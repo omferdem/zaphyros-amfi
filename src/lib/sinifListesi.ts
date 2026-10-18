@@ -10,6 +10,8 @@ export interface OgrenciKaydi {
 export interface AyristirmaSonucu {
   kayitlar: OgrenciKaydi[]
   atlanan: number
+  /** Numaralar Excel'den "2,2E+10" gibi bilimsel gösterimle kopyalanmış. */
+  bilimsel?: boolean
 }
 
 type Hucre = string | number | boolean | Date | null | undefined
@@ -122,16 +124,43 @@ export function satirlardanAyristir(satirlar: Hucre[][]): AyristirmaSonucu {
   return { kayitlar: [...kayitlar.values()], atlanan }
 }
 
-/** Excel'den kopyalanan (sekmeyle ayrılmış) ya da CSV metnini satırlara böler. */
+/**
+ * Ayırıcısız satırı (PDF, Word ya da web sayfasından kopyalanmış "22010101001 Ali Yılmaz") hücrelere böler:
+ * her rakam dizisi ayrı hücre olur, aradaki kelimeler tek hücrede birleşir.
+ */
+function bosluklaBol(satir: string): string[] {
+  const hucreler: string[] = []
+  let kelimeler: string[] = []
+  for (const parca of satir.trim().split(/\s+/)) {
+    if (/^[0-9]+$/.test(parca)) {
+      if (kelimeler.length) hucreler.push(kelimeler.join(' '))
+      kelimeler = []
+      hucreler.push(parca)
+    } else {
+      kelimeler.push(parca)
+    }
+  }
+  if (kelimeler.length) hucreler.push(kelimeler.join(' '))
+  return hucreler
+}
+
+/** Excel'den kopyalanan (sekmeyle ayrılmış), CSV ya da boşlukla ayrılmış metni satırlara böler. */
 export function metniSatirlaraBol(metinIcerik: string): string[][] {
   const satirlar = metinIcerik.replace(/\r\n?/g, '\n').split('\n')
   const sekmeli = satirlar.some((s) => s.includes('\t'))
   const ayirici = sekmeli ? '\t' : satirlar.some((s) => s.includes(';')) ? ';' : ','
-  return satirlar.map((s) => s.split(ayirici).map((h) => h.replace(/^"(.*)"$/, '$1')))
+  return satirlar.map((s) => {
+    const hucreler = s.split(ayirici).map((h) => h.replace(/^"(.*)"$/, '$1'))
+    return hucreler.length === 1 && /\s/.test(s.trim()) ? bosluklaBol(s) : hucreler
+  })
 }
 
+// Excel dar sütundaki uzun numarayı "2,20101E+10" diye kopyalar; bu durumda numara geri getirilemez.
+const BILIMSEL_GOSTERIM = /(^|[\t;\s])[0-9]+([.,][0-9]+)?E\+[0-9]+($|[\t;\s])/im
+
 export function metindenAyristir(metinIcerik: string): AyristirmaSonucu {
-  return satirlardanAyristir(metniSatirlaraBol(metinIcerik))
+  const sonuc = satirlardanAyristir(metniSatirlaraBol(metinIcerik))
+  return BILIMSEL_GOSTERIM.test(metinIcerik) ? { ...sonuc, bilimsel: true } : sonuc
 }
 
 export async function dosyadanAyristir(dosya: File): Promise<AyristirmaSonucu> {

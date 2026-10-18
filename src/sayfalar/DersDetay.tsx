@@ -315,6 +315,17 @@ function SinifListesi({ ders, ogrenciler, yenile }: { ders: Ders; ogrenciler: Og
               <b>{onizleme.kayitlar.length}</b> öğrenci bulundu
               {onizleme.atlanan > 0 && <span className="text-amber-300">, {onizleme.atlanan} satır atlandı</span>}.
             </p>
+            {onizleme.bilimsel && (
+              <p className="text-sm text-amber-300">
+                Bazı numaralar Excel'den "2,2E+10" gibi kısaltılmış geldi. Excel'de numara sütununu genişletip ya da
+                sütunu "Sayı" biçimine çevirip yeniden kopyala.
+              </p>
+            )}
+            {onizleme.kayitlar.length === 0 && !onizleme.bilimsel && (
+              <p className="text-sm text-amber-300">
+                Her satırda bir öğrenci numarası ve ad soyad olmalı, örneğin: 22010101001 Ali Yılmaz
+              </p>
+            )}
             {onizleme.kayitlar.length > 0 && (
               <>
                 <ul className="text-xs font-mono text-slate-300 max-h-40 overflow-auto">

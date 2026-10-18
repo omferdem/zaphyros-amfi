@@ -39,6 +39,21 @@ describe('sınıf listesi ayrıştırma', () => {
     expect(sonuc.kayitlar).toHaveLength(1)
   })
 
+  it('boşlukla ayrılmış (PDF ya da web sayfasından kopyalanmış) 11 haneli numaraları okur', () => {
+    const sonuc = metindenAyristir('1 22010101001 ALİ YILMAZ\n2 22010101002 Ayşe Nur Kaya Demir\n')
+    expect(sonuc.kayitlar).toEqual([
+      { ogrenci_no: '22010101001', ad_soyad: 'Ali Yılmaz' },
+      { ogrenci_no: '22010101002', ad_soyad: 'Ayşe Nur Kaya Demir' },
+    ])
+    expect(sonuc.atlanan).toBe(0)
+  })
+
+  it('Excel\'in kısalttığı bilimsel gösterimli numarayı bildirir', () => {
+    const sonuc = metindenAyristir('2,20101E+10\tALİ YILMAZ')
+    expect(sonuc.kayitlar).toHaveLength(0)
+    expect(sonuc.bilimsel).toBe(true)
+  })
+
   it('karışık yazılmış adı olduğu gibi bırakır', () => {
     expect(adDuzelt('  Mehmet   Ali ')).toBe('Mehmet Ali')
     expect(adDuzelt('IŞIL ÖZTÜRK')).toBe('Işıl Öztürk')

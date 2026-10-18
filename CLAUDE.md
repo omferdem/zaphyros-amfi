@@ -18,6 +18,25 @@ Sahibi: Doç. Dr. Ömer Faruk Erdem (NEÜ İlahiyat, Din Felsefesi). İlk kullan
 | Frontend | Vite + React + TypeScript + Tailwind | Çok ekranlı (hoca/öğrenci) yapı için düzenli, test edilebilir |
 | Gerçek zaman | Ders durumu: `sessions` satırı üzerinden postgres_changes. Oyunlar ve anlık etkileşim: Realtime Broadcast (veritabanına yazmadan) | Ücretsiz kotaları korur |
 
+## Altyapı (kurulu)
+
+| Ne | Değer |
+|---|---|
+| GitHub repo | `omferdem/zaphyros-amfi` (public) |
+| Canlı site | https://omferdem.github.io/zaphyros-amfi/ (main dalına push = otomatik yayın) |
+| Supabase organizasyon / proje | `Zaphyros` / `zaphyros-amfi`, Free plan, Central EU (Frankfurt) |
+| Supabase URL | https://oiqatggmfktgnexxaspc.supabase.co |
+| Frontend anahtarı | publishable anahtar, `src/lib/supabase.ts` içinde (herkese açık olması normal) |
+
+Supabase güvenlik ayarları, proje açılırken bilinçli seçildi:
+- **Automatic RLS açık:** `public` şemasında açılan her yeni tabloda RLS kendiliğinden devreye girer.
+- **Automatically expose new tables kapalı:** Yeni tablo, açıkça `grant` verilmedikçe Data API'ye çıkmaz. Her migration'da gereken `grant` satırlarını yazmayı unutma; unutulursa sonuç "permission denied" olur, veri sızmaz.
+
+### Veritabanı değişiklikleri (migration)
+- Her şema değişikliği `supabase/migrations/NNNN_aciklama.sql` dosyası olarak repoya girer, numara sırayla artar.
+- Bu oturumlarda veritabanına doğrudan bağlanacak bir CLI/anahtar yok. SQL, Supabase panelindeki SQL Editor'den çalıştırılır (Claude in Chrome ile ya da kullanıcıdan rica edilerek). Çalıştırılan her dosya `CHANGELOG.md` içinde not edilir.
+- Uygulanmış migration'lar: `0001_saglik.sql`.
+
 Ayrıntılı mimari: `docs/MIMARI.md`. Yol haritası ve fazlar: `docs/YOL-HARITASI.md`. Gemini prototipinin incelemesi: `docs/PROTOTIP-INCELEME.md`.
 
 ## Ücretsiz plan sınırları (Ekim 2026 itibarıyla doğrulandı)
@@ -33,7 +52,7 @@ Ayrıntılı mimari: `docs/MIMARI.md`. Yol haritası ve fazlar: `docs/YOL-HARITA
 2. Her değişikliği adım adım açıkla: ne yaptın, neden yaptın, neyi etkiler.
 3. **Çalışan özelliği bozma.** Yeni bir şey eklemeden önce mevcut davranışı koru; değiştirmen gerekiyorsa önce sor.
 4. Belirsiz bir noktada varsayımla ilerleme, sor. ("Beceremediğin yeri sor, kafana göre yapma.")
-5. Plan anlatmak yerine işi yap; gereksiz duyuru ve önsöz yok.
+5. Plan anlatmak yerine işi yap; gereksiz duyuru ve önsöz yok. **Kullanıcıya iş yükleme:** tarayıcıda, terminalde ya da panelde senin yapabileceğin her adımı kendin yap. Yalnızca gerçekten kullanıcının yapması gereken adımları (şifre girmek, hesap açmak gibi) iste.
 6. Kullanıcıya görünen Türkçe metinlerde (arayüz, README, mesajlar) doğal dil kullan: uzun çizgi (em dash) yok, abartılı pazarlama dili yok, yapay zeka kalıpları yok.
 7. Her anlamlı teslimde sürüm numarasını artır (`package.json` + `CHANGELOG.md`) ve git tag at. Kullanıcı isterse sürümü ZIP olarak da teslim et.
 8. Kod tamamlanmış sayılmadan önce çalıştır, derle ve tarayıcıda dene.

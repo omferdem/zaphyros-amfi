@@ -1,0 +1,25 @@
+# Supabase Free projeleri 7 gün hareketsiz kalınca duraklatılır.
+# Bu iş akışı iki günde bir veritabanında küçük bir sorgu çalıştırarak bunu önler.
+# Buradaki URL ve anahtar herkese açık (publishable) değerlerdir; gizli bilgi değildir.
+name: Supabase uyandırma
+
+on:
+  schedule:
+    - cron: '17 6 */2 * *'
+  workflow_dispatch:
+
+jobs:
+  uyandir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: saglik() fonksiyonunu çağır
+        env:
+          SUPABASE_URL: https://oiqatggmfktgnexxaspc.supabase.co
+          SUPABASE_KEY: sb_publishable_iXZC9Q-YPzley008nYw8Fg_AbUU5c6v
+        run: |
+          yanit=$(curl -sS -w '\n%{http_code}' -X POST "$SUPABASE_URL/rest/v1/rpc/saglik" \
+            -H "apikey: $SUPABASE_KEY" \
+            -H "Content-Type: application/json" -d '{}')
+          echo "$yanit"
+          kod=$(echo "$yanit" | tail -n1)
+          test "$kod" = "200"

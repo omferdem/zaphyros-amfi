@@ -2,7 +2,13 @@
 
 Üniversite dersleri için canlı ders sistemi. Hoca derse projeksiyondan başlar, öğrenciler QR kodu okutup telefonlarının tarayıcısından katılır. Yoklama, slayt, quiz, tartışma ve oyunlar tek akışta, hocanın kontrolünde ilerler.
 
-**Durum:** Faz 0 (iskelet) öncesi. Ayrıntılar için `docs/YOL-HARITASI.md`.
+**Durum:** v0.1.0, Faz 0 (iskelet) tamam. Canlı adres: https://omferdem.github.io/zaphyros-amfi/
+
+## Yerelde çalıştırma
+```
+npm install
+npm run dev
+```
 
 ## Belgeler
 - `CLAUDE.md`: Projede çalışırken uyulacak kurallar ve bağlayıcı kararlar

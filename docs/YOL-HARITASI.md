@@ -2,7 +2,7 @@
 
 Her faz kendi başına çalışır durumda teslim edilir. Bir faz bitmeden sonrakine geçilmez.
 
-## Faz 0: İskelet (v0.1)
+## Faz 0: İskelet (v0.1) ✅
 - Vite + React + TypeScript + Tailwind kurulumu
 - Supabase istemcisi, `.env.example`
 - GitHub Actions: build + GitHub Pages deploy

@@ -1,0 +1,73 @@
+# Supabase'i GitHub üzerinden yönetir: SQL çalıştırır ve giriş (Auth) adreslerini ayarlar.
+# Elle tetiklenir (Actions > Supabase işlemleri > Run workflow).
+# Gerekli: depo Settings > Secrets and variables > Actions altında SUPABASE_ACCESS_TOKEN
+# (supabase.com/dashboard/account/tokens adresinden alınan kişisel erişim anahtarı).
+# Anahtar yoksa iş akışı hiçbir şey yapmadan durur. Proje, public/ayarlar.json'daki adresten bulunur.
+name: Supabase işlemleri
+
+on:
+  workflow_dispatch:
+    inputs:
+      islem:
+        description: Ne yapılsın?
+        type: choice
+        options:
+          - kurulum-ve-ayar
+          - sql-dosyasi
+          - auth-ayar
+        default: kurulum-ve-ayar
+      dosya:
+        description: "sql-dosyasi için çalıştırılacak dosya (ör. supabase/migrations/0003_ornek.sql)"
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  calistir:
+    runs-on: ubuntu-latest
+    env:
+      TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Hazırlık
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::error::SUPABASE_ACCESS_TOKEN tanımlı değil. Depo ayarlarında Actions secret olarak ekle."
+            exit 1
+          fi
+          ref=$(jq -r .supabaseUrl public/ayarlar.json | sed -E 's#https://([a-z0-9]+)\.supabase\.co.*#\1#')
+          echo "REF=$ref" >> "$GITHUB_ENV"
+          sahip=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          echo "SITE=https://$sahip.github.io/${{ github.event.repository.name }}/" >> "$GITHUB_ENV"
+          echo "Proje: $ref"
+
+      - name: SQL çalıştır
+        if: inputs.islem != 'auth-ayar'
+        run: |
+          dosya="${{ inputs.islem == 'sql-dosyasi' && inputs.dosya || 'supabase/kurulum.sql' }}"
+          case "$dosya" in supabase/*.sql) ;; *) echo "::error::Yalnızca supabase/ altındaki .sql dosyaları"; exit 1;; esac
+          echo "Çalıştırılıyor: $dosya"
+          jq -Rs '{query: .}' "$dosya" > govde.json
+          kod=$(curl -sS -o yanit.json -w '%{http_code}' -X POST \
+            "https://api.supabase.com/v1/projects/$REF/database/query" \
+            -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" --data @govde.json)
+          cat yanit.json; echo
+          test "$kod" -ge 200 -a "$kod" -lt 300
+
+      - name: Giriş adreslerini ayarla
+        if: inputs.islem != 'sql-dosyasi'
+        run: |
+          jq -n --arg site "$SITE" '{site_url: $site, uri_allow_list: ($site + ",http://localhost:5173/")}' > auth.json
+          kod=$(curl -sS -o yanit.json -w '%{http_code}' -X PATCH \
+            "https://api.supabase.com/v1/projects/$REF/config/auth" \
+            -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" --data @auth.json)
+          jq '{site_url, uri_allow_list}' yanit.json 2>/dev/null || cat yanit.json
+          test "$kod" -ge 200 -a "$kod" -lt 300
+
+      - name: Kontrol
+        run: |
+          jq -n '{query: "select (select count(*) from information_schema.tables where table_schema = '"'"'public'"'"') as tablo_sayisi, (select count(*) from public.teachers) as hoca_sayisi"}' > govde.json
+          curl -sS -X POST "https://api.supabase.com/v1/projects/$REF/database/query" \
+            -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" --data @govde.json; echo

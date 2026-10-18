@@ -53,6 +53,15 @@ Bu yapılmazsa e-postana gelen giriş bağlantısı çalışmaz.
 
 Artık bu kurulumun tek hocası sensin. Başka biri siteye girse bile ders açamaz, verilerini göremez.
 
+## Kısa yol (isteğe bağlı)
+
+2. adımdaki SQL'i ve 5. adımdaki giriş adresini elle yapmak yerine GitHub'a yaptırabilirsin:
+1. https://supabase.com/dashboard/account/tokens adresinde **Generate new token** ile bir erişim anahtarı oluştur.
+2. Deponda **Settings > Secrets and variables > Actions > New repository secret**: ad `SUPABASE_ACCESS_TOKEN`, değer bu anahtar.
+3. Önce 3. adımı (ayarlar.json) yap, sonra **Actions > Supabase işlemleri > Run workflow** de.
+
+Bu anahtar Supabase hesabına geniş erişim verir; yalnızca kendi deponun gizli ayarlarına koy, başka yere yazma.
+
 ## Bilmen gerekenler
 
 - **Uyandırma:** Supabase'in ücretsiz projeleri bir hafta hiç kullanılmazsa duraklatılır. Deponda bunu önleyen bir iş akışı (Supabase uyandırma) iki günde bir çalışır; Actions açık olduğu sürece bir şey yapman gerekmez.

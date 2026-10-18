@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+.vscode/
+# Gerçek öğrenci verisi asla repoya girmez
+veri/
+*.xlsx
+!docs/ornek/*.xlsx

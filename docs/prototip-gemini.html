@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AmfiOS Studio v6.0 — Profesyonel Amfi & Web Audio Ses Motoru</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+    :root {
+      --bg-deep: #040711;
+      --glass-bg: rgba(15, 23, 42, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.08);
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-deep);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.16) 0px, transparent 45%),
+        radial-gradient(at 100% 0%, rgba(217, 70, 239, 0.12) 0px, transparent 45%);
+      color: #f8fafc;
+      overflow-x: hidden;
+    }
+    .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    }
+    .glass-card {
+      background: linear-gradient(145deg, rgba(30, 41, 59, 0.55), rgba(15, 23, 42, 0.75));
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .btn-glow-primary {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+      box-shadow: 0 0 25px rgba(139, 92, 246, 0.4);
+    }
+    .btn-glow-emerald {
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.35);
+    }
+    .iphone-frame {
+      background: #090d16; border-radius: 48px; padding: 12px;
+      box-shadow: 0 0 0 2px #334155, 0 0 0 5px #0f172a, 0 25px 60px rgba(0,0,0,0.85);
+      position: relative;
+    }
+    @keyframes scanLaser {
+      0%, 100% { top: 8%; opacity: 0.9; }
+      50% { top: 88%; opacity: 1; }
+    }
+    .qr-laser {
+      position: absolute; left: 6%; right: 6%; height: 3px;
+      background: linear-gradient(90deg, transparent, #10b981, #34d399, #10b981, transparent);
+      box-shadow: 0 0 15px 3px rgba(16, 185, 129, 0.8);
+      animation: scanLaser 2.6s ease-in-out infinite;
+    }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.4); }
+    ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.4); border-radius: 99px; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- ÜST HEADER -->
+  <header class="glass-panel sticky top-0 z-50 px-5 py-3 flex flex-wrap items-center justify-between gap-3 border-b border-white/10">
+    <div class="flex items-center gap-3.5">
+      <div class="w-10 h-10 rounded-2xl btn-glow-primary flex items-center justify-center shadow-lg">
+        <i data-lucide="cpu" class="w-5 h-5 text-white"></i>
+      </div>
+      <div>
+        <div class="flex items-center gap-2.5">
+          <h1 class="font-extrabold text-base tracking-tight text-white">AmfiOS <span class="text-indigo-400">Studio v6.0</span></h1>
+          <span class="text-[10px] font-mono-code px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">Web Audio API + 60FPS</span>
+        </div>
+        <p class="text-[11px] text-slate-400">Vektörel Fizik • Sentezlenmiş Ses Efektleri • QR Yoklama</p>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center gap-2">
+      <button onclick="toggleAudioEngine()" id="audioToggleBtn" class="glass-card px-3 py-2 rounded-xl text-xs font-semibold text-amber-300 border-amber-500/30 flex items-center gap-1.5">
+        <i data-lucide="volume-2" class="w-4 h-4"></i>
+        <span>Ses Motoru: AÇIK</span>
+      </button>
+      <button onclick="openModal('pptxModal')" class="glass-card px-3.5 py-2 rounded-xl text-xs font-semibold text-amber-300 border-amber-500/30 flex items-center gap-2">
+        <i data-lucide="presentation" class="w-4 h-4"></i> PowerPoint (.pptx)
+      </button>
+      <button onclick="openModal('rosterModal')" class="glass-card px-3.5 py-2 rounded-xl text-xs font-semibold text-emerald-300 border-emerald-500/30 flex items-center gap-2">
+        <i data-lucide="users" class="w-4 h-4"></i> Yoklama Listesi
+      </button>
+      <button onclick="goToStep(7)" class="btn-glow-primary px-4 py-2 rounded-xl text-xs font-bold text-white flex items-center gap-2">
+        <i data-lucide="zap" class="w-4 h-4"></i> CETVELLİ HOCA
+      </button>
+    </div>
+  </header>
+
+  <!-- MÜFREDAT ŞERİDİ -->
+  <div class="bg-slate-950/70 border-b border-white/5 px-5 py-2 flex items-center gap-2.5 overflow-x-auto">
+    <div class="flex items-center gap-1.5 text-[11px] font-bold text-indigo-400 shrink-0">
+      <i data-lucide="calendar" class="w-3.5 h-3.5"></i> MÜFREDAT:
+    </div>
+    <div id="weeksBar" class="flex items-center gap-1.5 overflow-x-auto py-0.5"></div>
+    <button onclick="promptAddWeek()" class="glass-card px-3 py-1 rounded-lg border-emerald-500/30 text-emerald-300 text-xs font-bold shrink-0">+ Hafta Ekle</button>
+  </div>
+
+  <!-- ANA SAHNE -->
+  <main class="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 p-4 max-w-[1920px] w-full mx-auto">
+    <aside class="lg:col-span-3 glass-panel rounded-3xl p-4 flex flex-col gap-4">
+      <div class="flex items-center justify-between border-b border-white/10 pb-3">
+        <div>
+          <div id="activeWeekLabel" class="text-[10px] font-mono-code font-bold text-indigo-400">1. HAFTA</div>
+          <div id="activeUnitTitle" class="text-xs font-bold text-white truncate">Ünite 1: Felsefe ve Doğruluk</div>
+        </div>
+        <button onclick="goToStep(0)" class="glass-card px-2.5 py-1.5 rounded-xl text-emerald-300 text-[11px] font-bold">QR</button>
+      </div>
+      <div>
+        <div class="text-[10px] font-mono-code font-bold text-slate-400 mb-2 flex justify-between">
+          <span>DERS SENARYOSU</span>
+          <span id="stepIndicator" class="text-indigo-400">01 / 08</span>
+        </div>
+        <div id="timelineContainer" class="space-y-1.5 max-h-[320px] overflow-y-auto pr-1"></div>
+      </div>
+      <div class="glass-card rounded-2xl p-3.5 flex-1 flex flex-col justify-between">
+        <div>
+          <div class="text-xs font-bold text-emerald-300 mb-2">Canlı Yoklama Akışı</div>
+          <div id="miniAttendanceFeed" class="space-y-1.5 overflow-y-auto text-[11px] max-h-40"></div>
+        </div>
+      </div>
+    </aside>
+
+    <section class="lg:col-span-6 glass-panel rounded-3xl flex flex-col overflow-hidden relative min-h-[650px]">
+      <div class="bg-slate-950/80 border-b border-white/10 px-5 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span id="projBadge" class="text-[10px] font-mono-code font-bold uppercase px-2.5 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">MODÜL</span>
+          <h2 id="projHeaderTitle" class="font-bold text-sm md:text-base text-white truncate">Sahne</h2>
+        </div>
+      </div>
+      <div id="projectorStage" class="flex-1 p-6 flex flex-col justify-between overflow-y-auto relative"></div>
+      <div class="bg-slate-950/80 border-t border-white/10 px-5 py-3 flex items-center justify-between">
+        <button onclick="prevStep()" class="glass-card px-4 py-2 rounded-xl text-xs font-semibold text-slate-200">← Önceki</button>
+        <button onclick="nextStep()" class="glass-card px-4 py-2 rounded-xl text-xs font-semibold text-white bg-indigo-600/40">Sonraki →</button>
+      </div>
+    </section>
+
+    <aside class="lg:col-span-3 flex flex-col items-center justify-center">
+      <div class="iphone-frame w-full max-w-[370px] min-h-[650px] flex flex-col justify-between">
+        <div class="w-28 h-5 bg-black rounded-full mx-auto mb-2.5 flex items-center justify-between px-2.5 border border-white/10">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="text-[9px] font-mono-code text-slate-400">AMFI-LIVE</span>
+        </div>
+        <div class="flex-1 bg-slate-950/90 rounded-[36px] p-3.5 flex flex-col justify-between border border-white/5 overflow-hidden">
+          <div class="flex items-center justify-between border-b border-white/10 pb-2.5 mb-2.5">
+            <div>
+              <div class="text-[10px] text-slate-400">Terminal</div>
+              <div id="phoneStudentIdentity" class="text-xs font-bold text-white">2026101 • Ahmet Yılmaz</div>
+            </div>
+            <span id="phoneAttendanceBadge" class="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-bold">Bekliyor</span>
+          </div>
+          <div class="glass-card rounded-2xl p-2.5 mb-2.5 border-emerald-500/30">
+            <div class="text-[10px] font-bold text-emerald-300 uppercase mb-1.5">QR Yoklama</div>
+            <div class="grid grid-cols-12 gap-1.5">
+              <input id="stuNoInput" type="text" value="2026101" class="col-span-5 bg-slate-950 border border-white/15 rounded-xl px-2 py-1.5 text-xs text-white font-mono-code" />
+              <input id="stuNameInput" type="text" value="Ahmet" class="col-span-4 bg-slate-950 border border-white/15 rounded-xl px-2 py-1.5 text-xs text-white" />
+              <button onclick="studentCheckIn()" class="col-span-3 btn-glow-emerald text-white font-extrabold text-[10px] rounded-xl">VAR</button>
+            </div>
+            <div id="checkinFeedback" class="text-[10px] text-emerald-300 mt-1">Numarayı girip VAR yazın.</div>
+          </div>
+          <div id="phoneDynamicContent" class="flex-1 glass-card rounded-2xl p-3.5 flex flex-col justify-between overflow-y-auto"></div>
+          <div class="w-28 h-1 bg-white/20 rounded-full mx-auto mt-2.5"></div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- MODALLAR -->
+  <div id="pptxModal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-xl z-50 flex items-center justify-center p-4">
+    <div class="glass-panel rounded-3xl max-w-xl w-full p-6 space-y-4">
+      <div class="flex justify-between items-center"><h3 class="font-extrabold text-white">PowerPoint (.pptx) Aktar</h3><button onclick="closeModal('pptxModal')" class="text-xs text-slate-400">Kapat</button></div>
+      <input type="file" accept=".pptx" onchange="handlePPTXUpload(event)" class="w-full text-xs text-slate-300" />
+      <div id="pptxStatusMsg" class="text-xs text-emerald-400"></div>
+    </div>
+  </div>
+
+  <div id="rosterModal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-xl z-50 flex items-center justify-center p-4">
+    <div class="glass-panel rounded-3xl max-w-4xl w-full p-6 space-y-4 max-h-[90vh] flex flex-col">
+      <div class="flex justify-between items-center"><h3 class="font-extrabold text-white">Sınıf Listesi</h3><button onclick="closeModal('rosterModal')" class="text-xs text-slate-400">Kapat</button></div>
+      <div class="flex-1 overflow-y-auto"><table class="w-full text-left text-xs"><tbody id="rosterTableBody"></tbody></table></div>
+    </div>
+  </div>
+
+  <script>
+    // ============================================================================
+    // WEB AUDIO API SES MOTORU (Harici Dosya Gerektirmez)
+    // ============================================================================
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function toggleAudioEngine() {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById('audioToggleBtn');
+      btn.innerHTML = soundEnabled ? `<i data-lucide="volume-2" class="w-4 h-4"></i><span>Ses: AÇIK</span>` : `<i data-lucide="volume-x" class="w-4 h-4"></i><span>Ses: KAPALI</span>`;
+      lucide.createIcons();
+    }
+
+    // Cetvel Darbesi Ses Efekti (Metallic Hit + Noise)
+    function playRulerHitSound() {
+      if (!soundEnabled) return;
+      initAudio();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(180, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.25);
+      gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.25);
+    }
+
+    // Turbo Depar Roket Sesi (Frequency Sweep)
+    function playTurboSound() {
+      if (!soundEnabled) return;
+      initAudio();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.35);
+      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.35);
+    }
+
+    // Doğru Cevap / Başarı Arpej Sesi
+    function playSuccessSound() {
+      if (!soundEnabled) return;
+      initAudio();
+      [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime + idx * 0.08);
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime + idx * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + idx * 0.08 + 0.2);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(audioCtx.currentTime + idx * 0.08);
+        osc.stop(audioCtx.currentTime + idx * 0.08 + 0.2);
+      });
+    }
+
+    // ============================================================================
+    // VERİTABANI VE OYUN MİMARİSİ
+    // ============================================================================
+    let studentRoster = [
+      { no: '2026101', fullName: 'Ahmet Yılmaz', className: 'Felsefe 101 - A Şubesi', present: false, checkinTime: '-' },
+      { no: '2026102', fullName: 'Derya Şahbaz', className: 'Felsefe 101 - A Şubesi', present: true, checkinTime: '09:02' },
+      { no: '2026103', fullName: 'Emine Sude Harmancı', className: 'Felsefe 101 - A Şubesi', present: true, checkinTime: '09:03' }
+    ];
+    let activeStudentProfile = { no: '2026101', fullName: 'Ahmet Yılmaz', className: 'Felsefe 101 - A Şubesi', present: false };
+
+    let weeksData = [{
+      weekNo: 1,
+      unit: 'Ünite 1: Felsefe ve Doğruluk',
+      slides: [{ title: 'Felsefe ve Hikmet', bullets: ['Philosophia: Bilgelik sevgisi.', 'Doğruluk ve gerçeklik ayrımı.'], imageUrl: null }],
+      videoTitle: 'Sokrates’in Savunması',
+      devilThesis: 'Yapay zeka hakim olmalıdır.',
+      questions: [{ q: 'Sokrates’in doğurtma yöntemi nedir?', options: ['A) Maiotik', 'B) Sofizm', 'C) Dogmatizm', 'D) Nihilizm'], correct: 0, explanation: 'Sokrates Maiotik yöntemini kullanır.' }]
+    }];
+
+    for (let w = 2; w <= 10; w++) {
+      weeksData.push({
+        weekNo: w, unit: `Ünite ${w}: Akademik Konu`,
+        slides: [{ title: `${w}. Hafta Slaytı`, bullets: [`${w}. Hafta felsefi analizleri.`], imageUrl: null }],
+        videoTitle: `${w}. Hafta Vaka Analizi`, devilThesis: `Tez ${w}`,
+        questions: [{ q: `Soru ${w}?`, options: ['A) Şık 1', 'B) Şık 2', 'C) Şık 3', 'D) Şık 4'], correct: 0, explanation: 'Açıklama' }]
+      });
+    }
+
+    let currentWeekIndex = 0;
+    let currentStepIndex = 0;
+    let currentSlidePageIndex = 0;
+
+    const stepDefinitions = [
+      { id: 1, type: 'QR YOKLAMA', title: 'Dersi Başlatan QR & Canlı Yoklama' },
+      { id: 2, type: 'PPTX SLAYT', title: 'PowerPoint Slayt Sunumu' },
+      { id: 3, type: 'VİDEO', title: 'Sinematik Vaka Analizi' },
+      { id: 4, type: 'BEYİN FIRTINASI', title: 'Canlı Fikir Ağı' },
+      { id: 5, type: 'ŞEYTANIN AVUKATI', title: 'Kutuplaşma Düellosu' },
+      { id: 6, type: 'İDDİA QUİZ', title: 'Çözümlü İddia Quiz' },
+      { id: 7, type: 'HALAT ÇEKME', title: 'Amfi Halat Çekme' },
+      { id: 8, type: '60FPS OYUN', title: 'Cetvelli Hoca Kovalamacası' }
+    ];
+
+    let quizQIdx = 0;
+    let quizRevealed = false;
+    let quizSelectedOpt = null;
+    let ropeVal = 50;
+
+    // 60FPS OYUN MOTORU
+    let chaseRunning = false;
+    let chaseAnimFrame = null;
+    let chaseDist = 0;
+    let teacherX = 14;
+    let turboReady = false;
+    let chaseQIdx = 0;
+    let chaseMsg = '';
+    let particles = [], shockwaves = [], flyingRagdolls = [], parallaxOffset = 0;
+    let runners = [
+      { id: 'me', name: 'Ahmet Yılmaz (Sen)', color: '#10b981', glow: '#34d399', pos: 52, alive: true, isMe: true, boostTimer: 0 },
+      { id: 'r1', name: 'Derya Ş.', color: '#6366f1', glow: '#818cf8', pos: 60, alive: true, isMe: false, boostTimer: 0 },
+      { id: 'r2', name: 'Sude H.', color: '#ec4899', glow: '#f472b6', pos: 44, alive: true, isMe: false, boostTimer: 0 }
+    ];
+
+    function drawStylizedRunner(ctx, x, y, scale, phase, color, glowColor, label, isTeacher, boostActive) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.scale(scale, scale);
+      const bounce = Math.abs(Math.cos(phase)) * 6;
+      ctx.translate(0, -bounce);
+
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.roundRect(-8, -14, 16, 28, 7);
+      ctx.fill();
+
+      ctx.fillStyle = '#fde68a';
+      ctx.beginPath();
+      ctx.arc(2, -24, 10, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (isTeacher) {
+        ctx.fillStyle = '#fbbf24';
+        ctx.fillRect(8, -10, 32, 6); // Cetvel
+      }
+      ctx.restore();
+    }
+
+    function renderChaseCanvasFrame() {
+      const canvas = document.getElementById('chaseGameCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width; const H = canvas.height;
+      const time = performance.now() * 0.01;
+
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(0, 0, W, H);
+
+      const trackTop = H - 115;
+      ctx.fillStyle = '#1e1b4b';
+      ctx.fillRect(0, trackTop, W, 115);
+
+      runners.forEach((r, idx) => {
+        if (!r.alive) return;
+        const rx = (r.pos / 100) * (W - 80) + 40;
+        const ry = trackTop + 25 + idx * 25;
+        drawStylizedRunner(ctx, rx, ry, 0.9, time + idx, r.color, r.glow, r.name, false, false);
+      });
+
+      const tx = (teacherX / 100) * (W - 80) + 40;
+      drawStylizedRunner(ctx, tx, trackTop + 55, 1.1, time * 2, '#e11d48', '#fb7185', 'HOCA', true, false);
+
+      if (currentStepIndex === 7) {
+        chaseAnimFrame = requestAnimationFrame(renderChaseCanvasFrame);
+      }
+    }
+
+    function startChaseCanvasLoop() {
+      if (chaseAnimFrame) cancelAnimationFrame(chaseAnimFrame);
+      chaseAnimFrame = requestAnimationFrame(renderChaseCanvasFrame);
+    }
+
+    async function handlePPTXUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const zip = await JSZip.loadAsync(await file.arrayBuffer());
+      const slideFiles = Object.keys(zip.files).filter(name => /^ppt\/slides\/slide\d+\.xml$/i.test(name));
+      const extracted = [];
+      for (let i = 0; i < slideFiles.length; i++) {
+        const xmlText = await zip.files[slideFiles[i]].async('string');
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, 'application/xml');
+        const textNodes = Array.from(xmlDoc.getElementsByTagName('a:t'));
+        const lines = textNodes.map(n => n.textContent.trim()).filter(Boolean);
+        extracted.push({ title: lines[0] || `Slayt ${i+1}`, bullets: lines.slice(1).length ? lines.slice(1) : ['Slayt içeriği'], imageUrl: null });
+      }
+      weeksData[currentWeekIndex].slides = extracted;
+      document.getElementById('pptxStatusMsg').innerText = `✅ ${extracted.length} slayt yüklendi!`;
+      setTimeout(() => { closeModal('pptxModal'); goToStep(1); }, 600);
+    }
+
+    function studentCheckIn() {
+      const noVal = document.getElementById('stuNoInput').value.trim();
+      const nameVal = document.getElementById('stuNameInput').value.trim();
+      const found = studentRoster.find(s => s.no === noVal);
+      if (found) {
+        found.present = true;
+        activeStudentProfile = found;
+        document.getElementById('checkinFeedback').innerText = `✅ ${found.fullName} (${found.className}) eşleşti!`;
+      }
+      updateAttendanceWidgets();
+      renderStageAndPhone();
+    }
+
+    function updateAttendanceWidgets() {
+      document.getElementById('headerAttendanceCount').innerText = `${studentRoster.filter(s=>s.present).length}/${studentRoster.length}`;
+      document.getElementById('miniAttendanceFeed').innerHTML = studentRoster.filter(s=>s.present).map(s => `
+        <div class="p-2 rounded-xl bg-slate-950/60 border border-white/5 flex justify-between text-[11px]">
+          <span class="font-bold text-white">${s.no} • ${s.fullName}</span>
+          <span class="text-emerald-400 font-mono-code">VAR</span>
+        </div>
+      `).join('');
+    }
+
+    function renderWeeksBar() {
+      document.getElementById('weeksBar').innerHTML = weeksData.map((w, idx) => `
+        <button onclick="selectWeek(${idx})" class="px-3.5 py-1.5 rounded-xl text-xs font-bold shrink-0 border transition ${idx === currentWeekIndex ? 'btn-glow-primary text-white border-transparent' : 'glass-card text-slate-400'}">
+          ${w.weekNo}. Hafta
+        </button>
+      `).join('');
+      document.getElementById('activeWeekLabel').innerText = `${weeksData[currentWeekIndex].weekNo}. HAFTA`;
+      document.getElementById('activeUnitTitle').innerText = weeksData[currentWeekIndex].unit;
+    }
+
+    function selectWeek(idx) { currentWeekIndex = idx; renderWeeksBar(); renderStageAndPhone(); }
+
+    function renderTimeline() {
+      document.getElementById('stepIndicator').innerText = `0${currentStepIndex + 1} / 08`;
+      document.getElementById('timelineContainer').innerHTML = stepDefinitions.map((s, idx) => `
+        <button onclick="goToStep(${idx})" class="w-full text-left p-2.5 rounded-2xl border transition flex items-center gap-3 ${idx === currentStepIndex ? 'bg-indigo-600/25 border-indigo-400/60' : 'glass-card border-white/5'}">
+          <span class="w-7 h-7 rounded-xl flex items-center justify-center text-xs font-mono-code font-bold ${idx === currentStepIndex ? 'btn-glow-primary text-white' : 'bg-slate-800 text-slate-400'}">0${s.id}</span>
+          <div class="text-xs font-semibold text-slate-100">${s.title}</div>
+        </button>
+      `).join('');
+    }
+
+    function goToStep(idx) { currentStepIndex = idx; renderTimeline(); renderStageAndPhone(); }
+    function nextStep() { if (currentStepIndex < stepDefinitions.length - 1) goToStep(currentStepIndex + 1); }
+    function prevStep() { if (currentStepIndex > 0) goToStep(currentStepIndex - 1); }
+
+    function renderStageAndPhone() {
+      const curWeek = weeksData[currentWeekIndex];
+      const step = stepDefinitions[currentStepIndex];
+      document.getElementById('projBadge').innerText = step.type;
+      document.getElementById('projHeaderTitle').innerText = `${curWeek.weekNo}. Hafta — ${step.title}`;
+
+      const stage = document.getElementById('projectorStage');
+      const phone = document.getElementById('phoneDynamicContent');
+
+      if (currentStepIndex === 0) {
+        stage.innerHTML = `<div class="my-auto text-center"><h3 class="text-xl font-extrabold text-white">QR Yoklama Terminali</h3><p class="text-xs text-slate-400 mt-2">Öğrenciler telefonlarından numara girerek yoklamaya katılır.</p></div>`;
+        phone.innerHTML = `<div class="my-auto text-center text-xs text-slate-300">Numaranızı girip VAR tuşuna basın.</div>`;
+      } else if (currentStepIndex === 1) {
+        const slide = curWeek.slides[currentSlidePageIndex] || curWeek.slides[0];
+        stage.innerHTML = `<div class="my-auto glass-card p-8 rounded-3xl"><h1 class="text-2xl font-extrabold text-amber-300 mb-4">${slide.title}</h1><ul class="space-y-2 text-sm text-slate-200 list-disc pl-5">${slide.bullets.map(b=>`<li>${b}</li>`).join('')}</ul></div>`;
+        phone.innerHTML = `<div class="my-auto text-center text-xs text-slate-300">Slayt takip ediliyor.</div>`;
+      } else if (currentStepIndex === 5) {
+        const q = curWeek.questions[quizQIdx % curWeek.questions.length];
+        stage.innerHTML = `<div class="my-auto glass-card p-6 rounded-3xl space-y-4"><h3 class="text-lg font-bold text-white">${q.q}</h3><div class="grid grid-cols-2 gap-2">${q.options.map(o=>`<div class="p-3 rounded-xl glass-card text-xs">${o}</div>`).join('')}</div></div>`;
+        phone.innerHTML = `<div class="my-auto space-y-2">${q.options.map((o,i)=>`<button onclick="playSuccessSound(); quizRevealed=true; renderStageAndPhone();" class="w-full text-left p-2 rounded-xl glass-card text-xs text-white">${o}</button>`).join('')}</div>`;
+      } else if (currentStepIndex === 7) {
+        stage.innerHTML = `<div class="space-y-3"><div class="glass-card p-3 rounded-2xl flex justify-between"><button onclick="toggleChase()" class="btn-glow-emerald px-4 py-1.5 rounded-xl text-xs font-bold text-white">Başlat / Durdur</button></div><div class="relative rounded-3xl overflow-hidden border border-indigo-500/30 bg-slate-950"><canvas id="chaseGameCanvas" width="760" height="270" class="w-full h-[270px] block"></canvas></div></div>`;
+        phone.innerHTML = `<button onclick="playTurboSound(); triggerTurbo();" class="w-full py-3 btn-glow-emerald text-white text-xs font-extrabold rounded-2xl">🚀 TURBO DEPAR</button>`;
+        startChaseCanvasLoop();
+      } else {
+        stage.innerHTML = `<div class="my-auto text-center"><h3 class="text-xl font-extrabold text-white">${step.title}</h3></div>`;
+        phone.innerHTML = `<div class="my-auto text-center text-xs text-slate-400">Aktif modül çalışıyor.</div>`;
+      }
+    }
+
+    function toggleChase() { chaseRunning = !chaseRunning; }
+    function triggerTurbo() {
+      playTurboSound();
+      const me = runners.find(r => r.isMe);
+      if (me) me.pos = Math.min(88, me.pos + 15);
+    }
+    function promptAddWeek() {
+      weeksData.push({ weekNo: weeksData.length + 1, unit: `Yeni Hafta`, slides: [{ title: 'Yeni', bullets: ['İçerik'], imageUrl: null }], videoTitle: 'Video', devilThesis: 'Tez', questions: [] });
+      renderWeeksBar();
+    }
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+    init();
+  </script>
+</body>
+</html>

@@ -40,7 +40,7 @@ Supabase güvenlik ayarları, proje açılırken bilinçli seçildi:
 - Kurulumun hocası migration ile değil, sitede "Kurulumu sahiplen" adımıyla belirlenir (ilk giren hoca). Migration'a kişisel veri yazılmaz.
 - Uygulanmış migration'lar: `0001_saglik.sql`. Bekleyen: `0002_yoklama.sql`.
 - Migration'lar Supabase'e gitmeden önce yerel Postgres'te denenir: `supabase/test/` içindeki taklit ve test dosyalarına bak.
-- Sürüm etiketleri `.github/workflows/etiket.yml` ile main'e push sonrası otomatik atılır (commit mesajı `vX.Y.Z:` ile başlamalı). Bulut oturumları etiket push edemez.
+- Sürüm etiketleri `.github/workflows/etiket.yml` ile main'e push sonrası otomatik atılır (commit mesajı `vX.Y.Z:` ile başlamalı). İstisna: `.github/workflows/` altında dosya değiştiren commit'lere GitHub bu yolla etiket attırmaz; bunların etiketi yerel oturumdan `git push` ile atılır. Bulut oturumları etiket push edemez. Bekleyen etiketler: v0.1.0 -> 68f6493, v0.2.0 -> 8961e13, v0.2.1 -> 9c6844d.
 
 Ayrıntılı mimari: `docs/MIMARI.md`. Yol haritası ve fazlar: `docs/YOL-HARITASI.md`. Gemini prototipinin incelemesi: `docs/PROTOTIP-INCELEME.md`.
 

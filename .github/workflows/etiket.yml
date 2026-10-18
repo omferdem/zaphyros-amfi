@@ -1,7 +1,7 @@
 # main dalındaki "vX.Y.Z: ..." ile başlayan her commit için aynı adlı git etiketi atar.
 # Etiketi zaten olan commit'lere dokunmaz. Böylece sürüm etiketleri elle atılmak zorunda kalmaz.
-# Not: GITHUB_TOKEN, workflow dosyası değiştiren commit'lere "git push" ile etiket atamaz;
-# bu yüzden etiketler GitHub API'siyle oluşturulur.
+# Not: GitHub, iş akışının kendi yetkisiyle (GITHUB_TOKEN) workflow dosyası değiştiren commit'lere
+# hiçbir yoldan etiket attırmaz. Böyle commit'lerin etiketi yerel bir oturumdan atılır; burada uyarı yazılır.
 name: Sürüm etiketi
 
 on:
@@ -23,7 +23,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          hata=0
           while read -r sha konu; do
             surum=$(printf '%s' "$konu" | grep -oE '^v[0-9]+\.[0-9]+\.[0-9]+' || true)
             [ -z "$surum" ] && continue
@@ -34,8 +33,6 @@ jobs:
             if gh api "repos/$GITHUB_REPOSITORY/git/refs" -f ref="refs/tags/$surum" -f sha="$sha" >/dev/null; then
               echo "$surum -> $sha"
             else
-              echo "::error::$surum etiketi atılamadı"
-              hata=1
+              echo "::warning::$surum etiketi atılamadı (workflow dosyası değiştiren commit olabilir; yerelden atılmalı)"
             fi
           done < <(git log --reverse --format='%H %s')
-          exit $hata

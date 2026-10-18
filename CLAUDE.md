@@ -16,6 +16,7 @@ Sahibi: Doç. Dr. Ömer Faruk Erdem (NEÜ İlahiyat, Din Felsefesi). İlk kullan
 | Backend | Supabase (Free plan): Postgres + Auth + Realtime | Ücretsiz, SQL, RLS ile çoklu hoca, Realtime Broadcast oyunlar için uygun |
 | Hosting | GitHub Pages, GitHub Actions ile otomatik deploy | Ücretsiz, sunucu gerekmez |
 | Frontend | Vite + React + TypeScript + Tailwind | Çok ekranlı (hoca/öğrenci) yapı için düzenli, test edilebilir |
+| Dağıtım | Her hoca kendi bağımsız kopyasını kurar: kendi GitHub deposu, kendi Supabase projesi (`docs/KURULUM.md`). Merkezi sunucu yok | Program başka hocalara verilecek; kimse kimseye bağlı olmamalı, sahibi diğer kurulumların verisini görmez ve yönetmez |
 | Gerçek zaman | Ders durumu: `sessions` satırı üzerinden postgres_changes. Oyunlar ve anlık etkileşim: Realtime Broadcast (veritabanına yazmadan) | Ücretsiz kotaları korur |
 
 ## Altyapı (kurulu)
@@ -26,7 +27,7 @@ Sahibi: Doç. Dr. Ömer Faruk Erdem (NEÜ İlahiyat, Din Felsefesi). İlk kullan
 | Canlı site | https://omferdem.github.io/zaphyros-amfi/ (main dalına push = otomatik yayın) |
 | Supabase organizasyon / proje | `Zaphyros` / `zaphyros-amfi`, Free plan, Central EU (Frankfurt) |
 | Supabase URL | https://oiqatggmfktgnexxaspc.supabase.co |
-| Frontend anahtarı | publishable anahtar, `src/lib/supabase.ts` içinde (herkese açık olması normal) |
+| Frontend ayarı | Supabase adresi ve publishable anahtar `public/ayarlar.json` içinde (herkese açık olması normal). Koda kurulum adresi, e-posta ya da kişiye özel hiçbir değer gömülmez |
 
 Supabase güvenlik ayarları, proje açılırken bilinçli seçildi:
 - **Automatic RLS açık:** `public` şemasında açılan her yeni tabloda RLS kendiliğinden devreye girer.
@@ -35,7 +36,11 @@ Supabase güvenlik ayarları, proje açılırken bilinçli seçildi:
 ### Veritabanı değişiklikleri (migration)
 - Her şema değişikliği `supabase/migrations/NNNN_aciklama.sql` dosyası olarak repoya girer, numara sırayla artar.
 - Bu oturumlarda veritabanına doğrudan bağlanacak bir CLI/anahtar yok. SQL, Supabase panelindeki SQL Editor'den çalıştırılır (Claude in Chrome ile ya da kullanıcıdan rica edilerek). Çalıştırılan her dosya `CHANGELOG.md` içinde not edilir.
-- Uygulanmış migration'lar: `0001_saglik.sql`.
+- Yeni kurulumlar için bütün migration'lar `supabase/kurulum.sql` dosyasında birleşir. Migration ekleyince `npm run kurulum-sql` çalıştır; test, dosya eskiyse hata verir.
+- Kurulumun hocası migration ile değil, sitede "Kurulumu sahiplen" adımıyla belirlenir (ilk giren hoca). Migration'a kişisel veri yazılmaz.
+- Uygulanmış migration'lar: `0001_saglik.sql`. Bekleyen: `0002_yoklama.sql`.
+- Migration'lar Supabase'e gitmeden önce yerel Postgres'te denenir: `supabase/test/` içindeki taklit ve test dosyalarına bak.
+- Sürüm etiketleri `.github/workflows/etiket.yml` ile main'e push sonrası otomatik atılır (commit mesajı `vX.Y.Z:` ile başlamalı). Bulut oturumları etiket push edemez.
 
 Ayrıntılı mimari: `docs/MIMARI.md`. Yol haritası ve fazlar: `docs/YOL-HARITASI.md`. Gemini prototipinin incelemesi: `docs/PROTOTIP-INCELEME.md`.
 

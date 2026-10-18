@@ -29,3 +29,39 @@ body {
   background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
   box-shadow: 0 0 25px rgba(139, 92, 246, 0.4);
 }
+
+.giris-kutusu {
+  width: 100%;
+  border-radius: 0.75rem;
+  background: rgba(2, 6, 23, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.7rem 0.9rem;
+  color: #f8fafc;
+  outline: none;
+}
+.giris-kutusu:focus {
+  border-color: #818cf8;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+}
+
+.ikincil-buton {
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.ikincil-buton:hover { background: rgba(255, 255, 255, 0.12); }
+.ikincil-buton:disabled { opacity: 0.5; }
+
+.tehlike-buton {
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fda4af;
+  background: rgba(244, 63, 94, 0.08);
+  border: 1px solid rgba(244, 63, 94, 0.25);
+}
+.tehlike-buton:hover { background: rgba(244, 63, 94, 0.16); }

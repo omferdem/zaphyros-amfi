@@ -64,6 +64,7 @@ Ayrıntılı mimari: `docs/MIMARI.md`. Yol haritası ve fazlar: `docs/YOL-HARITA
 6. Kullanıcıya görünen Türkçe metinlerde (arayüz, README, mesajlar) doğal dil kullan: uzun çizgi (em dash) yok, abartılı pazarlama dili yok, yapay zeka kalıpları yok.
 7. Her anlamlı teslimde sürüm numarasını artır (`package.json` + `CHANGELOG.md`) ve git tag at. Kullanıcı isterse sürümü ZIP olarak da teslim et.
 8. Kod tamamlanmış sayılmadan önce çalıştır, derle ve tarayıcıda dene.
+9. **Birden fazla bilgisayar:** Kullanıcı projeyi evden ve iş yerinden yürütür; ortak nokta GitHub'daki main dalıdır. Yerel oturumda işe başlamadan önce `git pull` yap. İş bitince commit'leyip push et; bir bilgisayarda push edilmemiş iş bırakma. Yerel klonun yeri: `C:\Users\omfer\code\zaphyros-amfi` (Windows'ta oturumun geçici klasörü git için fazla uzun yol verdiği için kısa yol seçildi).
 
 ## Güvenlik ve KVKK
 

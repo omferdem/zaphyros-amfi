@@ -35,7 +35,9 @@ Supabase güvenlik ayarları, proje açılırken bilinçli seçildi:
 ### Veritabanı değişiklikleri (migration)
 - Her şema değişikliği `supabase/migrations/NNNN_aciklama.sql` dosyası olarak repoya girer, numara sırayla artar.
 - Bu oturumlarda veritabanına doğrudan bağlanacak bir CLI/anahtar yok. SQL, Supabase panelindeki SQL Editor'den çalıştırılır (Claude in Chrome ile ya da kullanıcıdan rica edilerek). Çalıştırılan her dosya `CHANGELOG.md` içinde not edilir.
-- Uygulanmış migration'lar: `0001_saglik.sql`.
+- Uygulanmış migration'lar: `0001_saglik.sql`. Bekleyen: `0002_yoklama.sql`.
+- Migration'lar Supabase'e gitmeden önce yerel Postgres'te denenir: `supabase/test/` içindeki taklit ve test dosyalarına bak.
+- Sürüm etiketleri `.github/workflows/etiket.yml` ile main'e push sonrası otomatik atılır (commit mesajı `vX.Y.Z:` ile başlamalı). Bulut oturumları etiket push edemez.
 
 Ayrıntılı mimari: `docs/MIMARI.md`. Yol haritası ve fazlar: `docs/YOL-HARITASI.md`. Gemini prototipinin incelemesi: `docs/PROTOTIP-INCELEME.md`.
 

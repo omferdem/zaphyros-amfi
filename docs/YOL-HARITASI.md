@@ -9,7 +9,7 @@ Her faz kendi başına çalışır durumda teslim edilir. Bir faz bitmeden sonra
 - GitHub Actions: Supabase keepalive (duraklatmayı önlemek için)
 - Boş sayfalar: `/panel`, `/sahne/:id`, `/katil`
 
-## Faz 1: Yoklama uçtan uca (v0.2)
+## Faz 1: Yoklama uçtan uca (v0.2) ✅
 - Hoca girişi (e-posta ile magic link)
 - Ders oluşturma, sınıf listesini Excel'den içe aktarma
 - Oturum başlatma, dönen QR, `check_in()` RPC

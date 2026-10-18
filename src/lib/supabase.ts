@@ -12,7 +12,11 @@ const ANAHTAR_VARSAYILAN = 'sb_publishable_iXZC9Q-YPzley008nYw8Fg_AbUU5c6v'
 export const SUPABASE_URL: string = import.meta.env.VITE_SUPABASE_URL || URL_VARSAYILAN
 const SUPABASE_KEY: string = import.meta.env.VITE_SUPABASE_KEY || ANAHTAR_VARSAYILAN
 
-export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
+// PKCE akışı: e-postadaki giriş bağlantısı siteye ?code=... ile döner.
+// (Varsayılan akış jetonu adresin # kısmına koyar; bu, HashRouter'ın #/panel adresleriyle çakışır.)
+export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
+  auth: { flowType: 'pkce', detectSessionInUrl: true, persistSession: true },
+})
 
 /** Veritabanına basit bir sorgu atar; bağlantı sağlıklıysa true döner. */
 export async function baglantiyiDene(): Promise<boolean> {

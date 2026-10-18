@@ -1,43 +1,105 @@
 import { useEffect, useState } from 'react'
-import { baglantiyiDene } from '../lib/supabase'
-import { SURUM } from '../surum'
+import { Link } from 'react-router-dom'
+import { supabase } from '../lib/supabase'
+import type { Ders } from '../lib/tipler'
 
-type Durum = 'kontrol' | 'tamam' | 'hata'
+type DersSatiri = Ders & { students: { count: number }[] }
 
+/** Hocanın ders listesi ve yeni ders formu */
 export default function Panel() {
-  const [durum, setDurum] = useState<Durum>('kontrol')
+  const [dersler, setDersler] = useState<DersSatiri[] | null>(null)
+  const [hata, setHata] = useState<string | null>(null)
+  const [form, setForm] = useState({ ad: '', kod: '', donem: '' })
+  const [kaydediliyor, setKaydediliyor] = useState(false)
+
+  async function yukle() {
+    const { data, error } = await supabase
+      .from('courses')
+      .select('id, ad, kod, donem, olusturuldu, students(count)')
+      .order('olusturuldu', { ascending: false })
+    if (error) setHata('Dersler yüklenemedi.')
+    else setDersler(data as DersSatiri[])
+  }
 
   useEffect(() => {
-    baglantiyiDene()
-      .then((ok) => setDurum(ok ? 'tamam' : 'hata'))
-      .catch(() => setDurum('hata'))
+    yukle()
   }, [])
 
+  async function ekle(e: React.FormEvent) {
+    e.preventDefault()
+    setKaydediliyor(true)
+    setHata(null)
+    const { error } = await supabase.from('courses').insert({
+      ad: form.ad.trim(),
+      kod: form.kod.trim() || null,
+      donem: form.donem.trim() || null,
+    })
+    setKaydediliyor(false)
+    if (error) {
+      setHata('Ders kaydedilemedi.')
+      return
+    }
+    setForm({ ad: '', kod: '', donem: '' })
+    yukle()
+  }
+
   return (
-    <main className="min-h-screen flex items-center justify-center p-4">
-      <section className="cam-panel rounded-3xl p-8 w-full max-w-lg space-y-6">
-        <header className="flex items-center gap-3">
-          <img src="./favicon.svg" alt="" className="w-11 h-11" />
-          <div>
-            <h1 className="text-xl font-extrabold">
-              AmfiOS <span className="text-indigo-400">Hoca Paneli</span>
-            </h1>
-            <p className="text-xs text-slate-400 font-mono">sürüm {SURUM}</p>
-          </div>
-        </header>
+    <div className="space-y-6">
+      <h1 className="text-2xl font-extrabold">Derslerim</h1>
 
-        <p className="text-sm text-slate-300 leading-relaxed">
-          Sistemin iskeleti hazır. Ders oluşturma, sınıf listesi ve QR yoklama bir sonraki sürümde
-          bu panele gelecek.
-        </p>
+      {hata && <p className="text-sm text-rose-300 bg-rose-500/10 rounded-xl p-3">{hata}</p>}
 
-        <div className="rounded-2xl bg-slate-950/60 border border-white/5 p-4 flex items-center justify-between">
-          <span className="text-sm text-slate-300">Sunucu bağlantısı</span>
-          {durum === 'kontrol' && <span className="text-xs text-slate-400">kontrol ediliyor…</span>}
-          {durum === 'tamam' && <span className="text-xs font-bold text-emerald-400">bağlı</span>}
-          {durum === 'hata' && <span className="text-xs font-bold text-rose-400">bağlanamadı</span>}
+      {dersler === null ? (
+        <p className="text-sm text-slate-400">Yükleniyor…</p>
+      ) : dersler.length === 0 ? (
+        <p className="text-sm text-slate-400">Henüz ders yok. Aşağıdan ilk dersini ekle.</p>
+      ) : (
+        <ul className="grid gap-3 sm:grid-cols-2">
+          {dersler.map((d) => (
+            <li key={d.id}>
+              <Link
+                to={`/panel/ders/${d.id}`}
+                className="cam-panel rounded-2xl p-5 block hover:border-indigo-400/40 transition-colors"
+              >
+                <p className="text-xs font-mono text-indigo-300">{[d.kod, d.donem].filter(Boolean).join(' · ') || ' '}</p>
+                <p className="text-lg font-bold mt-1">{d.ad}</p>
+                <p className="text-xs text-slate-400 mt-2">{d.students[0]?.count ?? 0} öğrenci</p>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <form onSubmit={ekle} className="cam-panel rounded-2xl p-5 space-y-3">
+        <h2 className="font-bold">Yeni ders</h2>
+        <div className="grid gap-3 sm:grid-cols-[2fr_1fr_1fr]">
+          <input
+            required
+            maxLength={200}
+            className="giris-kutusu"
+            placeholder="Ders adı (ör. Din Felsefesi)"
+            value={form.ad}
+            onChange={(e) => setForm({ ...form, ad: e.target.value })}
+          />
+          <input
+            maxLength={40}
+            className="giris-kutusu"
+            placeholder="Kod (isteğe bağlı)"
+            value={form.kod}
+            onChange={(e) => setForm({ ...form, kod: e.target.value })}
+          />
+          <input
+            maxLength={40}
+            className="giris-kutusu"
+            placeholder="Dönem (ör. 2026 Güz)"
+            value={form.donem}
+            onChange={(e) => setForm({ ...form, donem: e.target.value })}
+          />
         </div>
-      </section>
-    </main>
+        <button disabled={kaydediliyor} className="parlak-buton rounded-xl px-5 py-2.5 font-bold disabled:opacity-60">
+          Dersi ekle
+        </button>
+      </form>
+    </div>
   )
 }

@@ -35,12 +35,15 @@ Supabase güvenlik ayarları, proje açılırken bilinçli seçildi:
 
 ### Veritabanı değişiklikleri (migration)
 - Her şema değişikliği `supabase/migrations/NNNN_aciklama.sql` dosyası olarak repoya girer, numara sırayla artar.
-- Bu oturumlarda veritabanına doğrudan bağlanacak bir CLI/anahtar yok. SQL, Supabase panelindeki SQL Editor'den çalıştırılır (Claude in Chrome ile ya da kullanıcıdan rica edilerek). Çalıştırılan her dosya `CHANGELOG.md` içinde not edilir.
+- Bu oturumlarda veritabanına doğrudan bağlanacak bir CLI/anahtar yok. SQL iki yoldan çalıştırılır:
+  - **Bulut oturumları:** `.github/workflows/supabase.yml` ("Supabase işlemleri") iş akışıyla. Depoda `SUPABASE_ACCESS_TOKEN` Actions secret'ı tanımlı; iş akışı `sql-dosyasi` seçeneğiyle `supabase/` altındaki bir dosyayı, `kurulum-ve-ayar` ile `kurulum.sql`'i çalıştırır.
+  - **Yerel oturumlar:** Supabase panelindeki SQL Editor'den (Claude in Chrome ile ya da kullanıcıdan rica edilerek).
+  - Çalıştırılan her dosya `CHANGELOG.md` içinde not edilir.
 - Yeni kurulumlar için bütün migration'lar `supabase/kurulum.sql` dosyasında birleşir. Migration ekleyince `npm run kurulum-sql` çalıştır; test, dosya eskiyse hata verir.
 - Kurulumun hocası migration ile değil, sitede "Kurulumu sahiplen" adımıyla belirlenir (ilk giren hoca). Migration'a kişisel veri yazılmaz.
-- Uygulanmış migration'lar: `0001_saglik.sql`. Bekleyen: `0002_yoklama.sql`.
+- Uygulanmış migration'lar: `0001_saglik.sql`, `0002_yoklama.sql` (18 Ekim 2026, `kurulum.sql` ile SQL Editor'den). Bekleyen yok.
 - Migration'lar Supabase'e gitmeden önce yerel Postgres'te denenir: `supabase/test/` içindeki taklit ve test dosyalarına bak.
-- Sürüm etiketleri `.github/workflows/etiket.yml` ile main'e push sonrası otomatik atılır (commit mesajı `vX.Y.Z:` ile başlamalı). İstisna: `.github/workflows/` altında dosya değiştiren commit'lere GitHub bu yolla etiket attırmaz; bunların etiketi yerel oturumdan `git push` ile atılır. Bulut oturumları etiket push edemez. Bekleyen etiketler: v0.1.0 -> 68f6493, v0.2.0 -> 8961e13, v0.2.1 -> 9c6844d.
+- Sürüm etiketleri `.github/workflows/etiket.yml` ile main'e push sonrası otomatik atılır (commit mesajı `vX.Y.Z:` ile başlamalı). İstisna: `.github/workflows/` altında dosya değiştiren commit'lere GitHub bu yolla etiket attırmaz; bunların etiketi yerel oturumdan `git push` ile atılır. Bulut oturumları etiket push edemez.
 
 Ayrıntılı mimari: `docs/MIMARI.md`. Yol haritası ve fazlar: `docs/YOL-HARITASI.md`. Gemini prototipinin incelemesi: `docs/PROTOTIP-INCELEME.md`.
 

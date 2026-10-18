@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useGiris, useHocaMi } from '../lib/giris'
@@ -13,6 +14,62 @@ function Bekle() {
   )
 }
 
+/**
+ * Giriş yapmış ama hoca listesinde olmayan kullanıcı. Kurulum henüz kimseye ait değilse
+ * (yeni açılmış bir kopya) ilk giren hoca kurulumu sahiplenebilir.
+ */
+function YetkiYok({ eposta }: { eposta: string }) {
+  const [sahipsiz, setSahipsiz] = useState<boolean | undefined>(undefined)
+  const [hata, setHata] = useState<string | null>(null)
+
+  useEffect(() => {
+    supabase.rpc('kurulum_sahipsiz').then(({ data, error }) => setSahipsiz(!error && data === true))
+  }, [])
+
+  async function sahiplen() {
+    setHata(null)
+    const { data, error } = await supabase.rpc('kurulumu_sahiplen')
+    if (error || data !== true) {
+      setHata('Kurulum sahiplenilemedi. Başka biri senden önce sahiplenmiş olabilir.')
+      setSahipsiz(false)
+      return
+    }
+    window.location.reload()
+  }
+
+  if (sahipsiz === undefined) return <Bekle />
+
+  return (
+    <main className="min-h-screen flex items-center justify-center p-4">
+      <section className="cam-panel rounded-3xl p-8 w-full max-w-md space-y-4">
+        {sahipsiz ? (
+          <>
+            <h1 className="text-lg font-bold">Bu kurulum henüz kimseye ait değil</h1>
+            <p className="text-sm text-slate-300 leading-relaxed">
+              Bu siteyi sen kurduysan aşağıdaki düğmeyle sahibi ol. <b>{eposta}</b> bu kurulumun hocası olarak
+              kaydedilir; bundan sonra başka hiç kimse bu yolla hoca olamaz.
+            </p>
+            <button className="parlak-buton w-full rounded-xl py-3 font-bold" onClick={sahiplen}>
+              Kurulumu sahiplen
+            </button>
+          </>
+        ) : (
+          <>
+            <h1 className="text-lg font-bold">Bu hesap hoca olarak tanımlı değil</h1>
+            <p className="text-sm text-slate-300">
+              <b>{eposta}</b> ile giriş yaptın ama bu adres bu kurulumda hoca olarak kayıtlı değil.
+            </p>
+          </>
+        )}
+        {hata && <p className="text-sm text-rose-300">{hata}</p>}
+        <button className="ikincil-buton" onClick={() => supabase.auth.signOut()}>
+          Çıkış yap
+        </button>
+      </section>
+    </main>
+  )
+}
+
 /** Giriş yapmış ve izin listesinde olan hocaya içeriği gösterir. cercevesiz: sahne ekranı için. */
 export default function HocaAlani({ cercevesiz = false }: { cercevesiz?: boolean }) {
   const oturum = useGiris()
@@ -22,22 +79,7 @@ export default function HocaAlani({ cercevesiz = false }: { cercevesiz?: boolean
   if (!oturum) return <Giris />
   if (hoca === undefined) return <Bekle />
 
-  if (!hoca) {
-    return (
-      <main className="min-h-screen flex items-center justify-center p-4">
-        <section className="cam-panel rounded-3xl p-8 w-full max-w-md space-y-4">
-          <h1 className="text-lg font-bold">Bu hesap hoca olarak tanımlı değil</h1>
-          <p className="text-sm text-slate-300">
-            <b>{oturum.user.email}</b> ile giriş yaptın ama bu adres sistemde hoca olarak kayıtlı değil. Erişim için
-            sistem yöneticisiyle görüş.
-          </p>
-          <button className="ikincil-buton" onClick={() => supabase.auth.signOut()}>
-            Çıkış yap
-          </button>
-        </section>
-      </main>
-    )
-  }
+  if (!hoca) return <YetkiYok eposta={oturum.user.email ?? ''} />
 
   if (cercevesiz) return <Outlet />
 

@@ -1,5 +1,14 @@
 # Sürüm Geçmişi
 
+## v0.2.1 (18 Ekim 2026)
+Bağımsız kurulum: program başka hocalara verilebilir, her kopya kendi başına çalışır.
+- Supabase adresi ve anahtarı koddan çıkarıldı; site bunları `public/ayarlar.json` dosyasından okur. Dosya doldurulmamışsa "Kurulum tamamlanmamış" ekranı çıkar.
+- Site göreli yollarla derlenir; depo adı ne olursa olsun çalışır.
+- Hoca e-postası migration'dan çıkarıldı. Yeni kurulumda siteye ilk giren hoca "Kurulumu sahiplen" ile sahibi olur.
+- `supabase/kurulum.sql`: yeni kurulum için bütün migration'lar tek dosyada (`npm run kurulum-sql` ile üretilir, test güncelliğini denetler).
+- `docs/KURULUM.md`: başka bir hocanın kendi kopyasını kurması için adım adım kılavuz.
+- Supabase uyandırma iş akışı adresi `ayarlar.json`'dan okur.
+
 ## v0.2.0 (18 Ekim 2026)
 Faz 1: QR yoklama uçtan uca.
 - Hoca girişi: e-postaya gelen tek kullanımlık bağlantı (şifresiz). Yalnızca `teachers` listesindeki adresler ders açabilir.

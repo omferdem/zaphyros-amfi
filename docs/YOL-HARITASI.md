@@ -35,7 +35,8 @@ Her faz kendi başına çalışır durumda teslim edilir. Bir faz bitmeden sonra
 - Halat çekme (iki takım, Broadcast)
 - Kovalamaca oyunu (soru doğru cevaplanınca hızlanma)
 
-## Faz 6: Çoklu hoca (v1.0)
-- Hoca kaydı ve davet
-- Kullanım limitleri, yönetim ekranı
-- Plan/kota değerlendirmesi
+## Faz 6: Dağıtım paketi (v1.0)
+Karar (v0.2.1): Merkezi çok hocalı sistem yerine her hoca kendi bağımsız kopyasını kurar (`docs/KURULUM.md`).
+- Kurulum kılavuzunun gerçek bir ikinci hocayla denenmesi
+- Sürüm notları ve güncelleme rehberi (yeni migration'ları uygulama)
+- İsteğe bağlı: kurulum sahibinin aynı kopyaya yardımcı hoca ekleyebilmesi

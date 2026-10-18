@@ -2,7 +2,7 @@
 --
 -- Tablolar: teachers, courses, students, sessions, attendance
 -- Gizli şema: ozel (Data API'ye kapalı; oturum anahtarları burada)
--- RPC: hoca_mi, qr_token, katilim_bileti, check_in
+-- RPC: hoca_mi, kurulum_sahipsiz, kurulumu_sahiplen, qr_token, katilim_bileti, check_in
 --
 -- Yoklama güvenliği kısaca:
 -- * Her oturumun rastgele bir gizli anahtarı var (ozel.session_secrets). Bu anahtar
@@ -441,8 +441,45 @@ alter publication supabase_realtime add table public.attendance;
 alter publication supabase_realtime add table public.sessions;
 
 -- ---------------------------------------------------------------------------
--- İlk hoca
+-- Kurulumun sahibi
+-- Her hoca kendi kopyasını kendi Supabase projesinde çalıştırır. Yeni kurulumda
+-- teachers tablosu boştur; siteye ilk giriş yapan hoca "kurulumu sahiplen" der ve
+-- listeye kendisi eklenir. Sonra kimse bu yolla hoca olamaz.
 -- ---------------------------------------------------------------------------
-insert into public.teachers (eposta, ad_soyad, unvan)
-values ('omferdem@gmail.com', 'Ömer Faruk Erdem', 'Doç. Dr.')
-on conflict (eposta) do nothing;
+create function public.kurulum_sahipsiz()
+returns boolean
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select not exists (select 1 from public.teachers);
+$$;
+
+create function public.kurulumu_sahiplen()
+returns boolean
+language plpgsql
+volatile
+security definer
+set search_path = ''
+as $$
+declare
+  v_eposta text := lower(coalesce(auth.jwt() ->> 'email', ''));
+begin
+  if auth.uid() is null or v_eposta = '' then
+    return false;
+  end if;
+  -- Aynı anda iki kişi denerse yalnızca biri kazansın.
+  lock table public.teachers in exclusive mode;
+  if exists (select 1 from public.teachers) then
+    return false;
+  end if;
+  insert into public.teachers (eposta) values (v_eposta);
+  return true;
+end;
+$$;
+
+revoke all on function public.kurulum_sahipsiz()  from public;
+revoke all on function public.kurulumu_sahiplen() from public;
+grant execute on function public.kurulum_sahipsiz()  to authenticated;
+grant execute on function public.kurulumu_sahiplen() to authenticated;

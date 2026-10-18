@@ -66,7 +66,7 @@ export default function Giris() {
                 value={eposta}
                 onChange={(e) => setEposta(e.target.value)}
                 className="giris-kutusu"
-                placeholder="ornek@erbakan.edu.tr"
+                placeholder="ornek@universite.edu.tr"
               />
             </label>
             <button disabled={durum === 'gonderiliyor'} className="parlak-buton w-full rounded-xl py-3 font-bold disabled:opacity-60">

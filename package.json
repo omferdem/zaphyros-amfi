@@ -1,14 +1,15 @@
 {
   "name": "zaphyros-amfi",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "kurulum-sql": "node scripts/kurulum-sql.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",

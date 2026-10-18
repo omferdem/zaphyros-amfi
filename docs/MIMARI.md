@@ -1,5 +1,9 @@
 # Mimari
 
+## Dağıtım modeli
+
+Her hoca kendi kopyasını kurar: kendi GitHub deposu (site) ve kendi Supabase projesi (veri). Kurulumlar arasında hiçbir bağ yoktur. Site, hangi Supabase projesine bağlanacağını yanındaki `ayarlar.json` dosyasından okur; derleme sırasında sabit adres gömülmez ve site göreli yollarla derlendiği için hangi adreste yayınlanırsa yayınlansın çalışır. Yeni kurulumun `teachers` tablosu boştur; siteye ilk giren hoca `kurulumu_sahiplen()` ile sahibi olur. Kurulum adımları: `docs/KURULUM.md`.
+
 ## Üç parça
 
 ```

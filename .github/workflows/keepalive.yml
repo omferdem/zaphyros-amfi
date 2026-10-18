@@ -1,6 +1,6 @@
 # Supabase Free projeleri 7 gün hareketsiz kalınca duraklatılır.
 # Bu iş akışı iki günde bir veritabanında küçük bir sorgu çalıştırarak bunu önler.
-# Buradaki URL ve anahtar herkese açık (publishable) değerlerdir; gizli bilgi değildir.
+# Adres ve anahtar public/ayarlar.json dosyasından okunur (herkese açık değerlerdir, gizli değildir).
 name: Supabase uyandırma
 
 on:
@@ -12,11 +12,14 @@ jobs:
   uyandir:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: public/ayarlar.json
+          sparse-checkout-cone-mode: false
       - name: saglik() fonksiyonunu çağır
-        env:
-          SUPABASE_URL: https://oiqatggmfktgnexxaspc.supabase.co
-          SUPABASE_KEY: sb_publishable_iXZC9Q-YPzley008nYw8Fg_AbUU5c6v
         run: |
+          SUPABASE_URL=$(jq -r .supabaseUrl public/ayarlar.json)
+          SUPABASE_KEY=$(jq -r .supabaseKey public/ayarlar.json)
           yanit=$(curl -sS -w '\n%{http_code}' -X POST "$SUPABASE_URL/rest/v1/rpc/saglik" \
             -H "apikey: $SUPABASE_KEY" \
             -H "Content-Type: application/json" -d '{}')

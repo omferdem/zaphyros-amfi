@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import type { Adim, Akis, Sunum } from '../lib/tipler'
-import { adimlarEkle, adimlariGetir, akisGetir, akisSirala, sunumYukle, sunumlariGetir } from '../lib/akis'
+import type { Adim, Akis, Soru, Sunum } from '../lib/tipler'
+import { adimlarEkle, adimlariGetir, akisGetir, akisSirala, sorulariGetir, sunumYukle, sunumlariGetir } from '../lib/akis'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
 
 /** Dosya adından sunum adı: uzantı ve alt çizgiler atılır. */
@@ -22,6 +22,8 @@ export default function AkisDuzenle() {
   const [akis, setAkis] = useState<Akis | null | undefined>(undefined)
   const [adimlar, setAdimlar] = useState<Adim[]>([])
   const [sunumlar, setSunumlar] = useState<Sunum[]>([])
+  const [sorular, setSorular] = useState<Soru[]>([])
+  const [soruSecimi, setSoruSecimi] = useState<Set<string> | null>(null)
   const [ad, setAd] = useState('')
   const [yukleme, setYukleme] = useState<string | null>(null)
   const [hata, setHata] = useState<string | null>(null)
@@ -34,9 +36,10 @@ export default function AkisDuzenle() {
       setAkis(a)
       if (!a) return
       setAd(a.ad)
-      const [ad2, s] = await Promise.all([adimlariGetir(a.id), sunumlariGetir(a.subject_id)])
+      const [ad2, s, q] = await Promise.all([adimlariGetir(a.id), sunumlariGetir(a.subject_id), sorulariGetir(a.subject_id)])
       setAdimlar(ad2)
       setSunumlar(s)
+      setSorular(q)
     } catch {
       setHata('Akış yüklenemedi.')
     }
@@ -47,6 +50,7 @@ export default function AkisDuzenle() {
   }, [yukle])
 
   const sunumHaritasi = useMemo(() => new Map(sunumlar.map((s) => [s.id, s])), [sunumlar])
+  const soruHaritasi = useMemo(() => new Map(sorular.map((s) => [s.id, s])), [sorular])
   const kullanilanSunumlar = useMemo(
     () => adimlar.flatMap((a) => (a.presentation_id ? [a.presentation_id] : [])),
     [adimlar],
@@ -103,6 +107,21 @@ export default function AkisDuzenle() {
       setHata('Slaytlar eklenemedi.')
     }
     setEklenecekSunum('')
+    yukle()
+  }
+
+  async function sorulariAkisaEkle(idler: string[]) {
+    if (!akis || idler.length === 0) return
+    try {
+      await adimlarEkle(
+        akis.id,
+        adimlar.length,
+        idler.map((id) => ({ tur: 'soru' as const, question_id: id })),
+      )
+    } catch {
+      setHata('Sorular eklenemedi.')
+    }
+    setSoruSecimi(null)
     yukle()
   }
 
@@ -210,6 +229,59 @@ export default function AkisDuzenle() {
             </div>
           )}
         </div>
+        {sorular.length > 0 && !soruSecimi && (
+          <button className="ikincil-buton" onClick={() => setSoruSecimi(new Set())} disabled={!!yukleme}>
+            Soru ekle ({sorular.length} soru bankada)
+          </button>
+        )}
+        {sorular.length === 0 && (
+          <p className="text-xs text-slate-500">
+            Bilgi yarışması sorusu eklemek için önce ders sayfasındaki "Ders akışları" sekmesinden soru bankasına soru aktar.
+          </p>
+        )}
+        {soruSecimi && (
+          <div className="rounded-xl bg-slate-950/60 border border-white/5 p-4 space-y-3">
+            <div className="flex flex-wrap gap-2 items-center">
+              <p className="text-sm font-semibold flex-1">Eklenecek soruları seç</p>
+              <button className="ikincil-buton !py-1 text-xs" onClick={() => setSoruSecimi(new Set(sorular.map((q) => q.id)))}>
+                Hepsini seç
+              </button>
+              <button className="ikincil-buton !py-1 text-xs" onClick={() => setSoruSecimi(null)}>
+                Vazgeç
+              </button>
+            </div>
+            <ul className="max-h-72 overflow-auto divide-y divide-white/5">
+              {sorular.map((q) => (
+                <li key={q.id}>
+                  <label className="flex gap-3 py-2 text-sm cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="accent-indigo-500 mt-1"
+                      checked={soruSecimi.has(q.id)}
+                      onChange={(e) => {
+                        const yeni = new Set(soruSecimi)
+                        if (e.target.checked) yeni.add(q.id)
+                        else yeni.delete(q.id)
+                        setSoruSecimi(yeni)
+                      }}
+                    />
+                    <span className="flex-1">
+                      {q.soru}
+                      {adimlar.some((a) => a.question_id === q.id) && <span className="text-xs text-slate-500"> (bu akışta var)</span>}
+                    </span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+            <button
+              disabled={soruSecimi.size === 0}
+              className="parlak-buton rounded-xl px-4 py-2 text-sm font-bold disabled:opacity-50"
+              onClick={() => sorulariAkisaEkle(sorular.filter((q) => soruSecimi.has(q.id)).map((q) => q.id))}
+            >
+              Seçilen {soruSecimi.size} soruyu ekle
+            </button>
+          </div>
+        )}
         {yukleme && <p className="text-sm text-indigo-300">{yukleme}</p>}
         <p className="text-xs text-slate-500">
           Sunumun her sayfası ayrı bir adım olur. Sırayı satırları sürükleyerek ya da oklarla değiştirebilirsin.
@@ -243,6 +315,10 @@ export default function AkisDuzenle() {
                     sayfaNo={a.sayfa_no ?? 1}
                     className="w-28 h-16 shrink-0 rounded bg-slate-900"
                   />
+                ) : a.tur === 'soru' ? (
+                  <div className="w-28 h-16 shrink-0 rounded bg-fuchsia-500/10 flex items-center justify-center text-fuchsia-300 text-xs font-bold">
+                    SORU
+                  </div>
                 ) : (
                   <div className="w-28 h-16 shrink-0 rounded bg-emerald-500/10 flex items-center justify-center text-emerald-300 text-xs font-bold">
                     YOKLAMA
@@ -254,6 +330,13 @@ export default function AkisDuzenle() {
                       <p className="text-sm font-semibold truncate">{ilkSatir(sunum?.metinler[(a.sayfa_no ?? 1) - 1]) || `Slayt ${a.sayfa_no}`}</p>
                       <p className="text-xs text-slate-400 truncate">
                         {sunum?.ad} · sayfa {a.sayfa_no}
+                      </p>
+                    </>
+                  ) : a.tur === 'soru' ? (
+                    <>
+                      <p className="text-sm font-semibold truncate">{soruHaritasi.get(a.question_id ?? '')?.soru ?? 'Soru'}</p>
+                      <p className="text-xs text-slate-400 truncate">
+                        Bilgi yarışması · {soruHaritasi.get(a.question_id ?? '')?.sure_sn ?? 20} saniye
                       </p>
                     </>
                   ) : (

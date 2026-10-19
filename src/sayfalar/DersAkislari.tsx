@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import type { Akis, Ders, Sunum } from '../lib/tipler'
 import { akisOlustur, akislariGetir, sunumSil, sunumlariGetir } from '../lib/akis'
 import { tarihSaat } from '../lib/bicim'
+import SoruBankasi from './SoruBankasi'
 
 /** Ders sayfasındaki "Ders akışları" sekmesi: akışlar ve dersin sunum kitaplığı. */
 export default function DersAkislari({ ders }: { ders: Ders }) {
@@ -85,8 +86,8 @@ export default function DersAkislari({ ders }: { ders: Ders }) {
       <form onSubmit={olustur} className="cam-panel rounded-2xl p-5 space-y-3">
         <h2 className="font-bold">Yeni ders akışı</h2>
         <p className="text-sm text-slate-400">
-          Akış, derste perdede sırayla göstereceğin adımlardır: yoklama ve sunum slaytları. Sonraki sürümlerde video,
-          beyin fırtınası ve quiz de araya eklenebilecek.
+          Akış, derste perdede sırayla göstereceğin adımlardır: yoklama, sunum slaytları ve bilgi yarışması soruları.
+          Sonraki sürümlerde video ve beyin fırtınası da araya eklenebilecek.
         </p>
         <div className="flex flex-col sm:flex-row gap-3">
           <input
@@ -145,6 +146,8 @@ export default function DersAkislari({ ders }: { ders: Ders }) {
           </ul>
         )}
       </section>
+
+      <SoruBankasi icerikId={ders.subject_id} />
     </div>
   )
 }

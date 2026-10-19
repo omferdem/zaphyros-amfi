@@ -3,6 +3,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { cihazKimligi, oku, sakla } from '../lib/cihaz'
 import type { DersDurumu } from '../lib/tipler'
+import SoruCevabi from '../bilesenler/SoruCevabi'
 
 interface Bilet {
   bilet: string
@@ -343,6 +344,8 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
               <p className="text-slate-400">Bu slaytta yazı yok; perdeye bak.</p>
             )}
           </div>
+        ) : adim?.tur === 'soru' ? (
+          <SoruCevabi key={adim.id} oturum={oturum} adim={adim} yoklamali={ad !== null} />
         ) : adim?.tur === 'yoklama' ? (
           <p className="text-slate-300 m-auto text-center">Yoklama alınıyor. Perdeye bak.</p>
         ) : (

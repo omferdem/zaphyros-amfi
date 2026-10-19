@@ -23,6 +23,7 @@ export interface Oturum {
   bitti: string | null
   lesson_id: string | null
   aktif_adim: string | null
+  soru_durum: 'acik' | 'sonuc' | null
 }
 
 /** Dönemler arasında ortak ders içeriği: akışlar ve sunumlar buna bağlıdır. */
@@ -49,7 +50,18 @@ export interface Akis {
   olusturuldu: string
 }
 
-export type AdimTuru = 'yoklama' | 'slayt'
+export interface Soru {
+  id: string
+  subject_id: string
+  soru: string
+  dogru: string
+  yanlislar: string[]
+  sure_sn: number
+  ek: Record<string, string>
+  olusturuldu: string
+}
+
+export type AdimTuru = 'yoklama' | 'slayt' | 'soru'
 
 export interface Adim {
   id: string
@@ -58,6 +70,7 @@ export interface Adim {
   tur: AdimTuru
   presentation_id: string | null
   sayfa_no: number | null
+  question_id: string | null
 }
 
 /** Öğrenci ve kumandanın gördüğü ders durumu (ders_durumu / kumanda_durumu RPC'leri). */
@@ -75,7 +88,23 @@ export interface DersDurumu {
     sayfa_no: number | null
     sayfa_sayisi: number | null
     metin: string | null
+    // Soru adımında
+    soru?: string
+    secenekler?: string[]
+    sure_sn?: number
+    soru_durum?: 'acik' | 'sonuc' | null
+    kalan_ms?: number | null
+    cevap_sayisi?: number
+    dogru_index?: number | null
+    dagilim?: number[] | null
   } | null
+}
+
+export interface PuanSatiri {
+  ad: string
+  puan: number
+  dogru: number
+  sira: number
 }
 
 export interface Yoklama {

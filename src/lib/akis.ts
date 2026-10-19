@@ -1,10 +1,12 @@
 // Sunumlar, ders akışları ve akış adımları için veri işlemleri (hoca tarafı).
 import { supabase } from './supabase'
-import type { Adim, Akis, Sunum } from './tipler'
+import type { Adim, Akis, Soru, Sunum } from './tipler'
+import type { ZomrSorusu } from './zomr'
 
 const KOVA = 'sunumlar'
 const SUNUM_ALANLARI = 'id, subject_id, ad, kaynak, durum, sayfa_sayisi, metinler, olusturuldu'
-const ADIM_ALANLARI = 'id, lesson_id, sira, tur, presentation_id, sayfa_no'
+const ADIM_ALANLARI = 'id, lesson_id, sira, tur, presentation_id, sayfa_no, question_id'
+const SORU_ALANLARI = 'id, subject_id, soru, dogru, yanlislar, sure_sn, ek, olusturuldu'
 
 /** Depodaki yol: ilk klasör ders içeriğinin kimliğidir (depo politikası buna bakar). */
 export function sunumYolu(icerikId: string, sunumId: string): string {
@@ -128,7 +130,7 @@ export async function adimlariGetir(akisId: string): Promise<Adim[]> {
 export async function adimlarEkle(
   akisId: string,
   mevcutSayi: number,
-  yeni: { tur: Adim['tur']; presentation_id?: string; sayfa_no?: number }[],
+  yeni: { tur: Adim['tur']; presentation_id?: string; sayfa_no?: number; question_id?: string }[],
 ): Promise<void> {
   if (yeni.length === 0) return
   const { error } = await supabase
@@ -139,5 +141,44 @@ export async function adimlarEkle(
 
 export async function akisSirala(akisId: string, idler: string[]): Promise<void> {
   const { error } = await supabase.rpc('akis_sirala', { p_lesson: akisId, p_adimlar: idler })
+  if (error) throw error
+}
+
+// ---------------------------------------------------------------------------
+// Soru bankası (ders içeriğine bağlı)
+
+export async function sorulariGetir(icerikId: string): Promise<Soru[]> {
+  const { data, error } = await supabase
+    .from('questions')
+    .select(SORU_ALANLARI)
+    .eq('subject_id', icerikId)
+    .order('olusturuldu')
+    .order('id')
+  if (error) throw error
+  return data as Soru[]
+}
+
+export async function sorulariGetirIdIle(idler: string[]): Promise<Soru[]> {
+  if (idler.length === 0) return []
+  const { data, error } = await supabase.from('questions').select(SORU_ALANLARI).in('id', idler)
+  if (error) throw error
+  return data as Soru[]
+}
+
+export async function sorulariEkle(icerikId: string, sorular: ZomrSorusu[], sureSn: number): Promise<void> {
+  if (sorular.length === 0) return
+  // Aynı anda eklenen sorular dosyadaki sırasını korusun diye her birine bir milisaniye ileri zaman verilir.
+  const simdi = Date.now()
+  const { error } = await supabase.from('questions').insert(
+    sorular.map((s, i) => ({
+      subject_id: icerikId,
+      soru: s.soru,
+      dogru: s.dogru,
+      yanlislar: s.yanlislar,
+      ek: s.ek,
+      sure_sn: sureSn,
+      olusturuldu: new Date(simdi + i).toISOString(),
+    })),
+  )
   if (error) throw error
 }

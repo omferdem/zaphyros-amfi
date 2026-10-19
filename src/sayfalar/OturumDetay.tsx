@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import type { Ders, Ogrenci, Oturum, Yoklama } from '../lib/tipler'
+import type { Ders, Ogrenci, Oturum, PuanSatiri, Yoklama } from '../lib/tipler'
 import { ogrencileriGetir, oturumGetir, oturumYoklamalari } from '../lib/veri'
-import { oturumuExceleAktar } from '../lib/rapor'
+import { oturumuExceleAktar, yarismayiExceleAktar } from '../lib/rapor'
 import { oturumAdi, saat, tarihSaat } from '../lib/bicim'
 
 /** Bir oturumun yoklama listesi: kim var, kim yok; hoca elle düzeltebilir. */
@@ -14,6 +14,7 @@ export default function OturumDetay() {
   const [yoklamalar, setYoklamalar] = useState<Yoklama[]>([])
   const [filtre, setFiltre] = useState<'hepsi' | 'var' | 'yok'>('hepsi')
   const [hata, setHata] = useState<string | null>(null)
+  const [puanlar, setPuanlar] = useState<PuanSatiri[]>([])
 
   const yukle = useCallback(async () => {
     try {
@@ -23,6 +24,8 @@ export default function OturumDetay() {
       const [og, y] = await Promise.all([ogrencileriGetir(o.course_id), oturumYoklamalari(o.id)])
       setOgrenciler(og)
       setYoklamalar(y)
+      const { data: p } = await supabase.rpc('puan_tablosu', { p_session: o.id, p_limit: 1000 })
+      setPuanlar((p as PuanSatiri[] | null) ?? [])
     } catch {
       setHata('Yoklama listesi yüklenemedi.')
     }
@@ -93,6 +96,29 @@ export default function OturumDetay() {
           Excel'e aktar
         </button>
       </section>
+
+      {puanlar.length > 0 && (
+        <section className="cam-panel rounded-2xl p-5 space-y-3">
+          <div className="flex items-center gap-3">
+            <h2 className="font-bold flex-1">Bilgi yarışması ({puanlar.length} kişi)</h2>
+            <button className="ikincil-buton" onClick={() => yarismayiExceleAktar(oturum.courses, oturum, puanlar)}>
+              Excel'e aktar
+            </button>
+          </div>
+          <table className="w-full text-sm">
+            <tbody>
+              {puanlar.map((p, i) => (
+                <tr key={`${p.ad}-${i}`} className="border-t border-white/5">
+                  <td className="py-1.5 w-10 font-mono text-slate-400">{p.sira}</td>
+                  <td className="py-1.5">{p.ad}</td>
+                  <td className="py-1.5 w-24 text-right font-mono">{p.puan}</td>
+                  <td className="py-1.5 w-24 text-right text-xs text-slate-400">{p.dogru} doğru</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      )}
 
       <section className="cam-panel rounded-2xl p-5 space-y-3">
         <div className="flex gap-2 text-sm">

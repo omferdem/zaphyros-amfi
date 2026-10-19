@@ -1,14 +1,16 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import type { DersDurumu } from '../lib/tipler'
+import type { DersDurumu, PuanSatiri } from '../lib/tipler'
+import { SIKLAR } from '../lib/yarisma'
 import { oku, sakla } from '../lib/cihaz'
 
 interface KumandaDurumu extends DersDurumu {
   katilan: number
   mevcut: number
   kod: { kod: string; kalan_ms: number } | null
-  adimlar: { id: string; tur: 'yoklama' | 'slayt'; sunum: string | null; sayfa_no: number | null; ozet: string | null }[]
+  puanlar: PuanSatiri[]
+  adimlar: { id: string; tur: 'yoklama' | 'slayt' | 'soru'; sunum: string | null; sayfa_no: number | null; ozet: string | null }[]
 }
 
 function anahtarYeri(oturum: string) {
@@ -90,7 +92,7 @@ export default function Kumanda() {
     }
   }, [anahtar, oturum, yenile])
 
-  async function komut(k: 'git' | 'yoklama_ac' | 'yoklama_kapat', adim?: string) {
+  async function komut(k: 'git' | 'yoklama_ac' | 'yoklama_kapat' | 'sonuc_goster', adim?: string) {
     if (!anahtar || mesgul) return
     setMesgul(true)
     const { data, error } = await supabase.rpc('kumanda_komut', {
@@ -141,6 +143,30 @@ export default function Kumanda() {
               <p className="text-sm whitespace-pre-line text-slate-200 max-h-48 overflow-auto">
                 {durum.adim.metin?.trim() || 'Bu slaytta metin yok.'}
               </p>
+            ) : durum.adim.tur === 'soru' ? (
+              <div className="space-y-2">
+                <p className="font-bold whitespace-pre-line">{durum.adim.soru}</p>
+                <ul className="space-y-1 text-sm">
+                  {(durum.adim.secenekler ?? []).map((x, i) => (
+                    <li
+                      key={i}
+                      className={`flex gap-2 ${durum.adim?.dogru_index === i ? 'text-emerald-300 font-bold' : 'text-slate-300'}`}
+                    >
+                      <span className={`w-6 h-6 rounded ${SIKLAR[i % SIKLAR.length].renk} text-white text-xs flex items-center justify-center shrink-0`}>
+                        {SIKLAR[i % SIKLAR.length].harf}
+                      </span>
+                      <span className="flex-1">{x}</span>
+                      {durum.adim?.dagilim && <span className="font-mono">{durum.adim.dagilim[i]}</span>}
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs text-slate-400">{durum.adim.cevap_sayisi ?? 0} cevap</p>
+                {durum.adim.soru_durum === 'acik' && (
+                  <button className="parlak-buton rounded-xl px-4 py-2 text-sm font-bold w-full" disabled={mesgul} onClick={() => komut('sonuc_goster')}>
+                    Cevabı göster
+                  </button>
+                )}
+              </div>
             ) : (
               <p className="text-2xl font-extrabold">Yoklama</p>
             )}
@@ -167,6 +193,21 @@ export default function Kumanda() {
             Sonraki ▶
           </button>
         </div>
+      )}
+
+      {durum.adim?.tur === 'soru' && durum.adim.soru_durum === 'sonuc' && durum.puanlar.length > 0 && (
+        <section className="cam-panel rounded-2xl p-4 space-y-1">
+          <p className="text-xs font-mono uppercase tracking-widest text-amber-300">İlk 5</p>
+          <ol className="text-sm">
+            {durum.puanlar.map((p, i) => (
+              <li key={`${p.ad}-${i}`} className="flex gap-2 py-0.5">
+                <span className="w-5 text-slate-500">{p.sira}</span>
+                <span className="flex-1 truncate">{p.ad}</span>
+                <span className="font-mono">{p.puan}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
       )}
 
       <section className="cam-panel rounded-2xl p-4 flex items-center gap-3">
@@ -206,7 +247,11 @@ export default function Kumanda() {
                   >
                     <span className="w-6 text-right font-mono text-xs text-slate-500">{i + 1}</span>
                     <span className="truncate">
-                      {a.tur === 'yoklama' ? 'Yoklama' : ilkSatir(a.ozet) || `${a.sunum ?? 'Slayt'} s. ${a.sayfa_no}`}
+                      {a.tur === 'yoklama'
+                        ? 'Yoklama'
+                        : a.tur === 'soru'
+                          ? `Soru: ${ilkSatir(a.ozet)}`
+                          : ilkSatir(a.ozet) || `${a.sunum ?? 'Slayt'} s. ${a.sayfa_no}`}
                     </span>
                   </button>
                 </li>

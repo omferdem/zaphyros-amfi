@@ -1,4 +1,4 @@
-import type { Ders, Ogrenci, Oturum, Yoklama } from './tipler'
+import type { Ders, Ogrenci, Oturum, PuanSatiri, Yoklama } from './tipler'
 import { oturumAdi, tarih } from './bicim'
 
 export interface RaporSatiri {
@@ -98,4 +98,29 @@ export async function oturumuExceleAktar(ders: Ders, oturum: Oturum, ogrenciler:
     columns: [{ width: 14 }, { width: 28 }, { width: 8 }, { width: 10 }, { width: 8 }],
     stickyRowsCount: 1,
   }).toFile(dosyaAdi(`Yoklama ${ders.kod || ders.ad} ${oturumAdi(oturum)}.xlsx`))
+}
+
+/** Oturumun bilgi yarışması sonuçları: sıra, ad (yoklamadaki ad ya da takma ad), puan, doğru sayısı. */
+export async function yarismayiExceleAktar(ders: Ders, oturum: Oturum, puanlar: PuanSatiri[]) {
+  const { default: writeXlsxFile } = await import('write-excel-file/browser')
+  const kalin = { fontWeight: 'bold' as const }
+  const veri = [
+    [
+      { value: 'Sıra', ...kalin },
+      { value: 'Ad', ...kalin },
+      { value: 'Puan', ...kalin },
+      { value: 'Doğru', ...kalin },
+    ],
+    ...puanlar.map((p) => [
+      { value: p.sira, type: Number },
+      { value: p.ad, type: String },
+      { value: p.puan, type: Number },
+      { value: p.dogru, type: Number },
+    ]),
+  ]
+  await writeXlsxFile(veri, {
+    sheet: 'Yarışma',
+    columns: [{ width: 6 }, { width: 28 }, { width: 8 }, { width: 8 }],
+    stickyRowsCount: 1,
+  }).toFile(dosyaAdi(`Yarisma ${ders.kod || ders.ad} ${oturumAdi(oturum)}.xlsx`))
 }

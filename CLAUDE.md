@@ -41,7 +41,7 @@ Supabase güvenlik ayarları, proje açılırken bilinçli seçildi:
   - Çalıştırılan her dosya `CHANGELOG.md` içinde not edilir.
 - Yeni kurulumlar için bütün migration'lar `supabase/kurulum.sql` dosyasında birleşir. Migration ekleyince `npm run kurulum-sql` çalıştır; test, dosya eskiyse hata verir.
 - Kurulumun hocası migration ile değil, sitede "Kurulumu sahiplen" adımıyla belirlenir (ilk giren hoca). Migration'a kişisel veri yazılmaz.
-- Uygulanmış migration'lar: `0001_saglik.sql`, `0002_yoklama.sql` (18 Ekim 2026, `kurulum.sql` ile SQL Editor'den), `0003_ders_akisi.sql`, `0004_ders_icerigi.sql` (19 Ekim 2026). Bekleyen yok.
+- Uygulanmış migration'lar: `0001_saglik.sql`, `0002_yoklama.sql` (18 Ekim 2026, `kurulum.sql` ile SQL Editor'den), `0003_ders_akisi.sql`, `0004_ders_icerigi.sql`, `0005_bilgi_yarismasi.sql` (19 Ekim 2026). Bekleyen yok.
 - Migration'lar Supabase'e gitmeden önce yerelde denenir: `npm run sql-test` (PGlite; bilgisayarda Postgres gerekmez, taklit + bütün migration'lar + düz SQL testleri). Yeni testleri psql komutu kullanmadan, hata verince duran düz SQL olarak yaz (`0003_ders_akisi_test.sql` gibi). Sonra Supabase SQL Editor'de `begin; <migration> <test> rollback;` ile bir kez daha dene, en son uygula.
 - Sürüm etiketleri `.github/workflows/etiket.yml` ile main'e push sonrası otomatik atılır (commit mesajı `vX.Y.Z:` ile başlamalı). İstisna: `.github/workflows/` altında dosya değiştiren commit'lere GitHub bu yolla etiket attırmaz; bunların etiketi yerel oturumdan `git push` ile atılır. Bulut oturumları etiket push edemez.
 

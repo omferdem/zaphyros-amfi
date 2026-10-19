@@ -40,10 +40,12 @@ Kullanıcı kararları (19 Ekim 2026): sunumlar PPTX, PPT ya da PDF olabilir; sl
 - Kullanıcı kararı: ek token yok; iş akışı birkaç dakikada bir bekleyen dosyalara bakar (5-20 dakika gecikme kabul)
 - Animasyonlar düşer, bazı yazı tipleri farklı görünebilir (Calibri yerine metrik uyumlu Carlito kurulacak)
 
-## Faz 3: Quiz ve bilgi yarışması (v0.4)
+## Faz 3: Quiz ve bilgi yarışması (v0.4.0) ✅
 Kullanıcı istekleri (19 Ekim 2026): slaytsız, yalnızca hazır sorularla bilgi yarışması ya da oyun başlatılabilmeli; sorular ZOMR biçiminde hazır. Kullanıcı sırayı "önce quiz, sonra 2b ve 2c" olarak seçti.
 - Soru bankası ders içeriğine bağlı ve yıllarca kullanılır; ZOMR biçiminde (#QUESTION / #CORRECT / #WRONG ...) içe aktarma
 - Soru adımı akışa slaytların arasına eklenebilir; yalnızca sorulardan oluşan akış da olur (slaytsız yarışma)
+- Kullanıcı kararları: Kahoot gibi hız puanı (500-1000), yoklamasız derste takma ad
+- Sıradaki: 2b (yalnız telefon modu), 2c (PPTX çevirisi), sonra Faz 4
 - Haftaya soru ekleme (elle ya da metin yapıştırarak)
 - Canlı soru, süre sayacı, cevap dağılımı grafiği, doğru cevabı açma
 - Puan tablosu ve ders sonu raporu

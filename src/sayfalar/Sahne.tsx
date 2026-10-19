@@ -2,11 +2,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import QRCode from 'qrcode'
 import { supabase } from '../lib/supabase'
-import type { Adim, Ders, Oturum, Sunum } from '../lib/tipler'
+import type { Adim, Ders, DersDurumu, Oturum, PuanSatiri, Sunum } from '../lib/tipler'
 import { oturumGetir } from '../lib/veri'
 import { adimlariGetir, sunumlariGetirIdIle } from '../lib/akis'
 import { kisaAd, oturumAdi } from '../lib/bicim'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
+import { SIKLAR, bitisAni } from '../lib/yarisma'
 
 interface Gelen {
   student_id: string
@@ -73,6 +74,7 @@ export default function Sahne() {
   const [mevcutGoster, setMevcutGoster] = useState(true)
   const [kodGoster, setKodGoster] = useState(true)
   const [kumandaAcik, setKumandaAcik] = useState(false)
+  const [puanAcik, setPuanAcik] = useState(false)
 
   const acik = !!oturum && oturum.yoklama_acik && !oturum.bitti
   const kod = useDersKodu(oturumId, !!oturum && !oturum.bitti)
@@ -151,7 +153,7 @@ export default function Sahne() {
       gelenleriYukle()
       oturumGetir(oturumId)
         .then((o) => {
-          if (o) setOturum((e) => (e ? { ...e, aktif_adim: o.aktif_adim, yoklama_acik: o.yoklama_acik, bitti: o.bitti } : o))
+          if (o) setOturum((e) => (e ? { ...e, aktif_adim: o.aktif_adim, yoklama_acik: o.yoklama_acik, bitti: o.bitti, soru_durum: o.soru_durum } : o))
         })
         .catch(() => {})
     }, 20000)
@@ -202,7 +204,7 @@ export default function Sahne() {
       .from('sessions')
       .update(ac ? { yoklama_acik: true, bitti: null } : { yoklama_acik: false })
       .eq('id', oturumId)
-      .select('id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim')
+      .select('id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, soru_durum')
       .single()
     if (data) setOturum((o) => (o ? { ...o, ...(data as Oturum) } : o))
   }
@@ -233,7 +235,7 @@ export default function Sahne() {
           </button>
         </>
       )}
-      {!slaytGorunumu && (
+      {!slaytGorunumu && aktif?.tur !== 'soru' && (
         <button className="ikincil-buton" onClick={() => setMevcutGoster(!mevcutGoster)}>
           {mevcutGoster ? 'Mevcudu gizle' : 'Mevcudu göster'}
         </button>
@@ -244,6 +246,11 @@ export default function Sahne() {
       <button className="ikincil-buton" onClick={() => setKodGoster((g) => !g)}>
         {kodGoster ? 'Kodu gizle' : 'Kodu göster'}
       </button>
+      {adimlar.some((a) => a.tur === 'soru') && (
+        <button className="ikincil-buton" onClick={() => setPuanAcik(true)}>
+          Puan tablosu
+        </button>
+      )}
       <button className="ikincil-buton" onClick={() => setKumandaAcik(true)}>
         Kumanda
       </button>
@@ -258,7 +265,17 @@ export default function Sahne() {
 
   return (
     <>
-      {slaytGorunumu && aktif ? (
+      {aktif?.tur === 'soru' ? (
+        <SoruSahnesi
+          // Her soruda baştan kurulur; önceki sorunun bitmiş sayacı yeni soruya taşınmasın.
+          key={aktif.id}
+          oturumId={oturum.id}
+          adimId={aktif.id}
+          soruDurum={oturum.soru_durum}
+          araclar={araclar}
+          kod={kodGoster ? kod : null}
+        />
+      ) : slaytGorunumu && aktif ? (
         <SlaytSahnesi
           belge={aktif.presentation_id ? belgeler.get(aktif.presentation_id) : undefined}
           sayfaNo={aktif.sayfa_no ?? 1}
@@ -278,6 +295,7 @@ export default function Sahne() {
         />
       )}
       {kumandaAcik && <KumandaQr oturumId={oturum.id} kapat={() => setKumandaAcik(false)} />}
+      {puanAcik && <PuanTablosu oturumId={oturum.id} kapat={() => setPuanAcik(false)} />}
     </>
   )
 }
@@ -506,6 +524,205 @@ function KumandaQr({ oturumId, kapat }: { oturumId: string; kapat: () => void })
           )}
         </div>
         <button className="parlak-buton rounded-xl px-5 py-2.5 font-bold w-full" onClick={kapat}>
+          Kapat
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Bilgi yarışması
+
+function usePuanlar(oturumId: string, etkin: boolean, limit: number) {
+  const [puanlar, setPuanlar] = useState<PuanSatiri[] | null>(null)
+  useEffect(() => {
+    if (!etkin) return
+    supabase
+      .rpc('puan_tablosu', { p_session: oturumId, p_limit: limit })
+      .then(({ data }) => setPuanlar((data as PuanSatiri[] | null) ?? []))
+  }, [oturumId, etkin, limit])
+  return puanlar
+}
+
+function PuanListesi({ puanlar, buyuk = false }: { puanlar: PuanSatiri[]; buyuk?: boolean }) {
+  if (puanlar.length === 0) return <p className="text-slate-400 text-center">Henüz cevap yok.</p>
+  return (
+    <ol className="space-y-2">
+      {puanlar.map((p, i) => (
+        <li
+          key={`${p.ad}-${i}`}
+          className={`flex items-center gap-4 rounded-2xl px-5 ${buyuk ? 'py-3 text-2xl' : 'py-2 text-lg'} ${
+            i === 0 ? 'bg-amber-400/20 text-amber-100' : 'bg-white/5'
+          }`}
+        >
+          <span className="w-8 font-mono text-slate-400">{p.sira}</span>
+          <span className="flex-1 font-bold truncate">{p.ad}</span>
+          <span className="font-mono tabular-nums">{p.puan}</span>
+        </li>
+      ))}
+    </ol>
+  )
+}
+
+/** Perdede bir soru: süre işlerken soru ve şıklar; süre bitince doğru şık, dağılım ve ilk 5. */
+function SoruSahnesi({
+  oturumId,
+  adimId,
+  soruDurum,
+  araclar,
+  kod,
+}: {
+  oturumId: string
+  adimId: string
+  soruDurum: 'acik' | 'sonuc' | null
+  araclar: React.ReactNode
+  kod: string | null
+}) {
+  const [durum, setDurum] = useState<DersDurumu['adim']>(null)
+  const [bitis, setBitis] = useState<number | null>(null)
+  const [cevap, setCevap] = useState(0)
+  const [simdi, setSimdi] = useState(Date.now())
+  const kapatildi = useRef<string | null>(null)
+  const sonuc = soruDurum === 'sonuc'
+  const puanlar = usePuanlar(oturumId, sonuc, 5)
+
+  // Soru bilgisi (şıkların karışık sırası sunucudan gelir) ve sonuç. Adım değişikliği veritabanına
+  // henüz yazılmadıysa sunucu eski adımı döndürür; doğru adım gelene kadar kısa aralıkla yeniden sorulur.
+  useEffect(() => {
+    let iptal = false
+    let zamanlayici: ReturnType<typeof setTimeout>
+    async function sor(deneme: number) {
+      const { data } = await supabase.rpc('ders_durumu', { p_session: oturumId })
+      if (iptal) return
+      const d = data as DersDurumu | null
+      if (!d?.adim || d.adim.id !== adimId) {
+        if (deneme < 20) zamanlayici = setTimeout(() => sor(deneme + 1), 400)
+        return
+      }
+      setDurum(d.adim)
+      setCevap(d.adim.cevap_sayisi ?? 0)
+      if (d.adim.soru_durum === 'acik') setBitis(bitisAni(d.adim.kalan_ms))
+    }
+    sor(0)
+    return () => {
+      iptal = true
+      clearTimeout(zamanlayici)
+    }
+  }, [oturumId, adimId, soruDurum])
+
+  // Gelen cevaplar sayılır (kimin ne seçtiği sonuçta açıklanır).
+  useEffect(() => {
+    const kanal = supabase
+      .channel(`soru:${oturumId}:${adimId}`)
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'responses', filter: `session_id=eq.${oturumId}` }, (p) => {
+        if ((p.new as { step_id?: string }).step_id === adimId) setCevap((c) => c + 1)
+      })
+      .subscribe()
+    return () => {
+      supabase.removeChannel(kanal)
+    }
+  }, [oturumId, adimId])
+
+  useEffect(() => {
+    const t = setInterval(() => setSimdi(Date.now()), 200)
+    return () => clearInterval(t)
+  }, [])
+
+  const kalan = bitis === null ? null : Math.max(0, bitis - simdi)
+
+  const sonucuGoster = useCallback(() => {
+    kapatildi.current = adimId
+    supabase.from('sessions').update({ soru_durum: 'sonuc' }).eq('id', oturumId).eq('soru_durum', 'acik').then(() => {})
+  }, [oturumId, adimId])
+
+  // Süre bitince doğru cevap kendiliğinden açıklanır (bir kez).
+  useEffect(() => {
+    if (soruDurum === 'acik' && kalan === 0 && kapatildi.current !== adimId) sonucuGoster()
+  }, [soruDurum, kalan, adimId, sonucuGoster])
+
+  const secenekler = durum?.secenekler ?? []
+  const toplamCevap = sonuc && durum?.dagilim ? durum.dagilim.reduce((a, b) => a + b, 0) : cevap
+
+  return (
+    <main className="min-h-screen flex flex-col p-5 lg:p-8 gap-5">
+      <header className="flex items-center gap-4">
+        <p className="text-sm font-mono uppercase tracking-widest text-fuchsia-300">
+          Soru {durum ? `${durum.sira} / ${durum.toplam}` : ''}
+        </p>
+        <div className="ml-auto opacity-60 hover:opacity-100 transition-opacity">{araclar}</div>
+      </header>
+
+      <section className="cam-panel rounded-3xl p-6 lg:p-10 flex items-center gap-6">
+        <h1 className="flex-1 text-3xl lg:text-5xl font-extrabold leading-tight whitespace-pre-line">{durum?.soru ?? 'Yükleniyor…'}</h1>
+        {!sonuc && kalan !== null && (
+          <div className="shrink-0 w-28 h-28 lg:w-36 lg:h-36 rounded-full border-4 border-fuchsia-400 flex items-center justify-center">
+            <span className="text-5xl lg:text-6xl font-extrabold tabular-nums">{Math.ceil(kalan / 1000)}</span>
+          </div>
+        )}
+      </section>
+
+      <div className="grid gap-4 sm:grid-cols-2 flex-1 content-start">
+        {secenekler.map((x, i) => {
+          const sik = SIKLAR[i % SIKLAR.length]
+          const dogru = sonuc && durum?.dogru_index === i
+          const sayi = durum?.dagilim?.[i] ?? 0
+          return (
+            <div
+              key={i}
+              className={`relative overflow-hidden rounded-3xl p-5 lg:p-7 flex items-center gap-4 text-2xl lg:text-4xl font-bold transition-opacity ${sik.renk} ${
+                sonuc && !dogru ? 'opacity-35' : ''
+              }`}
+            >
+              {sonuc && toplamCevap > 0 && (
+                <div className="absolute inset-y-0 left-0 bg-black/25" style={{ width: `${(sayi / toplamCevap) * 100}%` }} />
+              )}
+              <span className="relative w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-black/25 flex items-center justify-center shrink-0">
+                {sik.harf}
+              </span>
+              <span className="relative flex-1">{x}</span>
+              {sonuc && <span className="relative font-mono text-xl lg:text-3xl">{sayi}</span>}
+              {dogru && <span className="relative text-3xl lg:text-5xl">✓</span>}
+            </div>
+          )
+        })}
+      </div>
+
+      <footer className="flex flex-wrap items-center gap-4">
+        <p className="text-lg text-slate-300">
+          <b className="text-white text-2xl tabular-nums">{toplamCevap}</b> cevap
+        </p>
+        {!sonuc && (
+          <button className="parlak-buton rounded-xl px-5 py-2.5 font-bold" onClick={sonucuGoster}>
+            Cevabı göster
+          </button>
+        )}
+        {kod && (
+          <div className="ml-auto">
+            <KodSeridi kod={kod} />
+          </div>
+        )}
+      </footer>
+
+      {sonuc && puanlar && puanlar.length > 0 && (
+        <section className="cam-panel rounded-3xl p-5 lg:p-6">
+          <p className="text-sm font-mono uppercase tracking-widest text-amber-300 mb-3">İlk 5</p>
+          <PuanListesi puanlar={puanlar} />
+        </section>
+      )}
+    </main>
+  )
+}
+
+/** Bütün sınıfın puan tablosu (ilk 10). */
+function PuanTablosu({ oturumId, kapat }: { oturumId: string; kapat: () => void }) {
+  const puanlar = usePuanlar(oturumId, true, 10)
+  return (
+    <div className="fixed inset-0 bg-black/85 flex items-center justify-center p-4 z-50" onClick={kapat}>
+      <div className="cam-panel rounded-3xl p-6 lg:p-8 max-w-2xl w-full space-y-4" onClick={(e) => e.stopPropagation()}>
+        <h2 className="text-3xl font-extrabold text-center">Puan tablosu</h2>
+        {puanlar ? <PuanListesi puanlar={puanlar} buyuk /> : <p className="text-center text-slate-400">Yükleniyor…</p>}
+        <button className="ikincil-buton w-full" onClick={kapat}>
           Kapat
         </button>
       </div>

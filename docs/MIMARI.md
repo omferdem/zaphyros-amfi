@@ -48,7 +48,17 @@ Faz 2a ile gelenler (`0003_ders_akisi.sql`; 0004'ten beri sunum ve akışlar `co
 | `sessions` (+) | lesson_id, aktif_adim | Oturumda izlenen akış ve perdedeki adım |
 | `ozel.session_secrets` (+) | kumanda | Kumanda anahtarı |
 
-Sonraki fazlarda gelecek: `responses` (quiz ve oylama cevapları).
+Faz 3 ile gelenler (`0005_bilgi_yarismasi.sql`):
+
+| Tablo | Alanlar | Not |
+|---|---|---|
+| `questions` | id, subject_id, soru, dogru, yanlislar, sure_sn, ek | Soru bankası, ders içeriğine bağlı. `ek`: ZOMR'daki #EASINESS, #BLOOM, #OUTCOME |
+| `lesson_steps` (+) | question_id | `tur = 'soru'` adımı |
+| `sessions` (+) | soru_durum, soru_basladi | Perdeye soru adımı gelince tetikleyici `acik` yapar ve zamanı yazar; `sonuc` doğru cevabı açıklar |
+| `session_players` | session_id, cihaz_id, takma_ad | Yoklamasız derste takma ad; oturumda tekil |
+| `responses` | session_id, step_id, question_id, cihaz_id, secim, dogru, puan, sure_ms | Bir cihaz bir soruya bir kez cevap verir |
+
+**Yarışma güvenliği:** Şıkların sırası oturum ve soru kimliğinden türetilen bir sıralamayla karışır, herkese aynı görünür. Öğrenci şıkkın sırasını gönderir; `cevap_ver()` sırayı yeniden hesaplar, süreyi (1,5 sn pay ile) ve doğruluğu sunucuda denetler, puanı kendisi yazar. Doğru şık `soru_durum = 'sonuc'` olana kadar hiçbir yanıtta yer almaz.
 
 RLS: Hoca yalnızca kendi `courses` kayıtlarını (ve bunlara bağlı sunum, akış ve adımları) ve bunlara bağlı öğrenci, oturum ve yoklamaları görür. Öğrenci (anon) hiçbir tabloyu okuyamaz ve yazamaz; yalnızca `katilim_bileti()`, `check_in()`, `kodla_katil()` ve `ders_durumu()` RPC'lerini çağırır (`SECURITY DEFINER`). Kumanda (girişsiz) `kumanda_durumu()` ve `kumanda_komut()` ile, oturumun kumanda anahtarını vererek çalışır.
 

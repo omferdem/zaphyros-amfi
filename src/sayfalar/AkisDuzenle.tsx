@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import type { Adim, Akis, Sunum } from '../lib/tipler'
 import { adimlarEkle, adimlariGetir, akisGetir, akisSirala, sunumYukle, sunumlariGetir } from '../lib/akis'
@@ -18,6 +18,7 @@ function ilkSatir(metin: string | undefined): string {
 /** Bir ders akışını düzenler: sunum yükleme, adım ekleme, sıralama ve silme. */
 export default function AkisDuzenle() {
   const { akisId = '' } = useParams()
+  const navigate = useNavigate()
   const [akis, setAkis] = useState<Akis | null | undefined>(undefined)
   const [adimlar, setAdimlar] = useState<Adim[]>([])
   const [sunumlar, setSunumlar] = useState<Sunum[]>([])
@@ -33,7 +34,7 @@ export default function AkisDuzenle() {
       setAkis(a)
       if (!a) return
       setAd(a.ad)
-      const [ad2, s] = await Promise.all([adimlariGetir(a.id), sunumlariGetir(a.course_id)])
+      const [ad2, s] = await Promise.all([adimlariGetir(a.id), sunumlariGetir(a.subject_id)])
       setAdimlar(ad2)
       setSunumlar(s)
     } catch {
@@ -50,7 +51,7 @@ export default function AkisDuzenle() {
     () => adimlar.flatMap((a) => (a.presentation_id ? [a.presentation_id] : [])),
     [adimlar],
   )
-  const { belgeler } = usePdfBelgeleri(akis?.course_id, kullanilanSunumlar)
+  const { belgeler } = usePdfBelgeleri(akis?.subject_id, kullanilanSunumlar)
 
   async function adiKaydet() {
     if (!akis || !ad.trim() || ad.trim() === akis.ad) return
@@ -75,7 +76,7 @@ export default function AkisDuzenle() {
       return
     }
     try {
-      const sunum = await sunumYukle(akis.course_id, dosya, dosyadanAd(dosya.name), setYukleme)
+      const sunum = await sunumYukle(akis.subject_id, dosya, dosyadanAd(dosya.name), setYukleme)
       setYukleme('Slaytlar akışa ekleniyor…')
       await adimlarEkle(
         akis.id,
@@ -154,9 +155,12 @@ export default function AkisDuzenle() {
   return (
     <div className="space-y-6">
       <div>
-        <Link to={`/panel/ders/${akis.course_id}`} className="text-xs text-slate-400 hover:text-white">
-          ← Derse dön
-        </Link>
+        <button
+          onClick={() => (window.history.length > 1 ? navigate(-1) : navigate('/panel'))}
+          className="text-xs text-slate-400 hover:text-white"
+        >
+          ← Geri
+        </button>
         <input
           className="mt-3 w-full bg-transparent text-2xl font-extrabold outline-none border-b border-transparent focus:border-indigo-400"
           value={ad}
@@ -166,7 +170,10 @@ export default function AkisDuzenle() {
           onKeyDown={(e) => e.key === 'Enter' && (e.target as HTMLInputElement).blur()}
           aria-label="Akışın adı"
         />
-        <p className="text-xs text-slate-500 mt-1">{adimlar.length} adım. Derste bu sırayla ilerlersin.</p>
+        <p className="text-xs text-slate-500 mt-1">
+          {adimlar.length} adım. Derste bu sırayla ilerlersin. Bu akış ders içeriğine aittir; içeriğe bağlı bütün
+          dönemlerde aynı görünür.
+        </p>
       </div>
 
       {hata && <p className="text-sm text-rose-300 bg-rose-500/10 rounded-xl p-3">{hata}</p>}

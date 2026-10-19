@@ -1,5 +1,6 @@
 export interface Ders {
   id: string
+  subject_id: string
   ad: string
   kod: string | null
   donem: string | null
@@ -24,9 +25,15 @@ export interface Oturum {
   aktif_adim: string | null
 }
 
+/** Dönemler arasında ortak ders içeriği: akışlar ve sunumlar buna bağlıdır. */
+export interface Icerik {
+  id: string
+  ad: string
+}
+
 export interface Sunum {
   id: string
-  course_id: string
+  subject_id: string
   ad: string
   kaynak: 'pdf' | 'pptx' | 'ppt'
   durum: 'hazir' | 'cevriliyor' | 'hata'
@@ -37,7 +44,7 @@ export interface Sunum {
 
 export interface Akis {
   id: string
-  course_id: string
+  subject_id: string
   ad: string
   olusturuldu: string
 }

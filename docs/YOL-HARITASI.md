@@ -27,6 +27,10 @@ Kullanıcı kararları (19 Ekim 2026): sunumlar PPTX, PPT ya da PDF olabilir; sl
 - Ders kodu: 6 hane, dakikada bir değişir; geç gelen öğrenci kodla katılır, yoklama açıksa yoklamaya da yazılır
 - Öğrenci telefonunda perdedeki slaytın metni
 
+### Ara teslim: yıllar arası içerik ve karekodsuz başlatma (v0.3.1) ✅
+- Kullanıcı kararı: ders içeriği (akışlar, sunumlar) dönemler arasında ortak; yeni dönem aynı içeriğe bağlanır
+- Ders yoklamasız (QR'sız) başlatılabilir
+
 ### 2b: Yalnız telefon modu
 - Bilgisayar yoksa hoca dersi telefonundan yönetir; perdede görünecek ekran öğrenci telefonlarında görünür (slaytın görüntüsü + metni)
 - Slayt görüntüleri küçültülmüş resim olarak hazırlanır. Ücretsiz plan trafiği (ayda 5 GB) için hesap: 150 öğrenci x 40 slayt ders başına 300-400 MB; görüntü boyutu buna göre seçilecek
@@ -36,7 +40,10 @@ Kullanıcı kararları (19 Ekim 2026): sunumlar PPTX, PPT ya da PDF olabilir; sl
 - Kullanıcı kararı: ek token yok; iş akışı birkaç dakikada bir bekleyen dosyalara bakar (5-20 dakika gecikme kabul)
 - Animasyonlar düşer, bazı yazı tipleri farklı görünebilir (Calibri yerine metrik uyumlu Carlito kurulacak)
 
-## Faz 3: Quiz (v0.4)
+## Faz 3: Quiz ve bilgi yarışması (v0.4)
+Kullanıcı istekleri (19 Ekim 2026): slaytsız, yalnızca hazır sorularla bilgi yarışması ya da oyun başlatılabilmeli; sorular ZOMR biçiminde hazır. Kullanıcı sırayı "önce quiz, sonra 2b ve 2c" olarak seçti.
+- Soru bankası ders içeriğine bağlı ve yıllarca kullanılır; ZOMR biçiminde (#QUESTION / #CORRECT / #WRONG ...) içe aktarma
+- Soru adımı akışa slaytların arasına eklenebilir; yalnızca sorulardan oluşan akış da olur (slaytsız yarışma)
 - Haftaya soru ekleme (elle ya da metin yapıştırarak)
 - Canlı soru, süre sayacı, cevap dağılımı grafiği, doğru cevabı açma
 - Puan tablosu ve ders sonu raporu

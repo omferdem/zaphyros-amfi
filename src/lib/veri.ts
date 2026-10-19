@@ -27,7 +27,7 @@ export async function oturumYoklamalari(oturumId: string): Promise<Yoklama[]> {
 }
 
 export async function dersGetir(id: string): Promise<Ders | null> {
-  const { data, error } = await supabase.from('courses').select('id, ad, kod, donem, olusturuldu').eq('id', id).maybeSingle()
+  const { data, error } = await supabase.from('courses').select('id, subject_id, ad, kod, donem, olusturuldu').eq('id', id).maybeSingle()
   if (error) throw error
   return data as Ders | null
 }
@@ -56,7 +56,7 @@ export async function oturumlariGetir(dersId: string): Promise<Oturum[]> {
 export async function oturumGetir(id: string): Promise<(Oturum & { courses: Ders }) | null> {
   const { data, error } = await supabase
     .from('sessions')
-    .select('id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, courses(id, ad, kod, donem, olusturuldu)')
+    .select('id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, courses(id, subject_id, ad, kod, donem, olusturuldu)')
     .eq('id', id)
     .maybeSingle()
   if (error) throw error
@@ -65,9 +65,14 @@ export async function oturumGetir(id: string): Promise<(Oturum & { courses: Ders
 
 /**
  * Yeni oturum açar; aynı dersin hâlâ açık kalmış eski oturumlarını kapatır.
- * Akış seçildiyse perdeye akışın ilk adımı gelir.
+ * Akış seçildiyse perdeye akışın ilk adımı gelir. Yoklama alınmayacaksa oturum yoklaması kapalı açılır.
  */
-export async function oturumBaslat(dersId: string, baslik: string, akisId: string | null = null): Promise<string> {
+export async function oturumBaslat(
+  dersId: string,
+  baslik: string,
+  akisId: string | null = null,
+  yoklamaAl = true,
+): Promise<string> {
   await supabase
     .from('sessions')
     .update({ yoklama_acik: false, bitti: new Date().toISOString() })
@@ -86,7 +91,7 @@ export async function oturumBaslat(dersId: string, baslik: string, akisId: strin
   }
   const { data, error } = await supabase
     .from('sessions')
-    .insert({ course_id: dersId, baslik: baslik.trim() || null, lesson_id: akisId, aktif_adim: ilkAdim })
+    .insert({ course_id: dersId, baslik: baslik.trim() || null, lesson_id: akisId, aktif_adim: ilkAdim, yoklama_acik: yoklamaAl })
     .select('id')
     .single()
   if (error) throw error

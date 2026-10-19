@@ -1,5 +1,6 @@
 -- YALNIZCA YEREL TEST İÇİN (bkz. supabase_taklit.sql). Adlar ve numaralar uydurmadır.
 -- Düz SQL'dir: her denetim başarısızsa hata verir, hepsi geçerse son satırda "0003 tamam" yazar.
+-- Testler her zaman en güncel şemaya karşı çalışır (0004'ten beri sunum ve akışlar ders içeriğine bağlı).
 -- Kullanım (taklit + 0001 + 0002 + 0003 yüklendikten sonra):
 --   psql -d amfi_test -X -v ON_ERROR_STOP=1 -f supabase/test/0003_ders_akisi_test.sql
 
@@ -23,17 +24,17 @@ select set_config('t.ders2', id::text, false) from d;
 insert into students (course_id, ogrenci_no, ad_soyad) values (current_setting('t.ders')::uuid, '22010101001', 'Ali Yılmaz');
 
 with p as (
-  insert into presentations (course_id, ad, sayfa_sayisi, metinler)
-  values (current_setting('t.ders')::uuid, '3. Hafta', 2, '["Giriş\nTanrı kanıtları", "Ontolojik kanıt"]')
+  insert into presentations (subject_id, ad, sayfa_sayisi, metinler)
+  values ((select subject_id from courses where id = current_setting('t.ders')::uuid), '3. Hafta', 2, '["Giriş\nTanrı kanıtları", "Ontolojik kanıt"]')
   returning id)
 select set_config('t.sunum', id::text, false) from p;
 with p as (
-  insert into presentations (course_id, ad, sayfa_sayisi) values (current_setting('t.ders2')::uuid, 'Başka', 1) returning id)
+  insert into presentations (subject_id, ad, sayfa_sayisi) values ((select subject_id from courses where id = current_setting('t.ders2')::uuid), 'Başka', 1) returning id)
 select set_config('t.sunum2', id::text, false) from p;
 
-with l as (insert into lessons (course_id, ad) values (current_setting('t.ders')::uuid, '3. Hafta akışı') returning id)
+with l as (insert into lessons (subject_id, ad) values ((select subject_id from courses where id = current_setting('t.ders')::uuid), '3. Hafta akışı') returning id)
 select set_config('t.akis', id::text, false) from l;
-with l as (insert into lessons (course_id, ad) values (current_setting('t.ders')::uuid, 'Diğer akış') returning id)
+with l as (insert into lessons (subject_id, ad) values ((select subject_id from courses where id = current_setting('t.ders')::uuid), 'Diğer akış') returning id)
 select set_config('t.akis2', id::text, false) from l;
 
 with a as (insert into lesson_steps (lesson_id, sira, tur) values (current_setting('t.akis')::uuid, 1, 'yoklama') returning id)

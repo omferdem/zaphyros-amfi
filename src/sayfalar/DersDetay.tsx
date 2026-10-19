@@ -6,7 +6,7 @@ import { dersGetir, dersYoklamalari, ogrencileriGetir, oturumBaslat, oturumlariG
 import { dosyadanAyristir, metindenAyristir, type AyristirmaSonucu } from '../lib/sinifListesi'
 import { raporHesapla, raporuExceleAktar } from '../lib/rapor'
 import { oturumAdi, tarihSaat } from '../lib/bicim'
-import { akislariGetir, sunumlariGetir, sunumYolu } from '../lib/akis'
+import { akislariGetir } from '../lib/akis'
 import DersAkislari from './DersAkislari'
 
 type Sekme = 'oturumlar' | 'akislar' | 'liste' | 'rapor'
@@ -43,15 +43,12 @@ export default function DersDetay() {
 
   async function dersiSil() {
     if (!ders) return
-    if (!window.confirm(`"${ders.ad}" dersi; sınıf listesi, yoklama kayıtları, akışları ve sunumlarıyla birlikte silinecek. Emin misin?`))
+    if (
+      !window.confirm(
+        `"${[ders.ad, ders.donem].filter(Boolean).join(', ')}" sınıf listesi ve bütün yoklama kayıtlarıyla birlikte silinecek. Ders içeriği (akışlar ve sunumlar) silinmez, başka dönemlerde kullanılmaya devam eder. Emin misin?`,
+      )
+    )
       return
-    // Sunum dosyaları depoda durur; kayıtlar silinmeden önce dosyalar kaldırılır.
-    try {
-      const sunumlar = await sunumlariGetir(ders.id)
-      if (sunumlar.length) await supabase.storage.from('sunumlar').remove(sunumlar.map((s) => sunumYolu(ders.id, s.id)))
-    } catch {
-      /* dosyalar silinemese de ders silinebilsin */
-    }
     const { error } = await supabase.from('courses').delete().eq('id', ders.id)
     if (error) setHata('Ders silinemedi.')
     else navigate('/panel')
@@ -73,6 +70,7 @@ export default function DersDetay() {
         </Link>
         <p className="text-xs font-mono text-indigo-300 mt-3">{[ders.kod, ders.donem].filter(Boolean).join(' · ')}</p>
         <h1 className="text-2xl font-extrabold">{ders.ad}</h1>
+        <YeniDonem ders={ders} />
       </div>
 
       {hata && <p className="text-sm text-rose-300 bg-rose-500/10 rounded-xl p-3">{hata}</p>}
@@ -128,6 +126,7 @@ function Oturumlar(props: {
   const [baslik, setBaslik] = useState('')
   const [akislar, setAkislar] = useState<Akis[]>([])
   const [akisId, setAkisId] = useState('')
+  const [yoklamaAl, setYoklamaAl] = useState(true)
   const [basliyor, setBasliyor] = useState(false)
   const [hata, setHata] = useState<string | null>(null)
 
@@ -138,17 +137,17 @@ function Oturumlar(props: {
   }, [yoklamalar])
 
   useEffect(() => {
-    akislariGetir(ders.id)
+    akislariGetir(ders.subject_id)
       .then(setAkislar)
       .catch(() => setAkislar([]))
-  }, [ders.id])
+  }, [ders.subject_id])
 
   async function baslat(e: React.FormEvent) {
     e.preventDefault()
     setBasliyor(true)
     setHata(null)
     try {
-      const id = await oturumBaslat(ders.id, baslik || akislar.find((a) => a.id === akisId)?.ad || '', akisId || null)
+      const id = await oturumBaslat(ders.id, baslik || akislar.find((a) => a.id === akisId)?.ad || '', akisId || null, yoklamaAl)
       navigate(`/sahne/${id}`)
     } catch {
       setHata('Oturum başlatılamadı.')
@@ -167,12 +166,15 @@ function Oturumlar(props: {
     <div className="space-y-5">
       <form onSubmit={baslat} className="cam-panel rounded-2xl p-5 space-y-3">
         <h2 className="font-bold">Ders başlat</h2>
-        {ogrenciler.length === 0 && (
-          <p className="text-sm text-amber-300">Önce sınıf listesini yükle; listede olmayan numaralar yoklamaya giremez.</p>
+        {ogrenciler.length === 0 && yoklamaAl && (
+          <p className="text-sm text-amber-300">
+            Yoklama için önce sınıf listesini yükle; listede olmayan numaralar yoklamaya giremez. Yoklamasız başlatmak için
+            aşağıdaki kutuyu kaldır.
+          </p>
         )}
         <div className="flex flex-col sm:flex-row gap-3">
           <select className="giris-kutusu sm:!w-64" value={akisId} onChange={(e) => setAkisId(e.target.value)}>
-            <option value="">Akış yok, yalnızca yoklama</option>
+            <option value="">Akış yok</option>
             {akislar.map((a) => (
               <option key={a.id} value={a.id}>
                 {a.ad}
@@ -187,12 +189,16 @@ function Oturumlar(props: {
             onChange={(e) => setBaslik(e.target.value)}
           />
           <button
-            disabled={basliyor || ogrenciler.length === 0}
+            disabled={basliyor || (yoklamaAl && ogrenciler.length === 0)}
             className="parlak-buton rounded-xl px-5 py-2.5 font-bold whitespace-nowrap disabled:opacity-50"
           >
             Başlat ve sahneyi aç
           </button>
         </div>
+        <label className="flex items-center gap-2 text-sm text-slate-300 w-fit cursor-pointer">
+          <input type="checkbox" checked={yoklamaAl} onChange={(e) => setYoklamaAl(e.target.checked)} className="accent-indigo-500" />
+          Yoklama al (kapalıysa QR çıkmaz; gerekirse dersin içinde açabilirsin)
+        </label>
         <p className="text-xs text-slate-500">
           Sahne ekranını projeksiyona yansıt. Akış seçersen perdede akışın ilk adımı açılır; ilerlemek için klavyenin ok
           tuşlarını ya da telefonundaki kumandayı kullan.
@@ -480,5 +486,62 @@ function Rapor(props: { ders: Ders; ogrenciler: Ogrenci[]; oturumlar: Oturum[]; 
       </table>
       <p className="text-xs text-slate-500">%70'in altındaki oranlar sarı gösterilir.</p>
     </section>
+  )
+}
+
+// ---------------------------------------------------------------------------
+
+/** Aynı ders içeriğiyle yeni bir dönem açar: akışlar ve sunumlar ortak kalır, liste ve yoklamalar yeni başlar. */
+function YeniDonem({ ders }: { ders: Ders }) {
+  const navigate = useNavigate()
+  const [acik, setAcik] = useState(false)
+  const [donem, setDonem] = useState('')
+  const [hata, setHata] = useState<string | null>(null)
+
+  async function ac(e: React.FormEvent) {
+    e.preventDefault()
+    setHata(null)
+    const { data, error } = await supabase
+      .from('courses')
+      .insert({ ad: ders.ad, kod: ders.kod, donem: donem.trim() || null, subject_id: ders.subject_id })
+      .select('id')
+      .single()
+    if (error || !data) {
+      setHata('Yeni dönem açılamadı.')
+      return
+    }
+    setAcik(false)
+    navigate(`/panel/ders/${data.id as string}`)
+  }
+
+  if (!acik)
+    return (
+      <button className="text-xs text-indigo-300 hover:text-indigo-200 mt-1" onClick={() => setAcik(true)}>
+        + Bu dersin yeni dönemini aç
+      </button>
+    )
+
+  return (
+    <form onSubmit={ac} className="cam-panel rounded-2xl p-4 mt-3 space-y-2 max-w-md">
+      <p className="text-sm text-slate-300">
+        Akışlar ve sunumlar yeni dönemle ortak olur; sınıf listesi ve yoklamalar boş başlar.
+      </p>
+      <div className="flex gap-2">
+        <input
+          autoFocus
+          required
+          maxLength={40}
+          className="giris-kutusu"
+          placeholder="Dönem (ör. 2027 Güz)"
+          value={donem}
+          onChange={(e) => setDonem(e.target.value)}
+        />
+        <button className="parlak-buton rounded-xl px-4 py-2 text-sm font-bold whitespace-nowrap">Aç</button>
+        <button type="button" className="ikincil-buton" onClick={() => setAcik(false)}>
+          Vazgeç
+        </button>
+      </div>
+      {hata && <p className="text-sm text-rose-300">{hata}</p>}
+    </form>
   )
 }

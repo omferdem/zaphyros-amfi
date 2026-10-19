@@ -13,7 +13,7 @@ const db = new PGlite()
 
 const migrationlar = readdirSync(klasor('migrations')).filter((d) => /^\d{4}_.+\.sql$/.test(d)).sort()
 const testler = readdirSync(klasor('test'))
-  .filter((d) => /_test\.sql$/.test(d) && !readFileSync(klasor('test', d), 'utf8').includes('\gset'))
+  .filter((d) => d.endsWith('_test.sql') && !readFileSync(klasor('test', d), 'utf8').includes('\\gset'))
   .sort()
 
 const adimlar = [klasor('test', 'supabase_taklit.sql'), ...migrationlar.map((d) => klasor('migrations', d)), ...testler.map((d) => klasor('test', d))]

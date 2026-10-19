@@ -11,17 +11,23 @@ export default function DersAkislari({ ders }: { ders: Ders }) {
   const [akislar, setAkislar] = useState<Akis[] | null>(null)
   const [sunumlar, setSunumlar] = useState<Sunum[]>([])
   const [yeniAd, setYeniAd] = useState('')
+  const [donemler, setDonemler] = useState<{ id: string; ad: string; donem: string | null }[]>([])
   const [hata, setHata] = useState<string | null>(null)
 
   const yukle = useCallback(async () => {
     try {
-      const [a, s] = await Promise.all([akislariGetir(ders.id), sunumlariGetir(ders.id)])
+      const [a, s, d] = await Promise.all([
+        akislariGetir(ders.subject_id),
+        sunumlariGetir(ders.subject_id),
+        supabase.from('courses').select('id, ad, donem').eq('subject_id', ders.subject_id).order('olusturuldu'),
+      ])
       setAkislar(a)
       setSunumlar(s)
+      setDonemler((d.data ?? []) as { id: string; ad: string; donem: string | null }[])
     } catch {
       setHata('Akışlar yüklenemedi.')
     }
-  }, [ders.id])
+  }, [ders.subject_id])
 
   useEffect(() => {
     yukle()
@@ -31,7 +37,7 @@ export default function DersAkislari({ ders }: { ders: Ders }) {
     e.preventDefault()
     setHata(null)
     try {
-      const akis = await akisOlustur(ders.id, yeniAd || `${(akislar?.length ?? 0) + 1}. hafta`)
+      const akis = await akisOlustur(ders.subject_id, yeniAd || `${(akislar?.length ?? 0) + 1}. hafta`)
       navigate(`/panel/akis/${akis.id}`)
     } catch {
       setHata('Akış oluşturulamadı.')
@@ -58,6 +64,23 @@ export default function DersAkislari({ ders }: { ders: Ders }) {
   return (
     <div className="space-y-6">
       {hata && <p className="text-sm text-rose-300 bg-rose-500/10 rounded-xl p-3">{hata}</p>}
+
+      <p className="text-sm text-slate-400">
+        Akışlar ve sunumlar dönemden bağımsız ders içeriğinde durur; her yıl yeniden kullanılır.
+        {donemler.length > 1 && (
+          <>
+            {' '}
+            Bu içerik şu dönemlerle ortak:{' '}
+            {donemler.map((d, i) => (
+              <span key={d.id}>
+                {i > 0 && ', '}
+                {d.id === ders.id ? <b className="text-slate-200">{d.donem || d.ad}</b> : <Link to={`/panel/ders/${d.id}`} className="underline">{d.donem || d.ad}</Link>}
+              </span>
+            ))}
+            . Burada yaptığın değişiklik hepsinde görünür.
+          </>
+        )}
+      </p>
 
       <form onSubmit={olustur} className="cam-panel rounded-2xl p-5 space-y-3">
         <h2 className="font-bold">Yeni ders akışı</h2>
@@ -103,7 +126,7 @@ export default function DersAkislari({ ders }: { ders: Ders }) {
       <section className="cam-panel rounded-2xl p-5 space-y-3">
         <h2 className="font-bold">Sunum kitaplığı</h2>
         <p className="text-sm text-slate-400">
-          Yüklediğin sunumlar burada durur; aynı sunumu birden fazla akışta kullanabilirsin. Sunum yüklemek için bir akışı
+          Yüklediğin sunumlar burada durur; aynı sunumu birden fazla akışta ve her yıl kullanabilirsin. Sunum yüklemek için bir akışı
           aç.
         </p>
         {sunumlar.length === 0 ? (

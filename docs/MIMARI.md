@@ -31,11 +31,18 @@ Faz 1 itibarıyla kurulu olanlar (`0002_yoklama.sql`):
 | `ozel.session_secrets` | session_id, anahtar | Oturumun gizli anahtarı. `ozel` şeması API'ye kapalı, hiçbir rol doğrudan okuyamaz |
 | `attendance` | session_id, student_id, cihaz_id, yontem (qr/elle), zaman | (session_id, student_id) ve (session_id, cihaz_id) tekil |
 
-Faz 2a ile gelenler (`0003_ders_akisi.sql`):
+**Ders içeriği ve dönem** (`0004_ders_icerigi.sql`, kullanıcı kararı 19 Ekim 2026): hoca dersleri her yıl yeniden kullanır. `subjects` (ders içeriği: akışlar ve sunumlar) dönemden bağımsızdır; `courses` bir dönemin dersidir (sınıf listesi, oturumlar, yoklamalar) ve bir içeriğe bağlanır. Aynı içerik birden fazla döneme bağlanabilir; değişiklik hepsine yansır. İçerik seçilmeden açılan derse dersin adıyla içerik kendiliğinden açılır (tetikleyici). Dersi olan içerik silinemez.
 
 | Tablo | Alanlar | Not |
 |---|---|---|
-| `presentations` | id, course_id, ad, kaynak, durum, sayfa_sayisi, metinler | Sunum kitaplığı. Dosya depoda: `sunumlar/<ders id>/<sunum id>.pdf`. `metinler` her sayfanın metni (yüklerken tarayıcıda çıkarılır) |
+| `subjects` | id, teacher_id, ad | Ders içeriği |
+| `courses` (+) | subject_id | Dönemin dersinin bağlı olduğu içerik |
+
+Faz 2a ile gelenler (`0003_ders_akisi.sql`; 0004'ten beri sunum ve akışlar `course_id` yerine `subject_id` taşır):
+
+| Tablo | Alanlar | Not |
+|---|---|---|
+| `presentations` | id, course_id, ad, kaynak, durum, sayfa_sayisi, metinler | Sunum kitaplığı. Dosya depoda: `sunumlar/<içerik id>/<sunum id>.pdf`. `metinler` her sayfanın metni (yüklerken tarayıcıda çıkarılır) |
 | `lessons` | id, course_id, ad | Ders akışı (ör. "3. hafta") |
 | `lesson_steps` | id, lesson_id, sira, tur, presentation_id, sayfa_no, ayar | Akış adımı. `tur`: yoklama, slayt; sonraki fazlarda video, beyin fırtınası, quiz. `ayar` etkinliğe özel ayarlar için |
 | `sessions` (+) | lesson_id, aktif_adim | Oturumda izlenen akış ve perdedeki adım |

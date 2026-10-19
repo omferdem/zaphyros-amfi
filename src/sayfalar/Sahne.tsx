@@ -108,7 +108,7 @@ export default function Sahne() {
       .catch(() => setAdimlar([]))
   }, [akisId])
 
-  const { belgeler } = usePdfBelgeleri(oturum?.course_id, [...sunumlar.keys()])
+  const { belgeler } = usePdfBelgeleri(oturum?.courses.subject_id, [...sunumlar.keys()])
 
   // Gelenler listesi: ilk yüklemede ve her yeni kayıtta yeniden çekilir.
   const gelenleriYukle = useCallback(async () => {
@@ -431,9 +431,15 @@ function YoklamaSahnesi({
             </>
           ) : (
             <div className="text-center space-y-3">
-              <p className="text-sm font-mono uppercase tracking-widest text-slate-400">Yoklama kapandı</p>
-              <p className="text-6xl font-extrabold">{gelenler.length}</p>
-              <p className="text-slate-300">öğrenci derse katıldı</p>
+              <p className="text-sm font-mono uppercase tracking-widest text-slate-400">
+                {gelenler.length ? 'Yoklama kapandı' : 'Yoklama kapalı'}
+              </p>
+              {gelenler.length > 0 && (
+                <>
+                  <p className="text-6xl font-extrabold">{gelenler.length}</p>
+                  <p className="text-slate-300">öğrenci derse katıldı</p>
+                </>
+              )}
               {kod && <KodSeridi kod={kod} />}
             </div>
           )}

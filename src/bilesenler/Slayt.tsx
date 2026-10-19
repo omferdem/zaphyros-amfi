@@ -7,7 +7,7 @@ import { sunumAdresi } from '../lib/akis'
  * Sunum PDF'lerini bir kez açıp saklar. Aynı sunumun sayfaları arasında geçerken dosya
  * yeniden indirilmez.
  */
-export function usePdfBelgeleri(dersId: string | undefined, sunumIdleri: string[]) {
+export function usePdfBelgeleri(icerikId: string | undefined, sunumIdleri: string[]) {
   const [belgeler, setBelgeler] = useState<Map<string, PdfBelgesi>>(new Map())
   const [hatalar, setHatalar] = useState<Set<string>>(new Set())
   const istenen = useRef(new Set<string>())
@@ -15,11 +15,11 @@ export function usePdfBelgeleri(dersId: string | undefined, sunumIdleri: string[
   const anahtar = [...new Set(sunumIdleri)].sort().join(',')
 
   useEffect(() => {
-    if (!dersId) return
+    if (!icerikId) return
     for (const id of anahtar ? anahtar.split(',') : []) {
       if (istenen.current.has(id)) continue
       istenen.current.add(id)
-      sunumAdresi(dersId, id)
+      sunumAdresi(icerikId, id)
         .then(pdfAc)
         .then((b) => {
           acik.current.push(b)
@@ -27,7 +27,7 @@ export function usePdfBelgeleri(dersId: string | undefined, sunumIdleri: string[
         })
         .catch(() => setHatalar((h) => new Set(h).add(id)))
     }
-  }, [dersId, anahtar])
+  }, [icerikId, anahtar])
 
   // Sayfadan çıkınca açık belgeler kapatılır.
   useEffect(() => {

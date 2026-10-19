@@ -46,7 +46,7 @@ export async function ogrencileriGetir(dersId: string): Promise<Ogrenci[]> {
 export async function oturumlariGetir(dersId: string): Promise<Oturum[]> {
   const { data, error } = await supabase
     .from('sessions')
-    .select('id, course_id, baslik, yoklama_acik, basladi, bitti')
+    .select('id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim')
     .eq('course_id', dersId)
     .order('basladi', { ascending: false })
   if (error) throw error
@@ -56,23 +56,37 @@ export async function oturumlariGetir(dersId: string): Promise<Oturum[]> {
 export async function oturumGetir(id: string): Promise<(Oturum & { courses: Ders }) | null> {
   const { data, error } = await supabase
     .from('sessions')
-    .select('id, course_id, baslik, yoklama_acik, basladi, bitti, courses(id, ad, kod, donem, olusturuldu)')
+    .select('id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, courses(id, ad, kod, donem, olusturuldu)')
     .eq('id', id)
     .maybeSingle()
   if (error) throw error
   return data as unknown as (Oturum & { courses: Ders }) | null
 }
 
-/** Yeni oturum açar; aynı dersin hâlâ açık kalmış eski oturumlarını kapatır. */
-export async function oturumBaslat(dersId: string, baslik: string): Promise<string> {
+/**
+ * Yeni oturum açar; aynı dersin hâlâ açık kalmış eski oturumlarını kapatır.
+ * Akış seçildiyse perdeye akışın ilk adımı gelir.
+ */
+export async function oturumBaslat(dersId: string, baslik: string, akisId: string | null = null): Promise<string> {
   await supabase
     .from('sessions')
     .update({ yoklama_acik: false, bitti: new Date().toISOString() })
     .eq('course_id', dersId)
     .is('bitti', null)
+  let ilkAdim: string | null = null
+  if (akisId) {
+    const { data } = await supabase
+      .from('lesson_steps')
+      .select('id')
+      .eq('lesson_id', akisId)
+      .order('sira')
+      .order('id')
+      .limit(1)
+    ilkAdim = (data?.[0]?.id as string | undefined) ?? null
+  }
   const { data, error } = await supabase
     .from('sessions')
-    .insert({ course_id: dersId, baslik: baslik.trim() || null })
+    .insert({ course_id: dersId, baslik: baslik.trim() || null, lesson_id: akisId, aktif_adim: ilkAdim })
     .select('id')
     .single()
   if (error) throw error

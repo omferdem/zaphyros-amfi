@@ -1,10 +1,12 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import QRCode from 'qrcode'
 import { supabase } from '../lib/supabase'
-import type { Ders, Oturum } from '../lib/tipler'
+import type { Adim, Ders, Oturum, Sunum } from '../lib/tipler'
 import { oturumGetir } from '../lib/veri'
+import { adimlariGetir, sunumlariGetirIdIle } from '../lib/akis'
 import { kisaAd, oturumAdi } from '../lib/bicim'
+import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
 
 interface Gelen {
   student_id: string
@@ -12,10 +14,53 @@ interface Gelen {
   ad: string
 }
 
-/** Öğrencinin QR'dan açacağı adres. HashRouter olduğu için #/katil biçimindedir. */
+/** Sitenin kök adresi (HashRouter olduğu için sayfa yolları # işaretinden sonra gelir). */
+function kokAdres(): string {
+  return window.location.origin + window.location.pathname
+}
+
+/** Öğrencinin perdede okuyup yazacağı kısa adres, ör. omferdem.github.io/zaphyros-amfi */
+function kisaAdres(): string {
+  return (window.location.host + window.location.pathname).replace(/\/$/, '')
+}
+
+/** Öğrencinin QR'dan açacağı adres. */
 function katilimAdresi(oturumId: string, token: string): string {
-  const kok = window.location.origin + window.location.pathname
-  return `${kok}#/katil?s=${oturumId}&t=${token}`
+  return `${kokAdres()}#/katil?s=${oturumId}&t=${token}`
+}
+
+function kodBicimle(kod: string): string {
+  return `${kod.slice(0, 3)} ${kod.slice(3)}`
+}
+
+/** Dakikada bir değişen ders kodu (geç gelenler için). */
+function useDersKodu(oturumId: string, etkin: boolean) {
+  const [kod, setKod] = useState<string | null>(null)
+  useEffect(() => {
+    if (!etkin) {
+      setKod(null)
+      return
+    }
+    let iptal = false
+    let zamanlayici: ReturnType<typeof setTimeout>
+    async function yenile() {
+      const { data, error } = await supabase.rpc('ders_kodu', { p_session: oturumId })
+      if (iptal) return
+      if (error || !data) {
+        zamanlayici = setTimeout(yenile, 5000)
+        return
+      }
+      const d = data as { kod: string; kalan_ms: number }
+      setKod(d.kod)
+      zamanlayici = setTimeout(yenile, Math.max(500, d.kalan_ms + 300))
+    }
+    yenile()
+    return () => {
+      iptal = true
+      clearTimeout(zamanlayici)
+    }
+  }, [oturumId, etkin])
+  return kod
 }
 
 export default function Sahne() {
@@ -23,15 +68,16 @@ export default function Sahne() {
   const [oturum, setOturum] = useState<(Oturum & { courses: Ders }) | null | undefined>(undefined)
   const [mevcut, setMevcut] = useState(0)
   const [gelenler, setGelenler] = useState<Gelen[]>([])
-  const [qr, setQr] = useState<string | null>(null)
-  const [qrHata, setQrHata] = useState(false)
-  const [kalan, setKalan] = useState({ ms: 10000, toplam: 10000, an: Date.now() })
-  const [simdi, setSimdi] = useState(Date.now())
+  const [adimlar, setAdimlar] = useState<Adim[]>([])
+  const [sunumlar, setSunumlar] = useState<Map<string, Sunum>>(new Map())
   const [mevcutGoster, setMevcutGoster] = useState(true)
+  const [kodGoster, setKodGoster] = useState(true)
+  const [kumandaAcik, setKumandaAcik] = useState(false)
 
   const acik = !!oturum && oturum.yoklama_acik && !oturum.bitti
+  const kod = useDersKodu(oturumId, !!oturum && !oturum.bitti)
 
-  // Oturum ve sınıf mevcudu
+  // Oturum, sınıf mevcudu ve akış
   useEffect(() => {
     oturumGetir(oturumId)
       .then(async (o) => {
@@ -45,6 +91,24 @@ export default function Sahne() {
       })
       .catch(() => setOturum(null))
   }, [oturumId])
+
+  const akisId = oturum?.lesson_id ?? null
+  useEffect(() => {
+    if (!akisId) {
+      setAdimlar([])
+      return
+    }
+    adimlariGetir(akisId)
+      .then(async (a) => {
+        setAdimlar(a)
+        const idler = [...new Set(a.flatMap((x) => (x.presentation_id ? [x.presentation_id] : [])))]
+        const s = await sunumlariGetirIdIle(idler)
+        setSunumlar(new Map(s.map((x) => [x.id, x])))
+      })
+      .catch(() => setAdimlar([]))
+  }, [akisId])
+
+  const { belgeler } = usePdfBelgeleri(oturum?.course_id, [...sunumlar.keys()])
 
   // Gelenler listesi: ilk yüklemede ve her yeni kayıtta yeniden çekilir.
   const gelenleriYukle = useCallback(async () => {
@@ -77,18 +141,217 @@ export default function Sahne() {
     const kanal = supabase
       .channel(`sahne:${oturumId}`)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'attendance', filter: `session_id=eq.${oturumId}` }, tetikle)
+      // Kumandadan gelen adım değişikliği ve yoklama durumu da bu yoldan gelir.
       .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'sessions', filter: `id=eq.${oturumId}` }, (p) =>
         setOturum((o) => (o ? { ...o, ...(p.new as Partial<Oturum>) } : o)),
       )
       .subscribe()
     // Realtime bağlantısı koparsa diye 20 saniyede bir yedek yenileme
-    const yedek = setInterval(gelenleriYukle, 20000)
+    const yedek = setInterval(() => {
+      gelenleriYukle()
+      oturumGetir(oturumId)
+        .then((o) => {
+          if (o) setOturum((e) => (e ? { ...e, aktif_adim: o.aktif_adim, yoklama_acik: o.yoklama_acik, bitti: o.bitti } : o))
+        })
+        .catch(() => {})
+    }, 20000)
     return () => {
       clearInterval(yedek)
       if (bekleyen.current) clearTimeout(bekleyen.current)
       supabase.removeChannel(kanal)
     }
   }, [oturumId, gelenleriYukle])
+
+  const aktifSira = useMemo(() => adimlar.findIndex((a) => a.id === oturum?.aktif_adim), [adimlar, oturum?.aktif_adim])
+  const aktif = aktifSira >= 0 ? adimlar[aktifSira] : null
+  const slaytGorunumu = aktif?.tur === 'slayt'
+
+  const git = useCallback(
+    async (adim: Adim | undefined) => {
+      if (!adim) return
+      setOturum((o) => (o ? { ...o, aktif_adim: adim.id } : o))
+      await supabase.from('sessions').update({ aktif_adim: adim.id }).eq('id', oturumId)
+    },
+    [oturumId],
+  )
+  const ileri = useCallback(() => git(adimlar[aktifSira + 1]), [git, adimlar, aktifSira])
+  const geri = useCallback(() => git(adimlar[aktifSira - 1]), [git, adimlar, aktifSira])
+
+  // Klavye ve sunum kumandası (clicker): sağ ok, PageDown, boşluk ileri; sol ok, PageUp geri.
+  useEffect(() => {
+    function tus(e: KeyboardEvent) {
+      if ((e.target as HTMLElement)?.tagName === 'INPUT') return
+      if (['ArrowRight', 'PageDown', ' ', 'ArrowDown'].includes(e.key)) {
+        e.preventDefault()
+        ileri()
+      } else if (['ArrowLeft', 'PageUp', 'ArrowUp'].includes(e.key)) {
+        e.preventDefault()
+        geri()
+      } else if (e.key === 'k' || e.key === 'K') {
+        setKodGoster((g) => !g)
+      } else if (e.key === 'f' || e.key === 'F') {
+        tamEkran()
+      }
+    }
+    window.addEventListener('keydown', tus)
+    return () => window.removeEventListener('keydown', tus)
+  }, [ileri, geri])
+
+  async function yoklamaDurumu(ac: boolean) {
+    const { data } = await supabase
+      .from('sessions')
+      .update(ac ? { yoklama_acik: true, bitti: null } : { yoklama_acik: false })
+      .eq('id', oturumId)
+      .select('id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim')
+      .single()
+    if (data) setOturum((o) => (o ? { ...o, ...(data as Oturum) } : o))
+  }
+
+  if (oturum === undefined)
+    return <main className="min-h-screen flex items-center justify-center text-slate-400">Yükleniyor…</main>
+  if (oturum === null)
+    return (
+      <main className="min-h-screen flex items-center justify-center text-slate-400">
+        <p>
+          Oturum bulunamadı. <Link to="/panel" className="underline">Panele dön</Link>
+        </p>
+      </main>
+    )
+
+  const araclar = (
+    <div className="flex flex-wrap items-center gap-2">
+      {adimlar.length > 0 && (
+        <>
+          <button className="ikincil-buton" onClick={geri} disabled={aktifSira <= 0} aria-label="Önceki adım">
+            ◀
+          </button>
+          <span className="text-sm font-mono text-slate-300 tabular-nums">
+            {aktifSira + 1} / {adimlar.length}
+          </span>
+          <button className="ikincil-buton" onClick={ileri} disabled={aktifSira >= adimlar.length - 1} aria-label="Sonraki adım">
+            ▶
+          </button>
+        </>
+      )}
+      {!slaytGorunumu && (
+        <button className="ikincil-buton" onClick={() => setMevcutGoster(!mevcutGoster)}>
+          {mevcutGoster ? 'Mevcudu gizle' : 'Mevcudu göster'}
+        </button>
+      )}
+      <button className="ikincil-buton" onClick={() => yoklamaDurumu(!acik)}>
+        {acik ? 'Yoklamayı kapat' : 'Yoklamayı aç'}
+      </button>
+      <button className="ikincil-buton" onClick={() => setKodGoster((g) => !g)}>
+        {kodGoster ? 'Kodu gizle' : 'Kodu göster'}
+      </button>
+      <button className="ikincil-buton" onClick={() => setKumandaAcik(true)}>
+        Kumanda
+      </button>
+      <button className="ikincil-buton" onClick={tamEkran}>
+        Tam ekran
+      </button>
+      <Link to={`/panel/oturum/${oturum.id}`} className="ikincil-buton">
+        Panel
+      </Link>
+    </div>
+  )
+
+  return (
+    <>
+      {slaytGorunumu && aktif ? (
+        <SlaytSahnesi
+          belge={aktif.presentation_id ? belgeler.get(aktif.presentation_id) : undefined}
+          sayfaNo={aktif.sayfa_no ?? 1}
+          araclar={araclar}
+          kod={kodGoster ? kod : null}
+          katilan={gelenler.length}
+        />
+      ) : (
+        <YoklamaSahnesi
+          oturum={oturum}
+          acik={acik}
+          gelenler={gelenler}
+          mevcut={mevcut}
+          mevcutGoster={mevcutGoster}
+          kod={kodGoster ? kod : null}
+          araclar={araclar}
+        />
+      )}
+      {kumandaAcik && <KumandaQr oturumId={oturum.id} kapat={() => setKumandaAcik(false)} />}
+    </>
+  )
+}
+
+function tamEkran() {
+  if (document.fullscreenElement) document.exitFullscreen()
+  else document.documentElement.requestFullscreen?.()
+}
+
+// ---------------------------------------------------------------------------
+
+function KodSeridi({ kod, buyuk = false }: { kod: string; buyuk?: boolean }) {
+  return (
+    <p className={`text-center text-slate-300 ${buyuk ? 'text-base lg:text-lg' : 'text-sm'}`}>
+      Geç mi kaldın? <b className="text-white">{kisaAdres()}</b> adresine gir, kodu yaz:{' '}
+      <b className={`font-mono text-white tracking-widest ${buyuk ? 'text-2xl lg:text-3xl' : 'text-xl'}`}>{kodBicimle(kod)}</b>
+    </p>
+  )
+}
+
+function SlaytSahnesi({
+  belge,
+  sayfaNo,
+  araclar,
+  kod,
+  katilan,
+}: {
+  belge: Parameters<typeof SlaytCizimi>[0]['belge']
+  sayfaNo: number
+  araclar: React.ReactNode
+  kod: string | null
+  katilan: number
+}) {
+  return (
+    <main className="h-screen bg-black flex flex-col relative group">
+      <SlaytCizimi belge={belge} sayfaNo={sayfaNo} className="flex-1 min-h-0" />
+      {/* Araç çubuğu yalnızca fare üzerine gelince görünür; perdede slaytı kapatmaz. */}
+      <div className="absolute top-0 inset-x-0 p-3 flex justify-end opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity">
+        <div className="cam-panel rounded-2xl p-2">{araclar}</div>
+      </div>
+      {kod && (
+        <div className="absolute bottom-3 right-3 cam-panel rounded-2xl px-4 py-2 flex items-center gap-4">
+          <span className="text-xs text-slate-400">
+            <b className="text-emerald-300 text-sm">{katilan}</b> katılan
+          </span>
+          <KodSeridi kod={kod} />
+        </div>
+      )}
+    </main>
+  )
+}
+
+function YoklamaSahnesi({
+  oturum,
+  acik,
+  gelenler,
+  mevcut,
+  mevcutGoster,
+  kod,
+  araclar,
+}: {
+  oturum: Oturum & { courses: Ders }
+  acik: boolean
+  gelenler: Gelen[]
+  mevcut: number
+  mevcutGoster: boolean
+  kod: string | null
+  araclar: React.ReactNode
+}) {
+  const oturumId = oturum.id
+  const [qr, setQr] = useState<string | null>(null)
+  const [qrHata, setQrHata] = useState(false)
+  const [kalan, setKalan] = useState({ ms: 10000, toplam: 10000, an: Date.now() })
+  const [simdi, setSimdi] = useState(Date.now())
 
   // Dönen QR: sunucudan güncel kodu al, pencere bitince yenisini iste.
   useEffect(() => {
@@ -133,33 +396,6 @@ export default function Sahne() {
     return () => clearInterval(t)
   }, [])
   const kalanOran = Math.max(0, Math.min(1, (kalan.ms - (simdi - kalan.an)) / kalan.toplam))
-
-  async function yoklamaDurumu(ac: boolean) {
-    const { data } = await supabase
-      .from('sessions')
-      .update(ac ? { yoklama_acik: true, bitti: null } : { yoklama_acik: false })
-      .eq('id', oturumId)
-      .select('id, course_id, baslik, yoklama_acik, basladi, bitti')
-      .single()
-    if (data) setOturum((o) => (o ? { ...o, ...(data as Oturum) } : o))
-  }
-
-  function tamEkran() {
-    if (document.fullscreenElement) document.exitFullscreen()
-    else document.documentElement.requestFullscreen?.()
-  }
-
-  if (oturum === undefined)
-    return <main className="min-h-screen flex items-center justify-center text-slate-400">Yükleniyor…</main>
-  if (oturum === null)
-    return (
-      <main className="min-h-screen flex items-center justify-center text-slate-400">
-        <p>
-          Oturum bulunamadı. <Link to="/panel" className="underline">Panele dön</Link>
-        </p>
-      </main>
-    )
-
   const oran = mevcut ? gelenler.length / mevcut : 0
 
   return (
@@ -169,46 +405,36 @@ export default function Sahne() {
           <p className="text-sm font-mono text-indigo-300">{oturum.courses.ad}</p>
           <h1 className="text-2xl lg:text-3xl font-extrabold truncate">{oturumAdi(oturum)}</h1>
         </div>
-        <div className="ml-auto flex items-center gap-2 opacity-60 hover:opacity-100 transition-opacity">
-          <button className="ikincil-buton" onClick={() => setMevcutGoster(!mevcutGoster)}>
-            {mevcutGoster ? 'Mevcudu gizle' : 'Mevcudu göster'}
-          </button>
-          <button className="ikincil-buton" onClick={() => yoklamaDurumu(!acik)}>
-            {acik ? 'Yoklamayı kapat' : 'Yoklamayı aç'}
-          </button>
-          <button className="ikincil-buton" onClick={tamEkran}>
-            Tam ekran
-          </button>
-          <Link to={`/panel/oturum/${oturum.id}`} className="ikincil-buton">
-            Panel
-          </Link>
-        </div>
+        <div className="ml-auto opacity-60 hover:opacity-100 transition-opacity">{araclar}</div>
       </header>
 
       <div className="flex-1 grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] items-stretch">
         <section className="cam-panel rounded-3xl p-5 lg:p-6 flex flex-col items-center justify-center gap-4">
           {acik ? (
             <>
-              <p className="text-lg lg:text-xl text-slate-200 text-center">
-                Telefonunun kamerasıyla okut, numaranı gir.
-              </p>
-              <div className="bg-white rounded-3xl p-3 w-full max-w-[min(56vh,600px)] aspect-square flex items-center justify-center">
+              <p className="text-lg lg:text-xl text-slate-200 text-center">Telefonunun kamerasıyla okut, numaranı gir.</p>
+              <div className="bg-white rounded-3xl p-3 w-full max-w-[min(52vh,600px)] aspect-square flex items-center justify-center">
                 {qr ? (
                   <img src={qr} alt="Yoklama QR kodu" className="w-full h-full [image-rendering:pixelated]" />
                 ) : (
                   <span className="text-slate-500 text-sm">{qrHata ? 'Sunucuya ulaşılamıyor, deneniyor…' : 'Hazırlanıyor…'}</span>
                 )}
               </div>
-              <div className="w-full max-w-[min(56vh,600px)] h-1.5 rounded-full bg-white/10 overflow-hidden">
+              <div className="w-full max-w-[min(52vh,600px)] h-1.5 rounded-full bg-white/10 overflow-hidden">
                 <div className="h-full bg-indigo-400 transition-[width] duration-200 ease-linear" style={{ width: `${kalanOran * 100}%` }} />
               </div>
-              <p className="text-xs text-slate-500">Kod birkaç saniyede bir değişir. Fotoğrafı başkasına gönderilen kod işe yaramaz.</p>
+              {kod ? (
+                <KodSeridi kod={kod} buyuk />
+              ) : (
+                <p className="text-xs text-slate-500">Kod birkaç saniyede bir değişir. Fotoğrafı başkasına gönderilen kod işe yaramaz.</p>
+              )}
             </>
           ) : (
             <div className="text-center space-y-3">
               <p className="text-sm font-mono uppercase tracking-widest text-slate-400">Yoklama kapandı</p>
               <p className="text-6xl font-extrabold">{gelenler.length}</p>
               <p className="text-slate-300">öğrenci derse katıldı</p>
+              {kod && <KodSeridi kod={kod} />}
             </div>
           )}
         </section>
@@ -241,5 +467,42 @@ export default function Sahne() {
         </section>
       </div>
     </main>
+  )
+}
+
+/** Hocanın telefonuyla okutacağı kumanda QR'ı. Öğrencilere gösterilmemeli. */
+function KumandaQr({ oturumId, kapat }: { oturumId: string; kapat: () => void }) {
+  const [qr, setQr] = useState<string | null>(null)
+  const [hata, setHata] = useState(false)
+
+  useEffect(() => {
+    supabase.rpc('kumanda_anahtari', { p_session: oturumId }).then(async ({ data, error }) => {
+      if (error || !data) {
+        setHata(true)
+        return
+      }
+      setQr(await QRCode.toDataURL(`${kokAdres()}#/kumanda?s=${oturumId}&k=${data as string}`, { margin: 1, width: 480 }))
+    })
+  }, [oturumId])
+
+  return (
+    <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50" onClick={kapat}>
+      <div className="cam-panel rounded-3xl p-6 max-w-sm w-full text-center space-y-4" onClick={(e) => e.stopPropagation()}>
+        <h2 className="text-lg font-bold">Telefonunu kumanda yap</h2>
+        <p className="text-sm text-slate-300">
+          Bu kodu kendi telefonunla okut. Okutan kişi dersi yönetebilir, bu yüzden perdede uzun süre açık bırakma.
+        </p>
+        <div className="bg-white rounded-2xl p-3 aspect-square flex items-center justify-center">
+          {qr ? (
+            <img src={qr} alt="Kumanda QR kodu" className="w-full" />
+          ) : (
+            <span className="text-slate-500 text-sm">{hata ? 'Kod alınamadı.' : 'Hazırlanıyor…'}</span>
+          )}
+        </div>
+        <button className="parlak-buton rounded-xl px-5 py-2.5 font-bold w-full" onClick={kapat}>
+          Kapat
+        </button>
+      </div>
+    </div>
   )
 }

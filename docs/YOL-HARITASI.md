@@ -16,10 +16,25 @@ Her faz kendi başına çalışır durumda teslim edilir. Bir faz bitmeden sonra
 - Sahnede canlı yoklama sayacı ve akışı
 - Yoklama raporu: Excel'e dışa aktarma
 
-## Faz 2: Slayt (v0.3)
-- PDF yükleme (Supabase Storage), pdf.js ile sahnede gösterim
-- Hocanın kumanda görünümü (telefondan ileri/geri)
-- Öğrenci telefonunda aktif slayt başlığı / notu
+## Faz 2: Ders akışı ve slayt (v0.3)
+Kullanıcı kararları (19 Ekim 2026): sunumlar PPTX, PPT ya da PDF olabilir; slaytların arasına sonradan video, beyin fırtınası gibi etkinlikler eklenebilmeli ve sıra değiştirilebilmeli. Sistem hem bilgisayar + projeksiyonla hem yalnız telefonla kullanılabilmeli. Geç gelen öğrenci perdedeki kodla katılabilmeli (yoklama dahil). Üç parça halinde teslim.
+
+### 2a: Ders akışı, PDF, sahne, kumanda, ders kodu (v0.3.0) ✅
+- Ders akışı: sıralı adımlar (yoklama, slayt); sürükle bırak ve oklarla sıralama
+- PDF yükleme (Supabase Storage), sayfa metinlerinin çıkarılması, dersin sunum kitaplığı
+- Sahnede slayt (pdf.js), klavye ve sunum kumandasıyla ilerleme
+- Telefon kumandası: sahnedeki gizli QR ile, girişsiz
+- Ders kodu: 6 hane, dakikada bir değişir; geç gelen öğrenci kodla katılır, yoklama açıksa yoklamaya da yazılır
+- Öğrenci telefonunda perdedeki slaytın metni
+
+### 2b: Yalnız telefon modu
+- Bilgisayar yoksa hoca dersi telefonundan yönetir; perdede görünecek ekran öğrenci telefonlarında görünür (slaytın görüntüsü + metni)
+- Slayt görüntüleri küçültülmüş resim olarak hazırlanır. Ücretsiz plan trafiği (ayda 5 GB) için hesap: 150 öğrenci x 40 slayt ders başına 300-400 MB; görüntü boyutu buna göre seçilecek
+
+### 2c: PPTX/PPT çevirisi
+- Yüklenen PPTX/PPT dosyası GitHub Actions'ta LibreOffice ile PDF'e çevrilir
+- Kullanıcı kararı: ek token yok; iş akışı birkaç dakikada bir bekleyen dosyalara bakar (5-20 dakika gecikme kabul)
+- Animasyonlar düşer, bazı yazı tipleri farklı görünebilir (Calibri yerine metrik uyumlu Carlito kurulacak)
 
 ## Faz 3: Quiz (v0.4)
 - Haftaya soru ekleme (elle ya da metin yapıştırarak)

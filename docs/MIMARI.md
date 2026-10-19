@@ -31,9 +31,19 @@ Faz 1 itibarıyla kurulu olanlar (`0002_yoklama.sql`):
 | `ozel.session_secrets` | session_id, anahtar | Oturumun gizli anahtarı. `ozel` şeması API'ye kapalı, hiçbir rol doğrudan okuyamaz |
 | `attendance` | session_id, student_id, cihaz_id, yontem (qr/elle), zaman | (session_id, student_id) ve (session_id, cihaz_id) tekil |
 
-Sonraki fazlarda gelecek: `lessons` (haftalık içerik), `responses` (quiz ve oylama cevapları), `sessions.aktif_adim`.
+Faz 2a ile gelenler (`0003_ders_akisi.sql`):
 
-RLS: Hoca yalnızca kendi `courses` kayıtlarını ve bunlara bağlı öğrenci, oturum ve yoklamaları görür. Öğrenci (anon) hiçbir tabloyu okuyamaz ve yazamaz; yalnızca `katilim_bileti()` ve `check_in()` RPC'lerini çağırır (`SECURITY DEFINER`).
+| Tablo | Alanlar | Not |
+|---|---|---|
+| `presentations` | id, course_id, ad, kaynak, durum, sayfa_sayisi, metinler | Sunum kitaplığı. Dosya depoda: `sunumlar/<ders id>/<sunum id>.pdf`. `metinler` her sayfanın metni (yüklerken tarayıcıda çıkarılır) |
+| `lessons` | id, course_id, ad | Ders akışı (ör. "3. hafta") |
+| `lesson_steps` | id, lesson_id, sira, tur, presentation_id, sayfa_no, ayar | Akış adımı. `tur`: yoklama, slayt; sonraki fazlarda video, beyin fırtınası, quiz. `ayar` etkinliğe özel ayarlar için |
+| `sessions` (+) | lesson_id, aktif_adim | Oturumda izlenen akış ve perdedeki adım |
+| `ozel.session_secrets` (+) | kumanda | Kumanda anahtarı |
+
+Sonraki fazlarda gelecek: `responses` (quiz ve oylama cevapları).
+
+RLS: Hoca yalnızca kendi `courses` kayıtlarını (ve bunlara bağlı sunum, akış ve adımları) ve bunlara bağlı öğrenci, oturum ve yoklamaları görür. Öğrenci (anon) hiçbir tabloyu okuyamaz ve yazamaz; yalnızca `katilim_bileti()`, `check_in()`, `kodla_katil()` ve `ders_durumu()` RPC'lerini çağırır (`SECURITY DEFINER`). Kumanda (girişsiz) `kumanda_durumu()` ve `kumanda_komut()` ile, oturumun kumanda anahtarını vererek çalışır.
 
 ## Yoklama akışı
 
@@ -55,7 +65,7 @@ Supabase panelinde gereken ayar: Authentication > URL Configuration > Site URL `
 ## Gerçek zaman stratejisi
 
 - **Yoklama**: sahne ekranı `attendance` ve kendi `sessions` satırını postgres_changes ile dinler (RLS geçerli). Bağlantı koparsa 20 saniyede bir yedek sorgu çalışır.
-- **Ders durumu** (`aktif_adim`, aktif slayt, aktif soru, Faz 2+): hoca `sessions` satırını günceller. Öğrencinin `sessions` tablosunu okuması gerekecek; gizli anahtar ayrı tabloda tutulduğu için bu güvenli olacak.
+- **Ders durumu** (Faz 2a'dan itibaren): perdedeki adımı hoca (sahne ya da kumanda) `sessions.aktif_adim` ile değiştirir. Sahne bunu postgres_changes ile alır. Öğrenci tablo okumaz: `sessions` üzerindeki tetikleyici durumu `realtime.send()` ile herkese açık `oturum:<id>` Broadcast kanalına yayınlar (yalnızca ders adı, adım ve slayt metni); öğrenci ve kumanda bu kanalı dinler, ayrıca yedek olarak `ders_durumu()` ile sorar.
 - **Quiz cevapları**: `submit_response()` ile veritabanına yazılır (raporlanacağı için). Sahne ekranı sayıları dinler.
 - **Oyunlar** (halat çekme, kovalamaca): Realtime Broadcast kanalı `session:<id>`. Öğrenci telefonu dokunuşları kendi içinde toplar ve en fazla saniyede 2-3 mesaj gönderir. Veritabanına yazılmaz, sadece oyun sonucu kaydedilir.
 
@@ -67,4 +77,12 @@ Ders başına ~100.000 mesaj, ayda 12 ders yaklaşık 1,2 milyon. Free planın 2
 
 ## Slaytlar
 
-PPTX'i tarayıcıda birebir çizmek güvenilir değil. Önerilen yol: hoca sunumu **PDF olarak** yükler, pdf.js ile sayfa sayfa gösterilir, görüntü birebir korunur. PPTX'ten yalnızca metin çıkarma (öğrenci telefonuna not olarak) ikincil seçenek olarak kalır.
+PPTX'i tarayıcıda birebir çizmek güvenilir değil. Hoca sunumu **PDF olarak** yükler, pdf.js ile sayfa sayfa gösterilir, görüntü birebir korunur. PPTX/PPT yüklenirse Faz 2c'de GitHub Actions'taki LibreOffice ile PDF'e çevrilecek.
+
+- PDF özel `sunumlar` kovasındadır; sahne 6 saat geçerli imzalı adresle açar. Öğrenci dosyaya erişmez, yalnızca sayfa metnini görür (Faz 2b'de yalnız telefon modu için küçültülmüş görüntüler eklenecek).
+- Sayfa metni yüklerken pdf.js ile çıkarılır ve `presentations.metinler` dizisine yazılır.
+
+## Ders kodu ve kumanda
+
+- **Ders kodu**: oturumun gizli anahtarı ve dakika numarasından türetilen 6 haneli sayı. `kodla_katil()` açık oturumlar arasında (son 12 saat) bu dakikanın ya da bir önceki dakikanın koduna uyanı bulur. Yoklama açıksa QR'daki gibi cihaza bağlı bilet döner, numara `check_in()` ile girilir.
+- **Kumanda**: her oturumun ayrı, rastgele 64 haneli kumanda anahtarı vardır (`ozel.session_secrets.kumanda`). Sahnedeki Kumanda QR'ı bu anahtarı içerir; telefon anahtarı saklar ve adres çubuğundan siler. Telefonda hoca girişi varsa anahtar `kumanda_anahtari()` ile de alınır.

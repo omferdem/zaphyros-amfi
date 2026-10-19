@@ -1,13 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import type { Ders, Ogrenci, Oturum, Yoklama } from '../lib/tipler'
+import type { Akis, Ders, Ogrenci, Oturum, Yoklama } from '../lib/tipler'
 import { dersGetir, dersYoklamalari, ogrencileriGetir, oturumBaslat, oturumlariGetir } from '../lib/veri'
 import { dosyadanAyristir, metindenAyristir, type AyristirmaSonucu } from '../lib/sinifListesi'
 import { raporHesapla, raporuExceleAktar } from '../lib/rapor'
 import { oturumAdi, tarihSaat } from '../lib/bicim'
+import { akislariGetir, sunumlariGetir, sunumYolu } from '../lib/akis'
+import DersAkislari from './DersAkislari'
 
-type Sekme = 'oturumlar' | 'liste' | 'rapor'
+type Sekme = 'oturumlar' | 'akislar' | 'liste' | 'rapor'
 
 export default function DersDetay() {
   const { dersId = '' } = useParams()
@@ -41,8 +43,15 @@ export default function DersDetay() {
 
   async function dersiSil() {
     if (!ders) return
-    if (!window.confirm(`"${ders.ad}" dersi, sınıf listesi ve bütün yoklama kayıtlarıyla birlikte silinecek. Emin misin?`))
+    if (!window.confirm(`"${ders.ad}" dersi; sınıf listesi, yoklama kayıtları, akışları ve sunumlarıyla birlikte silinecek. Emin misin?`))
       return
+    // Sunum dosyaları depoda durur; kayıtlar silinmeden önce dosyalar kaldırılır.
+    try {
+      const sunumlar = await sunumlariGetir(ders.id)
+      if (sunumlar.length) await supabase.storage.from('sunumlar').remove(sunumlar.map((s) => sunumYolu(ders.id, s.id)))
+    } catch {
+      /* dosyalar silinemese de ders silinebilsin */
+    }
     const { error } = await supabase.from('courses').delete().eq('id', ders.id)
     if (error) setHata('Ders silinemedi.')
     else navigate('/panel')
@@ -72,6 +81,7 @@ export default function DersDetay() {
         {(
           [
             ['oturumlar', `Oturumlar (${oturumlar.length})`],
+            ['akislar', 'Ders akışları'],
             ['liste', `Sınıf listesi (${ogrenciler.length})`],
             ['rapor', 'Yoklama raporu'],
           ] as [Sekme, string][]
@@ -91,6 +101,7 @@ export default function DersDetay() {
       {sekme === 'oturumlar' && (
         <Oturumlar ders={ders} ogrenciler={ogrenciler} oturumlar={oturumlar} yoklamalar={yoklamalar} yenile={yukle} />
       )}
+      {sekme === 'akislar' && <DersAkislari ders={ders} />}
       {sekme === 'liste' && <SinifListesi ders={ders} ogrenciler={ogrenciler} yenile={yukle} />}
       {sekme === 'rapor' && <Rapor ders={ders} ogrenciler={ogrenciler} oturumlar={oturumlar} yoklamalar={yoklamalar} />}
 
@@ -115,6 +126,8 @@ function Oturumlar(props: {
   const { ders, ogrenciler, oturumlar, yoklamalar, yenile } = props
   const navigate = useNavigate()
   const [baslik, setBaslik] = useState('')
+  const [akislar, setAkislar] = useState<Akis[]>([])
+  const [akisId, setAkisId] = useState('')
   const [basliyor, setBasliyor] = useState(false)
   const [hata, setHata] = useState<string | null>(null)
 
@@ -124,12 +137,18 @@ function Oturumlar(props: {
     return m
   }, [yoklamalar])
 
+  useEffect(() => {
+    akislariGetir(ders.id)
+      .then(setAkislar)
+      .catch(() => setAkislar([]))
+  }, [ders.id])
+
   async function baslat(e: React.FormEvent) {
     e.preventDefault()
     setBasliyor(true)
     setHata(null)
     try {
-      const id = await oturumBaslat(ders.id, baslik)
+      const id = await oturumBaslat(ders.id, baslik || akislar.find((a) => a.id === akisId)?.ad || '', akisId || null)
       navigate(`/sahne/${id}`)
     } catch {
       setHata('Oturum başlatılamadı.')
@@ -147,11 +166,19 @@ function Oturumlar(props: {
   return (
     <div className="space-y-5">
       <form onSubmit={baslat} className="cam-panel rounded-2xl p-5 space-y-3">
-        <h2 className="font-bold">Yoklama başlat</h2>
+        <h2 className="font-bold">Ders başlat</h2>
         {ogrenciler.length === 0 && (
           <p className="text-sm text-amber-300">Önce sınıf listesini yükle; listede olmayan numaralar yoklamaya giremez.</p>
         )}
         <div className="flex flex-col sm:flex-row gap-3">
+          <select className="giris-kutusu sm:!w-64" value={akisId} onChange={(e) => setAkisId(e.target.value)}>
+            <option value="">Akış yok, yalnızca yoklama</option>
+            {akislar.map((a) => (
+              <option key={a.id} value={a.id}>
+                {a.ad}
+              </option>
+            ))}
+          </select>
           <input
             maxLength={200}
             className="giris-kutusu"
@@ -166,7 +193,10 @@ function Oturumlar(props: {
             Başlat ve sahneyi aç
           </button>
         </div>
-        <p className="text-xs text-slate-500">Sahne ekranını projeksiyona yansıt. QR kod 10 saniyede bir yenilenir.</p>
+        <p className="text-xs text-slate-500">
+          Sahne ekranını projeksiyona yansıt. Akış seçersen perdede akışın ilk adımı açılır; ilerlemek için klavyenin ok
+          tuşlarını ya da telefonundaki kumandayı kullan.
+        </p>
         {hata && <p className="text-sm text-rose-300">{hata}</p>}
       </form>
 

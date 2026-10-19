@@ -1,7 +1,7 @@
 {
   "name": "zaphyros-amfi",
   "private": true,
-  "version": "0.2.2",
+  "version": "0.3.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,10 +9,12 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "test": "vitest run",
-    "kurulum-sql": "node scripts/kurulum-sql.mjs"
+    "kurulum-sql": "node scripts/kurulum-sql.mjs",
+    "sql-test": "node scripts/sql-test.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",
+    "pdfjs-dist": "^6.4.299",
     "qrcode": "^1.5.4",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
@@ -21,6 +23,7 @@
     "write-excel-file": "^4.1.1"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.10",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^24.13.3",
     "@types/qrcode": "^1.5.6",

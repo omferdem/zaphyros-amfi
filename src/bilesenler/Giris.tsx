@@ -21,7 +21,7 @@ export default function Giris() {
       setDurum('bos')
       setHata(
         error.status === 429
-          ? 'Kısa sürede çok fazla bağlantı istendi. Birkaç dakika sonra tekrar dene.'
+          ? 'Giriş e-postası sınırına takıldın (ücretsiz e-posta saatte 2 ile sınırlı). Gelen son e-postadaki bağlantıyı kullan ya da bir saat sonra tekrar iste.'
           : 'Bağlantı gönderilemedi. E-posta adresini kontrol edip tekrar dene.',
       )
       return

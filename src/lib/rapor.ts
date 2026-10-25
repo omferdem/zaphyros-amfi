@@ -25,6 +25,11 @@ export function raporHesapla(ogrenciler: Ogrenci[], oturumlar: Oturum[], yoklama
 // Bazı tarayıcılar ASCII dışı karakter içeren indirme adlarını yok sayıp dosyayı "download" diye kaydeder.
 const ASCII: Record<string, string> = { ç: 'c', ğ: 'g', ı: 'i', ö: 'o', ş: 's', ü: 'u', Ç: 'C', Ğ: 'G', İ: 'I', Ö: 'O', Ş: 'S', Ü: 'U' }
 
+/** Dosya adında dersi, şubeyi ve dönemi ayırt eden etiket: yedi şubenin çıktısı karışmasın. */
+function dosyaEtiketi(d: Ders): string {
+  return [d.kod || d.ad, d.sube, d.donem].filter(Boolean).join(' ')
+}
+
 function dosyaAdi(s: string): string {
   return s
     .replace(/[çğıöşüÇĞİÖŞÜ]/g, (h) => ASCII[h])
@@ -67,7 +72,7 @@ export async function raporuExceleAktar(ders: Ders, ogrenciler: Ogrenci[], oturu
     sheet: 'Yoklama',
     columns: [{ width: 14 }, { width: 28 }, ...sirali.map(() => ({ width: 14 })), { width: 10 }, { width: 10 }],
     stickyRowsCount: 1,
-  }).toFile(dosyaAdi(`Yoklama ${ders.kod || ders.ad} ${tarih(new Date().toISOString())}.xlsx`))
+  }).toFile(dosyaAdi(`Yoklama ${dosyaEtiketi(ders)} ${tarih(new Date().toISOString())}.xlsx`))
 }
 
 export async function oturumuExceleAktar(ders: Ders, oturum: Oturum, ogrenciler: Ogrenci[], yoklamalar: Yoklama[]) {
@@ -97,7 +102,7 @@ export async function oturumuExceleAktar(ders: Ders, oturum: Oturum, ogrenciler:
     sheet: 'Yoklama',
     columns: [{ width: 14 }, { width: 28 }, { width: 8 }, { width: 10 }, { width: 8 }],
     stickyRowsCount: 1,
-  }).toFile(dosyaAdi(`Yoklama ${ders.kod || ders.ad} ${oturumAdi(oturum)}.xlsx`))
+  }).toFile(dosyaAdi(`Yoklama ${dosyaEtiketi(ders)} ${oturumAdi(oturum)}.xlsx`))
 }
 
 /** Oturumun bilgi yarışması sonuçları: sıra, ad (yoklamadaki ad ya da takma ad), puan, doğru sayısı. */
@@ -122,5 +127,5 @@ export async function yarismayiExceleAktar(ders: Ders, oturum: Oturum, puanlar: 
     sheet: 'Yarışma',
     columns: [{ width: 6 }, { width: 28 }, { width: 8 }, { width: 8 }],
     stickyRowsCount: 1,
-  }).toFile(dosyaAdi(`Yarisma ${ders.kod || ders.ad} ${oturumAdi(oturum)}.xlsx`))
+  }).toFile(dosyaAdi(`Yarisma ${dosyaEtiketi(ders)} ${oturumAdi(oturum)}.xlsx`))
 }

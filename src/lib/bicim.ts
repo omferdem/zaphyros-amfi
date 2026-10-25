@@ -23,6 +23,12 @@ export function saat(iso: string): string {
   return new Date(iso).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
 }
 
+/** Dersin şubesiyle birlikte görünen adı: "Din Felsefesi I · B" (şubesiz derste yalnızca ad). */
+export function dersEtiketi(d: { ad: string; sube?: string | null }): string {
+  const sube = d.sube?.trim()
+  return sube ? `${d.ad} · ${sube}` : d.ad
+}
+
 /** Oturumun listede ve raporda görünen adı */
 export function oturumAdi(o: { baslik: string | null; basladi: string }): string {
   return o.baslik?.trim() || tarih(o.basladi)

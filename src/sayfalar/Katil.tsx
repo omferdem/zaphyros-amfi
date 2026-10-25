@@ -26,7 +26,8 @@ const HATALAR: Record<string, string> = {
   bilet_gecersiz: 'Süre doldu. Perdedeki QR kodu yeniden okutup numaranı tekrar gir.',
   cihaz_gecersiz: 'Tarayıcın tanınamadı. Sayfayı yenileyip tekrar dene.',
   numara_gecersiz: 'Numarayı yalnızca rakam (ve gerekiyorsa harf) olarak yaz.',
-  liste_disi: 'Bu numara dersin listesinde yok. Numaranı kontrol et; doğruysa hocana söyle.',
+  liste_disi:
+    'Bu numara bu dersin (şubenin) listesinde yok. Numaranı kontrol et. Başka bir şubedeysen kendi şubenin ders kodunu ya da QR kodunu kullan; doğruysa hocana söyle.',
   numara_kullanildi: 'Bu numarayla bu derste başka bir telefondan yoklama verilmiş. Hatalıysa hocana söyle.',
   cihaz_kullanildi: 'Bu telefondan bu derste başka bir numarayla yoklama verildi. Her öğrenci kendi telefonunu kullanmalı.',
   tekrar_dene: 'Bir çakışma oldu. Lütfen tekrar dene.',

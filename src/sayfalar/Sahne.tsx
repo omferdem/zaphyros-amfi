@@ -5,7 +5,7 @@ import { supabase } from '../lib/supabase'
 import type { Adim, Ders, DersDurumu, Oturum, PuanSatiri, Sunum } from '../lib/tipler'
 import { oturumGetir } from '../lib/veri'
 import { adimlariGetir, sunumlariGetirIdIle } from '../lib/akis'
-import { kisaAd, oturumAdi } from '../lib/bicim'
+import { dersEtiketi, kisaAd, oturumAdi } from '../lib/bicim'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
 import { SIKLAR, bitisAni } from '../lib/yarisma'
 
@@ -420,7 +420,7 @@ function YoklamaSahnesi({
     <main className="min-h-screen flex flex-col p-5 lg:p-8 gap-5">
       <header className="flex items-center gap-4">
         <div className="min-w-0">
-          <p className="text-sm font-mono text-indigo-300">{oturum.courses.ad}</p>
+          <p className="text-sm font-mono text-indigo-300">{dersEtiketi(oturum.courses)}</p>
           <h1 className="text-2xl lg:text-3xl font-extrabold truncate">{oturumAdi(oturum)}</h1>
         </div>
         <div className="ml-auto opacity-60 hover:opacity-100 transition-opacity">{araclar}</div>

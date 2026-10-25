@@ -77,7 +77,7 @@ export default function DersDetay() {
           {ders.ad}
           {ders.sube?.trim() && <span className="text-indigo-300"> · {ders.sube.trim()}</span>}
         </h1>
-        <SubeAraci ders={ders} yenile={yukle} hataVer={setHata} />
+        <SubeAraci ders={ders} ogrenciSayisi={ogrenciler.length} yenile={yukle} hataVer={setHata} />
       </div>
 
       {hata && <p className="text-sm text-rose-300 bg-rose-500/10 rounded-xl p-3">{hata}</p>}
@@ -551,7 +551,17 @@ function Rapor(props: { ders: Ders; ogrenciler: Ogrenci[]; oturumlar: Oturum[]; 
  * Şube araçları: dersin bu dönemdeki kardeş şubeleri arasında geçiş, şube ekleme ve dersi düzenleme.
  * Her şubenin sınıf listesi, oturumları ve yoklaması ayrıdır.
  */
-function SubeAraci({ ders, yenile, hataVer }: { ders: Ders; yenile: () => Promise<void>; hataVer: (m: string | null) => void }) {
+function SubeAraci({
+  ders,
+  ogrenciSayisi,
+  yenile,
+  hataVer,
+}: {
+  ders: Ders
+  ogrenciSayisi: number
+  yenile: () => Promise<void>
+  hataVer: (m: string | null) => void
+}) {
   const [kardesler, setKardesler] = useState<DersSatiri[]>([])
   const [mod, setMod] = useState<'yok' | 'ekle' | 'duzenle'>('yok')
   const [yeni, setYeni] = useState('')
@@ -562,7 +572,7 @@ function SubeAraci({ ders, yenile, hataVer }: { ders: Ders; yenile: () => Promis
     subeleriGetir(ders.term_id, ders.subject_id)
       .then(setKardesler)
       .catch(() => setKardesler([]))
-  }, [ders.term_id, ders.subject_id, ders.id, ders.sube, say])
+  }, [ders.term_id, ders.subject_id, ders.id, ders.sube, say, ogrenciSayisi])
 
   useEffect(() => {
     setForm({ ad: ders.ad, kod: ders.kod ?? '', sube: ders.sube ?? '' })

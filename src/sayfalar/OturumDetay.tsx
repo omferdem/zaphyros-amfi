@@ -4,7 +4,7 @@ import { supabase } from '../lib/supabase'
 import type { Ders, Ogrenci, Oturum, PuanSatiri, Yoklama } from '../lib/tipler'
 import { ogrencileriGetir, oturumGetir, oturumYoklamalari } from '../lib/veri'
 import { oturumuExceleAktar, yarismayiExceleAktar } from '../lib/rapor'
-import { oturumAdi, saat, tarihSaat } from '../lib/bicim'
+import { dersEtiketi, oturumAdi, saat, tarihSaat } from '../lib/bicim'
 
 /** Bir oturumun yoklama listesi: kim var, kim yok; hoca elle düzeltebilir. */
 export default function OturumDetay() {
@@ -70,7 +70,7 @@ export default function OturumDetay() {
     <div className="space-y-6">
       <div>
         <Link to={`/panel/ders/${oturum.course_id}`} className="text-xs text-slate-400 hover:text-white">
-          ← {oturum.courses.ad}
+          ← {dersEtiketi(oturum.courses)}{oturum.courses.donem ? ` · ${oturum.courses.donem}` : ''}
         </Link>
         <h1 className="text-2xl font-extrabold mt-3">{oturumAdi(oturum)}</h1>
         <p className="text-xs text-slate-400">{tarihSaat(oturum.basladi)}</p>

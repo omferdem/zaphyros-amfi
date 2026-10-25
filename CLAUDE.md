@@ -70,6 +70,12 @@ Ayrıntılı mimari: `docs/MIMARI.md`. Yol haritası ve fazlar: `docs/YOL-HARITA
    - Bulut oturumu: iş kendi dalında PR olarak biter. PR main'e alınmadan öteki taraf değişikliği görmez; iş bitince kullanıcıya PR'ı birleştirmeyi teklif et, açık PR bırakma.
    - İki tarafta aynı anda aynı dosyalar üzerinde çalışma; yarım iş varsa önce onu main'e al.
 
+### Yerel oturumda hoca girişi (Claude in Chrome ile)
+- Giriş şifresizdir ve **PKCE** kullanır: bağlantıyı **sitenin kendi giriş formundan** iste (aynı tarayıcıda doğrulama kodu saklanır). Başka yoldan (ör. doğrudan API isteğiyle) üretilen bağlantılar giriş yapmaz. Form dışında yeni istek, doğrulama kodunu ezer ve önceki e-postayı işe yaramaz hâle getirir.
+- Supabase'in yerleşik e-postası **saatte 2** ile sınırlıdır (`over_email_send_rate_limit`); denemeleri sık yapma, e-posta 1 saat içinde kullanılmazsa süresi dolar.
+- Gmail aynı konudaki e-postaları tek konuşmada toplar. **En alttaki (en yeni) mesajı** aç; içeriği "…" (Kısaltılmış içeriği göster) ile gizlenmiş olabilir. Bağlantıya `computer` ile gerçek bir tıklama yap (betikle `click()` yeni sekme açmaz). Gelmesi birkaç dakika sürebilir.
+- Bu işi kullanıcıya yaptırma; Gmail, Supabase ve GitHub oturumları kullanıcının Chrome'unda açık.
+
 ## Güvenlik ve KVKK
 
 - `service_role` anahtarı **asla** repoya, frontend koduna ya da GitHub Pages'e girmez. Frontend yalnızca `anon` (publishable) anahtarı kullanır; güvenlik RLS politikalarıyla sağlanır.

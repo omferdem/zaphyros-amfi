@@ -48,10 +48,24 @@ Bu yapılmazsa e-postana gelen giriş bağlantısı çalışmaz.
 
 ## 6. Kurulumu sahiplen
 
+Önce aşağıdaki "Giriş e-postası" kutusunu oku; girişte takılmamak için kısa bir ön hazırlık gerekir.
+
 1. Siteni aç, e-posta adresini yaz ve gelen bağlantıya **aynı tarayıcıda** tıkla.
 2. "Bu kurulum henüz kimseye ait değil" ekranında **Kurulumu sahiplen** de.
 
 Artık bu kurulumun tek hocası sensin. Başka biri siteye girse bile ders açamaz, verilerini göremez.
+
+### Giriş e-postası: saatte 2 sınırı
+
+Giriş şifresizdir; her girişte e-postana tek kullanımlık bir bağlantı gelir. Supabase'in yerleşik ücretsiz e-posta hizmeti **bütün projede saatte yalnızca 2 e-posta** gönderir. Kurulum sırasında birkaç deneme yapıp bağlantıyı kaçırırsan "Kısa sürede çok fazla bağlantı istendi" uyarısı çıkar ve bir saate yakın beklemek gerekir. Bu yüzden:
+
+- **Şimdilik (en kolay yol):** Giriş bağlantısını bir kez iste, e-postanın gelmesini bekle ve **aynı tarayıcıda** hemen tıkla. Tekrar tekrar isteme; her istek hakkından biri gider. Bağlantı yalnızca bir kez ve yaklaşık bir saat çalışır. Gmail aynı konudaki e-postaları tek konuşmada toplar; **en alttaki (en yeni) e-postayı** aç. İçeriği "…" ile gizliyse üç noktaya basıp aç.
+- **Kalıcı çözüm (önerilir, 10 dakika):** Supabase'e kendi e-posta sunucunu bağla; sınır saatte onlarca e-postaya çıkar. Ücretsiz seçenekler arasında [Resend](https://resend.com) ve [Brevo](https://www.brevo.com) var.
+  1. Seçtiğin hizmette hesap aç ve bir **SMTP** erişim bilgisi (host, port, kullanıcı adı, şifre) oluştur. Gönderen adres olarak hizmetin doğruladığın bir adresini kullan.
+  2. Supabase'de **Authentication > Emails > SMTP Settings** sayfasında **Enable custom SMTP** aç ve bu bilgileri gir.
+  3. **Authentication > Rate Limits** sayfasında "Rate limit for sending emails" artık değiştirilebilir; 30 gibi bir sayı yaz.
+
+  Bu bilgiler yalnızca senin Supabase projene girilir; depoya ya da siteye yazılmaz.
 
 ## Kısa yol (isteğe bağlı)
 

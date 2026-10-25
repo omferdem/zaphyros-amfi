@@ -27,6 +27,12 @@ Kullanıcı kararları (19 Ekim 2026): sunumlar PPTX, PPT ya da PDF olabilir; sl
 - Ders kodu: 6 hane, dakikada bir değişir; geç gelen öğrenci kodla katılır, yoklama açıksa yoklamaya da yazılır
 - Öğrenci telefonunda perdedeki slaytın metni
 
+### Ara teslim: dönemler, şubeler ve hafta planı (v0.6.0) ✅
+Kullanıcının düzeni (26 Ekim 2026): yılda 2 dönem, dönemde 3 4 ders, bazı derslerde 6 7 şube; her şubenin ayrı listesi ve ayrı yoklaması çıktısı; içerik her yıl kullanılır ve geliştirilir; 2026-2027 Güz'de hazırlanan 2027-2028 Güz'de de işlenir ya da önceden planlanır.
+- Dönem kaydı, şube alanı, panelde dönem ve derse göre gruplama
+- Yeni dönem planla (önceki dönemin yapısı boş listelerle kopyalanır)
+- Hafta planı: şube x hafta tablosu, akışların hafta sırası, oradan oturum başlatma
+
 ### Ara teslim: yıllar arası içerik ve karekodsuz başlatma (v0.3.1) ✅
 - Kullanıcı kararı: ders içeriği (akışlar, sunumlar) dönemler arasında ortak; yeni dönem aynı içeriğe bağlanır
 - Ders yoklamasız (QR'sız) başlatılabilir
@@ -35,7 +41,8 @@ Kullanıcı kararları (19 Ekim 2026): sunumlar PPTX, PPT ya da PDF olabilir; sl
 - Bilgisayar yoksa hoca dersi telefonundan yönetir; perdede görünecek ekran öğrenci telefonlarında görünür (slaytın görüntüsü + metni)
 - Slayt görüntüleri sunum yüklenirken tarayıcıda küçültülür (en uzun kenar 900 piksel, WebP, sayfa başına yaklaşık 40-70 KB). Ücretsiz plan depo trafiği ayda 5 GB: 150 öğrenci x 40 slayt x 50 KB, ders başına yaklaşık 300 MB; ayda 15 dersin üstüne çıkılırsa görsel boyutu küçültülür ya da Pro plana geçilir
 
-### 2c: PPTX/PPT çevirisi
+### 2c: PPTX/PPT çevirisi (kaldırıldı)
+Kullanıcı kararı (26 Ekim 2026): PowerPoint dosyasını sistem dışında PDF'e çevirip yüklemek yeterli; sistem içinde dönüştürmeye gerek yok. Aşağıdaki plan geçersizdir:
 - Yüklenen PPTX/PPT dosyası GitHub Actions'ta LibreOffice ile PDF'e çevrilir
 - Kullanıcı kararı: ek token yok; iş akışı birkaç dakikada bir bekleyen dosyalara bakar (5-20 dakika gecikme kabul)
 - Animasyonlar düşer, bazı yazı tipleri farklı görünebilir (Calibri yerine metrik uyumlu Carlito kurulacak)

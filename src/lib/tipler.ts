@@ -1,10 +1,30 @@
+/** Akademik dönem (ör. "2026-2027 Güz"). Gelecek dönemler önceden açılabilir. */
+export interface Donem {
+  id: string
+  ad: string
+  baslangic: string
+}
+
+/** Bir dönemdeki ders şubesi: kendi sınıf listesi, oturumları ve yoklaması vardır. */
 export interface Ders {
   id: string
   subject_id: string
+  term_id: string
   ad: string
   kod: string | null
   donem: string | null
+  sube: string | null
   olusturuldu: string
+}
+
+/** Hafta planında bir şubenin bir akışla yaptığı oturum (şube x hafta özeti). */
+export interface PlanSatiri {
+  course_id: string
+  lesson_id: string
+  oturum_id: string
+  basladi: string
+  katilan: number
+  mevcut: number
 }
 
 export interface Ogrenci {
@@ -49,6 +69,7 @@ export interface Akis {
   id: string
   subject_id: string
   ad: string
+  sira: number
   olusturuldu: string
 }
 

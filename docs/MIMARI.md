@@ -31,6 +31,18 @@ Faz 1 itibarıyla kurulu olanlar (`0002_yoklama.sql`):
 | `ozel.session_secrets` | session_id, anahtar | Oturumun gizli anahtarı. `ozel` şeması API'ye kapalı, hiçbir rol doğrudan okuyamaz |
 | `attendance` | session_id, student_id, cihaz_id, yontem (qr/elle), zaman | (session_id, student_id) ve (session_id, cihaz_id) tekil |
 
+**Dönem ve şube** (`0007_donem_sube_plan.sql`, kullanıcı kararı 26 Ekim 2026): yapı üç katmandır: `subjects` (içerik) → `terms` (dönem) → `courses` (şube). Bir dönemde bir içeriğin birden çok şubesi olabilir (A, B, C...); her şube kendi `students`, `sessions` ve `attendance` kayıtlarını taşır, yani sınıf listesi, yoklama ve Excel çıktısı şube bazındadır. İçerik (akışlar, sunumlar, sorular) bütün şubeler ve dönemler için ortaktır.
+
+| Tablo | Alanlar | Not |
+|---|---|---|
+| `terms` | id, teacher_id, ad, baslangic | Akademik dönem ("2026-2027 Güz"); başlangıç tarihiyle sıralanır, önceden açılabilir. Adı hocada tekil |
+| `courses` (+) | term_id, sube | Dönemdeki şube. (dönem, içerik, şube adı) tekil. `courses.donem` metni dönem adından kendiliğinden doldurulur |
+| `lessons` (+) | sira | İçerikteki akışın hafta sırası |
+
+RPC: `hafta_plani(dönem, içerik)` (şube x hafta özeti: oturum, yoklamaya katılan, sınıf mevcudu), `donemi_planla(ad, tarih, kaynak dönem)` (ders ve şube yapısını boş listelerle kopyalar), `akislari_sirala(içerik, akışlar)`.
+
+Eski istemciler dönem metniyle ders açabilir: tetikleyici dönemi bulur ya da açar.
+
 **Ders içeriği ve dönem** (`0004_ders_icerigi.sql`, kullanıcı kararı 19 Ekim 2026): hoca dersleri her yıl yeniden kullanır. `subjects` (ders içeriği: akışlar ve sunumlar) dönemden bağımsızdır; `courses` bir dönemin dersidir (sınıf listesi, oturumlar, yoklamalar) ve bir içeriğe bağlanır. Aynı içerik birden fazla döneme bağlanabilir; değişiklik hepsine yansır. İçerik seçilmeden açılan derse dersin adıyla içerik kendiliğinden açılır (tetikleyici). Dersi olan içerik silinemez.
 
 | Tablo | Alanlar | Not |

@@ -144,15 +144,16 @@ export async function icerikSil(icerikId: string): Promise<void> {
 export async function akislariGetir(icerikId: string): Promise<Akis[]> {
   const { data, error } = await supabase
     .from('lessons')
-    .select('id, subject_id, ad, olusturuldu')
+    .select('id, subject_id, ad, sira, olusturuldu')
     .eq('subject_id', icerikId)
+    .order('sira')
     .order('olusturuldu')
   if (error) throw error
   return data as Akis[]
 }
 
 export async function akisGetir(id: string): Promise<Akis | null> {
-  const { data, error } = await supabase.from('lessons').select('id, subject_id, ad, olusturuldu').eq('id', id).maybeSingle()
+  const { data, error } = await supabase.from('lessons').select('id, subject_id, ad, sira, olusturuldu').eq('id', id).maybeSingle()
   if (error) throw error
   return data as Akis | null
 }
@@ -161,7 +162,7 @@ export async function akisOlustur(icerikId: string, ad: string): Promise<Akis> {
   const { data, error } = await supabase
     .from('lessons')
     .insert({ subject_id: icerikId, ad: ad.trim().slice(0, 200) })
-    .select('id, subject_id, ad, olusturuldu')
+    .select('id, subject_id, ad, sira, olusturuldu')
     .single()
   if (error) throw error
   return data as Akis

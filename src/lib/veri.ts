@@ -27,7 +27,7 @@ export async function oturumYoklamalari(oturumId: string): Promise<Yoklama[]> {
 }
 
 export async function dersGetir(id: string): Promise<Ders | null> {
-  const { data, error } = await supabase.from('courses').select('id, subject_id, ad, kod, donem, olusturuldu').eq('id', id).maybeSingle()
+  const { data, error } = await supabase.from('courses').select('id, subject_id, term_id, ad, kod, donem, sube, olusturuldu').eq('id', id).maybeSingle()
   if (error) throw error
   return data as Ders | null
 }
@@ -56,7 +56,7 @@ export async function oturumlariGetir(dersId: string): Promise<Oturum[]> {
 export async function oturumGetir(id: string): Promise<(Oturum & { courses: Ders }) | null> {
   const { data, error } = await supabase
     .from('sessions')
-    .select('id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, soru_durum, telefon_modu, courses(id, subject_id, ad, kod, donem, olusturuldu)')
+    .select('id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, soru_durum, telefon_modu, courses(id, subject_id, term_id, ad, kod, donem, sube, olusturuldu)')
     .eq('id', id)
     .maybeSingle()
   if (error) throw error

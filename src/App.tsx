@@ -9,6 +9,7 @@ const Panel = lazy(() => import('./sayfalar/Panel'))
 const DersDetay = lazy(() => import('./sayfalar/DersDetay'))
 const OturumDetay = lazy(() => import('./sayfalar/OturumDetay'))
 const AkisDuzenle = lazy(() => import('./sayfalar/AkisDuzenle'))
+const HaftaPlani = lazy(() => import('./sayfalar/HaftaPlani'))
 const Sahne = lazy(() => import('./sayfalar/Sahne'))
 const Kumanda = lazy(() => import('./sayfalar/Kumanda'))
 
@@ -37,6 +38,7 @@ export default function App() {
         <Route element={<HocaAlani />}>
           <Route path="/panel" element={<Panel />} />
           <Route path="/panel/ders/:dersId" element={<DersDetay />} />
+          <Route path="/panel/plan/:donemId/:icerikId" element={<HaftaPlani />} />
           <Route path="/panel/akis/:akisId" element={<AkisDuzenle />} />
           <Route path="/panel/oturum/:oturumId" element={<OturumDetay />} />
         </Route>

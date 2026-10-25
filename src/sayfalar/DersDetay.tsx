@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import type { Akis, Ders, Ogrenci, Oturum, Yoklama } from '../lib/tipler'
 import { dersGetir, dersYoklamalari, ogrencileriGetir, oturumBaslat, oturumlariGetir } from '../lib/veri'
@@ -7,6 +7,7 @@ import { dosyadanAyristir, metindenAyristir, type AyristirmaSonucu } from '../li
 import { raporHesapla, raporuExceleAktar } from '../lib/rapor'
 import { oturumAdi, tarihSaat } from '../lib/bicim'
 import { akislariGetir } from '../lib/akis'
+import { dersiDuzenle, subeEtiketi, subeleriAc, subeleriGetir, type DersSatiri } from '../lib/plan'
 import DersAkislari from './DersAkislari'
 
 type Sekme = 'oturumlar' | 'akislar' | 'liste' | 'rapor'
@@ -21,12 +22,15 @@ export default function DersDetay() {
   const [sekme, setSekme] = useState<Sekme>('oturumlar')
   const [hata, setHata] = useState<string | null>(null)
   const ilkYukleme = useRef(true)
+  const [parametreler] = useSearchParams()
+  // Hafta planından gelindiyse (?akis=) seçili akışla oturum başlatma formu açılır.
+  const baslangicAkis = useRef(parametreler.get('akis'))
 
   const yukle = useCallback(async () => {
     try {
       const [d, og, ot] = await Promise.all([dersGetir(dersId), ogrencileriGetir(dersId), oturumlariGetir(dersId)])
       // Listesi boş derste ilk iş liste yüklemek olduğu için o sekmeyle açılır.
-      if (ilkYukleme.current && og.length === 0) setSekme('liste')
+      if (ilkYukleme.current && og.length === 0 && !baslangicAkis.current) setSekme('liste')
       ilkYukleme.current = false
       setDers(d)
       setOgrenciler(og)
@@ -64,13 +68,16 @@ export default function DersDetay() {
 
   return (
     <div className="space-y-6">
-      <div>
+      <div className="space-y-2">
         <Link to="/panel" className="text-xs text-slate-400 hover:text-white">
           ← Derslerim
         </Link>
         <p className="text-xs font-mono text-indigo-300 mt-3">{[ders.kod, ders.donem].filter(Boolean).join(' · ')}</p>
-        <h1 className="text-2xl font-extrabold">{ders.ad}</h1>
-        <YeniDonem ders={ders} />
+        <h1 className="text-2xl font-extrabold">
+          {ders.ad}
+          {ders.sube?.trim() && <span className="text-indigo-300"> · {ders.sube.trim()}</span>}
+        </h1>
+        <SubeAraci ders={ders} yenile={yukle} hataVer={setHata} />
       </div>
 
       {hata && <p className="text-sm text-rose-300 bg-rose-500/10 rounded-xl p-3">{hata}</p>}
@@ -97,7 +104,14 @@ export default function DersDetay() {
       </nav>
 
       {sekme === 'oturumlar' && (
-        <Oturumlar ders={ders} ogrenciler={ogrenciler} oturumlar={oturumlar} yoklamalar={yoklamalar} yenile={yukle} />
+        <Oturumlar
+          ders={ders}
+          ogrenciler={ogrenciler}
+          oturumlar={oturumlar}
+          yoklamalar={yoklamalar}
+          yenile={yukle}
+          baslangicAkis={baslangicAkis.current}
+        />
       )}
       {sekme === 'akislar' && <DersAkislari ders={ders} />}
       {sekme === 'liste' && <SinifListesi ders={ders} ogrenciler={ogrenciler} yenile={yukle} />}
@@ -120,12 +134,13 @@ function Oturumlar(props: {
   oturumlar: Oturum[]
   yoklamalar: Yoklama[]
   yenile: () => Promise<void>
+  baslangicAkis?: string | null
 }) {
-  const { ders, ogrenciler, oturumlar, yoklamalar, yenile } = props
+  const { ders, ogrenciler, oturumlar, yoklamalar, yenile, baslangicAkis } = props
   const navigate = useNavigate()
   const [baslik, setBaslik] = useState('')
   const [akislar, setAkislar] = useState<Akis[]>([])
-  const [akisId, setAkisId] = useState('')
+  const [akisId, setAkisId] = useState(baslangicAkis ?? '')
   const [yoklamaAl, setYoklamaAl] = useState(true)
   const [telefonModu, setTelefonModu] = useState(false)
   const [gorselsiz, setGorselsiz] = useState<string[]>([])
@@ -532,57 +547,105 @@ function Rapor(props: { ders: Ders; ogrenciler: Ogrenci[]; oturumlar: Oturum[]; 
 
 // ---------------------------------------------------------------------------
 
-/** Aynı ders içeriğiyle yeni bir dönem açar: akışlar ve sunumlar ortak kalır, liste ve yoklamalar yeni başlar. */
-function YeniDonem({ ders }: { ders: Ders }) {
-  const navigate = useNavigate()
-  const [acik, setAcik] = useState(false)
-  const [donem, setDonem] = useState('')
-  const [hata, setHata] = useState<string | null>(null)
+/**
+ * Şube araçları: dersin bu dönemdeki kardeş şubeleri arasında geçiş, şube ekleme ve dersi düzenleme.
+ * Her şubenin sınıf listesi, oturumları ve yoklaması ayrıdır.
+ */
+function SubeAraci({ ders, yenile, hataVer }: { ders: Ders; yenile: () => Promise<void>; hataVer: (m: string | null) => void }) {
+  const [kardesler, setKardesler] = useState<DersSatiri[]>([])
+  const [mod, setMod] = useState<'yok' | 'ekle' | 'duzenle'>('yok')
+  const [yeni, setYeni] = useState('')
+  const [form, setForm] = useState({ ad: ders.ad, kod: ders.kod ?? '', sube: ders.sube ?? '' })
+  const [say, setSay] = useState(0)
 
-  async function ac(e: React.FormEvent) {
+  useEffect(() => {
+    subeleriGetir(ders.term_id, ders.subject_id)
+      .then(setKardesler)
+      .catch(() => setKardesler([]))
+  }, [ders.term_id, ders.subject_id, ders.id, ders.sube, say])
+
+  useEffect(() => {
+    setForm({ ad: ders.ad, kod: ders.kod ?? '', sube: ders.sube ?? '' })
+    setMod('yok')
+  }, [ders.id, ders.ad, ders.kod, ders.sube])
+
+  async function subeEkle(e: React.FormEvent) {
     e.preventDefault()
-    setHata(null)
-    const { data, error } = await supabase
-      .from('courses')
-      .insert({ ad: ders.ad, kod: ders.kod, donem: donem.trim() || null, subject_id: ders.subject_id })
-      .select('id')
-      .single()
-    if (error || !data) {
-      setHata('Yeni dönem açılamadı.')
-      return
+    hataVer(null)
+    const adlar = [...new Set(yeni.split(/[,;\n]/).map((x) => x.trim()).filter(Boolean))]
+    try {
+      await subeleriAc({ donemId: ders.term_id, ad: ders.ad, kod: ders.kod, icerikId: ders.subject_id, subeler: adlar })
+      setYeni('')
+      setMod('yok')
+      setSay((n) => n + 1)
+    } catch {
+      hataVer('Şube eklenemedi. Aynı adda başka bir şube olabilir.')
     }
-    setAcik(false)
-    navigate(`/panel/ders/${data.id as string}`)
   }
 
-  if (!acik)
-    return (
-      <button className="text-xs text-indigo-300 hover:text-indigo-200 mt-1" onClick={() => setAcik(true)}>
-        + Bu dersin yeni dönemini aç
-      </button>
-    )
+  async function kaydet(e: React.FormEvent) {
+    e.preventDefault()
+    hataVer(null)
+    try {
+      await dersiDuzenle(ders.id, { ad: form.ad, kod: form.kod || null, sube: form.sube || null })
+      await yenile()
+    } catch {
+      hataVer('Değişiklik kaydedilemedi. Aynı adda başka bir şube olabilir.')
+    }
+  }
+
+  const cokSube = kardesler.length > 1 || !!ders.sube?.trim()
 
   return (
-    <form onSubmit={ac} className="cam-panel rounded-2xl p-4 mt-3 space-y-2 max-w-md">
-      <p className="text-sm text-slate-300">
-        Akışlar ve sunumlar yeni dönemle ortak olur; sınıf listesi ve yoklamalar boş başlar.
-      </p>
-      <div className="flex gap-2">
-        <input
-          autoFocus
-          required
-          maxLength={40}
-          className="giris-kutusu"
-          placeholder="Dönem (ör. 2027 Güz)"
-          value={donem}
-          onChange={(e) => setDonem(e.target.value)}
-        />
-        <button className="parlak-buton rounded-xl px-4 py-2 text-sm font-bold whitespace-nowrap">Aç</button>
-        <button type="button" className="ikincil-buton" onClick={() => setAcik(false)}>
-          Vazgeç
+    <div className="space-y-3">
+      <div className="flex flex-wrap items-center gap-2">
+        {cokSube &&
+          kardesler.map((k) => (
+            <Link
+              key={k.id}
+              to={`/panel/ders/${k.id}`}
+              className={`rounded-xl px-3 py-1.5 text-sm border ${
+                k.id === ders.id ? 'bg-indigo-500/25 border-indigo-400/50 font-bold' : 'bg-white/5 border-white/10 hover:bg-white/10'
+              }`}
+            >
+              {subeEtiketi(k.sube, kardesler.length)}
+              <span className="text-xs text-slate-400"> · {k.students[0]?.count ?? 0}</span>
+            </Link>
+          ))}
+        <button className="text-xs text-indigo-300 hover:text-indigo-200" onClick={() => setMod(mod === 'ekle' ? 'yok' : 'ekle')}>
+          + Şube ekle
         </button>
+        <button className="text-xs text-slate-400 hover:text-white" onClick={() => setMod(mod === 'duzenle' ? 'yok' : 'duzenle')}>
+          Adı, kodu, şubeyi düzenle
+        </button>
+        <Link to={`/panel/plan/${ders.term_id}/${ders.subject_id}`} className="text-xs text-slate-400 hover:text-white">
+          Hafta planı
+        </Link>
       </div>
-      {hata && <p className="text-sm text-rose-300">{hata}</p>}
-    </form>
+
+      {mod === 'ekle' && (
+        <form onSubmit={subeEkle} className="flex flex-wrap gap-2 items-center">
+          <input
+            autoFocus
+            required
+            maxLength={120}
+            className="giris-kutusu !w-72"
+            placeholder="Şube adı ya da virgülle birden çok: B, C"
+            value={yeni}
+            onChange={(e) => setYeni(e.target.value)}
+          />
+          <button className="parlak-buton rounded-xl px-4 py-2 text-sm font-bold">Şube aç</button>
+        </form>
+      )}
+
+      {mod === 'duzenle' && (
+        <form onSubmit={kaydet} className="cam-panel rounded-2xl p-4 grid gap-3 sm:grid-cols-[2fr_1fr_1fr_auto] items-center max-w-3xl">
+          <input required maxLength={200} className="giris-kutusu" placeholder="Ders adı" value={form.ad} onChange={(e) => setForm({ ...form, ad: e.target.value })} />
+          <input maxLength={40} className="giris-kutusu" placeholder="Kod" value={form.kod} onChange={(e) => setForm({ ...form, kod: e.target.value })} />
+          <input maxLength={40} className="giris-kutusu" placeholder="Şube" value={form.sube} onChange={(e) => setForm({ ...form, sube: e.target.value })} />
+          <button className="parlak-buton rounded-xl px-4 py-2 text-sm font-bold">Kaydet</button>
+        </form>
+      )}
+    </div>
   )
 }

@@ -25,7 +25,9 @@ export default function DersAkislari({ ders }: { ders: Ders }) {
       ])
       setAkislar(a)
       setSunumlar(s)
-      setDonemler((d.data ?? []) as { id: string; ad: string; donem: string | null }[])
+      // Aynı dönemin şubeleri tek satır sayılır (ilk şubenin sayfasına gider).
+      const tum = (d.data ?? []) as { id: string; ad: string; donem: string | null }[]
+      setDonemler(tum.filter((x, i) => tum.findIndex((y) => y.donem === x.donem) === i))
     } catch {
       setHata('Akışlar yüklenemedi.')
     }

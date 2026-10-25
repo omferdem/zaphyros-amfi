@@ -24,6 +24,7 @@ export interface Oturum {
   lesson_id: string | null
   aktif_adim: string | null
   soru_durum: 'acik' | 'sonuc' | null
+  telefon_modu: boolean
 }
 
 /** Dönemler arasında ortak ders içeriği: akışlar ve sunumlar buna bağlıdır. */
@@ -40,6 +41,7 @@ export interface Sunum {
   durum: 'hazir' | 'cevriliyor' | 'hata'
   sayfa_sayisi: number
   metinler: string[]
+  gorseller_hazir: boolean
   olusturuldu: string
 }
 
@@ -79,6 +81,7 @@ export interface DersDurumu {
   baslik: string | null
   bitti: boolean
   yoklama_acik: boolean
+  telefon_modu?: boolean
   adim: {
     id: string
     tur: AdimTuru
@@ -88,6 +91,8 @@ export interface DersDurumu {
     sayfa_no: number | null
     sayfa_sayisi: number | null
     metin: string | null
+    /** Telefon modunda slayt görselinin depo yolu */
+    gorsel?: string | null
     // Soru adımında
     soru?: string
     secenekler?: string[]

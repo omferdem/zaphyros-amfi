@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import { cihazKimligi, oku, sakla } from '../lib/cihaz'
 import type { DersDurumu } from '../lib/tipler'
 import SoruCevabi from '../bilesenler/SoruCevabi'
+import { useSlaytGorseli } from '../lib/gorsel'
 
 interface Bilet {
   bilet: string
@@ -304,6 +305,7 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
   }, [oturum])
 
   const adim = durum?.adim
+  const gorsel = useSlaytGorseli(adim?.tur === 'slayt' ? adim.gorsel : null)
   const satirlar = (adim?.tur === 'slayt' ? adim.metin ?? '' : '').split('\n').filter(Boolean)
 
   return (
@@ -331,17 +333,40 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
               Slayt {adim.sayfa_no}
               {adim.sayfa_sayisi ? ` / ${adim.sayfa_sayisi}` : ''}
             </p>
+            {adim.gorsel &&
+              (gorsel.url ? (
+                <img
+                  src={gorsel.url}
+                  alt={`Slayt ${adim.sayfa_no}`}
+                  className={`w-full rounded-xl bg-white transition-opacity ${gorsel.gecis ? 'opacity-50' : ''}`}
+                />
+              ) : (
+                <div className="aspect-video rounded-xl bg-white/5 flex items-center justify-center text-sm text-slate-400 text-center px-4">
+                  {gorsel.hata ? 'Görsel yüklenemedi. Aşağıdaki metne bak.' : 'Slayt yükleniyor…'}
+                </div>
+              ))}
             {satirlar.length ? (
-              <>
-                <h1 className="text-xl font-extrabold leading-snug">{satirlar[0]}</h1>
-                {satirlar.slice(1).map((s, i) => (
-                  <p key={i} className="text-base text-slate-200 leading-relaxed">
-                    {s}
-                  </p>
-                ))}
-              </>
-            ) : (
-              <p className="text-slate-400">Bu slaytta yazı yok; perdeye bak.</p>
+              adim.gorsel ? (
+                <details className="text-sm text-slate-300" open={gorsel.hata}>
+                  <summary className="cursor-pointer text-slate-400">Slaytın metni</summary>
+                  <div className="mt-2 space-y-2">
+                    {satirlar.map((s, i) => (
+                      <p key={i}>{s}</p>
+                    ))}
+                  </div>
+                </details>
+              ) : (
+                <>
+                  <h1 className="text-xl font-extrabold leading-snug">{satirlar[0]}</h1>
+                  {satirlar.slice(1).map((s, i) => (
+                    <p key={i} className="text-base text-slate-200 leading-relaxed">
+                      {s}
+                    </p>
+                  ))}
+                </>
+              )
+            ) : adim.gorsel ? null : (
+              <p className="text-slate-400">{durum?.telefon_modu ? 'Bu slaytta yazı yok.' : 'Bu slaytta yazı yok; perdeye bak.'}</p>
             )}
           </div>
         ) : adim?.tur === 'soru' ? (

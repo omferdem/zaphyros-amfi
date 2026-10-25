@@ -2,11 +2,18 @@
 import { supabase } from './supabase'
 import type { Adim, Akis, Soru, Sunum } from './tipler'
 import type { ZomrSorusu } from './zomr'
+import type { PdfBelgesi } from './pdf'
 
 const KOVA = 'sunumlar'
-const SUNUM_ALANLARI = 'id, subject_id, ad, kaynak, durum, sayfa_sayisi, metinler, olusturuldu'
+const GORSEL_KOVA = 'slayt-gorselleri'
+const SUNUM_ALANLARI = 'id, subject_id, ad, kaynak, durum, sayfa_sayisi, metinler, gorseller_hazir, olusturuldu'
 const ADIM_ALANLARI = 'id, lesson_id, sira, tur, presentation_id, sayfa_no, question_id'
 const SORU_ALANLARI = 'id, subject_id, soru, dogru, yanlislar, sure_sn, ek, olusturuldu'
+
+/** Telefon modunda öğrenciye giden sayfa görselinin yolu (veritabanı da aynı yolu üretir). */
+export function gorselYolu(icerikId: string, sunumId: string, sayfaNo: number): string {
+  return `${icerikId}/${sunumId}/${sayfaNo}`
+}
 
 /** Depodaki yol: ilk klasör ders içeriğinin kimliğidir (depo politikası buna bakar). */
 export function sunumYolu(icerikId: string, sunumId: string): string {
@@ -38,8 +45,9 @@ export async function sunumAdresi(icerikId: string, sunumId: string): Promise<st
 }
 
 /**
- * PDF'i yükler: önce tarayıcıda açıp sayfa sayısını ve sayfa metinlerini çıkarır,
- * sonra dosyayı depoya, kaydı tabloya yazar.
+ * PDF'i yükler: önce tarayıcıda açıp sayfa sayısını ve sayfa metinlerini çıkarır, dosyayı depoya,
+ * kaydı tabloya yazar; sonra telefon modu için sayfa görsellerini hazırlar. Görseller hazırlanamazsa
+ * sunum yine kullanılabilir (öğrenci metni görür); görseller sonra elle hazırlanabilir.
  */
 export async function sunumYukle(icerikId: string, dosya: File, ad: string, durumBildir: (metin: string) => void): Promise<Sunum> {
   const { pdfAc, sayfaMetinleri } = await import('./pdf')
@@ -47,44 +55,88 @@ export async function sunumYukle(icerikId: string, dosya: File, ad: string, duru
   const veri = await dosya.arrayBuffer()
   // pdf.js veriyi işçiye aktarırken boşaltabilir; yükleme için ayrı bir kopya tutulur.
   const belge = await pdfAc(veri.slice(0))
-  durumBildir(`${belge.numPages} sayfanın metni çıkarılıyor…`)
-  const metinler = await sayfaMetinleri(belge)
-  const sayfaSayisi = belge.numPages
-  await belge.loadingTask.destroy()
+  try {
+    durumBildir(`${belge.numPages} sayfanın metni çıkarılıyor…`)
+    const metinler = await sayfaMetinleri(belge)
+    const sayfaSayisi = belge.numPages
 
-  const id = crypto.randomUUID()
-  durumBildir('Yükleniyor…')
-  const { error: yuklemeHatasi } = await supabase.storage
-    .from(KOVA)
-    .upload(sunumYolu(icerikId, id), new Blob([veri], { type: 'application/pdf' }), { contentType: 'application/pdf', upsert: false })
-  if (yuklemeHatasi) throw yuklemeHatasi
+    const id = crypto.randomUUID()
+    durumBildir('Yükleniyor…')
+    const { error: yuklemeHatasi } = await supabase.storage
+      .from(KOVA)
+      .upload(sunumYolu(icerikId, id), new Blob([veri], { type: 'application/pdf' }), { contentType: 'application/pdf', upsert: false })
+    if (yuklemeHatasi) throw yuklemeHatasi
 
-  const { data, error } = await supabase
-    .from('presentations')
-    .insert({ id, subject_id: icerikId, ad: ad.trim().slice(0, 200) || 'Sunum', sayfa_sayisi: sayfaSayisi, metinler })
-    .select(SUNUM_ALANLARI)
-    .single()
-  if (error) {
-    await supabase.storage.from(KOVA).remove([sunumYolu(icerikId, id)])
-    throw error
+    const { data, error } = await supabase
+      .from('presentations')
+      .insert({ id, subject_id: icerikId, ad: ad.trim().slice(0, 200) || 'Sunum', sayfa_sayisi: sayfaSayisi, metinler })
+      .select(SUNUM_ALANLARI)
+      .single()
+    if (error) {
+      await supabase.storage.from(KOVA).remove([sunumYolu(icerikId, id)])
+      throw error
+    }
+    try {
+      return await gorselleriHazirla(data as Sunum, durumBildir, belge)
+    } catch {
+      return data as Sunum
+    }
+  } finally {
+    await belge.loadingTask.destroy()
   }
-  return data as Sunum
 }
 
-/** Sunumu ve onu kullanan bütün akış adımlarını siler. */
+/**
+ * Sunumun sayfa görsellerini üretip depoya yükler (telefon modu için). Açık bir belge verilmezse
+ * PDF depodan açılır. Daha önce yüklenmiş görseller üzerine yazılır.
+ */
+export async function gorselleriHazirla(sunum: Sunum, durumBildir: (metin: string) => void, acikBelge?: PdfBelgesi): Promise<Sunum> {
+  const { pdfAc, sayfaGorseliUret } = await import('./pdf')
+  const belge = acikBelge ?? (await pdfAc(await sunumAdresi(sunum.subject_id, sunum.id)))
+  try {
+    for (let no = 1; no <= belge.numPages; no++) {
+      durumBildir(`Telefon görselleri hazırlanıyor… ${no} / ${belge.numPages}`)
+      const blob = await sayfaGorseliUret(belge, no)
+      const { error } = await supabase.storage
+        .from(GORSEL_KOVA)
+        .upload(gorselYolu(sunum.subject_id, sunum.id, no), blob, { contentType: blob.type, cacheControl: '3600', upsert: true })
+      if (error) throw error
+    }
+    const { data, error } = await supabase
+      .from('presentations')
+      .update({ gorseller_hazir: true })
+      .eq('id', sunum.id)
+      .select(SUNUM_ALANLARI)
+      .single()
+    if (error) throw error
+    return data as Sunum
+  } finally {
+    if (!acikBelge) await belge.loadingTask.destroy()
+  }
+}
+
+async function gorselleriSil(icerikId: string, sunumId: string): Promise<void> {
+  const klasor = `${icerikId}/${sunumId}`
+  const { data } = await supabase.storage.from(GORSEL_KOVA).list(klasor, { limit: 1000 })
+  if (data?.length) await supabase.storage.from(GORSEL_KOVA).remove(data.map((f) => `${klasor}/${f.name}`))
+}
+
+/** Sunumu ve onu kullanan bütün akış adımlarını siler (PDF ve sayfa görselleri de depodan kalkar). */
 export async function sunumSil(sunum: Sunum): Promise<void> {
   const { error } = await supabase.from('presentations').delete().eq('id', sunum.id)
   if (error) throw error
   await supabase.storage.from(KOVA).remove([sunumYolu(sunum.subject_id, sunum.id)])
+  await gorselleriSil(sunum.subject_id, sunum.id)
 }
 
 /**
- * Hiçbir döneme bağlı olmayan ders içeriğini siler: önce sunum dosyaları depodan, sonra kayıtlar
- * (akışlar ve sunumlar içerikle birlikte silinir). Dersi olan içerik veritabanınca korunur.
+ * Hiçbir döneme bağlı olmayan ders içeriğini siler: önce sunum dosyaları ve görselleri depodan, sonra
+ * kayıtlar (akışlar ve sunumlar içerikle birlikte silinir). Dersi olan içerik veritabanınca korunur.
  */
 export async function icerikSil(icerikId: string): Promise<void> {
   const sunumlar = await sunumlariGetir(icerikId)
   if (sunumlar.length) await supabase.storage.from(KOVA).remove(sunumlar.map((s) => sunumYolu(icerikId, s.id)))
+  for (const s of sunumlar) await gorselleriSil(icerikId, s.id)
   const { error } = await supabase.from('subjects').delete().eq('id', icerikId)
   if (error) throw error
 }

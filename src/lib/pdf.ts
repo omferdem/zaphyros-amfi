@@ -68,3 +68,23 @@ export async function sayfaMetinleri(belge: PdfBelgesi): Promise<string[]> {
   }
   return metinler
 }
+
+// Telefon modunda öğrenciye giden sayfa görseli: en uzun kenarı bu kadar piksel (yazılar okunur, dosya küçük kalır).
+const GORSEL_BOYUTU = 900
+
+/** Sayfayı küçültülmüş bir görsele çevirir (WebP; tarayıcı desteklemiyorsa JPEG). */
+export async function sayfaGorseliUret(belge: PdfBelgesi, sayfaNo: number): Promise<Blob> {
+  const sayfa = await belge.getPage(sayfaNo)
+  const temel = sayfa.getViewport({ scale: 1 })
+  const olcek = Math.min(GORSEL_BOYUTU / temel.width, GORSEL_BOYUTU / temel.height, 2)
+  const gorunum = sayfa.getViewport({ scale: olcek })
+  const tuval = document.createElement('canvas')
+  tuval.width = Math.max(1, Math.round(gorunum.width))
+  tuval.height = Math.max(1, Math.round(gorunum.height))
+  await sayfa.render({ canvas: tuval, viewport: gorunum }).promise
+  const blobla = (tur: string, kalite: number) => new Promise<Blob | null>((cevap) => tuval.toBlob(cevap, tur, kalite))
+  let blob = await blobla('image/webp', 0.7)
+  if (!blob || blob.type !== 'image/webp') blob = await blobla('image/jpeg', 0.75)
+  if (!blob) throw new Error('görsel üretilemedi')
+  return blob
+}

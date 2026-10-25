@@ -31,9 +31,9 @@ Kullanıcı kararları (19 Ekim 2026): sunumlar PPTX, PPT ya da PDF olabilir; sl
 - Kullanıcı kararı: ders içeriği (akışlar, sunumlar) dönemler arasında ortak; yeni dönem aynı içeriğe bağlanır
 - Ders yoklamasız (QR'sız) başlatılabilir
 
-### 2b: Yalnız telefon modu
+### 2b: Yalnız telefon modu (v0.5.0) ✅
 - Bilgisayar yoksa hoca dersi telefonundan yönetir; perdede görünecek ekran öğrenci telefonlarında görünür (slaytın görüntüsü + metni)
-- Slayt görüntüleri küçültülmüş resim olarak hazırlanır. Ücretsiz plan trafiği (ayda 5 GB) için hesap: 150 öğrenci x 40 slayt ders başına 300-400 MB; görüntü boyutu buna göre seçilecek
+- Slayt görüntüleri sunum yüklenirken tarayıcıda küçültülür (en uzun kenar 900 piksel, WebP, sayfa başına yaklaşık 40-70 KB). Ücretsiz plan depo trafiği ayda 5 GB: 150 öğrenci x 40 slayt x 50 KB, ders başına yaklaşık 300 MB; ayda 15 dersin üstüne çıkılırsa görsel boyutu küçültülür ya da Pro plana geçilir
 
 ### 2c: PPTX/PPT çevirisi
 - Yüklenen PPTX/PPT dosyası GitHub Actions'ta LibreOffice ile PDF'e çevrilir

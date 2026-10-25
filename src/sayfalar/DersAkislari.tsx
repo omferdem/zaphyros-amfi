@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import type { Akis, Ders, Sunum } from '../lib/tipler'
-import { akisOlustur, akislariGetir, sunumSil, sunumlariGetir } from '../lib/akis'
+import { akisOlustur, akislariGetir, gorselleriHazirla, sunumSil, sunumlariGetir } from '../lib/akis'
 import { tarihSaat } from '../lib/bicim'
 import SoruBankasi from './SoruBankasi'
 
@@ -12,6 +12,7 @@ export default function DersAkislari({ ders }: { ders: Ders }) {
   const [akislar, setAkislar] = useState<Akis[] | null>(null)
   const [sunumlar, setSunumlar] = useState<Sunum[]>([])
   const [yeniAd, setYeniAd] = useState('')
+  const [isleniyor, setIsleniyor] = useState<{ id: string; metin: string } | null>(null)
   const [donemler, setDonemler] = useState<{ id: string; ad: string; donem: string | null }[]>([])
   const [hata, setHata] = useState<string | null>(null)
 
@@ -49,6 +50,18 @@ export default function DersAkislari({ ders }: { ders: Ders }) {
     if (!window.confirm(`"${a.ad}" akışı silinecek. Sunum dosyaları kitaplıkta kalır. Emin misin?`)) return
     const { error } = await supabase.from('lessons').delete().eq('id', a.id)
     if (error) setHata('Akış silinemedi.')
+    yukle()
+  }
+
+  async function gorselleriYap(s: Sunum) {
+    setHata(null)
+    setIsleniyor({ id: s.id, metin: 'Hazırlanıyor…' })
+    try {
+      await gorselleriHazirla(s, (metin) => setIsleniyor({ id: s.id, metin }))
+    } catch {
+      setHata('Telefon görselleri hazırlanamadı. İnternet bağlantını kontrol edip tekrar dene.')
+    }
+    setIsleniyor(null)
     yukle()
   }
 
@@ -138,6 +151,17 @@ export default function DersAkislari({ ders }: { ders: Ders }) {
               <li key={s.id} className="py-2 flex items-center gap-3 text-sm">
                 <span className="flex-1 min-w-0 truncate">{s.ad}</span>
                 <span className="text-xs text-slate-400">{s.sayfa_sayisi} sayfa</span>
+                {isleniyor?.id === s.id ? (
+                  <span className="text-xs text-indigo-300">{isleniyor.metin}</span>
+                ) : s.gorseller_hazir ? (
+                  <span className="text-xs text-emerald-300" title="Telefon modunda öğrencilerin telefonunda görünür">
+                    telefon görselleri hazır
+                  </span>
+                ) : (
+                  <button className="ikincil-buton !py-1 !px-2 text-xs" disabled={!!isleniyor} onClick={() => gorselleriYap(s)}>
+                    Telefon görsellerini hazırla
+                  </button>
+                )}
                 <button className="tehlike-buton !py-1 !px-2 text-xs" onClick={() => sunumuSil(s)}>
                   Sil
                 </button>

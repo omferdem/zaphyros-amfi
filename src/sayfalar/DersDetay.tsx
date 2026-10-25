@@ -127,6 +127,8 @@ function Oturumlar(props: {
   const [akislar, setAkislar] = useState<Akis[]>([])
   const [akisId, setAkisId] = useState('')
   const [yoklamaAl, setYoklamaAl] = useState(true)
+  const [telefonModu, setTelefonModu] = useState(false)
+  const [gorselsiz, setGorselsiz] = useState<string[]>([])
   const [basliyor, setBasliyor] = useState(false)
   const [hata, setHata] = useState<string | null>(null)
 
@@ -142,13 +144,33 @@ function Oturumlar(props: {
       .catch(() => setAkislar([]))
   }, [ders.subject_id])
 
+  // Telefon modunda görseli hazır olmayan sunum varsa öğrenci yalnızca metni görür; başlamadan uyarılır.
+  useEffect(() => {
+    if (!telefonModu || !akisId) {
+      setGorselsiz([])
+      return
+    }
+    supabase
+      .from('lesson_steps')
+      .select('presentations(ad, gorseller_hazir)')
+      .eq('lesson_id', akisId)
+      .not('presentation_id', 'is', null)
+      .then(({ data }) => {
+        const adlar = new Set<string>()
+        for (const r of (data ?? []) as unknown as { presentations: { ad: string; gorseller_hazir: boolean } | null }[]) {
+          if (r.presentations && !r.presentations.gorseller_hazir) adlar.add(r.presentations.ad)
+        }
+        setGorselsiz([...adlar])
+      })
+  }, [telefonModu, akisId])
+
   async function baslat(e: React.FormEvent) {
     e.preventDefault()
     setBasliyor(true)
     setHata(null)
     try {
-      const id = await oturumBaslat(ders.id, baslik || akislar.find((a) => a.id === akisId)?.ad || '', akisId || null, yoklamaAl)
-      navigate(`/sahne/${id}`)
+      const id = await oturumBaslat(ders.id, baslik || akislar.find((a) => a.id === akisId)?.ad || '', akisId || null, yoklamaAl, telefonModu)
+      navigate(telefonModu ? `/kumanda?s=${id}` : `/sahne/${id}`)
     } catch {
       setHata('Oturum başlatılamadı.')
       setBasliyor(false)
@@ -192,13 +214,29 @@ function Oturumlar(props: {
             disabled={basliyor || (yoklamaAl && ogrenciler.length === 0)}
             className="parlak-buton rounded-xl px-5 py-2.5 font-bold whitespace-nowrap disabled:opacity-50"
           >
-            Başlat ve sahneyi aç
+            {telefonModu ? 'Başlat ve kumandayı aç' : 'Başlat ve sahneyi aç'}
           </button>
         </div>
         <label className="flex items-center gap-2 text-sm text-slate-300 w-fit cursor-pointer">
           <input type="checkbox" checked={yoklamaAl} onChange={(e) => setYoklamaAl(e.target.checked)} className="accent-indigo-500" />
           Yoklama al (kapalıysa QR çıkmaz; gerekirse dersin içinde açabilirsin)
         </label>
+        <label className="flex items-center gap-2 text-sm text-slate-300 w-fit cursor-pointer">
+          <input type="checkbox" checked={telefonModu} onChange={(e) => setTelefonModu(e.target.checked)} className="accent-indigo-500" />
+          Projeksiyon yok: telefondan yöneteceğim, slaytlar öğrencilerin telefonunda görünsün
+        </label>
+        {telefonModu && (
+          <p className="text-xs text-slate-500">
+            Ders telefondaki kumandada açılır. Öğrenciler sitenin adresine girip kumandada görünen 6 haneli kodu yazar.
+            {yoklamaAl && ' Yoklama da bu kodla alınır.'}
+          </p>
+        )}
+        {gorselsiz.length > 0 && (
+          <p className="text-sm text-amber-300">
+            Şu sunumların telefon görselleri hazır değil, öğrenciler yalnızca metni görür: {gorselsiz.join(', ')}. "Ders
+            akışları" sekmesindeki sunum kitaplığından hazırlayabilirsin.
+          </p>
+        )}
         <p className="text-xs text-slate-500">
           Sahne ekranını projeksiyona yansıt. Akış seçersen perdede akışın ilk adımı açılır; ilerlemek için klavyenin ok
           tuşlarını ya da telefonundaki kumandayı kullan.
@@ -228,6 +266,9 @@ function Oturumlar(props: {
               <div className="flex gap-2">
                 <Link to={`/sahne/${o.id}`} className="ikincil-buton">
                   Sahne
+                </Link>
+                <Link to={`/kumanda?s=${o.id}`} className="ikincil-buton">
+                  Kumanda
                 </Link>
                 <Link to={`/panel/oturum/${o.id}`} className="ikincil-buton">
                   Yoklama listesi

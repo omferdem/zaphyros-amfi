@@ -99,6 +99,16 @@ PPTX'i tarayıcıda birebir çizmek güvenilir değil. Hoca sunumu **PDF olarak*
 - PDF özel `sunumlar` kovasındadır; sahne 6 saat geçerli imzalı adresle açar. Öğrenci dosyaya erişmez, yalnızca sayfa metnini görür (Faz 2b'de yalnız telefon modu için küçültülmüş görüntüler eklenecek).
 - Sayfa metni yüklerken pdf.js ile çıkarılır ve `presentations.metinler` dizisine yazılır.
 
+## Telefon modu
+
+`sessions.telefon_modu` açıkken ders projeksiyonsuz yürütülür: hoca telefonundaki kumandadan yönetir, perdedeki slayt öğrencilerin telefonunda görünür.
+
+- Sayfa görselleri `slayt-gorselleri` kovasında (özel), `<içerik id>/<sunum id>/<sayfa no>` yolunda durur. Sunum yüklenirken tarayıcıda üretilir (en uzun kenar 900 piksel, WebP); `presentations.gorseller_hazir` hazır olduğunu söyler.
+- Öğrenci (anon) bir görseli yalnızca depo kuralı izin verirse okur: `gorsel_gorunur(yol)` telefon modundaki açık bir oturumda o an PERDEDEKİ adımın sunumu ve sayfasıysa doğru döner. Sıradaki slayt önceden indirilemez, ders bitince erişim kapanır. Hoca kendi içeriğinin bütün görsellerini okur ve yazar.
+- `ders_durumu()` telefon modunda perdedeki slaytın görsel yolunu (`gorsel`) da verir; yayınlanan durum bu alanı da taşır. Görseli hazır olmayan sunumda yol boştur, öğrenci metni görür.
+- Telefon modunda perde olmadığı için soru sonucunda ilk 5 `benim_sonucum()` ile öğrenci telefonuna da gelir.
+- Kumanda `telefon_ac` ve `telefon_kapat` komutlarıyla modu dersin içinde değiştirir.
+
 ## Ders kodu ve kumanda
 
 - **Ders kodu**: oturumun gizli anahtarı ve dakika numarasından türetilen 6 haneli sayı. `kodla_katil()` açık oturumlar arasında (son 12 saat) bu dakikanın ya da bir önceki dakikanın koduna uyanı bulur. Yoklama açıksa QR'daki gibi cihaza bağlı bilet döner, numara `check_in()` ile girilir.

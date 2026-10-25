@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { cihazKimligi, oku, sakla } from '../lib/cihaz'
-import type { DersDurumu } from '../lib/tipler'
+import type { DersDurumu, PuanSatiri } from '../lib/tipler'
 import { SIKLAR, bitisAni } from '../lib/yarisma'
 
 type SoruAdimi = NonNullable<DersDurumu['adim']>
@@ -15,6 +15,8 @@ interface Sonucum {
   toplam: number
   sira: number | null
   oyuncu: number
+  /** Telefon modunda sonuç açıklanınca ilk 5 (perde yok) */
+  puanlar?: PuanSatiri[] | null
 }
 
 const HATALAR: Record<string, string> = {
@@ -174,6 +176,21 @@ export default function SoruCevabi({ oturum, adim, yoklamali }: { oturum: string
               {sonucum.oyuncu} kişi içinde <b className="text-white">{sonucum.sira}.</b>
             </p>
           )}
+        </div>
+      )}
+
+      {adim.soru_durum === 'sonuc' && sonucum?.puanlar && sonucum.puanlar.length > 0 && (
+        <div className="rounded-2xl bg-white/5 p-3 space-y-1">
+          <p className="text-[11px] font-mono uppercase tracking-widest text-amber-300">İlk 5</p>
+          <ol className="text-sm">
+            {sonucum.puanlar.map((p, i) => (
+              <li key={`${p.ad}-${i}`} className="flex gap-2 py-0.5">
+                <span className="w-5 text-slate-500">{p.sira}</span>
+                <span className="flex-1 truncate">{p.ad}</span>
+                <span className="font-mono">{p.puan}</span>
+              </li>
+            ))}
+          </ol>
         </div>
       )}
 

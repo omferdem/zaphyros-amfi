@@ -204,7 +204,7 @@ export default function Sahne() {
       .from('sessions')
       .update(ac ? { yoklama_acik: true, bitti: null } : { yoklama_acik: false })
       .eq('id', oturumId)
-      .select('id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, soru_durum')
+      .select('id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, soru_durum, telefon_modu')
       .single()
     if (data) setOturum((o) => (o ? { ...o, ...(data as Oturum) } : o))
   }

@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import type { DersDurumu, PuanSatiri } from '../lib/tipler'
 import { SIKLAR } from '../lib/yarisma'
 import { oku, sakla } from '../lib/cihaz'
+import { useSlaytGorseli } from '../lib/gorsel'
 
 interface KumandaDurumu extends DersDurumu {
   katilan: number
@@ -33,6 +34,7 @@ export default function Kumanda() {
   const [hata, setHata] = useState<string | null>(null)
   const [mesgul, setMesgul] = useState(false)
   const [listeAcik, setListeAcik] = useState(false)
+  const gorsel = useSlaytGorseli(durum?.adim?.tur === 'slayt' ? durum.adim.gorsel : null)
 
   // Anahtar: adresten gelir ve saklanır (adres çubuğundan silinir); yoksa saklanandan ya da hoca girişinden.
   useEffect(() => {
@@ -92,7 +94,7 @@ export default function Kumanda() {
     }
   }, [anahtar, oturum, yenile])
 
-  async function komut(k: 'git' | 'yoklama_ac' | 'yoklama_kapat' | 'sonuc_goster', adim?: string) {
+  async function komut(k: 'git' | 'yoklama_ac' | 'yoklama_kapat' | 'sonuc_goster' | 'telefon_ac' | 'telefon_kapat', adim?: string) {
     if (!anahtar || mesgul) return
     setMesgul(true)
     const { data, error } = await supabase.rpc('kumanda_komut', {
@@ -140,9 +142,23 @@ export default function Kumanda() {
               {durum.adim.tur === 'slayt' && ` · ${durum.adim.sunum ?? ''} s. ${durum.adim.sayfa_no}`}
             </p>
             {durum.adim.tur === 'slayt' ? (
-              <p className="text-sm whitespace-pre-line text-slate-200 max-h-48 overflow-auto">
-                {durum.adim.metin?.trim() || 'Bu slaytta metin yok.'}
-              </p>
+              <div className="space-y-2">
+                {durum.adim.gorsel &&
+                  (gorsel.url ? (
+                    <img
+                      src={gorsel.url}
+                      alt={`Slayt ${durum.adim.sayfa_no}`}
+                      className={`w-full rounded-xl bg-white transition-opacity ${gorsel.gecis ? 'opacity-50' : ''}`}
+                    />
+                  ) : (
+                    <div className="aspect-video rounded-xl bg-white/5 flex items-center justify-center text-sm text-slate-400">
+                      {gorsel.hata ? 'Görsel yüklenemedi.' : 'Slayt yükleniyor…'}
+                    </div>
+                  ))}
+                <p className="text-sm whitespace-pre-line text-slate-200 max-h-48 overflow-auto">
+                  {durum.adim.metin?.trim() || 'Bu slaytta metin yok.'}
+                </p>
+              </div>
             ) : durum.adim.tur === 'soru' ? (
               <div className="space-y-2">
                 <p className="font-bold whitespace-pre-line">{durum.adim.soru}</p>
@@ -220,6 +236,20 @@ export default function Kumanda() {
         </div>
         <button className="ikincil-buton" disabled={mesgul} onClick={() => komut(durum.yoklama_acik ? 'yoklama_kapat' : 'yoklama_ac')}>
           {durum.yoklama_acik ? 'Yoklamayı kapat' : 'Yoklamayı aç'}
+        </button>
+      </section>
+
+      <section className="cam-panel rounded-2xl p-4 flex items-center gap-3">
+        <div className="flex-1">
+          <p className="text-sm font-semibold">Telefon modu</p>
+          <p className="text-xs text-slate-400">
+            {durum.telefon_modu
+              ? 'Açık: perdedeki slayt öğrencilerin telefonunda görünür.'
+              : 'Kapalı: öğrenciler perdeye bakar, telefonlarında yalnızca slaytın metni görünür.'}
+          </p>
+        </div>
+        <button className="ikincil-buton" disabled={mesgul} onClick={() => komut(durum.telefon_modu ? 'telefon_kapat' : 'telefon_ac')}>
+          {durum.telefon_modu ? 'Kapat' : 'Aç'}
         </button>
       </section>
 

@@ -27,3 +27,4 @@ create table storage.objects (id uuid primary key default gen_random_uuid(), buc
 alter table storage.objects enable row level security;
 grant usage on schema storage to anon, authenticated;
 grant select, insert, update, delete on storage.objects to authenticated;
+grant select on storage.objects to anon;

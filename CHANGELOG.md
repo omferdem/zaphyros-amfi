@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.6.2 (9 Kasım 2026)
+Supabase duraklatma uyarısı düzeltildi.
+- Sorun: Supabase, iki günde bir başarıyla çalışan "Supabase uyandırma" iş akışına rağmen projeyi "7 günden uzun süredir yeterli hareket görmedi" diye duraklatma listesine aldı ve 7 Kasım'da uyarı e-postası gönderdi (proje o gün duraklatılmamıştı). Eski iş akışı yalnızca `saglik()` çağırıyordu; bu fonksiyon `select true` döndürür ve hiçbir tabloya dokunmaz, Supabase bunu hareket saymadı. Hareketin tanımı Supabase belgelerinde yok.
+- Yeni `uyandir()` fonksiyonu gerçek bir tabloya yazar (`ozel.nabiz`, en fazla saatte bir) ve dersler ile öğrenciler tablolarını okur. İş akışı artık bunu çağırır. `saglik()` panelin bağlantı göstergesi için aynen kalır.
+- Veritabanı: `0009_uyandir.sql` uygulandı (Supabase SQL Editor, 9 Kasım 2026; önce geri alınan bir işlemle denendi). Uyarının geçtiğini sonraki hafta Supabase panelinden izlemek gerekir.
+
 ## v0.6.1 (26 Ekim 2026)
 Çok şubeli düzende karışıklığı önleyen düzeltmeler (6 7 şubeli bir derste hangi şubenin açık olduğu ve hangi çıktının hangi şubeye ait olduğu belli olsun).
 - Şube adı perdede, kumandada ve öğrenci telefonunda görünür: "Din Felsefesi I · B". Şubesiz derslerde değişen bir şey olmaz.

@@ -42,7 +42,7 @@ Supabase güvenlik ayarları, proje açılırken bilinçli seçildi:
   - Çalıştırılan her dosya `CHANGELOG.md` içinde not edilir.
 - Yeni kurulumlar için bütün migration'lar `supabase/kurulum.sql` dosyasında birleşir. Migration ekleyince `npm run kurulum-sql` çalıştır; test, dosya eskiyse hata verir.
 - Kurulumun hocası migration ile değil, sitede "Kurulumu sahiplen" adımıyla belirlenir (ilk giren hoca). Migration'a kişisel veri yazılmaz.
-- Uygulanmış migration'lar: `0001_saglik.sql`, `0002_yoklama.sql` (18 Ekim 2026, `kurulum.sql` ile SQL Editor'den), `0003_ders_akisi.sql`, `0004_ders_icerigi.sql`, `0005_bilgi_yarismasi.sql` (19 Ekim 2026), `0006_telefon_modu.sql` (25 Ekim 2026), `0007_donem_sube_plan.sql`, `0008_sube_gorunur.sql` (26 Ekim 2026). Bekleyen yok.
+- Uygulanmış migration'lar: `0001_saglik.sql`, `0002_yoklama.sql` (18 Ekim 2026, `kurulum.sql` ile SQL Editor'den), `0003_ders_akisi.sql`, `0004_ders_icerigi.sql`, `0005_bilgi_yarismasi.sql` (19 Ekim 2026), `0006_telefon_modu.sql` (25 Ekim 2026), `0007_donem_sube_plan.sql`, `0008_sube_gorunur.sql` (26 Ekim 2026), `0009_uyandir.sql` (9 Kasım 2026). Bekleyen yok.
 - Migration'lar Supabase'e gitmeden önce yerelde denenir: `npm run sql-test` (PGlite; bilgisayarda Postgres gerekmez, taklit + bütün migration'lar + düz SQL testleri). Yeni testleri psql komutu kullanmadan, hata verince duran düz SQL olarak yaz (`0003_ders_akisi_test.sql` gibi). Sonra Supabase SQL Editor'de `begin; <migration> <test> rollback;` ile bir kez daha dene, en son uygula.
 - Sürüm etiketleri `.github/workflows/etiket.yml` ile main'e push sonrası otomatik atılır (commit mesajı `vX.Y.Z:` ile başlamalı). İstisna: `.github/workflows/` altında dosya değiştiren commit'lere GitHub bu yolla etiket attırmaz; bunların etiketi yerel oturumdan `git push` ile atılır. Bulut oturumları etiket push edemez.
 
@@ -51,7 +51,7 @@ Ayrıntılı mimari: `docs/MIMARI.md`. Yol haritası ve fazlar: `docs/YOL-HARITA
 ## Ücretsiz plan sınırları (Ekim 2026 itibarıyla doğrulandı)
 
 - Supabase Free: 200 eşzamanlı Realtime bağlantısı, ayda 2 milyon Realtime mesajı, 500 MB veritabanı.
-- **Supabase Free projeler 7 gün hareketsiz kalınca duraklatılır.** Bunu önlemek için `.github/workflows/keepalive.yml` ile birkaç günde bir hafif bir istek atılacak (Faz 0'da kurulacak).
+- **Supabase Free projeler 7 gün "yeterli hareket" görmezse duraklatılır.** `.github/workflows/keepalive.yml` iki günde bir `uyandir()` RPC'sini çağırır: gerçek bir tabloya yazar ve dersler ile öğrenciler tablolarını okur. (Yalnızca `saglik()` çağırmak yetmedi: 7 Kasım 2026'da duraklatma uyarısı geldi, çünkü o fonksiyon hiçbir tabloya dokunmuyor.) Hareketin tanımı belgelenmemiş. Uyarı yine gelirse önce Supabase panelinden projenin durumuna ve iş akışının son çalışmalarına bak; duraklatılmışsa panelden "Restore project" ile geri aç. GitHub, 60 gün commit olmayan depoda zamanlanmış iş akışlarını kapatır.
 - 200 kişiyi aşan amfide Realtime sınırına takılırız. Bu durumda Pro plana geçiş ya da öğrenci tarafında bağlantıyı yalnızca etkileşimli adımlarda açık tutma düşünülecek.
 - GitHub Pages, ücretsiz hesapta yalnızca **public** repodan yayın yapar. Repo public olacaksa içinde hiçbir gerçek öğrenci verisi ve hiçbir gizli anahtar bulunmamalı.
 

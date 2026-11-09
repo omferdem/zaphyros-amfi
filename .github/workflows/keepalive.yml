@@ -1,6 +1,10 @@
-# Supabase Free projeleri 7 gün hareketsiz kalınca duraklatılır.
-# Bu iş akışı iki günde bir veritabanında küçük bir sorgu çalıştırarak bunu önler.
+# Supabase Free projeleri 7 gün "yeterli hareket" görmezse duraklatılır.
+# Bu iş akışı iki günde bir uyandir() fonksiyonunu çağırır: küçük bir tabloya yazar ve dersler ile öğrenciler
+# tablolarını okar. (Eski sürüm yalnızca saglik() çağırıyordu; o hiçbir tabloya dokunmadığı için Supabase
+# bunu hareket saymadı ve proje duraklatma uyarısı aldı.)
 # Adres ve anahtar public/ayarlar.json dosyasından okunur (herkese açık değerlerdir, gizli değildir).
+# Not: GitHub, 60 gün boyunca depoya hiç commit atılmazsa zamanlanmış iş akışlarını kendiliğinden kapatır;
+# bir kapanma e-postası gelirse Actions sekmesinden bu iş akışını yeniden aç.
 name: Supabase uyandırma
 
 on:
@@ -16,13 +20,15 @@ jobs:
         with:
           sparse-checkout: public/ayarlar.json
           sparse-checkout-cone-mode: false
-      - name: saglik() fonksiyonunu çağır
+      - name: uyandir() fonksiyonunu çağır
         run: |
           SUPABASE_URL=$(jq -r .supabaseUrl public/ayarlar.json)
           SUPABASE_KEY=$(jq -r .supabaseKey public/ayarlar.json)
-          yanit=$(curl -sS -w '\n%{http_code}' -X POST "$SUPABASE_URL/rest/v1/rpc/saglik" \
+          yanit=$(curl -sS -w '\n%{http_code}' -X POST "$SUPABASE_URL/rest/v1/rpc/uyandir" \
             -H "apikey: $SUPABASE_KEY" \
             -H "Content-Type: application/json" -d '{}')
           echo "$yanit"
           kod=$(echo "$yanit" | tail -n1)
+          govde=$(echo "$yanit" | sed '$d')
           test "$kod" = "200"
+          echo "$govde" | jq -e '.tamam == true'

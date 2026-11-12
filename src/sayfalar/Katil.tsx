@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import { cihazKimligi, oku, sakla } from '../lib/cihaz'
 import type { DersDurumu } from '../lib/tipler'
 import SoruCevabi from '../bilesenler/SoruCevabi'
+import { EtkinlikCevabi } from '../bilesenler/Etkinlik'
 import { useSlaytGorseli } from '../lib/gorsel'
 
 interface Bilet {
@@ -372,6 +373,8 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
           </div>
         ) : adim?.tur === 'soru' ? (
           <SoruCevabi key={adim.id} oturum={oturum} adim={adim} yoklamali={ad !== null} />
+        ) : adim?.tur === 'fikir' || adim?.tur === 'oylama' || adim?.tur === 'video' ? (
+          <EtkinlikCevabi key={adim.id} oturum={oturum} adim={adim} telefonModu={!!durum?.telefon_modu} />
         ) : adim?.tur === 'yoklama' ? (
           <p className="text-slate-300 m-auto text-center">Yoklama alınıyor. Perdeye bak.</p>
         ) : (

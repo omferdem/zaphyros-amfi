@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import type { Adim, Akis, Soru, Sunum } from '../lib/tipler'
+import type { Adim, AdimAyari, Akis, Soru, Sunum } from '../lib/tipler'
+import { videoAdresi } from '../lib/video'
 import { adimlarEkle, adimlariGetir, akisGetir, akisSirala, sorulariGetir, sunumYukle, sunumlariGetir } from '../lib/akis'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
 
@@ -29,6 +30,12 @@ export default function AkisDuzenle() {
   const [hata, setHata] = useState<string | null>(null)
   const [eklenecekSunum, setEklenecekSunum] = useState('')
   const [suruklenen, setSuruklenen] = useState<number | null>(null)
+  const [etkinlikTuru, setEtkinlikTuru] = useState<'fikir' | 'oylama' | 'video'>('fikir')
+  const [etkinlikSorusu, setEtkinlikSorusu] = useState('')
+  const [etiketSol, setEtiketSol] = useState('')
+  const [etiketSag, setEtiketSag] = useState('')
+  const [videoUrl, setVideoUrl] = useState('')
+  const [videoBaslik, setVideoBaslik] = useState('')
 
   const yukle = useCallback(async () => {
     try {
@@ -131,6 +138,40 @@ export default function AkisDuzenle() {
       await adimlarEkle(akis.id, adimlar.length, [{ tur: 'yoklama' }])
     } catch {
       setHata('Adım eklenemedi.')
+    }
+    yukle()
+  }
+
+  async function etkinlikEkle(e: React.FormEvent) {
+    e.preventDefault()
+    if (!akis) return
+    setHata(null)
+    let ayar: AdimAyari
+    if (etkinlikTuru === 'video') {
+      const url = videoAdresi(videoUrl)
+      if (!url) {
+        setHata('Video adresi https:// ile başlamalı (örneğin YouTube bağlantısı).')
+        return
+      }
+      ayar = { url, ...(videoBaslik.trim() ? { baslik: videoBaslik.trim().slice(0, 120) } : {}) }
+    } else {
+      const soru = etkinlikSorusu.trim().slice(0, 300)
+      if (!soru) {
+        setHata(etkinlikTuru === 'fikir' ? 'Beyin fırtınası sorusunu yaz.' : 'Oylanacak önermeyi yaz.')
+        return
+      }
+      ayar = { soru }
+      if (etkinlikTuru === 'oylama' && (etiketSol.trim() || etiketSag.trim())) {
+        ayar.etiketler = [etiketSol.trim().slice(0, 40) || 'Katılıyorum', etiketSag.trim().slice(0, 40) || 'Katılmıyorum']
+      }
+    }
+    try {
+      await adimlarEkle(akis.id, adimlar.length, [{ tur: etkinlikTuru, ayar }])
+      setEtkinlikSorusu('')
+      setVideoUrl('')
+      setVideoBaslik('')
+    } catch {
+      setHata('Etkinlik eklenemedi.')
     }
     yukle()
   }
@@ -282,6 +323,58 @@ export default function AkisDuzenle() {
             </button>
           </div>
         )}
+        <form onSubmit={etkinlikEkle} className="rounded-xl bg-slate-950/60 border border-white/5 p-4 space-y-3">
+          <div className="flex flex-wrap gap-2 items-center">
+            <p className="text-sm font-semibold">Tartışma etkinliği</p>
+            <select
+              className="giris-kutusu !w-auto !py-1.5 text-sm"
+              value={etkinlikTuru}
+              onChange={(e) => setEtkinlikTuru(e.target.value as typeof etkinlikTuru)}
+              aria-label="Etkinlik türü"
+            >
+              <option value="fikir">Beyin fırtınası (kelime bulutu)</option>
+              <option value="oylama">Şeytanın avukatı (iki taraflı oylama)</option>
+              <option value="video">Video</option>
+            </select>
+          </div>
+          {etkinlikTuru === 'video' ? (
+            <div className="grid gap-2 sm:grid-cols-2">
+              <input
+                className="giris-kutusu text-sm"
+                placeholder="Video adresi (https://...)"
+                value={videoUrl}
+                maxLength={255}
+                onChange={(e) => setVideoUrl(e.target.value)}
+              />
+              <input
+                className="giris-kutusu text-sm"
+                placeholder="Başlık (isteğe bağlı)"
+                value={videoBaslik}
+                maxLength={120}
+                onChange={(e) => setVideoBaslik(e.target.value)}
+              />
+            </div>
+          ) : (
+            <div className="space-y-2">
+              <input
+                className="giris-kutusu text-sm"
+                placeholder={etkinlikTuru === 'fikir' ? 'Soru: Kötülük problemi deyince aklına ne geliyor?' : 'Önerme: Tanrı kötülüğü engellemeye mecburdur.'}
+                value={etkinlikSorusu}
+                maxLength={300}
+                onChange={(e) => setEtkinlikSorusu(e.target.value)}
+              />
+              {etkinlikTuru === 'oylama' && (
+                <div className="grid gap-2 sm:grid-cols-2">
+                  <input className="giris-kutusu text-sm" placeholder="Sol seçenek (Katılıyorum)" value={etiketSol} maxLength={40} onChange={(e) => setEtiketSol(e.target.value)} />
+                  <input className="giris-kutusu text-sm" placeholder="Sağ seçenek (Katılmıyorum)" value={etiketSag} maxLength={40} onChange={(e) => setEtiketSag(e.target.value)} />
+                </div>
+              )}
+            </div>
+          )}
+          <button className="ikincil-buton" disabled={!!yukleme}>
+            Akışa ekle
+          </button>
+        </form>
         {yukleme && <p className="text-sm text-indigo-300">{yukleme}</p>}
         <p className="text-xs text-slate-500">
           Sunumun her sayfası ayrı bir adım olur. Sırayı satırları sürükleyerek ya da oklarla değiştirebilirsin.
@@ -319,6 +412,10 @@ export default function AkisDuzenle() {
                   <div className="w-28 h-16 shrink-0 rounded bg-fuchsia-500/10 flex items-center justify-center text-fuchsia-300 text-xs font-bold">
                     SORU
                   </div>
+                ) : a.tur === 'fikir' || a.tur === 'oylama' || a.tur === 'video' ? (
+                  <div className="w-28 h-16 shrink-0 rounded bg-amber-500/10 flex items-center justify-center text-amber-300 text-xs font-bold text-center leading-tight">
+                    {a.tur === 'fikir' ? 'BEYİN FIRTINASI' : a.tur === 'oylama' ? 'OYLAMA' : 'VİDEO'}
+                  </div>
                 ) : (
                   <div className="w-28 h-16 shrink-0 rounded bg-emerald-500/10 flex items-center justify-center text-emerald-300 text-xs font-bold">
                     YOKLAMA
@@ -338,6 +435,20 @@ export default function AkisDuzenle() {
                       <p className="text-xs text-slate-400 truncate">
                         Bilgi yarışması · {soruHaritasi.get(a.question_id ?? '')?.sure_sn ?? 20} saniye
                       </p>
+                    </>
+                  ) : a.tur === 'fikir' || a.tur === 'oylama' ? (
+                    <>
+                      <p className="text-sm font-semibold truncate">{a.ayar.soru}</p>
+                      <p className="text-xs text-slate-400 truncate">
+                        {a.tur === 'fikir'
+                          ? 'Beyin fırtınası · perdede kelime bulutu'
+                          : `Şeytanın avukatı · ${(a.ayar.etiketler ?? ['Katılıyorum', 'Katılmıyorum']).join(' / ')}`}
+                      </p>
+                    </>
+                  ) : a.tur === 'video' ? (
+                    <>
+                      <p className="text-sm font-semibold truncate">{a.ayar.baslik || 'Video'}</p>
+                      <p className="text-xs text-slate-400 truncate">{a.ayar.url}</p>
                     </>
                   ) : (
                     <>

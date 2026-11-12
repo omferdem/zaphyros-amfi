@@ -1,13 +1,13 @@
 // Sunumlar, ders akışları ve akış adımları için veri işlemleri (hoca tarafı).
 import { supabase } from './supabase'
-import type { Adim, Akis, Soru, Sunum } from './tipler'
+import type { Adim, AdimAyari, Akis, Soru, Sunum } from './tipler'
 import type { ZomrSorusu } from './zomr'
 import type { PdfBelgesi } from './pdf'
 
 const KOVA = 'sunumlar'
 const GORSEL_KOVA = 'slayt-gorselleri'
 const SUNUM_ALANLARI = 'id, subject_id, ad, kaynak, durum, sayfa_sayisi, metinler, gorseller_hazir, olusturuldu'
-const ADIM_ALANLARI = 'id, lesson_id, sira, tur, presentation_id, sayfa_no, question_id'
+const ADIM_ALANLARI = 'id, lesson_id, sira, tur, presentation_id, sayfa_no, question_id, ayar'
 const SORU_ALANLARI = 'id, subject_id, soru, dogru, yanlislar, sure_sn, ek, olusturuldu'
 
 /** Telefon modunda öğrenciye giden sayfa görselinin yolu (veritabanı da aynı yolu üretir). */
@@ -183,7 +183,7 @@ export async function adimlariGetir(akisId: string): Promise<Adim[]> {
 export async function adimlarEkle(
   akisId: string,
   mevcutSayi: number,
-  yeni: { tur: Adim['tur']; presentation_id?: string; sayfa_no?: number; question_id?: string }[],
+  yeni: { tur: Adim['tur']; presentation_id?: string; sayfa_no?: number; question_id?: string; ayar?: AdimAyari }[],
 ): Promise<void> {
   if (yeni.length === 0) return
   const { error } = await supabase

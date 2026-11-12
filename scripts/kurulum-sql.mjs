@@ -11,7 +11,7 @@ export function kurulumSqlUret() {
   const klasor = join(kok, 'supabase', 'migrations')
   const dosyalar = readdirSync(klasor).filter((d) => /^\d{4}_.+\.sql$/.test(d)).sort()
   const bolumler = dosyalar.map(
-    (d) => `-- ===========================================================================\n-- ${d}\n-- ===========================================================================\n\n${readFileSync(join(klasor, d), 'utf8').trim()}\n`,
+    (d) => `-- ===========================================================================\n-- ${d}\n-- ===========================================================================\n\n${readFileSync(join(klasor, d), 'utf8').replace(/\r\n/g, '\n').trim()}\n`,
   )
   return `-- AmfiOS kurulum SQL'i (bu dosya otomatik üretilir, elle düzenleme; kaynağı supabase/migrations)
 -- Yeni bir Supabase projesinde SQL Editor'e bu dosyanın tamamını yapıştırıp bir kez çalıştır.

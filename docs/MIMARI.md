@@ -72,6 +72,14 @@ Faz 3 ile gelenler (`0005_bilgi_yarismasi.sql`):
 
 **Yarışma güvenliği:** Şıkların sırası oturum ve soru kimliğinden türetilen bir sıralamayla karışır, herkese aynı görünür. Öğrenci şıkkın sırasını gönderir; `cevap_ver()` sırayı yeniden hesaplar, süreyi (1,5 sn pay ile) ve doğruluğu sunucuda denetler, puanı kendisi yazar. Doğru şık `soru_durum = 'sonuc'` olana kadar hiçbir yanıtta yer almaz.
 
+Faz 4 ile gelenler (`0010_tartisma.sql`): `lesson_steps.tur` değerleri `fikir` (beyin fırtınası), `oylama` (şeytanın avukatı) ve `video` olarak genişler; ayarları `ayar` jsonb alanında durur (`soru`, `etiketler`, `url`, `baslik`) ve tablo kısıtıyla denetlenir (video adresi yalnızca https).
+
+| Tablo | Alanlar | Not |
+|---|---|---|
+| `contributions` | id, session_id, step_id, kisi, taraf, metin, gizli, zaman | Fikir ve oylar. `kisi`: oturum anahtarıyla karılmış özet (kimlik değil); oylamada kişi başına tek satır (`taraf` dolu), beyin fırtınasında en çok 3. Öğrenci doğrudan okuyamaz; hoca okur, yalnızca `gizli` alanını değiştirir |
+
+`katki_gonder()` (girişsiz) kuralları sunucuda uygular. Açık/kapalı durum bilgi yarışmasındaki `sessions.soru_durum` alanını paylaşır; oylamada sayılar ve gerekçeler `sonuc` olana kadar `ders_durumu()` yanıtına girmez (kumanda hariç).
+
 RLS: Hoca yalnızca kendi `courses` kayıtlarını (ve bunlara bağlı sunum, akış ve adımları) ve bunlara bağlı öğrenci, oturum ve yoklamaları görür. Öğrenci (anon) hiçbir tabloyu okuyamaz ve yazamaz; yalnızca `katilim_bileti()`, `check_in()`, `kodla_katil()` ve `ders_durumu()` RPC'lerini çağırır (`SECURITY DEFINER`). Kumanda (girişsiz) `kumanda_durumu()` ve `kumanda_komut()` ile, oturumun kumanda anahtarını vererek çalışır.
 
 ## Yoklama akışı

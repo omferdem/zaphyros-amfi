@@ -8,6 +8,7 @@ import { adimlariGetir, sunumlariGetirIdIle } from '../lib/akis'
 import { dersEtiketi, kisaAd, oturumAdi } from '../lib/bicim'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
 import { SIKLAR, bitisAni } from '../lib/yarisma'
+import { KelimeBulutu, OylamaSonucu, VideoOynatici } from '../bilesenler/Etkinlik'
 
 interface Gelen {
   student_id: string
@@ -235,7 +236,7 @@ export default function Sahne() {
           </button>
         </>
       )}
-      {!slaytGorunumu && aktif?.tur !== 'soru' && (
+      {(!aktif || aktif.tur === 'yoklama') && (
         <button className="ikincil-buton" onClick={() => setMevcutGoster(!mevcutGoster)}>
           {mevcutGoster ? 'Mevcudu gizle' : 'Mevcudu göster'}
         </button>
@@ -271,6 +272,15 @@ export default function Sahne() {
           key={aktif.id}
           oturumId={oturum.id}
           adimId={aktif.id}
+          soruDurum={oturum.soru_durum}
+          araclar={araclar}
+          kod={kodGoster ? kod : null}
+        />
+      ) : aktif && (aktif.tur === 'fikir' || aktif.tur === 'oylama' || aktif.tur === 'video') ? (
+        <EtkinlikSahnesi
+          key={aktif.id}
+          oturumId={oturum.id}
+          adim={aktif}
           soruDurum={oturum.soru_durum}
           araclar={araclar}
           kod={kodGoster ? kod : null}
@@ -709,6 +719,139 @@ function SoruSahnesi({
           <p className="text-sm font-mono uppercase tracking-widest text-amber-300 mb-3">İlk 5</p>
           <PuanListesi puanlar={puanlar} />
         </section>
+      )}
+    </main>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Tartışma araçları: beyin fırtınası, şeytanın avukatı, video
+
+/** LIKE desenindeki özel karakterleri kaçırır (fikri metne göre gizlerken). */
+function likeKacir(metin: string): string {
+  return metin.replace(/[\\%_]/g, (c) => '\\' + c)
+}
+
+function EtkinlikSahnesi({
+  oturumId,
+  adim,
+  soruDurum,
+  araclar,
+  kod,
+}: {
+  oturumId: string
+  adim: Adim
+  soruDurum: 'acik' | 'sonuc' | null
+  araclar: React.ReactNode
+  kod: string | null
+}) {
+  const [durum, setDurum] = useState<DersDurumu['adim']>(null)
+  const acik = soruDurum === 'acik'
+  const tartisma = adim.tur === 'fikir' || adim.tur === 'oylama'
+
+  const yenile = useCallback(async () => {
+    const { data } = await supabase.rpc('ders_durumu', { p_session: oturumId })
+    const d = data as DersDurumu | null
+    if (d?.adim?.id === adim.id) setDurum(d.adim)
+  }, [oturumId, adim.id])
+
+  // Adım değişikliği ya da sonuç açıklaması; gelen katkılar kısa bir bekleyişle toplu yenilenir.
+  useEffect(() => {
+    yenile()
+    if (!tartisma) return
+    let bekleyen: ReturnType<typeof setTimeout> | null = null
+    const kanal = supabase
+      .channel(`etkinlik:${oturumId}:${adim.id}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'contributions', filter: `session_id=eq.${oturumId}` }, () => {
+        if (bekleyen) return
+        bekleyen = setTimeout(() => {
+          bekleyen = null
+          yenile()
+        }, 500)
+      })
+      .subscribe()
+    // Adım değişikliği veritabanına henüz yazılmadıysa ya da bağlantı koptuysa yedek yenileme
+    const t = setInterval(yenile, 4000)
+    return () => {
+      clearInterval(t)
+      if (bekleyen) clearTimeout(bekleyen)
+      supabase.removeChannel(kanal)
+    }
+  }, [oturumId, adim.id, soruDurum, tartisma, yenile])
+
+  async function durumDegistir(yeni: 'acik' | 'sonuc') {
+    await supabase.from('sessions').update({ soru_durum: yeni }).eq('id', oturumId)
+  }
+
+  async function fikriGizle(metin: string) {
+    await supabase
+      .from('contributions')
+      .update({ gizli: true })
+      .eq('session_id', oturumId)
+      .eq('step_id', adim.id)
+      .ilike('metin', likeKacir(metin))
+    yenile()
+  }
+
+  const baslikEtiketi = adim.tur === 'fikir' ? 'Beyin fırtınası' : adim.tur === 'oylama' ? 'Şeytanın avukatı' : 'Video'
+
+  return (
+    <main className="min-h-screen flex flex-col p-5 lg:p-8 gap-5">
+      <header className="flex items-center gap-4">
+        <p className="text-sm font-mono uppercase tracking-widest text-amber-300">{baslikEtiketi}</p>
+        <div className="ml-auto opacity-60 hover:opacity-100 transition-opacity">{araclar}</div>
+      </header>
+
+      {adim.tur === 'video' ? (
+        <section className="flex-1 flex flex-col items-center justify-center gap-4">
+          {adim.ayar.baslik && <h1 className="text-2xl lg:text-4xl font-extrabold text-center">{adim.ayar.baslik}</h1>}
+          {adim.ayar.url && <VideoOynatici adres={adim.ayar.url} baslik={adim.ayar.baslik} className="max-w-[min(90vw,calc(75vh*16/9))]" />}
+        </section>
+      ) : (
+        <>
+          <section className="cam-panel rounded-3xl p-6 lg:p-10 flex items-center gap-6">
+            <h1 className="flex-1 text-3xl lg:text-5xl font-extrabold leading-tight whitespace-pre-line">{adim.ayar.soru}</h1>
+            <div className="shrink-0 text-center">
+              <p className="text-5xl lg:text-6xl font-extrabold tabular-nums">{durum?.cevap_sayisi ?? 0}</p>
+              <p className="text-sm text-slate-400">{adim.tur === 'fikir' ? 'kişi yazdı' : 'oy'}</p>
+            </div>
+          </section>
+
+          <section className="cam-panel rounded-3xl p-6 lg:p-8 flex-1 flex flex-col justify-center">
+            {adim.tur === 'fikir' ? (
+              <KelimeBulutu fikirler={durum?.fikirler ?? []} buyuk gizle={fikriGizle} />
+            ) : acik ? (
+              <div className="text-center space-y-3">
+                <div className="flex items-center justify-center gap-6 text-3xl lg:text-5xl font-extrabold">
+                  <span className="text-sky-300">{(durum?.etiketler ?? adim.ayar.etiketler ?? ['Katılıyorum', 'Katılmıyorum'])[0]}</span>
+                  <span className="text-slate-500 text-2xl">ya da</span>
+                  <span className="text-rose-300">{(durum?.etiketler ?? adim.ayar.etiketler ?? ['Katılıyorum', 'Katılmıyorum'])[1]}</span>
+                </div>
+                <p className="text-slate-300 text-lg">Telefonundan oyunu ver. Sayılar sen açana kadar gizli.</p>
+              </div>
+            ) : durum ? (
+              <OylamaSonucu adim={durum} buyuk />
+            ) : null}
+          </section>
+
+          <footer className="flex flex-wrap items-center gap-4">
+            {acik ? (
+              <button className="parlak-buton rounded-xl px-5 py-2.5 font-bold" onClick={() => durumDegistir('sonuc')}>
+                {adim.tur === 'fikir' ? 'Toplamayı bitir' : 'Sonucu göster'}
+              </button>
+            ) : (
+              <button className="ikincil-buton" onClick={() => durumDegistir('acik')}>
+                Yeniden aç
+              </button>
+            )}
+            <p className="text-sm text-slate-400">{acik ? 'Öğrenciler yazıyor.' : adim.tur === 'fikir' ? 'Fikir toplama kapandı.' : 'Oylama kapandı.'}</p>
+            {kod && (
+              <div className="ml-auto">
+                <KodSeridi kod={kod} />
+              </div>
+            )}
+          </footer>
+        </>
       )}
     </main>
   )

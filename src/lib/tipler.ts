@@ -84,7 +84,15 @@ export interface Soru {
   olusturuldu: string
 }
 
-export type AdimTuru = 'yoklama' | 'slayt' | 'soru'
+export type AdimTuru = 'yoklama' | 'slayt' | 'soru' | 'fikir' | 'oylama' | 'video'
+
+/** Etkinlik adımlarının ayarı: fikir ve oylamada soru, oylamada iki etiket, videoda adres ve başlık. */
+export interface AdimAyari {
+  soru?: string
+  etiketler?: string[]
+  url?: string
+  baslik?: string
+}
 
 export interface Adim {
   id: string
@@ -94,6 +102,7 @@ export interface Adim {
   presentation_id: string | null
   sayfa_no: number | null
   question_id: string | null
+  ayar: AdimAyari
 }
 
 /** Öğrenci ve kumandanın gördüğü ders durumu (ders_durumu / kumanda_durumu RPC'leri). */
@@ -123,6 +132,13 @@ export interface DersDurumu {
     cevap_sayisi?: number
     dogru_index?: number | null
     dagilim?: number[] | null
+    // Beyin fırtınası, oylama ve video adımlarında (soru, soru_durum ve cevap_sayisi alanları ortaktır)
+    video?: string | null
+    fikirler?: { m: string; n: number }[]
+    etiketler?: string[]
+    /** Oylamada sonuç açıklanınca [sol, sağ] oy sayısı */
+    sayilar?: number[] | null
+    gerekceler?: { t: number; m: string }[] | null
   } | null
 }
 

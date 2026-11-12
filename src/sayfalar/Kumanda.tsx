@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import type { DersDurumu, PuanSatiri } from '../lib/tipler'
+import type { AdimTuru, DersDurumu, PuanSatiri } from '../lib/tipler'
+import { KelimeBulutu, OylamaSonucu, VideoOynatici } from '../bilesenler/Etkinlik'
 import { SIKLAR } from '../lib/yarisma'
 import { oku, sakla } from '../lib/cihaz'
 import { useSlaytGorseli } from '../lib/gorsel'
@@ -11,7 +12,7 @@ interface KumandaDurumu extends DersDurumu {
   mevcut: number
   kod: { kod: string; kalan_ms: number } | null
   puanlar: PuanSatiri[]
-  adimlar: { id: string; tur: 'yoklama' | 'slayt' | 'soru'; sunum: string | null; sayfa_no: number | null; ozet: string | null }[]
+  adimlar: { id: string; tur: AdimTuru; sunum: string | null; sayfa_no: number | null; ozet: string | null }[]
 }
 
 function anahtarYeri(oturum: string) {
@@ -94,7 +95,16 @@ export default function Kumanda() {
     }
   }, [anahtar, oturum, yenile])
 
-  async function komut(k: 'git' | 'yoklama_ac' | 'yoklama_kapat' | 'sonuc_goster' | 'telefon_ac' | 'telefon_kapat', adim?: string) {
+  async function fikriGizle(metin: string) {
+    if (!anahtar) return
+    await supabase.rpc('kumanda_gizle', { p_session: oturum, p_anahtar: anahtar, p_metin: metin, p_gizli: true })
+    await yenile()
+  }
+
+  async function komut(
+    k: 'git' | 'yoklama_ac' | 'yoklama_kapat' | 'sonuc_goster' | 'yeniden_ac' | 'telefon_ac' | 'telefon_kapat',
+    adim?: string,
+  ) {
     if (!anahtar || mesgul) return
     setMesgul(true)
     const { data, error } = await supabase.rpc('kumanda_komut', {
@@ -182,6 +192,35 @@ export default function Kumanda() {
                     Cevabı göster
                   </button>
                 )}
+              </div>
+            ) : durum.adim.tur === 'fikir' || durum.adim.tur === 'oylama' ? (
+              <div className="space-y-3">
+                <p className="font-bold whitespace-pre-line">{durum.adim.soru}</p>
+                <p className="text-xs text-slate-400">
+                  {durum.adim.cevap_sayisi ?? 0} {durum.adim.tur === 'fikir' ? 'kişi yazdı' : 'oy'} ·{' '}
+                  {durum.adim.soru_durum === 'acik' ? 'açık' : 'kapalı'}
+                </p>
+                {durum.adim.tur === 'fikir' ? (
+                  <KelimeBulutu fikirler={durum.adim.fikirler ?? []} gizle={fikriGizle} />
+                ) : (
+                  <OylamaSonucu adim={durum.adim} />
+                )}
+                <button
+                  className="parlak-buton rounded-xl px-4 py-2 text-sm font-bold w-full"
+                  disabled={mesgul}
+                  onClick={() => komut(durum.adim?.soru_durum === 'acik' ? 'sonuc_goster' : 'yeniden_ac')}
+                >
+                  {durum.adim.soru_durum === 'acik'
+                    ? durum.adim.tur === 'fikir'
+                      ? 'Toplamayı bitir'
+                      : 'Sonucu göster'
+                    : 'Yeniden aç'}
+                </button>
+              </div>
+            ) : durum.adim.tur === 'video' ? (
+              <div className="space-y-2">
+                <p className="font-bold">{durum.adim.soru || 'Video'}</p>
+                {durum.adim.video && <VideoOynatici adres={durum.adim.video} baslik={durum.adim.soru} />}
               </div>
             ) : (
               <p className="text-2xl font-extrabold">Yoklama</p>
@@ -281,7 +320,13 @@ export default function Kumanda() {
                         ? 'Yoklama'
                         : a.tur === 'soru'
                           ? `Soru: ${ilkSatir(a.ozet)}`
-                          : ilkSatir(a.ozet) || `${a.sunum ?? 'Slayt'} s. ${a.sayfa_no}`}
+                          : a.tur === 'fikir'
+                            ? `Beyin fırtınası: ${ilkSatir(a.ozet)}`
+                            : a.tur === 'oylama'
+                              ? `Oylama: ${ilkSatir(a.ozet)}`
+                              : a.tur === 'video'
+                                ? `Video: ${ilkSatir(a.ozet)}`
+                                : ilkSatir(a.ozet) || `${a.sunum ?? 'Slayt'} s. ${a.sayfa_no}`}
                     </span>
                   </button>
                 </li>

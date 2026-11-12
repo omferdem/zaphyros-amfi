@@ -57,10 +57,11 @@ Kullanıcı istekleri (19 Ekim 2026): slaytsız, yalnızca hazır sorularla bilg
 - Canlı soru, süre sayacı, cevap dağılımı grafiği, doğru cevabı açma
 - Puan tablosu ve ders sonu raporu
 
-## Faz 4: Tartışma araçları (v0.5)
+## Faz 4: Tartışma araçları (v0.7.0) ✅ (veritabanı bekliyor: 0010_tartisma.sql)
 - Beyin fırtınası: kelime bulutu
 - Şeytanın avukatı: iki kutuplu oylama ve gerekçe gönderme
 - Video adımı (YouTube linki, sahnede oynatma)
+- Sonraki iyileştirmeler: tartışma sonuçlarının oturum sayfasında ve Excel'de görünmesi, etkinlik adımını akışta düzenleme (şimdilik silip yeniden eklenir)
 
 ## Faz 5: Oyunlar (v0.6)
 - Halat çekme (iki takım, Broadcast)

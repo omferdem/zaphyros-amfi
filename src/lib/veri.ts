@@ -1,5 +1,6 @@
 import { supabase } from './supabase'
 import type { Ders, Ogrenci, Oturum, Yoklama } from './tipler'
+import type { CevapKaydi, KatilimKaydi } from './gelisim'
 
 // PostgREST tek seferde en fazla 1000 satır döndürür. 14 hafta x 150 öğrenci bunu aşar,
 // bu yüzden yoklama kayıtları sayfa sayfa çekilir.
@@ -20,6 +21,51 @@ export async function dersYoklamalari(oturumIdleri: string[]): Promise<Yoklama[]
     sonuc.push(...(data as Yoklama[]))
     if (data.length < SAYFA) return sonuc
   }
+}
+
+/** Uzun kimlik listelerini adrese sığsın diye parçalayıp her parçayı sayfa sayfa çeker. */
+async function parcaliCek<T>(
+  idler: string[],
+  cek: (parca: string[], bas: number) => PromiseLike<{ data: T[] | null; error: unknown }>,
+): Promise<T[]> {
+  const sonuc: T[] = []
+  for (let i = 0; i < idler.length; i += 40) {
+    const parca = idler.slice(i, i + 40)
+    for (let bas = 0; ; bas += SAYFA) {
+      const { data, error } = await cek(parca, bas)
+      if (error) throw error
+      sonuc.push(...(data ?? []))
+      if ((data?.length ?? 0) < SAYFA) break
+    }
+  }
+  return sonuc
+}
+
+/** Oturumların bilgi yarışması cevapları (gelişim raporu için). */
+export function oturumCevaplari(oturumIdleri: string[]): Promise<CevapKaydi[]> {
+  return parcaliCek<CevapKaydi>(oturumIdleri, (parca, bas) =>
+    supabase
+      .from('responses')
+      .select('session_id, question_id, cihaz_id, dogru, puan, sure_ms')
+      .in('session_id', parca)
+      .order('session_id')
+      .order('step_id')
+      .order('cihaz_id')
+      .range(bas, bas + SAYFA - 1),
+  )
+}
+
+/** Yoklama kayıtları cihaz kimliğiyle: cevapları öğrenciye bağlamak için. */
+export function oturumKatilimlari(oturumIdleri: string[]): Promise<KatilimKaydi[]> {
+  return parcaliCek<KatilimKaydi>(oturumIdleri, (parca, bas) =>
+    supabase
+      .from('attendance')
+      .select('session_id, student_id, cihaz_id')
+      .in('session_id', parca)
+      .order('session_id')
+      .order('student_id')
+      .range(bas, bas + SAYFA - 1),
+  )
 }
 
 export async function oturumYoklamalari(oturumId: string): Promise<Yoklama[]> {

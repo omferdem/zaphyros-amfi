@@ -1,5 +1,14 @@
 # Sürüm Geçmişi
 
+## v0.11.0 (12 Kasım 2026)
+Öğrenci gelişim raporu.
+- Ders (şube) sayfasında yeni "📈 Gelişim" sekmesi: bilgi yarışması cevaplarından öğrenci x konu başarısı. Üstte cevap sayısı, izlenen öğrenci, sınıf başarısı ve desteğe ihtiyacı olan öğrenci sayısı; "Sınıfın konuları" bölümünde en zayıf konu üstte olacak biçimde konu başarı çubukları ve o konuda zayıf kalan öğrenci sayısı.
+- Öğrenci tablosu: cevap sayısı, başarı, eğilim (ilk yarı oturumlara göre son yarının farkı, yüzde puan), güçlü ve zayıf konu. Önce zayıflar, önce başarılılar, önce gerileyenler, numara ya da ada göre sıralanır; ad ya da numarayla aranır. Satır açılınca oturum oturum başarı çizgisi, ortalama süre, puan ve her konudaki başarı görünür. Hiç cevap vermemiş öğrenciler her sıralamada sonda durur.
+- Konu ölçütü seçilebilir: Otomatik (sorudaki kazanım `#OUTCOME`, yoksa paket adı), Soru paketi, Kazanım ya da Bloom düzeyi (`#BLOOM`). Bir konuda yorum için en az 3 cevap gerekir; daha azında doğru/toplam gösterilir.
+- Excel çıktısı: öğrenci özeti ve her konu için başarı yüzdesi (yetersiz veride boş).
+- Cevaplar, o oturumda aynı cihazdan yoklama veren öğrenciye bağlanır. Takma adla oynayanlar ve yoklaması elle girilenler izlenemez; sayıları raporda uyarı olarak gösterilir.
+- Veritabanı değişikliği yok: rapor mevcut `responses`, `attendance` ve `questions` kayıtlarından tarayıcıda hesaplanır. Hesaplama `src/lib/gelisim.ts` içinde, 8 birim testle denendi. Görünüm sahte verilerle tarayıcıda denendi; gerçek ders verisiyle henüz denenmedi (veritabanında yarışma cevabı yok).
+
 ## v0.10.0 (12 Kasım 2026)
 Masaüstü uygulaması ve şifreyle giriş.
 - Şifreyle giriş: giriş ekranında "Şifreyle" ve "E-posta bağlantısı" sekmeleri. Panelin üstündeki "🔑 Şifre" düğmesinden şifre belirlenir (en az 8 karakter); sonraki girişlerde e-posta beklenmez, ücretsiz planın saatte 2 e-posta sınırına da takılınmaz. Seçilen yöntem hatırlanır. Supabase tarafında ek ayar ya da migration gerekmedi.

@@ -1,5 +1,6 @@
 import type { Ders, Ogrenci, Oturum, PuanSatiri, Yoklama } from './tipler'
 import { oturumAdi, tarih } from './bicim'
+import { AZ_VERI, type GelisimSonucu } from './gelisim'
 
 export interface RaporSatiri {
   ogrenci: Ogrenci
@@ -103,6 +104,46 @@ export async function oturumuExceleAktar(ders: Ders, oturum: Oturum, ogrenciler:
     columns: [{ width: 14 }, { width: 28 }, { width: 8 }, { width: 10 }, { width: 8 }],
     stickyRowsCount: 1,
   }).toFile(dosyaAdi(`Yoklama ${dosyaEtiketi(ders)} ${oturumAdi(oturum)}.xlsx`))
+}
+
+/** Öğrenci gelişim raporu: öğrenci özeti ve her konu için başarı yüzdesi (yetersiz veride boş). */
+export async function gelisimiExceleAktar(ders: Ders, sonuc: GelisimSonucu, olcutAdi: string) {
+  const { default: writeXlsxFile } = await import('write-excel-file/browser')
+  const kalin = { fontWeight: 'bold' as const }
+  const konular = sonuc.konular.map((k) => k.konu)
+  const sirali = [...sonuc.ogrenciler].sort((a, b) => a.ogrenci.ogrenci_no.localeCompare(b.ogrenci.ogrenci_no, 'tr', { numeric: true }))
+  const veri = [
+    [
+      { value: 'Öğrenci No', ...kalin },
+      { value: 'Ad Soyad', ...kalin },
+      { value: 'Cevap', ...kalin },
+      { value: 'Doğru', ...kalin },
+      { value: 'Başarı (%)', ...kalin },
+      { value: 'Eğilim (puan)', ...kalin },
+      { value: 'Ort. süre (sn)', ...kalin },
+      { value: 'Puan', ...kalin },
+      ...konular.map((k) => ({ value: k, ...kalin })),
+    ],
+    ...sirali.map((g) => [
+      { value: g.ogrenci.ogrenci_no, type: String },
+      { value: g.ogrenci.ad_soyad, type: String },
+      { value: g.cevap, type: Number },
+      { value: g.dogru, type: Number },
+      g.oran === null ? { value: '', type: String } : { value: Math.round(g.oran * 100), type: Number },
+      g.egilim === null ? { value: '', type: String } : { value: g.egilim, type: Number },
+      g.sureOrt === null ? { value: '', type: String } : { value: Math.round(g.sureOrt * 10) / 10, type: Number },
+      { value: g.puan, type: Number },
+      ...konular.map((k) => {
+        const o = g.konular.get(k)
+        return o && o.toplam >= AZ_VERI ? { value: Math.round((o.dogru / o.toplam) * 100), type: Number } : { value: '', type: String }
+      }),
+    ]),
+  ]
+  await writeXlsxFile(veri, {
+    sheet: 'Gelişim',
+    columns: [{ width: 14 }, { width: 28 }, { width: 8 }, { width: 8 }, { width: 11 }, { width: 12 }, { width: 13 }, { width: 9 }, ...konular.map(() => ({ width: 16 }))],
+    stickyRowsCount: 1,
+  }).toFile(dosyaAdi(`Gelisim ${dosyaEtiketi(ders)} (${olcutAdi}) ${tarih(new Date().toISOString())}.xlsx`))
 }
 
 /** Oturumun bilgi yarışması sonuçları: sıra, ad (yoklamadaki ad ya da takma ad), puan, doğru sayısı. */

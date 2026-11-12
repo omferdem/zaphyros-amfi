@@ -9,6 +9,7 @@ import { oku, sakla } from '../lib/cihaz'
 import { useSlaytGorseli } from '../lib/gorsel'
 import SinifPaneli, { useSinifDurumu } from '../bilesenler/SinifPaneli'
 import TakimPaneli from '../bilesenler/TakimPaneli'
+import HocaYarisiPaneli from '../bilesenler/HocaYarisiPaneli'
 
 interface KumandaDurumu extends DersDurumu {
   katilan: number
@@ -171,6 +172,7 @@ export default function Kumanda() {
 
       <SinifPaneli d={sinif.d} komut={sinif.komut} hata={sinif.hata} mod="kumanda" />
       {anahtar && <TakimPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
+      {anahtar && <HocaYarisiPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
 
       <section className="cam-panel rounded-3xl p-5 space-y-2 min-h-40">
         {durum.adim ? (

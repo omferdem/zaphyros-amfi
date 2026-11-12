@@ -80,7 +80,7 @@ Kullanıcı istekleri (13 Kasım 2026):
 ## Faz 5: Oyunlar (v0.6)
 - Takım yarışması (v0.15) ✅: bilgi yarışmasında sınıf 2-6 gruba bölünür (öğrenci grubunu seçer), gruplar üye başına ortalama puanla yarışır
 - Halat çekme (iki takım, Broadcast)
-- Hocayla yarış (sınıf hocaya karşı: doğru bilen sınıf puan alır, hoca her soruda kendi cevabını gizli verir)
+- Hocayla yarış (v0.16) ✅: sınıf hocaya karşı; hoca her soruda kendi cevabını gizli verir, doğru bilen taraf puan alır
 - Aday oyunlar (hoca seçimine göre): Kim Milyoner Olmak İster (jokerli, sınıf oyu), Doğru mu Yanlış mı (ayakta/oturarak hızlı eleme), Eşleştirme yarışı (kavram-tanım), Boşluk doldurma, Resim/sözcük tahmin (Pictionary tarzı, hoca çizer), Mini turnuva (eleme usulü), Kovalamaca (doğru cevap hızlandırır)
 - Kovalamaca oyunu (soru doğru cevaplanınca hızlanma)
 

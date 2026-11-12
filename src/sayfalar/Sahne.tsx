@@ -13,6 +13,7 @@ import { SIKLAR, bitisAni } from '../lib/yarisma'
 import { KelimeBulutu, OylamaSonucu, VideoOynatici } from '../bilesenler/Etkinlik'
 import SinifPaneli, { useSinifDurumu } from '../bilesenler/SinifPaneli'
 import TakimPaneli from '../bilesenler/TakimPaneli'
+import HocaYarisiPaneli from '../bilesenler/HocaYarisiPaneli'
 
 interface Gelen {
   student_id: string
@@ -339,6 +340,7 @@ export default function Sahne() {
       {puanAcik && <PuanTablosu oturumId={oturum.id} kapat={() => setPuanAcik(false)} />}
       <SinifPaneli d={sinif.d} komut={sinif.komut} hata={sinif.hata} mod="perde" />
       <TakimPaneli oturum={oturum.id} anahtar={null} mod="perde" />
+      <HocaYarisiPaneli oturum={oturum.id} anahtar={null} mod="perde" />
     </>
   )
 }

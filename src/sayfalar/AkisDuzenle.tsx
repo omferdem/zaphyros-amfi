@@ -1,9 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import type { Adim, AdimAyari, Akis, Soru, Sunum } from '../lib/tipler'
 import { videoAdresi } from '../lib/video'
-import { adimlarEkle, adimlariGetir, akisGetir, akisSirala, sorulariGetir, sunumYukle, sunumlariGetir } from '../lib/akis'
+import { adimlarEkle, adimlariGetir, akisGetir, akisSirala, sorulariAkisaYerlestir, sorulariGetir, sunumYukle, sunumlariGetir } from '../lib/akis'
+import { konumuCoz } from '../lib/paket'
+import SoruPaketiEkle from '../bilesenler/SoruPaketiEkle'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
 
 /** Dosya adından sunum adı: uzantı ve alt çizgiler atılır. */
@@ -30,6 +32,9 @@ export default function AkisDuzenle() {
   const [hata, setHata] = useState<string | null>(null)
   const [eklenecekSunum, setEklenecekSunum] = useState('')
   const [suruklenen, setSuruklenen] = useState<number | null>(null)
+  const [konum, setKonum] = useState('son')
+  const [bilgi, setBilgi] = useState<string | null>(null)
+  const soruPaneli = useRef<HTMLDivElement>(null)
   const [etkinlikTuru, setEtkinlikTuru] = useState<'fikir' | 'oylama' | 'video'>('fikir')
   const [etkinlikSorusu, setEtkinlikSorusu] = useState('')
   const [etiketSol, setEtiketSol] = useState('')
@@ -119,17 +124,23 @@ export default function AkisDuzenle() {
 
   async function sorulariAkisaEkle(idler: string[]) {
     if (!akis || idler.length === 0) return
+    setHata(null)
+    setBilgi(null)
     try {
-      await adimlarEkle(
-        akis.id,
-        adimlar.length,
-        idler.map((id) => ({ tur: 'soru' as const, question_id: id })),
-      )
+      await sorulariAkisaYerlestir(akis.id, adimlar, idler, konumuCoz(konum))
+      setBilgi(`${idler.length} soru akışa eklendi.`)
     } catch {
       setHata('Sorular eklenemedi.')
     }
     setSoruSecimi(null)
-    yukle()
+    await yukle()
+  }
+
+  /** Adım satırındaki "+ Soru" düğmesi: ekleme konumunu o adımın arkasına alıp paneli gösterir. */
+  function buraya(adimId: string) {
+    setKonum(`sonra:${adimId}`)
+    setBilgi('Ekleme konumu bu adımın arkası olarak seçildi. Aşağıdan bir soru paketi seç.')
+    soruPaneli.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }
 
   async function yoklamaEkle() {
@@ -140,6 +151,20 @@ export default function AkisDuzenle() {
       setHata('Adım eklenemedi.')
     }
     yukle()
+  }
+
+  /** Konum seçiminde ve listede adımı tanıtan kısa etiket: "5. Kötülük problemi". */
+  function adimEtiketi(a: Adim, i: number): string {
+    const ad =
+      a.tur === 'slayt'
+        ? ilkSatir(sunumHaritasi.get(a.presentation_id ?? '')?.metinler[(a.sayfa_no ?? 1) - 1]) || `Slayt ${a.sayfa_no}`
+        : a.tur === 'soru'
+          ? `Soru: ${soruHaritasi.get(a.question_id ?? '')?.soru ?? ''}`
+          : a.tur === 'yoklama'
+            ? 'Yoklama'
+            : a.ayar.soru || a.ayar.baslik || (a.tur === 'video' ? 'Video' : 'Etkinlik')
+    const metin = `${i + 1}. ${ad.replace(/\s+/g, ' ')}`
+    return metin.length > 64 ? `${metin.slice(0, 63)}…` : metin
   }
 
   async function etkinlikEkle(e: React.FormEvent) {
@@ -270,15 +295,23 @@ export default function AkisDuzenle() {
             </div>
           )}
         </div>
+        <div ref={soruPaneli}>
+          <SoruPaketiEkle
+            akisAdi={akis.ad}
+            icerikId={akis.subject_id}
+            sorular={sorular}
+            adimEtiketleri={adimlar.map((a, i) => ({ id: a.id, etiket: adimEtiketi(a, i) }))}
+            konum={konum}
+            setKonum={setKonum}
+            ekle={sorulariAkisaEkle}
+            disabled={!!yukleme}
+          />
+        </div>
+        {bilgi && <p className="text-sm text-emerald-300">{bilgi}</p>}
         {sorular.length > 0 && !soruSecimi && (
           <button className="ikincil-buton" onClick={() => setSoruSecimi(new Set())} disabled={!!yukleme}>
-            Soru ekle ({sorular.length} soru bankada)
+            Soruları tek tek seç ({sorular.length} soru bankada)
           </button>
-        )}
-        {sorular.length === 0 && (
-          <p className="text-xs text-slate-500">
-            Bilgi yarışması sorusu eklemek için önce ders sayfasındaki "Ders akışları" sekmesinden soru bankasına soru aktar.
-          </p>
         )}
         {soruSecimi && (
           <div className="rounded-xl bg-slate-950/60 border border-white/5 p-4 space-y-3">
@@ -458,6 +491,9 @@ export default function AkisDuzenle() {
                   )}
                 </div>
                 <div className="flex gap-1">
+                  <button className="ikincil-buton !px-2 !py-1" onClick={() => buraya(a.id)} title="Bu adımın arkasına soru paketi ekle">
+                    + Soru
+                  </button>
                   <button className="ikincil-buton !px-2 !py-1" onClick={() => tasi(i, i - 1)} disabled={i === 0} aria-label="Yukarı taşı">
                     ↑
                   </button>

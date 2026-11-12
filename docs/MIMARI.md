@@ -78,6 +78,8 @@ Faz 4 ile gelenler (`0010_tartisma.sql`): `lesson_steps.tur` değerleri `fikir` 
 |---|---|---|
 | `contributions` | id, session_id, step_id, kisi, taraf, metin, gizli, zaman | Fikir ve oylar. `kisi`: oturum anahtarıyla karılmış özet (kimlik değil); oylamada kişi başına tek satır (`taraf` dolu), beyin fırtınasında en çok 3. Öğrenci doğrudan okuyamaz; hoca okur, yalnızca `gizli` alanını değiştirir |
 
+**Soru paketleri** (v0.9.0): paket ayrı bir tablo değildir; her sorunun `questions.ek.paket` alanında paket adı yazar (ZOMR dosyasındaki `#PAKET:` etiketi de buraya düşer). Paket listesi sorulardan türetilir, paket yeniden adlandırma ve taşıma ilgili soruların `ek` alanını günceller. Akışa ekleme `lesson_steps`'e `tur = 'soru'` satırları ekler; araya yerleştirme için yeni adımlar sona yazılıp `akis_sirala()` ile istenen sıraya alınır.
+
 `katki_gonder()` (girişsiz) kuralları sunucuda uygular. Açık/kapalı durum bilgi yarışmasındaki `sessions.soru_durum` alanını paylaşır; oylamada sayılar ve gerekçeler `sonuc` olana kadar `ders_durumu()` yanıtına girmez (kumanda hariç).
 
 RLS: Hoca yalnızca kendi `courses` kayıtlarını (ve bunlara bağlı sunum, akış ve adımları) ve bunlara bağlı öğrenci, oturum ve yoklamaları görür. Öğrenci (anon) hiçbir tabloyu okuyamaz ve yazamaz; yalnızca `katilim_bileti()`, `check_in()`, `kodla_katil()` ve `ders_durumu()` RPC'lerini çağırır (`SECURITY DEFINER`). Kumanda (girişsiz) `kumanda_durumu()` ve `kumanda_komut()` ile, oturumun kumanda anahtarını vererek çalışır.

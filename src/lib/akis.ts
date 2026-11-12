@@ -2,6 +2,7 @@
 import { supabase } from './supabase'
 import type { Adim, AdimAyari, Akis, Soru, Sunum } from './tipler'
 import type { ZomrSorusu } from './zomr'
+import { adimSirasi, type Konum } from './paket'
 import type { PdfBelgesi } from './pdf'
 
 const KOVA = 'sunumlar'
@@ -179,17 +180,36 @@ export async function adimlariGetir(akisId: string): Promise<Adim[]> {
   return data as Adim[]
 }
 
-/** Adımları akışın sonuna ekler. */
+/**
+ * Adımları akışın sonuna ekler ve yeni adımların kimliklerini eklenme sırasıyla döndürür.
+ * Sıra numarası, silinmiş adımlardan kalan boşluklar yüzünden çakışmasın diye mevcut en büyük sıradan başlar.
+ */
 export async function adimlarEkle(
   akisId: string,
-  mevcutSayi: number,
+  _mevcutSayi: number,
   yeni: { tur: Adim['tur']; presentation_id?: string; sayfa_no?: number; question_id?: string; ayar?: AdimAyari }[],
-): Promise<void> {
-  if (yeni.length === 0) return
-  const { error } = await supabase
+): Promise<string[]> {
+  if (yeni.length === 0) return []
+  const { data: son } = await supabase.from('lesson_steps').select('sira').eq('lesson_id', akisId).order('sira', { ascending: false }).limit(1)
+  const taban = (son?.[0]?.sira as number | undefined) ?? 0
+  const { data, error } = await supabase
     .from('lesson_steps')
-    .insert(yeni.map((a, i) => ({ lesson_id: akisId, sira: mevcutSayi + i + 1, ...a })))
+    .insert(yeni.map((a, i) => ({ lesson_id: akisId, sira: taban + i + 1, ...a })))
+    .select('id, sira')
   if (error) throw error
+  return ((data ?? []) as { id: string; sira: number }[]).sort((a, b) => a.sira - b.sira).map((r) => r.id)
+}
+
+/** Soruları akışa tek seferde ekler: sona, başa ya da bir adımın hemen arkasına (slaytların arasına). */
+export async function sorulariAkisaYerlestir(akisId: string, mevcut: Adim[], soruIdleri: string[], konum: Konum): Promise<void> {
+  const yeni = await adimlarEkle(
+    akisId,
+    mevcut.length,
+    soruIdleri.map((id) => ({ tur: 'soru' as const, question_id: id })),
+  )
+  if (konum.tur !== 'son' && yeni.length) {
+    await akisSirala(akisId, adimSirasi(mevcut.map((a) => a.id), yeni, konum))
+  }
 }
 
 export async function akisSirala(akisId: string, idler: string[]): Promise<void> {
@@ -218,20 +238,51 @@ export async function sorulariGetirIdIle(idler: string[]): Promise<Soru[]> {
   return data as Soru[]
 }
 
-export async function sorulariEkle(icerikId: string, sorular: ZomrSorusu[], sureSn: number): Promise<void> {
-  if (sorular.length === 0) return
+/**
+ * Soruları bankaya ekler ve dosyadaki sırasıyla kimliklerini döndürür. `paket` verilirse bütün sorular o
+ * pakete girer; verilmezse dosyadaki #PAKET satırı (varsa) korunur.
+ */
+export async function sorulariEkle(icerikId: string, sorular: ZomrSorusu[], sureSn: number, paket = ''): Promise<string[]> {
+  if (sorular.length === 0) return []
   // Aynı anda eklenen sorular dosyadaki sırasını korusun diye her birine bir milisaniye ileri zaman verilir.
   const simdi = Date.now()
-  const { error } = await supabase.from('questions').insert(
-    sorular.map((s, i) => ({
-      subject_id: icerikId,
-      soru: s.soru,
-      dogru: s.dogru,
-      yanlislar: s.yanlislar,
-      ek: s.ek,
-      sure_sn: sureSn,
-      olusturuldu: new Date(simdi + i).toISOString(),
-    })),
-  )
+  const ad = paket.trim().slice(0, 80)
+  const { data, error } = await supabase
+    .from('questions')
+    .insert(
+      sorular.map((s, i) => ({
+        subject_id: icerikId,
+        soru: s.soru,
+        dogru: s.dogru,
+        yanlislar: s.yanlislar,
+        ek: ad ? { ...s.ek, paket: ad } : s.ek,
+        sure_sn: sureSn,
+        olusturuldu: new Date(simdi + i).toISOString(),
+      })),
+    )
+    .select('id, olusturuldu')
+  if (error) throw error
+  return ((data ?? []) as { id: string; olusturuldu: string }[]).sort((a, b) => a.olusturuldu.localeCompare(b.olusturuldu)).map((r) => r.id)
+}
+
+/** Bir sorunun paketini değiştirir (boş ad: paketsiz). Sorunun diğer ek bilgileri korunur. */
+export async function soruPaketiniDegistir(s: Soru, ad: string): Promise<void> {
+  const { paket: _eski, ...kalan } = s.ek
+  const temiz = ad.trim().slice(0, 80)
+  const { error } = await supabase
+    .from('questions')
+    .update({ ek: temiz ? { ...kalan, paket: temiz } : kalan })
+    .eq('id', s.id)
+  if (error) throw error
+}
+
+export async function paketiYenidenAdlandir(sorular: Soru[], ad: string): Promise<void> {
+  for (const s of sorular) await soruPaketiniDegistir(s, ad)
+}
+
+/** Paketteki bütün soruları bankadan (ve onları kullanan akışlardan) siler. */
+export async function paketiSil(sorular: Soru[]): Promise<void> {
+  if (sorular.length === 0) return
+  const { error } = await supabase.from('questions').delete().in('id', sorular.map((s) => s.id))
   if (error) throw error
 }

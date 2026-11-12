@@ -1,5 +1,16 @@
 # Sürüm Geçmişi
 
+## v0.9.0 (12 Kasım 2026)
+Soru paketleri: ders ve haftaya göre soru setleri, akışa topluca ekleme, seri yarışma.
+- Soru paketi: ders içeriğinin soru bankasındaki sorular artık paketlere ayrılır (ör. "3. hafta: Kötülük problemi"). ZOMR dosyası yüklerken paket adı verilir (dosya adından önerilir); dosyada `#PAKET:ad` satırı varsa soru kendi paketine girer. Soru bankası paketlere göre gruplanır; paket yeniden adlandırılır, silinir, tek tek soru başka pakete taşınır.
+- Akışa topluca ekleme: akış düzenleyicide "Soru paketi ekle" paneli. Paket, akışın sonuna, başına ya da seçilen bir adımın (ör. bir slaytın) arkasına tek seferde eklenir; sırayı karıştırma ve "ilk N soru" sınırı vardır. Adı akışın adıyla aynı olan paket (bu haftanın paketi) listenin başında çıkar. Her adım satırında "+ Soru" düğmesi konumu o adımın arkasına alır.
+- Doğrudan yükleme: aynı panelden yeni bir ZOMR dosyası yüklenip tek adımda akışa eklenebilir.
+- Seri yarışma: paketin yanındaki "Yarışma akışı oluştur" yalnızca o paketin sorularından oluşan yeni bir akış açar (slaytsız Kahoot tarzı yarışma).
+- Panelde ve soru bankasında "nasıl çalışır" açıklaması eklendi.
+- Düzeltme: akışa adım eklerken sıra numarası artık mevcut en büyük sıradan başlıyor. Eskiden ortadan bir adım silindikten sonra eklenen adım, sondakiyle aynı sıra numarasını alıp yanlış yere düşebiliyordu.
+- Paket adı sorunun `ek` alanında (`ek.paket`) tutulur; yeni tablo ya da migration gerekmedi.
+- Tarayıcıda denenmedi: hoca ekranları giriş gerektirir; saf mantık (gruplama, araya yerleştirme, karıştırma) 7 birim testle denendi.
+
 ## v0.8.0 (12 Kasım 2026)
 Gençlere yönelik yeni görünüm ve ders sırasında bitirme düğmeleri.
 - Dersi bitir: sahnede, kumandada, ders sayfasındaki oturum listesinde ve yoklama listesinde "Dersi bitir" düğmesi var. Bitince yoklama kapanır, perdede kapanış ekranı çıkar (katılan sayısı, yoklama listesi ve ana sayfa bağlantısı), öğrencilerin telefonunda "Ders bitti" görünür. Bitmiş ders yeniden açılabilir. Daha önce ders yalnızca yeni ders başlatılınca kapanıyordu.

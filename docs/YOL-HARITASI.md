@@ -54,6 +54,7 @@ Kullanıcı istekleri (19 Ekim 2026): slaytsız, yalnızca hazır sorularla bilg
 - Kullanıcı kararları: Kahoot gibi hız puanı (500-1000), yoklamasız derste takma ad
 - Sıradaki: 2b (yalnız telefon modu), 2c (PPTX çevirisi), sonra Faz 4
 - Haftaya soru ekleme (elle ya da metin yapıştırarak)
+- Soru paketleri (v0.9.0): hafta/konu başına paket, akışa topluca ekleme (sona, başa, slaytların arasına), paketten yarışma akışı
 - Canlı soru, süre sayacı, cevap dağılımı grafiği, doğru cevabı açma
 - Puan tablosu ve ders sonu raporu
 

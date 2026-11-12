@@ -3,6 +3,8 @@ import { supabase } from '../lib/supabase'
 import { cihazKimligi, oku, sakla } from '../lib/cihaz'
 import type { DersDurumu, PuanSatiri } from '../lib/tipler'
 import { SIKLAR, bitisAni } from '../lib/yarisma'
+import Halka from './Halka'
+import Konfeti from './Konfeti'
 
 type SoruAdimi = NonNullable<DersDurumu['adim']>
 
@@ -114,9 +116,7 @@ export default function SoruCevabi({ oturum, adim, yoklamali }: { oturum: string
       <div className="flex items-start gap-3">
         <h1 className="flex-1 text-xl font-extrabold leading-snug whitespace-pre-line">{adim.soru}</h1>
         {acik && kalan !== null && (
-          <span className="shrink-0 w-12 h-12 rounded-full border-2 border-fuchsia-400 flex items-center justify-center text-lg font-bold tabular-nums">
-            {Math.ceil(kalan / 1000)}
-          </span>
+          <Halka oran={kalan / ((adim.sure_sn ?? 20) * 1000)} etiket={Math.ceil(kalan / 1000)} boyut={68} />
         )}
       </div>
 
@@ -129,7 +129,8 @@ export default function SoruCevabi({ oturum, adim, yoklamali }: { oturum: string
                 key={i}
                 onClick={() => cevapla(i)}
                 disabled={kalan === 0}
-                className={`${sik.renk} rounded-2xl px-4 py-4 flex items-center gap-3 text-left text-lg font-bold active:scale-[0.98] transition-transform disabled:opacity-50`}
+                style={{ animationDelay: `${i * 60}ms` }}
+                className={`${sik.renk} pop rounded-3xl px-4 py-5 flex items-center gap-3 text-left text-lg font-bold active:scale-[0.97] transition-transform disabled:opacity-50`}
               >
                 <span className="w-9 h-9 rounded-lg bg-black/25 flex items-center justify-center shrink-0">{sik.harf}</span>
                 <span className="flex-1">{x}</span>
@@ -156,13 +157,18 @@ export default function SoruCevabi({ oturum, adim, yoklamali }: { oturum: string
             <p className="text-xl font-bold text-slate-300">Bu soruya cevap vermedin.</p>
           ) : sonucum.dogru ? (
             <>
-              <p className="text-4xl">✓</p>
-              <p className="text-2xl font-extrabold text-emerald-300">Doğru! +{sonucum.puan}</p>
+              <Konfeti adet={36} />
+              <p className="text-6xl pop" aria-hidden>
+                🎉
+              </p>
+              <p className="text-3xl font-display font-extrabold text-emerald-300">Doğru! +{sonucum.puan}</p>
             </>
           ) : (
             <>
-              <p className="text-4xl">✗</p>
-              <p className="text-2xl font-extrabold text-rose-300">Yanlış</p>
+              <p className="text-6xl pop" aria-hidden>
+                😅
+              </p>
+              <p className="text-2xl font-display font-extrabold text-rose-300">Olmadı, sıradaki senin!</p>
             </>
           )}
           {typeof adim.dogru_index === 'number' && (

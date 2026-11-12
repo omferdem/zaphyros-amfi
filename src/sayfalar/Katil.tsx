@@ -211,8 +211,8 @@ export default function Katil() {
                 className="giris-kutusu text-2xl font-mono tracking-wider text-center"
               />
             </label>
-            <button disabled={gonderiliyor || !numara.trim()} className="parlak-buton w-full rounded-xl py-3.5 font-bold text-lg disabled:opacity-60">
-              {gonderiliyor ? 'Gönderiliyor…' : 'Yoklamaya katıl'}
+            <button disabled={gonderiliyor || !numara.trim()} className="parlak-buton w-full rounded-2xl py-4 text-lg disabled:opacity-60">
+              {gonderiliyor ? 'Gönderiliyor…' : 'Yoklamaya katıl ✋'}
             </button>
             {formHata && <p className="text-sm text-rose-200 bg-rose-500/10 rounded-xl p-3">{formHata}</p>}
             <p className="text-[11px] text-slate-500 text-center">
@@ -246,7 +246,10 @@ function KodFormu({ gonder, kucuk = false }: { gonder: (kod: string) => Promise<
     <form onSubmit={gonderForm} className="space-y-4">
       {!kucuk && (
         <>
-          <h1 className="text-2xl font-extrabold text-center">Hoş geldin</h1>
+          <p className="text-6xl text-center suzul" aria-hidden>
+            🎓
+          </p>
+          <h1 className="text-3xl font-extrabold text-center renkli-yazi pb-1">Hoş geldin!</h1>
           <p className="text-sm text-slate-300 text-center">
             Perdedeki QR kodu telefonunun kamerasıyla okut ya da perdede yazan 6 haneli ders kodunu gir.
           </p>
@@ -260,10 +263,10 @@ function KodFormu({ gonder, kucuk = false }: { gonder: (kod: string) => Promise<
         aria-label="Ders kodu"
         value={kod}
         onChange={(e) => setKod(e.target.value)}
-        className="giris-kutusu text-3xl font-mono tracking-[0.3em] text-center"
+        className="giris-kutusu !py-4 text-3xl font-mono tracking-[0.3em] text-center"
       />
-      <button disabled={mesgul || temiz.length !== 6} className="parlak-buton w-full rounded-xl py-3 font-bold disabled:opacity-50">
-        {mesgul ? 'Kontrol ediliyor…' : 'Derse katıl'}
+      <button disabled={mesgul || temiz.length !== 6} className="parlak-buton w-full rounded-2xl py-4 text-lg disabled:opacity-50">
+        {mesgul ? 'Kontrol ediliyor…' : 'Derse katıl 🚀'}
       </button>
       {hata && <p className="text-sm text-rose-200 bg-rose-500/10 rounded-xl p-3">{hata}</p>}
       {!kucuk && (
@@ -318,7 +321,7 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
           {durum?.baslik && <p className="text-sm text-slate-400 truncate">{durum.baslik}</p>}
         </div>
         {ad !== null && (
-          <span className="text-[11px] font-bold text-emerald-300 bg-emerald-500/10 rounded-full px-2.5 py-1 whitespace-nowrap">
+          <span className="nabiz text-[11px] font-bold text-emerald-300 bg-emerald-500/15 rounded-full px-2.5 py-1 whitespace-nowrap">
             ✓ {ad ? `${ad}, ` : ''}yoklama alındı
           </span>
         )}
@@ -328,7 +331,13 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
         {!durum ? (
           <p className="text-slate-400 text-sm m-auto">Bağlanıyor…</p>
         ) : durum.bitti ? (
-          <p className="text-slate-300 m-auto text-center">Ders bitti. Bu sayfayı kapatabilirsin.</p>
+          <div className="m-auto text-center space-y-2 girdi">
+            <p className="text-6xl suzul" aria-hidden>
+              👋
+            </p>
+            <p className="text-2xl font-display font-extrabold">Ders bitti</p>
+            <p className="text-slate-300">Teşekkürler. Bu sayfayı kapatabilirsin.</p>
+          </div>
         ) : adim?.tur === 'slayt' ? (
           <div className="space-y-3">
             <p className="text-[11px] font-mono uppercase tracking-widest text-slate-500">

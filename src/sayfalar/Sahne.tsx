@@ -3,7 +3,9 @@ import { Link, useParams } from 'react-router-dom'
 import QRCode from 'qrcode'
 import { supabase } from '../lib/supabase'
 import type { Adim, Ders, DersDurumu, Oturum, PuanSatiri, Sunum } from '../lib/tipler'
-import { oturumGetir } from '../lib/veri'
+import { DERSI_BITIR_SORUSU, oturumGetir, oturumuBitir, oturumuYenidenAc } from '../lib/veri'
+import Konfeti from '../bilesenler/Konfeti'
+import Halka from '../bilesenler/Halka'
 import { adimlariGetir, sunumlariGetirIdIle } from '../lib/akis'
 import { dersEtiketi, kisaAd, oturumAdi } from '../lib/bicim'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
@@ -210,6 +212,25 @@ export default function Sahne() {
     if (data) setOturum((o) => (o ? { ...o, ...(data as Oturum) } : o))
   }
 
+  async function dersiBitir() {
+    if (!window.confirm(DERSI_BITIR_SORUSU)) return
+    try {
+      const o = await oturumuBitir(oturumId)
+      setOturum((e) => (e ? { ...e, ...o } : e))
+    } catch {
+      window.alert('Ders bitirilemedi. İnternet bağlantını kontrol edip tekrar dene.')
+    }
+  }
+
+  async function dersiYenidenAc() {
+    try {
+      const o = await oturumuYenidenAc(oturumId)
+      setOturum((e) => (e ? { ...e, ...o } : e))
+    } catch {
+      window.alert('Ders yeniden açılamadı. Tekrar dene.')
+    }
+  }
+
   if (oturum === undefined)
     return <main className="min-h-screen flex items-center justify-center text-slate-400">Yükleniyor…</main>
   if (oturum === null)
@@ -220,6 +241,7 @@ export default function Sahne() {
         </p>
       </main>
     )
+  if (oturum.bitti) return <DersBitti oturum={oturum} katilan={gelenler.length} yenidenAc={dersiYenidenAc} />
 
   const araclar = (
     <div className="flex flex-wrap items-center gap-2">
@@ -259,8 +281,14 @@ export default function Sahne() {
         Tam ekran
       </button>
       <Link to={`/panel/oturum/${oturum.id}`} className="ikincil-buton">
-        Panel
+        Yoklama listesi
       </Link>
+      <Link to="/panel" className="ikincil-buton" title="Ders açık kalır; sahneye Dersler sayfasından dönebilirsin">
+        🏠 Ana sayfa
+      </Link>
+      <button className="tehlike-buton" onClick={dersiBitir}>
+        ⏹ Dersi bitir
+      </button>
     </div>
   )
 
@@ -307,6 +335,40 @@ export default function Sahne() {
       {kumandaAcik && <KumandaQr oturumId={oturum.id} kapat={() => setKumandaAcik(false)} />}
       {puanAcik && <PuanTablosu oturumId={oturum.id} kapat={() => setPuanAcik(false)} />}
     </>
+  )
+}
+
+/** Ders bitince perdede görünen kapanış ekranı. */
+function DersBitti({ oturum, katilan, yenidenAc }: { oturum: Oturum & { courses: Ders }; katilan: number; yenidenAc: () => void }) {
+  return (
+    <main className="min-h-screen flex items-center justify-center p-6">
+      <Konfeti />
+      <section className="cam-panel rounded-[2rem] p-8 sm:p-12 text-center space-y-6 max-w-xl w-full girdi">
+        <p className="text-7xl suzul" aria-hidden>
+          🎉
+        </p>
+        <div className="space-y-1">
+          <h1 className="text-4xl sm:text-5xl font-extrabold renkli-yazi pb-1">Ders bitti</h1>
+          <p className="text-sm font-mono text-indigo-300">{dersEtiketi(oturum.courses)}</p>
+          <p className="text-slate-300">{oturumAdi(oturum)}</p>
+        </div>
+        <p>
+          <b className="text-6xl font-display font-extrabold tabular-nums">{katilan}</b>
+          <span className="block text-slate-400 mt-1">öğrenci yoklamaya katıldı</span>
+        </p>
+        <div className="flex flex-wrap justify-center gap-3 pt-2">
+          <Link to="/panel" className="parlak-buton rounded-full px-6 py-3">
+            🏠 Ana sayfaya dön
+          </Link>
+          <Link to={`/panel/oturum/${oturum.id}`} className="ikincil-buton !py-3">
+            Yoklama listesi
+          </Link>
+          <button className="ikincil-buton !py-3" onClick={yenidenAc}>
+            Dersi yeniden aç
+          </button>
+        </div>
+      </section>
+    </main>
   )
 }
 
@@ -440,8 +502,8 @@ function YoklamaSahnesi({
         <section className="cam-panel rounded-3xl p-5 lg:p-6 flex flex-col items-center justify-center gap-4">
           {acik ? (
             <>
-              <p className="text-lg lg:text-xl text-slate-200 text-center">Telefonunun kamerasıyla okut, numaranı gir.</p>
-              <div className="bg-white rounded-3xl p-3 w-full max-w-[min(52vh,600px)] aspect-square flex items-center justify-center">
+              <p className="text-xl lg:text-2xl font-display font-extrabold text-center">📲 Kamerayı aç, QR'ı okut, numaranı gir</p>
+              <div className="bg-white rounded-[2rem] p-3 w-full max-w-[min(52vh,600px)] aspect-square flex items-center justify-center shadow-[0_0_90px_rgba(124,92,255,0.6)] ring-8 ring-white/10">
                 {qr ? (
                   <img src={qr} alt="Yoklama QR kodu" className="w-full h-full [image-rendering:pixelated]" />
                 ) : (
@@ -449,7 +511,7 @@ function YoklamaSahnesi({
                 )}
               </div>
               <div className="w-full max-w-[min(52vh,600px)] h-1.5 rounded-full bg-white/10 overflow-hidden">
-                <div className="h-full bg-indigo-400 transition-[width] duration-200 ease-linear" style={{ width: `${kalanOran * 100}%` }} />
+                <div className="h-full bg-linear-to-r from-pink-500 to-violet-500 transition-[width] duration-200 ease-linear" style={{ width: `${kalanOran * 100}%` }} />
               </div>
               {kod ? (
                 <KodSeridi kod={kod} buyuk />
@@ -476,13 +538,13 @@ function YoklamaSahnesi({
         <section className="cam-panel rounded-3xl p-6 lg:p-8 flex flex-col gap-5 min-h-0">
           <div>
             <p className="text-sm font-mono uppercase tracking-widest text-emerald-300">Katılan</p>
-            <p className="text-7xl lg:text-8xl font-extrabold leading-none mt-2 tabular-nums">
+            <p className="text-7xl lg:text-9xl font-display font-extrabold leading-none mt-2 tabular-nums renkli-yazi pb-2">
               {gelenler.length}
               {mevcutGoster && <span className="text-3xl lg:text-4xl text-slate-500 font-bold"> / {mevcut}</span>}
             </p>
             {mevcutGoster && mevcut > 0 && (
               <div className="mt-4 h-3 rounded-full bg-white/10 overflow-hidden">
-                <div className="h-full bg-emerald-400 transition-[width] duration-500" style={{ width: `${oran * 100}%` }} />
+                <div className="h-full bg-linear-to-r from-emerald-400 to-cyan-400 transition-[width] duration-500" style={{ width: `${oran * 100}%` }} />
               </div>
             )}
           </div>
@@ -490,8 +552,8 @@ function YoklamaSahnesi({
             {gelenler.slice(0, 60).map((g, i) => (
               <li
                 key={g.student_id}
-                className={`rounded-full px-3 py-1 text-sm lg:text-base ${
-                  i === 0 ? 'bg-emerald-400/20 text-emerald-200' : 'bg-white/5 text-slate-300'
+                className={`pop rounded-full px-3.5 py-1 text-sm lg:text-base font-semibold ${
+                  i === 0 ? 'bg-emerald-400/25 text-emerald-200 ring-2 ring-emerald-300/50' : 'bg-white/10 text-slate-200'
                 }`}
               >
                 {g.ad}
@@ -566,7 +628,7 @@ function PuanListesi({ puanlar, buyuk = false }: { puanlar: PuanSatiri[]; buyuk?
             i === 0 ? 'bg-amber-400/20 text-amber-100' : 'bg-white/5'
           }`}
         >
-          <span className="w-8 font-mono text-slate-400">{p.sira}</span>
+          <span className="w-10 font-mono text-slate-400 text-center">{p.sira <= 3 ? ['🥇', '🥈', '🥉'][p.sira - 1] : p.sira}</span>
           <span className="flex-1 font-bold truncate">{p.ad}</span>
           <span className="font-mono tabular-nums">{p.puan}</span>
         </li>
@@ -654,11 +716,14 @@ function SoruSahnesi({
   const secenekler = durum?.secenekler ?? []
   const toplamCevap = sonuc && durum?.dagilim ? durum.dagilim.reduce((a, b) => a + b, 0) : cevap
 
+  const herkesYanlis = !!durum?.dagilim && (durum.dagilim[durum.dogru_index ?? -1] ?? 0) === 0
+
   return (
     <main className="min-h-screen flex flex-col p-5 lg:p-8 gap-5">
+      {sonuc && durum?.dagilim && !herkesYanlis && <Konfeti adet={40} />}
       <header className="flex items-center gap-4">
         <p className="text-sm font-mono uppercase tracking-widest text-fuchsia-300">
-          Soru {durum ? `${durum.sira} / ${durum.toplam}` : ''}
+          🎯 Soru {durum ? `${durum.sira} / ${durum.toplam}` : ''}
         </p>
         <div className="ml-auto opacity-60 hover:opacity-100 transition-opacity">{araclar}</div>
       </header>
@@ -666,9 +731,7 @@ function SoruSahnesi({
       <section className="cam-panel rounded-3xl p-6 lg:p-10 flex items-center gap-6">
         <h1 className="flex-1 text-3xl lg:text-5xl font-extrabold leading-tight whitespace-pre-line">{durum?.soru ?? 'Yükleniyor…'}</h1>
         {!sonuc && kalan !== null && (
-          <div className="shrink-0 w-28 h-28 lg:w-36 lg:h-36 rounded-full border-4 border-fuchsia-400 flex items-center justify-center">
-            <span className="text-5xl lg:text-6xl font-extrabold tabular-nums">{Math.ceil(kalan / 1000)}</span>
-          </div>
+          <Halka oran={kalan / ((durum?.sure_sn ?? 20) * 1000)} etiket={Math.ceil(kalan / 1000)} boyut={150} />
         )}
       </section>
 
@@ -680,9 +743,10 @@ function SoruSahnesi({
           return (
             <div
               key={i}
-              className={`relative overflow-hidden rounded-3xl p-5 lg:p-7 flex items-center gap-4 text-2xl lg:text-4xl font-bold transition-opacity ${sik.renk} ${
-                sonuc && !dogru ? 'opacity-35' : ''
-              }`}
+              className={`pop relative overflow-hidden rounded-3xl p-5 lg:p-7 flex items-center gap-4 text-2xl lg:text-4xl font-bold transition-all duration-500 ${sik.renk} ${
+                sonuc && !dogru ? 'opacity-30 scale-[0.98]' : ''
+              } ${dogru ? 'ring-8 ring-white scale-[1.02]' : ''}`}
+              style={{ animationDelay: `${i * 70}ms` }}
             >
               {sonuc && toplamCevap > 0 && (
                 <div className="absolute inset-y-0 left-0 bg-black/25" style={{ width: `${(sayi / toplamCevap) * 100}%` }} />
@@ -793,7 +857,7 @@ function EtkinlikSahnesi({
     yenile()
   }
 
-  const baslikEtiketi = adim.tur === 'fikir' ? 'Beyin fırtınası' : adim.tur === 'oylama' ? 'Şeytanın avukatı' : 'Video'
+  const baslikEtiketi = adim.tur === 'fikir' ? '🧠 Beyin fırtınası' : adim.tur === 'oylama' ? '⚖️ Şeytanın avukatı' : '🎬 Video'
 
   return (
     <main className="min-h-screen flex flex-col p-5 lg:p-8 gap-5">
@@ -857,14 +921,42 @@ function EtkinlikSahnesi({
   )
 }
 
+/** İlk üç: ortada birinci, solda ikinci, sağda üçüncü. */
+function Podyum({ puanlar }: { puanlar: PuanSatiri[] }) {
+  const duzen = [
+    { p: puanlar[1], madalya: '🥈', yukseklik: 'h-24', renk: 'from-slate-300 to-slate-500' },
+    { p: puanlar[0], madalya: '🥇', yukseklik: 'h-36', renk: 'from-amber-300 to-orange-500' },
+    { p: puanlar[2], madalya: '🥉', yukseklik: 'h-16', renk: 'from-orange-400 to-amber-700' },
+  ]
+  return (
+    <div className="grid grid-cols-3 items-end gap-3 pt-4">
+      {duzen.map((d, i) => (
+        <div key={i} className="text-center pop" style={{ animationDelay: `${(i === 1 ? 0 : i === 0 ? 1 : 2) * 150}ms` }}>
+          <p className="text-4xl">{d.madalya}</p>
+          <p className="font-display font-extrabold text-xl truncate px-1">{d.p.ad}</p>
+          <p className="font-mono text-slate-300 mb-2">{d.p.puan}</p>
+          <div className={`${d.yukseklik} rounded-t-2xl bg-linear-to-b ${d.renk} shadow-lg`} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
 /** Bütün sınıfın puan tablosu (ilk 10). */
 function PuanTablosu({ oturumId, kapat }: { oturumId: string; kapat: () => void }) {
   const puanlar = usePuanlar(oturumId, true, 10)
   return (
     <div className="fixed inset-0 bg-black/85 flex items-center justify-center p-4 z-50" onClick={kapat}>
       <div className="cam-panel rounded-3xl p-6 lg:p-8 max-w-2xl w-full space-y-4" onClick={(e) => e.stopPropagation()}>
-        <h2 className="text-3xl font-extrabold text-center">Puan tablosu</h2>
-        {puanlar ? <PuanListesi puanlar={puanlar} buyuk /> : <p className="text-center text-slate-400">Yükleniyor…</p>}
+        <h2 className="text-3xl font-extrabold text-center">🏆 Puan tablosu</h2>
+        {puanlar ? (
+          <>
+            {puanlar.length >= 3 && <Podyum puanlar={puanlar.slice(0, 3)} />}
+            <PuanListesi puanlar={puanlar.length >= 3 ? puanlar.slice(3) : puanlar} buyuk />
+          </>
+        ) : (
+          <p className="text-center text-slate-400">Yükleniyor…</p>
+        )}
         <button className="ikincil-buton w-full" onClick={kapat}>
           Kapat
         </button>

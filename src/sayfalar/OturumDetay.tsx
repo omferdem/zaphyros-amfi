@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import type { Ders, Ogrenci, Oturum, PuanSatiri, Yoklama } from '../lib/tipler'
-import { ogrencileriGetir, oturumGetir, oturumYoklamalari } from '../lib/veri'
+import { DERSI_BITIR_SORUSU, ogrencileriGetir, oturumGetir, oturumYoklamalari, oturumuBitir, oturumuYenidenAc } from '../lib/veri'
 import { oturumuExceleAktar, yarismayiExceleAktar } from '../lib/rapor'
 import { dersEtiketi, oturumAdi, saat, tarihSaat } from '../lib/bicim'
 
@@ -55,6 +55,25 @@ export default function OturumDetay() {
     yukle()
   }
 
+  async function dersiBitir() {
+    if (!window.confirm(DERSI_BITIR_SORUSU)) return
+    try {
+      await oturumuBitir(oturumId)
+    } catch {
+      setHata('Ders bitirilemedi.')
+    }
+    yukle()
+  }
+
+  async function dersiYenidenAc() {
+    try {
+      await oturumuYenidenAc(oturumId)
+    } catch {
+      setHata('Ders yeniden açılamadı.')
+    }
+    yukle()
+  }
+
   if (oturum === undefined) return <p className="text-sm text-slate-400">{hata ?? 'Yükleniyor…'}</p>
   if (oturum === null)
     return (
@@ -92,6 +111,15 @@ export default function OturumDetay() {
         <button className="ikincil-buton" onClick={() => yoklamaDurumu(!acik)}>
           {acik ? 'Yoklamayı kapat' : 'Yoklamayı yeniden aç'}
         </button>
+        {oturum.bitti ? (
+          <button className="ikincil-buton" onClick={dersiYenidenAc}>
+            Dersi yeniden aç
+          </button>
+        ) : (
+          <button className="tehlike-buton" onClick={dersiBitir}>
+            ⏹ Dersi bitir
+          </button>
+        )}
         <button className="ikincil-buton" onClick={() => oturumuExceleAktar(oturum.courses, oturum, ogrenciler, yoklamalar)}>
           Excel'e aktar
         </button>

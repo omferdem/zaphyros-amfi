@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
+import { DERSI_BITIR_SORUSU } from '../lib/veri'
 import { supabase } from '../lib/supabase'
 import type { AdimTuru, DersDurumu, PuanSatiri } from '../lib/tipler'
 import { KelimeBulutu, OylamaSonucu, VideoOynatici } from '../bilesenler/Etkinlik'
@@ -102,7 +103,7 @@ export default function Kumanda() {
   }
 
   async function komut(
-    k: 'git' | 'yoklama_ac' | 'yoklama_kapat' | 'sonuc_goster' | 'yeniden_ac' | 'telefon_ac' | 'telefon_kapat',
+    k: 'git' | 'yoklama_ac' | 'yoklama_kapat' | 'sonuc_goster' | 'yeniden_ac' | 'telefon_ac' | 'telefon_kapat' | 'ders_bitir' | 'ders_ac',
     adim?: string,
   ) {
     if (!anahtar || mesgul) return
@@ -129,6 +130,26 @@ export default function Kumanda() {
       </Kabuk>
     )
   if (!durum) return <Kabuk>{hata ?? 'Bağlanıyor…'}</Kabuk>
+
+  if (durum.bitti)
+    return (
+      <Kabuk>
+        <p className="text-6xl" aria-hidden>
+          🎉
+        </p>
+        <h1 className="text-2xl font-extrabold renkli-yazi pb-1">Ders bitti</h1>
+        <p className="text-sm text-slate-400">{durum.ders}</p>
+        {hata && <p className="text-sm text-rose-200 bg-rose-500/10 rounded-xl p-3">{hata}</p>}
+        <div className="flex flex-col gap-2 pt-2">
+          <Link to="/panel" className="parlak-buton rounded-full px-5 py-3">
+            🏠 Ana sayfa
+          </Link>
+          <button className="ikincil-buton !py-3" disabled={mesgul} onClick={() => komut('ders_ac')}>
+            Dersi yeniden aç
+          </button>
+        </div>
+      </Kabuk>
+    )
 
   const adimlar = durum.adimlar
   const sira = durum.adim ? durum.adim.sira - 1 : -1
@@ -289,6 +310,21 @@ export default function Kumanda() {
         </div>
         <button className="ikincil-buton" disabled={mesgul} onClick={() => komut(durum.telefon_modu ? 'telefon_kapat' : 'telefon_ac')}>
           {durum.telefon_modu ? 'Kapat' : 'Aç'}
+        </button>
+      </section>
+
+      <section className="cam-panel rounded-2xl p-4 flex flex-wrap items-center gap-3">
+        <Link to="/panel" className="ikincil-buton flex-1 text-center">
+          🏠 Ana sayfa
+        </Link>
+        <button
+          className="tehlike-buton flex-1"
+          disabled={mesgul}
+          onClick={() => {
+            if (window.confirm(DERSI_BITIR_SORUSU)) komut('ders_bitir')
+          }}
+        >
+          ⏹ Dersi bitir
         </button>
       </section>
 

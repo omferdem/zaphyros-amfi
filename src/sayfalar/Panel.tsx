@@ -24,6 +24,22 @@ function varsayilanDonem(donemler: Donem[]): string {
   return (baslamis ?? donemler[donemler.length - 1]).id
 }
 
+const VURGULAR = [
+  'from-pink-500 to-violet-500',
+  'from-cyan-400 to-blue-500',
+  'from-amber-400 to-pink-500',
+  'from-emerald-400 to-cyan-400',
+  'from-violet-500 to-fuchsia-500',
+  'from-orange-400 to-rose-500',
+]
+
+/** Her dersin kimliğinden sabit bir vurgu rengi (kartlar ayırt edilsin). */
+function vurgu(id: string): string {
+  let t = 0
+  for (const c of id) t = (t * 31 + c.charCodeAt(0)) % 997
+  return VURGULAR[t % VURGULAR.length]
+}
+
 function virguleBol(metin: string): string[] {
   return [...new Set(metin.split(/[,;\n]/).map((s) => s.trim()).filter(Boolean))]
 }
@@ -105,7 +121,7 @@ export default function Panel() {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-extrabold">Derslerim</h1>
+        <h1 className="text-3xl font-extrabold">📚 Derslerim</h1>
         {donemler && donemler.length > 0 && (
           <select
             aria-label="Dönem"
@@ -287,11 +303,12 @@ function DersKarti({
   }
 
   return (
-    <section className="cam-panel rounded-2xl p-5 space-y-3">
+    <section className="cam-panel kart-hover rounded-3xl p-5 pt-6 space-y-3 relative overflow-hidden">
+      <div className={`absolute inset-x-0 top-0 h-1.5 bg-linear-to-r ${vurgu(ilk.subject_id)}`} aria-hidden />
       <div className="flex flex-wrap items-center gap-3">
         <div className="min-w-0 flex-1">
           {ilk.kod && <p className="text-xs font-mono text-indigo-300">{ilk.kod}</p>}
-          <h2 className="text-lg font-bold">{ilk.ad}</h2>
+          <h2 className="text-xl font-extrabold">{ilk.ad}</h2>
           <p className="text-xs text-slate-400">
             {subeler.length > 1 || ilk.sube ? `${subeler.length} şube · ` : ''}
             {toplam} öğrenci
@@ -310,7 +327,7 @@ function DersKarti({
           <li key={s.id}>
             <Link
               to={`/panel/ders/${s.id}`}
-              className="block rounded-xl bg-white/5 hover:bg-indigo-500/20 border border-white/10 px-4 py-2 transition-colors"
+              className="block rounded-full bg-white/8 hover:bg-indigo-500/25 border border-white/15 px-4 py-2 transition-all hover:-translate-y-0.5"
             >
               <span className="font-semibold">{subeEtiketi(s.sube, subeler.length)}</span>
               <span className="text-xs text-slate-400"> · {s.students[0]?.count ?? 0} öğrenci</span>

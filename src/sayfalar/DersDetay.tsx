@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import type { Akis, Ders, Ogrenci, Oturum, Yoklama } from '../lib/tipler'
-import { dersGetir, dersYoklamalari, ogrencileriGetir, oturumBaslat, oturumlariGetir } from '../lib/veri'
+import { DERSI_BITIR_SORUSU, dersGetir, dersYoklamalari, ogrencileriGetir, oturumBaslat, oturumlariGetir, oturumuBitir } from '../lib/veri'
 import { dosyadanAyristir, metindenAyristir, type AyristirmaSonucu } from '../lib/sinifListesi'
 import { raporHesapla, raporuExceleAktar } from '../lib/rapor'
 import { oturumAdi, tarihSaat } from '../lib/bicim'
@@ -192,6 +192,16 @@ function Oturumlar(props: {
     }
   }
 
+  async function bitir(o: Oturum) {
+    if (!window.confirm(DERSI_BITIR_SORUSU)) return
+    try {
+      await oturumuBitir(o.id)
+    } catch {
+      setHata('Ders bitirilemedi.')
+    }
+    yenile()
+  }
+
   async function sil(o: Oturum) {
     if (!window.confirm(`"${oturumAdi(o)}" oturumu ve yoklama kayıtları silinecek. Emin misin?`)) return
     const { error } = await supabase.from('sessions').delete().eq('id', o.id)
@@ -273,12 +283,20 @@ function Oturumlar(props: {
                 <b>{sayilar.get(o.id) ?? 0}</b>
                 <span className="text-slate-400"> / {ogrenciler.length}</span>
               </span>
+              {!o.bitti && (
+                <span className="nabiz text-[11px] font-bold text-rose-200 bg-rose-500/20 rounded-full px-2.5 py-0.5">● canlı</span>
+              )}
               {o.yoklama_acik && !o.bitti && (
                 <span className="text-[11px] font-bold text-emerald-300 bg-emerald-500/10 rounded-full px-2 py-0.5">
                   yoklama açık
                 </span>
               )}
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
+                {!o.bitti && (
+                  <button className="tehlike-buton" onClick={() => bitir(o)}>
+                    ⏹ Dersi bitir
+                  </button>
+                )}
                 <Link to={`/sahne/${o.id}`} className="ikincil-buton">
                   Sahne
                 </Link>

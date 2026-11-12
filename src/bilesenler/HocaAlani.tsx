@@ -85,12 +85,12 @@ export default function HocaAlani({ cercevesiz = false }: { cercevesiz?: boolean
 
   return (
     <div className="min-h-screen">
-      <header className="border-b border-white/5 bg-slate-950/40 backdrop-blur">
+      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#070a1f]/70 backdrop-blur-xl">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Link to="/panel" className="flex items-center gap-2">
-            <img src="./favicon.svg" alt="" className="w-8 h-8" />
-            <span className="font-extrabold">
-              AmfiOS <span className="text-indigo-400">Panel</span>
+          <Link to="/panel" className="flex items-center gap-2.5 group">
+            <img src="./favicon.svg" alt="" className="w-9 h-9 transition-transform group-hover:rotate-12 group-hover:scale-110" />
+            <span className="font-display font-extrabold text-lg">
+              AmfiOS <span className="renkli-yazi">Panel</span>
             </span>
           </Link>
           <span className="text-[10px] text-slate-500 font-mono">v{SURUM}</span>

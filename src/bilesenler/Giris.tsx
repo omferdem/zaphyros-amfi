@@ -31,12 +31,12 @@ export default function Giris() {
 
   return (
     <main className="min-h-screen flex items-center justify-center p-4">
-      <section className="cam-panel rounded-3xl p-8 w-full max-w-md space-y-6">
+      <section className="cam-panel rounded-[2rem] p-8 w-full max-w-md space-y-6 girdi">
         <header className="flex items-center gap-3">
-          <img src="./favicon.svg" alt="" className="w-11 h-11" />
+          <img src="./favicon.svg" alt="" className="w-12 h-12 suzul" />
           <div>
-            <h1 className="text-xl font-extrabold">
-              AmfiOS <span className="text-indigo-400">Hoca Paneli</span>
+            <h1 className="text-2xl font-extrabold">
+              AmfiOS <span className="renkli-yazi">Hoca Paneli</span>
             </h1>
             <p className="text-xs text-slate-400 font-mono">sürüm {SURUM}</p>
           </div>
@@ -69,7 +69,7 @@ export default function Giris() {
                 placeholder="ornek@universite.edu.tr"
               />
             </label>
-            <button disabled={durum === 'gonderiliyor'} className="parlak-buton w-full rounded-xl py-3 font-bold disabled:opacity-60">
+            <button disabled={durum === 'gonderiliyor'} className="parlak-buton w-full rounded-2xl py-3.5 text-lg disabled:opacity-60">
               {durum === 'gonderiliyor' ? 'Gönderiliyor…' : 'Giriş bağlantısı gönder'}
             </button>
             <p className="text-xs text-slate-500">Şifre yok. Her girişte e-postana tek kullanımlık bir bağlantı gelir.</p>

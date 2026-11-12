@@ -63,6 +63,30 @@ export async function oturumGetir(id: string): Promise<(Oturum & { courses: Ders
   return data as unknown as (Oturum & { courses: Ders }) | null
 }
 
+const OTURUM_ALANLARI = 'id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, soru_durum, telefon_modu'
+
+/** Dersi bitirir: yoklama kapanır, öğrencilerin telefonunda "Ders bitti" görünür. Silmez; yeniden açılabilir. */
+export async function oturumuBitir(id: string): Promise<Oturum> {
+  const { data, error } = await supabase
+    .from('sessions')
+    .update({ yoklama_acik: false, bitti: new Date().toISOString() })
+    .eq('id', id)
+    .select(OTURUM_ALANLARI)
+    .single()
+  if (error) throw error
+  return data as Oturum
+}
+
+/** Bitmiş dersi yeniden açar (yoklama kapalı kalır; gerekirse dersin içinde açılır). */
+export async function oturumuYenidenAc(id: string): Promise<Oturum> {
+  const { data, error } = await supabase.from('sessions').update({ bitti: null }).eq('id', id).select(OTURUM_ALANLARI).single()
+  if (error) throw error
+  return data as Oturum
+}
+
+export const DERSI_BITIR_SORUSU =
+  'Ders bitirilsin mi? Yoklama kapanır ve öğrencilerin telefonunda "Ders bitti" görünür. İstersen sonra yeniden açabilirsin.'
+
 /**
  * Yeni oturum açar; aynı dersin hâlâ açık kalmış eski oturumlarını kapatır.
  * Akış seçildiyse perdeye akışın ilk adımı gelir. Yoklama alınmayacaksa oturum yoklaması kapalı açılır.

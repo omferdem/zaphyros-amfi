@@ -10,3 +10,5 @@ dist/
 veri/
 *.xlsx
 !docs/ornek/*.xlsx
+
+.claude/

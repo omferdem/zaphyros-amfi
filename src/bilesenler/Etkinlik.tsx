@@ -19,8 +19,8 @@ export function KelimeBulutu({ fikirler, buyuk = false, gizle }: { fikirler: { m
       {fikirler.map((f, i) => (
         <li
           key={f.m.toLowerCase()}
-          className={`font-extrabold ${RENKLER[i % RENKLER.length]} ${gizle ? 'group relative' : ''}`}
-          style={{ fontSize: `${taban + (enCok > 1 ? (aralik * (f.n - 1)) / (enCok - 1) : 0)}rem` }}
+          className={`pop font-display font-extrabold drop-shadow-[0_2px_12px_currentColor] ${RENKLER[i % RENKLER.length]} ${gizle ? 'group relative' : ''}`}
+          style={{ animationDelay: `${Math.min(i, 20) * 40}ms`, fontSize: `${taban + (enCok > 1 ? (aralik * (f.n - 1)) / (enCok - 1) : 0)}rem` }}
           title={f.n > 1 ? `${f.n} kişi yazdı` : undefined}
         >
           {f.m}
@@ -56,8 +56,8 @@ export function OylamaSonucu({ adim, buyuk = false }: { adim: Adim; buyuk?: bool
         </span>
       </div>
       <div className={`flex overflow-hidden rounded-full bg-white/10 ${buyuk ? 'h-8' : 'h-4'}`}>
-        <div className="bg-sky-500 transition-[width] duration-700" style={{ width: `${oranSol}%` }} />
-        <div className="bg-rose-500 flex-1" />
+        <div className="bg-linear-to-r from-sky-400 to-blue-600 transition-[width] duration-1000" style={{ width: `${oranSol}%` }} />
+        <div className="bg-linear-to-r from-pink-500 to-rose-600 flex-1" />
       </div>
       {adim.gerekceler && adim.gerekceler.length > 0 && (
         <ul className={`grid gap-2 ${buyuk ? 'sm:grid-cols-2 text-xl' : 'text-sm'}`}>
@@ -258,9 +258,11 @@ function OyFormu({ oturum, adim, acik }: { oturum: string; adim: Adim; acik: boo
                   setTaraf(i)
                   setGonderildi(false)
                 }}
-                className={`rounded-2xl px-3 py-5 font-bold text-lg transition-all ${i === 0 ? 'bg-sky-600' : 'bg-rose-600'} ${
-                  taraf === i ? 'ring-4 ring-white' : taraf !== null ? 'opacity-50' : ''
-                } disabled:opacity-60`}
+                className={`rounded-3xl px-3 py-6 font-display font-extrabold text-xl transition-all active:scale-95 ${
+                  i === 0
+                    ? 'bg-linear-to-br from-sky-400 to-blue-600 shadow-[0_8px_28px_rgba(56,189,248,0.4)]'
+                    : 'bg-linear-to-br from-pink-500 to-rose-600 shadow-[0_8px_28px_rgba(244,63,94,0.4)]'
+                } ${taraf === i ? 'ring-4 ring-white scale-[1.03]' : taraf !== null ? 'opacity-50' : ''} disabled:opacity-60`}
               >
                 {e}
               </button>

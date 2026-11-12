@@ -67,7 +67,7 @@ export default function HocaYarisiPaneli({ oturum, anahtar, mod }: { oturum: str
 
   if (!y.acik) {
     return (
-      <div className={perde ? 'fixed left-4 top-24 z-30' : ''}>
+      <div className={perde ? 'fixed left-1/2 -translate-x-1/2 bottom-14 z-30' : ''}>
         <button className="ikincil-buton !py-1.5 text-sm" onClick={() => ayarla(true)}>
           🥊 Hocayla yarış
         </button>
@@ -76,7 +76,7 @@ export default function HocaYarisiPaneli({ oturum, anahtar, mod }: { oturum: str
   }
 
   return (
-    <div className={perde ? 'fixed left-4 top-24 z-30 flex flex-col items-start gap-2 max-w-[18rem]' : 'cam-panel rounded-2xl p-4 space-y-3'}>
+    <div className={perde ? 'fixed left-1/2 -translate-x-1/2 bottom-14 z-30 flex flex-col items-center gap-2 max-w-[22rem]' : 'cam-panel rounded-2xl p-4 space-y-3'}>
       <div className="cam-panel rounded-2xl px-4 py-2 flex items-center gap-3">
         <span aria-hidden className="text-xl">
           🥊

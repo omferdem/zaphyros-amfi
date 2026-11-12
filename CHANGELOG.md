@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.16.1 (13 Kasım 2026)
+Canlı denemede çıkan düzeltmeler.
+- Takma adı olmayan öğrenci (yoklamasız derste) parmak, soru ya da sıkıldım düğmesine basınca hata görüyordu; artık önce "Takma ad seç" kutusu çıkar, ad alınır ve basılan düğme kendiliğinden gönderilir. Ad, soru cevaplarında kullanılanla aynıdır.
+- "Hocayla yarış" skoru ve gizli cevap seçimi perdenin sol üstünde soru başlığının üstüne biniyordu; alt ortaya taşındı.
+- İçerik paketi içe aktarılınca soru paketleri listesi yenilenmiyordu (veri doğru kaydediliyordu); düzeltildi.
+- Canlıda gerçek hoca girişiyle denendi (deneme dersi sonunda silindi, gerçek derslere dokunulmadı): toplu hafta planı, misafir öğrenci, "Dersi tamamen sil", parmak, soru zarfı, sıkıldım uyarısı ve çekiliş, takım tablosu, hocayla yarış skoru, .amfi dışa ve içe aktarma. Öğrenci telefonu ekranı gerçek arayüzden açıldı; düğmeler göründü. Not: hocanın gizli cevabı soru süresi (varsayılan 20 sn) dolmadan verilmelidir.
+
 ## v0.16.0 (13 Kasım 2026)
 Hocayla yarış.
 - Perdede (ve kumandada) "🥊 Hocayla yarış" düğmesi bilgi yarışmasını sınıf-hoca düellosuna çevirir. Soru açıkken hoca kendi cevabını gizlice verir: sahnede şıklar yalnızca harfle (A, B, C…) gösterilir, kumandada metinleriyle; perdede yalnızca "✓ Hoca cevabını verdi" görünür. Cevap, sonuç açılana kadar değiştirilebilir.

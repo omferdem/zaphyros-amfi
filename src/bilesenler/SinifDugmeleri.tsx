@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
-import { cihazKimligi } from '../lib/cihaz'
+import { cihazKimligi, sakla } from '../lib/cihaz'
 import { takimBilgisi } from '../lib/takim'
 
 interface Durumum {
@@ -28,6 +28,9 @@ export default function SinifDugmeleri({ oturum }: { oturum: string }) {
   const [metin, setMetin] = useState('')
   const [mesgul, setMesgul] = useState(false)
   const [mesaj, setMesaj] = useState<{ tur: 'iyi' | 'kotu'; metin: string } | null>(null)
+  // Yoklaması ve takma adı olmayan öğrenci düğmeye basınca önce takma ad ister
+  const [bekleyen, setBekleyen] = useState<{ tur: string; metin?: string } | null>(null)
+  const [adGirdisi, setAdGirdisi] = useState('')
 
   const sor = useCallback(async () => {
     const cihaz = cihazKimligi()
@@ -65,12 +68,35 @@ export default function SinifDugmeleri({ oturum }: { oturum: string }) {
     const { data, error } = await supabase.rpc('sinif_gonder', { p_session: oturum, p_cihaz: cihazKimligi(), p_tur: tur, p_metin: m ?? null })
     setMesgul(false)
     const hata = (data as { hata?: string } | null)?.hata
+    if (hata === 'katilmadin') {
+      setBekleyen({ tur, metin: m })
+      return false
+    }
     if (error || hata) {
       setMesaj({ tur: 'kotu', metin: (hata && HATALAR[hata]) || 'Gönderilemedi. İnternet bağlantını kontrol et.' })
       return false
     }
     await sor()
     return true
+  }
+
+  async function adAlVeDevamEt(e: React.FormEvent) {
+    e.preventDefault()
+    const ad = adGirdisi.trim()
+    setMesgul(true)
+    const { data } = await supabase.rpc('takma_ad_al', { p_session: oturum, p_cihaz: cihazKimligi(), p_ad: ad })
+    setMesgul(false)
+    const hata = (data as { hata?: string } | null)?.hata
+    if (hata) {
+      setMesaj({ tur: 'kotu', metin: hata === 'ad_kullaniliyor' ? 'Bu ad başkasında. Başka bir ad dene.' : hata === 'ad_kisa' ? 'Ad en az 2 harf olmalı.' : 'Ad alınamadı.' })
+      return
+    }
+    sakla(`amfi_takma_${oturum}`, ad)
+    const b = bekleyen
+    setBekleyen(null)
+    setAdGirdisi('')
+    setMesaj(null)
+    if (b) await gonder(b.tur, b.metin)
   }
 
   async function soruGonder(e: React.FormEvent) {
@@ -196,6 +222,17 @@ export default function SinifDugmeleri({ oturum }: { oturum: string }) {
             <button disabled={mesgul || metin.trim().length < 3} className="parlak-buton rounded-xl px-4 py-2 text-sm font-bold">
               Gönder
             </button>
+          </div>
+        </form>
+      )}
+
+      {bekleyen && (
+        <form onSubmit={adAlVeDevamEt} className="cam-panel rounded-2xl p-3 space-y-2 girdi">
+          <p className="text-sm font-bold">Önce kendine bir takma ad seç</p>
+          <p className="text-xs text-slate-400">Perdede bu adla görünürsün. Yoklamaya girmediysen de düğmeleri kullanabilirsin.</p>
+          <div className="flex gap-2">
+            <input autoFocus required minLength={2} maxLength={24} className="giris-kutusu" placeholder="Takma ad" value={adGirdisi} onChange={(e) => setAdGirdisi(e.target.value)} />
+            <button disabled={mesgul} className="parlak-buton rounded-xl px-4 py-2 text-sm font-bold">Tamam</button>
           </div>
         </form>
       )}

@@ -19,6 +19,8 @@ export default function DersAkislari({ ders }: { ders: Ders }) {
   const [aktarmaDurumu, setAktarmaDurumu] = useState<string | null>(null)
   const [bilgi, setBilgi] = useState<string | null>(null)
   const [plan, setPlan] = useState('')
+  // İçe aktarmadan sonra soru paketleri listesi yeniden kurulsun
+  const [bankaSurumu, setBankaSurumu] = useState(0)
 
   const yukle = useCallback(async () => {
     try {
@@ -101,6 +103,7 @@ export default function DersAkislari({ ders }: { ders: Ders }) {
       }
       const r = await icerigiIceAktar(ders.subject_id, paket, dosyalar, setAktarmaDurumu)
       setBilgi(`Eklendi: ${r.akis} akış, ${r.sunum} sunum, ${r.soru} soru.`)
+      setBankaSurumu((n) => n + 1)
       yukle()
     } catch (e) {
       setHata(e instanceof Error ? e.message : 'İçe aktarılamadı.')
@@ -279,7 +282,7 @@ export default function DersAkislari({ ders }: { ders: Ders }) {
         </div>
       </section>
 
-      <SoruBankasi icerikId={ders.subject_id} />
+      <SoruBankasi key={bankaSurumu} icerikId={ders.subject_id} />
     </div>
   )
 }

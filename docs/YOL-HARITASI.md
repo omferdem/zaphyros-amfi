@@ -85,6 +85,9 @@ Kullanıcı istekleri (13 Kasım 2026):
 - Aday oyunlar (hoca seçimine göre): Doğru mu Yanlış mı (ayakta/oturarak hızlı eleme), Eşleştirme yarışı (kavram-tanım), Boşluk doldurma, Resim/sözcük tahmin (Pictionary tarzı, hoca çizer), Mini turnuva (eleme usulü), Kovalamaca (doğru cevap hızlandırır)
 - Kovalamaca oyunu (soru doğru cevaplanınca hızlanma)
 
+## Faz 5b: Davetle hoca katılımı (telefon uygulamasından önce, onay bekliyor)
+Kullanıcı isteği (13 Kasım 2026): başka bir hoca, kullanıcının verdiği bir davet linkinden e-posta ve şifreyle üye olup hemen ders işleyebilsin (kurulum yapmadan). Veri modeli buna hazır (her kayıt `teacher_id` ile ayrı, RLS ile yalıtılı); eksik olan davet linki, kayıt ekranı ve sahibin davet yönetimi. Karar bekliyor: bu, "her hoca kendi kopyasını kurar" kararıyla (bkz. CLAUDE.md) çelişir; ortak Supabase kotaları (200 eşzamanlı Realtime, 500 MB veritabanı, 1 GB depo) ve KVKK sorumluluğu (sahip, diğer hocaların öğrencilerinin veri sorumlusu olur) birlikte değerlendirilecek.
+
 ## Faz 6: Dağıtım paketi (v1.0)
 Karar (v0.2.1): Merkezi çok hocalı sistem yerine her hoca kendi bağımsız kopyasını kurar (`docs/KURULUM.md`).
 - Kurulum kılavuzunun gerçek bir ikinci hocayla denenmesi

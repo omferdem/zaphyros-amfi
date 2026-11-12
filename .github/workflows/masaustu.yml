@@ -1,0 +1,36 @@
+# masaustu-vX.Y.Z biçiminde bir etiket gönderilince Windows kurulum dosyasını derleyip GitHub Release'e ekler.
+# Yeni sürüm: masaustu/package.json'daki sürümü artır, commit'le, sonra
+#   git tag masaustu-vX.Y.Z && git push origin masaustu-vX.Y.Z
+name: Masaüstü uygulaması
+
+on:
+  push:
+    tags: ['masaustu-v*']
+
+permissions:
+  contents: write
+
+jobs:
+  derle:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: masaustu
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: masaustu/package-lock.json
+      - run: npm ci
+      - run: npm run derle
+      - name: Release oluştur
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          surum="${GITHUB_REF_NAME#masaustu-v}"
+          gh release create "$GITHUB_REF_NAME" dist/AmfiOS-Kurulum-*.exe \
+            --title "AmfiOS masaüstü uygulaması $surum" \
+            --notes "Windows için AmfiOS masaüstü uygulaması. Kurulum dosyasını indirip çalıştır; yönetici yetkisi gerekmez. Uygulama imzalı olmadığı için Windows ilk kurulumda 'Bilinmeyen yayıncı' uyarısı gösterebilir: Daha fazla bilgi, ardından Yine de çalıştır. İlk giriş ve kullanım için docs/MASAUSTU.md dosyasına bak."

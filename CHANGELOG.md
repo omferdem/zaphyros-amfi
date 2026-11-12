@@ -6,7 +6,7 @@ Hoca araçları: içerik paylaşma, toplu hafta planı, esnek sınıf listesi.
 - **Haftalık planı topluca ekle:** Ders akışları sekmesine konu satırlarını yapıştırınca her satır bir akış olur (14 satır = 14 hafta). Satır başındaki "1.", "Hafta 1:" gibi numaralar atılır, akış "N. hafta: konu" adıyla açılır, mevcut akışların arkasına sıralanır.
 - **Sınıf listesi:** Seçilenleri sil, görünenlerin hepsini seç ve "Listeyi tamamen sil". "Dersi sil" ikiye ayrıldı: "Bu şubeyi sil" yalnızca bu şubenin listesini ve yoklamasını siler; "Dersi tamamen sil" bütün şubeleri, dönemleri ve içeriği kaldırır (dersin adı yazılarak onaylanır).
 - **Misafir öğrenci:** Başka şubede kayıtlı bir öğrenci bu şubenin listesine "misafir" olarak eklenir (asıl şubesi ve kendisi seçilir). Bu şubede yoklamaya ve etkinliklere katılır; yoklaması kendi şubesinin aynı akışla yapılmış (aynı hafta) oturumunda da var sayılır. Gelişim raporunda misafir öğrencinin cevapları henüz asıl şubeye taşınmıyor.
-- Veritabanı: `0013_misafir_ogrenci.sql` (`students.asil_id`; asıl öğrenci başka şubede, aynı hocanın ve kendisi misafir olmayan bir kayıt olmalı). `npm run sql-test` ile yerelde denendi; henüz Supabase'e uygulanmadı.
+- Veritabanı: `0013_misafir_ogrenci.sql` (`students.asil_id`; asıl öğrenci başka şubede, aynı hocanın ve kendisi misafir olmayan bir kayıt olmalı). `npm run sql-test` ile yerelde denendi; Supabase'e 13 Kasım 2026'da uygulandı; sütun, iki tetikleyici ve anonim erişimin kapalı olduğu sorguyla doğrulandı.
 
 ## v0.12.0 (12 Kasım 2026)
 Habersiz quiz.

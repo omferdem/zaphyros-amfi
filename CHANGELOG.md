@@ -8,7 +8,7 @@ Habersiz quiz.
 - Sonuçlar öğrenciye bağlı kaydedilir: öğrenci başına doğru sayısı, başarı, çözme süresi; soru bazında başarı (en zor soru üstte); Excel çıktısı (öğrenci sonuçları ve soru analizi iki sayfada); öğrenciye "yeniden hak ver" (denemesini silme).
 - Gelişim raporu quiz cevaplarını da kullanır: "Kaynak" filtresiyle yarışma, quiz ya da ikisi birden. Quiz öğrenci numarasıyla girildiği için her cevap öğrenciye bağlanır; yarışmadaki "takma adla oynayan izlenemez" sınırı quiz için yoktur.
 - Güvenlik: doğru cevap öğrenciye hiç gönderilmez, doğruluk sunucuda hesaplanır; numara şubenin listesinde olmalı; bir numara tek cihazdan, bir cihaz tek numarayla girer; süre ve kapanış sunucuda uygulanır; öğrenci tabloları okuyamaz, hoca yalnızca kendi şubesinin quizlerini görür.
-- Veritabanı: `0012_quiz.sql` (tablolar: `quizzes`, `quiz_questions`, `quiz_attempts`, `quiz_answers`). Yerelde `npm run sql-test` ile denendi.
+- Veritabanı: `0012_quiz.sql` uygulandı (Supabase, 12 Kasım 2026; tablolar `quizzes`, `quiz_questions`, `quiz_attempts`, `quiz_answers`). Önce `npm run sql-test` ile yerelde denendi; uygulamadan sonra RLS, politikalar ve izinler sorguyla doğrulandı (anonim kullanıcı cevap ve denemeleri okuyamaz, quiz oluşturma ve kapatma yalnızca hocaya açık). Geri alınan işlemle ikinci deneme yapılmadı.
 - Denendi: öğrenci akışı tarayıcıda sahte sunucu yanıtlarıyla uçtan uca (kod, numara, üç soru, bitirme, puan). Hoca ekranları giriş gerektirdiği için canlı denenmedi; sonuç hesabı 4, gelişim hesabı 10 birim testle denendi.
 
 ## v0.11.0 (12 Kasım 2026)

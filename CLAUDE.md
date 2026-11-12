@@ -16,7 +16,7 @@ Sahibi: Doç. Dr. Ömer Faruk Erdem (NEÜ İlahiyat, Din Felsefesi). İlk kullan
 | Backend | Supabase (Free plan): Postgres + Auth + Realtime | Ücretsiz, SQL, RLS ile çoklu hoca, Realtime Broadcast oyunlar için uygun |
 | Hosting | GitHub Pages, GitHub Actions ile otomatik deploy | Ücretsiz, sunucu gerekmez |
 | Frontend | Vite + React + TypeScript + Tailwind | Çok ekranlı (hoca/öğrenci) yapı için düzenli, test edilebilir |
-| Dağıtım | Her hoca kendi bağımsız kopyasını kurar: kendi GitHub deposu, kendi Supabase projesi (`docs/KURULUM.md`). Merkezi sunucu yok | Program başka hocalara verilecek; kimse kimseye bağlı olmamalı, sahibi diğer kurulumların verisini görmez ve yönetmez |
+| Dağıtım | **13 Kasım 2026 kararı: ortak sistem.** Tek Supabase projesi ve tek site; başka hocalar sahibin davet linkiyle e-posta ve şifreyle katılır (Faz 5b, henüz uygulanmadı). Bağımsız kopya kurulumu (`docs/KURULUM.md`) isteğe bağlı olarak kalır | Programın kontrolü sahibinde kalmalı; ileride ticari olarak satılabilmeli. Eski karar (her hoca kendi kopyasını kurar) kaldırıldı |
 | Ders düzeni | **İçerik** (akışlar, sunumlar, sorular; dönemden bağımsız) → **dönem** (`terms`) → **şube** (`courses`: her şubenin kendi sınıf listesi, oturumları ve yoklaması). Kullanıcı yılda 2 dönem, dönemde 3 4 ders, bazı derslerde 6 7 şube okutur; içeriği her yıl kullanır ve geliştirir, gelecek dönemleri önceden planlar | Bir kez hazırlanan içerik her dönem ve her şubede geçerli olmalı; yoklama ve çıktı şube bazında ayrı kalmalı |
 | Gerçek zaman | Ders durumu: `sessions` satırı üzerinden postgres_changes. Oyunlar ve anlık etkileşim: Realtime Broadcast (veritabanına yazmadan) | Ücretsiz kotaları korur |
 

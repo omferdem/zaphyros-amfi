@@ -19,7 +19,7 @@ Gençlere yönelik yeni görünüm ve ders sırasında bitirme düğmeleri.
 - Perde: dönen QR için parlayan çerçeve, renkli katılım sayacı, geri sayım halkası (son çeyrekte kırmızı), gradyanlı ve gölgeli şıklar, doğru şıkta vurgu ve konfeti, ilk üçlü podyum ve madalyalı puan tablosu.
 - Öğrenci telefonu: daha canlı karşılama ekranı, geri sayım halkası, büyük renkli şıklar, doğru cevapta konfeti, "Ders bitti" ekranı.
 - Panel: yapışkan üst çubuk, derse göre renkli şeritli kartlar.
-- Veritabanı: `0011_kumanda_dersi_bitir.sql` (kumandaya `ders_bitir` ve `ders_ac` komutları). Yerelde `npm run sql-test` ile denendi; Supabase'e uygulanana kadar yalnızca kumandadaki "Dersi bitir" çalışmaz (sahne ve panel düğmeleri çalışır).
+- Veritabanı: `0011_kumanda_dersi_bitir.sql` uygulandı (Supabase, 12 Kasım 2026; kumandaya `ders_bitir` ve `ders_ac` komutları). Önce `npm run sql-test` ile yerelde denendi, uygulamadan sonra fonksiyon tanımı ve izinleri sorguyla doğrulandı.
 - Tarayıcıda yalnızca öğrenci giriş ekranı (masaüstü ve telefon boyutu) görsel olarak denendi; hoca ekranları giriş gerektirdiği için henüz canlı denenmedi.
 
 ## v0.7.0 (12 Kasım 2026)

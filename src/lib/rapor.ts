@@ -32,7 +32,7 @@ function dosyaEtiketi(d: Ders): string {
   return [d.kod || d.ad, d.sube, d.donem].filter(Boolean).join(' ')
 }
 
-function dosyaAdi(s: string): string {
+export function dosyaAdi(s: string): string {
   return s
     .replace(/[çğıöşüÇĞİÖŞÜ]/g, (h) => ASCII[h])
     .normalize('NFKD')
@@ -216,4 +216,27 @@ export async function yarismayiExceleAktar(ders: Ders, oturum: Oturum, puanlar: 
     columns: [{ width: 6 }, { width: 28 }, { width: 8 }, { width: 8 }],
     stickyRowsCount: 1,
   }).toFile(dosyaAdi(`Yarisma ${dosyaEtiketi(ders)} ${oturumAdi(oturum)}.xlsx`))
+}
+
+/** Misafir olarak başka şubede derse giren bir öğrencinin katılımı (asıl kaydın kimliğiyle). */
+export interface MisafirKatilim {
+  asil_id: string
+  lesson_id: string | null
+  zaman: string
+}
+
+/**
+ * Bir öğrencinin başka şubede (misafir) katıldığı ders, kendi şubesinde aynı akışla yapılmış oturumun
+ * yoklamasına yazılır: "Ahmet B'de dinlediyse A'daki aynı hafta oturumunda var sayılır".
+ * Akışı olmayan oturumlar eşleşmez. Sonuç, gerçek yoklama kayıtlarının yanına eklenir.
+ */
+export function misafirYoklamalari(oturumlar: Pick<Oturum, 'id' | 'lesson_id'>[], katilimlar: MisafirKatilim[]): Yoklama[] {
+  const sonuc: Yoklama[] = []
+  for (const o of oturumlar) {
+    if (!o.lesson_id) continue
+    for (const k of katilimlar) {
+      if (k.lesson_id === o.lesson_id) sonuc.push({ session_id: o.id, student_id: k.asil_id, yontem: 'elle', zaman: k.zaman })
+    }
+  }
+  return sonuc
 }

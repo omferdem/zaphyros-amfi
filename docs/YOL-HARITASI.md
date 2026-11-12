@@ -66,8 +66,21 @@ Kullanıcı istekleri (19 Ekim 2026): slaytsız, yalnızca hazır sorularla bilg
 - Video adımı (YouTube linki, sahnede oynatma)
 - Sonraki iyileştirmeler: tartışma sonuçlarının oturum sayfasında ve Excel'de görünmesi, etkinlik adımını akışta düzenleme (şimdilik silip yeniden eklenir)
 
+## Faz 4b: Hoca araçları (v0.13) ✅ (tarayıcıda uçtan uca denenmedi)
+Kullanıcı istekleri (13 Kasım 2026):
+- Ders içeriğini dışa/içe aktarma (.amfi paketi); boş kurulum için bkz. docs/KURULUM.md
+- Haftalık planı satır satır yapıştırarak topluca akış açma
+- Sınıf listesi: toplu silme, misafir öğrenci (asıl şubesine yoklama), şubeyi sil / dersi tamamen sil ayrımı
+- Sonraki iyileştirme: misafir öğrencinin quiz ve yarışma cevaplarının asıl şubenin gelişim raporuna taşınması
+
+## Faz 4c: Sınıf etkileşimi (sıradaki)
+- Öğrenci konsolunda düğmeler: "Soru sor" (yazılı soru perdede zarf olarak, hoca sırası gelince açıp cevaplar) ve "Parmak kaldır" (ad perdenin kenarında sıraya girer)
+- "Sıkıldım" düğmesi: sınıfın yüzde 25'i basarsa perdede uyarı; hoca dersi durdurur, sıkıldım diyenler arasından çekiliş (fıkra anlatma, en fazla 3 çekiliş), sonra derse döner
+
 ## Faz 5: Oyunlar (v0.6)
+- Takım yarışması: bilgi yarışmasında sınıf gruplara bölünür (öğrenci grubunu seçer), gruplar yarışır
 - Halat çekme (iki takım, Broadcast)
+- Hocayla yarış, ve yeni takım/rekabet oyunları (araştırılıp eklenecek)
 - Kovalamaca oyunu (soru doğru cevaplanınca hızlanma)
 
 ## Faz 6: Dağıtım paketi (v1.0)

@@ -32,6 +32,8 @@ export interface Ogrenci {
   course_id: string
   ogrenci_no: string
   ad_soyad: string
+  /** Misafir öğrencide: asıl kaydın (başka şubedeki) kimliği */
+  asil_id?: string | null
 }
 
 export interface Oturum {

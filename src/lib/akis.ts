@@ -3,6 +3,7 @@ import { supabase } from './supabase'
 import type { Adim, AdimAyari, Akis, Soru, Sunum } from './tipler'
 import type { ZomrSorusu } from './zomr'
 import { adimSirasi, type Konum } from './paket'
+export { haftaSatirlari } from './haftaPlani'
 import type { PdfBelgesi } from './pdf'
 
 const KOVA = 'sunumlar'
@@ -285,4 +286,16 @@ export async function paketiSil(sorular: Soru[]): Promise<void> {
   if (sorular.length === 0) return
   const { error } = await supabase.from('questions').delete().in('id', sorular.map((s) => s.id))
   if (error) throw error
+}
+
+/** Adları verilen akışları sırayla, mevcut akışların arkasına açar. */
+export async function akislariTopluOlustur(icerikId: string, adlar: string[]): Promise<number> {
+  if (adlar.length === 0) return 0
+  const { data: son } = await supabase.from('lessons').select('sira').eq('subject_id', icerikId).order('sira', { ascending: false }).limit(1)
+  const taban = (son?.[0]?.sira as number | undefined) ?? 0
+  const { error } = await supabase
+    .from('lessons')
+    .insert(adlar.map((ad, i) => ({ subject_id: icerikId, ad, sira: taban + i + 1 })))
+  if (error) throw error
+  return adlar.length
 }

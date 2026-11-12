@@ -1,6 +1,7 @@
 import { supabase } from './supabase'
 import type { Ders, Ogrenci, Oturum, Yoklama } from './tipler'
 import type { CevapKaydi, KatilimKaydi } from './gelisim'
+import type { MisafirKatilim } from './rapor'
 
 // PostgREST tek seferde en fazla 1000 satır döndürür. 14 hafta x 150 öğrenci bunu aşar,
 // bu yüzden yoklama kayıtları sayfa sayfa çekilir.
@@ -81,7 +82,7 @@ export async function dersGetir(id: string): Promise<Ders | null> {
 export async function ogrencileriGetir(dersId: string): Promise<Ogrenci[]> {
   const { data, error } = await supabase
     .from('students')
-    .select('id, course_id, ogrenci_no, ad_soyad')
+    .select('id, course_id, ogrenci_no, ad_soyad, asil_id')
     .eq('course_id', dersId)
     .order('ogrenci_no')
     .limit(SAYFA)
@@ -167,4 +168,24 @@ export async function oturumBaslat(
     .single()
   if (error) throw error
   return data.id as string
+}
+
+/** Öğrencilerin misafir olarak başka şubelerde katıldığı oturumlar (asıl şubenin yoklamasına yazılmak üzere). */
+export async function misafirKatilimlari(ogrenciler: Ogrenci[]): Promise<MisafirKatilim[]> {
+  const evler = ogrenciler.filter((o) => !o.asil_id).map((o) => o.id)
+  if (evler.length === 0) return []
+  const misafirler = await parcaliCek<{ id: string; asil_id: string }>(evler, (parca, bas) =>
+    supabase.from('students').select('id, asil_id').in('asil_id', parca).order('id').range(bas, bas + SAYFA - 1),
+  )
+  if (misafirler.length === 0) return []
+  const asil = new Map(misafirler.map((m) => [m.id, m.asil_id]))
+  const katilimlar = await parcaliCek<{ session_id: string; student_id: string; zaman: string }>(misafirler.map((m) => m.id), (parca, bas) =>
+    supabase.from('attendance').select('session_id, student_id, zaman').in('student_id', parca).order('session_id').order('student_id').range(bas, bas + SAYFA - 1),
+  )
+  if (katilimlar.length === 0) return []
+  const oturumlar = await parcaliCek<{ id: string; lesson_id: string | null }>([...new Set(katilimlar.map((k) => k.session_id))], (parca, bas) =>
+    supabase.from('sessions').select('id, lesson_id').in('id', parca).order('id').range(bas, bas + SAYFA - 1),
+  )
+  const akis = new Map(oturumlar.map((o) => [o.id, o.lesson_id]))
+  return katilimlar.map((k) => ({ asil_id: asil.get(k.student_id)!, lesson_id: akis.get(k.session_id) ?? null, zaman: k.zaman }))
 }

@@ -1,5 +1,13 @@
 # Sürüm Geçmişi
 
+## v0.13.0 (13 Kasım 2026)
+Hoca araçları: içerik paylaşma, toplu hafta planı, esnek sınıf listesi.
+- **İçeriği paylaş:** Ders akışları sekmesinde "Dışa aktar" dersin akışlarını, sunum PDF'lerini ve soru bankasını tek bir `.amfi` dosyasına (ZIP) toplar; "İçe aktar" başka bir hocanın paketini kendi dersine ekler. Var olan içerik silinmez; sunumlar kendi kurulumunda yeniden işlenir (sayfa metinleri, telefon görselleri). Öğrenci listesi, şube ve yoklama pakete girmez. Paket doğrulanır (yabancı dosya, yeni sürüm, bozuk bağlantı reddedilir).
+- **Haftalık planı topluca ekle:** Ders akışları sekmesine konu satırlarını yapıştırınca her satır bir akış olur (14 satır = 14 hafta). Satır başındaki "1.", "Hafta 1:" gibi numaralar atılır, akış "N. hafta: konu" adıyla açılır, mevcut akışların arkasına sıralanır.
+- **Sınıf listesi:** Seçilenleri sil, görünenlerin hepsini seç ve "Listeyi tamamen sil". "Dersi sil" ikiye ayrıldı: "Bu şubeyi sil" yalnızca bu şubenin listesini ve yoklamasını siler; "Dersi tamamen sil" bütün şubeleri, dönemleri ve içeriği kaldırır (dersin adı yazılarak onaylanır).
+- **Misafir öğrenci:** Başka şubede kayıtlı bir öğrenci bu şubenin listesine "misafir" olarak eklenir (asıl şubesi ve kendisi seçilir). Bu şubede yoklamaya ve etkinliklere katılır; yoklaması kendi şubesinin aynı akışla yapılmış (aynı hafta) oturumunda da var sayılır. Gelişim raporunda misafir öğrencinin cevapları henüz asıl şubeye taşınmıyor.
+- Veritabanı: `0013_misafir_ogrenci.sql` (`students.asil_id`; asıl öğrenci başka şubede, aynı hocanın ve kendisi misafir olmayan bir kayıt olmalı). `npm run sql-test` ile yerelde denendi; henüz Supabase'e uygulanmadı.
+
 ## v0.12.0 (12 Kasım 2026)
 Habersiz quiz.
 - Kahoot'tan ayrı, sessiz bir ölçme modu. Ders (şube) sayfasındaki yeni "📝 Quiz" sekmesinden hoca bir soru paketinden (ya da bütün sorulardan) quiz açar: başlık, soru sayısı, süre (dakika), rastgele seçim ve "bitirince öğrenci kendi puanını görsün" seçenekleri vardır. Quiz 6 haneli bir kod alır; kod ekranda büyük gösterilir ve "Kodu perdede göster" ile tam ekran açılır.

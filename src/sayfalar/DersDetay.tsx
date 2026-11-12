@@ -2,11 +2,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import type { Akis, Ders, Ogrenci, Oturum, Yoklama } from '../lib/tipler'
-import { DERSI_BITIR_SORUSU, dersGetir, dersYoklamalari, ogrencileriGetir, oturumBaslat, oturumlariGetir, oturumuBitir } from '../lib/veri'
+import { DERSI_BITIR_SORUSU, dersGetir, dersYoklamalari, misafirKatilimlari, ogrencileriGetir, oturumBaslat, oturumlariGetir, oturumuBitir } from '../lib/veri'
 import { dosyadanAyristir, metindenAyristir, type AyristirmaSonucu } from '../lib/sinifListesi'
-import { raporHesapla, raporuExceleAktar } from '../lib/rapor'
+import { misafirYoklamalari, raporHesapla, raporuExceleAktar } from '../lib/rapor'
 import { oturumAdi, tarihSaat } from '../lib/bicim'
-import { akislariGetir } from '../lib/akis'
+import { akislariGetir, icerikSil } from '../lib/akis'
 import { dersiDuzenle, subeEtiketi, subeleriAc, subeleriGetir, type DersSatiri } from '../lib/plan'
 import DersAkislari from './DersAkislari'
 import Gelisim from './Gelisim'
@@ -37,7 +37,9 @@ export default function DersDetay() {
       setDers(d)
       setOgrenciler(og)
       setOturumlar(ot)
-      setYoklamalar(await dersYoklamalari(ot.map((o) => o.id)))
+      const [gercek, misafir] = await Promise.all([dersYoklamalari(ot.map((o) => o.id)), misafirKatilimlari(og)])
+      // Başka şubede misafir olarak derse giren öğrenci, kendi şubesinin aynı hafta oturumunda var sayılır.
+      setYoklamalar([...gercek, ...misafirYoklamalari(ot, misafir)])
     } catch {
       setHata('Ders bilgileri yüklenemedi.')
     }
@@ -56,8 +58,31 @@ export default function DersDetay() {
     )
       return
     const { error } = await supabase.from('courses').delete().eq('id', ders.id)
-    if (error) setHata('Ders silinemedi.')
+    if (error) setHata('Şube silinemedi.')
     else navigate('/panel')
+  }
+
+  /** Dersin bütün şubelerini, bütün dönemlerdeki listelerini ve içeriğini (akış, sunum, soru) siler. */
+  async function dersiTamamenSil() {
+    if (!ders) return
+    const { data: subeler } = await supabase.from('courses').select('id').eq('subject_id', ders.subject_id)
+    const sayi = subeler?.length ?? 1
+    const yazilan = window.prompt(
+      `"${ders.ad}" dersi TAMAMEN silinecek: ${sayi} şube (bütün dönemler), bütün sınıf listeleri, yoklamalar, quizler ve ders içeriği (akışlar, sunumlar, soru bankası). Bu geri alınamaz.\n\nOnaylamak için dersin adını aynen yaz:`,
+    )
+    if (yazilan === null) return
+    if (yazilan.trim() !== ders.ad.trim()) {
+      setHata('Yazdığın ad dersin adıyla aynı değil; hiçbir şey silinmedi.')
+      return
+    }
+    try {
+      const { error } = await supabase.from('courses').delete().eq('subject_id', ders.subject_id)
+      if (error) throw error
+      await icerikSil(ders.subject_id)
+      navigate('/panel')
+    } catch {
+      setHata('Ders tamamen silinemedi. Bir kısmı silinmiş olabilir; Derslerim sayfasından kontrol et.')
+    }
   }
 
   if (ders === undefined) return <p className="text-sm text-slate-400">{hata ?? 'Yükleniyor…'}</p>
@@ -123,10 +148,16 @@ export default function DersDetay() {
       {sekme === 'quiz' && <QuizSekmesi ders={ders} ogrenciler={ogrenciler} />}
       {sekme === 'gelisim' &&<Gelisim ders={ders} ogrenciler={ogrenciler} oturumlar={oturumlar} />}
 
-      <div className="pt-6 border-t border-white/5">
+      <div className="pt-6 border-t border-white/5 flex flex-wrap gap-3 items-center">
         <button className="tehlike-buton" onClick={dersiSil}>
-          Dersi sil
+          Bu şubeyi sil
         </button>
+        <button className="tehlike-buton" onClick={dersiTamamenSil}>
+          Dersi tamamen sil
+        </button>
+        <p className="text-xs text-slate-500 basis-full">
+          "Bu şubeyi sil" yalnızca bu şubenin listesini ve yoklamasını siler; içerik kalır. "Dersi tamamen sil" bütün şubeleri ve içeriği kaldırır.
+        </p>
       </div>
     </div>
   )
@@ -336,6 +367,78 @@ function SinifListesi({ ders, ogrenciler, yenile }: { ders: Ders; ogrenciler: Og
 
   const mevcut = useMemo(() => new Set(ogrenciler.map((o) => o.ogrenci_no)), [ogrenciler])
 
+  // Toplu silme: seçili öğrenciler
+  const [secili, setSecili] = useState<Set<string>>(new Set())
+  useEffect(() => setSecili(new Set()), [ders.id])
+
+  // Misafir öğrenci: başka şubede kayıtlı, bu şubede derse giren
+  const [kardesler, setKardesler] = useState<DersSatiri[]>([])
+  const [asilSube, setAsilSube] = useState('')
+  const [asilListe, setAsilListe] = useState<Ogrenci[]>([])
+  const [asilOgrenci, setAsilOgrenci] = useState('')
+  const [asilAdlari, setAsilAdlari] = useState<Map<string, string>>(new Map())
+
+  useEffect(() => {
+    subeleriGetir(ders.term_id, ders.subject_id)
+      .then((s) => setKardesler(s.filter((k) => k.id !== ders.id)))
+      .catch(() => setKardesler([]))
+  }, [ders.term_id, ders.subject_id, ders.id])
+
+  useEffect(() => {
+    setAsilOgrenci('')
+    if (!asilSube) return setAsilListe([])
+    ogrencileriGetir(asilSube)
+      .then((l) => setAsilListe(l.filter((o) => !o.asil_id)))
+      .catch(() => setAsilListe([]))
+  }, [asilSube])
+
+  // Misafir satırların asıl şubesinin adı
+  const asilKimlikleri = useMemo(() => ogrenciler.filter((o) => o.asil_id).map((o) => o.asil_id as string), [ogrenciler])
+  useEffect(() => {
+    if (asilKimlikleri.length === 0) return setAsilAdlari(new Map())
+    supabase
+      .from('students')
+      .select('id, courses(sube)')
+      .in('id', asilKimlikleri)
+      .then(({ data }) => {
+        const m = new Map<string, string>()
+        for (const r of (data ?? []) as unknown as { id: string; courses: { sube: string | null } | null }[]) m.set(r.id, r.courses?.sube?.trim() || 'başka şube')
+        setAsilAdlari(m)
+      })
+  }, [asilKimlikleri])
+
+  async function misafirEkle(e: React.FormEvent) {
+    e.preventDefault()
+    const asil = asilListe.find((o) => o.id === asilOgrenci)
+    if (!asil) return
+    setMesgul(true)
+    const { error } = await supabase
+      .from('students')
+      .insert({ course_id: ders.id, ogrenci_no: asil.ogrenci_no, ad_soyad: asil.ad_soyad, asil_id: asil.id })
+    setMesgul(false)
+    if (error) {
+      setMesaj({ tur: 'kotu', metin: error.code === '23505' ? 'Bu numara bu şubenin listesinde zaten var.' : 'Misafir öğrenci eklenemedi.' })
+      return
+    }
+    setMesaj({ tur: 'iyi', metin: `${asil.ad_soyad} misafir olarak eklendi. Yoklaması kendi şubesinin aynı hafta oturumuna da yazılır.` })
+    setAsilOgrenci('')
+    await yenile()
+  }
+
+  async function seciliSil(idler: string[], aciklama: string) {
+    if (idler.length === 0) return
+    if (!window.confirm(`${aciklama}\n\n${idler.length} öğrenci listeden ve bu dersin yoklama kayıtlarından silinecek. Geri alınamaz.`)) return
+    for (let i = 0; i < idler.length; i += 100) {
+      const { error } = await supabase.from('students').delete().in('id', idler.slice(i, i + 100))
+      if (error) {
+        setMesaj({ tur: 'kotu', metin: 'Silme sırasında hata oldu; bir kısmı silinmemiş olabilir.' })
+        break
+      }
+    }
+    setSecili(new Set())
+    await yenile()
+  }
+
   async function dosyaSecildi(e: React.ChangeEvent<HTMLInputElement>) {
     const dosya = e.target.files?.[0]
     e.target.value = ''
@@ -490,13 +593,89 @@ function SinifListesi({ ders, ogrenciler, yenile }: { ders: Ders; ogrenciler: Og
             Tek öğrenci ekle
           </button>
         </form>
+        {kardesler.length > 0 && (
+          <form onSubmit={misafirEkle} className="rounded-xl bg-slate-950/40 border border-white/5 p-3 space-y-2">
+            <p className="text-sm font-semibold">Başka şubeden misafir öğrenci ekle</p>
+            <p className="text-xs text-slate-400">
+              Öğrenci kendi şubesinde kayıtlı kalır, bu şubede derse ve etkinliklere katılır. Burada yoklaması alınınca kendi şubesinin aynı hafta
+              oturumuna da yazılır.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <select className="giris-kutusu sm:max-w-52" value={asilSube} onChange={(e) => setAsilSube(e.target.value)}>
+                <option value="">Asıl şube…</option>
+                {kardesler.map((k) => (
+                  <option key={k.id} value={k.id}>
+                    {subeEtiketi(k.sube, kardesler.length + 1)} ({k.students[0]?.count ?? 0})
+                  </option>
+                ))}
+              </select>
+              <select className="giris-kutusu" value={asilOgrenci} onChange={(e) => setAsilOgrenci(e.target.value)} disabled={!asilSube}>
+                <option value="">Öğrenci seç…</option>
+                {asilListe.map((o) => (
+                  <option key={o.id} value={o.id}>
+                    {o.ogrenci_no} {o.ad_soyad}
+                  </option>
+                ))}
+              </select>
+              <button disabled={mesgul || !asilOgrenci} className="ikincil-buton whitespace-nowrap">
+                Misafir ekle
+              </button>
+            </div>
+          </form>
+        )}
+        {ogrenciler.length > 0 && (
+          <div className="flex flex-wrap items-center gap-3 text-xs">
+            <label className="flex items-center gap-1.5 text-slate-300">
+              <input
+                type="checkbox"
+                checked={filtreli.length > 0 && filtreli.every((o) => secili.has(o.id))}
+                onChange={(e) => setSecili(e.target.checked ? new Set(filtreli.map((o) => o.id)) : new Set())}
+              />
+              Görünenlerin hepsini seç
+            </label>
+            <button
+              disabled={secili.size === 0}
+              className="text-rose-300 hover:text-rose-200 disabled:opacity-40"
+              onClick={() => seciliSil([...secili], 'Seçili öğrenciler silinecek.')}
+            >
+              Seçilenleri sil ({secili.size})
+            </button>
+            <button
+              className="text-rose-300 hover:text-rose-200 ml-auto"
+              onClick={() => seciliSil(ogrenciler.map((o) => o.id), 'Bu şubenin sınıf listesinin TAMAMI silinecek.')}
+            >
+              Listeyi tamamen sil
+            </button>
+          </div>
+        )}
         {filtreli.length > 0 && (
           <table className="w-full text-sm">
             <tbody>
               {filtreli.map((o) => (
                 <tr key={o.id} className="border-t border-white/5">
+                  <td className="py-1.5 pr-2 w-6">
+                    <input
+                      type="checkbox"
+                      checked={secili.has(o.id)}
+                      onChange={(e) =>
+                        setSecili((s) => {
+                          const y = new Set(s)
+                          if (e.target.checked) y.add(o.id)
+                          else y.delete(o.id)
+                          return y
+                        })
+                      }
+                    />
+                  </td>
                   <td className="py-1.5 pr-3 font-mono text-slate-300 w-32">{o.ogrenci_no}</td>
-                  <td className="py-1.5">{o.ad_soyad}</td>
+                  <td className="py-1.5">
+                    {o.ad_soyad}
+                    {o.asil_id && (
+                      <span className="ml-2 text-xs rounded-full bg-fuchsia-500/20 text-fuchsia-200 px-2 py-0.5">
+                        misafir · {asilAdlari.get(o.asil_id) ?? '…'} şubesi
+                      </span>
+                    )}
+                  </td>
                   <td className="py-1.5 text-right">
                     <button className="text-xs text-rose-300 hover:text-rose-200" onClick={() => sil(o)}>
                       sil

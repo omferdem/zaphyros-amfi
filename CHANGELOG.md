@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.18.0 (13 Kasım 2026)
+Bilgi merdiveni.
+- Sınıfın tek bir yarışmacı gibi basamak basamak çıktığı, güvenli basamaklı ve jokerli yeni oyun (özgün; bilinen bir televizyon yarışmasının adını ya da görünümünü kullanmaz). Perdede (ve kumandada) "🪜 Bilgi merdiveni" düğmesi açılır; soru akışındaki her soru bir basamaktır (15 soru = 15 basamak).
+- Kural: bir sorunun sonucu açılınca cevap verenlerin en az yarısı doğru bildiyse sınıf bir basamak çıkar; bilemezse son güvenli basamağa (her 5. basamak) iner. Hoca yanlış bilinen son soruyu en fazla 2 kez "🛟 Joker" ile yok sayabilir (basamak korunur). Tüm basamaklar çıkılınca "Sınıf merdiveni tamamladı!" yazar.
+- Soru çözülürken merdiven kıpırdamaz; sonuç açılınca ya da soru geçilince güncellenir (cevabı önceden belli etmesin). Joker ve merdiveni açık tutma bu tarayıcıda saklanır. Bilgi yarışmasının puanlaması, takım modu ve hocayla yarış aynen çalışır; öğrenci telefonunda değişiklik yok.
+- Veritabanı: `0017_bilgi_merdiveni.sql` (yalnızca okuyan `merdiven_goster` RPC'si; kurallar `src/lib/merdiven.ts` içinde, 8 birim testle). `npm run sql-test` ile yerelde denendi; henüz Supabase'e uygulanmadı. Arayüz gerçek derste denenmedi.
+
 ## v0.17.0 (13 Kasım 2026)
 Halat çekme.
 - Takım modunda tam 2 takım seçiliyse takım düğmelerinin yanında "🪢 Halat çekme" çıkar. Halat perdede iki takımın renkleri arasında durur; bilgi yarışmasında bir takımın üye başına doğru cevabı diğerinden fazlaysa halat o takıma doğru kayar, fark 3 doğru cevaba ulaşınca "takım halatı çekti!" yazar. Takımların üye sayısı eşit olmayabildiği için doğru sayısı üyeye bölünür.

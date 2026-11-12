@@ -1,16 +1,29 @@
 import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
-import { TAKIM_SAYILARI, takimBilgisi, type TakimDurumu } from '../lib/takim'
+import { TAKIM_SAYILARI, halatHesapla, takimBilgisi, type HalatTarafi, type TakimDurumu } from '../lib/takim'
 
 /** Takım yarışması: hoca takım sayısını seçer, takımların üye başına ortalama puanı canlı görünür. */
 export default function TakimPaneli({ oturum, anahtar, mod }: { oturum: string; anahtar: string | null; mod: 'perde' | 'kumanda' }) {
   const [d, setD] = useState<TakimDurumu | null>(null)
   const [menu, setMenu] = useState(false)
   const [hata, setHata] = useState<string | null>(null)
+  // Halat çekme (yalnızca 2 takımla): halat, soru açıkken kıpırdamasın diye son "kapalı" andaki değerlerle çizilir
+  const [halat, setHalat] = useState(false)
+  const [snap, setSnap] = useState<{ bir: HalatTarafi; iki: HalatTarafi } | null>(null)
 
   const yenile = useCallback(async () => {
-    const { data } = await supabase.rpc('takim_goster', { p_session: oturum, p_anahtar: anahtar })
-    if (data && !(data as { hata?: string }).hata) setD(data as TakimDurumu)
+    const [{ data }, { data: durum }] = await Promise.all([
+      supabase.rpc('takim_goster', { p_session: oturum, p_anahtar: anahtar }),
+      supabase.rpc('ders_durumu', { p_session: oturum }),
+    ])
+    if (data && !(data as { hata?: string }).hata) {
+      const g = data as TakimDurumu
+      setD(g)
+      const soruAcik = (durum as { adim?: { tur?: string; soru_durum?: string | null } | null } | null)?.adim?.soru_durum === 'acik'
+      const bir = g.takimlar.find((x) => x.takim === 1)
+      const iki = g.takimlar.find((x) => x.takim === 2)
+      if (!soruAcik && g.sayi === 2 && bir && iki) setSnap({ bir: { dogru: bir.dogru, uye: bir.uye }, iki: { dogru: iki.dogru, uye: iki.uye } })
+    }
   }, [oturum, anahtar])
 
   useEffect(() => {
@@ -45,6 +58,8 @@ export default function TakimPaneli({ oturum, anahtar, mod }: { oturum: string; 
     </div>
   )
 
+  const halatGorunumu = halat && acik && d.sayi === 2 && snap && <Halat bir={snap.bir} iki={snap.iki} kucuk={!perde} />
+
   const puanTablosu = acik && (
     <ul className="cam-panel rounded-2xl p-3 space-y-1.5 min-w-52">
       {d.takimlar.map((t) => {
@@ -67,11 +82,57 @@ export default function TakimPaneli({ oturum, anahtar, mod }: { oturum: string; 
 
   return (
     <div className={perde ? 'fixed right-4 bottom-4 z-30 flex flex-col items-end gap-2' : 'space-y-2'}>
+      {halatGorunumu}
       {puanTablosu}
       {secenekler}
-      <button className="ikincil-buton !py-1.5 text-sm" onClick={() => setMenu((m) => !m)}>
-        👥 {acik ? `${d.sayi} takım` : 'Takım modu'}
-      </button>
+      <div className="flex gap-2">
+        {d.sayi === 2 && (
+          <button className={halat ? 'parlak-buton rounded-xl px-3 py-1.5 text-sm font-bold' : 'ikincil-buton !py-1.5 text-sm'} onClick={() => setHalat((h) => !h)}>
+            🪢 Halat çekme
+          </button>
+        )}
+        <button className="ikincil-buton !py-1.5 text-sm" onClick={() => setMenu((m) => !m)}>
+          👥 {acik ? `${d.sayi} takım` : 'Takım modu'}
+        </button>
+      </div>
+    </div>
+  )
+}
+
+/** İki takımın halat çekme görünümü: doğru cevaplar halatı kendi tarafına çeker; fark eşiği aşınca takım kazanır. */
+function Halat({ bir, iki, kucuk }: { bir: HalatTarafi; iki: HalatTarafi; kucuk: boolean }) {
+  const h = halatHesapla(bir, iki)
+  const a = takimBilgisi(1)
+  const b = takimBilgisi(2)
+  // Düğüm: konum -1 (sol uç) ile +1 (sağ uç) arasında; kenarlara taşmasın diye %6 ile %94 arasına yerleşir
+  const yuzde = 50 + h.konum * 44
+  return (
+    <div className={`cam-panel rounded-3xl p-4 space-y-2 ${kucuk ? 'w-full' : 'w-[min(52rem,92vw)] mb-2'}`}>
+      <div className="flex items-center justify-between text-sm font-bold">
+        <span>
+          {a.emoji} {a.ad}
+        </span>
+        <span className="text-xs text-slate-400">🪢 Halat çekme</span>
+        <span>
+          {b.ad} {b.emoji}
+        </span>
+      </div>
+      <div className="relative h-10">
+        <div className="absolute inset-x-0 top-1/2 h-2 -translate-y-1/2 rounded-full bg-gradient-to-r from-rose-500 via-slate-600 to-sky-500" />
+        <div className="absolute left-1/2 top-0 h-full w-px bg-white/30" title="Orta çizgi" />
+        <div
+          className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-all duration-700 ease-out"
+          style={{ left: `${yuzde}%` }}
+          aria-hidden
+        >
+          🪢
+        </div>
+      </div>
+      {h.kazanan && (
+        <p className="text-center text-xl font-display font-extrabold pop pb-1">
+          <span aria-hidden>{takimBilgisi(h.kazanan).emoji}</span> <span className="renkli-yazi">{takimBilgisi(h.kazanan).ad} takım halatı çekti!</span>
+        </p>
+      )}
     </div>
   )
 }

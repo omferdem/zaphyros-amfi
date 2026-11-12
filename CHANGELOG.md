@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.17.0 (13 Kasım 2026)
+Halat çekme.
+- Takım modunda tam 2 takım seçiliyse takım düğmelerinin yanında "🪢 Halat çekme" çıkar. Halat perdede iki takımın renkleri arasında durur; bilgi yarışmasında bir takımın üye başına doğru cevabı diğerinden fazlaysa halat o takıma doğru kayar, fark 3 doğru cevaba ulaşınca "takım halatı çekti!" yazar. Takımların üye sayısı eşit olmayabildiği için doğru sayısı üyeye bölünür.
+- Halat, soru açıkken kıpırdamaz; soru kapanıp cevap açıklanınca kayar (doğru cevabı önceden belli etmesin diye). Perdede ve kumandada çalışır; öğrenci telefonunda değişiklik yok.
+- Veritabanı değişikliği yok: halat, takım puan tablosundan (`takim_goster`) tarayıcıda hesaplanır (`halatHesapla`, 5 birim testle). Görünüm sahte verilerle tarayıcıda denendi; gerçek derste denenmedi.
+
 ## v0.16.1 (13 Kasım 2026)
 Canlı denemede çıkan düzeltmeler.
 - Takma adı olmayan öğrenci (yoklamasız derste) parmak, soru ya da sıkıldım düğmesine basınca hata görüyordu; artık önce "Takma ad seç" kutusu çıkar, ad alınır ve basılan düğme kendiliğinden gönderilir. Ad, soru cevaplarında kullanılanla aynıdır.

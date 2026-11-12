@@ -31,3 +31,30 @@ export function takimBilgisi(no: number) {
 
 /** Takım sayısını seçerken sunulan seçenekler (0: kapalı) */
 export const TAKIM_SAYILARI = [0, 2, 3, 4, 5, 6] as const
+
+/** Halat çekmede bir takımın üye başına doğru sayısı fark ederse halat o yöne kayar; bu fark kazanmak için yeter. */
+export const HALAT_ESIGI = 3
+
+export interface HalatTarafi {
+  dogru: number
+  uye: number
+}
+
+export interface HalatDurumu {
+  /** -1 (1. takım tarafı kazandı) ile +1 (2. takım) arası; 0 ortada */
+  konum: number
+  /** Kazanan takım numarası (1 ya da 2), yoksa null */
+  kazanan: 1 | 2 | null
+}
+
+/**
+ * İki takımın üye başına doğru cevap farkından halatın konumunu hesaplar. Bir takımın cevapları o takıma
+ * doğru çeker; üye sayısı eşit olmadığı için doğru sayısı üyeye bölünür. Konum -1 ile 1 arasında sınırlıdır.
+ */
+export function halatHesapla(bir: HalatTarafi, iki: HalatTarafi): HalatDurumu {
+  const ort = (t: HalatTarafi) => (t.uye > 0 ? t.dogru / t.uye : 0)
+  const fark = ort(iki) - ort(bir)
+  // 1. takım öndeyse fark negatif olur ve halat sola (negatif yöne) gider
+  const konum = Math.max(-1, Math.min(1, fark / HALAT_ESIGI)) || 0
+  return { konum, kazanan: konum <= -1 ? 1 : konum >= 1 ? 2 : null }
+}

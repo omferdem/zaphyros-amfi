@@ -19,7 +19,11 @@ export interface CevapKaydi {
   cihaz_id: string
   dogru: boolean
   puan: number
+  /** 0 ise süre bilinmiyor (quiz cevapları) ve ortalama süreye katılmaz */
   sure_ms: number
+  /** Quiz cevapları öğrenciye doğrudan bağlıdır; yarışma cevapları yoklama üzerinden bağlanır */
+  student_id?: string
+  kaynak?: 'yarisma' | 'quiz'
 }
 
 export interface KatilimKaydi {
@@ -118,6 +122,7 @@ export function gelisimHesapla(
     cevap: number
     dogru: number
     sure: number
+    sureSayisi: number
     puan: number
     konular: Map<string, Oran>
     oturumlar: Map<string, Oran>
@@ -126,20 +131,23 @@ export function gelisimHesapla(
   let izlenemeyen = 0
 
   for (const c of cevaplar) {
-    const ogrenciId = eslesme.get(`${c.session_id}|${c.cihaz_id}`)
+    const ogrenciId = c.student_id && ogrenciHaritasi.has(c.student_id) ? c.student_id : eslesme.get(`${c.session_id}|${c.cihaz_id}`)
     if (!ogrenciId) {
       izlenemeyen++
       continue
     }
     let b = birikim.get(ogrenciId)
     if (!b) {
-      b = { cevap: 0, dogru: 0, sure: 0, puan: 0, konular: new Map(), oturumlar: new Map() }
+      b = { cevap: 0, dogru: 0, sure: 0, sureSayisi: 0, puan: 0, konular: new Map(), oturumlar: new Map() }
       birikim.set(ogrenciId, b)
     }
     const d = c.dogru ? 1 : 0
     b.cevap++
     b.dogru += d
-    b.sure += c.sure_ms
+    if (c.sure_ms > 0) {
+      b.sure += c.sure_ms
+      b.sureSayisi++
+    }
     b.puan += c.puan
     const konu = konuAdi(soruHaritasi.get(c.question_id), olcut)
     const k = b.konular.get(konu) ?? { dogru: 0, toplam: 0 }
@@ -164,7 +172,7 @@ export function gelisimHesapla(
       cevap: b?.cevap ?? 0,
       dogru: b?.dogru ?? 0,
       oran: b && b.cevap > 0 ? b.dogru / b.cevap : null,
-      sureOrt: b && b.cevap > 0 ? b.sure / b.cevap / 1000 : null,
+      sureOrt: b && b.sureSayisi > 0 ? b.sure / b.sureSayisi / 1000 : null,
       puan: b?.puan ?? 0,
       konular: b?.konular ?? new Map(),
       oturumlar: oturumListesi,

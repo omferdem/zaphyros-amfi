@@ -12,6 +12,7 @@ const AkisDuzenle = lazy(() => import('./sayfalar/AkisDuzenle'))
 const HaftaPlani = lazy(() => import('./sayfalar/HaftaPlani'))
 const Sahne = lazy(() => import('./sayfalar/Sahne'))
 const Kumanda = lazy(() => import('./sayfalar/Kumanda'))
+const Quiz = lazy(() => import('./sayfalar/Quiz'))
 
 const bekle = <main className="min-h-screen flex items-center justify-center text-sm text-slate-400">Yükleniyor…</main>
 
@@ -47,6 +48,7 @@ export default function App() {
         </Route>
         <Route path="/katil" element={<Katil />} />
         <Route path="/kumanda" element={<Kumanda />} />
+        <Route path="/quiz" element={<Quiz />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>

@@ -10,8 +10,9 @@ import { akislariGetir } from '../lib/akis'
 import { dersiDuzenle, subeEtiketi, subeleriAc, subeleriGetir, type DersSatiri } from '../lib/plan'
 import DersAkislari from './DersAkislari'
 import Gelisim from './Gelisim'
+import QuizSekmesi from './QuizSekmesi'
 
-type Sekme = 'oturumlar' | 'akislar' | 'liste' | 'rapor' | 'gelisim'
+type Sekme = 'oturumlar' | 'akislar' | 'liste' | 'rapor' | 'quiz' | 'gelisim'
 
 export default function DersDetay() {
   const { dersId = '' } = useParams()
@@ -90,6 +91,7 @@ export default function DersDetay() {
             ['akislar', 'Ders akışları'],
             ['liste', `Sınıf listesi (${ogrenciler.length})`],
             ['rapor', 'Yoklama raporu'],
+            ['quiz', '📝 Quiz'],
             ['gelisim', '📈 Gelişim'],
           ] as [Sekme, string][]
         ).map(([k, ad]) => (
@@ -118,7 +120,8 @@ export default function DersDetay() {
       {sekme === 'akislar' && <DersAkislari ders={ders} />}
       {sekme === 'liste' && <SinifListesi ders={ders} ogrenciler={ogrenciler} yenile={yukle} />}
       {sekme === 'rapor' && <Rapor ders={ders} ogrenciler={ogrenciler} oturumlar={oturumlar} yoklamalar={yoklamalar} />}
-      {sekme === 'gelisim' && <Gelisim ders={ders} ogrenciler={ogrenciler} oturumlar={oturumlar} />}
+      {sekme === 'quiz' && <QuizSekmesi ders={ders} ogrenciler={ogrenciler} />}
+      {sekme === 'gelisim' &&<Gelisim ders={ders} ogrenciler={ogrenciler} oturumlar={oturumlar} />}
 
       <div className="pt-6 border-t border-white/5">
         <button className="tehlike-buton" onClick={dersiSil}>

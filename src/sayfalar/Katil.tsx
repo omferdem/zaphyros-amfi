@@ -151,6 +151,14 @@ export default function Katil() {
     const { data, error } = await supabase.rpc('kodla_katil', { p_kod: kod, p_cihaz: cihazKimligi() })
     if (error || !data) return 'Sunucuya ulaşılamadı. İnternet bağlantını kontrol et.'
     const sonuc = data as { hata?: string; oturum?: string; ders?: string; baslik?: string | null; bilet?: string }
+    // Ders kodu değilse habersiz quiz kodu olabilir: öğrenci quiz ekranına geçer.
+    if (sonuc.hata === 'kod_yanlis') {
+      const { data: quiz } = await supabase.rpc('quiz_bul', { p_kod: kod })
+      if (quiz && !(quiz as { hata?: string }).hata) {
+        navigate(`/quiz?k=${kod}`)
+        return null
+      }
+    }
     if (sonuc.hata || !sonuc.oturum) return HATALAR[sonuc.hata ?? ''] ?? 'Bir sorun oldu. Tekrar dene.'
     const s = sonuc.oturum
     const ders = sonuc.ders ?? ''

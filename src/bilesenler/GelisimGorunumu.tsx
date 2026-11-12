@@ -62,11 +62,14 @@ export default function GelisimGorunumu({
   olcut,
   setOlcut,
   excel,
+  ustte,
 }: {
   sonuc: GelisimSonucu
   olcut: Olcut
   setOlcut: (o: Olcut) => void
   excel: () => void
+  /** Ölçüt seçicinin yanında gösterilecek ek denetimler (ör. kaynak filtresi) */
+  ustte?: React.ReactNode
 }) {
   const [arama, setArama] = useState('')
   const [siralama, setSiralama] = useState<Siralama>('zayif')
@@ -106,6 +109,7 @@ export default function GelisimGorunumu({
             ))}
           </select>
         </label>
+        {ustte}
         <button className="ikincil-buton ml-auto" onClick={excel}>
           Excel'e aktar
         </button>
@@ -114,7 +118,7 @@ export default function GelisimGorunumu({
       <div className="grid gap-3 grid-cols-2 lg:grid-cols-4">
         {[
           ['Cevap', String(sonuc.toplamCevap), `${sonuc.oturumSayisi} oturum`],
-          ['İzlenen öğrenci', `${izlenen.length} / ${sonuc.ogrenciler.length}`, 'yarışmaya numarasıyla girenler'],
+          ['İzlenen öğrenci', `${izlenen.length} / ${sonuc.ogrenciler.length}`, 'numarasıyla girenler'],
           ['Sınıf başarısı', yuzde(ortBasari), 'doğru cevap oranı'],
           ['Desteğe ihtiyacı olan', String(zayifOgrenci), `başarısı %${Math.round(ZAYIF_ESIK * 100)} altı`],
         ].map(([baslik, deger, alt]) => (

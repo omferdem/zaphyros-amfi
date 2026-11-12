@@ -1,6 +1,7 @@
 import type { Ders, Ogrenci, Oturum, PuanSatiri, Yoklama } from './tipler'
 import { oturumAdi, tarih } from './bicim'
 import { AZ_VERI, type GelisimSonucu } from './gelisim'
+import type { MaddeAnalizi, Quiz, QuizSatiri } from './quizHesap'
 
 export interface RaporSatiri {
   ogrenci: Ogrenci
@@ -144,6 +145,52 @@ export async function gelisimiExceleAktar(ders: Ders, sonuc: GelisimSonucu, olcu
     columns: [{ width: 14 }, { width: 28 }, { width: 8 }, { width: 8 }, { width: 11 }, { width: 12 }, { width: 13 }, { width: 9 }, ...konular.map(() => ({ width: 16 }))],
     stickyRowsCount: 1,
   }).toFile(dosyaAdi(`Gelisim ${dosyaEtiketi(ders)} (${olcutAdi}) ${tarih(new Date().toISOString())}.xlsx`))
+}
+
+/** Quiz sonuçları: öğrenci başına doğru, başarı, süre; ikinci sayfada soru bazında başarı. */
+export async function quizSonucunuExceleAktar(ders: Ders, quiz: Quiz, satirlar: QuizSatiri[], madde: MaddeAnalizi[]) {
+  const { default: writeXlsxFile } = await import('write-excel-file/browser')
+  const kalin = { fontWeight: 'bold' as const }
+  const sirali = [...satirlar].sort((a, b) => a.ogrenci.ogrenci_no.localeCompare(b.ogrenci.ogrenci_no, 'tr', { numeric: true }))
+  const veri = [
+    [
+      { value: 'Öğrenci No', ...kalin },
+      { value: 'Ad Soyad', ...kalin },
+      { value: 'Doğru', ...kalin },
+      { value: 'Toplam soru', ...kalin },
+      { value: 'Başarı (%)', ...kalin },
+      { value: 'Süre (dk)', ...kalin },
+      { value: 'Durum', ...kalin },
+    ],
+    ...sirali.map((s) => [
+      { value: s.ogrenci.ogrenci_no, type: String },
+      { value: s.ogrenci.ad_soyad, type: String },
+      s.deneme ? { value: s.dogru, type: Number } : { value: '', type: String },
+      { value: s.toplam, type: Number },
+      s.oran === null ? { value: '', type: String } : { value: Math.round(s.oran * 100), type: Number },
+      s.sureDk === null ? { value: '', type: String } : { value: s.sureDk, type: Number },
+      { value: !s.deneme ? 'girmedi' : s.deneme.bitti ? 'bitirdi' : 'bitirmedi', type: String },
+    ]),
+  ]
+  const maddeVeri = [
+    [
+      { value: 'Soru', ...kalin },
+      { value: 'Cevaplayan', ...kalin },
+      { value: 'Doğru oranı (%)', ...kalin },
+    ],
+    ...madde.map((m) => [
+      { value: m.soru, type: String },
+      { value: m.cevaplayan, type: Number },
+      m.oran === null ? { value: '', type: String } : { value: Math.round(m.oran * 100), type: Number },
+    ]),
+  ]
+  await writeXlsxFile(
+    [
+      { data: veri, sheet: 'Sonuçlar', columns: [{ width: 14 }, { width: 28 }, { width: 8 }, { width: 12 }, { width: 11 }, { width: 10 }, { width: 11 }], stickyRowsCount: 1 },
+      { data: maddeVeri, sheet: 'Sorular', columns: [{ width: 70 }, { width: 12 }, { width: 16 }], stickyRowsCount: 1 },
+    ],
+    {},
+  ).toFile(dosyaAdi(`Quiz ${dosyaEtiketi(ders)} ${quiz.baslik} ${tarih(quiz.basladi)}.xlsx`))
 }
 
 /** Oturumun bilgi yarışması sonuçları: sıra, ad (yoklamadaki ad ya da takma ad), puan, doğru sayısı. */

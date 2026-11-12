@@ -24,7 +24,7 @@ export async function dersYoklamalari(oturumIdleri: string[]): Promise<Yoklama[]
 }
 
 /** Uzun kimlik listelerini adrese sığsın diye parçalayıp her parçayı sayfa sayfa çeker. */
-async function parcaliCek<T>(
+export async function parcaliCek<T>(
   idler: string[],
   cek: (parca: string[], bas: number) => PromiseLike<{ data: T[] | null; error: unknown }>,
 ): Promise<T[]> {

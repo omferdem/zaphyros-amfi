@@ -1,5 +1,16 @@
 # Sürüm Geçmişi
 
+## v0.12.0 (12 Kasım 2026)
+Habersiz quiz.
+- Kahoot'tan ayrı, sessiz bir ölçme modu. Ders (şube) sayfasındaki yeni "📝 Quiz" sekmesinden hoca bir soru paketinden (ya da bütün sorulardan) quiz açar: başlık, soru sayısı, süre (dakika), rastgele seçim ve "bitirince öğrenci kendi puanını görsün" seçenekleri vardır. Quiz 6 haneli bir kod alır; kod ekranda büyük gösterilir ve "Kodu perdede göster" ile tam ekran açılır.
+- Öğrenci sitenin adresine girip aynı kod kutusuna quiz kodunu yazar (ders kodu değilse otomatik quiz ekranına geçilir), öğrenci numarasını girer ve soruları kendi hızında çözer. Soru sırası ve şıkların sırası her öğrencide farklıdır. Soruya numara kutucuklarıyla geçilir, süre içinde cevap değiştirilebilir, boş soru olursa bitirmeden önce uyarılır, süre dolunca quiz kendiliğinden biter. Bağlantı zayıfsa cevap telefonda tutulup sonra gönderilir; sayfa yenilenirse kaldığı yerden devam eder.
+- Canlı sıralama yoktur. Hoca açık quizde kaç öğrencinin başladığını ve bitirdiğini canlı görür, "Quizi bitir" ile kapatır (bitirmeyenler o ana kadarki cevaplarla biter).
+- Sonuçlar öğrenciye bağlı kaydedilir: öğrenci başına doğru sayısı, başarı, çözme süresi; soru bazında başarı (en zor soru üstte); Excel çıktısı (öğrenci sonuçları ve soru analizi iki sayfada); öğrenciye "yeniden hak ver" (denemesini silme).
+- Gelişim raporu quiz cevaplarını da kullanır: "Kaynak" filtresiyle yarışma, quiz ya da ikisi birden. Quiz öğrenci numarasıyla girildiği için her cevap öğrenciye bağlanır; yarışmadaki "takma adla oynayan izlenemez" sınırı quiz için yoktur.
+- Güvenlik: doğru cevap öğrenciye hiç gönderilmez, doğruluk sunucuda hesaplanır; numara şubenin listesinde olmalı; bir numara tek cihazdan, bir cihaz tek numarayla girer; süre ve kapanış sunucuda uygulanır; öğrenci tabloları okuyamaz, hoca yalnızca kendi şubesinin quizlerini görür.
+- Veritabanı: `0012_quiz.sql` (tablolar: `quizzes`, `quiz_questions`, `quiz_attempts`, `quiz_answers`). Yerelde `npm run sql-test` ile denendi.
+- Denendi: öğrenci akışı tarayıcıda sahte sunucu yanıtlarıyla uçtan uca (kod, numara, üç soru, bitirme, puan). Hoca ekranları giriş gerektirdiği için canlı denenmedi; sonuç hesabı 4, gelişim hesabı 10 birim testle denendi.
+
 ## v0.11.0 (12 Kasım 2026)
 Öğrenci gelişim raporu.
 - Ders (şube) sayfasında yeni "📈 Gelişim" sekmesi: bilgi yarışması cevaplarından öğrenci x konu başarısı. Üstte cevap sayısı, izlenen öğrenci, sınıf başarısı ve desteğe ihtiyacı olan öğrenci sayısı; "Sınıfın konuları" bölümünde en zayıf konu üstte olacak biçimde konu başarı çubukları ve o konuda zayıf kalan öğrenci sayısı.

@@ -22,6 +22,36 @@ const cevap = (session: string, q: string, cihaz: string, dogru: boolean, ms = 4
   sure_ms: ms,
 })
 
+describe('quiz cevapları', () => {
+  const ogrenciler = [ogrenci('1', '1001')]
+  const sorular = [soru('q1', { outcome: 'Kötülük' })]
+  it('öğrenciye doğrudan bağlanır, ortalama süreyi bozmaz', () => {
+    const cevaplar: CevapKaydi[] = [
+      cevap('o1', 'q1', 'cihaz-1', true, 6000),
+      { session_id: 'quiz1', question_id: 'q1', cihaz_id: '', student_id: '1', dogru: false, puan: 0, sure_ms: 0, kaynak: 'quiz' },
+    ]
+    const s = gelisimHesapla(ogrenciler, cevaplar, [{ session_id: 'o1', student_id: '1', cihaz_id: 'cihaz-1' }], sorular, [
+      { id: 'o1', basladi: '2026-10-01' },
+      { id: 'quiz1', basladi: '2026-10-08' },
+    ])
+    expect(s.izlenemeyen).toBe(0)
+    expect(s.ogrenciler[0].cevap).toBe(2)
+    expect(s.ogrenciler[0].dogru).toBe(1)
+    expect(s.ogrenciler[0].sureOrt).toBeCloseTo(6)
+    expect(s.ogrenciler[0].oturumlar.map((o) => o.oturum)).toEqual(['o1', 'quiz1'])
+  })
+  it('listede olmayan öğrencinin quiz cevabını izlenemeyen sayar', () => {
+    const s = gelisimHesapla(
+      ogrenciler,
+      [{ session_id: 'quiz1', question_id: 'q1', cihaz_id: '', student_id: 'yok', dogru: true, puan: 0, sure_ms: 0, kaynak: 'quiz' }],
+      [],
+      sorular,
+      [],
+    )
+    expect(s.izlenemeyen).toBe(1)
+  })
+})
+
 describe('konuAdi', () => {
   it('ölçüte göre konu seçer', () => {
     const s = soru('q', { outcome: 'LO2', bloom: 'Analiz', paket: 'Hafta 3' })

@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.10.0 (12 Kasım 2026)
+Masaüstü uygulaması ve şifreyle giriş.
+- Şifreyle giriş: giriş ekranında "Şifreyle" ve "E-posta bağlantısı" sekmeleri. Panelin üstündeki "🔑 Şifre" düğmesinden şifre belirlenir (en az 8 karakter); sonraki girişlerde e-posta beklenmez, ücretsiz planın saatte 2 e-posta sınırına da takılınmaz. Seçilen yöntem hatırlanır. Supabase tarafında ek ayar ya da migration gerekmedi.
+- Masaüstü uygulaması (Windows): `masaustu/` klasöründeki Electron kabuğu, canlı siteyi kendi penceresinde açar. Pencere konumu hatırlanır, `F11` tam ekran, dış bağlantılar tarayıcıda açılır, bağlantı koparsa yeniden dener, kurulum adresi menüden değiştirilebilir. Web tarafı her yayında kendiliğinden güncellenir. Kurulum, ilk giriş ve derleme: `docs/MASAUSTU.md`.
+- Uygulama imzalı değildir; Windows ilk kurulumda "Bilinmeyen yayıncı" uyarısı gösterir.
+- Denendi: uygulama (hem `npm start` hem paketlenmiş `AmfiOS.exe`) `--sinama` kipiyle canlı siteyi yükledi. Kurulum dosyasının kendisi bu bilgisayarda kurulup çalıştırılmadı; şifreyle giriş ekranı tarayıcıda görsel olarak denendi, gerçek bir giriş denenmedi.
+
 ## v0.9.0 (12 Kasım 2026)
 Soru paketleri: ders ve haftaya göre soru setleri, akışa topluca ekleme, seri yarışma.
 - Soru paketi: ders içeriğinin soru bankasındaki sorular artık paketlere ayrılır (ör. "3. hafta: Kötülük problemi"). ZOMR dosyası yüklerken paket adı verilir (dosya adından önerilir); dosyada `#PAKET:ad` satırı varsa soru kendi paketine girer. Soru bankası paketlere göre gruplanır; paket yeniden adlandırılır, silinir, tek tek soru başka pakete taşınır.

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'unsafe-inline'" />
+    <title>AmfiOS</title>
+    <style>
+      body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #070a1f; color: #f8fafc; font-family: "Segoe UI", system-ui, sans-serif; text-align: center; }
+      main { max-width: 420px; padding: 24px; }
+      .ikon { font-size: 56px; }
+      h1 { margin: 8px 0; font-size: 24px; }
+      p { color: #94a3b8; line-height: 1.6; }
+      button { margin-top: 12px; padding: 12px 26px; border: 0; border-radius: 999px; color: #fff; font-weight: 800; font-size: 15px; cursor: pointer; background: linear-gradient(135deg, #ff4d9d, #7c5cff 60%, #22b8ff); }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="ikon">📡</div>
+      <h1>İnternete ulaşılamıyor</h1>
+      <p>AmfiOS buluttaki verilerini kullanır. Bağlantı gelince kendiliğinden açılacak; istersen hemen yeniden deneyebilirsin.</p>
+      <button id="dene">Yeniden dene</button>
+    </main>
+    <script src="cevrimdisi.js"></script>
+  </body>
+</html>

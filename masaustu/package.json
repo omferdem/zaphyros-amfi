@@ -1,0 +1,52 @@
+{
+  "name": "amfios-masaustu",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AmfiOS masaüstü uygulaması",
+  "author": "Ömer Faruk Erdem",
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "sinama": "electron . --sinama",
+    "ikon": "node ikon-uret.mjs",
+    "derle": "electron-builder --win nsis"
+  },
+  "build": {
+    "appId": "tr.edu.zaphyros.amfios",
+    "productName": "AmfiOS",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.cjs",
+      "adres*",
+      "cevrimdisi.*",
+      "build/icon.png",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "shortcutName": "AmfiOS",
+      "deleteAppDataOnUninstall": false
+    },
+    "artifactName": "AmfiOS-Kurulum-${version}.exe"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "electron": "^45.3.1",
+    "electron-builder": "^26.18.0"
+  }
+}

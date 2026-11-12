@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import { useGiris, useHocaMi } from '../lib/giris'
 import { SURUM } from '../surum'
 import BaglantiGostergesi from './BaglantiGostergesi'
+import SifreBelirle from './SifreBelirle'
 import Giris from './Giris'
 
 function Bekle() {
@@ -99,6 +100,7 @@ export default function HocaAlani({ cercevesiz = false }: { cercevesiz?: boolean
               <BaglantiGostergesi />
             </span>
             <span className="hidden md:inline text-xs text-slate-400">{oturum.user.email}</span>
+            <SifreBelirle />
             <button className="text-xs text-slate-300 hover:text-white" onClick={() => supabase.auth.signOut()}>
               Çıkış
             </button>

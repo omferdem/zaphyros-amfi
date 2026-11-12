@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'" />
+    <title>Kurulum adresi</title>
+    <style>
+      body { margin: 0; padding: 24px; background: #070a1f; color: #f8fafc; font-family: "Segoe UI", system-ui, sans-serif; }
+      h1 { font-size: 18px; margin: 0 0 6px; }
+      p { font-size: 13px; color: #94a3b8; margin: 0 0 14px; line-height: 1.5; }
+      input { width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 10px; border: 1.5px solid rgba(255,255,255,.15); background: rgba(4,6,24,.8); color: inherit; font-size: 14px; outline: none; }
+      input:focus { border-color: #22e3d2; }
+      .satir { display: flex; gap: 8px; margin-top: 14px; justify-content: flex-end; }
+      button { padding: 9px 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.08); color: inherit; font-weight: 700; cursor: pointer; }
+      button.ana { border: 0; background: linear-gradient(135deg, #ff4d9d, #7c5cff 60%, #22b8ff); }
+      #hata { color: #fda4af; font-size: 13px; min-height: 18px; margin-top: 8px; }
+    </style>
+  </head>
+  <body>
+    <h1>Kurulum adresi</h1>
+    <p>Kendi AmfiOS kopyanın adresi (GitHub Pages). Çoğu kullanıcı bunu değiştirmez.</p>
+    <input id="adres" spellcheck="false" autofocus />
+    <div id="hata"></div>
+    <div class="satir">
+      <button id="vazgec">Vazgeç</button>
+      <button id="kaydet" class="ana">Kaydet</button>
+    </div>
+    <script src="adres.js"></script>
+  </body>
+</html>

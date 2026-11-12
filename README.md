@@ -14,6 +14,9 @@ npm run dev
 npm test
 ```
 
+## Masaüstü uygulaması
+Windows için kurulabilir bir uygulama da vardır (`masaustu/`): aynı siteyi kendi penceresinde açar, şifreyle girişi hatırlar. Ayrıntı: `docs/MASAUSTU.md`.
+
 ## Belgeler
 - `CLAUDE.md`: Projede çalışırken uyulacak kurallar ve bağlayıcı kararlar
 - `docs/MIMARI.md`: Mimari, veri modeli, yoklama ve gerçek zaman tasarımı

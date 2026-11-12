@@ -46,6 +46,8 @@ Supabase güvenlik ayarları, proje açılırken bilinçli seçildi:
 - Migration'lar Supabase'e gitmeden önce yerelde denenir: `npm run sql-test` (PGlite; bilgisayarda Postgres gerekmez, taklit + bütün migration'lar + düz SQL testleri). Yeni testleri psql komutu kullanmadan, hata verince duran düz SQL olarak yaz (`0003_ders_akisi_test.sql` gibi). Sonra Supabase SQL Editor'de `begin; <migration> <test> rollback;` ile bir kez daha dene, en son uygula.
 - Sürüm etiketleri `.github/workflows/etiket.yml` ile main'e push sonrası otomatik atılır (commit mesajı `vX.Y.Z:` ile başlamalı). İstisna: `.github/workflows/` altında dosya değiştiren commit'lere GitHub bu yolla etiket attırmaz; bunların etiketi yerel oturumdan `git push` ile atılır. Bulut oturumları etiket push edemez.
 
+Masaüstü uygulaması (Windows, Electron): `masaustu/` klasörü ve `docs/MASAUSTU.md`. Canlı siteyi açan ince bir kabuktur, ayrı sunucu yoktur; kurulum dosyası repoya girmez, `npm run derle` ile yerelde üretilir.
+
 Ayrıntılı mimari: `docs/MIMARI.md`. Yol haritası ve fazlar: `docs/YOL-HARITASI.md`. Gemini prototipinin incelemesi: `docs/PROTOTIP-INCELEME.md`.
 
 ## Ücretsiz plan sınırları (Ekim 2026 itibarıyla doğrulandı)

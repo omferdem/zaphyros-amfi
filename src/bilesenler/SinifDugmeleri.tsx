@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { cihazKimligi } from '../lib/cihaz'
+import { takimBilgisi } from '../lib/takim'
 
 interface Durumum {
   el: boolean
@@ -22,15 +23,34 @@ const HATALAR: Record<string, string> = {
 /** Derse katılmış öğrencinin düğmeleri: parmak kaldır, soru sor, sıkıldım. Mola ve çekiliş durumu da burada görünür. */
 export default function SinifDugmeleri({ oturum }: { oturum: string }) {
   const [d, setD] = useState<Durumum | null>(null)
+  const [takim, setTakim] = useState<{ sayi: number; takim: number | null }>({ sayi: 0, takim: null })
   const [soruAcik, setSoruAcik] = useState(false)
   const [metin, setMetin] = useState('')
   const [mesgul, setMesgul] = useState(false)
   const [mesaj, setMesaj] = useState<{ tur: 'iyi' | 'kotu'; metin: string } | null>(null)
 
   const sor = useCallback(async () => {
-    const { data } = await supabase.rpc('sinif_durumum', { p_session: oturum, p_cihaz: cihazKimligi() })
+    const cihaz = cihazKimligi()
+    const [{ data }, { data: t }] = await Promise.all([
+      supabase.rpc('sinif_durumum', { p_session: oturum, p_cihaz: cihaz }),
+      supabase.rpc('takim_durumum', { p_session: oturum, p_cihaz: cihaz }),
+    ])
     if (data && !(data as { hata?: string }).hata) setD(data as Durumum)
+    if (t && !(t as { hata?: string }).hata) setTakim(t as { sayi: number; takim: number | null })
   }, [oturum])
+
+  async function takimSec(no: number) {
+    setMesgul(true)
+    setMesaj(null)
+    const { data } = await supabase.rpc('takim_sec', { p_session: oturum, p_cihaz: cihazKimligi(), p_takim: no })
+    setMesgul(false)
+    const hata = (data as { hata?: string } | null)?.hata
+    if (hata) {
+      setMesaj({ tur: 'kotu', metin: hata === 'kilitli' ? 'Cevap verdikten sonra takım değiştirilemez.' : (HATALAR[hata] ?? 'Takım seçilemedi.') })
+      return
+    }
+    await sor()
+  }
 
   useEffect(() => {
     sor()
@@ -88,6 +108,36 @@ export default function SinifDugmeleri({ oturum }: { oturum: string }) {
 
   return (
     <section className="space-y-3">
+      {takim.sayi > 0 && (
+        <div className="cam-panel rounded-2xl p-3 space-y-2 girdi">
+          <p className="text-sm font-bold">
+            {takim.takim ? (
+              <>
+                {takimBilgisi(takim.takim).emoji} {takimBilgisi(takim.takim).ad} takımdasın
+              </>
+            ) : (
+              'Takımını seç'
+            )}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {Array.from({ length: takim.sayi }, (_, i) => i + 1).map((no) => {
+              const b = takimBilgisi(no)
+              return (
+                <button
+                  key={no}
+                  disabled={mesgul}
+                  onClick={() => takimSec(no)}
+                  className={`rounded-xl px-3 py-2 text-sm font-bold border transition active:scale-95 ${
+                    takim.takim === no ? `bg-gradient-to-br ${b.renk} border-white/40 text-white` : 'bg-white/5 border-white/10 hover:bg-white/10'
+                  }`}
+                >
+                  {b.emoji} {b.ad}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      )}
       <div className="grid grid-cols-3 gap-2">
         <button
           disabled={mesgul}

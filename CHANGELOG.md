@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.15.0 (13 Kasım 2026)
+Takım yarışması.
+- Perdede (ve kumandada) "👥 Takım modu" düğmesi: hoca takım sayısını seçer (2 ile 6 arası, 🔴 Kırmızı, 🔵 Mavi, 🟢 Yeşil, 🟡 Sarı, 🟣 Mor, 🟠 Turuncu) ya da kapatır. Mod açılınca öğrenci telefonunda "Takımını seç" düğmeleri çıkar; yoklaması ya da takma adı olan her cihaz seçebilir.
+- Bilgi yarışmasındaki puanlar takım bazında toplanır. Perdenin sağ altındaki tabloda her takımın üye başına ortalama puanı, toplam puanı ve üye sayısı canlı görünür; sıralama ortalamaya göredir (takımların üye sayısı eşit olmayabilir). Öğrenci ilk cevabını verince takımını değiştiremez (kazanan takıma geçip puan toplanamasın). Takım sayısı azalırsa dışarıda kalan üyeler yeniden seçer.
+- Takım modu bilgi yarışmasının mevcut puanlamasını değiştirmez; bireysel puan tablosu ve podyum aynen çalışır.
+- Veritabanı: `0015_takim_yarismasi.sql` (tablolar `takim_ayar`, `takim_uyeleri`; RPC'ler `takim_durumum`, `takim_sec` öğrenci için, `takim_goster`, `takim_ayarla` hoca ve kumanda için). `npm run sql-test` ile yerelde denendi (seçim kuralları, kilit, ortalama sıralaması, yetki); henüz Supabase'e uygulanmadı. Arayüz gerçek derste denenmedi.
+
 ## v0.14.0 (13 Kasım 2026)
 Sınıf etkileşimi: parmak kaldır, soru sor, sıkıldım ve çekiliş.
 - **Öğrenci telefonunda üç düğme** (derse katılınca, ders bitene kadar): ✋ Parmak kaldır (basınca "Elini indir" olur), ❓ Soru sor (3-280 harflik yazılı soru) ve 😮‍💨 Sıkıldım ("Vazgeçtim" ile geri alınır). Düğmeleri yoklaması alınmış ya da takma ad almış cihaz kullanabilir; öğrencinin gördüğü adı kısadır ("Ahmet Y."). Öğrenci kendi son sorularını ve cevaplanıp cevaplanmadığını görür. Bekleyen en fazla 3 soru.

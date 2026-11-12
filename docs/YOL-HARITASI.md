@@ -78,9 +78,10 @@ Kullanıcı istekleri (13 Kasım 2026):
 - "Sıkıldım" düğmesi: sınıfın yüzde 25'i basarsa perdede uyarı; hoca dersi durdurur, sıkıldım diyenler arasından çekiliş (fıkra anlatma, en fazla 3 çekiliş), sonra derse döner
 
 ## Faz 5: Oyunlar (v0.6)
-- Takım yarışması: bilgi yarışmasında sınıf gruplara bölünür (öğrenci grubunu seçer), gruplar yarışır
+- Takım yarışması (v0.15) ✅: bilgi yarışmasında sınıf 2-6 gruba bölünür (öğrenci grubunu seçer), gruplar üye başına ortalama puanla yarışır
 - Halat çekme (iki takım, Broadcast)
-- Hocayla yarış, ve yeni takım/rekabet oyunları (araştırılıp eklenecek)
+- Hocayla yarış (sınıf hocaya karşı: doğru bilen sınıf puan alır, hoca her soruda kendi cevabını gizli verir)
+- Aday oyunlar (hoca seçimine göre): Kim Milyoner Olmak İster (jokerli, sınıf oyu), Doğru mu Yanlış mı (ayakta/oturarak hızlı eleme), Eşleştirme yarışı (kavram-tanım), Boşluk doldurma, Resim/sözcük tahmin (Pictionary tarzı, hoca çizer), Mini turnuva (eleme usulü), Kovalamaca (doğru cevap hızlandırır)
 - Kovalamaca oyunu (soru doğru cevaplanınca hızlanma)
 
 ## Faz 6: Dağıtım paketi (v1.0)

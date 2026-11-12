@@ -5,7 +5,7 @@ Hocayla yarış.
 - Perdede (ve kumandada) "🥊 Hocayla yarış" düğmesi bilgi yarışmasını sınıf-hoca düellosuna çevirir. Soru açıkken hoca kendi cevabını gizlice verir: sahnede şıklar yalnızca harfle (A, B, C…) gösterilir, kumandada metinleriyle; perdede yalnızca "✓ Hoca cevabını verdi" görünür. Cevap, sonuç açılana kadar değiştirilebilir.
 - Sonuç açılınca hocanın doğru bilip bilmediği ve sınıfın doğru oranı gösterilir. Skor: hoca soruyu doğru bilirse hoca 1 puan, cevap verenlerin en az yarısı doğru bilirse sınıf 1 puan (ikisi birden puan alabilir). Skor "Hoca 3 – 5 Sınıf" olarak perdenin solunda durur; yalnızca sonucu açılmış ya da geçilmiş sorular sayılır, böylece skor hocanın cevabını önceden belli etmez.
 - Öğrencilerin telefonunda değişiklik yok; mevcut puan tablosu, podyum ve takım modu aynen çalışır.
-- Veritabanı: `0016_hocayla_yaris.sql` (tablolar `hoca_yaris`, `hoca_cevaplari`; RPC'ler `hoca_yaris_ayarla`, `hoca_cevapla`, `hoca_yaris_goster`; hoca yetkisi sahnede giriş, kumandada anahtar). Hocanın cevabı şık sırası oturuma göre karıştığı için metin olarak saklanır. `npm run sql-test` ile yerelde denendi (gizlilik, skor kuralları, yetki); henüz Supabase'e uygulanmadı. Arayüz gerçek derste denenmedi.
+- Veritabanı: `0016_hocayla_yaris.sql` (tablolar `hoca_yaris`, `hoca_cevaplari`; RPC'ler `hoca_yaris_ayarla`, `hoca_cevapla`, `hoca_yaris_goster`; hoca yetkisi sahnede giriş, kumandada anahtar). Hocanın cevabı şık sırası oturuma göre karıştığı için metin olarak saklanır. `npm run sql-test` ile yerelde denendi (gizlilik, skor kuralları, yetki); Supabase'e 13 Kasım 2026'da uygulandı; RLS, anonim yetkiler (tabloları okuyamaz) ve yanlış anahtarın reddi sorguyla doğrulandı. Arayüz gerçek derste denenmedi.
 
 ## v0.15.0 (13 Kasım 2026)
 Takım yarışması.

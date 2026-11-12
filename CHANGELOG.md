@@ -1,7 +1,7 @@
 # Sürüm Geçmişi
 
 ## v0.7.0 (12 Kasım 2026)
-Faz 4: tartışma araçları. **`0010_tartisma.sql` henüz Supabase'e uygulanmadı** (yerelde `npm run sql-test` ile denendi); uygulanmadan akışa yeni adım eklenemez.
+Faz 4: tartışma araçları.
 - Beyin fırtınası: hoca bir soru yazar, öğrenciler telefonlarından en çok 3 kısa fikir (2-40 harf) gönderir, perdede kelime bulutu oluşur; aynı fikri yazanlar birleşir ve yazı büyür. Uygunsuz fikir perdede ya da kumandada ✕ ile gizlenir.
 - Şeytanın avukatı: iki taraflı oylama (varsayılan "Katılıyorum / Katılmıyorum", istenirse özel etiketler). Öğrenci taraf seçer, isterse 200 harfe kadar gerekçe yazar ve sonuç açılana kadar fikrini değiştirebilir. Oy sayıları ve gerekçeler hoca "Sonucu göster" diyene kadar öğrencilere ve perdeye gitmez; hoca kumandada her zaman görür. Oylama yeniden açılabilir.
 - Video adımı: https adresi (YouTube bağlantıları çerezsiz gömülü oynatılır, diğerleri "Videoyu aç" bağlantısı olur). Telefon modunda öğrencinin telefonunda da oynar.
@@ -9,7 +9,7 @@ Faz 4: tartışma araçları. **`0010_tartisma.sql` henüz Supabase'e uygulanmad
 - Gizlilik: katkılar öğrenci kimliğine ya da cihaz kimliğine bağlanmaz; yalnızca "aynı kişi mi" denetimi için oturum anahtarıyla karılmış bir özet tutulur. Öğrenci katkı tablosunu okuyamaz.
 - Windows'ta `kurulum.sql` güncellik testi satır sonu (CRLF) farkından yanlışlıkla kırılıyordu; düzeltildi.
 - Güvenlik danışmanı uyarısı: `rls_auto_enable()` fonksiyonunun Data API'den çağrılabilirliği 0010 ile kapatılır.
-- Veritabanı: `0010_tartisma.sql` (bekliyor).
+- Veritabanı: `0010_tartisma.sql` uygulandı (Supabase, 12 Kasım 2026; önce `npm run sql-test` ile yerelde denendi, uygulamadan sonra tablo, RLS, kısıtlar ve izinler sorguyla doğrulandı). Geri alınan işlemle ikinci deneme yapılmadı. Tarayıcıda uçtan uca deneme henüz yapılmadı.
 
 ## v0.6.2 (9 Kasım 2026)
 Supabase duraklatma uyarısı düzeltildi.

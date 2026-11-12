@@ -57,7 +57,7 @@ Kullanıcı istekleri (19 Ekim 2026): slaytsız, yalnızca hazır sorularla bilg
 - Canlı soru, süre sayacı, cevap dağılımı grafiği, doğru cevabı açma
 - Puan tablosu ve ders sonu raporu
 
-## Faz 4: Tartışma araçları (v0.7.0) ✅ (veritabanı bekliyor: 0010_tartisma.sql)
+## Faz 4: Tartışma araçları (v0.7.0) ✅ (tarayıcıda uçtan uca denenmedi)
 - Beyin fırtınası: kelime bulutu
 - Şeytanın avukatı: iki kutuplu oylama ve gerekçe gönderme
 - Video adımı (YouTube linki, sahnede oynatma)

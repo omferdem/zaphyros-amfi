@@ -7,6 +7,7 @@ import { KelimeBulutu, OylamaSonucu, VideoOynatici } from '../bilesenler/Etkinli
 import { SIKLAR } from '../lib/yarisma'
 import { oku, sakla } from '../lib/cihaz'
 import { useSlaytGorseli } from '../lib/gorsel'
+import SinifPaneli, { useSinifDurumu } from '../bilesenler/SinifPaneli'
 
 interface KumandaDurumu extends DersDurumu {
   katilan: number
@@ -63,6 +64,8 @@ export default function Kumanda() {
       } else setAnahtar(null)
     })
   }, [oturum, parametreler, setParametreler])
+
+  const sinif = useSinifDurumu(oturum, anahtar ?? null, !!oturum && !!anahtar, false)
 
   const yenile = useCallback(async () => {
     if (!anahtar) return
@@ -164,6 +167,8 @@ export default function Kumanda() {
       </header>
 
       {hata && <p className="text-sm text-rose-200 bg-rose-500/10 rounded-xl p-3">{hata}</p>}
+
+      <SinifPaneli d={sinif.d} komut={sinif.komut} hata={sinif.hata} mod="kumanda" />
 
       <section className="cam-panel rounded-3xl p-5 space-y-2 min-h-40">
         {durum.adim ? (

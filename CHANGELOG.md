@@ -1,5 +1,13 @@
 # Sürüm Geçmişi
 
+## v0.14.0 (13 Kasım 2026)
+Sınıf etkileşimi: parmak kaldır, soru sor, sıkıldım ve çekiliş.
+- **Öğrenci telefonunda üç düğme** (derse katılınca, ders bitene kadar): ✋ Parmak kaldır (basınca "Elini indir" olur), ❓ Soru sor (3-280 harflik yazılı soru) ve 😮‍💨 Sıkıldım ("Vazgeçtim" ile geri alınır). Düğmeleri yoklaması alınmış ya da takma ad almış cihaz kullanabilir; öğrencinin gördüğü adı kısadır ("Ahmet Y."). Öğrenci kendi son sorularını ve cevaplanıp cevaplanmadığını görür. Bekleyen en fazla 3 soru.
+- **Perdede (sahne):** kaldırılan parmaklar sağ kenarda sırayla (ad ve sıra numarası; adına basınca söz verilmiş sayılıp iner, "Hepsini indir"), sorular sol altta soran kişinin adıyla zarf olarak (zarfa basınca soru büyük açılır, "Cevaplandı" ya da "Sonra bakarım"), altta "😮‍💨 3 / 40 sıkıldı" göstergesi.
+- **Sıkıldım uyarısı:** sıkıldım diyenler katılanların yüzde 25'ine (en az 2 kişi) ulaşınca perdede tam ekran 😵 "Sınıf sıkıldı!" çıkar. "Dersi durdur, çekiliş yap" molayı açar ve sıkıldım diyenler arasından rastgele birini seçer; seçilen kişinin telefonunda "Sıra sende!", diğerlerinde "Ders kısa bir mola verdi" yazar. Kabul etmezse "yeniden çek" (en fazla 3 çekiliş, aynı kişi tekrar çıkmaz); "Anlattı, derse dön" ya da "Derse dön" molayı kapatır ve sıkıldım kayıtlarını sıfırlar. "Devam et" uyarıyı kapatır.
+- **Kumanda (projeksiyonsuz ders):** aynı bilgiler hocanın telefonundaki kumandada "Sınıf" kartı olarak çıkar; parmaklar, sorular, sıkıldım sayısı, çekiliş ve mola oradan da yönetilir.
+- Veritabanı: `0014_sinif_etkilesimi.sql` (tablolar `sinif_olaylari`, `sinif_durum`; RPC'ler `sinif_gonder`, `sinif_durumum` öğrenci için, `sinif_goster`, `sinif_komut` hoca ve kumanda için). Öğrenci tabloları okuyamaz. `npm run sql-test` ile yerelde denendi (cihaz doğrulama, sınırlar, çekiliş kuralları, yetki); henüz Supabase'e uygulanmadı. Perde görünümü sahte verilerle tarayıcıda denendi; öğrenci telefonu ve gerçek derste uçtan uca denenmedi.
+
 ## v0.13.0 (13 Kasım 2026)
 Hoca araçları: içerik paylaşma, toplu hafta planı, esnek sınıf listesi.
 - **İçeriği paylaş:** Ders akışları sekmesinde "Dışa aktar" dersin akışlarını, sunum PDF'lerini ve soru bankasını tek bir `.amfi` dosyasına (ZIP) toplar; "İçe aktar" başka bir hocanın paketini kendi dersine ekler. Var olan içerik silinmez; sunumlar kendi kurulumunda yeniden işlenir (sayfa metinleri, telefon görselleri). Öğrenci listesi, şube ve yoklama pakete girmez. Paket doğrulanır (yabancı dosya, yeni sürüm, bozuk bağlantı reddedilir).

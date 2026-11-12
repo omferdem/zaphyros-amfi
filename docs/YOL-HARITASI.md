@@ -73,7 +73,7 @@ Kullanıcı istekleri (13 Kasım 2026):
 - Sınıf listesi: toplu silme, misafir öğrenci (asıl şubesine yoklama), şubeyi sil / dersi tamamen sil ayrımı
 - Sonraki iyileştirme: misafir öğrencinin quiz ve yarışma cevaplarının asıl şubenin gelişim raporuna taşınması
 
-## Faz 4c: Sınıf etkileşimi (sıradaki)
+## Faz 4c: Sınıf etkileşimi (v0.14) ✅ (gerçek derste denenmedi)
 - Öğrenci konsolunda düğmeler: "Soru sor" (yazılı soru perdede zarf olarak, hoca sırası gelince açıp cevaplar) ve "Parmak kaldır" (ad perdenin kenarında sıraya girer)
 - "Sıkıldım" düğmesi: sınıfın yüzde 25'i basarsa perdede uyarı; hoca dersi durdurur, sıkıldım diyenler arasından çekiliş (fıkra anlatma, en fazla 3 çekiliş), sonra derse döner
 

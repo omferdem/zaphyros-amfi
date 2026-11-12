@@ -6,6 +6,7 @@ import type { DersDurumu } from '../lib/tipler'
 import SoruCevabi from '../bilesenler/SoruCevabi'
 import { EtkinlikCevabi } from '../bilesenler/Etkinlik'
 import { useSlaytGorseli } from '../lib/gorsel'
+import SinifDugmeleri from '../bilesenler/SinifDugmeleri'
 
 interface Bilet {
   bilet: string
@@ -398,6 +399,8 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
           <p className="text-slate-300 m-auto text-center">Hocanın ekranını izle. Bir sonraki adım burada görünecek.</p>
         )}
       </section>
+
+      {durum && !durum.bitti && <SinifDugmeleri oturum={oturum} />}
     </main>
   )
 }

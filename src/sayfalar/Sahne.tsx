@@ -11,6 +11,7 @@ import { dersEtiketi, kisaAd, oturumAdi } from '../lib/bicim'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
 import { SIKLAR, bitisAni } from '../lib/yarisma'
 import { KelimeBulutu, OylamaSonucu, VideoOynatici } from '../bilesenler/Etkinlik'
+import SinifPaneli, { useSinifDurumu } from '../bilesenler/SinifPaneli'
 
 interface Gelen {
   student_id: string
@@ -81,6 +82,7 @@ export default function Sahne() {
 
   const acik = !!oturum && oturum.yoklama_acik && !oturum.bitti
   const kod = useDersKodu(oturumId, !!oturum && !oturum.bitti)
+  const sinif = useSinifDurumu(oturumId, null, !!oturum && !oturum.bitti, true)
 
   // Oturum, sınıf mevcudu ve akış
   useEffect(() => {
@@ -334,6 +336,7 @@ export default function Sahne() {
       )}
       {kumandaAcik && <KumandaQr oturumId={oturum.id} kapat={() => setKumandaAcik(false)} />}
       {puanAcik && <PuanTablosu oturumId={oturum.id} kapat={() => setPuanAcik(false)} />}
+      <SinifPaneli d={sinif.d} komut={sinif.komut} hata={sinif.hata} mod="perde" />
     </>
   )
 }

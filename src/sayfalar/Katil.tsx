@@ -293,6 +293,38 @@ function KodFormu({ gonder, kucuk = false }: { gonder: (kod: string) => Promise<
  * Derse katılmış öğrencinin ekranı: perdede ne varsa onu izler. Slayttaysa slaytın metni
  * görünür. Değişiklik veritabanının yayınından gelir; bağlantı koparsa 20 saniyede bir sorulur.
  */
+/** Şubede açık quiz varsa derse girmiş öğrenciye tek dokunuşluk bant gösterir (kod ve numara sorulmaz). RPC yoksa sessizce görünmez. */
+function QuizBandi({ oturum }: { oturum: string }) {
+  const [quiz, setQuiz] = useState<{ baslik: string; sure_dk: number; kimlik: boolean; bitti: boolean } | null>(null)
+  useEffect(() => {
+    let iptal = false
+    async function sor() {
+      const { data, error } = await supabase.rpc('oturum_quizi', { p_session: oturum, p_cihaz: cihazKimligi() })
+      if (iptal || error) return
+      setQuiz((data as { quiz?: typeof quiz })?.quiz ?? null)
+    }
+    sor()
+    const t = setInterval(sor, 10000)
+    return () => {
+      iptal = true
+      clearInterval(t)
+    }
+  }, [oturum])
+  if (!quiz || quiz.bitti || !quiz.kimlik) return null
+  return (
+    <Link to={`/quiz?o=${oturum}`} className="rounded-2xl border border-amber-300/50 bg-amber-400/10 p-4 flex items-center gap-3 girdi">
+      <span className="text-3xl nabiz" aria-hidden>
+        📝
+      </span>
+      <span className="flex-1 min-w-0">
+        <b className="block truncate">Quiz başladı: {quiz.baslik}</b>
+        <span className="text-xs text-slate-300">{`${quiz.sure_dk} dakika. Dokun, hemen başla.`}</span>
+      </span>
+      <span className="parlak-buton rounded-xl px-4 py-2 text-sm font-bold">Başla</span>
+    </Link>
+  )
+}
+
 function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; ders: string }) {
   const [durum, setDurum] = useState<DersDurumu | null>(null)
 
@@ -335,6 +367,8 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
           </span>
         )}
       </header>
+
+      <QuizBandi oturum={oturum} />
 
       <section className="cam-panel rounded-3xl p-5 flex-1 flex flex-col">
         {!durum ? (

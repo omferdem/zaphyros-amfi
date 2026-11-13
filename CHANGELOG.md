@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.25.0 (14 Kasım 2026)
+Derse girmiş öğrenci quize kod girmeden katılır.
+- Hoca şubede bir quiz açınca, o şubenin açık dersinde yoklaması alınmış öğrencinin telefonunda "Quiz başladı" bandı çıkar; dokununca quiz başlar. Kimlik yoklama kaydından alınır, kod ve numara sorulmaz. Quiz sayfası  ile de açılır; yarıda kalan quiz aynı telefondan kaldığı yerden devam eder. Kod ve numara ile girme yolu yoklamasız öğrenciler için aynen duruyor.
+- Hata ekranı artık gerçek nedeni gösterir (yoklama yok, quiz kapalı, ders bitmiş).
+- **0022_oturum_quizi.sql** (, ) henüz Supabase'e uygulanmadı; uygulanana kadar bant görünmez, diğer her şey eskisi gibi çalışır.
+
 ## v0.24.0 (14 Kasım 2026)
 Soru yönetimi ve soru süreleri.
 - **Soruyu düzenle:** Ders düzenleme sayfasındaki soru paketlerinde her sorunun yanında "Düzenle": soru metni, doğru cevap, yanlış şıklar (her satıra bir şık, en fazla 5), cevap süresi ve paket tek formda değiştirilir; kayıttan önce denetlenir (boş metin, çift şık, doğruyla aynı şık, süre sınırı). Sorunun öbür ek bilgileri (kazanım vb.) korunur.

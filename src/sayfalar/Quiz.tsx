@@ -24,6 +24,9 @@ const HATALAR: Record<string, string> = {
   cihaz_gecersiz: 'Tarayıcın tanınamadı. Sayfayı yenileyip tekrar dene.',
   zaten_bitti: 'Bu quizi zaten bitirdin.',
   tekrar_dene: 'Bir çakışma oldu. Tekrar dene.',
+  yoklama_yok: 'Bu derste yoklaman görünmüyor. Perdedeki karekodu okutup derse gir ya da quiz kodunu ve numaranı elle yaz.',
+  quiz_yok: 'Şu an açık bir quiz yok. Hocan quizi kapatmış olabilir.',
+  oturum_yok: 'Bu ders bitmiş. Quiz kodun varsa ana sayfadan gir.',
 }
 
 function dakika(ms: number): string {
@@ -39,6 +42,9 @@ function yerelAnahtar(kod: string) {
 export default function Quiz() {
   const [parametreler] = useSearchParams()
   const kod = (parametreler.get('k') ?? '').replace(/\D/g, '')
+  const oturumParam = parametreler.get('o') ?? ''
+  const oturum = /^[0-9a-f-]{36}$/i.test(oturumParam) ? oturumParam : ''
+  const [hataKodu, setHataKodu] = useState<string | null>(null)
   const [asama, setAsama] = useState<'yukleniyor' | 'giris' | 'coz' | 'bitti' | 'hata'>('yukleniyor')
   const [baslik, setBaslik] = useState<{ baslik: string; ders: string } | null>(null)
   const [numara, setNumara] = useState(() => oku('amfi_ogrenci_no') ?? '')
@@ -83,10 +89,34 @@ export default function Quiz() {
     [kod],
   )
 
+  /** Derse girmiş öğrenci: kimlik yoklama kaydından alınır, kod ve numara sorulmaz. */
+  const oturumdanBaslat = useCallback(async (): Promise<void> => {
+    const { data, error } = await supabase.rpc('oturum_quizi_baslat', { p_session: oturum, p_cihaz: cihazKimligi() })
+    const s = data as (QuizPaketi & { hata?: string }) | null
+    if (error || !s || s.hata) {
+      setHataKodu(error || !s ? 'baglanti' : (s.hata as string))
+      if (s?.hata === 'zaten_bitti') {
+        setAsama('bitti')
+        return
+      }
+      setAsama('hata')
+      return
+    }
+    setPaket(s)
+    setCevaplar(Object.fromEntries(s.sorular.filter((x) => x.secim !== null).map((x) => [x.id, x.secim as number])))
+    setBitis(Date.now() + s.kalan_ms)
+    setSira(0)
+    setAsama(s.bitti ? 'bitti' : 'coz')
+  }, [oturum])
+
   // Açılışta: quiz var mı? Bu telefonda yarıda kalmış deneme varsa kendiliğinden devam edilir.
   useEffect(() => {
     if (basladi.current) return
     basladi.current = true
+    if (oturum) {
+      oturumdanBaslat()
+      return
+    }
     if (kod.length !== 6) {
       setAsama('hata')
       return
@@ -102,7 +132,7 @@ export default function Quiz() {
       if (kayitli) baslat(kayitli)
       else setAsama('giris')
     })
-  }, [kod, baslat])
+  }, [kod, baslat, oturum, oturumdanBaslat])
 
   useEffect(() => {
     if (asama !== 'coz') return
@@ -184,7 +214,7 @@ export default function Quiz() {
       <Kabuk>
         <p className="text-5xl text-center">🤔</p>
         <h1 className="text-xl font-extrabold text-center">Quiz bulunamadı</h1>
-        <p className="text-sm text-rose-200 bg-rose-500/10 rounded-xl p-4">{HATALAR.kod_yanlis}</p>
+        <p className="text-sm text-rose-200 bg-rose-500/10 rounded-xl p-4">{hataKodu === 'baglanti' ? 'Sunucuya ulaşılamadı. Bağlantını kontrol edip sayfayı yenile.' : HATALAR[hataKodu ?? 'kod_yanlis'] ?? HATALAR.kod_yanlis}</p>
         <Link to="/" className="parlak-buton rounded-2xl py-3 text-center">
           Kodu yeniden gir
         </Link>

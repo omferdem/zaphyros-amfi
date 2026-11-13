@@ -8,6 +8,7 @@ import Konfeti from '../bilesenler/Konfeti'
 import Halka from '../bilesenler/Halka'
 import { adimlariGetir, adimlarEkle, akisGetir, akislariGetir, sunumlariGetirIdIle } from '../lib/akis'
 import { adaGoreHafta, kahootAkisAdi, kahootAkisiMi } from '../lib/gecis'
+import { kalinanAdim } from '../lib/veri'
 import { KahootSecici, QuizPaneli } from '../bilesenler/PaketGecisi'
 import { oyunuAc } from '../lib/oyunAc'
 import type { OyunAnahtari } from '../lib/oyun'
@@ -90,6 +91,7 @@ export default function Sahne() {
   const [kumandaAcik, setKumandaAcik] = useState(false)
   const [puanAcik, setPuanAcik] = useState(false)
   const [kahootSecimi, setKahootSecimi] = useState(false)
+  const [devam, setDevam] = useState<{ akis: string; baslangic: string | null; metin: string } | null>(null)
   const [quizAcik, setQuizAcik] = useState(false)
   const [kahootAkisi, setKahootAkisi] = useState<{ id: string; ad: string } | null>(null)
 
@@ -242,7 +244,11 @@ export default function Sahne() {
       return
     }
     const { data } = await supabase.from('lesson_steps').select('id').eq('lesson_id', deger).order('sira').order('id').limit(1)
-    const ilk = (data?.[0]?.id as string | undefined) ?? null
+    const baslangic = (data?.[0]?.id as string | undefined) ?? null
+    // Bu şubede bu akış daha önce yarım kaldıysa kaldığı adımdan devam edilir (hoca "başa dön" diyebilir)
+    const kalinan = oturum ? await kalinanAdim(oturum.course_id, deger).catch(() => null) : null
+    const ilk = kalinan?.adimId ?? baslangic
+    setDevam(kalinan ? { akis: deger, baslangic, metin: `${kalinan.sira} / ${kalinan.toplam}. adımdan devam ediliyor` } : null)
     const { error } = await supabase.from('sessions').update({ lesson_id: deger, aktif_adim: ilk }).eq('id', oturumId)
     if (error) return window.alert('Akış açılamadı. Bağlantını kontrol edip tekrar dene.')
     setOturum((o) => (o ? { ...o, lesson_id: deger, aktif_adim: ilk } : o))
@@ -377,6 +383,20 @@ export default function Sahne() {
         ))}
         {kahootAkisi && <option value={kahootAkisi.id}>{kahootAkisi.ad}</option>}
       </select>
+      {devam && devam.akis === oturum.lesson_id && (
+        <span className="rounded-full bg-emerald-500/15 text-emerald-200 text-xs px-3 py-1.5 flex items-center gap-2">
+          ↺ {devam.metin}
+          <button
+            className="underline"
+            onClick={() => {
+              if (devam.baslangic) git({ id: devam.baslangic } as Adim)
+              setDevam(null)
+            }}
+          >
+            Baştan başla
+          </button>
+        </span>
+      )}
       {kahootAkisi ? (
         <button
           className={`parlak-buton rounded-xl px-4 py-1.5 text-sm font-bold ${aktifSira === adimlar.length - 1 ? 'nabiz' : ''}`}

@@ -91,7 +91,7 @@ export default function HocaAlani({ cercevesiz = false }: { cercevesiz?: boolean
           <Link to="/panel" className="flex items-center gap-2.5 group">
             <img src="./favicon.svg" alt="" className="w-9 h-9 transition-transform group-hover:rotate-12 group-hover:scale-110" />
             <span className="font-display font-extrabold text-lg">
-              ZAPEDU <span className="renkli-yazi">Panel</span>
+              ZAPEDU <span className="gumus-yazi">Panel</span>
             </span>
           </Link>
           <span className="text-[10px] text-slate-500 font-mono">v{SURUM}</span>

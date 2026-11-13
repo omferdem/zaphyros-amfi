@@ -138,6 +138,28 @@ export const DERSI_BITIR_SORUSU =
  * Yeni oturum açar; aynı dersin hâlâ açık kalmış eski oturumlarını kapatır.
  * Akış seçildiyse perdeye akışın ilk adımı gelir. Yoklama alınmayacaksa oturum yoklaması kapalı açılır.
  */
+/**
+ * Bu şubede aynı akışla yapılmış son oturumun kaldığı adım (varsa). Böylece hoca bir sonraki hafta
+ * "nerede kalmıştık" diye aramadan, akışı kaldığı yerden sürdürür. Kahoot geçişlerinin gizli (⚡) akışları sayılmaz.
+ */
+export async function kalinanAdim(dersId: string, akisId: string): Promise<{ adimId: string; sira: number; toplam: number } | null> {
+  const { data } = await supabase
+    .from('sessions')
+    .select('aktif_adim')
+    .eq('course_id', dersId)
+    .eq('lesson_id', akisId)
+    .not('aktif_adim', 'is', null)
+    .order('basladi', { ascending: false })
+    .limit(1)
+  const adimId = data?.[0]?.aktif_adim as string | undefined
+  if (!adimId) return null
+  const { data: adimlar } = await supabase.from('lesson_steps').select('id').eq('lesson_id', akisId).order('sira').order('id')
+  const idler = (adimlar ?? []).map((a) => a.id as string)
+  const i = idler.indexOf(adimId)
+  // İlk adımda kalınmışsa ya da adım silinmişse devam edilecek bir şey yoktur
+  return i > 0 ? { adimId, sira: i + 1, toplam: idler.length } : null
+}
+
 export async function oturumBaslat(
   dersId: string,
   baslik: string,
@@ -160,6 +182,9 @@ export async function oturumBaslat(
       .order('id')
       .limit(1)
     ilkAdim = (data?.[0]?.id as string | undefined) ?? null
+    // Aynı akışın önceki oturumu yarım kaldıysa kaldığı adımdan başlanır
+    const kalinan = await kalinanAdim(dersId, akisId).catch(() => null)
+    if (kalinan) ilkAdim = kalinan.adimId
   }
   const { data, error } = await supabase
     .from('sessions')

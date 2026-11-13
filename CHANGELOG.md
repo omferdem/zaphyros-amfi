@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.27.0 (14 Kasım 2026)
+Kaldığın yerden devam ve ek slaytlar.
+- **Kaldığın yerden devam:** bir şubede akış yarım kalırsa (ör. A sınıfında 2. haftanın ortasında), o şubede aynı akış sonraki oturumda seçildiğinde ya da başlatıldığında kaldığı adımdan açılır; "nerede kalmıştık" diye aranmaz. Sahnede "N / M. adımdan devam ediliyor" bilgisi ve "Baştan başla" bağlantısı çıkar. Her şubenin ilerlemesi ayrı tutulur.
+- Panel başlığındaki "Panel" yazısı gökkuşağı yerine gümüş.
+- Din Felsefesi I 9-14. haftalar ve Din Felsefesi 2 13-14. haftalar için kaynak kitaplardan hazırlanan özgün ek slaytlar (hafta başına 11-13 slayt, tartışma sorusu ve özet dahil) akışlara eklendi.
+
 ## v0.26.1 (14 Kasım 2026)
 Kahoot geçişi düzeltmeleri.
 - Ders yoklama ekranından açılmışsa "Derse dön" Kahoot akışından çıkıp yoklama ekranına döner (önceden Kahoot ekranında kalıyordu). Önerilen paket, akış seçilmemişse oturumun hafta numarasından bulunur.

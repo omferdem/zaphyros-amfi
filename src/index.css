@@ -70,6 +70,19 @@ h1, h2, h3, .baslik {
   color: transparent;
 }
 
+/* Gümüş yazı: panel başlığı gibi sakin vurgular için */
+.gumus-yazi {
+  background: linear-gradient(110deg, #9aa3b5 0%, #e8ecf4 30%, #ffffff 45%, #b7bfce 62%, #8a93a6 80%, #dfe4ee 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: marka-parilti 12s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gumus-yazi { animation: none; }
+}
+
 /* ------------------------------------------------------------------ düğmeler */
 .parlak-buton {
   background: linear-gradient(135deg, #ff4d9d 0%, #7c5cff 55%, #22b8ff 100%);

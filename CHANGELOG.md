@@ -1,5 +1,8 @@
 # Sürüm Geçmişi
 
+## v0.32.1 (14 Kasım 2026)
+- Önizlemede perde, gerçek projeksiyon gibi 1280x720 üzerinde çizilip kutuya sığdırılıyor (dar kutuda içerik taşmıyor).
+
 ## v0.32.0 (14 Kasım 2026)
 Ders günü için sadeleştirme.
 - **Derslerim sayfasında şube başına "▶ Derse başla":** açık bir ders varsa sahneye döner ("▶ Devam"), yoksa şubenin sıradaki yoklama haftasını açar ("▶ 3. haftayı başlat"). Şube sayfasına girmeden ders başlar.

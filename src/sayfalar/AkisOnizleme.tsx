@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { adimlariGetir, akisGetir, sorulariGetir, sunumlariGetir } from '../lib/akis'
 import type { Adim, Akis, Soru, Sunum } from '../lib/tipler'
@@ -171,10 +171,7 @@ export default function AkisOnizleme() {
             </div>
             <div className={`grid gap-4 ${gorunum === 'ikisi' ? 'xl:grid-cols-[1fr_20rem]' : ''} items-start`}>
               {gorunum !== 'telefon' && (
-                <div className="rounded-3xl border border-white/10 overflow-hidden bg-slate-950 aspect-video relative">
-                  <div className="absolute inset-0 p-4 sm:p-6 flex flex-col overflow-hidden">{perde}</div>
-                  <span className="absolute left-3 top-2 text-[10px] font-mono text-slate-500">PERDE</span>
-                </div>
+                <PerdeCercevesi>{perde}</PerdeCercevesi>
               )}
               {gorunum !== 'perde' && (
                 <div className={`mx-auto w-[20rem] max-w-full ${gorunum === 'telefon' ? 'xl:w-[24rem]' : ''}`}>
@@ -381,4 +378,27 @@ function TelefonIcerigi({ adim, soru, metin, belge }: { adim: Adim; soru: Soru |
     )
   }
   return <p className="text-slate-300 m-auto text-center">Yoklama alınıyor. Perdeye bak.</p>
+}
+
+/** Perde içeriğini gerçek bir projeksiyon ekranı gibi 1280x720 üzerinde çizer ve kutuya sığacak şekilde küçültür. */
+function PerdeCercevesi({ children }: { children: React.ReactNode }) {
+  const kutu = useRef<HTMLDivElement>(null)
+  const [olcek, setOlcek] = useState(0.5)
+  useEffect(() => {
+    const el = kutu.current
+    if (!el) return
+    const hesapla = () => setOlcek(el.clientWidth / 1280)
+    hesapla()
+    const g = new ResizeObserver(hesapla)
+    g.observe(el)
+    return () => g.disconnect()
+  }, [])
+  return (
+    <div ref={kutu} className="rounded-3xl border border-white/10 overflow-hidden bg-slate-950 aspect-video relative w-full">
+      <div className="absolute left-0 top-0 p-8 flex flex-col overflow-hidden" style={{ width: 1280, height: 720, transform: `scale(${olcek})`, transformOrigin: 'top left' }}>
+        {children}
+      </div>
+      <span className="absolute left-3 top-2 text-[10px] font-mono text-slate-500">PERDE</span>
+    </div>
+  )
 }

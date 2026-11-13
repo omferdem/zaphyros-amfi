@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.35.0 (14 Kasım 2026)
+Otomatik doğrulama.
+- **Yayın öncesi kapı:** her push'ta GitHub Actions lint, birim testleri ve SQL testlerini (PGlite) çalıştırır; biri kırılırsa site yayınlanmaz.
+- **Öğrenci yolculuğu testi:** supabase/test/ogrenci_yolculugu_test.sql, bir öğrencinin yoklama, takım seçimi, açık uçlu cevap, bilgi yarışması cevabı, sonuç, zombi verisi ve kodsuz quiz zincirini telefonun çağırdığı RPC'lerle uçtan uca sınar.
+- **Yayın sonrası doğrulama:** yayın bitince scripts/yayin-dogrula.mjs siteden surum.json'u okuyup beklenen sürümle eşleşmesini bekler, Supabase saglik() fonksiyonunu ve açılış sayfasını denetler; kırılırsa iş akışı kırmızı olur ve bildirim gider. Site artık surum.json de yayınlar.
+
 ## v0.34.1 (14 Kasım 2026)
 - Önizlemede "ikisi" görünümünde perde tam genişlikte, telefon altında; perde artık okunaklı büyüklükte.
 

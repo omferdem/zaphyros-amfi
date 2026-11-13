@@ -25,7 +25,10 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # Test ya da SQL testi kırılırsa site yayınlanmaz
+      - run: npm run lint
       - run: npm test
+      - run: npm run sql-test
       - run: npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
@@ -38,6 +41,21 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      adres: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # Yayın sonrası otomatik doğrulama: yeni sürüm yayında mı, Supabase ayakta mı (scripts/yayin-dogrula.mjs)
+  dogrula:
+    needs: yayinla
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/yayin-dogrula.mjs
+        env:
+          SITE: ${{ needs.yayinla.outputs.adres }}

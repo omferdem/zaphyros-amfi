@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.35.1 (14 Kasım 2026)
+Canlı denemede bulunanlar.
+- Dönem özeti: kimsenin katılmadığı oturum (deneme ya da yanlışlıkla açılmış) yapılmış ders sayılmıyor; katılım oranı ve risk bozulmuyordu.
+- Tek öğrenci eklerken hata mesajı doğru söylüyor: numara en az 3 rakam olmalı (harfli numara kabul edilmez).
+- Canlıda gerçek bir öğrenci akışı denendi: yoklama, kodsuz quiz bandı, quiz çözme ve bitirme, Kahoot cevabı, roket sahnesinde adıyla görünme.
+
 ## v0.35.0 (14 Kasım 2026)
 Otomatik doğrulama.
 - **Yayın öncesi kapı:** her push'ta GitHub Actions lint, birim testleri ve SQL testlerini (PGlite) çalıştırır; biri kırılırsa site yayınlanmaz.

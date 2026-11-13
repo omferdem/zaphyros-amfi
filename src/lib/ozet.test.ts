@@ -35,6 +35,11 @@ describe('dönem özeti', () => {
     expect(RISK_ESIGI).toBe(0.5)
     expect(d.riskli).toBe(1)
   })
+  it('kimsenin katılmadığı oturum yapılmış ders sayılmaz', () => {
+    const b = ozetHesapla(ogrenciler, [...oturumlar, otr('bos', 29)], yoklamalar)
+    expect(b.haftalar).toHaveLength(4)
+    expect(b.ortalamaKatilim).toBeCloseTo(d.ortalamaKatilim)
+  })
   it('oturum yoksa boş ve güvenli döner', () => {
     const b = ozetHesapla(ogrenciler, [], [])
     expect(b.ortalamaKatilim).toBe(0)

@@ -48,12 +48,13 @@ export function ozetHesapla(
   baglar: QuizSoruBagi[] = [],
 ): DonemOzeti {
   // Gerçek yoklama kaydı olmayan (başka şubeden varsayılan) satırlar da sayılır: öğrenci derse katılmış demektir.
-  const sirali = [...oturumlar].sort((a, b) => a.basladi.localeCompare(b.basladi))
   const katilim = new Map<string, Set<string>>()
   for (const y of yoklamalar) {
     if (!katilim.has(y.session_id)) katilim.set(y.session_id, new Set())
     katilim.get(y.session_id)!.add(y.student_id)
   }
+  // Kimsenin katılmadığı oturum (deneme, yanlışlıkla açılmış) yapılmış ders sayılmaz; yoksa katılım oranını ve riski bozar.
+  const sirali = [...oturumlar].filter((o) => (katilim.get(o.id)?.size ?? 0) > 0).sort((a, b) => a.basladi.localeCompare(b.basladi))
   const mevcut = ogrenciler.length
   const haftalar: HaftaOzeti[] = sirali.map((oturum) => {
     const katilan = ogrenciler.filter((o) => katilim.get(oturum.id)?.has(o.id)).length

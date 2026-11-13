@@ -495,7 +495,7 @@ function SinifListesi({ ders, ogrenciler, yenile }: { ders: Ders; ogrenciler: Og
     e.preventDefault()
     const sonuc = metindenAyristir(`${tek.no}\t${tek.ad}`)
     if (sonuc.kayitlar.length !== 1) {
-      setMesaj({ tur: 'kotu', metin: 'Numara yalnızca harf ve rakamdan oluşmalı; ad soyad boş olmamalı.' })
+      setMesaj({ tur: 'kotu', metin: 'Numara en az 3 rakamdan oluşmalı (yalnızca rakam); ad soyad boş olmamalı.' })
       return
     }
     if (await kaydet(sonuc.kayitlar)) setTek({ no: '', ad: '' })

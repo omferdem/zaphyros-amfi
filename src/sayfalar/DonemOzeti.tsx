@@ -45,7 +45,7 @@ export default function DonemOzeti({ ders, ogrenciler, oturumlar, yoklamalar }: 
     [ozet.ogrenciler, sadeceRisk],
   )
 
-  if (oturumlar.length === 0) return <p className="text-sm text-slate-400">Henüz hiç ders yapılmadı. İlk yoklama alınınca özet burada görünür.</p>
+  if (ozet.haftalar.length === 0) return <p className="text-sm text-slate-400">Henüz yoklaması alınmış bir ders yok. İlk yoklama alınınca özet burada görünür.</p>
 
   return (
     <div className="space-y-5">

@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.33.1 (14 Kasım 2026)
+- Derslerim sayfasında "Yeni ders ekle" formu, dönemde dersi varsa kapalı geliyor (ders günü ekranı sade kalsın). "Derse başla" düğmesinin yazısı düzeltildi ("▶ Başlat: 1. hafta").
+- Çalışma kuralı: her teslimin sonunda sistem hoca ve öğrenci gözüyle gözlemlenir, eksikler listelenip onay istenir.
+
 ## v0.33.0 (14 Kasım 2026)
 Hoca notu kumandada ve dönem sonu özeti.
 - **Dönem özeti:** şube sayfasında yeni "📊 Dönem özeti" sekmesi. Hafta hafta katılım çubukları, öğrenci bazında devam oranı (yarının altındakiler "risk", son iki derse gelmeyenler ayrıca işaretli; yalnızca dikkat gerekenleri süzme), quizlerin katılım ve sınıf ortalaması. Üç sayfalık Excel dosyası olarak indirilir (haftalık katılım, öğrenci devamı, quizler).

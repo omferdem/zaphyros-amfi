@@ -165,15 +165,21 @@ export default function Panel() {
       )}
 
       {donem ? (
-        <YeniDers
-          donem={donem}
-          icerikler={icerikler}
-          tamam={() => {
-            dersleriYukle(donem.id)
-            donemleriYukle(donem.id)
-          }}
-          hataVer={setHata}
-        />
+        // Dersi olan dönemde ekleme formu kapalı durur: ders günü ekranı sade kalsın
+        <details className="group" open={gruplar.length === 0}>
+          <summary className="ikincil-buton cursor-pointer list-none inline-block select-none">+ Yeni ders ekle</summary>
+          <div className="mt-3">
+            <YeniDers
+              donem={donem}
+              icerikler={icerikler}
+              tamam={() => {
+                dersleriYukle(donem.id)
+                donemleriYukle(donem.id)
+              }}
+              hataVer={setHata}
+            />
+          </div>
+        </details>
       ) : (
         donemler?.length === 0 && <YeniDonem donemler={[]} secili={null} tamam={(id) => donemleriYukle(id)} hataVer={setHata} acik />
       )}

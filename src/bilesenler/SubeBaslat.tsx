@@ -58,7 +58,7 @@ export default function SubeBaslat({ dersId, sayi, birim }: { dersId: string; sa
   }
 
   if (!durum) return null
-  const etiket = durum.acikOturum ? `▶ Devam${durum.acikHafta ? ` (${durum.acikHafta}. ${birim})` : ''}` : durum.siradaki !== null ? `▶ ${durum.siradaki}. ${birim}i başlat` : null
+  const etiket = durum.acikOturum ? `▶ Devam${durum.acikHafta ? ` (${durum.acikHafta}. ${birim})` : ''}` : durum.siradaki !== null ? `▶ Başlat: ${durum.siradaki}. ${birim}` : null
   if (!etiket) return null
   return (
     <>

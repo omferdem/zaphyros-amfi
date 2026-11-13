@@ -16,6 +16,7 @@ import TakimPaneli from '../bilesenler/TakimPaneli'
 import HocaYarisiPaneli from '../bilesenler/HocaYarisiPaneli'
 import MerdivenPaneli from '../bilesenler/MerdivenPaneli'
 import DersSayaci from '../bilesenler/DersSayaci'
+import OyunSahnesi from '../bilesenler/OyunSahnesi'
 
 interface Gelen {
   student_id: string
@@ -320,6 +321,8 @@ export default function Sahne() {
           araclar={araclar}
           kod={kodGoster ? kod : null}
         />
+      ) : aktif?.tur === 'oyun' ? (
+        <OyunSahnesi key={aktif.id} oturumId={oturum.id} adim={aktif} araclar={araclar} />
       ) : slaytGorunumu && aktif ? (
         <SlaytSahnesi
           belge={aktif.presentation_id ? belgeler.get(aktif.presentation_id) : undefined}

@@ -7,6 +7,7 @@ import { adimlarEkle, adimlariGetir, akisGetir, akisSirala, sorulariAkisaYerlest
 import { konumuCoz } from '../lib/paket'
 import SoruPaketiEkle from '../bilesenler/SoruPaketiEkle'
 import SunumSurukle from '../bilesenler/SunumSurukle'
+import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
 
 /** Dosya adından sunum adı: uzantı ve alt çizgiler atılır. */
@@ -36,7 +37,8 @@ export default function AkisDuzenle() {
   const [konum, setKonum] = useState('son')
   const [bilgi, setBilgi] = useState<string | null>(null)
   const soruPaneli = useRef<HTMLDivElement>(null)
-  const [etkinlikTuru, setEtkinlikTuru] = useState<'fikir' | 'oylama' | 'video'>('fikir')
+  const [etkinlikTuru, setEtkinlikTuru] = useState<'fikir' | 'oylama' | 'video' | 'oyun'>('fikir')
+  const [oyunSecimi, setOyunSecimi] = useState<OyunAnahtari>('takim')
   const [etkinlikSorusu, setEtkinlikSorusu] = useState('')
   const [etiketSol, setEtiketSol] = useState('')
   const [etiketSag, setEtiketSag] = useState('')
@@ -169,7 +171,9 @@ export default function AkisDuzenle() {
           ? `Soru: ${soruHaritasi.get(a.question_id ?? '')?.soru ?? ''}`
           : a.tur === 'yoklama'
             ? 'Yoklama'
-            : a.ayar.soru || a.ayar.baslik || (a.tur === 'video' ? 'Video' : 'Etkinlik')
+            : a.tur === 'oyun'
+              ? `Oyun: ${OYUNLAR[(a.ayar.oyun ?? 'takim') as OyunAnahtari]?.ad ?? 'Oyun'}`
+              : a.ayar.soru || a.ayar.baslik || (a.tur === 'video' ? 'Video' : 'Etkinlik')
     const metin = `${i + 1}. ${ad.replace(/\s+/g, ' ')}`
     return metin.length > 64 ? `${metin.slice(0, 63)}…` : metin
   }
@@ -179,7 +183,9 @@ export default function AkisDuzenle() {
     if (!akis) return
     setHata(null)
     let ayar: AdimAyari
-    if (etkinlikTuru === 'video') {
+    if (etkinlikTuru === 'oyun') {
+      ayar = { oyun: oyunSecimi }
+    } else if (etkinlikTuru === 'video') {
       const url = videoAdresi(videoUrl)
       if (!url) {
         setHata('Video adresi https:// ile başlamalı (örneğin YouTube bağlantısı).')
@@ -372,9 +378,21 @@ export default function AkisDuzenle() {
               <option value="fikir">Beyin fırtınası (kelime bulutu)</option>
               <option value="oylama">Şeytanın avukatı (iki taraflı oylama)</option>
               <option value="video">Video</option>
+              <option value="oyun">Oyun kartı (takım, halat, hocayla yarış, merdiven)</option>
             </select>
           </div>
-          {etkinlikTuru === 'video' ? (
+          {etkinlikTuru === 'oyun' ? (
+            <div className="space-y-2">
+              <select className="giris-kutusu text-sm" value={oyunSecimi} onChange={(e) => setOyunSecimi(e.target.value as OyunAnahtari)} aria-label="Oyun">
+                {(Object.keys(OYUNLAR) as OyunAnahtari[]).map((k) => (
+                  <option key={k} value={k}>
+                    {OYUNLAR[k].emoji} {OYUNLAR[k].ad}
+                  </option>
+                ))}
+              </select>
+              <p className="text-xs text-slate-400">{OYUNLAR[oyunSecimi].nasil}</p>
+            </div>
+          ) : etkinlikTuru === 'video' ? (
             <div className="grid gap-2 sm:grid-cols-2">
               <input
                 className="giris-kutusu text-sm"

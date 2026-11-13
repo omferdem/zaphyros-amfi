@@ -86,7 +86,7 @@ export interface Soru {
   olusturuldu: string
 }
 
-export type AdimTuru = 'yoklama' | 'slayt' | 'soru' | 'fikir' | 'oylama' | 'video'
+export type AdimTuru = 'yoklama' | 'slayt' | 'soru' | 'fikir' | 'oylama' | 'video' | 'oyun'
 
 /** Etkinlik adımlarının ayarı: fikir ve oylamada soru, oylamada iki etiket, videoda adres ve başlık. */
 export interface AdimAyari {
@@ -94,6 +94,9 @@ export interface AdimAyari {
   etiketler?: string[]
   url?: string
   baslik?: string
+  /** Oyun adımında: 'takim' | 'halat' | 'hoca' | 'merdiven' */
+  oyun?: string
+  aciklama?: string
 }
 
 export interface Adim {

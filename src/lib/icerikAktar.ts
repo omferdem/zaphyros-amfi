@@ -106,10 +106,16 @@ export async function icerigiIceAktar(
     sunumIdleri.set(s.no, yuklenen.id)
   }
 
-  // 3) Akışlar
+  // 3) Akışlar. Aynı adlı ve içi boş bir akış zaten varsa (ör. hafta planıyla açılmış) yenisi açılmaz, o doldurulur.
+  const bosAkislar = new Map<string, string>()
+  for (const m of await akislariGetir(icerikId)) {
+    if (!bosAkislar.has(m.ad) && (await adimlariGetir(m.id)).length === 0) bosAkislar.set(m.ad, m.id)
+  }
   for (const [i, a] of paket.akislar.entries()) {
     durumBildir(`Akışlar ekleniyor… ${i + 1} / ${paket.akislar.length}`)
-    const akis = await akisOlustur(icerikId, a.ad)
+    const bosId = bosAkislar.get(a.ad)
+    if (bosId) bosAkislar.delete(a.ad)
+    const akis = bosId ? { id: bosId } : await akisOlustur(icerikId, a.ad)
     const yeni = a.adimlar.flatMap((s): Parameters<typeof adimlarEkle>[2] => {
       if (s.tur === 'slayt') {
         const sunum = s.sunum !== undefined ? sunumIdleri.get(s.sunum) : undefined

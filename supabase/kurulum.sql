@@ -1,6 +1,6 @@
 -- AmfiOS kurulum SQL'i (bu dosya otomatik üretilir, elle düzenleme; kaynağı supabase/migrations)
 -- Yeni bir Supabase projesinde SQL Editor'e bu dosyanın tamamını yapıştırıp bir kez çalıştır.
--- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql
+-- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql, 0019_oyun_adimi.sql
 
 -- ===========================================================================
 -- 0001_saglik.sql
@@ -4167,3 +4167,30 @@ as $$
 $$;
 
 revoke all on function ozel.ilk_ad(uuid, uuid) from public;
+
+-- ===========================================================================
+-- 0019_oyun_adimi.sql
+-- ===========================================================================
+
+-- 0019: Akışta "oyun" adımı
+--
+-- Hocanın haftalık akışına "bugünün oyunu" kartı koymasını sağlar. Adım perdede oyunun adını, nasıl oynandığını ve bir
+-- "Oyunu başlat" düğmesini gösterir; düğme ilgili modu açar (takım yarışması, halat çekme, hocayla yarış, bilgi merdiveni).
+-- * lesson_steps.tur'a 'oyun' eklenir.
+-- * ayar.oyun: 'takim' | 'halat' | 'hoca' | 'merdiven' (zorunlu); ayar.baslik ve ayar.aciklama isteğe bağlıdır (en fazla 300 harf).
+-- Öğrenci telefonunda bu adım "hocanın ekranını izle" olarak görünür (başka bir değişiklik gerekmez).
+
+alter table public.lesson_steps drop constraint lesson_steps_tur_check;
+alter table public.lesson_steps drop constraint lesson_steps_etkinlik_check;
+alter table public.lesson_steps
+  add constraint lesson_steps_tur_check check (tur in ('yoklama', 'slayt', 'soru', 'fikir', 'oylama', 'video', 'oyun')),
+  add constraint lesson_steps_etkinlik_check check (
+    case
+      when tur in ('fikir', 'oylama') then length(btrim(coalesce(ayar ->> 'soru', ''))) between 1 and 300
+      when tur = 'video' then coalesce(ayar ->> 'url', '') ~ '^https://[^\s]{4,255}$'
+      when tur = 'oyun' then coalesce(ayar ->> 'oyun', '') in ('takim', 'halat', 'hoca', 'merdiven')
+        and length(coalesce(ayar ->> 'baslik', '')) <= 120
+        and length(coalesce(ayar ->> 'aciklama', '')) <= 300
+      else true
+    end
+  );

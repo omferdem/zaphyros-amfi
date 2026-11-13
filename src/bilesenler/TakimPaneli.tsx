@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
+import { OYUN_OLAYI } from '../lib/oyun'
 import { TAKIM_SAYILARI, halatHesapla, takimBilgisi, type HalatTarafi, type TakimDurumu } from '../lib/takim'
 
 /** Takım yarışması: hoca takım sayısını seçer, takımların üye başına ortalama puanı canlı görünür. */
@@ -30,6 +31,17 @@ export default function TakimPaneli({ oturum, anahtar, mod }: { oturum: string; 
     yenile()
     const t = setInterval(yenile, 5000)
     return () => clearInterval(t)
+  }, [yenile])
+
+  // Akıştaki "oyun" adımı takım ya da halat çekmeyi başlatınca tablo hemen yenilenir, halat açılır
+  useEffect(() => {
+    function dinle(e: Event) {
+      const oyun = (e as CustomEvent<{ oyun: string }>).detail?.oyun
+      if (oyun === 'halat') setHalat(true)
+      if (oyun === 'halat' || oyun === 'takim') setTimeout(yenile, 400)
+    }
+    window.addEventListener(OYUN_OLAYI, dinle)
+    return () => window.removeEventListener(OYUN_OLAYI, dinle)
   }, [yenile])
 
   async function ayarla(sayi: number) {

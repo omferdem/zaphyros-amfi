@@ -373,7 +373,9 @@ export default function Kumanda() {
                               ? `Oylama: ${ilkSatir(a.ozet)}`
                               : a.tur === 'video'
                                 ? `Video: ${ilkSatir(a.ozet)}`
-                                : ilkSatir(a.ozet) || `${a.sunum ?? 'Slayt'} s. ${a.sayfa_no}`}
+                                : a.tur === 'oyun'
+                                  ? '🎮 Oyun'
+                                  : ilkSatir(a.ozet) || `${a.sunum ?? 'Slayt'} s. ${a.sayfa_no}`}
                     </span>
                   </button>
                 </li>

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { GUVENLI_ARALIK, merdivenHesapla, type MerdivenDurumu, type MerdivenSorusu } from '../lib/merdiven'
+import { OYUN_OLAYI } from '../lib/oyun'
 
 const ANAHTAR = (oturum: string) => `amfi_merdiven_${oturum}`
 
@@ -47,6 +48,16 @@ export default function MerdivenPaneli({ oturum, anahtar, mod }: { oturum: strin
       // Depolama kapalıysa durum yalnızca bu açılışta tutulur
     }
   }
+
+  // Akıştaki "oyun" adımı merdiveni başlatınca panel kendiliğinden açılır
+  useEffect(() => {
+    function dinle(e: Event) {
+      if ((e as CustomEvent<{ oyun: string }>).detail?.oyun === 'merdiven') kaydet({ ...oku(oturum), acik: true })
+    }
+    window.addEventListener(OYUN_OLAYI, dinle)
+    return () => window.removeEventListener(OYUN_OLAYI, dinle)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [oturum])
 
   const perde = mod === 'perde'
   if (sorular.length === 0) return null

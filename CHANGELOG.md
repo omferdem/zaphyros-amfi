@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.20.0 (13 Kasım 2026)
+Akışta "oyun" adımı.
+- Haftalık akışa "🎮 Bugünün oyunu" kartı konabilir (akış düzenleyicide Tartışma etkinliği > Oyun kartı): takım yarışması, halat çekme, hocayla yarış ya da bilgi merdiveni. Adım perdede oyunun adını, nasıl oynandığını ve "🚀 Oyunu başlat" düğmesini gösterir; düğme ilgili modu açar (takım sayısını ayarlar, hocayla yarışı açar, halat ya da merdiven panelini gösterir). Öğrenci telefonunda "hocanın ekranını izle" görünür.
+- İçerik paketini içe aktarırken, aynı adlı ve içi boş bir akış zaten varsa (örneğin hafta planıyla önceden açılmış) yenisi açılmaz, o akış doldurulur.
+- Veritabanı: `0019_oyun_adimi.sql` (`lesson_steps.tur` içine `oyun`; `ayar.oyun` zorunlu ve dört değerden biri). `npm run sql-test` ile yerelde denendi; henüz Supabase'e uygulanmadı.
+
 ## v0.19.2 (13 Kasım 2026)
 Yoklama raporunda elle var yazma.
 - Şube sayfasındaki "Yoklama raporu" artık öğrenci x oturum tablosudur: her oturumun tarihi bir sütundur ve hücreye tıklayınca öğrenci o oturumda elle "var" yazılır ya da kaldırılır (✓ var, ✋ elle yazılmış, ↗ başka şubede misafir olarak katılmış, boş yok). Katılım sayısı ve oran anında güncellenir; oturum başlığına tıklayınca o oturumun yoklama listesi açılır (orada da elle ekleme vardır). Veritabanı değişikliği yok (hocanın elle yoklama izni 0002'den beri var).

@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.32.0 (14 Kasım 2026)
+Ders günü için sadeleştirme.
+- **Derslerim sayfasında şube başına "▶ Derse başla":** açık bir ders varsa sahneye döner ("▶ Devam"), yoksa şubenin sıradaki yoklama haftasını açar ("▶ 3. haftayı başlat"). Şube sayfasına girmeden ders başlar.
+- **Sahnede "Kaldığın yerden devam":** yoklama ekranındayken bu şubede en son kalınan akış önerilir (ör. "2. hafta … (14/28)"); tek dokunuşla o adımdan açılır.
+- **Sahne araç çubuğu sadeleşti:** sık kullanılanlar (akış, geri/ileri, Kahoot, Quiz, puan tablosu, kumanda, sayaç, dersi bitir) görünür; yoklamayı aç/kapat, kodu göster/gizle, tam ekran, yoklama listesi ve ana sayfa "⋯ Diğer" menüsüne alındı.
+
 ## v0.31.0 (14 Kasım 2026)
 İki yeni oyun: biri takım, biri bireysel.
 - **Kule yarışı (takım):** sınıf 3 takıma ayrılır, her takım blok blok bir kule yapar. Her doğru cevap bir kat ekler; sıralama kişi başına doğruya göredir (kalabalık takım avantajlı olmaz). Hedef yüksekliğe ilk çıkan takım kazanır, önde olan taç takar.

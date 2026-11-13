@@ -160,6 +160,27 @@ export async function kalinanAdim(dersId: string, akisId: string): Promise<{ adi
   return i > 0 ? { adimId, sira: i + 1, toplam: idler.length } : null
 }
 
+/** Bu şubede en son çalışılan (Kahoot geçişi olmayan) akış ve kaldığı adım; yeni derste "devam et" önerisi için. */
+export async function sonAkisBilgisi(dersId: string): Promise<{ akisId: string; ad: string; sira: number; toplam: number } | null> {
+  const { data } = await supabase
+    .from('sessions')
+    .select('lesson_id')
+    .eq('course_id', dersId)
+    .not('lesson_id', 'is', null)
+    .not('aktif_adim', 'is', null)
+    .order('basladi', { ascending: false })
+    .limit(15)
+  const idler = [...new Set((data ?? []).map((x) => x.lesson_id as string))]
+  if (idler.length === 0) return null
+  const { data: akislar } = await supabase.from('lessons').select('id, ad').in('id', idler)
+  const ad = new Map((akislar ?? []).map((a) => [a.id as string, a.ad as string]))
+  const secilen = idler.find((id) => ad.has(id) && !(ad.get(id) as string).startsWith('⚡'))
+  if (!secilen) return null
+  const k = await kalinanAdim(dersId, secilen)
+  if (!k) return null
+  return { akisId: secilen, ad: ad.get(secilen) as string, sira: k.sira, toplam: k.toplam }
+}
+
 export async function oturumBaslat(
   dersId: string,
   baslik: string,

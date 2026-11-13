@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import type { Donem, Icerik } from '../lib/tipler'
 import { icerikSil } from '../lib/akis'
 import { oku, sakla } from '../lib/cihaz'
+import SubeBaslat from '../bilesenler/SubeBaslat'
 import {
   bosDonemiSil,
   donemAdiniDegistir,
@@ -324,7 +325,7 @@ function DersKarti({
 
       <ul className="flex flex-wrap gap-2">
         {subeler.map((s) => (
-          <li key={s.id}>
+          <li key={s.id} className="flex items-center gap-2">
             <Link
               to={`/panel/ders/${s.id}`}
               className="block rounded-full bg-white/8 hover:bg-indigo-500/25 border border-white/15 px-4 py-2 transition-all hover:-translate-y-0.5"
@@ -332,6 +333,7 @@ function DersKarti({
               <span className="font-semibold">{subeEtiketi(s.sube, subeler.length)}</span>
               <span className="text-xs text-slate-400"> · {s.students[0]?.count ?? 0} öğrenci</span>
             </Link>
+            <SubeBaslat dersId={s.id} sayi={s.yoklama_sayisi ?? 15} birim={s.yoklama_birimi ?? 'hafta'} />
           </li>
         ))}
       </ul>

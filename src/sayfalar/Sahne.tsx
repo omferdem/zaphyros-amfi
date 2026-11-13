@@ -8,7 +8,7 @@ import Konfeti from '../bilesenler/Konfeti'
 import Halka from '../bilesenler/Halka'
 import { adimlariGetir, adimlarEkle, akisGetir, akislariGetir, sunumlariGetirIdIle } from '../lib/akis'
 import { adaGoreHafta, kahootAkisAdi, kahootAkisiMi } from '../lib/gecis'
-import { kalinanAdim } from '../lib/veri'
+import { kalinanAdim, sonAkisBilgisi } from '../lib/veri'
 import { KahootSecici, QuizPaneli } from '../bilesenler/PaketGecisi'
 import { oyunuAc } from '../lib/oyunAc'
 import type { OyunAnahtari } from '../lib/oyun'
@@ -94,6 +94,19 @@ export default function Sahne() {
   const [puanAcik, setPuanAcik] = useState(false)
   const [kahootSecimi, setKahootSecimi] = useState(false)
   const [devam, setDevam] = useState<{ akis: string; baslangic: string | null; metin: string } | null>(null)
+  // Akış seçilmemişse bu şubede en son kalınan akış önerilir
+  const [sonAkis, setSonAkis] = useState<{ akisId: string; ad: string; sira: number; toplam: number } | null>(null)
+  const dersKimligi = oturum?.course_id
+  const akissizMi = oturum ? !oturum.lesson_id : false
+  useEffect(() => {
+    if (!dersKimligi || !akissizMi) {
+      setSonAkis(null)
+      return
+    }
+    sonAkisBilgisi(dersKimligi)
+      .then(setSonAkis)
+      .catch(() => setSonAkis(null))
+  }, [dersKimligi, akissizMi])
   const [quizAcik, setQuizAcik] = useState(false)
   const [kahootAkisi, setKahootAkisi] = useState<{ id: string; ad: string } | null>(null)
 
@@ -392,6 +405,11 @@ export default function Sahne() {
         ))}
         {kahootAkisi && <option value={kahootAkisi.id}>{kahootAkisi.ad}</option>}
       </select>
+      {!oturum.lesson_id && sonAkis && akislar.some((a) => a.id === sonAkis.akisId) && (
+        <button className="parlak-buton rounded-xl px-3 py-1.5 text-sm font-bold" onClick={() => akisSec(sonAkis.akisId)} title="Bu şubede en son kaldığın akış">
+          ↺ Kaldığın yerden devam: {sonAkis.ad.length > 28 ? `${sonAkis.ad.slice(0, 27)}…` : sonAkis.ad} ({sonAkis.sira}/{sonAkis.toplam})
+        </button>
+      )}
       {devam && devam.akis === oturum.lesson_id && (
         <span className="rounded-full bg-emerald-500/15 text-emerald-200 text-xs px-3 py-1.5 flex items-center gap-2">
           ↺ {devam.metin}
@@ -437,35 +455,42 @@ export default function Sahne() {
           </button>
         </>
       )}
-      {(!aktif || aktif.tur === 'yoklama') && (
-        <button className="ikincil-buton" onClick={() => setMevcutGoster(!mevcutGoster)}>
-          {mevcutGoster ? 'Mevcudu gizle' : 'Mevcudu göster'}
-        </button>
-      )}
-      <button className="ikincil-buton" onClick={() => yoklamaDurumu(!acik)}>
-        {acik ? 'Yoklamayı kapat' : 'Yoklamayı aç'}
-      </button>
-      <button className="ikincil-buton" onClick={() => setKodGoster((g) => !g)}>
-        {kodGoster ? 'Kodu gizle' : 'Kodu göster'}
-      </button>
       {(adimlar.some((a) => a.tur === 'soru') || !!kahootAkisi) && (
         <button className="ikincil-buton" onClick={() => setPuanAcik(true)}>
           Puan tablosu
         </button>
       )}
-      <button className="ikincil-buton" onClick={() => setKumandaAcik(true)}>
-        Kumanda
-      </button>
-      <button className="ikincil-buton" onClick={tamEkran}>
-        Tam ekran
+      <button className="ikincil-buton" onClick={() => setKumandaAcik(true)} title="Telefondan yönetmek için kumanda karekodu">
+        📱 Kumanda
       </button>
       <DersSayaci oturum={oturum.id} />
-      <Link to={`/panel/oturum/${oturum.id}`} className="ikincil-buton">
-        Yoklama listesi
-      </Link>
-      <Link to="/panel" className="ikincil-buton" title="Ders açık kalır; sahneye Dersler sayfasından dönebilirsin">
-        🏠 Ana sayfa
-      </Link>
+      <details className="relative">
+        <summary className="ikincil-buton cursor-pointer list-none select-none" title="Yoklama, kod, tam ekran ve diğer ayarlar">
+          ⋯ Diğer
+        </summary>
+        <div className="absolute right-0 top-full mt-1 z-50 w-56 cam-panel rounded-2xl p-2 grid gap-1 text-sm">
+          <button className="ikincil-buton text-left" onClick={() => yoklamaDurumu(!acik)}>
+            {acik ? '🔒 Yoklamayı kapat' : '🔓 Yoklamayı aç'}
+          </button>
+          <button className="ikincil-buton text-left" onClick={() => setKodGoster((g) => !g)}>
+            {kodGoster ? '🙈 Kodu gizle' : '👁 Kodu göster'}
+          </button>
+          {(!aktif || aktif.tur === 'yoklama') && (
+            <button className="ikincil-buton text-left" onClick={() => setMevcutGoster(!mevcutGoster)}>
+              {mevcutGoster ? '🙈 Mevcudu gizle' : '👁 Mevcudu göster'}
+            </button>
+          )}
+          <button className="ikincil-buton text-left" onClick={tamEkran}>
+            ⛶ Tam ekran
+          </button>
+          <Link to={`/panel/oturum/${oturum.id}`} className="ikincil-buton text-left">
+            📋 Yoklama listesi
+          </Link>
+          <Link to="/panel" className="ikincil-buton text-left" title="Ders açık kalır; sahneye Dersler sayfasından dönebilirsin">
+            🏠 Ana sayfa
+          </Link>
+        </div>
+      </details>
       <button className="tehlike-buton" onClick={dersiBitir}>
         ⏹ Dersi bitir
       </button>

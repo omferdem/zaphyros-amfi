@@ -94,3 +94,64 @@ export function ozetHesapla(
   }
 }
 
+
+export interface SampiyonSatiri {
+  ogrenci: Ogrenci
+  puan: number
+  dogru: number
+  /** Kaç derste yarışmaya katıldı */
+  ders: number
+}
+
+export interface HaftaBirincisi {
+  oturum: Oturum
+  ogrenci: Ogrenci
+  puan: number
+}
+
+export interface Sampiyonlar {
+  /** Dönem boyunca toplam puana göre sıralı (puanı olmayanlar yok) */
+  siralama: SampiyonSatiri[]
+  haftalar: HaftaBirincisi[]
+}
+
+/**
+ * Dönemin şampiyonları: yarışma puanları (responses) yoklamadaki cihaz eşleşmesiyle öğrencilere bağlanır ve toplanır.
+ * Elle eklenen yoklamada cihaz yoktur; o öğrencinin cevapları bağlanamaz (puan alamaz).
+ */
+export function sampiyonlariHesapla(
+  ogrenciler: Ogrenci[],
+  oturumlar: Oturum[],
+  cevaplar: { session_id: string; cihaz_id: string; dogru: boolean; puan: number }[],
+  katilimlar: { session_id: string; student_id: string; cihaz_id: string | null }[],
+): Sampiyonlar {
+  const ogrenci = new Map(ogrenciler.map((o) => [o.id, o]))
+  const cihazOgrenci = new Map<string, string>()
+  for (const k of katilimlar) if (k.cihaz_id && ogrenci.has(k.student_id)) cihazOgrenci.set(`${k.session_id}|${k.cihaz_id}`, k.student_id)
+  const toplam = new Map<string, { puan: number; dogru: number; dersler: Set<string> }>()
+  const oturumPuan = new Map<string, Map<string, number>>()
+  for (const c of cevaplar) {
+    const sid = cihazOgrenci.get(`${c.session_id}|${c.cihaz_id}`)
+    if (!sid) continue
+    const t = toplam.get(sid) ?? { puan: 0, dogru: 0, dersler: new Set<string>() }
+    t.puan += c.puan
+    if (c.dogru) t.dogru++
+    t.dersler.add(c.session_id)
+    toplam.set(sid, t)
+    const m = oturumPuan.get(c.session_id) ?? new Map<string, number>()
+    m.set(sid, (m.get(sid) ?? 0) + c.puan)
+    oturumPuan.set(c.session_id, m)
+  }
+  const siralama: SampiyonSatiri[] = [...toplam.entries()]
+    .filter(([, t]) => t.puan > 0)
+    .map(([sid, t]) => ({ ogrenci: ogrenci.get(sid)!, puan: t.puan, dogru: t.dogru, ders: t.dersler.size }))
+    .sort((a, b) => b.puan - a.puan || b.dogru - a.dogru)
+  const haftalar: HaftaBirincisi[] = []
+  for (const o of [...oturumlar].sort((a, b) => a.basladi.localeCompare(b.basladi))) {
+    const m = oturumPuan.get(o.id)
+    if (!m) continue
+    const [sid, puan] = [...m.entries()].sort((a, b) => b[1] - a[1])[0]
+    if (puan > 0) haftalar.push({ oturum: o, ogrenci: ogrenci.get(sid)!, puan })
+  }
+  return { siralama, haftalar }
+}

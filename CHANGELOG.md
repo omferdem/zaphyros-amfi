@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.37.0 (14 Kasım 2026)
+Devam serisi, dönem şampiyonları, davetle hoca katılımı. Veritabanı: `0026_devam_serisi.sql`, `0027_hoca_davetleri.sql`.
+- **Öğrenci telefonunda devam serisi:** üst üste en az 2 derse katılan öğrenci "🔥 N ders üst üste" rozetini görür (5 ve üzerinde ⭐). Yalnızca en az bir öğrencinin katıldığı oturumlar sayılır; rozet yalnızca öğrencinin kendi serisini gösterir.
+- **Dönem özetinde "🏆 Dönemin şampiyonları":** dönem boyunca en çok puan toplayan on öğrenci ve hafta hafta birinciler.
+- **Hocalar sayfası (`/panel/hocalar`, yalnızca kurulumun sahibi):** e-posta adresiyle hoca ekleme, listeleme, erişimi kaldırma ve kopyalanabilir davet metni. Her hocanın dersleri, öğrencileri ve yoklamaları kendisine özel kalır. Sahip (en eski hoca) çıkarılamaz.
+
 ## v0.36.2 (14 Kasım 2026)
 Ders kapanışı.
 - **Perdede "⭐ Bugünün yıldızları":** ders bitince, derste bilgi yarışması oynandıysa ilk üç öğrenci podyumda görünür.

@@ -85,7 +85,7 @@ Kullanıcı istekleri (13 Kasım 2026):
 - Aday oyunlar (hoca seçimine göre): Doğru mu Yanlış mı (ayakta/oturarak hızlı eleme), Eşleştirme yarışı (kavram-tanım), Boşluk doldurma, Resim/sözcük tahmin (Pictionary tarzı, hoca çizer), Mini turnuva (eleme usulü), Kovalamaca (doğru cevap hızlandırır)
 - Kovalamaca oyunu (soru doğru cevaplanınca hızlanma)
 
-## Faz 5b: Davetle hoca katılımı (telefon uygulamasından önce, onay bekliyor)
+## Faz 5b: Davetle hoca katılımı (v0.37.0'da uygulandı: sahip e-posta ile davet eder, hoca bağlantıyla girer)
 Kullanıcı isteği (13 Kasım 2026): başka bir hoca, kullanıcının verdiği bir davet linkinden e-posta ve şifreyle üye olup hemen ders işleyebilsin (kurulum yapmadan). Veri modeli buna hazır (her kayıt `teacher_id` ile ayrı, RLS ile yalıtılı); eksik olan davet linki, kayıt ekranı ve sahibin davet yönetimi. KARAR (13 Kasım 2026, kullanıcı): programın kontrolü sahibinde kalacak ve ileride Kahoot gibi ticari olarak satılabilecek; bu yüzden "her hoca kendi kopyasını kurar" kararı yerine ORTAK SİSTEM seçildi (tek Supabase projesi, davet linkiyle hoca katılımı). Sonuçları: ortak kotalar (200 eşzamanlı Realtime, 500 MB veritabanı, 1 GB depo) kalabalıklaşınca Pro plana geçişi gerektirir; sahip diğer hocaların öğrencilerinin veri sorumlusu olur (KVKK aydınlatma metni ve kullanım koşulları gerekir); sahip için hoca yönetimi (davet, askıya alma) paneli gerekir. Uygulama sırası kullanıcının diğer taleplerinden sonra planlanacak.
 
 ## Faz 6: Dağıtım paketi (v1.0)

@@ -46,3 +46,31 @@ describe('dönem özeti', () => {
     expect(b.ogrenciler.every((x) => !x.risk)).toBe(true)
   })
 })
+
+import { sampiyonlariHesapla } from './ozet'
+
+describe('dönemin şampiyonları', () => {
+  const ogr2 = [ogr('1'), ogr('2'), ogr('3')]
+  const otr2 = [otr('a', 1), otr('b', 8)]
+  const kat = [
+    { session_id: 'a', student_id: '1', cihaz_id: 'c1' },
+    { session_id: 'a', student_id: '2', cihaz_id: 'c2' },
+    { session_id: 'b', student_id: '1', cihaz_id: 'c1' },
+    { session_id: 'b', student_id: '3', cihaz_id: null },
+  ]
+  const cev = [
+    { session_id: 'a', cihaz_id: 'c1', dogru: true, puan: 900 },
+    { session_id: 'a', cihaz_id: 'c2', dogru: true, puan: 950 },
+    { session_id: 'b', cihaz_id: 'c1', dogru: true, puan: 800 },
+    { session_id: 'b', cihaz_id: 'c9', dogru: true, puan: 700 },
+  ]
+  it('puanlar öğrenciye bağlanıp toplanır, eşleşmeyenler atlanır', () => {
+    const s = sampiyonlariHesapla(ogr2, otr2, cev, kat)
+    expect(s.siralama.map((x) => [x.ogrenci.id, x.puan])).toEqual([['1', 1700], ['2', 950]])
+    expect(s.siralama[0].ders).toBe(2)
+  })
+  it('hafta birincileri', () => {
+    const s = sampiyonlariHesapla(ogr2, otr2, cev, kat)
+    expect(s.haftalar.map((h) => [h.oturum.id, h.ogrenci.id])).toEqual([['a', '2'], ['b', '1']])
+  })
+})

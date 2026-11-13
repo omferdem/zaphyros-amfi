@@ -350,6 +350,16 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
     }
   }, [oturum])
 
+  // Devam serisi: yoklaması alınmış öğrenciye "🔥 N ders üst üste" rozeti (fonksiyon yoksa ya da hata olursa sessizce görünmez)
+  const [seri, setSeri] = useState<{ seri: number; katilan: number; toplam: number } | null>(null)
+  const yoklamaAlindi = ad !== null
+  useEffect(() => {
+    if (!yoklamaAlindi) return
+    supabase.rpc('devam_serisi', { p_session: oturum, p_cihaz: cihazKimligi() }).then(({ data, error }) => {
+      if (!error && data) setSeri(data as { seri: number; katilan: number; toplam: number })
+    })
+  }, [yoklamaAlindi, oturum])
+
   // Ders bitince, derste yarışma oynandıysa öğrencinin kendi sırası ve puanı gösterilir
   const [karne, setKarne] = useState<{ sira: number; toplam: number; oyuncu: number } | null>(null)
   const dersBitti = !!durum?.bitti
@@ -375,6 +385,11 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
         {ad !== null && (
           <span className="nabiz text-[11px] font-bold text-emerald-300 bg-emerald-500/15 rounded-full px-2.5 py-1 whitespace-nowrap">
             ✓ {ad ? `${ad}, ` : ''}yoklama alındı
+          </span>
+        )}
+        {seri && seri.seri >= 2 && (
+          <span className="text-[11px] font-bold text-amber-200 bg-amber-500/15 rounded-full px-2.5 py-1 whitespace-nowrap" title={`${seri.toplam} dersin ${seri.katilan}'ine katıldın`}>
+            {seri.seri >= 5 ? '⭐' : '🔥'} {seri.seri} ders üst üste
           </span>
         )}
       </header>

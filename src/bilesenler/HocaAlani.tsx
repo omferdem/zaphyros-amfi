@@ -77,6 +77,12 @@ export default function HocaAlani({ cercevesiz = false }: { cercevesiz?: boolean
   const oturum = useGiris()
   const hoca = useHocaMi(oturum)
   const [rehberAcik, setRehberAcik] = useState(false)
+  const [sahip, setSahip] = useState(false)
+
+  useEffect(() => {
+    if (!hoca) return
+    supabase.rpc('hoca_sahip_mi').then(({ data, error }) => setSahip(!error && data === true))
+  }, [hoca])
 
   if (oturum === undefined) return <Bekle />
   if (!oturum) return <Giris />
@@ -101,6 +107,11 @@ export default function HocaAlani({ cercevesiz = false }: { cercevesiz?: boolean
           <button className="text-xs text-slate-400 hover:text-white" onClick={() => setRehberAcik(true)} title="Ders günü rehberi">
             ❓ Rehber
           </button>
+          {sahip && (
+            <Link to="/panel/hocalar" className="text-xs text-slate-400 hover:text-white" title="Hoca davet et ve yönet">
+              👥 Hocalar
+            </Link>
+          )}
           <div className="ml-auto flex items-center gap-4">
             <span className="hidden sm:inline">
               <BaglantiGostergesi />

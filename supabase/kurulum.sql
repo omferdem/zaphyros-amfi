@@ -1,6 +1,6 @@
 -- ZAPEDU kurulum SQL'i (bu dosya otomatik üretilir, elle düzenleme; kaynağı supabase/migrations)
 -- Yeni bir Supabase projesinde SQL Editor'e bu dosyanın tamamını yapıştırıp bir kez çalıştır.
--- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql, 0019_oyun_adimi.sql, 0020_yoklama_haftalari.sql, 0021_pencere_6sn.sql, 0022_oturum_quizi.sql, 0023_acik_uclu_zombi.sql, 0024_kumanda_notu.sql, 0025_acik_uclu_sure.sql
+-- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql, 0019_oyun_adimi.sql, 0020_yoklama_haftalari.sql, 0021_pencere_6sn.sql, 0022_oturum_quizi.sql, 0023_acik_uclu_zombi.sql, 0024_kumanda_notu.sql, 0025_acik_uclu_sure.sql, 0026_devam_serisi.sql, 0027_hoca_davetleri.sql
 
 -- ===========================================================================
 -- 0001_saglik.sql
@@ -4885,3 +4885,184 @@ begin
   return jsonb_build_object('durum', 'tamam', 'kalan', 0);
 end;
 $$;
+
+-- ===========================================================================
+-- 0026_devam_serisi.sql
+-- ===========================================================================
+
+-- 0026: Öğrenciye devam serisi
+--
+-- Derse giren öğrencinin telefonunda "🔥 4 ders üst üste" gibi bir rozet göstermek için.
+-- devam_serisi(p_session, p_cihaz): cihaz bu oturumun yoklamasındaysa, öğrencinin şubesindeki en son derslerden başlayarak
+-- kaç dersin üst üste katıldığını döndürür. Yalnızca en az bir öğrencinin katıldığı oturumlar "yapılmış ders" sayılır
+-- (deneme ya da yanlışlıkla açılmış oturum seriyi bozmaz). Öğrencinin adını ya da başkalarının bilgisini döndürmez.
+-- Yoklaması olmayan cihaz için { seri: 0 } döner.
+
+create function public.devam_serisi(p_session uuid, p_cihaz text)
+returns jsonb
+language plpgsql
+stable
+security definer
+set search_path = ''
+as $$
+declare
+  v_ogrenci uuid;
+  v_course  uuid;
+  v_seri    integer;
+  v_katilan integer;
+  v_toplam  integer;
+begin
+  if p_cihaz is null or p_cihaz !~ '^[0-9A-Za-z-]{8,64}$' then
+    return jsonb_build_object('seri', 0, 'katilan', 0, 'toplam', 0);
+  end if;
+  select a.student_id, s.course_id into v_ogrenci, v_course
+  from public.attendance a
+  join public.sessions s on s.id = a.session_id
+  where a.session_id = p_session and a.cihaz_id = p_cihaz;
+  if v_ogrenci is null then
+    return jsonb_build_object('seri', 0, 'katilan', 0, 'toplam', 0);
+  end if;
+
+  with dersler as (
+    select s.id, s.basladi,
+           exists (select 1 from public.attendance a where a.session_id = s.id and a.student_id = v_ogrenci) as geldi
+    from public.sessions s
+    where s.course_id = v_course
+      and exists (select 1 from public.attendance x where x.session_id = s.id)
+  ),
+  sirali as (
+    select geldi,
+           sum(case when geldi then 0 else 1 end) over (order by basladi desc, id rows unbounded preceding) as bosluk
+    from dersler
+  )
+  select coalesce((select count(*) from sirali where geldi and bosluk = 0), 0)::integer,
+         (select count(*) from dersler where geldi)::integer,
+         (select count(*) from dersler)::integer
+    into v_seri, v_katilan, v_toplam;
+
+  return jsonb_build_object('seri', v_seri, 'katilan', v_katilan, 'toplam', v_toplam);
+end;
+$$;
+
+revoke all on function public.devam_serisi(uuid, text) from public;
+grant execute on function public.devam_serisi(uuid, text) to anon, authenticated;
+
+-- ===========================================================================
+-- 0027_hoca_davetleri.sql
+-- ===========================================================================
+
+-- 0027: Davetle hoca katılımı (Faz 5b)
+--
+-- Ortak sistemde sahip, başka hocaları e-posta adresleriyle davet eder. Davet edilen hoca siteye kendi e-postasıyla
+-- (bağlantı ya da şifre) girer; teachers tablosunda adresi olduğu için hoca sayılır. Her hocanın dersleri, öğrencileri ve
+-- yoklamaları teacher_id ile ayrıdır (RLS); sahip bile başkasının dersini göremez.
+-- * Sahip: teachers tablosundaki en eski kayıt (kurulumu ilk sahiplenen).
+-- * hoca_sahip_mi(): oturumdaki hoca sahip mi (arayüz "Hocalar" sayfasını göstersin).
+-- * hoca_listele(): yalnızca sahip; hocalar, ders sayıları ve ilk giriş yapıp yapmadıkları.
+-- * hoca_ekle(eposta, ad): yalnızca sahip; adresi izin listesine ekler.
+-- * hoca_cikar(eposta): yalnızca sahip; erişimi kaldırır (sahip çıkarılamaz). Hocanın dersleri silinmez, yeniden eklenirse döner.
+-- Hepsi security definer; çağıran sahip değilse hata kodu döner, hiçbir bilgi sızmaz.
+
+create function ozel.sahip_eposta()
+returns text
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select t.eposta from public.teachers t order by t.eklendi, t.eposta limit 1;
+$$;
+
+create function public.hoca_sahip_mi()
+returns boolean
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select public.hoca_mi() and ozel.sahip_eposta() = lower(coalesce(auth.jwt() ->> 'email', ''));
+$$;
+
+create function public.hoca_listele()
+returns jsonb
+language plpgsql
+stable
+security definer
+set search_path = ''
+as $$
+begin
+  if not public.hoca_sahip_mi() then
+    return jsonb_build_object('hata', 'yetki_yok');
+  end if;
+  return jsonb_build_object('hocalar', coalesce((
+    select jsonb_agg(jsonb_build_object(
+             'eposta', t.eposta,
+             'ad_soyad', t.ad_soyad,
+             'sahip', t.eposta = ozel.sahip_eposta(),
+             'eklendi', t.eklendi,
+             'giris_yapti', exists (select 1 from auth.users u where lower(u.email) = t.eposta),
+             'ders_sayisi', (select count(*) from public.courses c join auth.users u on u.id = c.teacher_id where lower(u.email) = t.eposta)
+           ) order by t.eklendi, t.eposta)
+    from public.teachers t
+  ), '[]'::jsonb));
+end;
+$$;
+
+create function public.hoca_ekle(p_eposta text, p_ad text default null)
+returns jsonb
+language plpgsql
+volatile
+security definer
+set search_path = ''
+as $$
+declare
+  v_eposta text := lower(btrim(coalesce(p_eposta, '')));
+  v_ad     text := nullif(left(btrim(coalesce(p_ad, '')), 120), '');
+begin
+  if not public.hoca_sahip_mi() then
+    return jsonb_build_object('hata', 'yetki_yok');
+  end if;
+  if v_eposta !~ '^[^@\s]+@[^@\s]+\.[^@\s]+$' or length(v_eposta) > 200 then
+    return jsonb_build_object('hata', 'eposta_gecersiz');
+  end if;
+  if exists (select 1 from public.teachers t where t.eposta = v_eposta) then
+    return jsonb_build_object('hata', 'zaten_var');
+  end if;
+  insert into public.teachers (eposta, ad_soyad) values (v_eposta, v_ad);
+  return jsonb_build_object('durum', 'tamam', 'eposta', v_eposta);
+end;
+$$;
+
+create function public.hoca_cikar(p_eposta text)
+returns jsonb
+language plpgsql
+volatile
+security definer
+set search_path = ''
+as $$
+declare
+  v_eposta text := lower(btrim(coalesce(p_eposta, '')));
+begin
+  if not public.hoca_sahip_mi() then
+    return jsonb_build_object('hata', 'yetki_yok');
+  end if;
+  if v_eposta = ozel.sahip_eposta() then
+    return jsonb_build_object('hata', 'sahip_cikarilamaz');
+  end if;
+  delete from public.teachers t where t.eposta = v_eposta;
+  if not found then
+    return jsonb_build_object('hata', 'bulunamadi');
+  end if;
+  return jsonb_build_object('durum', 'tamam');
+end;
+$$;
+
+revoke all on function ozel.sahip_eposta()              from public;
+revoke all on function public.hoca_sahip_mi()           from public;
+revoke all on function public.hoca_listele()            from public;
+revoke all on function public.hoca_ekle(text, text)     from public;
+revoke all on function public.hoca_cikar(text)          from public;
+grant execute on function public.hoca_sahip_mi()        to authenticated;
+grant execute on function public.hoca_listele()         to authenticated;
+grant execute on function public.hoca_ekle(text, text)  to authenticated;
+grant execute on function public.hoca_cikar(text)       to authenticated;

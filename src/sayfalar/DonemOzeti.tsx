@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { Ders, Ogrenci, Oturum, Yoklama } from '../lib/tipler'
 import { quizCevaplari, quizDenemeleri, quizleriGetir, quizSoruBaglari, type Quiz, type QuizCevap, type QuizDeneme, type QuizSoruBagi } from '../lib/quiz'
-import { ozetHesapla, RISK_ESIGI } from '../lib/ozet'
+import { ozetHesapla, sampiyonlariHesapla, RISK_ESIGI } from '../lib/ozet'
+import { oturumCevaplari, oturumKatilimlari } from '../lib/veri'
+import type { CevapKaydi, KatilimKaydi } from '../lib/gelisim'
 import { ozetiExceleAktar } from '../lib/rapor'
 import { oturumAdi, tarih } from '../lib/bicim'
 
@@ -16,6 +18,7 @@ export default function DonemOzeti({ ders, ogrenciler, oturumlar, yoklamalar }: 
   const [cevaplar, setCevaplar] = useState<QuizCevap[]>([])
   const [baglar, setBaglar] = useState<QuizSoruBagi[]>([])
   const [hata, setHata] = useState<string | null>(null)
+  const [yarisma, setYarisma] = useState<{ cevaplar: CevapKaydi[]; katilimlar: KatilimKaydi[] }>({ cevaplar: [], katilimlar: [] })
   const [sadeceRisk, setSadeceRisk] = useState(false)
 
   useEffect(() => {
@@ -39,7 +42,21 @@ export default function DonemOzeti({ ders, ogrenciler, oturumlar, yoklamalar }: 
     }
   }, [ders.id])
 
+  // Yarışma puanları şampiyonlar listesi için ayrıca yüklenir (başarısız olursa liste boş kalır)
+  useEffect(() => {
+    let iptal = false
+    const idler = oturumlar.map((o) => o.id)
+    if (idler.length === 0) return
+    Promise.all([oturumCevaplari(idler), oturumKatilimlari(idler)])
+      .then(([cevaplar, katilimlar]) => !iptal && setYarisma({ cevaplar, katilimlar }))
+      .catch(() => {})
+    return () => {
+      iptal = true
+    }
+  }, [oturumlar])
+
   const ozet = useMemo(() => ozetHesapla(ogrenciler, oturumlar, yoklamalar, quizler, denemeler, cevaplar, baglar), [ogrenciler, oturumlar, yoklamalar, quizler, denemeler, cevaplar, baglar])
+  const sampiyonlar = useMemo(() => sampiyonlariHesapla(ogrenciler, oturumlar, yarisma.cevaplar, yarisma.katilimlar), [ogrenciler, oturumlar, yarisma])
   const liste = useMemo(
     () => [...ozet.ogrenciler].filter((o) => !sadeceRisk || o.risk || o.sonDevamsiz).sort((a, b) => a.oran - b.oran || a.ogrenci.ogrenci_no.localeCompare(b.ogrenci.ogrenci_no, 'tr', { numeric: true })),
     [ozet.ogrenciler, sadeceRisk],
@@ -132,6 +149,35 @@ export default function DonemOzeti({ ders, ogrenciler, oturumlar, yoklamalar }: 
           </table>
         </div>
       </section>
+
+      {sampiyonlar.siralama.length > 0 && (
+        <section className="cam-panel rounded-2xl p-4 space-y-3">
+          <h2 className="font-bold">🏆 Dönemin şampiyonları</h2>
+          <ol className="space-y-1 text-sm">
+            {sampiyonlar.siralama.slice(0, 10).map((s, i) => (
+              <li key={s.ogrenci.id} className="flex items-center gap-3">
+                <span className="w-8 text-center">{i < 3 ? ['🥇', '🥈', '🥉'][i] : i + 1}</span>
+                <span className="flex-1 truncate">{s.ogrenci.ad_soyad}</span>
+                <span className="text-xs text-slate-400">{s.ders} derste yarıştı · {s.dogru} doğru</span>
+                <b className="w-20 text-right tabular-nums">{s.puan}</b>
+              </li>
+            ))}
+          </ol>
+          {sampiyonlar.haftalar.length > 0 && (
+            <div className="space-y-1">
+              <h3 className="text-xs font-bold text-slate-300">Hafta hafta birinciler</h3>
+              <ul className="flex flex-wrap gap-2 text-xs">
+                {sampiyonlar.haftalar.map((h) => (
+                  <li key={h.oturum.id} className="rounded-full bg-white/8 border border-white/10 px-3 py-1">
+                    {tarih(h.oturum.basladi)} · <b>{h.ogrenci.ad_soyad}</b> ({h.puan})
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <p className="text-xs text-slate-500">Puanlar yoklamada cihazı eşleşen öğrencilere bağlanır; elle var yazılan öğrencinin cevapları puana girmez.</p>
+        </section>
+      )}
 
       <section className="cam-panel rounded-2xl p-4 space-y-2">
         <h2 className="font-bold">Quizler</h2>

@@ -4,7 +4,7 @@
 Derse girmiş öğrenci quize kod girmeden katılır.
 - Hoca şubede bir quiz açınca, o şubenin açık dersinde yoklaması alınmış öğrencinin telefonunda "Quiz başladı" bandı çıkar; dokununca quiz başlar. Kimlik yoklama kaydından alınır, kod ve numara sorulmaz. Quiz sayfası `?o=<oturum>` ile de açılır; yarıda kalan quiz aynı telefondan kaldığı yerden devam eder. Kod ve numara ile girme yolu yoklamasız öğrenciler için aynen duruyor.
 - Hata ekranı artık gerçek nedeni gösterir (yoklama yok, quiz kapalı, ders bitmiş).
-- **0022_oturum_quizi.sql** (`oturum_quizi`, `oturum_quizi_baslat`) henüz Supabase'e uygulanmadı; uygulanana kadar bant görünmez, diğer her şey eskisi gibi çalışır.
+- **0022_oturum_quizi.sql** (`oturum_quizi`, `oturum_quizi_baslat`) 14 Kasım 2026'da Supabase'e uygulandı ve doğrulandı.
 
 ## v0.24.0 (14 Kasım 2026)
 Soru yönetimi ve soru süreleri.

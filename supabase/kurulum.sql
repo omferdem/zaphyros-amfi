@@ -1,6 +1,6 @@
 -- ZAPEDU kurulum SQL'i (bu dosya otomatik üretilir, elle düzenleme; kaynağı supabase/migrations)
 -- Yeni bir Supabase projesinde SQL Editor'e bu dosyanın tamamını yapıştırıp bir kez çalıştır.
--- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql, 0019_oyun_adimi.sql, 0020_yoklama_haftalari.sql, 0021_pencere_6sn.sql, 0022_oturum_quizi.sql, 0023_acik_uclu_zombi.sql, 0024_kumanda_notu.sql, 0025_acik_uclu_sure.sql, 0026_devam_serisi.sql, 0027_hoca_davetleri.sql
+-- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql, 0019_oyun_adimi.sql, 0020_yoklama_haftalari.sql, 0021_pencere_6sn.sql, 0022_oturum_quizi.sql, 0023_acik_uclu_zombi.sql, 0024_kumanda_notu.sql, 0025_acik_uclu_sure.sql, 0026_devam_serisi.sql, 0027_hoca_davetleri.sql, 0028_etkinlik_fotograflari.sql
 
 -- ===========================================================================
 -- 0001_saglik.sql
@@ -5066,3 +5066,30 @@ grant execute on function public.hoca_sahip_mi()        to authenticated;
 grant execute on function public.hoca_listele()         to authenticated;
 grant execute on function public.hoca_ekle(text, text)  to authenticated;
 grant execute on function public.hoca_cikar(text)       to authenticated;
+
+-- ===========================================================================
+-- 0028_etkinlik_fotograflari.sql
+-- ===========================================================================
+
+-- 0028: Akışa fotoğraf adımı
+--
+-- Hoca akışa fotoğraf ekler; perdede ve (telefon modunda) öğrencinin telefonunda video gibi gösterilir.
+-- Fotoğraflar herkese açık okunabilir bir depoda durur: dosya yolu ders içeriğinin kimliği ve rastgele bir kimlikten oluşur
+-- (tahmin edilemez); listeleme yetkisi yalnızca ilgili hocadadır. Yükleme ve silme yalnızca içeriğin sahibi hocaya açıktır.
+-- Fotoğraf adımı mevcut "video" adım türünü kullanır (ayar.url bir fotoğraf adresidir); şema ve RPC'ler değişmez.
+
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('etkinlik-fotograflari', 'etkinlik-fotograflari', true, 1048576, array['image/webp', 'image/jpeg', 'image/png'])
+on conflict (id) do nothing;
+
+create policy "hoca kendi fotograflarini okur" on storage.objects
+  for select to authenticated
+  using (bucket_id = 'etkinlik-fotograflari' and public.depo_dersi_benim(name));
+
+create policy "hoca kendi fotograflarini yukler" on storage.objects
+  for insert to authenticated
+  with check (bucket_id = 'etkinlik-fotograflari' and public.depo_dersi_benim(name));
+
+create policy "hoca kendi fotograflarini siler" on storage.objects
+  for delete to authenticated
+  using (bucket_id = 'etkinlik-fotograflari' and public.depo_dersi_benim(name));

@@ -3,13 +3,15 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import type { Adim, AdimAyari, Akis, Soru, Sunum } from '../lib/tipler'
 import { videoAdresi } from '../lib/video'
-import { adimlarEkle, adimlariGetir, akisGetir, akisSirala, sorulariAkisaYerlestir, sorulariGetir, sunumYukle, sunumlariGetir } from '../lib/akis'
+import { adimlarEkle, adimlariGetir, akislariGetir, akisGetir, akisSirala, sorulariAkisaYerlestir, sorulariGetir, sunumYukle, sunumlariGetir } from '../lib/akis'
 import { adimSirasi, konumuCoz } from '../lib/paket'
 import SoruPaketiEkle from '../bilesenler/SoruPaketiEkle'
 import SunumSurukle from '../bilesenler/SunumSurukle'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
 import SlaytOnizleme from '../bilesenler/SlaytOnizleme'
+import AdimDuzenle, { type SoruDegisikligi } from '../bilesenler/AdimDuzenle'
+import { fotoYukle, gorselMi } from '../lib/foto'
 
 /** Dosya adından sunum adı: uzantı ve alt çizgiler atılır. */
 function dosyadanAd(ad: string): string {
@@ -38,7 +40,7 @@ export default function AkisDuzenle() {
   const [konum, setKonum] = useState('son')
   const [bilgi, setBilgi] = useState<string | null>(null)
   const soruPaneli = useRef<HTMLDivElement>(null)
-  const [etkinlikTuru, setEtkinlikTuru] = useState<'bulut' | 'firtina' | 'acik' | 'oylama' | 'video' | 'oyun'>('bulut')
+  const [etkinlikTuru, setEtkinlikTuru] = useState<'bulut' | 'firtina' | 'acik' | 'oylama' | 'video' | 'foto' | 'oyun'>('bulut')
   const [oyunSecimi, setOyunSecimi] = useState<OyunAnahtari>('takim')
   const [etkinlikSorusu, setEtkinlikSorusu] = useState('')
   // Cevap süresi (saniye); 0 = süresiz. Açık uçlu soruda varsayılan 90 sn.
@@ -47,6 +49,11 @@ export default function AkisDuzenle() {
   const [etiketSag, setEtiketSag] = useState('')
   const [videoUrl, setVideoUrl] = useState('')
   const [videoBaslik, setVideoBaslik] = useState('')
+  const [fotoDosya, setFotoDosya] = useState<File | null>(null)
+  const [duzenlenen, setDuzenlenen] = useState<string | null>(null)
+  const [secim, setSecim] = useState<Set<string>>(new Set())
+  const [digerAkislar, setDigerAkislar] = useState<Akis[]>([])
+  const [hedefAkis, setHedefAkis] = useState('')
 
   const yukle = useCallback(async () => {
     try {
@@ -54,8 +61,9 @@ export default function AkisDuzenle() {
       setAkis(a)
       if (!a) return
       setAd(a.ad)
-      const [ad2, s, q] = await Promise.all([adimlariGetir(a.id), sunumlariGetir(a.subject_id), sorulariGetir(a.subject_id)])
+      const [ad2, s, q, tumAkislar] = await Promise.all([adimlariGetir(a.id), sunumlariGetir(a.subject_id), sorulariGetir(a.subject_id), akislariGetir(a.subject_id)])
       setAdimlar(ad2)
+      setDigerAkislar(tumAkislar.filter((x) => x.id !== a.id))
       // Boş akışta ekleme alanı açık gelir; dolu akışta kapalı
       if (ad2.length === 0) setEklemeAcik(true)
       setSunumlar(s)
@@ -205,6 +213,21 @@ export default function AkisDuzenle() {
     let ayar: AdimAyari
     if (etkinlikTuru === 'oyun') {
       ayar = { oyun: oyunSecimi }
+    } else if (etkinlikTuru === 'foto') {
+      if (!fotoDosya) {
+        setHata('Bir fotoğraf seç.')
+        return
+      }
+      try {
+        setYukleme('Fotoğraf yükleniyor…')
+        const adres = await fotoYukle(akis.subject_id, fotoDosya)
+        ayar = { url: adres, ...(videoBaslik.trim() ? { baslik: videoBaslik.trim().slice(0, 120) } : {}) }
+      } catch {
+        setYukleme(null)
+        setHata('Fotoğraf yüklenemedi. Dosya bir görsel olmalı; bağlantını da kontrol et.')
+        return
+      }
+      setYukleme(null)
     } else if (etkinlikTuru === 'video') {
       const url = videoAdresi(videoUrl)
       if (!url) {
@@ -227,12 +250,13 @@ export default function AkisDuzenle() {
       }
     }
     try {
-      const yeniIdler = await adimlarEkle(akis.id, adimlar.length, [{ tur: etkinlikTuru === 'bulut' || etkinlikTuru === 'firtina' || etkinlikTuru === 'acik' ? 'fikir' : etkinlikTuru, ayar }])
+      const yeniIdler = await adimlarEkle(akis.id, adimlar.length, [{ tur: etkinlikTuru === 'bulut' || etkinlikTuru === 'firtina' || etkinlikTuru === 'acik' ? 'fikir' : etkinlikTuru === 'foto' ? 'video' : etkinlikTuru, ayar }])
       // Ekleme konumu seçilmişse ("+ Ekle" ya da konum kutusu) etkinlik oraya yerleşir
       if (konum !== 'son' && yeniIdler.length) await akisSirala(akis.id, adimSirasi(adimlar.map((a) => a.id), yeniIdler, konumuCoz(konum)))
       setEtkinlikSorusu('')
       setVideoUrl('')
       setVideoBaslik('')
+      setFotoDosya(null)
     } catch {
       setHata('Etkinlik eklenemedi.')
     }
@@ -267,6 +291,60 @@ export default function AkisDuzenle() {
     setSorular((l) => l.map((q) => (q.id === soruId ? { ...q, sure_sn: sn } : q)))
     const { error } = await supabase.from('questions').update({ sure_sn: sn }).eq('id', soruId)
     if (error) setHata('Süre kaydedilemedi.')
+  }
+
+  /** Kartın ayarını (etkinlik metni, etiketler, başlık) kaydeder. */
+  async function ayarKaydet(adimId: string, ayar: AdimAyari) {
+    const { error } = await supabase.from('lesson_steps').update({ ayar }).eq('id', adimId)
+    if (error) throw error
+    setAdimlar((l) => l.map((x) => (x.id === adimId ? { ...x, ayar } : x)))
+  }
+
+  /** Bilgi yarışması sorusunun metnini, şıklarını ve süresini soru bankasında günceller. */
+  async function soruKaydet(soruId: string, d: SoruDegisikligi) {
+    const { error } = await supabase.from('questions').update(d).eq('id', soruId)
+    if (error) throw error
+    setSorular((l) => l.map((q) => (q.id === soruId ? { ...q, ...d } : q)))
+  }
+
+  /** Seçili kartları başka bir haftanın akışına kopyalar ya da taşır (hedef akışın sonuna, sırayı koruyarak). */
+  async function gonder(tasi: boolean) {
+    if (!hedefAkis || secim.size === 0) return
+    const hedef = digerAkislar.find((x) => x.id === hedefAkis)
+    const secilenler = adimlar.filter((a) => secim.has(a.id))
+    setHata(null)
+    setBilgi(null)
+    try {
+      await adimlarEkle(
+        hedefAkis,
+        0,
+        secilenler.map((a) => ({
+          tur: a.tur,
+          ...(a.presentation_id ? { presentation_id: a.presentation_id } : {}),
+          ...(a.sayfa_no ? { sayfa_no: a.sayfa_no } : {}),
+          ...(a.question_id ? { question_id: a.question_id } : {}),
+          ayar: a.ayar,
+        })),
+      )
+      if (tasi) {
+        const { error } = await supabase.from('lesson_steps').delete().in('id', secilenler.map((a) => a.id))
+        if (error) throw error
+      }
+      setBilgi(`${secilenler.length} kart "${hedef?.ad ?? 'akış'}" akışına ${tasi ? 'taşındı' : 'kopyalandı'}.`)
+      setSecim(new Set())
+      await yukle()
+    } catch {
+      setHata('Kartlar gönderilemedi. Bağlantını kontrol edip tekrar dene.')
+    }
+  }
+
+  function secimiDegistir(id: string, secili: boolean) {
+    setSecim((s) => {
+      const y = new Set(s)
+      if (secili) y.add(id)
+      else y.delete(id)
+      return y
+    })
   }
 
   async function sil(a: Adim) {
@@ -416,6 +494,7 @@ export default function AkisDuzenle() {
                   ['firtina', '💡', 'Beyin fırtınası', 'Kısa cümlelik fikirler (en çok 3), perdede kartlar'],
                   ['oylama', '😈', 'Şeytanın avukatı', 'İki taraflı oylama; isteyen gerekçe yazar'],
                   ['video', '🎬', 'Video', 'Perdede ve telefonda oynatılır'],
+                  ['foto', '🖼️', 'Fotoğraf', 'Bilgisayardan ya da telefondan yüklenir; perdede büyük gösterilir'],
                   ['oyun', '🎮', 'Oyun', 'Zombi kaçışı, takım yarışı, halat çekme, hocayla yarış, bilgi merdiveni'],
                 ] as const
               ).map(([k, emoji, ad, aciklama]) => (
@@ -438,7 +517,7 @@ export default function AkisDuzenle() {
               ))}
             </div>
           </div>
-          {etkinlikTuru !== 'oyun' && etkinlikTuru !== 'video' && (
+          {etkinlikTuru !== 'oyun' && etkinlikTuru !== 'video' && etkinlikTuru !== 'foto' && (
             <label className="flex items-center gap-2 text-xs text-slate-300">
               Cevap süresi
               <select className="giris-kutusu !w-auto !py-1 text-sm" value={etkinlikSuresi} onChange={(e) => setEtkinlikSuresi(Number(e.target.value))}>
@@ -462,6 +541,11 @@ export default function AkisDuzenle() {
                 ))}
               </select>
               <p className="text-xs text-slate-400">{OYUNLAR[oyunSecimi].nasil}</p>
+            </div>
+          ) : etkinlikTuru === 'foto' ? (
+            <div className="grid gap-2 sm:grid-cols-2">
+              <input type="file" accept="image/*" className="giris-kutusu text-sm" onChange={(e) => setFotoDosya(e.target.files?.[0] ?? null)} aria-label="Fotoğraf dosyası" />
+              <input className="giris-kutusu text-sm" placeholder="Başlık (isteğe bağlı)" value={videoBaslik} maxLength={120} onChange={(e) => setVideoBaslik(e.target.value)} />
             </div>
           ) : etkinlikTuru === 'video' ? (
             <div className="grid gap-2 sm:grid-cols-2">
@@ -517,13 +601,36 @@ export default function AkisDuzenle() {
       {adimlar.length === 0 ? (
         <p className="text-sm text-slate-400">Akış boş. Bir sunum yükleyerek ya da yoklama adımı ekleyerek başla.</p>
       ) : (
+        <>
+        {secim.size > 0 && (
+          <div className="sticky top-16 z-20 cam-panel rounded-2xl p-3 flex flex-wrap items-center gap-2 border border-indigo-400/40">
+            <span className="text-sm font-bold">{secim.size} kart seçili</span>
+            <select className="giris-kutusu !w-auto !py-1.5 text-sm" value={hedefAkis} onChange={(e) => setHedefAkis(e.target.value)} aria-label="Hedef akış">
+              <option value="">Hangi haftanın akışına?</option>
+              {digerAkislar.map((x) => (
+                <option key={x.id} value={x.id}>
+                  {x.ad}
+                </option>
+              ))}
+            </select>
+            <button className="parlak-buton rounded-xl px-3 py-1.5 text-sm font-bold disabled:opacity-50" disabled={!hedefAkis} onClick={() => gonder(false)}>
+              Kopyala
+            </button>
+            <button className="ikincil-buton !py-1.5 text-sm" disabled={!hedefAkis} onClick={() => gonder(true)} title="Kartları bu akıştan çıkarıp hedef akışın sonuna koyar">
+              Taşı
+            </button>
+            <button className="text-xs text-slate-400 hover:text-white ml-auto" onClick={() => setSecim(new Set())}>
+              Seçimi temizle
+            </button>
+          </div>
+        )}
         <ol className="space-y-2">
           {adimlar.map((a, i) => {
             const sunum = a.presentation_id ? sunumHaritasi.get(a.presentation_id) : undefined
             return (
               <li
                 key={a.id}
-                draggable
+                draggable={duzenlenen !== a.id}
                 onDragStart={() => setSuruklenen(i)}
                 onDragEnd={() => setSuruklenen(null)}
                 onDragOver={(e) => e.preventDefault()}
@@ -532,8 +639,9 @@ export default function AkisDuzenle() {
                   if (suruklenen !== null) tasi(suruklenen, i)
                   setSuruklenen(null)
                 }}
-                className={`cam-panel rounded-2xl p-3 flex items-center gap-3 cursor-grab ${suruklenen === i ? 'opacity-40' : ''}`}
+                className={`cam-panel rounded-2xl p-3 flex flex-wrap items-center gap-3 cursor-grab ${suruklenen === i ? 'opacity-40' : ''} ${secim.has(a.id) ? 'ring-2 ring-indigo-400/60' : ''}`}
               >
+                <input type="checkbox" className="accent-indigo-500 w-4 h-4" checked={secim.has(a.id)} onChange={(e) => secimiDegistir(a.id, e.target.checked)} aria-label={`${i + 1}. kartı seç`} title="Başka haftaya göndermek için seç" />
                 <span className="w-7 text-right font-mono text-xs text-slate-500">{i + 1}</span>
                 {a.tur === 'slayt' ? (
                   <button
@@ -556,7 +664,7 @@ export default function AkisDuzenle() {
                   </div>
                 ) : a.tur === 'fikir' || a.tur === 'oylama' || a.tur === 'video' ? (
                   <div className="w-28 h-16 shrink-0 rounded bg-amber-500/10 flex items-center justify-center text-amber-300 text-xs font-bold text-center leading-tight">
-                    {a.tur === 'fikir' ? (a.ayar.mod === 'acik' ? 'AÇIK UÇLU' : a.ayar.mod === 'firtina' ? 'BEYİN FIRTINASI' : 'KELİME BULUTU') : a.tur === 'oylama' ? 'OYLAMA' : 'VİDEO'}
+                    {a.tur === 'fikir' ? (a.ayar.mod === 'acik' ? 'AÇIK UÇLU' : a.ayar.mod === 'firtina' ? 'BEYİN FIRTINASI' : 'KELİME BULUTU') : a.tur === 'oylama' ? 'OYLAMA' : a.ayar.url && gorselMi(a.ayar.url) ? 'FOTOĞRAF' : 'VİDEO'}
                   </div>
                 ) : (
                   <div className="w-28 h-16 shrink-0 rounded bg-emerald-500/10 flex items-center justify-center text-emerald-300 text-xs font-bold">
@@ -605,8 +713,8 @@ export default function AkisDuzenle() {
                     </>
                   ) : a.tur === 'video' ? (
                     <>
-                      <p className="text-sm font-semibold truncate">{a.ayar.baslik || 'Video'}</p>
-                      <p className="text-xs text-slate-400 truncate">{a.ayar.url}</p>
+                      <p className="text-sm font-semibold truncate">{a.ayar.baslik || (a.ayar.url && gorselMi(a.ayar.url) ? 'Fotoğraf' : 'Video')}</p>
+                      <p className="text-xs text-slate-400 truncate">{a.ayar.url && gorselMi(a.ayar.url) ? 'Perdede büyük gösterilir' : a.ayar.url}</p>
                     </>
                   ) : (
                     <>
@@ -616,6 +724,11 @@ export default function AkisDuzenle() {
                   )}
                 </div>
                 <div className="flex gap-1">
+                  {(a.tur === 'soru' || a.tur === 'fikir' || a.tur === 'oylama' || a.tur === 'video') && (
+                    <button className="ikincil-buton !px-2 !py-1" onClick={() => setDuzenlenen(duzenlenen === a.id ? null : a.id)} title="Soruyu, şıkları ve metni düzenle">
+                      ✏️ Düzenle
+                    </button>
+                  )}
                   <button className="ikincil-buton !px-2 !py-1" onClick={() => buraya(a.id)} title="Bu adımın arkasına soru paketi ya da etkinlik ekle">
                     + Ekle
                   </button>
@@ -634,10 +747,20 @@ export default function AkisDuzenle() {
                     ✕
                   </button>
                 </div>
+                {duzenlenen === a.id && (
+                  <AdimDuzenle
+                    adim={a}
+                    soru={a.question_id ? soruHaritasi.get(a.question_id) : undefined}
+                    ayarKaydet={(ayar) => ayarKaydet(a.id, ayar)}
+                    soruKaydet={(d) => soruKaydet(a.question_id ?? '', d)}
+                    kapat={() => setDuzenlenen(null)}
+                  />
+                )}
               </li>
             )
           })}
         </ol>
+        </>
       )}
       {onizleme !== null && (
         <SlaytOnizleme adimlar={adimlar} baslangic={onizleme} belgeler={belgeler} sunumlar={sunumHaritasi} notKaydet={notKaydet} kapat={() => setOnizleme(null)} />

@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabase'
 import { cihazKimligi, oku, sakla } from '../lib/cihaz'
 import type { DersDurumu } from '../lib/tipler'
 import { youtubeGomme } from '../lib/video'
+import { gorselMi } from '../lib/foto'
 
 type Adim = NonNullable<DersDurumu['adim']>
 
@@ -129,6 +130,9 @@ export function OylamaSonucu({ adim, buyuk = false }: { adim: Adim; buyuk?: bool
 
 /** YouTube ise gömülü oynatıcı, değilse bağlantı. */
 export function VideoOynatici({ adres, baslik, className = '' }: { adres: string; baslik?: string | null; className?: string }) {
+  // Fotoğraf adımı da bu bileşenle gösterilir
+  if (gorselMi(adres))
+    return <img src={adres} alt={baslik || 'Fotoğraf'} className={`mx-auto max-h-[75vh] w-auto max-w-full rounded-2xl object-contain ${className}`} />
   const gomme = youtubeGomme(adres)
   if (gomme)
     return (

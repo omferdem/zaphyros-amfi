@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.38.0 (14 Kasım 2026)
+Akış kartlarını düzenleme, fotoğraf ve haftalar arası gönderme. Veritabanı: `0028_etkinlik_fotograflari.sql` (fotoğraf deposu).
+- **✏️ Düzenle:** akıştaki soru kartında soru metni, doğru ve yanlış şıklar, süre; kelime bulutu, beyin fırtınası ve açık uçlu kartta soru, tür ve süre; oylamada önerme ve iki etiket; videoda adres ve başlık yerinde değiştirilir. Bilgi yarışması sorusu soru bankasında durduğu için aynı soruyu kullanan yerlerde de değişir (ekranda uyarı yazar).
+- **🖼️ Fotoğraf etkinliği:** bilgisayardan ya da telefondan fotoğraf yüklenir (en uzun kenarı 1600 pikselde küçültülür), perdede büyük, telefon modunda öğrencide görünür.
+- **Başka haftaya gönder:** kartların başındaki kutuyla bir ya da birden çok kart (slayt parçaları dahil) seçilir; "Hangi haftanın akışına?" listesinden hedef seçilip kopyalanır ya da taşınır (hedef akışın sonuna, sırayı koruyarak).
+
 ## v0.37.1 (14 Kasım 2026)
 - Sunum ekranındaki "🥊 Hocayla yarış", "🪢 Halat çekme", "👥 Takım modu" ve "🪜 Bilgi merdiveni" köşe düğmeleri artık yalnızca Kahoot oturumunda görünür. Normal ders akışında perdeyi kalabalıklaştırıyorlardı; oyun modu "Kahoot'a git" seçicisinden seçilir. Açık olan bir oyun paneli her zaman görünür.
 

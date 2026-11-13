@@ -81,26 +81,37 @@ export async function icerigiIceAktar(
   dosyalar: Record<string, Uint8Array>,
   durumBildir: (m: string) => void,
 ): Promise<AktarmaOzeti> {
-  // 1) Sorular
-  const soruIdleri: string[] = []
+  // 1) Sorular. Aynı paket adı ve soru metniyle bankada zaten olan soru yeniden eklenmez (yarım kalan içe aktarma güvenle tekrarlanır).
+  const soruAnahtari = (soru: string, paketAdi: string | undefined) => `${paketAdi ?? ''}|${soru}`
+  const varOlanSorular = new Map((await sorulariGetir(icerikId)).map((q) => [soruAnahtari(q.soru, q.ek.paket), q.id]))
+  const soruIdleri: string[] = paket.sorular.map((s) => varOlanSorular.get(soruAnahtari(s.soru, s.ek.paket)) ?? '')
+  const eksikler = paket.sorular.map((s, i) => ({ s, i })).filter((x) => !soruIdleri[x.i])
   const simdi = Date.now()
-  for (let i = 0; i < paket.sorular.length; i += 100) {
-    durumBildir(`Sorular ekleniyor… ${Math.min(i + 100, paket.sorular.length)} / ${paket.sorular.length}`)
-    const parca = paket.sorular.slice(i, i + 100)
+  for (let k = 0; k < eksikler.length; k += 100) {
+    durumBildir(`Sorular ekleniyor… ${Math.min(k + 100, eksikler.length)} / ${eksikler.length}`)
+    const parca = eksikler.slice(k, k + 100)
     const { data, error } = await supabase
       .from('questions')
-      .insert(parca.map((s, j) => ({ subject_id: icerikId, ...s, olusturuldu: new Date(simdi + i + j).toISOString() })))
+      .insert(parca.map((x, j) => ({ subject_id: icerikId, ...x.s, olusturuldu: new Date(simdi + k + j).toISOString() })))
       .select('id, olusturuldu')
     if (error) throw error
     const sirali = ((data ?? []) as { id: string; olusturuldu: string }[]).sort((a, b) => a.olusturuldu.localeCompare(b.olusturuldu))
-    soruIdleri.push(...sirali.map((r) => r.id))
+    parca.forEach((x, j) => {
+      soruIdleri[x.i] = sirali[j].id
+    })
   }
 
   // 2) Sunumlar
   const sunumIdleri = new Map<number, string>()
+  const varOlanSunumlar = new Map((await sunumlariGetir(icerikId)).map((x) => [`${x.ad}|${x.sayfa_sayisi}`, x.id]))
   for (const [i, s] of paket.sunumlar.entries()) {
     const bayt = s.dosya ? dosyalar[s.dosya] : undefined
     if (!bayt) continue
+    const var_ = varOlanSunumlar.get(`${s.ad}|${s.sayfa_sayisi}`)
+    if (var_) {
+      sunumIdleri.set(s.no, var_)
+      continue
+    }
     durumBildir(`Sunum yükleniyor: ${s.ad} (${i + 1} / ${paket.sunumlar.length})`)
     const yuklenen = await sunumYukle(icerikId, new File([bayt as BlobPart], `${s.ad}.pdf`, { type: 'application/pdf' }), s.ad, durumBildir)
     sunumIdleri.set(s.no, yuklenen.id)
@@ -126,13 +137,13 @@ export async function icerigiIceAktar(
     const yeni = a.adimlar.flatMap((s): Parameters<typeof adimlarEkle>[2] => {
       if (s.tur === 'slayt') {
         const sunum = s.sunum !== undefined ? sunumIdleri.get(s.sunum) : undefined
-        return sunum ? [{ tur: 'slayt' as const, presentation_id: sunum, sayfa_no: s.sayfa_no ?? 1 }] : []
+        return sunum ? [{ tur: 'slayt' as const, presentation_id: sunum, sayfa_no: s.sayfa_no ?? 1, ayar: {} }] : []
       }
       if (s.tur === 'soru') {
         const soru = s.soru !== undefined ? soruIdleri[s.soru] : undefined
-        return soru ? [{ tur: 'soru' as const, question_id: soru }] : []
+        return soru ? [{ tur: 'soru' as const, question_id: soru, ayar: {} }] : []
       }
-      return [{ tur: s.tur, ayar: s.ayar }]
+      return [{ tur: s.tur, ayar: s.ayar ?? {} }]
     })
     await adimlarEkle(akis.id, 0, yeni)
   }

@@ -89,7 +89,8 @@ export default function DersAkislari({ ders }: { ders: Ders }) {
       setBankaSurumu((n) => n + 1)
       yukle()
     } catch (e) {
-      setHata(e instanceof Error ? e.message : 'İçe aktarılamadı.')
+      const ileti = e instanceof Error ? e.message : (e as { message?: string } | null)?.message
+      setHata(ileti ? `İçe aktarılamadı: ${ileti}` : 'İçe aktarılamadı.')
       yukle()
     }
     setAktarmaDurumu(null)

@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.21.1 (13 Kasım 2026)
+İçerik paketi içe aktarma düzeltmeleri (gerçek paketle denemede çıktı).
+- Karışık türde adımlar (slayt, video, etkinlik, soru) tek seferde eklenirken eksik alanlar boş değerle yazılıyor ve akışa hiç adım eklenmiyordu; bütün adımlar artık aynı alanlarla gönderiliyor.
+- İçe aktarma tekrarlanabilir: aynı ad ve sayfa sayısıyla kayıtlı sunum yeniden yüklenmez, aynı paket adı ve metinle bankada olan soru yeniden eklenmez. Yarım kalan bir içe aktarma, aynı dosya yeniden seçilerek eksik kalan yerden tamamlanır.
+- Hata olduğunda sunucunun iletisi gösterilir ("İçe aktarılamadı: ...").
+
 ## v0.21.0 (13 Kasım 2026)
 Yoklama sınıfın içinde: yoklama haftaları.
 - Yoklama artık haftalık akışların içinde değil, şubenin (sınıfın) içindedir. Şube sayfasındaki "Oturumlar" sekmesinin en üstünde "Yoklama haftaları" bölümü: hoca şubede kaç yoklama alacağını (ör. 15 hafta ya da 30 ders; 1-60) "⚙ Sayıyı ayarla" ile belirler. Her hafta ayrı bir kart: "Yoklamayı aç" (sıradaki hafta vurgulanır), açıksa "AÇIK" etiketi, alınmışsa "n / N katıldı", "Yeniden aç" ve yoklama listesine "Liste" bağlantısı.

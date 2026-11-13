@@ -279,10 +279,17 @@ export default function Sahne() {
       if (error || !data) throw error ?? new Error('akis')
       id = data.id as string
     }
-    // Paket sonradan değişmiş olabilir: adımlar her seferinde yeniden kurulur.
-    const { error: silHatasi } = await supabase.from('lesson_steps').delete().eq('lesson_id', id)
-    if (silHatasi) throw silHatasi
-    const idler = await adimlarEkle(id, 0, sorular.map((s) => ({ tur: 'soru' as const, question_id: s.id, ayar: {} })))
+    // Aynı paket yeniden açılıyorsa mevcut adımlar korunur (bu oturumdaki cevaplar ve puanlar silinmesin);
+    // paket değişmişse adımlar yeniden kurulur.
+    const { data: eski } = await supabase.from('lesson_steps').select('id, question_id').eq('lesson_id', id).order('sira').order('id')
+    const ayni = (eski ?? []).length === sorular.length && (eski ?? []).every((x, i) => x.question_id === sorular[i].id)
+    let idler: string[]
+    if (ayni) idler = (eski ?? []).map((x) => x.id as string)
+    else {
+      const { error: silHatasi } = await supabase.from('lesson_steps').delete().eq('lesson_id', id)
+      if (silHatasi) throw silHatasi
+      idler = await adimlarEkle(id, 0, sorular.map((s) => ({ tur: 'soru' as const, question_id: s.id, ayar: {} })))
+    }
     if (!kahootAkisi) {
       try {
         localStorage.setItem(

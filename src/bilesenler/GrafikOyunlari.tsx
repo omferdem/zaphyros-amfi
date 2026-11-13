@@ -122,7 +122,7 @@ function OyunKabugu<D>({
 
 // ---------------------------------------------------------------------------------------------------- Roket yarışı
 
-const ROKETLER = ['🚀', '🛸', '🚀', '🛰️']
+const ROKETLER = ['🚀', '🛸', '🚀', '🚀']
 
 export function RoketPaneli({ oturum, anahtar, mod }: { oturum: string; anahtar: string | null; mod: 'perde' | 'kumanda' }) {
   return (
@@ -252,7 +252,8 @@ export function EjderhaPaneli({ oturum, anahtar, mod }: { oturum: string; anahta
 
 function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => void }) {
   const n = d.kahramanlar.length
-  const boy = n > 80 ? 'text-xl' : n > 40 ? 'text-2xl' : 'text-3xl'
+  const boy = n > 80 ? 'text-2xl' : n > 40 ? 'text-4xl' : n > 20 ? 'text-5xl' : 'text-6xl'
+  const adBoy = n > 40 ? 'text-[10px] max-w-16' : 'text-sm max-w-24'
   const sonHasar = d.hasarlar[d.hasarlar.length - 1] ?? 0
   const oran = d.can / d.enCok
   return (
@@ -273,10 +274,10 @@ function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => void })
       </div>
       <div className="relative flex-1 min-h-0 rounded-3xl overflow-hidden ejderha-magara border border-white/10 flex flex-col">
         <div className="relative flex flex-col items-center pt-4 pb-2 gap-2">
-          <div className={`text-[7rem] leading-none ${d.kazandi ? 'ejderha-oldu' : 'ejderha-nefes'}`} aria-hidden>
+          <div className={`text-[11rem] leading-none ${d.kazandi ? 'ejderha-oldu' : 'ejderha-nefes'}`} aria-hidden>
             {d.kazandi ? '💀' : '🐉'}
           </div>
-          {!d.kazandi && d.oynanan > 0 && <div className="absolute right-[28%] top-12 text-5xl ejderha-ates" aria-hidden>🔥</div>}
+          {!d.kazandi && d.oynanan > 0 && <div className="absolute right-[26%] top-16 text-7xl ejderha-ates" aria-hidden>🔥</div>}
           <div className="w-[min(40rem,86%)] space-y-1">
             <div className="h-6 rounded-full bg-black/50 border border-white/15 overflow-hidden">
               <div className="h-full bg-linear-to-r from-rose-600 via-orange-500 to-amber-300 transition-[width] duration-1000 ease-out" style={{ width: `${Math.max(0, oran) * 100}%` }} />
@@ -287,14 +288,14 @@ function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => void })
           </div>
         </div>
         <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-4">
-          <ul className="flex flex-wrap justify-center gap-x-3 gap-y-2">
+          <ul className="flex flex-wrap justify-center gap-x-5 gap-y-4">
             {d.kahramanlar.map((h, i) => {
               const dustu = h.dustu !== null
               return (
                 <li key={`${h.ad}-${i}`} className={`text-center leading-none transition-all duration-700 ${dustu ? 'opacity-40 grayscale' : 'ejderha-kahraman'}`}>
                   <div className={boy}>{dustu ? '💤' : karakter(h.ad, KAHRAMANLAR)}</div>
-                  <div className="text-[10px] font-bold max-w-16 truncate">{h.ad}</div>
-                  <div className="text-[9px] tracking-tighter">{'❤️'.repeat(Math.max(0, h.kalan)) + '🖤'.repeat(KAHRAMAN_CANI - Math.max(0, h.kalan))}</div>
+                  <div className={`${adBoy} font-bold truncate mx-auto`}>{h.ad}</div>
+                  <div className={n > 40 ? "text-[9px] tracking-tighter" : "text-xs tracking-tighter"}>{'❤️'.repeat(Math.max(0, h.kalan)) + '🖤'.repeat(KAHRAMAN_CANI - Math.max(0, h.kalan))}</div>
                 </li>
               )
             })}

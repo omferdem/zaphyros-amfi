@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.29.1 (14 Kasım 2026)
+- Aynı Kahoot paketi derste yeniden açılınca adımlar silinip yeniden kurulmuyor; o oturumdaki cevaplar ve puanlar korunuyor.
+- Ejderha savaşı sahnesi büyütüldü, roket simgeleri sadeleştirildi. Din Felsefesi paketlerinin önerilen oyun modları haftaya göre dönüşümlü (zombi, roket, ejderha, takım, halat, hocayla yarış).
+
 ## v0.29.0 (14 Kasım 2026)
 İki yeni grafik oyun.
 - **Roket yarışı:** her öğrenci perdede ilk adıyla bir roket; doğru cevap roketi ileri iter, uzay sahnesinde iz bırakır, bitiş çizgisine ilk varanlar podyuma çıkar. Bireysel hız ve bilgi yarışı.

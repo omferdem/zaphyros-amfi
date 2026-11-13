@@ -86,9 +86,9 @@ begin
   v := sinif_goster(sid, k);
   assert jsonb_array_length(v -> 'olaylar') = 6, 'HATA: olay sayisi: ' || v::text;  -- 3 soru + 3 sikildim
   assert (v ->> 'katilan')::int = 3, 'HATA: katilan: ' || v::text;
-  -- Kısa ad: "Ahmet Can Yılmaz" -> "Ahmet Y."
-  assert exists (select 1 from jsonb_array_elements(v -> 'olaylar') o where o ->> 'ad' = 'Ahmet Y.'), 'HATA: kisa ad: ' || v::text;
-  assert exists (select 1 from jsonb_array_elements(v -> 'olaylar') o where o ->> 'ad' = 'Kral A.'), 'HATA: takma ad kisaltmasi: ' || v::text;
+  -- İlk ad (0018): "Ahmet Can Yılmaz" -> "Ahmet Can"; takma ad olduğu gibi
+  assert exists (select 1 from jsonb_array_elements(v -> 'olaylar') o where o ->> 'ad' = 'Ahmet Can'), 'HATA: kisa ad: ' || v::text;
+  assert exists (select 1 from jsonb_array_elements(v -> 'olaylar') o where o ->> 'ad' = 'Kral Ali'), 'HATA: takma ad degisti: ' || v::text;
 
   -- Soruyu cevaplandı say
   perform sinif_komut(sid, k, 'soru_tamam', (select (o ->> 'id')::uuid from jsonb_array_elements(v -> 'olaylar') o where o ->> 'tur' = 'soru' limit 1));

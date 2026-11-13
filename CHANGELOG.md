@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.19.1 (13 Kasım 2026)
+Oyunlarda öğrencinin ilk adı.
+- Derse herkes kayıtlı numarasıyla girdiği için oyunlarda takma ad yerine öğrencinin ilk adı görünür: puan tablosu, podyum, takım tablosu, perdedeki parmak ve soru zarfları, sıkıldım çekilişi. "Ahmet Can Yılmaz" ilk adıyla "Ahmet Can", "Ayşe Kaya" "Ayşe" görünür. Aynı oturumda aynı ilk adı taşıyan başka bir yoklamalı öğrenci varsa soyadın baş harfi eklenir ("Ali V.", "Ali Y."). Yoklaması olmayıp takma ad almış cihazın adı olduğu gibi kalır.
+- Veritabanı: `0018_ilk_ad.sql` (`ozel.ilk_ad`, `ozel.oyuncu_adi` ve `ozel.sinif_adi` güncellendi). `npm run sql-test` ile yerelde denendi (çok adlı isim, çakışma, takma ad); henüz Supabase'e uygulanmadı.
+
 ## v0.19.0 (13 Kasım 2026)
 Ders sayacı, sürükle-bırak sunum yükleme, ders düzenleme merkezi.
 - **Ders sayacı:** Sahnenin araç çubuğunda "⏱ 50:00" düğmesi. Hoca süreyi hazır değerlerden (10-60 dk), dakika yazarak ya da bitiş saati (10:40) vererek ayarlar; Başlat, Durdur, +5 dk, Sıfırla. Son 5 dakika sarı, son dakika kırmızı yanıp söner; süre bitince perdede tam ekran "Süre doldu!" uyarısı çıkar ve üç kısa ses çalar (+5 dakika ya da Tamam). Durum tarayıcıda saklanır, sayfa yenilense de sayaç sürer.

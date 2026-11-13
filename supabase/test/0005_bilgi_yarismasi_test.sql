@@ -143,7 +143,7 @@ declare
 begin
   assert jsonb_array_length(v) = 3, 'HATA: puan tablosu: ' || v::text;
   assert v -> 2 ->> 'ad' = 'Mavi' and (v -> 2 ->> 'puan')::int = 0, 'HATA: son sira: ' || v::text;
-  assert exists (select 1 from jsonb_array_elements(v) e where e ->> 'ad' = 'Zeynep A.'), 'HATA: yoklamali ad: ' || v::text;
+  assert exists (select 1 from jsonb_array_elements(v) e where e ->> 'ad' = 'Zeynep'), 'HATA: yoklamali ad: ' || v::text;
   assert (select count(*) from responses where session_id = current_setting('t5.sid')::uuid) = 3, 'HATA: hoca cevaplari goremiyor';
 end $$;
 

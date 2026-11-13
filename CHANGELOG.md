@@ -7,7 +7,7 @@ Yoklama raporunda elle var yazma.
 ## v0.19.1 (13 Kasım 2026)
 Oyunlarda öğrencinin ilk adı.
 - Derse herkes kayıtlı numarasıyla girdiği için oyunlarda takma ad yerine öğrencinin ilk adı görünür: puan tablosu, podyum, takım tablosu, perdedeki parmak ve soru zarfları, sıkıldım çekilişi. "Ahmet Can Yılmaz" ilk adıyla "Ahmet Can", "Ayşe Kaya" "Ayşe" görünür. Aynı oturumda aynı ilk adı taşıyan başka bir yoklamalı öğrenci varsa soyadın baş harfi eklenir ("Ali V.", "Ali Y."). Yoklaması olmayıp takma ad almış cihazın adı olduğu gibi kalır.
-- Veritabanı: `0018_ilk_ad.sql` (`ozel.ilk_ad`, `ozel.oyuncu_adi` ve `ozel.sinif_adi` güncellendi). `npm run sql-test` ile yerelde denendi (çok adlı isim, çakışma, takma ad); henüz Supabase'e uygulanmadı.
+- Veritabanı: `0018_ilk_ad.sql` (`ozel.ilk_ad`, `ozel.oyuncu_adi` ve `ozel.sinif_adi` güncellendi). `npm run sql-test` ile yerelde denendi (çok adlı isim, çakışma, takma ad); Supabase'e 13 Kasım 2026'da uygulandı; fonksiyonların anonim role kapalı olduğu ve `sinif_adi`nin yeni sürümü kullandığı sorguyla doğrulandı.
 
 ## v0.19.0 (13 Kasım 2026)
 Ders sayacı, sürükle-bırak sunum yükleme, ders düzenleme merkezi.

@@ -236,6 +236,14 @@ export default function AkisDuzenle() {
     sirala(yeni)
   }
 
+  /** Akıştaki bir sorunun cevap süresi: soru bankasındaki kaydı günceller (soruyu kullanan bütün akışlarda geçerli olur). */
+  async function soruSuresiniDegistir(soruId: string, sn: number) {
+    if (!soruId) return
+    setSorular((l) => l.map((q) => (q.id === soruId ? { ...q, sure_sn: sn } : q)))
+    const { error } = await supabase.from('questions').update({ sure_sn: sn }).eq('id', soruId)
+    if (error) setHata('Süre kaydedilemedi.')
+  }
+
   async function sil(a: Adim) {
     const { error } = await supabase.from('lesson_steps').delete().eq('id', a.id)
     if (error) setHata('Adım silinemedi.')
@@ -487,8 +495,20 @@ export default function AkisDuzenle() {
                   ) : a.tur === 'soru' ? (
                     <>
                       <p className="text-sm font-semibold truncate">{soruHaritasi.get(a.question_id ?? '')?.soru ?? 'Soru'}</p>
-                      <p className="text-xs text-slate-400 truncate">
-                        Bilgi yarışması · {soruHaritasi.get(a.question_id ?? '')?.sure_sn ?? 20} saniye
+                      <p className="text-xs text-slate-400 flex items-center gap-2" onMouseDown={(e) => e.stopPropagation()}>
+                        Bilgi yarışması ·
+                        <select
+                          aria-label="Cevap süresi"
+                          className="giris-kutusu !w-auto !py-0.5 !px-1.5 text-xs"
+                          value={soruHaritasi.get(a.question_id ?? '')?.sure_sn ?? 20}
+                          onChange={(e) => soruSuresiniDegistir(a.question_id ?? '', Number(e.target.value))}
+                        >
+                          {[...new Set([10, 15, 20, 30, 45, 60, 90, 120, soruHaritasi.get(a.question_id ?? '')?.sure_sn ?? 20])].sort((x, y) => x - y).map((x) => (
+                            <option key={x} value={x}>
+                              {x} sn
+                            </option>
+                          ))}
+                        </select>
                       </p>
                     </>
                   ) : a.tur === 'fikir' || a.tur === 'oylama' ? (

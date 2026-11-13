@@ -52,3 +52,16 @@ export function karistir<T>(dizi: T[], rastgele: () => number = Math.random): T[
   }
   return k
 }
+
+/**
+ * Soru metni ve şık uzunluğuna göre önerilen cevap süresi (saniye): kısa ve basit sorular kısa, paragraflı ve uzun şıklı
+ * sorular daha uzun süre alır. Hoca isterse soru bazında değiştirir.
+ */
+export function otomatikSure(soru: { soru: string; dogru: string; yanlislar: string[] }): number {
+  const sayi = soru.soru.length + [soru.dogru, ...soru.yanlislar].reduce((t, x) => t + x.length, 0)
+  if (sayi <= 120) return 15
+  if (sayi <= 260) return 20
+  if (sayi <= 480) return 30
+  if (sayi <= 800) return 45
+  return 60
+}

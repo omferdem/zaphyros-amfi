@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import type { Soru } from '../lib/tipler'
 import { adimlarEkle, akisOlustur, paketiSil, paketiYenidenAdlandir, soruPaketiniDegistir, sorulariEkle, sorulariGetir } from '../lib/akis'
-import { paketleriGrupla, type PaketGrubu } from '../lib/paket'
+import { otomatikSure, paketleriGrupla, type PaketGrubu } from '../lib/paket'
+import SoruFormu, { type SoruDegisikligi } from '../bilesenler/SoruFormu'
 import { zomrOku } from '../lib/zomr'
 
 const SURELER = [10, 15, 20, 30, 45, 60, 90, 120]
@@ -28,6 +29,7 @@ export default function SoruBankasi({ icerikId }: { icerikId: string }) {
   const [hata, setHata] = useState<string | null>(null)
   const [mesaj, setMesaj] = useState<string | null>(null)
   const [mesgul, setMesgul] = useState(false)
+  const [duzenlenen, setDuzenlenen] = useState<string | null>(null)
   const [arama, setArama] = useState('')
 
   const yukle = useCallback(async () => {
@@ -76,6 +78,43 @@ export default function SoruBankasi({ icerikId }: { icerikId: string }) {
     setSorular((l) => l?.map((x) => (x.id === s.id ? { ...x, sure_sn: yeni } : x)) ?? l)
     const { error } = await supabase.from('questions').update({ sure_sn: yeni }).eq('id', s.id)
     if (error) setHata('Süre kaydedilemedi.')
+  }
+
+  /** Düzenlenen sorunun metnini, şıklarını, süresini ve paketini kaydeder (diğer ek bilgiler korunur). */
+  async function soruKaydet(s: Soru, d: SoruDegisikligi) {
+    const { paket: _eski, ...kalan } = s.ek
+    const { error } = await supabase
+      .from('questions')
+      .update({ soru: d.soru, dogru: d.dogru, yanlislar: d.yanlislar, sure_sn: d.sure_sn, ek: d.paket ? { ...kalan, paket: d.paket.slice(0, 80) } : kalan })
+      .eq('id', s.id)
+    if (error) throw error
+    setDuzenlenen(null)
+    await yukle()
+  }
+
+  /** Paketteki bütün sorulara aynı süreyi (sn) ya da her soruya uzunluğuna göre otomatik süre verir. */
+  async function paketSuresi(g: PaketGrubu, sn: number | 'otomatik') {
+    setMesgul(true)
+    setHata(null)
+    try {
+      if (sn === 'otomatik') {
+        for (const s of g.sorular) {
+          const yeni = otomatikSure(s)
+          if (yeni !== s.sure_sn) {
+            const { error } = await supabase.from('questions').update({ sure_sn: yeni }).eq('id', s.id)
+            if (error) throw error
+          }
+        }
+      } else {
+        const { error } = await supabase.from('questions').update({ sure_sn: sn }).in('id', g.sorular.map((s) => s.id))
+        if (error) throw error
+      }
+      setMesaj(`${g.ad || 'Paketsiz'} paketindeki ${g.sorular.length} sorunun süresi ayarlandı.`)
+    } catch {
+      setHata('Süreler kaydedilemedi.')
+    }
+    setMesgul(false)
+    yukle()
   }
 
   async function paketeTasi(s: Soru, ad: string) {
@@ -264,6 +303,21 @@ export default function SoruBankasi({ icerikId }: { icerikId: string }) {
                       Yeniden adlandır
                     </button>
                   )}
+                  <select
+                    aria-label="Paketteki bütün soruların süresi"
+                    className="giris-kutusu !w-auto !py-1.5 !px-2 text-xs"
+                    value=""
+                    disabled={mesgul}
+                    onChange={(e) => e.target.value && paketSuresi(g, e.target.value === 'otomatik' ? 'otomatik' : Number(e.target.value))}
+                  >
+                    <option value="">⏱ Süreleri ayarla…</option>
+                    <option value="otomatik">Otomatik (soru uzunluğuna göre)</option>
+                    {SURELER.map((x) => (
+                      <option key={x} value={x}>
+                        Hepsi {x} sn
+                      </option>
+                    ))}
+                  </select>
                   <button className="tehlike-buton" disabled={mesgul} onClick={() => paketiKaldir(g)}>
                     Paketi sil
                   </button>
@@ -303,9 +357,15 @@ export default function SoruBankasi({ icerikId }: { icerikId: string }) {
                           </option>
                         ))}
                       </select>
+                      <button className="ikincil-buton !py-1 !px-2 text-xs" onClick={() => setDuzenlenen(duzenlenen === s.id ? null : s.id)}>
+                        Düzenle
+                      </button>
                       <button className="tehlike-buton !py-1 !px-2 text-xs" onClick={() => sil(s)}>
                         Sil
                       </button>
+                      {duzenlenen === s.id && (
+                        <SoruFormu soru={s} paket={g.ad} paketAdlari={paketAdlari} kaydet={(d) => soruKaydet(s, d)} vazgec={() => setDuzenlenen(null)} />
+                      )}
                     </li>
                   ))}
                 </ol>

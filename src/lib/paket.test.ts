@@ -61,3 +61,13 @@ describe('karistir', () => {
     expect(k).not.toEqual(d)
   })
 })
+
+import { otomatikSure } from './paket'
+
+describe('otomatikSure', () => {
+  it('kısa soruya kısa, uzun paragraflı soruya uzun süre verir', () => {
+    expect(otomatikSure({ soru: 'Başkent?', dogru: 'Ankara', yanlislar: ['Bodrum', 'Kars'] })).toBe(15)
+    expect(otomatikSure({ soru: 'a'.repeat(300), dogru: 'b'.repeat(40), yanlislar: ['c'.repeat(40), 'd'.repeat(40), 'e'.repeat(40)] })).toBe(30)
+    expect(otomatikSure({ soru: 'a'.repeat(900), dogru: 'b', yanlislar: ['c'] })).toBe(60)
+  })
+})

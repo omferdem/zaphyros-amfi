@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.24.0 (14 Kasım 2026)
+Soru yönetimi ve soru süreleri.
+- **Soruyu düzenle:** Ders düzenleme sayfasındaki soru paketlerinde her sorunun yanında "Düzenle": soru metni, doğru cevap, yanlış şıklar (her satıra bir şık, en fazla 5), cevap süresi ve paket tek formda değiştirilir; kayıttan önce denetlenir (boş metin, çift şık, doğruyla aynı şık, süre sınırı). Sorunun öbür ek bilgileri (kazanım vb.) korunur.
+- **Süre soru bazında ayarlanır:** her soru kendi süresine sahip olabilir (10-120 sn). Akış düzenleme sayfasında her soru adımının yanında süre seçici vardır; soru paketinde "⏱ Süreleri ayarla" ile paketin hepsine aynı süre ya da "Otomatik" (soru ve şık uzunluğuna göre 15-60 sn) verilir.
+- **Derste süre uzat:** soru perdedeyken "⏱ +10 sn" düğmesi o sorunun süresini 10 saniye uzatır (öğrenci telefonları yeni kalan süreyi alır).
+
 ## v0.23.0 (13 Kasım 2026)
 Programın adı ZAPEDU oldu.
 - Programın adı "AmfiOS" yerine **ZAPEDU**: panel başlığı, giriş ekranı, sekme başlığı, masaüstü uygulaması (pencere ve kurulum adı) ve belgeler. Depo adı ve canlı adres aynı kaldı. İçerik paketlerinin iç türü (`amfios-icerik`) ve uygulama kimliği, eski paketler ve kurulu masaüstü uygulaması çalışmaya devam etsin diye değişmedi; önceki sürüm notları tarihî adıyla durur.

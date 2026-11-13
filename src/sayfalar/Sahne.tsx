@@ -800,6 +800,21 @@ function SoruSahnesi({
     supabase.from('sessions').update({ soru_durum: 'sonuc' }).eq('id', oturumId).eq('soru_durum', 'acik').then(() => {})
   }, [oturumId, adimId])
 
+  /** Soru açıkken süreyi uzatır: sorunun başlama anı ileri alınır; öğrenci telefonları yeni kalan süreyi yayından alır. */
+  const sureUzat = useCallback(
+    async (sn: number) => {
+      const { data } = await supabase.from('sessions').select('soru_basladi').eq('id', oturumId).single()
+      const basladi = (data as { soru_basladi: string | null } | null)?.soru_basladi
+      if (!basladi) return
+      await supabase
+        .from('sessions')
+        .update({ soru_basladi: new Date(new Date(basladi).getTime() + sn * 1000).toISOString() })
+        .eq('id', oturumId)
+        .eq('soru_durum', 'acik')
+    },
+    [oturumId],
+  )
+
   // Süre bitince doğru cevap kendiliğinden açıklanır (bir kez).
   useEffect(() => {
     if (soruDurum === 'acik' && kalan === 0 && kapatildi.current !== adimId) sonucuGoster()
@@ -861,6 +876,11 @@ function SoruSahnesi({
         {!sonuc && (
           <button className="parlak-buton rounded-xl px-5 py-2.5 font-bold" onClick={sonucuGoster}>
             Cevabı göster
+          </button>
+        )}
+        {!sonuc && (
+          <button className="ikincil-buton" onClick={() => sureUzat(10)} title="Bu sorunun süresini 10 saniye uzat">
+            ⏱ +10 sn
           </button>
         )}
         {kod && (

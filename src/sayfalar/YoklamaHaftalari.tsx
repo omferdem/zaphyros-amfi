@@ -57,6 +57,16 @@ export default function YoklamaHaftalari({
     }
   }
 
+  /** Haftanın yoklamasını tamamen iptal eder: oturum ve bütün katılım kayıtları silinir, hafta yeniden başlatılabilir. */
+  async function iptal(n: number, o: Oturum) {
+    const k = katilan.get(o.id) ?? 0
+    if (!window.confirm(`${n}. ${birim} yoklaması TAMAMEN iptal edilecek: oturum ve ${k} katılım kaydı silinir. Sonra bu ${birim}in yoklamasını sıfırdan başlatabilirsin. Emin misin?`)) return
+    setHata(null)
+    const { error } = await supabase.from('sessions').delete().eq('id', o.id)
+    if (error) setHata('Yoklama iptal edilemedi.')
+    await yenile()
+  }
+
   async function ayarKaydet(e: React.FormEvent) {
     e.preventDefault()
     setHata(null)
@@ -140,6 +150,11 @@ export default function YoklamaHaftalari({
                   <Link to={`/panel/oturum/${o.id}`} className="ikincil-buton !py-1 !px-2 text-xs">
                     Liste
                   </Link>
+                )}
+                {o && (
+                  <button className="tehlike-buton !py-1 !px-2 text-xs" onClick={() => iptal(n, o)} title="Bu haftanın yoklamasını tamamen sil ve yeniden başlat">
+                    İptal et
+                  </button>
                 )}
               </div>
             </li>

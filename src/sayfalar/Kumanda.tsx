@@ -341,7 +341,7 @@ export default function Kumanda() {
 
       {durum.kod && (
         <section className="cam-panel rounded-2xl p-4 text-center">
-          <p className="text-xs text-slate-400">Geç gelenler için ders kodu (dakikada bir değişir)</p>
+          <p className="text-xs text-slate-400">Geç gelenler için ders kodu (10 saniyede bir değişir)</p>
           <p className="text-3xl font-mono font-extrabold tracking-widest">
             {durum.kod.kod.slice(0, 3)} {durum.kod.kod.slice(3)}
           </p>

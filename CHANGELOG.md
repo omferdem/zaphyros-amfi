@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.22.0 (13 Kasım 2026)
+Yoklama iptali ve 10 saniyelik giriş kodu.
+- **Yoklamayı iptal et:** Yoklama haftaları kartlarında "İptal et" düğmesi. O haftanın oturumu ve bütün katılım kayıtları (onayla) tamamen silinir; hafta "Yoklama alınmadı" durumuna döner ve sıfırdan başlatılabilir.
+- **Ders kodu 10 saniyede bir değişir:** Perdedeki ve kumandadaki 6 haneli giriş kodu artık karekodla aynı sürede (10 saniye) değişir; kod dışarıdaki birine verilip derse girilemez. Karekoddaki gibi içinde bulunulan ve önceki iki pencerenin kodu kabul edilir (en fazla 30 saniye), yavaş yazan öğrenci de girebilir. Eski dakikalık kodlar artık geçmez.
+- Veritabanı: `0021_kod_10sn.sql` (`ozel.kod_bilgisi` ve `kodla_katil` güncellendi). `npm run sql-test` ile yerelde denendi (güncel ve önceki iki pencere kabul, eski ve dakikalık kod ret); henüz Supabase'e uygulanmadı.
+
 ## v0.21.1 (13 Kasım 2026)
 İçerik paketi içe aktarma düzeltmeleri (gerçek paketle denemede çıktı).
 - Karışık türde adımlar (slayt, video, etkinlik, soru) tek seferde eklenirken eksik alanlar boş değerle yazılıyor ve akışa hiç adım eklenmiyordu; bütün adımlar artık aynı alanlarla gönderiliyor.

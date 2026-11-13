@@ -33,7 +33,7 @@ const HATALAR: Record<string, string> = {
   numara_kullanildi: 'Bu numarayla bu derste başka bir telefondan yoklama verilmiş. Hatalıysa hocana söyle.',
   cihaz_kullanildi: 'Bu telefondan bu derste başka bir numarayla yoklama verildi. Her öğrenci kendi telefonunu kullanmalı.',
   tekrar_dene: 'Bir çakışma oldu. Lütfen tekrar dene.',
-  kod_yanlis: 'Bu kod tutmadı. Kod dakikada bir değişir; perdedeki güncel kodu yaz.',
+  kod_yanlis: 'Bu kod tutmadı. Kod birkaç saniyede bir değişir; perdedeki güncel kodu yaz.',
 }
 
 // Form hatası sayılmayan, akışı bitiren hatalar

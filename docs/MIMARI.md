@@ -137,7 +137,7 @@ PPTX'i tarayıcıda birebir çizmek güvenilir değil. Hoca sunumu **PDF olarak*
 
 ## Ders kodu ve kumanda
 
-- **Ders kodu**: oturumun gizli anahtarı ve dakika numarasından türetilen 6 haneli sayı. `kodla_katil()` açık oturumlar arasında (son 12 saat) bu dakikanın ya da bir önceki dakikanın koduna uyanı bulur. Yoklama açıksa QR'daki gibi cihaza bağlı bilet döner, numara `check_in()` ile girilir.
+- **Ders kodu** (0021'den beri): oturumun gizli anahtarı ve 10 saniyelik pencere numarasından türetilen 6 haneli sayı (karekodla aynı süre). `kodla_katil()` açık oturumlar arasında (son 12 saat) güncel ya da önceki iki pencerenin koduna uyanı bulur. Yoklama açıksa QR'daki gibi cihaza bağlı bilet döner, numara `check_in()` ile girilir.
 - **Kumanda**: her oturumun ayrı, rastgele 64 haneli kumanda anahtarı vardır (`ozel.session_secrets.kumanda`). Sahnedeki Kumanda QR'ı bu anahtarı içerir; telefon anahtarı saklar ve adres çubuğundan siler. Telefonda hoca girişi varsa anahtar `kumanda_anahtari()` ile de alınır.
 
 **Misafir öğrenci** (v0.13.0, `0013_misafir_ogrenci.sql`): `students.asil_id`, öğrencinin asıl şubesindeki kaydına bağlanır (başka şube, aynı hoca, zincir yok; tetikleyiciyle denetlenir). Misafir satır, gittiği şubede normal öğrenci gibi yoklama ve etkinlik alır. Yoklama raporunda asıl şubenin aynı `lesson_id`li oturumu, misafir katılımıyla tarayıcıda tamamlanır (`misafirYoklamalari`). **Ders içeriği paketi** (`.amfi`): ZIP; `icerik.json` (akışlar, adımlar, sorular, sunum künyesi) ve `sunumlar/N.pdf`. İçe aktarmada kimlikler yeniden üretilir.

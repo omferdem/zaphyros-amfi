@@ -257,7 +257,7 @@ export default function Sahne() {
     }
   }
   // Önerilen paket: şu an (ya da Kahoottan önce) hangi haftanın akışındaysak onun paketi
-  const haftaNo = adaGoreHafta(akislar.find((a) => a.id === oturum?.lesson_id)?.ad ?? donusKaydi()?.ad)
+  const haftaNo = adaGoreHafta(akislar.find((a) => a.id === oturum?.lesson_id)?.ad ?? donusKaydi()?.ad) ?? oturum?.hafta_no ?? null
 
   /** Seçilen soru paketini canlı Kahoot olarak açar: gizli bir akış (⚡ paket adı) paketin sorularıyla kurulur, dönüş noktası saklanır. */
   async function kahootaGit(paketAdi: string, sorular: { id: string }[], mod: OyunAnahtari | null) {
@@ -307,7 +307,8 @@ export default function Sahne() {
         hedefAdim = (ilk?.[0]?.id as string | undefined) ?? null
       }
     }
-    const degisiklik = hedefAkis ? { lesson_id: hedefAkis, aktif_adim: hedefAdim } : { aktif_adim: null }
+    // Dönülecek akış yoksa (ders yoklama ekranından açılmıştı) Kahoot akışından çıkılır ve yoklama ekranı açılır
+    const degisiklik = hedefAkis ? { lesson_id: hedefAkis, aktif_adim: hedefAdim } : { lesson_id: null, aktif_adim: null }
     const { error } = await supabase.from('sessions').update(degisiklik).eq('id', oturumId)
     if (error) return window.alert('Derse dönülemedi. Bağlantını kontrol edip tekrar dene.')
     setOturum((o) => (o ? { ...o, ...degisiklik } : o))

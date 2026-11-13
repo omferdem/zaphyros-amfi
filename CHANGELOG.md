@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.26.1 (14 Kasım 2026)
+Kahoot geçişi düzeltmeleri.
+- Ders yoklama ekranından açılmışsa "Derse dön" Kahoot akışından çıkıp yoklama ekranına döner (önceden Kahoot ekranında kalıyordu). Önerilen paket, akış seçilmemişse oturumun hafta numarasından bulunur.
+- Din Felsefesi I ve 2 içerikleri yeni düzene göre yeniden yüklendi: akışlarda ısınma, slayt, video, şeytanın avukatı ve çıkış bileti; her hafta ayrı Hızlı Kahoot ve Ciddi Quiz paketi.
+
 ## v0.26.0 (14 Kasım 2026)
 Kahoot ve quizler akıştan ayrıldı: hoca konu bitince sahneden açar, bitirir, derse kaldığı yerden döner.
 - **Sahnede iki yeni düğme:** "🎮 Kahoot'a git" ve "📝 Quize git". Kahoot'ta hazır bir soru paketi seçilir (bu haftanın paketi başta, önerilen), nasıl oynanacağı seçilir (bireysel, takım, halat çekme, hocayla yarış, bilgi merdiveni; her paket için önerilen mod hazırdır) ve sorular perdeye tek tek gelir. Bitince "↩ Derse dön" kaldığın akışa ve slayta geri götürür; puan tablosu aynı çubuktadır. Perde arkasında paket adıyla (⚡) gizli bir akış kurulur; akış listelerinde görünmez.

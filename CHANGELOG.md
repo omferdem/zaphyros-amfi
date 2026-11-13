@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.27.1 (14 Kasım 2026)
+Akışta slayt önizlemesi.
+- Akış düzenlemede bir slaydın küçük resmine tıklayınca büyük önizleme açılır: slayt, sayfanın metni ve yalnızca hocanın gördüğü not kutusu. Ok tuşlarıyla akıştaki öteki slaytlara geçilir, Esc kapatır. Notu olan slaytta 📝 işareti görünür. Not öğrenciye ve perdeye gitmez.
+- Ek slayt sunumlarının adları "9. hafta: Ek slaytlar" biçimine getirildi.
+
 ## v0.27.0 (14 Kasım 2026)
 Kaldığın yerden devam ve ek slaytlar.
 - **Kaldığın yerden devam:** bir şubede akış yarım kalırsa (ör. A sınıfında 2. haftanın ortasında), o şubede aynı akış sonraki oturumda seçildiğinde ya da başlatıldığında kaldığı adımdan açılır; "nerede kalmıştık" diye aranmaz. Sahnede "N / M. adımdan devam ediliyor" bilgisi ve "Baştan başla" bağlantısı çıkar. Her şubenin ilerlemesi ayrı tutulur.

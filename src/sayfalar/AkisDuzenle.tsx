@@ -9,6 +9,7 @@ import SoruPaketiEkle from '../bilesenler/SoruPaketiEkle'
 import SunumSurukle from '../bilesenler/SunumSurukle'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
+import SlaytOnizleme from '../bilesenler/SlaytOnizleme'
 
 /** Dosya adından sunum adı: uzantı ve alt çizgiler atılır. */
 function dosyadanAd(ad: string): string {
@@ -71,6 +72,19 @@ export default function AkisDuzenle() {
     [adimlar],
   )
   const { belgeler } = usePdfBelgeleri(akis?.subject_id, kullanilanSunumlar)
+  const [onizleme, setOnizleme] = useState<number | null>(null)
+
+  /** Slayt notunu adımın ayarına yazar (öğrenciye ve perdeye gitmez). */
+  async function notKaydet(adimId: string, metin: string) {
+    const a = adimlar.find((x) => x.id === adimId)
+    if (!a) return
+    const ayar = { ...a.ayar }
+    if (metin) ayar.not = metin
+    else delete ayar.not
+    const { error } = await supabase.from('lesson_steps').update({ ayar }).eq('id', adimId)
+    if (error) throw error
+    setAdimlar((l) => l.map((x) => (x.id === adimId ? { ...x, ayar } : x)))
+  }
 
   async function adiKaydet() {
     if (!akis || !ad.trim() || ad.trim() === akis.ad) return
@@ -466,11 +480,20 @@ export default function AkisDuzenle() {
               >
                 <span className="w-7 text-right font-mono text-xs text-slate-500">{i + 1}</span>
                 {a.tur === 'slayt' ? (
-                  <SlaytCizimi
-                    belge={a.presentation_id ? belgeler.get(a.presentation_id) : undefined}
-                    sayfaNo={a.sayfa_no ?? 1}
-                    className="w-28 h-16 shrink-0 rounded bg-slate-900"
-                  />
+                  <button
+                    type="button"
+                    className="relative shrink-0 rounded focus:outline-2 focus:outline-indigo-300 cursor-zoom-in"
+                    onClick={() => setOnizleme(i)}
+                    title="Büyük önizleme ve not"
+                    aria-label="Slaytı büyüt"
+                  >
+                    <SlaytCizimi
+                      belge={a.presentation_id ? belgeler.get(a.presentation_id) : undefined}
+                      sayfaNo={a.sayfa_no ?? 1}
+                      className="w-28 h-16 rounded bg-slate-900"
+                    />
+                    {a.ayar.not && <span className="absolute -top-1 -right-1 text-xs" title="Notu var">📝</span>}
+                  </button>
                 ) : a.tur === 'soru' ? (
                   <div className="w-28 h-16 shrink-0 rounded bg-fuchsia-500/10 flex items-center justify-center text-fuchsia-300 text-xs font-bold">
                     SORU
@@ -555,6 +578,9 @@ export default function AkisDuzenle() {
             )
           })}
         </ol>
+      )}
+      {onizleme !== null && (
+        <SlaytOnizleme adimlar={adimlar} baslangic={onizleme} belgeler={belgeler} sunumlar={sunumHaritasi} notKaydet={notKaydet} kapat={() => setOnizleme(null)} />
       )}
     </div>
   )

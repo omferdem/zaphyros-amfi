@@ -102,6 +102,8 @@ export interface AdimAyari {
   /** Oyun adımında: 'takim' | 'halat' | 'hoca' | 'merdiven' */
   oyun?: string
   aciklama?: string
+  /** Hocanın bu adım için notu (yalnızca düzenleme ekranında görünür) */
+  not?: string
 }
 
 export interface Adim {

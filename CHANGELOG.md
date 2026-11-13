@@ -3,7 +3,7 @@
 ## v0.22.1 (13 Kasım 2026)
 Karekod ve giriş kodu 6 saniyede bir değişir.
 - Karekod ve yoklama (ders) kodu süresi uzun bulunduğu için ikisi de **6 saniyede** bir değişir (önceden karekod 10 saniye, kod 10 saniyeydi; v0.22.0'daki 10 saniyelik kod değişikliği 6 saniyeye çekildi). Sahnedeki karekodun geri sayım çubuğu, perdedeki ve kumandadaki 6 haneli kod aynı süreyle yenilenir. Karekod ve kodda içinde bulunulan ve önceki iki pencere (en fazla 18 saniye) kabul edilir; yavaş okutan ya da yazan öğrenci de girebilir. Öğrenciye verilen bilet, numarasını yazması için yaklaşık 108 saniye geçerlidir.
-- Veritabanı: `0021_pencere_6sn.sql` (adı `0021_kod_10sn.sql` iken değiştirildi; `ozel.pencere`, `qr_token`, `kod_bilgisi`, `kodla_katil`). `npm run sql-test` ile yerelde denendi; henüz Supabase'e uygulanmadı.
+- Veritabanı: `0021_pencere_6sn.sql` (adı `0021_kod_10sn.sql` iken değiştirildi; `ozel.pencere`, `qr_token`, `kod_bilgisi`, `kodla_katil`). `npm run sql-test` ile yerelde denendi; Supabase'e 13 Kasım 2026'da uygulandı (dört fonksiyonun 6 saniyeli yeni sürümü, anonim yetkiler ve sahte kodun reddi sorguyla doğrulandı).
 
 ## v0.22.0 (13 Kasım 2026)
 Yoklama iptali ve 10 saniyelik giriş kodu.

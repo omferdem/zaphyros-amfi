@@ -4,7 +4,7 @@
 Ders gibi deneme ve açık uçlu soruda süre ile "cevapları yansıt".
 - **Önizleme artık ders gibi denenir:** soru, açık uçlu soru, beyin fırtınası, kelime bulutu ve oylama adımlarında hoca "Etkinliği aç" der, sağdaki öğrenci telefonundan cevap verirsin (süre işler), süre bitince hoca "Cevapları yansıt" / "Cevabı göster" der ve perdeye düşer. Slayt ve diğer adımlar eskisi gibi. "Ders gibi dene" kutusundan kapatılır.
 - **Açık uçlu soruya süre:** akış düzenlemede etkinlik eklerken cevap süresi seçilir (açık uçlu soruda varsayılan 90 sn). Sahnede geri sayım halkası, telefonda kalan süre; süre dolunca sunucu cevap almaz. Açık uçlu soruda cevaplar "📣 Cevapları yansıt" denene kadar perdede görünmez (kumandada görünür).
-- **0024_kumanda_notu.sql Supabase'e uygulandı** (14 Kasım 2026): slayt notu kumandada görünür. **0025_acik_uclu_sure.sql henüz uygulanmadı**; uygulanana kadar süre ve gizli cevap sunucuda işlemez (perde ve telefonda geri sayım çıkmaz, cevaplar canlı görünür).
+- **0024_kumanda_notu.sql ve 0025_acik_uclu_sure.sql Supabase'e uygulandı** (14 Kasım 2026, SQL Editor'den, kullanıcı onayıyla ve doğrulanarak): slayt notu kumandada görünür; açık uçlu soruda süre sunucuda işler ve cevaplar yansıtılana kadar perdeye gitmez.
 
 ## v0.35.1 (14 Kasım 2026)
 Canlı denemede bulunanlar.

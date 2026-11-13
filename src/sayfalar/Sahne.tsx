@@ -19,7 +19,7 @@ import type { OyunAnahtari } from '../lib/oyun'
 import { dersEtiketi, kisaAd, oturumAdi } from '../lib/bicim'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
 import { SIKLAR, bitisAni } from '../lib/yarisma'
-import { KelimeBulutu, OylamaSonucu, VideoOynatici } from '../bilesenler/Etkinlik'
+import { KelimeBulutu, OylamaSonucu, VideoOynatici, useKalanSaniye } from '../bilesenler/Etkinlik'
 import SinifPaneli, { useSinifDurumu } from '../bilesenler/SinifPaneli'
 import TakimPaneli from '../bilesenler/TakimPaneli'
 import HocaYarisiPaneli from '../bilesenler/HocaYarisiPaneli'
@@ -1156,6 +1156,8 @@ function EtkinlikSahnesi({
     yenile()
   }
 
+  const acikUclu = (durum?.mod ?? adim.ayar.mod) === 'acik'
+  const kalanSn = useKalanSaniye(durum?.kalan_ms, adim.id)
   const baslikEtiketi = adim.tur === 'fikir' ? '🧠 Beyin fırtınası' : adim.tur === 'oylama' ? '⚖️ Şeytanın avukatı' : '🎬 Video'
 
   return (
@@ -1174,6 +1176,11 @@ function EtkinlikSahnesi({
         <>
           <section className="cam-panel rounded-3xl p-6 lg:p-10 flex items-center gap-6">
             <h1 className="flex-1 text-3xl lg:text-5xl font-extrabold leading-tight whitespace-pre-line">{adim.ayar.soru}</h1>
+            {acik && adim.ayar.sure_sn && kalanSn !== null && (
+              <div className="shrink-0">
+                <Halka oran={kalanSn / adim.ayar.sure_sn} etiket={kalanSn} boyut={110} />
+              </div>
+            )}
             <div className="shrink-0 text-center">
               <p className="text-5xl lg:text-6xl font-extrabold tabular-nums">{durum?.cevap_sayisi ?? 0}</p>
               <p className="text-sm text-slate-400">{adim.tur === 'fikir' ? 'kişi yazdı' : 'oy'}</p>
@@ -1181,7 +1188,15 @@ function EtkinlikSahnesi({
           </section>
 
           <section className="cam-panel rounded-3xl p-6 lg:p-8 flex-1 flex flex-col justify-center">
-            {adim.tur === 'fikir' ? (
+            {adim.tur === 'fikir' && acikUclu && acik ? (
+              <div className="text-center space-y-3">
+                <p className="text-5xl" aria-hidden>
+                  ✍️
+                </p>
+                <p className="text-2xl lg:text-3xl font-extrabold">Öğrenciler yazıyor…</p>
+                <p className="text-slate-300 text-lg">Cevaplar sen “Cevapları yansıt” diyene kadar perdede görünmez.</p>
+              </div>
+            ) : adim.tur === 'fikir' ? (
               <KelimeBulutu fikirler={durum?.fikirler ?? []} buyuk gizle={fikriGizle} mod={durum?.mod ?? adim.ayar.mod} />
             ) : acik ? (
               <div className="text-center space-y-3">
@@ -1200,7 +1215,7 @@ function EtkinlikSahnesi({
           <footer className="flex flex-wrap items-center gap-4">
             {acik ? (
               <button className="parlak-buton rounded-xl px-5 py-2.5 font-bold" onClick={() => durumDegistir('sonuc')}>
-                {adim.tur === 'fikir' ? 'Toplamayı bitir' : 'Sonucu göster'}
+                {adim.tur === 'fikir' ? (acikUclu ? '📣 Cevapları yansıt' : 'Toplamayı bitir') : 'Sonucu göster'}
               </button>
             ) : (
               <button className="ikincil-buton" onClick={() => durumDegistir('acik')}>

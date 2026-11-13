@@ -102,6 +102,8 @@ export interface AdimAyari {
   /** Oyun adımında: 'takim' | 'halat' | 'hoca' | 'merdiven' */
   oyun?: string
   aciklama?: string
+  /** Fikir ve oylama adımında cevap süresi (saniye); yoksa süresiz */
+  sure_sn?: number
   /** Fikir adımının kipi: 'bulut' (varsayılan), 'firtina' ya da 'acik' */
   mod?: 'bulut' | 'firtina' | 'acik'
   /** Hocanın bu adım için notu (yalnızca düzenleme ekranında görünür) */
@@ -151,6 +153,8 @@ export interface DersDurumu {
     fikirler?: { m: string; n: number }[]
     /** Fikir adımının kipi: kelime bulutu, beyin fırtınası ya da açık uçlu soru */
     mod?: 'bulut' | 'firtina' | 'acik'
+    /** Açık uçlu soruda cevaplar hoca yansıtana kadar perdeye gönderilmez */
+    gizli_cevap?: boolean
     etiketler?: string[]
     /** Oylamada sonuç açıklanınca [sol, sağ] oy sayısı */
     sayilar?: number[] | null

@@ -7,6 +7,7 @@ import { SIKLAR } from '../lib/yarisma'
 import { youtubeGomme } from '../lib/video'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
 import OyunProvasi from '../bilesenler/OyunProvasi'
+import { SimKontrol, SimPerde, SimTelefon, etkilesimli, ilkSim, simSuresi, useSimSayaci, type Sim } from './OnizlemeSimulasyonu'
 
 type Gorunum = 'perde' | 'telefon' | 'ikisi'
 
@@ -50,6 +51,9 @@ export default function AkisOnizleme() {
   const [i, setI] = useState(0)
   const [gorunum, setGorunum] = useState<Gorunum>('ikisi')
   const [cevapGoster, setCevapGoster] = useState(false)
+  // "Ders gibi dene": soru, açık uçlu, bulut ve oylama adımlarında hoca açar, öğrenci cevaplar, hoca yansıtır
+  const [canli, setCanli] = useState(true)
+  const [sim, setSimDurum] = useState<Sim>(ilkSim())
   const [prova, setProva] = useState(false)
 
   const yukle = useCallback(async () => {
@@ -80,7 +84,9 @@ export default function AkisOnizleme() {
 
   useEffect(() => {
     setCevapGoster(false)
+    setSimDurum(ilkSim())
   }, [i])
+  useSimSayaci(sim, setSimDurum)
 
   useEffect(() => {
     function tus(e: KeyboardEvent) {
@@ -104,8 +110,10 @@ export default function AkisOnizleme() {
   const sunum = adim?.presentation_id ? sunumHaritasi.get(adim.presentation_id) : undefined
   const slaytMetni = sunum?.metinler[(adim?.sayfa_no ?? 1) - 1] ?? ''
 
-  const perde = adim ? <PerdeIcerigi adim={adim} soru={soru} cevapGoster={cevapGoster} belge={adim.presentation_id ? belgeler.get(adim.presentation_id) : undefined} /> : null
-  const telefon = adim ? <TelefonIcerigi adim={adim} soru={soru} metin={slaytMetni} belge={adim.presentation_id ? belgeler.get(adim.presentation_id) : undefined} /> : null
+  const simAktif = canli && !!adim && etkilesimli(adim)
+  const sure = adim ? simSuresi(adim, soru) : null
+  const perde = adim && simAktif ? <SimPerde adim={adim} soru={soru} sim={sim} /> : adim ? <PerdeIcerigi adim={adim} soru={soru} cevapGoster={cevapGoster} belge={adim.presentation_id ? belgeler.get(adim.presentation_id) : undefined} /> : null
+  const telefon = adim && simAktif ? <SimTelefon adim={adim} soru={soru} sim={sim} degistir={setSimDurum} /> : adim ? <TelefonIcerigi adim={adim} soru={soru} metin={slaytMetni} belge={adim.presentation_id ? belgeler.get(adim.presentation_id) : undefined} /> : null
 
   return (
     <main className="min-h-screen p-3 sm:p-5 max-w-7xl mx-auto space-y-3">
@@ -167,13 +175,29 @@ export default function AkisOnizleme() {
                 ▶
               </button>
               <span className="text-xs text-slate-400">{adim ? etiketAdi(adim) : ''} · ok tuşları ve boşluk da çalışır</span>
-              {adim?.tur === 'soru' && (
+              {adim && etkilesimli(adim) && (
+                <label className="ml-auto text-xs flex items-center gap-1.5">
+                  <input type="checkbox" className="accent-fuchsia-500" checked={canli} onChange={(e) => setCanli(e.target.checked)} />
+                  Ders gibi dene (etkileşimli)
+                </label>
+              )}
+              {adim?.tur === 'soru' && !simAktif && (
                 <label className="ml-auto text-xs flex items-center gap-1.5">
                   <input type="checkbox" className="accent-indigo-500" checked={cevapGoster} onChange={(e) => setCevapGoster(e.target.checked)} />
                   Doğru cevabı göster
                 </label>
               )}
             </div>
+            {simAktif && adim && (
+              <SimKontrol
+                adim={adim}
+                sim={sim}
+                ac={() => setSimDurum((x) => ({ ...x, durum: 'acik', kalan: sure }))}
+                bitir={() => setSimDurum((x) => ({ ...x, durum: 'kapandi', kalan: x.kalan === null ? null : 0 }))}
+                yansit={() => setSimDurum((x) => ({ ...x, durum: 'sonuc' }))}
+                sifirla={() => setSimDurum(ilkSim())}
+              />
+            )}
             <div className={`grid gap-4 items-start`}>
               {gorunum !== 'telefon' && (
                 <PerdeCercevesi>{perde}</PerdeCercevesi>

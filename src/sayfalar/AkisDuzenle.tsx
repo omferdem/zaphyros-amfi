@@ -41,6 +41,8 @@ export default function AkisDuzenle() {
   const [etkinlikTuru, setEtkinlikTuru] = useState<'bulut' | 'firtina' | 'acik' | 'oylama' | 'video' | 'oyun'>('bulut')
   const [oyunSecimi, setOyunSecimi] = useState<OyunAnahtari>('takim')
   const [etkinlikSorusu, setEtkinlikSorusu] = useState('')
+  // Cevap süresi (saniye); 0 = süresiz. Açık uçlu soruda varsayılan 90 sn.
+  const [etkinlikSuresi, setEtkinlikSuresi] = useState(0)
   const [etiketSol, setEtiketSol] = useState('')
   const [etiketSag, setEtiketSag] = useState('')
   const [videoUrl, setVideoUrl] = useState('')
@@ -214,6 +216,8 @@ export default function AkisDuzenle() {
       }
       ayar = { soru }
       if (etkinlikTuru === 'firtina' || etkinlikTuru === 'acik') ayar.mod = etkinlikTuru
+      const sure = etkinlikSuresi || (etkinlikTuru === 'acik' ? 90 : 0)
+      if (sure > 0) ayar.sure_sn = sure
       if (etkinlikTuru === 'oylama' && (etiketSol.trim() || etiketSag.trim())) {
         ayar.etiketler = [etiketSol.trim().slice(0, 40) || 'Katılıyorum', etiketSag.trim().slice(0, 40) || 'Katılmıyorum']
       }
@@ -413,7 +417,10 @@ export default function AkisDuzenle() {
                   key={k}
                   role="radio"
                   aria-checked={etkinlikTuru === k}
-                  onClick={() => setEtkinlikTuru(k)}
+                  onClick={() => {
+                    setEtkinlikTuru(k)
+                    setEtkinlikSuresi(k === 'acik' ? 90 : 0)
+                  }}
                   title={aciklama}
                   className={`text-left rounded-xl border p-3 transition ${etkinlikTuru === k ? 'border-indigo-300 bg-indigo-500/20' : 'border-white/10 bg-white/5 hover:bg-white/10'}`}
                 >
@@ -424,6 +431,20 @@ export default function AkisDuzenle() {
               ))}
             </div>
           </div>
+          {etkinlikTuru !== 'oyun' && etkinlikTuru !== 'video' && (
+            <label className="flex items-center gap-2 text-xs text-slate-300">
+              Cevap süresi
+              <select className="giris-kutusu !w-auto !py-1 text-sm" value={etkinlikSuresi} onChange={(e) => setEtkinlikSuresi(Number(e.target.value))}>
+                <option value={0}>Süresiz (hoca bitirir)</option>
+                {[30, 45, 60, 90, 120, 180, 300].map((x) => (
+                  <option key={x} value={x}>
+                    {x >= 60 ? `${x / 60} dk` : `${x} sn`}
+                  </option>
+                ))}
+              </select>
+              <span className="text-slate-500">Süre bitince cevap alınmaz; açık uçlu soruda cevapları sen yansıtırsın.</span>
+            </label>
+          )}
           {etkinlikTuru === 'oyun' ? (
             <div className="space-y-2">
               <select className="giris-kutusu text-sm" value={oyunSecimi} onChange={(e) => setOyunSecimi(e.target.value as OyunAnahtari)} aria-label="Oyun">
@@ -567,7 +588,7 @@ export default function AkisDuzenle() {
                       <p className="text-xs text-slate-400 truncate">
                         {a.tur === 'fikir'
                           ? a.ayar.mod === 'acik'
-                            ? 'Açık uçlu soru · cevaplar perdede kart olarak'
+                            ? `Açık uçlu soru · ${a.ayar.sure_sn ? `${a.ayar.sure_sn} sn · ` : ''}sen yansıtınca perdede kartlar`
                             : a.ayar.mod === 'firtina'
                               ? 'Beyin fırtınası · fikirler perdede kart olarak'
                               : 'Kelime bulutu · perdede bulut'

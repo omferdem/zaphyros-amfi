@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { cihazKimligi, oku, sakla } from '../lib/cihaz'
 import type { DersDurumu } from '../lib/tipler'
@@ -9,6 +9,22 @@ type Adim = NonNullable<DersDurumu['adim']>
 const RENKLER = ['text-rose-300', 'text-sky-300', 'text-amber-300', 'text-emerald-300', 'text-violet-300', 'text-cyan-300']
 
 /** Fikirler kelime bulutu gibi dizilir: çok yazılan büyük görünür. */
+/** Sunucunun bildirdiği kalan süreden (ms) saniye cinsinden geri sayım; süre yoksa null. */
+export function useKalanSaniye(kalanMs: number | null | undefined, anahtar: string): number | null {
+  const [bitis, setBitis] = useState<number | null>(null)
+  const [simdi, setSimdi] = useState(Date.now())
+  useEffect(() => {
+    setBitis(kalanMs == null ? null : Date.now() + kalanMs)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [anahtar, kalanMs == null ? null : Math.round(kalanMs / 1500)])
+  useEffect(() => {
+    if (bitis === null) return
+    const t = setInterval(() => setSimdi(Date.now()), 250)
+    return () => clearInterval(t)
+  }, [bitis])
+  return bitis === null ? null : Math.max(0, Math.ceil((bitis - simdi) / 1000))
+}
+
 export function KelimeBulutu({
   fikirler,
   buyuk = false,
@@ -142,6 +158,7 @@ const HATALAR: Record<string, string> = {
   metin_uzun: 'Biraz kısalt.',
   ayni: 'Bu fikri zaten yazdın.',
   sinir: 'Gönderme hakkın doldu.',
+  sure_bitti: 'Süre doldu, cevabın alınamadı.',
   dolu: 'Etkinlik doldu.',
   taraf_gecersiz: 'Bir taraf seç.',
   cihaz_gecersiz: 'Tarayıcın tanınamadı. Sayfayı yenile.',
@@ -190,6 +207,8 @@ function FikirFormu({ oturum, adim, acik }: { oturum: string; adim: Adim; acik: 
   const mod = adim.mod ?? 'bulut'
   const hak = mod === 'acik' ? 1 : 3
   const bitti = yazilanlar.length >= hak
+  const kalanSn = useKalanSaniye(adim.kalan_ms, adim.id)
+  const sureDoldu = kalanSn === 0
 
   async function gonder(e: React.FormEvent) {
     e.preventDefault()
@@ -218,7 +237,10 @@ function FikirFormu({ oturum, adim, acik }: { oturum: string; adim: Adim; acik: 
   return (
     <div className="space-y-4">
       <h1 className="text-xl font-extrabold leading-snug whitespace-pre-line">{adim.soru}</h1>
-      {acik && !bitti && (
+      {acik && adim.sure_sn != null && kalanSn !== null && (
+        <p className={`text-sm font-bold tabular-nums ${kalanSn <= 10 ? 'text-rose-300' : 'text-amber-200'}`}>⏱ {kalanSn} sn kaldı</p>
+      )}
+      {acik && !bitti && !sureDoldu && (
         <form onSubmit={gonder} className="space-y-3">
           {mod === 'bulut' ? (
             <input
@@ -252,7 +274,8 @@ function FikirFormu({ oturum, adim, acik }: { oturum: string; adim: Adim; acik: 
         </form>
       )}
       {acik && bitti && <p className="text-emerald-300 font-bold">{mod === 'acik' ? 'Cevabın gönderildi. Perdeye bak.' : 'Üç fikrini de gönderdin. Perdeye bak.'}</p>}
-      {!acik && <p className="text-slate-400">Fikir toplama kapandı. Perdeye bak.</p>}
+      {acik && sureDoldu && !bitti && <p className="text-slate-400">Süre doldu. Perdeye bak.</p>}
+      {!acik && <p className="text-slate-400">{mod === 'acik' ? 'Cevaplar toplandı. Hocan yansıtınca perdede görünecek.' : 'Fikir toplama kapandı. Perdeye bak.'}</p>}
       {hata && <p className="text-sm text-rose-200 bg-rose-500/10 rounded-xl p-3">{hata}</p>}
       {yazilanlar.length > 0 && (
         <ul className="flex flex-wrap gap-2">

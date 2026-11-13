@@ -1,5 +1,13 @@
 # Sürüm Geçmişi
 
+## v0.21.0 (13 Kasım 2026)
+Yoklama sınıfın içinde: yoklama haftaları.
+- Yoklama artık haftalık akışların içinde değil, şubenin (sınıfın) içindedir. Şube sayfasındaki "Oturumlar" sekmesinin en üstünde "Yoklama haftaları" bölümü: hoca şubede kaç yoklama alacağını (ör. 15 hafta ya da 30 ders; 1-60) "⚙ Sayıyı ayarla" ile belirler. Her hafta ayrı bir kart: "Yoklamayı aç" (sıradaki hafta vurgulanır), açıksa "AÇIK" etiketi, alınmışsa "n / N katıldı", "Yeniden aç" ve yoklama listesine "Liste" bağlantısı.
+- Akış sonradan seçilir: yoklama açılınca sahne karekodu gösterir, öğrenciler katılır; hoca sahnenin araç çubuğundaki "Akış seç" listesinden "📋 Yoklama ekranı" ile bir akış arasında geçiş yapar (akış seçilince ilk adımı açılır). Yoklama akıştan bağımsız olduğu için 2. haftanın yoklaması 1. haftanın akışından verilebilir; bir akış iki hafta sürebilir. Akışların içine artık yoklama adımı konmaz.
+- Aynı gün (ya da sonra) o haftanın yoklaması yeniden açılırsa aynı oturum kullanılır: önceki kayıtlar korunur, yeni gelenler de var yazılır (karekod, ders kodu ya da elle). Bir şubede bir hafta numarası tek oturumda bulunur.
+- Eski "Ders başlat" formu "Ek ders başlat" adıyla duruyor (yoklama haftasından bağımsız, akışlı ya da yoklamasız oturumlar için).
+- Veritabanı: `0020_yoklama_haftalari.sql` (`courses.yoklama_sayisi`, `courses.yoklama_birimi`, `sessions.hafta_no` ve şube başına tekil hafta numarası). `npm run sql-test` ile yerelde denendi; henüz Supabase'e uygulanmadı.
+
 ## v0.20.0 (13 Kasım 2026)
 Akışta "oyun" adımı.
 - Haftalık akışa "🎮 Bugünün oyunu" kartı konabilir (akış düzenleyicide Tartışma etkinliği > Oyun kartı): takım yarışması, halat çekme, hocayla yarış ya da bilgi merdiveni. Adım perdede oyunun adını, nasıl oynandığını ve "🚀 Oyunu başlat" düğmesini gösterir; düğme ilgili modu açar (takım sayısını ayarlar, hocayla yarışı açar, halat ya da merdiven panelini gösterir). Öğrenci telefonunda "hocanın ekranını izle" görünür.

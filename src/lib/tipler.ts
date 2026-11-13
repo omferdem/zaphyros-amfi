@@ -14,6 +14,9 @@ export interface Ders {
   kod: string | null
   donem: string | null
   sube: string | null
+  /** Şubenin kaç yoklama (hafta ya da ders) alacağı ve birimi */
+  yoklama_sayisi?: number
+  yoklama_birimi?: 'hafta' | 'ders'
   olusturuldu: string
 }
 
@@ -47,6 +50,8 @@ export interface Oturum {
   aktif_adim: string | null
   soru_durum: 'acik' | 'sonuc' | null
   telefon_modu: boolean
+  /** Oturumun ait olduğu yoklama haftası (boşsa ek ders ya da yoklamasız oturum) */
+  hafta_no?: number | null
 }
 
 /** Dönemler arasında ortak ders içeriği: akışlar ve sunumlar buna bağlıdır. */

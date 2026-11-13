@@ -6,7 +6,7 @@ import type { Adim, Ders, DersDurumu, Oturum, PuanSatiri, Sunum } from '../lib/t
 import { DERSI_BITIR_SORUSU, oturumGetir, oturumuBitir, oturumuYenidenAc } from '../lib/veri'
 import Konfeti from '../bilesenler/Konfeti'
 import Halka from '../bilesenler/Halka'
-import { adimlariGetir, sunumlariGetirIdIle } from '../lib/akis'
+import { adimlariGetir, akislariGetir, sunumlariGetirIdIle } from '../lib/akis'
 import { dersEtiketi, kisaAd, oturumAdi } from '../lib/bicim'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
 import { SIKLAR, bitisAni } from '../lib/yarisma'
@@ -79,6 +79,7 @@ export default function Sahne() {
   const [mevcut, setMevcut] = useState(0)
   const [gelenler, setGelenler] = useState<Gelen[]>([])
   const [adimlar, setAdimlar] = useState<Adim[]>([])
+  const [akislar, setAkislar] = useState<{ id: string; ad: string }[]>([])
   const [sunumlar, setSunumlar] = useState<Map<string, Sunum>>(new Map())
   const [mevcutGoster, setMevcutGoster] = useState(true)
   const [kodGoster, setKodGoster] = useState(true)
@@ -105,6 +106,13 @@ export default function Sahne() {
   }, [oturumId])
 
   const akisId = oturum?.lesson_id ?? null
+  const icerikId = oturum?.courses.subject_id
+  useEffect(() => {
+    if (!icerikId) return
+    akislariGetir(icerikId)
+      .then((a) => setAkislar(a.map((x) => ({ id: x.id, ad: x.ad }))))
+      .catch(() => setAkislar([]))
+  }, [icerikId])
   useEffect(() => {
     if (!akisId) {
       setAdimlar([])
@@ -209,6 +217,20 @@ export default function Sahne() {
     return () => window.removeEventListener('keydown', tus)
   }, [ileri, geri])
 
+  /** Akış seçici: yoklama ekranı (akışsız) ya da bir akış; akış seçilince ilk adımı açılır. Yoklama akıştan bağımsız kalır. */
+  async function akisSec(deger: string) {
+    if (!deger) {
+      await supabase.from('sessions').update({ aktif_adim: null }).eq('id', oturumId)
+      setOturum((o) => (o ? { ...o, aktif_adim: null } : o))
+      return
+    }
+    const { data } = await supabase.from('lesson_steps').select('id').eq('lesson_id', deger).order('sira').order('id').limit(1)
+    const ilk = (data?.[0]?.id as string | undefined) ?? null
+    const { error } = await supabase.from('sessions').update({ lesson_id: deger, aktif_adim: ilk }).eq('id', oturumId)
+    if (error) return window.alert('Akış açılamadı. Bağlantını kontrol edip tekrar dene.')
+    setOturum((o) => (o ? { ...o, lesson_id: deger, aktif_adim: ilk } : o))
+  }
+
   async function yoklamaDurumu(ac: boolean) {
     const { data } = await supabase
       .from('sessions')
@@ -252,6 +274,20 @@ export default function Sahne() {
 
   const araclar = (
     <div className="flex flex-wrap items-center gap-2">
+      <select
+        className="giris-kutusu !w-auto !py-1.5 text-sm max-w-64"
+        value={aktif ? (oturum.lesson_id ?? '') : ''}
+        onChange={(e) => akisSec(e.target.value)}
+        aria-label="Akış seç"
+        title="Yoklama ekranına dön ya da bir akışa geç"
+      >
+        <option value="">📋 Yoklama ekranı</option>
+        {akislar.map((a) => (
+          <option key={a.id} value={a.id}>
+            {a.ad.length > 50 ? `${a.ad.slice(0, 49)}…` : a.ad}
+          </option>
+        ))}
+      </select>
       {adimlar.length > 0 && (
         <>
           <button className="ikincil-buton" onClick={geri} disabled={aktifSira <= 0} aria-label="Önceki adım">

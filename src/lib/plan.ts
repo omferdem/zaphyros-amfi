@@ -2,7 +2,7 @@
 import { supabase } from './supabase'
 import type { Ders, Donem, PlanSatiri } from './tipler'
 
-const DERS_ALANLARI = 'id, subject_id, term_id, ad, kod, donem, sube, olusturuldu'
+const DERS_ALANLARI = 'id, subject_id, term_id, ad, kod, donem, sube, yoklama_sayisi, yoklama_birimi, olusturuldu'
 
 export type DersSatiri = Ders & { students: { count: number }[] }
 

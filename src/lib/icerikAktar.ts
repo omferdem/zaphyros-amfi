@@ -1,7 +1,7 @@
 // Ders içeriğini .amfi paketi olarak dışa ve içe aktarır (hoca tarafı).
 import { supabase } from './supabase'
 import { adimlarEkle, adimlariGetir, akisOlustur, akislariGetir, sorulariGetir, sunumAdresi, sunumYukle, sunumlariGetir } from './akis'
-import { PAKET_SURUMU, PAKET_TURU, paketAkislari, paketiDogrula, type IcerikPaketi } from './icerikPaketi'
+import { PAKET_SURUMU, PAKET_TURU, haftaNo, paketAkislari, paketiDogrula, type IcerikPaketi } from './icerikPaketi'
 import { dosyaAdi } from './rapor'
 
 /** Dersin içeriğini (sunum PDF'leri dahil) tek bir .amfi dosyası olarak indirir. */
@@ -106,15 +106,22 @@ export async function icerigiIceAktar(
     sunumIdleri.set(s.no, yuklenen.id)
   }
 
-  // 3) Akışlar. Aynı adlı ve içi boş bir akış zaten varsa (ör. hafta planıyla açılmış) yenisi açılmaz, o doldurulur.
+  // 3) Akışlar. Aynı adlı ya da aynı hafta numaralı ("5. hafta: ...") içi boş bir akış zaten varsa (ör. hafta planıyla
+  // açılmış) yenisi açılmaz, o doldurulur ve adı korunur.
   const bosAkislar = new Map<string, string>()
   for (const m of await akislariGetir(icerikId)) {
-    if (!bosAkislar.has(m.ad) && (await adimlariGetir(m.id)).length === 0) bosAkislar.set(m.ad, m.id)
+    if ((await adimlariGetir(m.id)).length > 0) continue
+    if (!bosAkislar.has(m.ad)) bosAkislar.set(m.ad, m.id)
+    const hn = haftaNo(m.ad)
+    if (hn !== null && !bosAkislar.has(`hafta:${hn}`)) bosAkislar.set(`hafta:${hn}`, m.id)
   }
   for (const [i, a] of paket.akislar.entries()) {
     durumBildir(`Akışlar ekleniyor… ${i + 1} / ${paket.akislar.length}`)
-    const bosId = bosAkislar.get(a.ad)
-    if (bosId) bosAkislar.delete(a.ad)
+    const hn = haftaNo(a.ad)
+    const bosId = bosAkislar.get(a.ad) ?? (hn !== null ? bosAkislar.get(`hafta:${hn}`) : undefined)
+    if (bosId) {
+      for (const [k, v] of bosAkislar) if (v === bosId) bosAkislar.delete(k)
+    }
     const akis = bosId ? { id: bosId } : await akisOlustur(icerikId, a.ad)
     const yeni = a.adimlar.flatMap((s): Parameters<typeof adimlarEkle>[2] => {
       if (s.tur === 'slayt') {

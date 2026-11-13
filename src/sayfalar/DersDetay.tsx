@@ -9,6 +9,7 @@ import { oturumAdi, tarihSaat } from '../lib/bicim'
 import { akislariGetir, icerikSil } from '../lib/akis'
 import { dersiDuzenle, subeEtiketi, subeleriAc, subeleriGetir, type DersSatiri } from '../lib/plan'
 import DersAkislari from './DersAkislari'
+import YoklamaHaftalari from './YoklamaHaftalari'
 import Gelisim from './Gelisim'
 import QuizSekmesi from './QuizSekmesi'
 
@@ -252,8 +253,10 @@ function Oturumlar(props: {
 
   return (
     <div className="space-y-5">
+      <YoklamaHaftalari ders={ders} ogrenciler={ogrenciler} oturumlar={oturumlar} yoklamalar={yoklamalar} yenile={yenile} />
+
       <form onSubmit={baslat} className="cam-panel rounded-2xl p-5 space-y-3">
-        <h2 className="font-bold">Ders başlat</h2>
+        <h2 className="font-bold">Ek ders başlat (yoklama haftasından bağımsız)</h2>
         {ogrenciler.length === 0 && yoklamaAl && (
           <p className="text-sm text-amber-300">
             Yoklama için önce sınıf listesini yükle; listede olmayan numaralar yoklamaya giremez. Yoklamasız başlatmak için

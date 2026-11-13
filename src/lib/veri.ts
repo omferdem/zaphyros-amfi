@@ -74,7 +74,7 @@ export async function oturumYoklamalari(oturumId: string): Promise<Yoklama[]> {
 }
 
 export async function dersGetir(id: string): Promise<Ders | null> {
-  const { data, error } = await supabase.from('courses').select('id, subject_id, term_id, ad, kod, donem, sube, olusturuldu').eq('id', id).maybeSingle()
+  const { data, error } = await supabase.from('courses').select('id, subject_id, term_id, ad, kod, donem, sube, yoklama_sayisi, yoklama_birimi, olusturuldu').eq('id', id).maybeSingle()
   if (error) throw error
   return data as Ders | null
 }
@@ -93,7 +93,7 @@ export async function ogrencileriGetir(dersId: string): Promise<Ogrenci[]> {
 export async function oturumlariGetir(dersId: string): Promise<Oturum[]> {
   const { data, error } = await supabase
     .from('sessions')
-    .select('id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, soru_durum, telefon_modu')
+    .select('id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, soru_durum, telefon_modu, hafta_no')
     .eq('course_id', dersId)
     .order('basladi', { ascending: false })
   if (error) throw error
@@ -103,14 +103,14 @@ export async function oturumlariGetir(dersId: string): Promise<Oturum[]> {
 export async function oturumGetir(id: string): Promise<(Oturum & { courses: Ders }) | null> {
   const { data, error } = await supabase
     .from('sessions')
-    .select('id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, soru_durum, telefon_modu, courses(id, subject_id, term_id, ad, kod, donem, sube, olusturuldu)')
+    .select('id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, soru_durum, telefon_modu, hafta_no, courses(id, subject_id, term_id, ad, kod, donem, sube, yoklama_sayisi, yoklama_birimi, olusturuldu)')
     .eq('id', id)
     .maybeSingle()
   if (error) throw error
   return data as unknown as (Oturum & { courses: Ders }) | null
 }
 
-const OTURUM_ALANLARI = 'id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, soru_durum, telefon_modu'
+const OTURUM_ALANLARI = 'id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, soru_durum, telefon_modu, hafta_no'
 
 /** Dersi bitirir: yoklama kapanır, öğrencilerin telefonunda "Ders bitti" görünür. Silmez; yeniden açılabilir. */
 export async function oturumuBitir(id: string): Promise<Oturum> {
@@ -188,4 +188,29 @@ export async function misafirKatilimlari(ogrenciler: Ogrenci[]): Promise<Misafir
   )
   const akis = new Map(oturumlar.map((o) => [o.id, o.lesson_id]))
   return katilimlar.map((k) => ({ asil_id: asil.get(k.student_id)!, lesson_id: akis.get(k.session_id) ?? null, zaman: k.zaman }))
+}
+
+/**
+ * Şubenin bir yoklama haftasını açar ve oturumun kimliğini döndürür. O haftanın oturumu varsa (aynı gün yeniden açma dahil)
+ * o kullanılır: yoklama yeniden açılır ve yeni gelenler aynı yoklamaya yazılır. Yoksa akışsız yeni bir oturum açılır; hoca
+ * akışı sahneden seçer. Şubenin öbür açık oturumları kapanır.
+ */
+export async function haftaYoklamasiAc(dersId: string, haftaNo: number, birim: 'hafta' | 'ders' = 'hafta', telefonModu = false): Promise<string> {
+  const { data: mevcut, error: e1 } = await supabase.from('sessions').select('id').eq('course_id', dersId).eq('hafta_no', haftaNo).maybeSingle()
+  if (e1) throw e1
+  let kapat = supabase.from('sessions').update({ yoklama_acik: false, bitti: new Date().toISOString() }).eq('course_id', dersId).is('bitti', null)
+  if (mevcut) kapat = kapat.neq('id', mevcut.id as string)
+  await kapat
+  if (mevcut) {
+    const { error } = await supabase.from('sessions').update({ yoklama_acik: true, bitti: null, telefon_modu: telefonModu }).eq('id', mevcut.id as string)
+    if (error) throw error
+    return mevcut.id as string
+  }
+  const { data, error } = await supabase
+    .from('sessions')
+    .insert({ course_id: dersId, hafta_no: haftaNo, baslik: `${haftaNo}. ${birim}`, yoklama_acik: true, telefon_modu: telefonModu })
+    .select('id')
+    .single()
+  if (error) throw error
+  return data.id as string
 }

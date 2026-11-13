@@ -83,3 +83,9 @@ export function paketAkislari(
     }),
   }))
 }
+
+/** "5. hafta: Konu" gibi bir akış adının hafta numarası; yoksa null. */
+export function haftaNo(ad: string): number | null {
+  const m = ad.trim().match(/^(\d{1,2})\s*\.\s*hafta\b/i)
+  return m ? Number(m[1]) : null
+}

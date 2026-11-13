@@ -1,5 +1,8 @@
 # Sürüm Geçmişi
 
+## v0.34.1 (14 Kasım 2026)
+- Önizlemede "ikisi" görünümünde perde tam genişlikte, telefon altında; perde artık okunaklı büyüklükte.
+
 ## v0.34.0 (14 Kasım 2026)
 Ders günü güvencesi: prova, ses, bağlantı uyarısı ve rehber.
 - **🧪 Oyun provası:** sahne "⋯ Diğer" menüsünden ve akış önizlemesinden açılır. Sahte öğrencilerle zombi kaçışı, roket yarışı, ejderha savaşı, son kalan arenası ve kule yarışını baştan sona, gerçek derste görecek olduğun perde görünümüyle izlersin (3,5 saniyede bir soru oynanır; duraklat, sonraki soru, baştan). Hiçbir şey kaydedilmez.

@@ -174,7 +174,7 @@ export default function AkisOnizleme() {
                 </label>
               )}
             </div>
-            <div className={`grid gap-4 ${gorunum === 'ikisi' ? 'xl:grid-cols-[1fr_20rem]' : ''} items-start`}>
+            <div className={`grid gap-4 items-start`}>
               {gorunum !== 'telefon' && (
                 <PerdeCercevesi>{perde}</PerdeCercevesi>
               )}

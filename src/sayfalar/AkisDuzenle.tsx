@@ -6,6 +6,7 @@ import { videoAdresi } from '../lib/video'
 import { adimlarEkle, adimlariGetir, akisGetir, akisSirala, sorulariAkisaYerlestir, sorulariGetir, sunumYukle, sunumlariGetir } from '../lib/akis'
 import { konumuCoz } from '../lib/paket'
 import SoruPaketiEkle from '../bilesenler/SoruPaketiEkle'
+import SunumSurukle from '../bilesenler/SunumSurukle'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
 
 /** Dosya adından sunum adı: uzantı ve alt çizgiler atılır. */
@@ -76,32 +77,38 @@ export default function AkisDuzenle() {
     else setAkis({ ...akis, ad: ad.trim() })
   }
 
-  async function dosyaSecildi(e: React.ChangeEvent<HTMLInputElement>) {
-    const dosya = e.target.files?.[0]
-    e.target.value = ''
-    if (!dosya || !akis) return
+  /** Bırakılan ya da seçilen PDF'leri sırayla yükler ve slaytlarını akışın sonuna ekler. */
+  async function dosyalarSecildi(liste: File[]) {
+    if (!akis) return
     setHata(null)
-    if (!/\.pdf$/i.test(dosya.name)) {
-      setHata(
-        'Şimdilik yalnızca PDF yüklenebiliyor. PowerPoint dosyası için PowerPoint\'te Dosya > Farklı Kaydet > PDF ile kaydedip onu yükle. PPTX desteği sonraki sürümde gelecek.',
-      )
-      return
+    setBilgi(null)
+    const pdfler = liste.filter((d) => /\.pdf$/i.test(d.name))
+    if (pdfler.length < liste.length) {
+      setHata("Şimdilik yalnızca PDF yüklenebiliyor. PowerPoint dosyası için PowerPoint'te Dosya > Farklı Kaydet > PDF ile kaydedip onu yükle.")
+      if (pdfler.length === 0) return
     }
-    if (dosya.size > 50 * 1024 * 1024) {
-      setHata('Dosya 50 MB\'tan büyük. PowerPoint\'te PDF olarak kaydederken "En küçük boyut" seçeneğini dene.')
-      return
+    let eklenen = 0
+    // Adım sırası birbirini ezmesin diye dosyalar ada göre sıralanıp sırayla işlenir
+    const sirali = [...pdfler].sort((x, y) => x.name.localeCompare(y.name, 'tr', { numeric: true }))
+    for (const [i, dosya] of sirali.entries()) {
+      if (dosya.size > 50 * 1024 * 1024) {
+        setHata(`"${dosya.name}" 50 MB'tan büyük. PowerPoint'te PDF olarak kaydederken "En küçük boyut" seçeneğini dene.`)
+        continue
+      }
+      try {
+        const sunum = await sunumYukle(akis.subject_id, dosya, dosyadanAd(dosya.name), (m) => setYukleme(`(${i + 1}/${sirali.length}) ${m}`))
+        setYukleme('Slaytlar akışa ekleniyor…')
+        await adimlarEkle(
+          akis.id,
+          0,
+          Array.from({ length: sunum.sayfa_sayisi }, (_, k) => ({ tur: 'slayt' as const, presentation_id: sunum.id, sayfa_no: k + 1 })),
+        )
+        eklenen++
+      } catch {
+        setHata(`"${dosya.name}" yüklenemedi. Dosyanın bozuk olmadığından ve internet bağlantından emin ol.`)
+      }
     }
-    try {
-      const sunum = await sunumYukle(akis.subject_id, dosya, dosyadanAd(dosya.name), setYukleme)
-      setYukleme('Slaytlar akışa ekleniyor…')
-      await adimlarEkle(
-        akis.id,
-        adimlar.length,
-        Array.from({ length: sunum.sayfa_sayisi }, (_, i) => ({ tur: 'slayt' as const, presentation_id: sunum.id, sayfa_no: i + 1 })),
-      )
-    } catch {
-      setHata('Sunum yüklenemedi. Dosyanın bozuk olmadığından ve internet bağlantından emin ol.')
-    }
+    if (eklenen > 0) setBilgi(`${eklenen} sunum yüklendi ve slaytları akışa eklendi.`)
     setYukleme(null)
     yukle()
   }
@@ -265,11 +272,8 @@ export default function AkisDuzenle() {
 
       <section className="cam-panel rounded-2xl p-5 space-y-4">
         <h2 className="font-bold">Adım ekle</h2>
+        <SunumSurukle dosyalar={dosyalarSecildi} mesgul={!!yukleme} durum={yukleme} />
         <div className="flex flex-wrap gap-2 items-center">
-          <label className={`parlak-buton rounded-xl px-4 py-2 text-sm font-bold cursor-pointer ${yukleme ? 'opacity-60 pointer-events-none' : ''}`}>
-            Sunum yükle (PDF)
-            <input type="file" accept=".pdf,application/pdf,.ppt,.pptx" className="hidden" onChange={dosyaSecildi} />
-          </label>
           <button className="ikincil-buton" onClick={yoklamaEkle} disabled={!!yukleme}>
             Yoklama adımı
           </button>

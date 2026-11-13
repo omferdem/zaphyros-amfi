@@ -100,10 +100,15 @@ export default function DersDetay() {
           ← Derslerim
         </Link>
         <p className="text-xs font-mono text-indigo-300 mt-3">{[ders.kod, ders.donem].filter(Boolean).join(' · ')}</p>
-        <h1 className="text-2xl font-extrabold">
-          {ders.ad}
-          {ders.sube?.trim() && <span className="text-indigo-300"> · {ders.sube.trim()}</span>}
-        </h1>
+        <div className="flex flex-wrap items-center gap-3">
+          <h1 className="text-2xl font-extrabold">
+            {ders.ad}
+            {ders.sube?.trim() && <span className="text-indigo-300"> · {ders.sube.trim()}</span>}
+          </h1>
+          <Link to={`/panel/ders/${ders.id}/duzenle`} className="ikincil-buton !py-1.5" title="Akışlar, sunumlar, soru paketleri ve quizler">
+            ✏️ Düzenle
+          </Link>
+        </div>
         <SubeAraci ders={ders} ogrenciSayisi={ogrenciler.length} yenile={yukle} hataVer={setHata} />
       </div>
 
@@ -113,7 +118,6 @@ export default function DersDetay() {
         {(
           [
             ['oturumlar', `Oturumlar (${oturumlar.length})`],
-            ['akislar', 'Ders akışları'],
             ['liste', `Sınıf listesi (${ogrenciler.length})`],
             ['rapor', 'Yoklama raporu'],
             ['quiz', '📝 Quiz'],

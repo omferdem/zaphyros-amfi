@@ -15,6 +15,7 @@ import SinifPaneli, { useSinifDurumu } from '../bilesenler/SinifPaneli'
 import TakimPaneli from '../bilesenler/TakimPaneli'
 import HocaYarisiPaneli from '../bilesenler/HocaYarisiPaneli'
 import MerdivenPaneli from '../bilesenler/MerdivenPaneli'
+import DersSayaci from '../bilesenler/DersSayaci'
 
 interface Gelen {
   student_id: string
@@ -285,6 +286,7 @@ export default function Sahne() {
       <button className="ikincil-buton" onClick={tamEkran}>
         Tam ekran
       </button>
+      <DersSayaci oturum={oturum.id} />
       <Link to={`/panel/oturum/${oturum.id}`} className="ikincil-buton">
         Yoklama listesi
       </Link>

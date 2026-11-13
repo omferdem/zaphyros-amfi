@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import type { Akis, Donem, PlanSatiri } from '../lib/tipler'
 import { akisOlustur, akislariGetir } from '../lib/akis'
+import TopluAkis from '../bilesenler/TopluAkis'
 import { akislariSirala, haftaPlaniGetir, subeEtiketi, subeleriGetir, type DersSatiri } from '../lib/plan'
 import { tarih } from '../lib/bicim'
 
@@ -207,6 +208,8 @@ export default function HaftaPlani() {
           dönemlerde de geçerlidir.
         </p>
       </form>
+
+      <TopluAkis icerikId={icerikId} mevcutSayi={akislar.length} eklendi={() => yukle()} />
     </div>
   )
 }

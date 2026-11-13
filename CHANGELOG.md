@@ -1,5 +1,13 @@
 # Sürüm Geçmişi
 
+## v0.19.0 (13 Kasım 2026)
+Ders sayacı, sürükle-bırak sunum yükleme, ders düzenleme merkezi.
+- **Ders sayacı:** Sahnenin araç çubuğunda "⏱ 50:00" düğmesi. Hoca süreyi hazır değerlerden (10-60 dk), dakika yazarak ya da bitiş saati (10:40) vererek ayarlar; Başlat, Durdur, +5 dk, Sıfırla. Son 5 dakika sarı, son dakika kırmızı yanıp söner; süre bitince perdede tam ekran "Süre doldu!" uyarısı çıkar ve üç kısa ses çalar (+5 dakika ya da Tamam). Durum tarayıcıda saklanır, sayfa yenilense de sayaç sürer.
+- **Sunum yükleme:** Akış düzenleme sayfasında "Sunumları buraya sürükleyip bırak" alanı; birden fazla PDF aynı anda bırakılabilir, ada göre sıralanıp sırayla yüklenir ve slaytları akışa eklenir.
+- **Toplu hafta ekleme her yerde:** "Haftalık planı topluca ekle" kutusu ortak bileşen oldu; ders içerik sayfasında ve hafta planı sayfasında var.
+- **Ders düzenleme merkezi:** Ders adının yanındaki "✏️ Düzenle" düğmesi akışları, sunum kitaplığını, soru paketlerini ve içerik paylaşımını tek sayfada toplar. Şube sayfasında yalnızca sınıfa özel işler kalır (oturumlar, sınıf listesi, yoklama, quiz sonuçları, gelişim); "Ders akışları" sekmesi buraya taşındı.
+- Veritabanı değişikliği yok. Sayaç kuralları 6 birim testle denendi.
+
 ## v0.18.0 (13 Kasım 2026)
 Bilgi merdiveni.
 - Sınıfın tek bir yarışmacı gibi basamak basamak çıktığı, güvenli basamaklı ve jokerli yeni oyun (özgün; bilinen bir televizyon yarışmasının adını ya da görünümünü kullanmaz). Perdede (ve kumandada) "🪜 Bilgi merdiveni" düğmesi açılır; soru akışındaki her soru bir basamaktır (15 soru = 15 basamak).

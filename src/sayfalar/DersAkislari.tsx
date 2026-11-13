@@ -2,10 +2,11 @@ import { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import type { Akis, Ders, Sunum } from '../lib/tipler'
-import { akisOlustur, akislariGetir, akislariTopluOlustur, gorselleriHazirla, haftaSatirlari, sunumSil, sunumlariGetir } from '../lib/akis'
+import { akisOlustur, akislariGetir, gorselleriHazirla, sunumSil, sunumlariGetir } from '../lib/akis'
 import { tarihSaat } from '../lib/bicim'
 import { icerigiDisaAktar, icerigiIceAktar, paketiOku } from '../lib/icerikAktar'
 import SoruBankasi from './SoruBankasi'
+import TopluAkis from '../bilesenler/TopluAkis'
 
 /** Ders sayfasındaki "Ders akışları" sekmesi: akışlar ve dersin sunum kitaplığı. */
 export default function DersAkislari({ ders }: { ders: Ders }) {
@@ -18,7 +19,6 @@ export default function DersAkislari({ ders }: { ders: Ders }) {
   const [hata, setHata] = useState<string | null>(null)
   const [aktarmaDurumu, setAktarmaDurumu] = useState<string | null>(null)
   const [bilgi, setBilgi] = useState<string | null>(null)
-  const [plan, setPlan] = useState('')
   // İçe aktarmadan sonra soru paketleri listesi yeniden kurulsun
   const [bankaSurumu, setBankaSurumu] = useState(0)
 
@@ -52,23 +52,6 @@ export default function DersAkislari({ ders }: { ders: Ders }) {
     } catch {
       setHata('Akış oluşturulamadı.')
     }
-  }
-
-  async function topluOlustur(e: React.FormEvent) {
-    e.preventDefault()
-    setHata(null)
-    setBilgi(null)
-    const adlar = haftaSatirlari(plan, (akislar?.length ?? 0) + 1)
-    if (adlar.length === 0) return
-    if (adlar.length > 60) return setHata('Bir seferde en fazla 60 satır eklenebilir.')
-    try {
-      const n = await akislariTopluOlustur(ders.subject_id, adlar)
-      setPlan('')
-      setBilgi(`${n} akış açıldı. Her birinin içine slayt ve soru ekleyebilirsin.`)
-    } catch {
-      setHata('Akışlar oluşturulamadı.')
-    }
-    yukle()
   }
 
   async function akisSil(a: Akis) {
@@ -174,28 +157,14 @@ export default function DersAkislari({ ders }: { ders: Ders }) {
         </div>
       </form>
 
-      <form onSubmit={topluOlustur} className="cam-panel rounded-2xl p-5 space-y-3">
-        <h2 className="font-bold">Haftalık planı topluca ekle</h2>
-        <p className="text-sm text-slate-400">
-          Ders bilgi paketindeki hafta konularını satır satır yapıştır; her satır bir akış olur. Örneğin 14 satır yapıştırırsan 14 hafta
-          açılır. Satır başındaki "1." ya da "Hafta 1:" gibi numaralar otomatik atılır.
-        </p>
-        <textarea
-          className="giris-kutusu min-h-32"
-          placeholder={'Giriş: dinin tanımı\nTanrı\'nın varlığı delilleri\nKötülük problemi'}
-          value={plan}
-          onChange={(e) => setPlan(e.target.value)}
-        />
-        {plan.trim() && (
-          <p className="text-xs text-slate-400">
-            Açılacak: {haftaSatirlari(plan, (akislar?.length ?? 0) + 1).slice(0, 3).join(' · ')}
-            {haftaSatirlari(plan, 1).length > 3 && ` … (toplam ${haftaSatirlari(plan, 1).length} akış)`}
-          </p>
-        )}
-        <button className="parlak-buton rounded-xl px-5 py-2.5 font-bold" disabled={!plan.trim()}>
-          Akışları aç
-        </button>
-      </form>
+      <TopluAkis
+        icerikId={ders.subject_id}
+        mevcutSayi={akislar?.length ?? 0}
+        eklendi={(n) => {
+          setBilgi(`${n} akış açıldı. Her birinin içine slayt ve soru ekleyebilirsin.`)
+          yukle()
+        }}
+      />
 
       {akislar === null ? (
         <p className="text-sm text-slate-400">Yükleniyor…</p>

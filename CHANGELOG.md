@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.19.2 (13 Kasım 2026)
+Yoklama raporunda elle var yazma.
+- Şube sayfasındaki "Yoklama raporu" artık öğrenci x oturum tablosudur: her oturumun tarihi bir sütundur ve hücreye tıklayınca öğrenci o oturumda elle "var" yazılır ya da kaldırılır (✓ var, ✋ elle yazılmış, ↗ başka şubede misafir olarak katılmış, boş yok). Katılım sayısı ve oran anında güncellenir; oturum başlığına tıklayınca o oturumun yoklama listesi açılır (orada da elle ekleme vardır). Veritabanı değişikliği yok (hocanın elle yoklama izni 0002'den beri var).
+
 ## v0.19.1 (13 Kasım 2026)
 Oyunlarda öğrencinin ilk adı.
 - Derse herkes kayıtlı numarasıyla girdiği için oyunlarda takma ad yerine öğrencinin ilk adı görünür: puan tablosu, podyum, takım tablosu, perdedeki parmak ve soru zarfları, sıkıldım çekilişi. "Ahmet Can Yılmaz" ilk adıyla "Ahmet Can", "Ayşe Kaya" "Ayşe" görünür. Aynı oturumda aynı ilk adı taşıyan başka bir yoklamalı öğrenci varsa soyadın baş harfi eklenir ("Ali V.", "Ali Y."). Yoklaması olmayıp takma ad almış cihazın adı olduğu gibi kalır.

@@ -156,4 +156,6 @@ export interface Yoklama {
   student_id: string
   yontem: 'qr' | 'elle'
   zaman: string
+  /** Başka şubede misafir olarak katıldığı için bu şubenin oturumunda var sayılan kayıt (gerçek kayıt değil) */
+  baska_sube?: boolean
 }

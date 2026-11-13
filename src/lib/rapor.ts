@@ -235,7 +235,7 @@ export function misafirYoklamalari(oturumlar: Pick<Oturum, 'id' | 'lesson_id'>[]
   for (const o of oturumlar) {
     if (!o.lesson_id) continue
     for (const k of katilimlar) {
-      if (k.lesson_id === o.lesson_id) sonuc.push({ session_id: o.id, student_id: k.asil_id, yontem: 'elle', zaman: k.zaman })
+      if (k.lesson_id === o.lesson_id) sonuc.push({ session_id: o.id, student_id: k.asil_id, yontem: 'elle', zaman: k.zaman, baska_sube: true })
     }
   }
   return sonuc

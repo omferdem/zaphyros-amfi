@@ -148,7 +148,7 @@ export default function DersDetay() {
       )}
       {sekme === 'akislar' && <DersAkislari ders={ders} />}
       {sekme === 'liste' && <SinifListesi ders={ders} ogrenciler={ogrenciler} yenile={yukle} />}
-      {sekme === 'rapor' && <Rapor ders={ders} ogrenciler={ogrenciler} oturumlar={oturumlar} yoklamalar={yoklamalar} />}
+      {sekme === 'rapor' && <Rapor ders={ders} ogrenciler={ogrenciler} oturumlar={oturumlar} yoklamalar={yoklamalar} yenile={yukle} />}
       {sekme === 'quiz' && <QuizSekmesi ders={ders} ogrenciler={ogrenciler} />}
       {sekme === 'gelisim' &&<Gelisim ders={ders} ogrenciler={ogrenciler} oturumlar={oturumlar} />}
 
@@ -697,8 +697,27 @@ function SinifListesi({ ders, ogrenciler, yenile }: { ders: Ders; ogrenciler: Og
 
 // ---------------------------------------------------------------------------
 
-function Rapor(props: { ders: Ders; ogrenciler: Ogrenci[]; oturumlar: Oturum[]; yoklamalar: Yoklama[] }) {
-  const { ders, ogrenciler, oturumlar, yoklamalar } = props
+function Rapor(props: { ders: Ders; ogrenciler: Ogrenci[]; oturumlar: Oturum[]; yoklamalar: Yoklama[]; yenile: () => Promise<void> }) {
+  const { ders, ogrenciler, oturumlar, yoklamalar, yenile } = props
+  const [hata, setHata] = useState<string | null>(null)
+  const [islemde, setIslemde] = useState<string | null>(null)
+  const sirali = useMemo(() => [...oturumlar].sort((a, b) => a.basladi.localeCompare(b.basladi)), [oturumlar])
+  // Gerçek yoklama kaydı olanlar (başka şubeden sayılanlar hariç); hücre tıklanınca elle eklenir ya da kaldırılır
+  const gercek = useMemo(() => new Set(yoklamalar.filter((y) => !y.baska_sube).map((y) => `${y.session_id}|${y.student_id}`)), [yoklamalar])
+  const elle = useMemo(() => new Set(yoklamalar.filter((y) => !y.baska_sube && y.yontem === 'elle').map((y) => `${y.session_id}|${y.student_id}`)), [yoklamalar])
+
+  async function hucre(o: Ogrenci, oturum: Oturum) {
+    const anahtar = `${oturum.id}|${o.id}`
+    if (islemde) return
+    setIslemde(anahtar)
+    setHata(null)
+    const { error } = gercek.has(anahtar)
+      ? await supabase.from('attendance').delete().eq('session_id', oturum.id).eq('student_id', o.id)
+      : await supabase.from('attendance').insert({ session_id: oturum.id, student_id: o.id, yontem: 'elle' })
+    if (error) setHata('Değişiklik kaydedilemedi.')
+    await yenile()
+    setIslemde(null)
+  }
   const [aktariliyor, setAktariliyor] = useState(false)
   const satirlar = useMemo(() => raporHesapla(ogrenciler, oturumlar, yoklamalar), [ogrenciler, oturumlar, yoklamalar])
 
@@ -723,11 +742,23 @@ function Rapor(props: { ders: Ders; ogrenciler: Ogrenci[]; oturumlar: Oturum[]; 
           {aktariliyor ? 'Hazırlanıyor…' : "Excel'e aktar"}
         </button>
       </div>
+      <p className="text-xs text-slate-400">
+        Bir öğrenciyi bir oturumda <b>elle var yazmak</b> ya da kaldırmak için o oturumun hücresine tıkla (✓ var, boş yok; ✋ elle yazılmış, ↗ başka şubede katılmış).
+      </p>
+      {hata && <p className="text-sm text-rose-300">{hata}</p>}
+      <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
           <tr className="text-left text-xs text-slate-400">
             <th className="py-1.5 pr-3 font-medium">Numara</th>
             <th className="py-1.5 font-medium">Ad soyad</th>
+            {sirali.map((o) => (
+              <th key={o.id} className="py-1.5 px-1 font-medium text-center whitespace-nowrap" title={oturumAdi(o)}>
+                <Link to={`/panel/oturum/${o.id}`} className="hover:underline">
+                  {new Date(o.basladi).toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit' })}
+                </Link>
+              </th>
+            ))}
             <th className="py-1.5 font-medium text-right">Katıldığı</th>
             <th className="py-1.5 font-medium text-right w-20">Oran</th>
           </tr>
@@ -737,6 +768,31 @@ function Rapor(props: { ders: Ders; ogrenciler: Ogrenci[]; oturumlar: Oturum[]; 
             <tr key={r.ogrenci.id} className="border-t border-white/5">
               <td className="py-1.5 pr-3 font-mono text-slate-300 w-32">{r.ogrenci.ogrenci_no}</td>
               <td className="py-1.5">{r.ogrenci.ad_soyad}</td>
+              {sirali.map((o) => {
+                const a = `${o.id}|${r.ogrenci.id}`
+                const var_ = gercek.has(a)
+                const baska = !var_ && r.katildigi.has(o.id)
+                return (
+                  <td key={o.id} className="py-1 px-0.5 text-center">
+                    {baska ? (
+                      <span title="Başka şubede misafir olarak katıldı" className="text-fuchsia-300">
+                        ↗
+                      </span>
+                    ) : (
+                      <button
+                        disabled={islemde === a}
+                        onClick={() => hucre(r.ogrenci, o)}
+                        title={var_ ? 'Var (tıkla: kaldır)' : 'Yok (tıkla: elle var yaz)'}
+                        className={`w-7 h-7 rounded-md text-xs font-bold transition ${
+                          var_ ? 'bg-emerald-500/25 text-emerald-200 hover:bg-emerald-500/40' : 'bg-white/5 text-slate-600 hover:bg-white/15'
+                        }`}
+                      >
+                        {var_ ? (elle.has(a) ? '✋' : '✓') : '·'}
+                      </button>
+                    )}
+                  </td>
+                )
+              })}
               <td className="py-1.5 text-right">
                 {r.sayi} / {oturumlar.length}
               </td>
@@ -747,6 +803,7 @@ function Rapor(props: { ders: Ders; ogrenciler: Ogrenci[]; oturumlar: Oturum[]; 
           ))}
         </tbody>
       </table>
+      </div>
       <p className="text-xs text-slate-500">%70'in altındaki oranlar sarı gösterilir.</p>
     </section>
   )

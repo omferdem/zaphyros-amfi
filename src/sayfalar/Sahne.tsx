@@ -580,6 +580,8 @@ export default function Sahne() {
 
 /** Ders bitince perdede görünen kapanış ekranı. */
 function DersBitti({ oturum, katilan, yenidenAc }: { oturum: Oturum & { courses: Ders }; katilan: number; yenidenAc: () => void }) {
+  // Derste bilgi yarışması oynandıysa bugünün yıldızları (ilk üç) kapanışta gösterilir
+  const yildizlar = usePuanlar(oturum.id, true, 3)
   return (
     <main className="min-h-screen flex items-center justify-center p-6">
       <Konfeti />
@@ -596,6 +598,12 @@ function DersBitti({ oturum, katilan, yenidenAc }: { oturum: Oturum & { courses:
           <b className="text-6xl font-display font-extrabold tabular-nums">{katilan}</b>
           <span className="block text-slate-400 mt-1">öğrenci yoklamaya katıldı</span>
         </p>
+        {yildizlar && yildizlar.length >= 3 && (
+          <div className="space-y-1">
+            <p className="text-sm font-bold text-amber-200">⭐ Bugünün yıldızları</p>
+            <Podyum puanlar={yildizlar} />
+          </div>
+        )}
         <div className="flex flex-wrap justify-center gap-3 pt-2">
           <Link to="/panel" className="parlak-buton rounded-full px-6 py-3">
             🏠 Ana sayfaya dön

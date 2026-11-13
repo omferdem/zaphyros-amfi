@@ -350,6 +350,17 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
     }
   }, [oturum])
 
+  // Ders bitince, derste yarışma oynandıysa öğrencinin kendi sırası ve puanı gösterilir
+  const [karne, setKarne] = useState<{ sira: number; toplam: number; oyuncu: number } | null>(null)
+  const dersBitti = !!durum?.bitti
+  useEffect(() => {
+    if (!dersBitti) return
+    supabase.rpc('benim_sonucum', { p_session: oturum, p_cihaz: cihazKimligi() }).then(({ data }) => {
+      const d = data as { sira?: number | null; toplam?: number; oyuncu?: number } | null
+      if (d && d.sira && d.toplam && d.oyuncu) setKarne({ sira: d.sira, toplam: d.toplam, oyuncu: d.oyuncu })
+    })
+  }, [dersBitti, oturum])
+
   const adim = durum?.adim
   const gorsel = useSlaytGorseli(adim?.tur === 'slayt' ? adim.gorsel : null)
   const satirlar = (adim?.tur === 'slayt' ? adim.metin ?? '' : '').split('\n').filter(Boolean)
@@ -379,6 +390,11 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
               👋
             </p>
             <p className="text-2xl font-display font-extrabold">Ders bitti</p>
+            {karne && (
+              <p className="text-lg font-bold text-amber-200">
+                🏅 Bugünkü yarışmada {karne.oyuncu} kişi arasında {karne.sira}. oldun ({karne.toplam} puan)
+              </p>
+            )}
             <p className="text-slate-300">Teşekkürler. Bu sayfayı kapatabilirsin.</p>
           </div>
         ) : adim?.tur === 'slayt' ? (

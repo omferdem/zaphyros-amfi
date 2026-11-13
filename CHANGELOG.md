@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.36.2 (14 Kasım 2026)
+Ders kapanışı.
+- **Perdede "⭐ Bugünün yıldızları":** ders bitince, derste bilgi yarışması oynandıysa ilk üç öğrenci podyumda görünür.
+- **Öğrenci telefonunda karne:** ders bitince "Bugünkü yarışmada N kişi arasında K. oldun (puan)" yazar (yalnızca yarışmaya katılmışsa).
+- Her ikisi de mevcut verileri kullanır; veritabanı değişikliği yoktur.
+
 ## v0.36.1 (14 Kasım 2026)
 Ders günü sadeleştirme ve yük azaltma.
 - Akış düzenleme sayfasında "Adım ekle" bölümü (slayt yükleme, soru paketi, etkinlik) akış doluyken kapalı geliyor: önce akışın adım listesi görünür, "+ Adım ekle" ile açılır. Boş akışta açık gelir; satırdaki "+ Ekle" bölümü kendiliğinden açar.

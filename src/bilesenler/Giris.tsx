@@ -66,7 +66,7 @@ export default function Giris() {
           <img src="./favicon.svg" alt="" className="w-12 h-12 suzul" />
           <div>
             <h1 className="text-2xl font-extrabold">
-              AmfiOS <span className="renkli-yazi">Hoca Paneli</span>
+              ZAPEDU <span className="renkli-yazi">Hoca Paneli</span>
             </h1>
             <p className="text-xs text-slate-400 font-mono">sürüm {SURUM}</p>
           </div>

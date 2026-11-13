@@ -13,7 +13,7 @@ export function kurulumSqlUret() {
   const bolumler = dosyalar.map(
     (d) => `-- ===========================================================================\n-- ${d}\n-- ===========================================================================\n\n${readFileSync(join(klasor, d), 'utf8').replace(/\r\n/g, '\n').trim()}\n`,
   )
-  return `-- AmfiOS kurulum SQL'i (bu dosya otomatik üretilir, elle düzenleme; kaynağı supabase/migrations)
+  return `-- ZAPEDU kurulum SQL'i (bu dosya otomatik üretilir, elle düzenleme; kaynağı supabase/migrations)
 -- Yeni bir Supabase projesinde SQL Editor'e bu dosyanın tamamını yapıştırıp bir kez çalıştır.
 -- İçerdiği migration'lar: ${dosyalar.join(', ')}
 

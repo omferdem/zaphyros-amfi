@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
+import Marka from './bilesenler/Marka'
 import { supabase } from './lib/supabase'
 import Katil from './sayfalar/Katil'
 
@@ -34,6 +35,8 @@ function KokSayfa() {
 
 export default function App() {
   return (
+    <>
+    <Marka />
     <Suspense fallback={bekle}>
       <Routes>
         <Route path="/" element={<KokSayfa />} />
@@ -54,5 +57,6 @@ export default function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>
+    </>
   )
 }

@@ -1,6 +1,6 @@
 # Gemini Prototipi İncelemesi
 
-Dosya: `docs/prototip-gemini.html` (AmfiOS Studio v6.0). İnceleme tarihi: 18 Ekim 2026.
+Dosya: `docs/prototip-gemini.html` (ZAPEDU Studio v6.0). İnceleme tarihi: 18 Ekim 2026.
 
 ## Sonuç
 

@@ -1,12 +1,12 @@
-# Kendi AmfiOS kurulumunu yapmak
+# Kendi ZAPEDU kurulumunu yapmak
 
-AmfiOS'u kullanmak isteyen her hoca kendi kopyasını kurar. Kopyan tamamen sana aittir: öğrencilerin, derslerin ve yoklama kayıtların kendi Supabase projende durur. Programı sana veren kişi ya da başka bir hoca bu verileri göremez, senin kurulumunu yönetemez ve sen de onlara bağlı değilsin.
+ZAPEDU'u kullanmak isteyen her hoca kendi kopyasını kurar. Kopyan tamamen sana aittir: öğrencilerin, derslerin ve yoklama kayıtların kendi Supabase projende durur. Programı sana veren kişi ya da başka bir hoca bu verileri göremez, senin kurulumunu yönetemez ve sen de onlara bağlı değilsin.
 
 Gereken iki ücretsiz hesap: **GitHub** (sitenin yayınlandığı yer) ve **Supabase** (veritabanı). Kurulum yaklaşık 20 dakika sürer ve bir kez yapılır.
 
 ## 1. Kodun kopyasını al
 
-1. GitHub'a giriş yap ve AmfiOS deposunun sayfasını aç.
+1. GitHub'a giriş yap ve ZAPEDU deposunun sayfasını aç.
 2. Sağ üstteki **Use this template > Create a new repository** düğmesine bas. (Bu düğme yoksa **Fork** kullan.)
 3. Depoya bir ad ver (ör. `amfi`), **Public** seç ve oluştur.
 
@@ -14,7 +14,7 @@ Sitenin adresi şöyle olacak: `https://<github-kullanıcı-adın>.github.io/<de
 
 ## 2. Supabase projesini aç
 
-1. https://supabase.com adresinde hesap aç, **New project** ile yeni bir proje oluştur. Bölge olarak **Central EU (Frankfurt)** seç. Veritabanı şifresini bir yere not et (AmfiOS bu şifreyi kullanmaz, ama Supabase ister).
+1. https://supabase.com adresinde hesap aç, **New project** ile yeni bir proje oluştur. Bölge olarak **Central EU (Frankfurt)** seç. Veritabanı şifresini bir yere not et (ZAPEDU bu şifreyi kullanmaz, ama Supabase ister).
 2. Proje açılınca soldaki menüden **SQL Editor**'e gir.
 3. Kendi deponda `supabase/kurulum.sql` dosyasını aç, **Raw** görünümünde içeriğin tamamını kopyala, SQL Editor'e yapıştır ve **Run** de. "Success" yazısını görmelisin.
 

@@ -49,7 +49,7 @@ export interface IcerikPaketi {
 /** Paket içindeki JSON'u doğrular; geçersizse nedenini söyleyen bir hata fırlatır. */
 export function paketiDogrula(ham: unknown): IcerikPaketi {
   const p = ham as Partial<IcerikPaketi> | null
-  if (!p || typeof p !== 'object' || p.tur !== PAKET_TURU) throw new Error('Bu dosya bir AmfiOS ders içeriği paketi değil.')
+  if (!p || typeof p !== 'object' || p.tur !== PAKET_TURU) throw new Error('Bu dosya bir ZAPEDU ders içeriği paketi değil.')
   if (typeof p.surum !== 'number' || p.surum > PAKET_SURUMU) throw new Error('Paket daha yeni bir sürümle hazırlanmış. Programı güncelle.')
   if (!Array.isArray(p.sunumlar) || !Array.isArray(p.sorular) || !Array.isArray(p.akislar)) throw new Error('Paket bozuk: bölümler eksik.')
   for (const a of p.akislar) {

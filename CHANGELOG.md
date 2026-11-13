@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.23.0 (13 Kasım 2026)
+Programın adı ZAPEDU oldu.
+- Programın adı "AmfiOS" yerine **ZAPEDU**: panel başlığı, giriş ekranı, sekme başlığı, masaüstü uygulaması (pencere ve kurulum adı) ve belgeler. Depo adı ve canlı adres aynı kaldı. İçerik paketlerinin iç türü (`amfios-icerik`) ve uygulama kimliği, eski paketler ve kurulu masaüstü uygulaması çalışmaya devam etsin diye değişmedi; önceki sürüm notları tarihî adıyla durur.
+- Marka: ekranın sol altında, her sayfada, tıklanmayan ve içeriği kapatmayan altın sarısı parıltılı "ZAPHYROS" yazısı (hareketi azalt ayarında parıltı durur, yazdırmada görünmez).
+
 ## v0.22.2 (13 Kasım 2026)
 Telefonda slayt geçişi.
 - Sahne sayfasını telefondan açınca slayt ekranında geçiş okları yoktu: araç çubuğu yalnızca fareyle üzerine gelince göründüğü için dokunmatik ekranda hiç çıkmıyordu. Artık slayt ekranında ekranın iki yanında her zaman görünen büyük ‹ › okları, sol altta "3 / 28" sayacı var; sola/sağa kaydırarak (swipe) de geçilir. Dokunmatik ekranlarda araç çubuğu da her zaman görünür.

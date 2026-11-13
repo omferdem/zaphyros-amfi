@@ -1,4 +1,4 @@
-# AmfiOS: Canlı Amfi Ders Sistemi
+# ZAPEDU: Canlı Amfi Ders Sistemi
 
 Bu dosya, bu repoda çalışan her Claude oturumunun ilk okuması gereken yönergedir.
 

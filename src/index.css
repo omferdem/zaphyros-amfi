@@ -178,3 +178,28 @@ h1, h2, h3, .baslik {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Marka yazısı: köşede duran, altın sarısı parıltılı "zaphyros" */
+.marka-yazi {
+  font-family: var(--font-display, inherit);
+  font-weight: 600;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  background: linear-gradient(110deg, #8a6d1f 0%, #f3d77a 22%, #fff6cf 38%, #d4af37 52%, #9c7a1d 70%, #f3d77a 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0.85;
+  animation: marka-parilti 10s linear infinite;
+}
+@keyframes marka-parilti {
+  0% { background-position: 0% 0; }
+  100% { background-position: 220% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marka-yazi { animation: none; }
+}
+@media print {
+  .marka-yazi { display: none; }
+}

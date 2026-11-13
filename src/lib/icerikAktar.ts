@@ -61,7 +61,7 @@ export async function paketiOku(dosya: File): Promise<{ paket: IcerikPaketi; dos
   } catch {
     throw new Error('Dosya açılamadı. Bir .amfi paketi seçtiğinden emin ol.')
   }
-  if (!dosyalar['icerik.json']) throw new Error('Bu dosya bir AmfiOS ders içeriği paketi değil.')
+  if (!dosyalar['icerik.json']) throw new Error('Bu dosya bir ZAPEDU ders içeriği paketi değil.')
   let ham: unknown
   try {
     ham = JSON.parse(strFromU8(dosyalar['icerik.json']))

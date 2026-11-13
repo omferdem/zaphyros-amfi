@@ -2,7 +2,7 @@
   "name": "amfios-masaustu",
   "version": "0.1.0",
   "private": true,
-  "description": "AmfiOS masaüstü uygulaması",
+  "description": "ZAPEDU masaüstü uygulaması",
   "author": "Ömer Faruk Erdem",
   "main": "main.cjs",
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "build": {
     "appId": "tr.edu.zaphyros.amfios",
-    "productName": "AmfiOS",
+    "productName": "ZAPEDU",
     "directories": {
       "output": "dist"
     },
@@ -39,10 +39,10 @@
       "oneClick": true,
       "perMachine": false,
       "createDesktopShortcut": true,
-      "shortcutName": "AmfiOS",
+      "shortcutName": "ZAPEDU",
       "deleteAppDataOnUninstall": false
     },
-    "artifactName": "AmfiOS-Kurulum-${version}.exe"
+    "artifactName": "ZAPEDU-Kurulum-${version}.exe"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",

@@ -1,4 +1,4 @@
-// AmfiOS masaüstü kabuğu: web uygulamasını (kendi GitHub Pages adresinden) bir pencerede açar.
+// ZAPEDU masaüstü kabuğu: web uygulamasını (kendi GitHub Pages adresinden) bir pencerede açar.
 // Veri ve giriş aynı Supabase projesindedir; uygulama yalnızca daha rahat bir pencere sağlar:
 // oturum hatırlanır, tam ekran sahne, dış bağlantılar tarayıcıda açılır, bağlantı koparsa yeniden dener.
 // Web tarafı her yayında kendiliğinden güncellenir; bu kabuğun yeniden kurulması gerekmez.
@@ -56,7 +56,7 @@ function pencereOlustur() {
     minWidth: 820,
     minHeight: 600,
     show: false,
-    title: 'AmfiOS',
+    title: 'ZAPEDU',
     backgroundColor: '#070a1f',
     autoHideMenuBar: true,
     icon: path.join(__dirname, 'build', 'icon.png'),
@@ -116,7 +116,7 @@ function sinamaYap(pencere) {
       )
       console.log('SINAMA ' + sonuc)
       clearTimeout(zamanasimi)
-      app.exit(JSON.parse(sonuc).baslik.includes('AmfiOS') ? 0 : 1)
+      app.exit(JSON.parse(sonuc).baslik.includes('ZAPEDU') ? 0 : 1)
     } catch (e) {
       console.log('SINAMA_HATA ' + e.message)
       app.exit(3)
@@ -165,7 +165,7 @@ ipcMain.on('adres-kapat', (olay) => BrowserWindow.fromWebContents(olay.sender)?.
 function menuKur() {
   const sablon = [
     {
-      label: 'AmfiOS',
+      label: 'ZAPEDU',
       submenu: [
         { label: 'Yeniden yükle', accelerator: 'CmdOrCtrl+R', click: () => ana?.loadURL(siteAdresi()) },
         { role: 'togglefullscreen', label: 'Tam ekran', accelerator: 'F11' },

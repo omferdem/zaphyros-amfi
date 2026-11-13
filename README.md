@@ -1,4 +1,4 @@
-# AmfiOS
+# ZAPEDU
 
 Üniversite dersleri için canlı ders sistemi. Hoca derse projeksiyondan başlar, öğrenciler QR kodu okutup telefonlarının tarayıcısından katılır. Yoklama, slayt, quiz, tartışma ve oyunlar tek akışta, hocanın kontrolünde ilerler.
 

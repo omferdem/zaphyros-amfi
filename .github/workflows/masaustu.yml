@@ -31,6 +31,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           surum="${GITHUB_REF_NAME#masaustu-v}"
-          gh release create "$GITHUB_REF_NAME" dist/AmfiOS-Kurulum-*.exe \
-            --title "AmfiOS masaüstü uygulaması $surum" \
-            --notes "Windows için AmfiOS masaüstü uygulaması. Kurulum dosyasını indirip çalıştır; yönetici yetkisi gerekmez. Uygulama imzalı olmadığı için Windows ilk kurulumda 'Bilinmeyen yayıncı' uyarısı gösterebilir: Daha fazla bilgi, ardından Yine de çalıştır. İlk giriş ve kullanım için docs/MASAUSTU.md dosyasına bak."
+          gh release create "$GITHUB_REF_NAME" dist/ZAPEDU-Kurulum-*.exe \
+            --title "ZAPEDU masaüstü uygulaması $surum" \
+            --notes "Windows için ZAPEDU masaüstü uygulaması. Kurulum dosyasını indirip çalıştır; yönetici yetkisi gerekmez. Uygulama imzalı olmadığı için Windows ilk kurulumda 'Bilinmeyen yayıncı' uyarısı gösterebilir: Daha fazla bilgi, ardından Yine de çalıştır. İlk giriş ve kullanım için docs/MASAUSTU.md dosyasına bak."

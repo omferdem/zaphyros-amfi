@@ -284,6 +284,9 @@ export default function AkisDuzenle() {
         >
           ← Geri
         </button>
+        <Link to={`/panel/akis/${akisId}/onizle`} className="ml-3 text-xs rounded-lg px-2.5 py-1 bg-indigo-500/20 hover:bg-indigo-500/35 text-indigo-100 font-bold" title="Dersi başlatmadan perde ve öğrenci telefonu görünümüyle dene">
+          👁 Önizle (hoca ve öğrenci)
+        </Link>
         <input
           className="mt-3 w-full bg-transparent text-2xl font-extrabold outline-none border-b border-transparent focus:border-indigo-400"
           value={ad}

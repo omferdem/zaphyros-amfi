@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.30.0 (14 Kasım 2026)
+Akış önizlemesi.
+- **Dersi başlatmadan önizleme:** akış düzenleme sayfasındaki "👁 Önizle" düğmesi, akışı adım adım perde (hoca), öğrenci telefonu ya da ikisi yan yana gösterir. Slayt, soru (isteğe bağlı doğru cevap), açık uçlu soru, kelime bulutu, oylama, video ve oyun adımları iki tarafın görünümüyle denenir; ok tuşları ve boşlukla ilerlenir, adım listesinden atlanır. Hiçbir şey kaydedilmez, oturum açılmaz.
+- Logodaki "E" harfinin orta çizgisi uzatıldı (küçük boyutta "C" gibi okunuyordu); sekme simgesi yenilenmezse tarayıcı önbelleği için sayfayı sert yenile.
+
 ## v0.29.1 (14 Kasım 2026)
 - Aynı Kahoot paketi derste yeniden açılınca adımlar silinip yeniden kurulmuyor; o oturumdaki cevaplar ve puanlar korunuyor.
 - Ejderha savaşı sahnesi büyütüldü, roket simgeleri sadeleştirildi. Din Felsefesi paketlerinin önerilen oyun modları haftaya göre dönüşümlü (zombi, roket, ejderha, takım, halat, hocayla yarış).

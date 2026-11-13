@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.28.1 (14 Kasım 2026)
+ZAPEDU logosu.
+- Yeni logo: koyu zeminde gümüş "ZE" monogramı ve altın çizgi. Sekme simgesi, panel başlığı ve masaüstü uygulaması simgesi aynı logoyu kullanır.
+
 ## v0.28.0 (14 Kasım 2026)
 Etkinlik menüsü, açık uçlu soru ve Zombi Kaçışı.
 - **Akış düzenlemede "Etkinlik ekle" menüsü:** açık uçlu soru, kelime bulutu, beyin fırtınası, şeytanın avukatı, video ve oyun kartları (zombi kaçışı, takım, halat, hocayla yarış, bilgi merdiveni). Satırdaki "+ Ekle" ile etkinlik ya da soru paketi o adımın arkasına eklenir.

@@ -38,11 +38,13 @@ export default function ZombiPaneli({ oturum, anahtar, mod }: { oturum: string; 
     if (v?.sorular && v.oyuncular) setVeri({ sorular: v.sorular, oyuncular: v.oyuncular })
   }, [oturum, anahtar])
 
+  // Oyun açık değilken sunucuya sorulmaz
   useEffect(() => {
+    if (!acik) return
     yenile()
     const t = setInterval(yenile, 3500)
     return () => clearInterval(t)
-  }, [yenile])
+  }, [yenile, acik])
 
   function ac(a: boolean) {
     setAcik(a)
@@ -69,15 +71,7 @@ export default function ZombiPaneli({ oturum, anahtar, mod }: { oturum: string; 
   const perde = mod === 'perde'
   if (!d) return null
 
-  if (!acik) {
-    return (
-      <div className={perde ? 'fixed left-4 bottom-36 z-30' : ''}>
-        <button className="ikincil-buton !py-1.5 text-sm" onClick={() => ac(true)}>
-          🧟 Zombi kaçışı
-        </button>
-      </div>
-    )
-  }
+  if (!acik) return null
 
   if (!perde) return <Ozet d={d} kapat={() => ac(false)} />
 

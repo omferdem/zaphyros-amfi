@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.36.1 (14 Kasım 2026)
+Ders günü sadeleştirme ve yük azaltma.
+- Akış düzenleme sayfasında "Adım ekle" bölümü (slayt yükleme, soru paketi, etkinlik) akış doluyken kapalı geliyor: önce akışın adım listesi görünür, "+ Adım ekle" ile açılır. Boş akışta açık gelir; satırdaki "+ Ekle" bölümü kendiliğinden açar.
+- Oyun panelleri (zombi, roket, ejderha, arena, kule) oyun açık değilken sunucuya sormuyor; sahnede boşuna her 3,5 saniyede beş istek atılıyordu.
+
 ## v0.36.0 (14 Kasım 2026)
 Ders gibi deneme ve açık uçlu soruda süre ile "cevapları yansıt".
 - **Önizleme artık ders gibi denenir:** soru, açık uçlu soru, beyin fırtınası, kelime bulutu ve oylama adımlarında hoca "Etkinliği aç" der, sağdaki öğrenci telefonundan cevap verirsin (süre işler), süre bitince hoca "Cevapları yansıt" / "Cevabı göster" der ve perdeye düşer. Slayt ve diğer adımlar eskisi gibi. "Ders gibi dene" kutusundan kapatılır.

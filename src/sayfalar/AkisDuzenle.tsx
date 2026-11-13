@@ -56,6 +56,8 @@ export default function AkisDuzenle() {
       setAd(a.ad)
       const [ad2, s, q] = await Promise.all([adimlariGetir(a.id), sunumlariGetir(a.subject_id), sorulariGetir(a.subject_id)])
       setAdimlar(ad2)
+      // Boş akışta ekleme alanı açık gelir; dolu akışta kapalı
+      if (ad2.length === 0) setEklemeAcik(true)
       setSunumlar(s)
       setSorular(q)
     } catch {
@@ -75,6 +77,7 @@ export default function AkisDuzenle() {
   )
   const { belgeler } = usePdfBelgeleri(akis?.subject_id, kullanilanSunumlar)
   const [onizleme, setOnizleme] = useState<number | null>(null)
+  const [eklemeAcik, setEklemeAcik] = useState(false)
 
   /** Slayt notunu adımın ayarına yazar (öğrenciye ve perdeye gitmez). */
   async function notKaydet(adimId: string, metin: string) {
@@ -164,8 +167,9 @@ export default function AkisDuzenle() {
   /** Adım satırındaki "+ Soru" düğmesi: ekleme konumunu o adımın arkasına alıp paneli gösterir. */
   function buraya(adimId: string) {
     setKonum(`sonra:${adimId}`)
+    setEklemeAcik(true)
     setBilgi('Ekleme konumu bu adımın arkası olarak seçildi. Aşağıdan bir soru paketi ya da etkinlik (açık uçlu soru, kelime bulutu, oyun…) ekleyebilirsin.')
-    soruPaneli.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    setTimeout(() => soruPaneli.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 120)
   }
 
   async function yoklamaEkle() {
@@ -308,6 +312,9 @@ export default function AkisDuzenle() {
 
       {hata && <p className="text-sm text-rose-300 bg-rose-500/10 rounded-xl p-3">{hata}</p>}
 
+      {/* Adım ekleme alanı uzun olduğu için akış doluyken kapalı durur; akışın kendisi (adım listesi) önce görünsün */}
+      <details className="group" open={eklemeAcik} onToggle={(e) => setEklemeAcik(e.currentTarget.open)}>
+      <summary className="ikincil-buton cursor-pointer list-none inline-block select-none mb-3">+ Adım ekle (slayt, etkinlik, soru paketi)</summary>
       <section className="cam-panel rounded-2xl p-5 space-y-4">
         <h2 className="font-bold">Adım ekle</h2>
         <SunumSurukle dosyalar={dosyalarSecildi} mesgul={!!yukleme} durum={yukleme} />
@@ -505,6 +512,7 @@ export default function AkisDuzenle() {
           Sunumun her sayfası ayrı bir adım olur. Sırayı satırları sürükleyerek ya da oklarla değiştirebilirsin.
         </p>
       </section>
+      </details>
 
       {adimlar.length === 0 ? (
         <p className="text-sm text-slate-400">Akış boş. Bir sunum yükleyerek ya da yoklama adımı ekleyerek başla.</p>

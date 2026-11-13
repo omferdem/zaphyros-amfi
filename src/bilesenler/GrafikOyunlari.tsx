@@ -70,11 +70,13 @@ function OyunKabugu<D, V = Veri>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [oturum, anahtar])
 
+  // Oyun açık değilken sunucuya sorulmaz (beş oyun paneli aynı sayfada durur; boşuna istek atmasınlar)
   useEffect(() => {
+    if (!acik) return
     yenile()
     const t = setInterval(yenile, 3500)
     return () => clearInterval(t)
-  }, [yenile])
+  }, [yenile, acik])
 
   function ac(a: boolean) {
     setAcik(a)

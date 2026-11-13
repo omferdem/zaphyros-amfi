@@ -22,7 +22,7 @@ const HARFLER = ['A', 'B', 'C', 'D', 'E', 'F']
  * Hocayla yarış: sınıf hocaya karşı oynar. Hoca soru açıkken kendi cevabını gizlice verir; sonuç açılınca
  * hocanın doğru bilip bilmediği ve sınıfın başarısı skora yazılır. Perdede şıklar yalnızca harfle gösterilir.
  */
-export default function HocaYarisiPaneli({ oturum, anahtar, mod }: { oturum: string; anahtar: string | null; mod: 'perde' | 'kumanda' }) {
+export default function HocaYarisiPaneli({ oturum, anahtar, mod, dugme = true }: { oturum: string; anahtar: string | null; mod: 'perde' | 'kumanda'; dugme?: boolean }) {
   const [y, setY] = useState<Yaris | null>(null)
   const [soru, setSoru] = useState<Soru | null>(null)
   const [secilen, setSecilen] = useState<{ adim: string; metin: string } | null>(null)
@@ -66,6 +66,7 @@ export default function HocaYarisiPaneli({ oturum, anahtar, mod }: { oturum: str
   const benim = secilen && soru && secilen.adim === soru.id ? secilen.metin : null
 
   if (!y.acik) {
+    if (!dugme) return null
     return (
       <div className={perde ? 'fixed left-1/2 -translate-x-1/2 bottom-14 z-30' : ''}>
         <button className="ikincil-buton !py-1.5 text-sm" onClick={() => ayarla(true)}>

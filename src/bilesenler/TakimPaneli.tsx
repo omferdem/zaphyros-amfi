@@ -4,7 +4,7 @@ import { OYUN_OLAYI } from '../lib/oyun'
 import { TAKIM_SAYILARI, halatHesapla, takimBilgisi, type HalatTarafi, type TakimDurumu } from '../lib/takim'
 
 /** Takım yarışması: hoca takım sayısını seçer, takımların üye başına ortalama puanı canlı görünür. */
-export default function TakimPaneli({ oturum, anahtar, mod }: { oturum: string; anahtar: string | null; mod: 'perde' | 'kumanda' }) {
+export default function TakimPaneli({ oturum, anahtar, mod, dugme = true }: { oturum: string; anahtar: string | null; mod: 'perde' | 'kumanda'; dugme?: boolean }) {
   const [d, setD] = useState<TakimDurumu | null>(null)
   const [menu, setMenu] = useState(false)
   const [hata, setHata] = useState<string | null>(null)
@@ -54,6 +54,8 @@ export default function TakimPaneli({ oturum, anahtar, mod }: { oturum: string; 
 
   if (!d) return null
   const acik = d.sayi > 0
+  // dugme=false: takım modu kapalıyken kısayol düğmeleri gösterilmez (sahnede yalnızca Kahoot oturumunda görünür)
+  if (!acik && !dugme) return null
   const perde = mod === 'perde'
 
   const secenekler = menu && (

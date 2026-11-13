@@ -24,7 +24,7 @@ function oku(oturum: string): Kayit {
  * bir basamak çıkılır; bilemezse son güvenli basamağa (5, 10, ...) inilir. Hoca yanlış bir soruyu (en fazla 2 kez)
  * jokerle yok sayabilir. Soru çözülürken merdiven kıpırdamaz; sonuç açılınca ya da soru geçilince güncellenir.
  */
-export default function MerdivenPaneli({ oturum, anahtar, mod }: { oturum: string; anahtar: string | null; mod: 'perde' | 'kumanda' }) {
+export default function MerdivenPaneli({ oturum, anahtar, mod, dugme = true }: { oturum: string; anahtar: string | null; mod: 'perde' | 'kumanda'; dugme?: boolean }) {
   const [kayit, setKayit] = useState<Kayit>(() => oku(oturum))
   const [sorular, setSorular] = useState<MerdivenSorusu[]>([])
 
@@ -63,6 +63,7 @@ export default function MerdivenPaneli({ oturum, anahtar, mod }: { oturum: strin
   if (sorular.length === 0) return null
 
   if (!kayit.acik) {
+    if (!dugme) return null
     return (
       <div className={perde ? 'fixed left-4 bottom-24 z-30' : ''}>
         <button className="ikincil-buton !py-1.5 text-sm" onClick={() => kaydet({ ...kayit, acik: true })}>

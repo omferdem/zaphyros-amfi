@@ -1,5 +1,8 @@
 # Sürüm Geçmişi
 
+## v0.37.1 (14 Kasım 2026)
+- Sunum ekranındaki "🥊 Hocayla yarış", "🪢 Halat çekme", "👥 Takım modu" ve "🪜 Bilgi merdiveni" köşe düğmeleri artık yalnızca Kahoot oturumunda görünür. Normal ders akışında perdeyi kalabalıklaştırıyorlardı; oyun modu "Kahoot'a git" seçicisinden seçilir. Açık olan bir oyun paneli her zaman görünür.
+
 ## v0.37.0 (14 Kasım 2026)
 Devam serisi, dönem şampiyonları, davetle hoca katılımı. Veritabanı: `0026_devam_serisi.sql`, `0027_hoca_davetleri.sql`.
 - **Öğrenci telefonunda devam serisi:** üst üste en az 2 derse katılan öğrenci "🔥 N ders üst üste" rozetini görür (5 ve üzerinde ⭐). Yalnızca en az bir öğrencinin katıldığı oturumlar sayılır; rozet yalnızca öğrencinin kendi serisini gösterir.

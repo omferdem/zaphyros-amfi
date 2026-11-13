@@ -566,9 +566,9 @@ export default function Sahne() {
       {quizAcik && icerikId && <QuizPaneli dersId={oturum.course_id} icerikId={icerikId} hafta={haftaNo} katilan={gelenler.length} kapat={() => setQuizAcik(false)} />}
       {puanAcik && <PuanTablosu oturumId={oturum.id} kapat={() => setPuanAcik(false)} />}
       <SinifPaneli d={sinif.d} komut={sinif.komut} hata={sinif.hata} mod="perde" />
-      <TakimPaneli oturum={oturum.id} anahtar={null} mod="perde" />
-      <HocaYarisiPaneli oturum={oturum.id} anahtar={null} mod="perde" />
-      <MerdivenPaneli oturum={oturum.id} anahtar={null} mod="perde" />
+      <TakimPaneli oturum={oturum.id} anahtar={null} mod="perde" dugme={!!kahootAkisi} />
+      <HocaYarisiPaneli oturum={oturum.id} anahtar={null} mod="perde" dugme={!!kahootAkisi} />
+      <MerdivenPaneli oturum={oturum.id} anahtar={null} mod="perde" dugme={!!kahootAkisi} />
       <ZombiPaneli oturum={oturum.id} anahtar={null} mod="perde" />
       <RoketPaneli oturum={oturum.id} anahtar={null} mod="perde" />
       <EjderhaPaneli oturum={oturum.id} anahtar={null} mod="perde" />

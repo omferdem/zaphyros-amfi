@@ -21,6 +21,7 @@ import TakimPaneli from '../bilesenler/TakimPaneli'
 import HocaYarisiPaneli from '../bilesenler/HocaYarisiPaneli'
 import MerdivenPaneli from '../bilesenler/MerdivenPaneli'
 import ZombiPaneli from '../bilesenler/ZombiPaneli'
+import { EjderhaPaneli, RoketPaneli } from '../bilesenler/GrafikOyunlari'
 import DersSayaci from '../bilesenler/DersSayaci'
 import OyunSahnesi from '../bilesenler/OyunSahnesi'
 
@@ -518,6 +519,8 @@ export default function Sahne() {
       <HocaYarisiPaneli oturum={oturum.id} anahtar={null} mod="perde" />
       <MerdivenPaneli oturum={oturum.id} anahtar={null} mod="perde" />
       <ZombiPaneli oturum={oturum.id} anahtar={null} mod="perde" />
+      <RoketPaneli oturum={oturum.id} anahtar={null} mod="perde" />
+      <EjderhaPaneli oturum={oturum.id} anahtar={null} mod="perde" />
     </>
   )
 }

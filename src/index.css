@@ -122,6 +122,39 @@ h1, h2, h3, .baslik {
   .zombi-yuru > span, .zombi-yuruyen, .zombi-zirvede, .zombi-yakalanan, .zombi-bayrak { animation: none; }
 }
 
+/* ------------------------------------------------------------------ roket yarışı ve ejderha savaşı */
+.roket-uzay { background: radial-gradient(70% 60% at 20% 10%, rgba(99, 102, 241, 0.28), transparent 70%), linear-gradient(180deg, #050816 0%, #0b1030 60%, #1a1040 100%); }
+.roket-yildizlar {
+  position: absolute; inset: 0; opacity: 0.8;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 22%, #fff, transparent), radial-gradient(1px 1px at 38% 70%, #cbd5ff, transparent),
+    radial-gradient(1.5px 1.5px at 62% 30%, #fff, transparent), radial-gradient(1px 1px at 82% 62%, #fde68a, transparent),
+    radial-gradient(1px 1px at 25% 85%, #fff, transparent), radial-gradient(1.5px 1.5px at 90% 12%, #fff, transparent),
+    radial-gradient(1px 1px at 52% 48%, #fff, transparent), radial-gradient(1px 1px at 5% 55%, #cbd5ff, transparent);
+  background-size: 340px 260px;
+  animation: roket-kay 60s linear infinite;
+}
+.roket-bitis { background: repeating-linear-gradient(0deg, rgba(255,255,255,0.18) 0 20px, rgba(0,0,0,0.25) 20px 40px); border-left: 2px dashed rgba(255,255,255,0.5); }
+.roket-iz { height: 4px; border-radius: 9999px; background: linear-gradient(90deg, transparent, rgba(251, 146, 60, 0.85)); filter: blur(1px); margin-right: -4px; }
+.roket-ucus { animation: roket-titre 0.7s ease-in-out infinite; filter: drop-shadow(0 0 8px rgba(251, 146, 60, 0.7)); }
+.roket-varti { filter: drop-shadow(0 0 12px rgba(253, 224, 71, 0.95)); animation: roket-titre 1.4s ease-in-out infinite; }
+.roket-gezegen { animation: roket-yuz 14s ease-in-out infinite; }
+.roket-baslik { background: linear-gradient(120deg, #a5b4fc, #fdba74 60%, #fde68a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.ejderha-magara { background: radial-gradient(60% 50% at 50% 0%, rgba(239, 68, 68, 0.28), transparent 70%), linear-gradient(180deg, #1a0b12 0%, #2a1220 55%, #150a14 100%); }
+.ejderha-nefes { animation: ejderha-nefes 3s ease-in-out infinite; filter: drop-shadow(0 0 24px rgba(239, 68, 68, 0.6)); }
+.ejderha-oldu { filter: grayscale(0.6); }
+.ejderha-ates { animation: ejderha-ates 0.9s ease-in-out infinite; }
+.ejderha-kahraman { animation: roket-titre 2.2s ease-in-out infinite; }
+.ejderha-baslik { background: linear-gradient(120deg, #fca5a5, #fdba74 55%, #fde68a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+@keyframes roket-kay { to { background-position: -340px 260px; } }
+@keyframes roket-titre { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes roket-yuz { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(8px) rotate(4deg); } }
+@keyframes ejderha-nefes { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+@keyframes ejderha-ates { 0%, 100% { opacity: 0.55; transform: scale(0.9) rotate(-6deg); } 50% { opacity: 1; transform: scale(1.15) rotate(6deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .roket-yildizlar, .roket-ucus, .roket-varti, .roket-gezegen, .ejderha-nefes, .ejderha-ates, .ejderha-kahraman { animation: none; }
+}
+
 /* ------------------------------------------------------------------ düğmeler */
 .parlak-buton {
   background: linear-gradient(135deg, #ff4d9d 0%, #7c5cff 55%, #22b8ff 100%);

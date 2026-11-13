@@ -96,7 +96,7 @@ export function KahootSecici({
           >
             ✨ Önerilen
           </button>
-          {([null, 'takim', 'halat', 'hoca', 'zombi', 'merdiven'] as (OyunAnahtari | null)[]).map((k) => (
+          {([null, 'takim', 'halat', 'hoca', 'zombi', 'roket', 'ejderha', 'merdiven'] as (OyunAnahtari | null)[]).map((k) => (
             <button
               key={k ?? 'bireysel'}
               onClick={() => setMod(k)}

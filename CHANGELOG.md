@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.29.0 (14 Kasım 2026)
+İki yeni grafik oyun.
+- **Roket yarışı:** her öğrenci perdede ilk adıyla bir roket; doğru cevap roketi ileri iter, uzay sahnesinde iz bırakır, bitiş çizgisine ilk varanlar podyuma çıkar. Bireysel hız ve bilgi yarışı.
+- **Ejderha savaşı:** bütün sınıf birlikte bir ejderhaya karşı savaşır. Doğru cevap ejderhaya vurur (can çubuğu azalır), yanlış ya da cevapsız kalan kahraman üç canından birini kaybeder, canı bitenler uyur. Sınıf ejderhayı yenerse kazanır. Ortak çaba oyunu.
+- İkisi de Kahoot geçişinde mod olarak seçilir ve akıştaki oyun kartlarında bulunur. Veritabanı değişikliği yoktur (zombi_goster verisini kullanır).
+
 ## v0.28.1 (14 Kasım 2026)
 ZAPEDU logosu.
 - Yeni logo: koyu zeminde gümüş "ZE" monogramı ve altın çizgi. Sekme simgesi, panel başlığı ve masaüstü uygulaması simgesi aynı logoyu kullanır.

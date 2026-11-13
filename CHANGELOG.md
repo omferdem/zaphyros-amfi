@@ -6,13 +6,13 @@ Yoklama sınıfın içinde: yoklama haftaları.
 - Akış sonradan seçilir: yoklama açılınca sahne karekodu gösterir, öğrenciler katılır; hoca sahnenin araç çubuğundaki "Akış seç" listesinden "📋 Yoklama ekranı" ile bir akış arasında geçiş yapar (akış seçilince ilk adımı açılır). Yoklama akıştan bağımsız olduğu için 2. haftanın yoklaması 1. haftanın akışından verilebilir; bir akış iki hafta sürebilir. Akışların içine artık yoklama adımı konmaz.
 - Aynı gün (ya da sonra) o haftanın yoklaması yeniden açılırsa aynı oturum kullanılır: önceki kayıtlar korunur, yeni gelenler de var yazılır (karekod, ders kodu ya da elle). Bir şubede bir hafta numarası tek oturumda bulunur.
 - Eski "Ders başlat" formu "Ek ders başlat" adıyla duruyor (yoklama haftasından bağımsız, akışlı ya da yoklamasız oturumlar için).
-- Veritabanı: `0020_yoklama_haftalari.sql` (`courses.yoklama_sayisi`, `courses.yoklama_birimi`, `sessions.hafta_no` ve şube başına tekil hafta numarası). `npm run sql-test` ile yerelde denendi; henüz Supabase'e uygulanmadı.
+- Veritabanı: `0020_yoklama_haftalari.sql` (`courses.yoklama_sayisi`, `courses.yoklama_birimi`, `sessions.hafta_no` ve şube başına tekil hafta numarası). `npm run sql-test` ile yerelde denendi; Supabase'e 13 Kasım 2026'da uygulandı (sütunlar, tekil indeks ve kısıtlar sorguyla doğrulandı).
 
 ## v0.20.0 (13 Kasım 2026)
 Akışta "oyun" adımı.
 - Haftalık akışa "🎮 Bugünün oyunu" kartı konabilir (akış düzenleyicide Tartışma etkinliği > Oyun kartı): takım yarışması, halat çekme, hocayla yarış ya da bilgi merdiveni. Adım perdede oyunun adını, nasıl oynandığını ve "🚀 Oyunu başlat" düğmesini gösterir; düğme ilgili modu açar (takım sayısını ayarlar, hocayla yarışı açar, halat ya da merdiven panelini gösterir). Öğrenci telefonunda "hocanın ekranını izle" görünür.
 - İçerik paketini içe aktarırken, aynı adlı ve içi boş bir akış zaten varsa (örneğin hafta planıyla önceden açılmış) yenisi açılmaz, o akış doldurulur.
-- Veritabanı: `0019_oyun_adimi.sql` (`lesson_steps.tur` içine `oyun`; `ayar.oyun` zorunlu ve dört değerden biri). `npm run sql-test` ile yerelde denendi; henüz Supabase'e uygulanmadı.
+- Veritabanı: `0019_oyun_adimi.sql` (`lesson_steps.tur` içine `oyun`; `ayar.oyun` zorunlu ve dört değerden biri). `npm run sql-test` ile yerelde denendi; Supabase'e 13 Kasım 2026'da uygulandı (`oyun` türü kısıtta doğrulandı).
 
 ## v0.19.2 (13 Kasım 2026)
 Yoklama raporunda elle var yazma.

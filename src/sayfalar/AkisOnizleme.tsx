@@ -6,6 +6,7 @@ import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import { SIKLAR } from '../lib/yarisma'
 import { youtubeGomme } from '../lib/video'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
+import OyunProvasi from '../bilesenler/OyunProvasi'
 
 type Gorunum = 'perde' | 'telefon' | 'ikisi'
 
@@ -49,6 +50,7 @@ export default function AkisOnizleme() {
   const [i, setI] = useState(0)
   const [gorunum, setGorunum] = useState<Gorunum>('ikisi')
   const [cevapGoster, setCevapGoster] = useState(false)
+  const [prova, setProva] = useState(false)
 
   const yukle = useCallback(async () => {
     try {
@@ -112,6 +114,9 @@ export default function AkisOnizleme() {
           ← Düzenlemeye dön
         </Link>
         <h1 className="font-display font-extrabold text-lg flex-1 min-w-0 truncate">👁 Önizleme: {akis.ad}</h1>
+        <button className="ikincil-buton !py-1.5 text-sm" onClick={() => setProva(true)} title="Sahte öğrencilerle bir oyunu baştan sona izle">
+          🧪 Oyun provası
+        </button>
         <div className="flex rounded-xl overflow-hidden border border-white/10" role="group" aria-label="Görünüm">
           {(
             [
@@ -193,6 +198,7 @@ export default function AkisOnizleme() {
           </section>
         </div>
       )}
+      {prova && <OyunProvasi kapat={() => setProva(false)} />}
     </main>
   )
 }

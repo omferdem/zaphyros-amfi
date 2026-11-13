@@ -11,6 +11,10 @@ import { adaGoreHafta, kahootAkisAdi, kahootAkisiMi } from '../lib/gecis'
 import { kalinanAdim, sonAkisBilgisi } from '../lib/veri'
 import { KahootSecici, QuizPaneli } from '../bilesenler/PaketGecisi'
 import { oyunuAc } from '../lib/oyunAc'
+import OyunProvasi from '../bilesenler/OyunProvasi'
+import Rehber from '../bilesenler/Rehber'
+import BaglantiUyarisi from '../bilesenler/BaglantiUyarisi'
+import { useSesAyari } from '../lib/ses'
 import type { OyunAnahtari } from '../lib/oyun'
 import { dersEtiketi, kisaAd, oturumAdi } from '../lib/bicim'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
@@ -93,6 +97,9 @@ export default function Sahne() {
   const [kumandaAcik, setKumandaAcik] = useState(false)
   const [puanAcik, setPuanAcik] = useState(false)
   const [kahootSecimi, setKahootSecimi] = useState(false)
+  const [provaAcik, setProvaAcik] = useState(false)
+  const [rehberAcik, setRehberAcik] = useState(false)
+  const [sesAcik, sesAyarla] = useSesAyari()
   const [devam, setDevam] = useState<{ akis: string; baslangic: string | null; metin: string } | null>(null)
   // Akış seçilmemişse bu şubede en son kalınan akış önerilir
   const [sonAkis, setSonAkis] = useState<{ akisId: string; ad: string; sira: number; toplam: number } | null>(null)
@@ -480,6 +487,15 @@ export default function Sahne() {
               {mevcutGoster ? '🙈 Mevcudu gizle' : '👁 Mevcudu göster'}
             </button>
           )}
+          <button className="ikincil-buton text-left" onClick={() => sesAyarla(!sesAcik)}>
+            {sesAcik ? '🔊 Oyun seslerini kapat' : '🔇 Oyun seslerini aç'}
+          </button>
+          <button className="ikincil-buton text-left" onClick={() => setProvaAcik(true)}>
+            🧪 Oyun provası
+          </button>
+          <button className="ikincil-buton text-left" onClick={() => setRehberAcik(true)}>
+            ❓ Ders günü rehberi
+          </button>
           <button className="ikincil-buton text-left" onClick={tamEkran}>
             ⛶ Tam ekran
           </button>
@@ -543,6 +559,9 @@ export default function Sahne() {
         />
       )}
       {kumandaAcik && <KumandaQr oturumId={oturum.id} kapat={() => setKumandaAcik(false)} />}
+      <BaglantiUyarisi />
+      {provaAcik && <OyunProvasi kapat={() => setProvaAcik(false)} />}
+      {rehberAcik && <Rehber kapat={() => setRehberAcik(false)} />}
       {kahootSecimi && icerikId && <KahootSecici icerikId={icerikId} hafta={haftaNo} sec={kahootaGit} kapat={() => setKahootSecimi(false)} />}
       {quizAcik && icerikId && <QuizPaneli dersId={oturum.course_id} icerikId={icerikId} hafta={haftaNo} katilan={gelenler.length} kapat={() => setQuizAcik(false)} />}
       {puanAcik && <PuanTablosu oturumId={oturum.id} kapat={() => setPuanAcik(false)} />}

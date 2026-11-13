@@ -8,6 +8,7 @@ import { takimBilgisi } from '../lib/takim'
 import { EJDERHA_ORANI, KAHRAMAN_CANI, ejderhaHesapla, type EjderhaDurumu } from '../lib/ejderha'
 import type { ZombiOyuncusu, ZombiSorusu } from '../lib/zombi'
 import Konfeti from './Konfeti'
+import { useOyunSesi } from '../lib/ses'
 
 type Veri = { sorular: ZombiSorusu[]; oyuncular: ZombiOyuncusu[] }
 
@@ -156,7 +157,8 @@ export function RoketPaneli({ oturum, anahtar, mod }: { oturum: string; anahtar:
   )
 }
 
-function RoketSahnesi({ d, kucult }: { d: RoketDurumu; kucult: () => void }) {
+export function RoketSahnesi({ d, kucult }: { d: RoketDurumu; kucult: () => void }) {
+  useOyunSesi(d.oynanan, d.bitti, true)
   const n = d.oyuncular.length
   const seritSayisi = Math.max(4, Math.min(14, n))
   const boy = n > 60 ? 'text-xl' : n > 30 ? 'text-2xl' : 'text-3xl'
@@ -262,7 +264,8 @@ export function EjderhaPaneli({ oturum, anahtar, mod }: { oturum: string; anahta
   )
 }
 
-function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => void }) {
+export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => void }) {
+  useOyunSesi(d.oynanan, d.bitti, d.kazandi)
   const n = d.kahramanlar.length
   const boy = n > 80 ? 'text-2xl' : n > 40 ? 'text-4xl' : n > 20 ? 'text-5xl' : 'text-6xl'
   const adBoy = n > 40 ? 'text-[10px] max-w-16' : 'text-sm max-w-24'
@@ -351,7 +354,8 @@ export function ArenaPaneli({ oturum, anahtar, mod }: { oturum: string; anahtar:
   )
 }
 
-function ArenaSahnesi({ d, kucult }: { d: ArenaDurumu; kucult: () => void }) {
+export function ArenaSahnesi({ d, kucult }: { d: ArenaDurumu; kucult: () => void }) {
+  useOyunSesi(d.oynanan, d.bitti, true)
   const n = d.oyuncular.length
   const boy = n > 80 ? 'text-2xl' : n > 40 ? 'text-3xl' : n > 20 ? 'text-5xl' : 'text-6xl'
   const adBoy = n > 40 ? 'text-[10px] max-w-16' : 'text-sm max-w-24'
@@ -456,7 +460,8 @@ export function KulePaneli({ oturum, anahtar, mod }: { oturum: string; anahtar: 
   )
 }
 
-function KuleSahnesi({ d, kucult }: { d: KuleDurumu; kucult: () => void }) {
+export function KuleSahnesi({ d, kucult }: { d: KuleDurumu; kucult: () => void }) {
+  useOyunSesi(d.oynanan, d.bitti, true)
   const satirlar = [...d.satirlar].sort((a, b) => a.takim - b.takim)
   return (
     <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">

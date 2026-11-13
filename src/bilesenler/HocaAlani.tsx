@@ -6,6 +6,7 @@ import { SURUM } from '../surum'
 import BaglantiGostergesi from './BaglantiGostergesi'
 import SifreBelirle from './SifreBelirle'
 import Giris from './Giris'
+import Rehber from './Rehber'
 
 function Bekle() {
   return (
@@ -75,6 +76,7 @@ function YetkiYok({ eposta }: { eposta: string }) {
 export default function HocaAlani({ cercevesiz = false }: { cercevesiz?: boolean }) {
   const oturum = useGiris()
   const hoca = useHocaMi(oturum)
+  const [rehberAcik, setRehberAcik] = useState(false)
 
   if (oturum === undefined) return <Bekle />
   if (!oturum) return <Giris />
@@ -86,6 +88,7 @@ export default function HocaAlani({ cercevesiz = false }: { cercevesiz?: boolean
 
   return (
     <div className="min-h-screen">
+      {rehberAcik && <Rehber kapat={() => setRehberAcik(false)} />}
       <header className="sticky top-0 z-30 border-b border-white/10 bg-[#070a1f]/70 backdrop-blur-xl">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center gap-3">
           <Link to="/panel" className="flex items-center gap-2.5 group">
@@ -95,6 +98,9 @@ export default function HocaAlani({ cercevesiz = false }: { cercevesiz?: boolean
             </span>
           </Link>
           <span className="text-[10px] text-slate-500 font-mono">v{SURUM}</span>
+          <button className="text-xs text-slate-400 hover:text-white" onClick={() => setRehberAcik(true)} title="Ders günü rehberi">
+            ❓ Rehber
+          </button>
           <div className="ml-auto flex items-center gap-4">
             <span className="hidden sm:inline">
               <BaglantiGostergesi />

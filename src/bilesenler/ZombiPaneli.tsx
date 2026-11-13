@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabase'
 import { OYUN_OLAYI } from '../lib/oyun'
 import { KURTULMA_ORANI, zombiHesapla, type ZombiDurumu, type ZombiOyuncuDurumu, type ZombiOyuncusu, type ZombiSorusu } from '../lib/zombi'
 import Konfeti from './Konfeti'
+import { useOyunSesi } from '../lib/ses'
 
 const ANAHTAR = (oturum: string) => `amfi_zombi_${oturum}`
 const KARAKTERLER = ['🧑‍🎓', '👩‍🎓', '🧙', '🦸', '🥷', '🧑‍🚀', '👨‍🔬', '👩‍🎨', '🧝', '🕵️', '👩‍🚀', '🧑‍🍳', '🦹', '🤠', '👩‍🏫', '🧑‍🎤']
@@ -92,7 +93,7 @@ export default function ZombiPaneli({ oturum, anahtar, mod }: { oturum: string; 
           </div>
         </div>
       )}
-      {buyuk && <Sahne d={d} kapat={() => setBuyuk(false)} />}
+      {buyuk && <ZombiSahnesi d={d} kapat={() => setBuyuk(false)} />}
     </>
   )
 }
@@ -121,7 +122,8 @@ function Ozet({ d, kapat }: { d: ZombiDurumu; kapat: () => void }) {
 }
 
 /** Tam ekran sahne: piramit, karakterler ve zombi sürüsü. */
-function Sahne({ d, kapat }: { d: ZombiDurumu; kapat: () => void }) {
+export function ZombiSahnesi({ d, kapat }: { d: ZombiDurumu; kapat: () => void }) {
+  useOyunSesi(d.oynanan, d.bitti, d.kazandi)
   const kat = d.zirve
   const birim = 100 / (kat + 2) // yüzde cinsinden bir katın yüksekliği (zemin ve bayrak payı dahil)
   // Katlardaki oyuncuları yan yana diz: aynı seviyedekiler eşit aralıkla dağılır

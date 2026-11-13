@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.34.0 (14 Kasım 2026)
+Ders günü güvencesi: prova, ses, bağlantı uyarısı ve rehber.
+- **🧪 Oyun provası:** sahne "⋯ Diğer" menüsünden ve akış önizlemesinden açılır. Sahte öğrencilerle zombi kaçışı, roket yarışı, ejderha savaşı, son kalan arenası ve kule yarışını baştan sona, gerçek derste görecek olduğun perde görünümüyle izlersin (3,5 saniyede bir soru oynanır; duraklat, sonraki soru, baştan). Hiçbir şey kaydedilmez.
+- **Oyun sesleri:** oyun sahnelerinde yeni soru, zafer ve yenilgi için küçük ses efektleri (dosyasız, tarayıcıda üretilir). "⋯ Diğer" menüsünden kapatılır.
+- **Bağlantı uyarısı:** sahnede ve kumandada internet kopunca ekranın üstünde uyarı çıkar; ders durumu sunucuda durduğu için bağlantı gelince devam eder.
+- **❓ Ders günü rehberi:** panel başlığında ve sahne menüsünde; ders öncesi, derste, sorun olursa (öğrenci giremiyor, sayfa kapandı, dersi yanlışlıkla bitirdim, yoklama yanlış) ve kısayollar.
+
 ## v0.33.1 (14 Kasım 2026)
 - Derslerim sayfasında "Yeni ders ekle" formu, dönemde dersi varsa kapalı geliyor (ders günü ekranı sade kalsın). "Derse başla" düğmesinin yazısı düzeltildi ("▶ Başlat: 1. hafta").
 - Çalışma kuralı: her teslimin sonunda sistem hoca ve öğrenci gözüyle gözlemlenir, eksikler listelenip onay istenir.

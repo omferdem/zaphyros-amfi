@@ -12,6 +12,7 @@ import TakimPaneli from '../bilesenler/TakimPaneli'
 import HocaYarisiPaneli from '../bilesenler/HocaYarisiPaneli'
 import MerdivenPaneli from '../bilesenler/MerdivenPaneli'
 import ZombiPaneli from '../bilesenler/ZombiPaneli'
+import BaglantiUyarisi from '../bilesenler/BaglantiUyarisi'
 import { ArenaPaneli, EjderhaPaneli, KulePaneli, RoketPaneli } from '../bilesenler/GrafikOyunlari'
 
 interface KumandaDurumu extends DersDurumu {
@@ -173,6 +174,7 @@ export default function Kumanda() {
 
       {hata && <p className="text-sm text-rose-200 bg-rose-500/10 rounded-xl p-3">{hata}</p>}
 
+      <BaglantiUyarisi />
       <SinifPaneli d={sinif.d} komut={sinif.komut} hata={sinif.hata} mod="kumanda" />
       {anahtar && <TakimPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
       {anahtar && <HocaYarisiPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}

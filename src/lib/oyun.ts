@@ -1,6 +1,6 @@
 // Akıştaki "oyun" adımı için oyun listesi ve açıklamaları (perde kartı ve akış düzenleyici kullanır).
 
-export type OyunAnahtari = 'takim' | 'halat' | 'hoca' | 'merdiven'
+export type OyunAnahtari = 'takim' | 'halat' | 'hoca' | 'merdiven' | 'zombi'
 
 export interface OyunBilgisi {
   ad: string
@@ -29,6 +29,12 @@ export const OYUNLAR: Record<OyunAnahtari, OyunBilgisi> = {
     emoji: '🥊',
     nasil: 'Sınıf hocaya karşı oynar. Hoca her soruda cevabını gizlice verir; doğru bilen taraf puan alır. Skor perdede durur.',
     baslat: 'Hocayla yarış skorunu açar.',
+  },
+  zombi: {
+    ad: 'Zombi kaçışı',
+    emoji: '🧟',
+    nasil: 'Sınıf bir piramidin zirvesine çıkmaya çalışır; her öğrenci perdede ayrı bir karakterdir. Doğru cevap bir kat yükseltir, zombiler her soruda yaklaşır. Sınıfın %70\'i zirveye çıkarsa kurtulur.',
+    baslat: 'Zombi kaçışı piramidini perdede açar.',
   },
   merdiven: {
     ad: 'Bilgi merdiveni',

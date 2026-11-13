@@ -20,6 +20,7 @@ import SinifPaneli, { useSinifDurumu } from '../bilesenler/SinifPaneli'
 import TakimPaneli from '../bilesenler/TakimPaneli'
 import HocaYarisiPaneli from '../bilesenler/HocaYarisiPaneli'
 import MerdivenPaneli from '../bilesenler/MerdivenPaneli'
+import ZombiPaneli from '../bilesenler/ZombiPaneli'
 import DersSayaci from '../bilesenler/DersSayaci'
 import OyunSahnesi from '../bilesenler/OyunSahnesi'
 
@@ -516,6 +517,7 @@ export default function Sahne() {
       <TakimPaneli oturum={oturum.id} anahtar={null} mod="perde" />
       <HocaYarisiPaneli oturum={oturum.id} anahtar={null} mod="perde" />
       <MerdivenPaneli oturum={oturum.id} anahtar={null} mod="perde" />
+      <ZombiPaneli oturum={oturum.id} anahtar={null} mod="perde" />
     </>
   )
 }
@@ -1124,7 +1126,7 @@ function EtkinlikSahnesi({
 
           <section className="cam-panel rounded-3xl p-6 lg:p-8 flex-1 flex flex-col justify-center">
             {adim.tur === 'fikir' ? (
-              <KelimeBulutu fikirler={durum?.fikirler ?? []} buyuk gizle={fikriGizle} />
+              <KelimeBulutu fikirler={durum?.fikirler ?? []} buyuk gizle={fikriGizle} mod={durum?.mod ?? adim.ayar.mod} />
             ) : acik ? (
               <div className="text-center space-y-3">
                 <div className="flex items-center justify-center gap-6 text-3xl lg:text-5xl font-extrabold">

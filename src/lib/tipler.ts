@@ -102,6 +102,8 @@ export interface AdimAyari {
   /** Oyun adımında: 'takim' | 'halat' | 'hoca' | 'merdiven' */
   oyun?: string
   aciklama?: string
+  /** Fikir adımının kipi: 'bulut' (varsayılan), 'firtina' ya da 'acik' */
+  mod?: 'bulut' | 'firtina' | 'acik'
   /** Hocanın bu adım için notu (yalnızca düzenleme ekranında görünür) */
   not?: string
 }
@@ -147,6 +149,8 @@ export interface DersDurumu {
     // Beyin fırtınası, oylama ve video adımlarında (soru, soru_durum ve cevap_sayisi alanları ortaktır)
     video?: string | null
     fikirler?: { m: string; n: number }[]
+    /** Fikir adımının kipi: kelime bulutu, beyin fırtınası ya da açık uçlu soru */
+    mod?: 'bulut' | 'firtina' | 'acik'
     etiketler?: string[]
     /** Oylamada sonuç açıklanınca [sol, sağ] oy sayısı */
     sayilar?: number[] | null

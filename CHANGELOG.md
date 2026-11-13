@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.28.0 (14 Kasım 2026)
+Etkinlik menüsü, açık uçlu soru ve Zombi Kaçışı.
+- **Akış düzenlemede "Etkinlik ekle" menüsü:** açık uçlu soru, kelime bulutu, beyin fırtınası, şeytanın avukatı, video ve oyun kartları (zombi kaçışı, takım, halat, hocayla yarış, bilgi merdiveni). Satırdaki "+ Ekle" ile etkinlik ya da soru paketi o adımın arkasına eklenir.
+- **Açık uçlu soru:** hoca sorar, öğrenciler telefondan (300 harfe kadar) yazar, bütün cevaplar perdede kart olarak görünür; hoca uygunsuz olanı gizleyebilir. Beyin fırtınası kısa cümleler (120 harf, 3 hak) alır; kelime bulutu eskisi gibi çalışır.
+- **Zombi Kaçışı:** bilgi merdiveninin yerini alan oyun. Her öğrenci ilk adıyla ayrı bir karakter olarak piramitte görünür; doğru cevap bir kat yükseltir, zombi sürüsü her soruda yaklaşır, altında kalan yakalanıp zombi olur. Oyun sonunda sınıfın %70'i zirvedeyse sınıf kurtulur. Kahoot geçişinde "Zombi kaçışı" modu seçilir.
+- **0023_acik_uclu_zombi.sql** (katkı kipleri ve zombi_goster) henüz Supabase'e uygulanmadı; uygulanana kadar açık uçlu cevaplar ve zombi piramidi çalışmaz, diğer her şey eskisi gibidir.
+
 ## v0.27.1 (14 Kasım 2026)
 Akışta slayt önizlemesi.
 - Akış düzenlemede bir slaydın küçük resmine tıklayınca büyük önizleme açılır: slayt, sayfanın metni ve yalnızca hocanın gördüğü not kutusu. Ok tuşlarıyla akıştaki öteki slaytlara geçilir, Esc kapatır. Notu olan slaytta 📝 işareti görünür. Not öğrenciye ve perdeye gitmez.

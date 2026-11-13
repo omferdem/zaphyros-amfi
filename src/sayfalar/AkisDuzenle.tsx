@@ -4,7 +4,7 @@ import { supabase } from '../lib/supabase'
 import type { Adim, AdimAyari, Akis, Soru, Sunum } from '../lib/tipler'
 import { videoAdresi } from '../lib/video'
 import { adimlarEkle, adimlariGetir, akisGetir, akisSirala, sorulariAkisaYerlestir, sorulariGetir, sunumYukle, sunumlariGetir } from '../lib/akis'
-import { konumuCoz } from '../lib/paket'
+import { adimSirasi, konumuCoz } from '../lib/paket'
 import SoruPaketiEkle from '../bilesenler/SoruPaketiEkle'
 import SunumSurukle from '../bilesenler/SunumSurukle'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
@@ -38,7 +38,7 @@ export default function AkisDuzenle() {
   const [konum, setKonum] = useState('son')
   const [bilgi, setBilgi] = useState<string | null>(null)
   const soruPaneli = useRef<HTMLDivElement>(null)
-  const [etkinlikTuru, setEtkinlikTuru] = useState<'fikir' | 'oylama' | 'video' | 'oyun'>('fikir')
+  const [etkinlikTuru, setEtkinlikTuru] = useState<'bulut' | 'firtina' | 'acik' | 'oylama' | 'video' | 'oyun'>('bulut')
   const [oyunSecimi, setOyunSecimi] = useState<OyunAnahtari>('takim')
   const [etkinlikSorusu, setEtkinlikSorusu] = useState('')
   const [etiketSol, setEtiketSol] = useState('')
@@ -162,7 +162,7 @@ export default function AkisDuzenle() {
   /** Adım satırındaki "+ Soru" düğmesi: ekleme konumunu o adımın arkasına alıp paneli gösterir. */
   function buraya(adimId: string) {
     setKonum(`sonra:${adimId}`)
-    setBilgi('Ekleme konumu bu adımın arkası olarak seçildi. Aşağıdan bir soru paketi seç.')
+    setBilgi('Ekleme konumu bu adımın arkası olarak seçildi. Aşağıdan bir soru paketi ya da etkinlik (açık uçlu soru, kelime bulutu, oyun…) ekleyebilirsin.')
     soruPaneli.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }
 
@@ -209,16 +209,19 @@ export default function AkisDuzenle() {
     } else {
       const soru = etkinlikSorusu.trim().slice(0, 300)
       if (!soru) {
-        setHata(etkinlikTuru === 'fikir' ? 'Beyin fırtınası sorusunu yaz.' : 'Oylanacak önermeyi yaz.')
+        setHata(etkinlikTuru === 'oylama' ? 'Oylanacak önermeyi yaz.' : 'Soruyu yaz.')
         return
       }
       ayar = { soru }
+      if (etkinlikTuru === 'firtina' || etkinlikTuru === 'acik') ayar.mod = etkinlikTuru
       if (etkinlikTuru === 'oylama' && (etiketSol.trim() || etiketSag.trim())) {
         ayar.etiketler = [etiketSol.trim().slice(0, 40) || 'Katılıyorum', etiketSag.trim().slice(0, 40) || 'Katılmıyorum']
       }
     }
     try {
-      await adimlarEkle(akis.id, adimlar.length, [{ tur: etkinlikTuru, ayar }])
+      const yeniIdler = await adimlarEkle(akis.id, adimlar.length, [{ tur: etkinlikTuru === 'bulut' || etkinlikTuru === 'firtina' || etkinlikTuru === 'acik' ? 'fikir' : etkinlikTuru, ayar }])
+      // Ekleme konumu seçilmişse ("+ Ekle" ya da konum kutusu) etkinlik oraya yerleşir
+      if (konum !== 'son' && yeniIdler.length) await akisSirala(akis.id, adimSirasi(adimlar.map((a) => a.id), yeniIdler, konumuCoz(konum)))
       setEtkinlikSorusu('')
       setVideoUrl('')
       setVideoBaslik('')
@@ -389,19 +392,34 @@ export default function AkisDuzenle() {
           </div>
         )}
         <form onSubmit={etkinlikEkle} className="rounded-xl bg-slate-950/60 border border-white/5 p-4 space-y-3">
-          <div className="flex flex-wrap gap-2 items-center">
-            <p className="text-sm font-semibold">Tartışma etkinliği</p>
-            <select
-              className="giris-kutusu !w-auto !py-1.5 text-sm"
-              value={etkinlikTuru}
-              onChange={(e) => setEtkinlikTuru(e.target.value as typeof etkinlikTuru)}
-              aria-label="Etkinlik türü"
-            >
-              <option value="fikir">Beyin fırtınası (kelime bulutu)</option>
-              <option value="oylama">Şeytanın avukatı (iki taraflı oylama)</option>
-              <option value="video">Video</option>
-              <option value="oyun">Oyun kartı (takım, halat, hocayla yarış, merdiven)</option>
-            </select>
+          <div className="space-y-2">
+            <p className="text-sm font-semibold">Etkinlik ekle</p>
+            <div className="grid gap-2 grid-cols-2 sm:grid-cols-3" role="radiogroup" aria-label="Etkinlik türü">
+              {(
+                [
+                  ['acik', '✍️', 'Açık uçlu soru', 'Öğrenciler telefondan cevap yazar, bütün cevaplar perdede kartlarla görünür'],
+                  ['bulut', '☁️', 'Kelime bulutu', 'Tek kelimelik cevaplar; çok yazılan büyür'],
+                  ['firtina', '💡', 'Beyin fırtınası', 'Kısa cümlelik fikirler (en çok 3), perdede kartlar'],
+                  ['oylama', '😈', 'Şeytanın avukatı', 'İki taraflı oylama; isteyen gerekçe yazar'],
+                  ['video', '🎬', 'Video', 'Perdede ve telefonda oynatılır'],
+                  ['oyun', '🎮', 'Oyun', 'Zombi kaçışı, takım yarışı, halat çekme, hocayla yarış, bilgi merdiveni'],
+                ] as const
+              ).map(([k, emoji, ad, aciklama]) => (
+                <button
+                  type="button"
+                  key={k}
+                  role="radio"
+                  aria-checked={etkinlikTuru === k}
+                  onClick={() => setEtkinlikTuru(k)}
+                  title={aciklama}
+                  className={`text-left rounded-xl border p-3 transition ${etkinlikTuru === k ? 'border-indigo-300 bg-indigo-500/20' : 'border-white/10 bg-white/5 hover:bg-white/10'}`}
+                >
+                  <span className="text-xl mr-1.5">{emoji}</span>
+                  <b className="text-sm">{ad}</b>
+                  <span className="block text-xs text-slate-400 mt-0.5">{aciklama}</span>
+                </button>
+              ))}
+            </div>
           </div>
           {etkinlikTuru === 'oyun' ? (
             <div className="space-y-2">
@@ -435,7 +453,13 @@ export default function AkisDuzenle() {
             <div className="space-y-2">
               <input
                 className="giris-kutusu text-sm"
-                placeholder={etkinlikTuru === 'fikir' ? 'Soru: Kötülük problemi deyince aklına ne geliyor?' : 'Önerme: Tanrı kötülüğü engellemeye mecburdur.'}
+                placeholder={
+                  etkinlikTuru === 'oylama'
+                    ? 'Önerme: Tanrı kötülüğü engellemeye mecburdur.'
+                    : etkinlikTuru === 'acik'
+                      ? 'Soru: Sence Tanrı kötülüğe neden izin veriyor? Gerekçeni yaz.'
+                      : 'Soru: Kötülük problemi deyince aklına ne geliyor?'
+                }
                 value={etkinlikSorusu}
                 maxLength={300}
                 onChange={(e) => setEtkinlikSorusu(e.target.value)}
@@ -500,7 +524,7 @@ export default function AkisDuzenle() {
                   </div>
                 ) : a.tur === 'fikir' || a.tur === 'oylama' || a.tur === 'video' ? (
                   <div className="w-28 h-16 shrink-0 rounded bg-amber-500/10 flex items-center justify-center text-amber-300 text-xs font-bold text-center leading-tight">
-                    {a.tur === 'fikir' ? 'BEYİN FIRTINASI' : a.tur === 'oylama' ? 'OYLAMA' : 'VİDEO'}
+                    {a.tur === 'fikir' ? (a.ayar.mod === 'acik' ? 'AÇIK UÇLU' : a.ayar.mod === 'firtina' ? 'BEYİN FIRTINASI' : 'KELİME BULUTU') : a.tur === 'oylama' ? 'OYLAMA' : 'VİDEO'}
                   </div>
                 ) : (
                   <div className="w-28 h-16 shrink-0 rounded bg-emerald-500/10 flex items-center justify-center text-emerald-300 text-xs font-bold">
@@ -539,7 +563,11 @@ export default function AkisDuzenle() {
                       <p className="text-sm font-semibold truncate">{a.ayar.soru}</p>
                       <p className="text-xs text-slate-400 truncate">
                         {a.tur === 'fikir'
-                          ? 'Beyin fırtınası · perdede kelime bulutu'
+                          ? a.ayar.mod === 'acik'
+                            ? 'Açık uçlu soru · cevaplar perdede kart olarak'
+                            : a.ayar.mod === 'firtina'
+                              ? 'Beyin fırtınası · fikirler perdede kart olarak'
+                              : 'Kelime bulutu · perdede bulut'
                           : `Şeytanın avukatı · ${(a.ayar.etiketler ?? ['Katılıyorum', 'Katılmıyorum']).join(' / ')}`}
                       </p>
                     </>
@@ -556,8 +584,8 @@ export default function AkisDuzenle() {
                   )}
                 </div>
                 <div className="flex gap-1">
-                  <button className="ikincil-buton !px-2 !py-1" onClick={() => buraya(a.id)} title="Bu adımın arkasına soru paketi ekle">
-                    + Soru
+                  <button className="ikincil-buton !px-2 !py-1" onClick={() => buraya(a.id)} title="Bu adımın arkasına soru paketi ya da etkinlik ekle">
+                    + Ekle
                   </button>
                   <button className="ikincil-buton !px-2 !py-1" onClick={() => tasi(i, i - 1)} disabled={i === 0} aria-label="Yukarı taşı">
                     ↑

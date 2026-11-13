@@ -9,8 +9,47 @@ type Adim = NonNullable<DersDurumu['adim']>
 const RENKLER = ['text-rose-300', 'text-sky-300', 'text-amber-300', 'text-emerald-300', 'text-violet-300', 'text-cyan-300']
 
 /** Fikirler kelime bulutu gibi dizilir: çok yazılan büyük görünür. */
-export function KelimeBulutu({ fikirler, buyuk = false, gizle }: { fikirler: { m: string; n: number }[]; buyuk?: boolean; gizle?: (metin: string) => void }) {
-  if (fikirler.length === 0) return <p className="text-slate-400 text-center">Henüz fikir yok.</p>
+export function KelimeBulutu({
+  fikirler,
+  buyuk = false,
+  gizle,
+  mod = 'bulut',
+}: {
+  fikirler: { m: string; n: number }[]
+  buyuk?: boolean
+  gizle?: (metin: string) => void
+  mod?: 'bulut' | 'firtina' | 'acik'
+}) {
+  if (fikirler.length === 0) return <p className="text-slate-400 text-center">Henüz {mod === 'acik' ? 'cevap' : 'fikir'} yok.</p>
+  // Beyin fırtınası ve açık uçlu soruda cevaplar kart olarak, yazıldığı gibi okunur
+  if (mod !== 'bulut') {
+    return (
+      <ul className={`grid gap-3 w-full ${buyuk ? 'sm:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'}`}>
+        {fikirler.map((f, i) => (
+          <li
+            key={f.m.toLowerCase()}
+            className={`pop rounded-2xl border border-white/10 bg-white/7 p-4 leading-snug group relative ${buyuk ? 'text-xl' : 'text-sm'}`}
+            style={{ animationDelay: `${Math.min(i, 20) * 40}ms` }}
+          >
+            <span className={`mr-2 ${RENKLER[i % RENKLER.length]}`} aria-hidden>
+              ●
+            </span>
+            {f.m}
+            {f.n > 1 && <span className="ml-2 text-xs text-slate-400">×{f.n}</span>}
+            {gizle && (
+              <button
+                onClick={() => gizle(f.m)}
+                aria-label="Bu cevabı gizle"
+                className="absolute top-1 right-2 text-xs text-slate-500 hover:text-rose-300 opacity-0 group-hover:opacity-100 focus:opacity-100"
+              >
+                ✕
+              </button>
+            )}
+          </li>
+        ))}
+      </ul>
+    )
+  }
   const enCok = Math.max(...fikirler.map((f) => f.n))
   const taban = buyuk ? 1.4 : 0.95
   const aralik = buyuk ? 2.6 : 1.2
@@ -102,7 +141,7 @@ const HATALAR: Record<string, string> = {
   metin_kisa: 'En az 2 harf yaz.',
   metin_uzun: 'Biraz kısalt.',
   ayni: 'Bu fikri zaten yazdın.',
-  sinir: 'En fazla 3 fikir yazabilirsin.',
+  sinir: 'Gönderme hakkın doldu.',
   dolu: 'Etkinlik doldu.',
   taraf_gecersiz: 'Bir taraf seç.',
   cihaz_gecersiz: 'Tarayıcın tanınamadı. Sayfayı yenile.',
@@ -148,7 +187,9 @@ function FikirFormu({ oturum, adim, acik }: { oturum: string; adim: Adim; acik: 
   const [metin, setMetin] = useState('')
   const [hata, setHata] = useState<string | null>(null)
   const [mesgul, setMesgul] = useState(false)
-  const bitti = yazilanlar.length >= 3
+  const mod = adim.mod ?? 'bulut'
+  const hak = mod === 'acik' ? 1 : 3
+  const bitti = yazilanlar.length >= hak
 
   async function gonder(e: React.FormEvent) {
     e.preventDefault()
@@ -165,7 +206,7 @@ function FikirFormu({ oturum, adim, acik }: { oturum: string; adim: Adim; acik: 
     }
     if (s.hata) {
       setHata(HATALAR[s.hata] ?? 'Fikir alınamadı.')
-      if (s.hata === 'sinir' && yazilanlar.length < 3) setYazilanlar((l) => [...l, ...Array(3 - l.length).fill('…')])
+      if (s.hata === 'sinir' && yazilanlar.length < hak) setYazilanlar((l) => [...l, ...Array(hak - l.length).fill('…')])
       return
     }
     const yeni = [...yazilanlar, m]
@@ -179,21 +220,38 @@ function FikirFormu({ oturum, adim, acik }: { oturum: string; adim: Adim; acik: 
       <h1 className="text-xl font-extrabold leading-snug whitespace-pre-line">{adim.soru}</h1>
       {acik && !bitti && (
         <form onSubmit={gonder} className="space-y-3">
-          <input
-            autoFocus
-            className="giris-kutusu text-lg"
-            placeholder="Bir kelime ya da kısa bir ifade"
-            maxLength={40}
-            autoComplete="off"
-            value={metin}
-            onChange={(e) => setMetin(e.target.value)}
-          />
+          {mod === 'bulut' ? (
+            <input
+              autoFocus
+              className="giris-kutusu text-lg"
+              placeholder="Bir kelime ya da kısa bir ifade"
+              maxLength={40}
+              autoComplete="off"
+              value={metin}
+              onChange={(e) => setMetin(e.target.value)}
+            />
+          ) : (
+            <div className="space-y-1">
+              <textarea
+                autoFocus
+                className="giris-kutusu text-base"
+                rows={mod === 'acik' ? 5 : 3}
+                placeholder={mod === 'acik' ? 'Cevabını yaz' : 'Fikrini bir iki cümleyle yaz'}
+                maxLength={mod === 'acik' ? 300 : 120}
+                value={metin}
+                onChange={(e) => setMetin(e.target.value)}
+              />
+              <p className="text-xs text-slate-500 text-right tabular-nums">
+                {metin.length} / {mod === 'acik' ? 300 : 120}
+              </p>
+            </div>
+          )}
           <button disabled={mesgul || metin.trim().length < 2} className="parlak-buton w-full rounded-xl py-3 font-bold disabled:opacity-50">
-            Gönder ({3 - yazilanlar.length} hakkın var)
+            {mod === 'acik' ? 'Cevabı gönder' : `Gönder (${hak - yazilanlar.length} hakkın var)`}
           </button>
         </form>
       )}
-      {acik && bitti && <p className="text-emerald-300 font-bold">Üç fikrini de gönderdin. Perdeye bak.</p>}
+      {acik && bitti && <p className="text-emerald-300 font-bold">{mod === 'acik' ? 'Cevabın gönderildi. Perdeye bak.' : 'Üç fikrini de gönderdin. Perdeye bak.'}</p>}
       {!acik && <p className="text-slate-400">Fikir toplama kapandı. Perdeye bak.</p>}
       {hata && <p className="text-sm text-rose-200 bg-rose-500/10 rounded-xl p-3">{hata}</p>}
       {yazilanlar.length > 0 && (

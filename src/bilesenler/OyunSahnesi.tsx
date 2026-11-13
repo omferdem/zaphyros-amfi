@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { supabase } from '../lib/supabase'
-import { OYUNLAR, OYUN_OLAYI, type OyunAnahtari } from '../lib/oyun'
+import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
+import { oyunuAc } from '../lib/oyunAc'
 import type { Adim } from '../lib/tipler'
 
 /**
@@ -13,18 +13,8 @@ export default function OyunSahnesi({ oturumId, adim, araclar }: { oturumId: str
   const [durum, setDurum] = useState<'bekliyor' | 'acildi' | 'hata'>('bekliyor')
 
   async function baslat() {
-    let hata = false
-    if (anahtar === 'takim' || anahtar === 'halat') {
-      const { data, error } = await supabase.rpc('takim_ayarla', { p_session: oturumId, p_anahtar: null, p_sayi: anahtar === 'halat' ? 2 : 3 })
-      hata = !!error || !!(data as { hata?: string })?.hata
-    } else if (anahtar === 'hoca') {
-      const { data, error } = await supabase.rpc('hoca_yaris_ayarla', { p_session: oturumId, p_anahtar: null, p_acik: true })
-      hata = !!error || !!(data as { hata?: string })?.hata
-    }
-    if (hata) return setDurum('hata')
-    // Takım, halat ve merdiven panelleri bu olayı dinleyip kendilerini açar
-    window.dispatchEvent(new CustomEvent(OYUN_OLAYI, { detail: { oyun: anahtar } }))
-    setDurum('acildi')
+    // Takım, halat ve merdiven panelleri oyun olayını dinleyip kendilerini açar
+    setDurum((await oyunuAc(oturumId, anahtar)) ? 'acildi' : 'hata')
   }
 
   return (

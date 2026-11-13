@@ -3,6 +3,7 @@ import { supabase } from './supabase'
 import type { Adim, AdimAyari, Akis, Soru, Sunum } from './tipler'
 import type { ZomrSorusu } from './zomr'
 import { adimSirasi, type Konum } from './paket'
+import { KAHOOT_ISARETI } from './gecis'
 export { haftaSatirlari } from './haftaPlani'
 import type { PdfBelgesi } from './pdf'
 
@@ -148,6 +149,7 @@ export async function akislariGetir(icerikId: string): Promise<Akis[]> {
     .from('lessons')
     .select('id, subject_id, ad, sira, olusturuldu')
     .eq('subject_id', icerikId)
+    .not('ad', 'like', `${KAHOOT_ISARETI}%`)
     .order('sira')
     .order('olusturuldu')
   if (error) throw error

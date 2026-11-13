@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.26.0 (14 Kasım 2026)
+Kahoot ve quizler akıştan ayrıldı: hoca konu bitince sahneden açar, bitirir, derse kaldığı yerden döner.
+- **Sahnede iki yeni düğme:** "🎮 Kahoot'a git" ve "📝 Quize git". Kahoot'ta hazır bir soru paketi seçilir (bu haftanın paketi başta, önerilen), nasıl oynanacağı seçilir (bireysel, takım, halat çekme, hocayla yarış, bilgi merdiveni; her paket için önerilen mod hazırdır) ve sorular perdeye tek tek gelir. Bitince "↩ Derse dön" kaldığın akışa ve slayta geri götürür; puan tablosu aynı çubuktadır. Perde arkasında paket adıyla (⚡) gizli bir akış kurulur; akış listelerinde görünmez.
+- **Quiz:** paket ve süre seçilir, derse girmiş öğrencilerin telefonunda "Quiz başladı" bandı çıkar. Perdede kalan süre, başlayan ve bitiren sayısı görünür; hoca bitirince sınıf ortalaması, katılım ve en çok zorlanılan sorular açıklanır (isim gösterilmez), sonra derse devam edilir. Öğrenci bazında sonuçlar Quiz sekmesinde durur.
+- Akışlar artık yalnızca ısınma beyin fırtınası, slaytlar, videolar, şeytanın avukatı (oylama) ve çıkış bileti (açık uçlu, telefondan yazılır) gibi etkinliklerden oluşur; 20'li seri sorular Kahoot paketlerinde durur.
+
 ## v0.25.0 (14 Kasım 2026)
 Derse girmiş öğrenci quize kod girmeden katılır.
 - Hoca şubede bir quiz açınca, o şubenin açık dersinde yoklaması alınmış öğrencinin telefonunda "Quiz başladı" bandı çıkar; dokununca quiz başlar. Kimlik yoklama kaydından alınır, kod ve numara sorulmaz. Quiz sayfası `?o=<oturum>` ile de açılır; yarıda kalan quiz aynı telefondan kaldığı yerden devam eder. Kod ve numara ile girme yolu yoklamasız öğrenciler için aynen duruyor.

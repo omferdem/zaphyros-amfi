@@ -6,7 +6,11 @@ import type { Adim, Ders, DersDurumu, Oturum, PuanSatiri, Sunum } from '../lib/t
 import { DERSI_BITIR_SORUSU, oturumGetir, oturumuBitir, oturumuYenidenAc } from '../lib/veri'
 import Konfeti from '../bilesenler/Konfeti'
 import Halka from '../bilesenler/Halka'
-import { adimlariGetir, akislariGetir, sunumlariGetirIdIle } from '../lib/akis'
+import { adimlariGetir, adimlarEkle, akisGetir, akislariGetir, sunumlariGetirIdIle } from '../lib/akis'
+import { adaGoreHafta, kahootAkisAdi, kahootAkisiMi } from '../lib/gecis'
+import { KahootSecici, QuizPaneli } from '../bilesenler/PaketGecisi'
+import { oyunuAc } from '../lib/oyunAc'
+import type { OyunAnahtari } from '../lib/oyun'
 import { dersEtiketi, kisaAd, oturumAdi } from '../lib/bicim'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
 import { SIKLAR, bitisAni } from '../lib/yarisma'
@@ -85,6 +89,9 @@ export default function Sahne() {
   const [kodGoster, setKodGoster] = useState(true)
   const [kumandaAcik, setKumandaAcik] = useState(false)
   const [puanAcik, setPuanAcik] = useState(false)
+  const [kahootSecimi, setKahootSecimi] = useState(false)
+  const [quizAcik, setQuizAcik] = useState(false)
+  const [kahootAkisi, setKahootAkisi] = useState<{ id: string; ad: string } | null>(null)
 
   const acik = !!oturum && oturum.yoklama_acik && !oturum.bitti
   const kod = useDersKodu(oturumId, !!oturum && !oturum.bitti)
@@ -106,6 +113,16 @@ export default function Sahne() {
   }, [oturumId])
 
   const akisId = oturum?.lesson_id ?? null
+  // Kahoot geçişi sırasında oturum gizli (⚡) bir akışta olur; adı alınır ki araç çubuğu "Derse dön" gösterebilsin.
+  useEffect(() => {
+    if (!akisId) {
+      setKahootAkisi(null)
+      return
+    }
+    akisGetir(akisId)
+      .then((a) => setKahootAkisi(a && kahootAkisiMi(a.ad) ? { id: a.id, ad: a.ad } : null))
+      .catch(() => setKahootAkisi(null))
+  }, [akisId])
   const icerikId = oturum?.courses.subject_id
   useEffect(() => {
     if (!icerikId) return
@@ -231,6 +248,76 @@ export default function Sahne() {
     setOturum((o) => (o ? { ...o, lesson_id: deger, aktif_adim: ilk } : o))
   }
 
+  const donusAnahtari = `amfi_donus_${oturumId}`
+  function donusKaydi(): { lesson_id: string | null; aktif_adim: string | null; ad: string | null } | null {
+    try {
+      return JSON.parse(localStorage.getItem(donusAnahtari) ?? 'null')
+    } catch {
+      return null
+    }
+  }
+  // Önerilen paket: şu an (ya da Kahoottan önce) hangi haftanın akışındaysak onun paketi
+  const haftaNo = adaGoreHafta(akislar.find((a) => a.id === oturum?.lesson_id)?.ad ?? donusKaydi()?.ad)
+
+  /** Seçilen soru paketini canlı Kahoot olarak açar: gizli bir akış (⚡ paket adı) paketin sorularıyla kurulur, dönüş noktası saklanır. */
+  async function kahootaGit(paketAdi: string, sorular: { id: string }[], mod: OyunAnahtari | null) {
+    if (!icerikId || sorular.length === 0) throw new Error('bos')
+    const ad = kahootAkisAdi(paketAdi)
+    let id: string
+    const { data: mevcutAkis } = await supabase.from('lessons').select('id').eq('subject_id', icerikId).eq('ad', ad).limit(1)
+    if (mevcutAkis?.[0]) id = mevcutAkis[0].id as string
+    else {
+      const { data, error } = await supabase.from('lessons').insert({ subject_id: icerikId, ad, sira: -1 }).select('id').single()
+      if (error || !data) throw error ?? new Error('akis')
+      id = data.id as string
+    }
+    // Paket sonradan değişmiş olabilir: adımlar her seferinde yeniden kurulur.
+    const { error: silHatasi } = await supabase.from('lesson_steps').delete().eq('lesson_id', id)
+    if (silHatasi) throw silHatasi
+    const idler = await adimlarEkle(id, 0, sorular.map((s) => ({ tur: 'soru' as const, question_id: s.id, ayar: {} })))
+    if (!kahootAkisi) {
+      try {
+        localStorage.setItem(
+          donusAnahtari,
+          JSON.stringify({ lesson_id: oturum.lesson_id ?? null, aktif_adim: oturum.aktif_adim ?? null, ad: akislar.find((a) => a.id === oturum.lesson_id)?.ad ?? null }),
+        )
+      } catch {
+        /* saklanamazsa dönüşte yoklama ekranı açılır */
+      }
+    }
+    const { error } = await supabase.from('sessions').update({ lesson_id: id, aktif_adim: idler[0] ?? null }).eq('id', oturumId)
+    if (error) throw error
+    setOturum((o) => (o ? { ...o, lesson_id: id, aktif_adim: idler[0] ?? null } : o))
+    await oyunuAc(oturumId, mod)
+    setKahootSecimi(false)
+  }
+
+  /** Kahoot bitince: kaldığın akışa ve slayta döner. */
+  async function dersedon() {
+    const kayit = donusKaydi()
+    const hedefAkis = kayit?.lesson_id && akislar.some((a) => a.id === kayit.lesson_id) ? kayit.lesson_id : null
+    let hedefAdim: string | null = null
+    if (hedefAkis) {
+      if (kayit?.aktif_adim) {
+        const { data } = await supabase.from('lesson_steps').select('id').eq('id', kayit.aktif_adim).maybeSingle()
+        hedefAdim = (data?.id as string | undefined) ?? null
+      }
+      if (!hedefAdim) {
+        const { data: ilk } = await supabase.from('lesson_steps').select('id').eq('lesson_id', hedefAkis).order('sira').order('id').limit(1)
+        hedefAdim = (ilk?.[0]?.id as string | undefined) ?? null
+      }
+    }
+    const degisiklik = hedefAkis ? { lesson_id: hedefAkis, aktif_adim: hedefAdim } : { aktif_adim: null }
+    const { error } = await supabase.from('sessions').update(degisiklik).eq('id', oturumId)
+    if (error) return window.alert('Derse dönülemedi. Bağlantını kontrol edip tekrar dene.')
+    setOturum((o) => (o ? { ...o, ...degisiklik } : o))
+    try {
+      localStorage.removeItem(donusAnahtari)
+    } catch {
+      /* önemsiz */
+    }
+  }
+
   async function yoklamaDurumu(ac: boolean) {
     const { data } = await supabase
       .from('sessions')
@@ -287,7 +374,26 @@ export default function Sahne() {
             {a.ad.length > 50 ? `${a.ad.slice(0, 49)}…` : a.ad}
           </option>
         ))}
+        {kahootAkisi && <option value={kahootAkisi.id}>{kahootAkisi.ad}</option>}
       </select>
+      {kahootAkisi ? (
+        <button
+          className={`parlak-buton rounded-xl px-4 py-1.5 text-sm font-bold ${aktifSira === adimlar.length - 1 ? 'nabiz' : ''}`}
+          onClick={dersedon}
+          title="Kahoottan çık, kaldığın slayta dön"
+        >
+          ↩ Derse dön
+        </button>
+      ) : (
+        <>
+          <button className="ikincil-buton" onClick={() => setKahootSecimi(true)} title="Hazır bir Kahoot paketini perdede oynat">
+            🎮 Kahoot'a git
+          </button>
+          <button className="ikincil-buton" onClick={() => setQuizAcik(true)} title="Ciddi quizi başlat; bitince sonuçlar açıklanır">
+            📝 Quize git
+          </button>
+        </>
+      )}
       {adimlar.length > 0 && (
         <>
           <button className="ikincil-buton" onClick={geri} disabled={aktifSira <= 0} aria-label="Önceki adım">
@@ -312,7 +418,7 @@ export default function Sahne() {
       <button className="ikincil-buton" onClick={() => setKodGoster((g) => !g)}>
         {kodGoster ? 'Kodu gizle' : 'Kodu göster'}
       </button>
-      {adimlar.some((a) => a.tur === 'soru') && (
+      {(adimlar.some((a) => a.tur === 'soru') || !!kahootAkisi) && (
         <button className="ikincil-buton" onClick={() => setPuanAcik(true)}>
           Puan tablosu
         </button>
@@ -382,6 +488,8 @@ export default function Sahne() {
         />
       )}
       {kumandaAcik && <KumandaQr oturumId={oturum.id} kapat={() => setKumandaAcik(false)} />}
+      {kahootSecimi && icerikId && <KahootSecici icerikId={icerikId} hafta={haftaNo} sec={kahootaGit} kapat={() => setKahootSecimi(false)} />}
+      {quizAcik && icerikId && <QuizPaneli dersId={oturum.course_id} icerikId={icerikId} hafta={haftaNo} katilan={gelenler.length} kapat={() => setQuizAcik(false)} />}
       {puanAcik && <PuanTablosu oturumId={oturum.id} kapat={() => setPuanAcik(false)} />}
       <SinifPaneli d={sinif.d} komut={sinif.komut} hata={sinif.hata} mod="perde" />
       <TakimPaneli oturum={oturum.id} anahtar={null} mod="perde" />

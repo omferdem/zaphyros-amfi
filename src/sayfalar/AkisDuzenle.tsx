@@ -666,6 +666,11 @@ export default function AkisDuzenle() {
                   <div className="w-28 h-16 shrink-0 rounded bg-amber-500/10 flex items-center justify-center text-amber-300 text-xs font-bold text-center leading-tight">
                     {a.tur === 'fikir' ? (a.ayar.mod === 'acik' ? 'AÇIK UÇLU' : a.ayar.mod === 'firtina' ? 'BEYİN FIRTINASI' : 'KELİME BULUTU') : a.tur === 'oylama' ? 'OYLAMA' : a.ayar.url && gorselMi(a.ayar.url) ? 'FOTOĞRAF' : 'VİDEO'}
                   </div>
+                ) : a.tur === 'oyun' ? (
+                  <div className="w-28 h-16 shrink-0 rounded bg-indigo-500/15 flex flex-col items-center justify-center text-indigo-200 text-xs font-bold text-center leading-tight">
+                    <span className="text-xl">{OYUNLAR[(a.ayar.oyun ?? 'takim') as OyunAnahtari]?.emoji ?? '🎮'}</span>
+                    OYUN
+                  </div>
                 ) : (
                   <div className="w-28 h-16 shrink-0 rounded bg-emerald-500/10 flex items-center justify-center text-emerald-300 text-xs font-bold">
                     YOKLAMA
@@ -715,6 +720,11 @@ export default function AkisDuzenle() {
                     <>
                       <p className="text-sm font-semibold truncate">{a.ayar.baslik || (a.ayar.url && gorselMi(a.ayar.url) ? 'Fotoğraf' : 'Video')}</p>
                       <p className="text-xs text-slate-400 truncate">{a.ayar.url && gorselMi(a.ayar.url) ? 'Perdede büyük gösterilir' : a.ayar.url}</p>
+                    </>
+                  ) : a.tur === 'oyun' ? (
+                    <>
+                      <p className="text-sm font-semibold truncate">{OYUNLAR[(a.ayar.oyun ?? 'takim') as OyunAnahtari]?.ad ?? 'Oyun'}</p>
+                      <p className="text-xs text-slate-400 truncate">Oyun · sınıf oyunu bu adımda başlar</p>
                     </>
                   ) : (
                     <>

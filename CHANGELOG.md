@@ -1,5 +1,8 @@
 # Sürüm Geçmişi
 
+## v0.38.1 (14 Kasım 2026)
+- Akış düzenleme listesinde "oyun" adımı artık oyunun adı ve simgesiyle görünür; daha önce yanlışlıkla "Yoklama" gibi görünüyordu (adım doğru ekleniyordu, yalnızca satır yanlış çiziliyordu).
+
 ## v0.38.0 (14 Kasım 2026)
 Akış kartlarını düzenleme, fotoğraf ve haftalar arası gönderme. Veritabanı: `0028_etkinlik_fotograflari.sql` (fotoğraf deposu).
 - **✏️ Düzenle:** akıştaki soru kartında soru metni, doğru ve yanlış şıklar, süre; kelime bulutu, beyin fırtınası ve açık uçlu kartta soru, tür ve süre; oylamada önerme ve iki etiket; videoda adres ve başlık yerinde değiştirilir. Bilgi yarışması sorusu soru bankasında durduğu için aynı soruyu kullanan yerlerde de değişir (ekranda uyarı yazar).

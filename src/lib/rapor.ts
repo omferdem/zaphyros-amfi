@@ -2,6 +2,7 @@ import type { Ders, Ogrenci, Oturum, PuanSatiri, Yoklama } from './tipler'
 import { oturumAdi, tarih } from './bicim'
 import { AZ_VERI, type GelisimSonucu } from './gelisim'
 import type { MaddeAnalizi, Quiz, QuizSatiri } from './quizHesap'
+import { RISK_ESIGI, type DonemOzeti } from './ozet'
 
 export interface RaporSatiri {
   ogrenci: Ogrenci
@@ -239,4 +240,51 @@ export function misafirYoklamalari(oturumlar: Pick<Oturum, 'id' | 'lesson_id'>[]
     }
   }
   return sonuc
+}
+
+/** Dönem sonu özeti: hafta hafta katılım, öğrenci devamı (risk işaretli) ve quizler; üç sayfalık Excel. */
+export async function ozetiExceleAktar(ders: Ders, ozet: DonemOzeti) {
+  const { default: writeXlsxFile } = await import('write-excel-file/browser')
+  const kalin = { fontWeight: 'bold' as const }
+  const haftaVeri = [
+    [{ value: 'Tarih', ...kalin }, { value: 'Ders', ...kalin }, { value: 'Katılan', ...kalin }, { value: 'Mevcut', ...kalin }, { value: 'Katılım (%)', ...kalin }],
+    ...ozet.haftalar.map((h) => [
+      { value: tarih(h.oturum.basladi), type: String },
+      { value: oturumAdi(h.oturum), type: String },
+      { value: h.katilan, type: Number },
+      { value: h.mevcut, type: Number },
+      { value: Math.round(h.oran * 100), type: Number },
+    ]),
+  ]
+  const ogrVeri = [
+    [{ value: 'Öğrenci No', ...kalin }, { value: 'Ad Soyad', ...kalin }, { value: 'Katıldığı', ...kalin }, { value: 'Toplam ders', ...kalin }, { value: 'Devam (%)', ...kalin }, { value: 'Durum', ...kalin }],
+    ...[...ozet.ogrenciler]
+      .sort((a, b) => a.ogrenci.ogrenci_no.localeCompare(b.ogrenci.ogrenci_no, 'tr', { numeric: true }))
+      .map((o) => [
+        { value: o.ogrenci.ogrenci_no, type: String },
+        { value: o.ogrenci.ad_soyad, type: String },
+        { value: o.katildigi, type: Number },
+        { value: ozet.haftalar.length, type: Number },
+        { value: Math.round(o.oran * 100), type: Number },
+        { value: [o.risk ? `Risk (<%${Math.round(RISK_ESIGI * 100)})` : '', o.sonDevamsiz ? 'Son 2 derse gelmedi' : ''].filter(Boolean).join('; '), type: String },
+      ]),
+  ]
+  const quizVeri = [
+    [{ value: 'Quiz', ...kalin }, { value: 'Tarih', ...kalin }, { value: 'Katılan', ...kalin }, { value: 'Bitiren', ...kalin }, { value: 'Ortalama (%)', ...kalin }],
+    ...ozet.quizler.map((q) => [
+      { value: q.quiz.baslik, type: String },
+      { value: tarih(q.quiz.basladi), type: String },
+      { value: q.katilan, type: Number },
+      { value: q.bitiren, type: Number },
+      q.ortalama === null ? { value: '', type: String } : { value: Math.round(q.ortalama * 100), type: Number },
+    ]),
+  ]
+  await writeXlsxFile(
+    [
+      { data: haftaVeri, sheet: 'Haftalık katılım', columns: [{ width: 12 }, { width: 28 }, { width: 10 }, { width: 10 }, { width: 12 }], stickyRowsCount: 1 },
+      { data: ogrVeri, sheet: 'Öğrenci devamı', columns: [{ width: 14 }, { width: 28 }, { width: 11 }, { width: 12 }, { width: 11 }, { width: 34 }], stickyRowsCount: 1 },
+      { data: quizVeri, sheet: 'Quizler', columns: [{ width: 40 }, { width: 12 }, { width: 10 }, { width: 10 }, { width: 13 }], stickyRowsCount: 1 },
+    ],
+    {},
+  ).toFile(dosyaAdi(`Donem ozeti ${dosyaEtiketi(ders)} ${tarih(new Date().toISOString())}.xlsx`))
 }

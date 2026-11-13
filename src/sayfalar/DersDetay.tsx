@@ -12,8 +12,9 @@ import DersAkislari from './DersAkislari'
 import YoklamaHaftalari from './YoklamaHaftalari'
 import Gelisim from './Gelisim'
 import QuizSekmesi from './QuizSekmesi'
+import DonemOzeti from './DonemOzeti'
 
-type Sekme = 'oturumlar' | 'akislar' | 'liste' | 'rapor' | 'quiz' | 'gelisim'
+type Sekme = 'oturumlar' | 'akislar' | 'liste' | 'rapor' | 'quiz' | 'gelisim' | 'ozet'
 
 export default function DersDetay() {
   const { dersId = '' } = useParams()
@@ -123,6 +124,7 @@ export default function DersDetay() {
             ['rapor', 'Yoklama raporu'],
             ['quiz', '📝 Quiz'],
             ['gelisim', '📈 Gelişim'],
+            ['ozet', '📊 Dönem özeti'],
           ] as [Sekme, string][]
         ).map(([k, ad]) => (
           <button
@@ -151,6 +153,7 @@ export default function DersDetay() {
       {sekme === 'liste' && <SinifListesi ders={ders} ogrenciler={ogrenciler} yenile={yukle} />}
       {sekme === 'rapor' && <Rapor ders={ders} ogrenciler={ogrenciler} oturumlar={oturumlar} yoklamalar={yoklamalar} yenile={yukle} />}
       {sekme === 'quiz' && <QuizSekmesi ders={ders} ogrenciler={ogrenciler} />}
+      {sekme === 'ozet' && <DonemOzeti ders={ders} ogrenciler={ogrenciler} oturumlar={oturumlar} yoklamalar={yoklamalar} />}
       {sekme === 'gelisim' &&<Gelisim ders={ders} ogrenciler={ogrenciler} oturumlar={oturumlar} />}
 
       <div className="pt-6 border-t border-white/5 flex flex-wrap gap-3 items-center">

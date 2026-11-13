@@ -19,7 +19,7 @@ interface KumandaDurumu extends DersDurumu {
   mevcut: number
   kod: { kod: string; kalan_ms: number } | null
   puanlar: PuanSatiri[]
-  adimlar: { id: string; tur: AdimTuru; sunum: string | null; sayfa_no: number | null; ozet: string | null }[]
+  adimlar: { id: string; tur: AdimTuru; sunum: string | null; sayfa_no: number | null; ozet: string | null; not?: string | null }[]
 }
 
 function anahtarYeri(oturum: string) {
@@ -269,6 +269,13 @@ export default function Kumanda() {
           <p className="text-sm text-slate-300">{adimlar.length ? 'Henüz bir adım seçilmedi.' : 'Bu oturumda akış yok.'}</p>
         )}
       </section>
+
+      {adimlar[sira]?.not && (
+        <section className="rounded-2xl border border-amber-300/30 bg-amber-500/10 p-3 text-sm space-y-1">
+          <p className="text-xs font-bold text-amber-200">📝 Bu adımın notu (yalnızca sen görürsün)</p>
+          <p className="whitespace-pre-line">{adimlar[sira]?.not}</p>
+        </section>
+      )}
 
       {adimlar.length > 0 && (
         <div className="grid grid-cols-2 gap-3">

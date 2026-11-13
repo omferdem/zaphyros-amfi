@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.33.0 (14 Kasım 2026)
+Hoca notu kumandada ve dönem sonu özeti.
+- **Dönem özeti:** şube sayfasında yeni "📊 Dönem özeti" sekmesi. Hafta hafta katılım çubukları, öğrenci bazında devam oranı (yarının altındakiler "risk", son iki derse gelmeyenler ayrıca işaretli; yalnızca dikkat gerekenleri süzme), quizlerin katılım ve sınıf ortalaması. Üç sayfalık Excel dosyası olarak indirilir (haftalık katılım, öğrenci devamı, quizler).
+- **Hoca notu kumandada:** akış düzenlemede slayda yazılan not, telefondaki kumanda ekranında o adım açıkken "📝 Bu adımın notu" kutusunda görünür; perdede ve öğrenci telefonlarında görünmez. **0024_kumanda_notu.sql** henüz Supabase'e uygulanmadı; uygulanana kadar not kumandada çıkmaz, başka hiçbir şey etkilenmez.
+
 ## v0.32.1 (14 Kasım 2026)
 - Önizlemede perde, gerçek projeksiyon gibi 1280x720 üzerinde çizilip kutuya sığdırılıyor (dar kutuda içerik taşmıyor).
 

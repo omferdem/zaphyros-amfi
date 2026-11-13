@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.22.2 (13 Kasım 2026)
+Telefonda slayt geçişi.
+- Sahne sayfasını telefondan açınca slayt ekranında geçiş okları yoktu: araç çubuğu yalnızca fareyle üzerine gelince göründüğü için dokunmatik ekranda hiç çıkmıyordu. Artık slayt ekranında ekranın iki yanında her zaman görünen büyük ‹ › okları, sol altta "3 / 28" sayacı var; sola/sağa kaydırarak (swipe) de geçilir. Dokunmatik ekranlarda araç çubuğu da her zaman görünür.
+
 ## v0.22.1 (13 Kasım 2026)
 Karekod ve giriş kodu 6 saniyede bir değişir.
 - Karekod ve yoklama (ders) kodu süresi uzun bulunduğu için ikisi de **6 saniyede** bir değişir (önceden karekod 10 saniye, kod 10 saniyeydi; v0.22.0'daki 10 saniyelik kod değişikliği 6 saniyeye çekildi). Sahnedeki karekodun geri sayım çubuğu, perdedeki ve kumandadaki 6 haneli kod aynı süreyle yenilenir. Karekod ve kodda içinde bulunulan ve önceki iki pencere (en fazla 18 saniye) kabul edilir; yavaş okutan ya da yazan öğrenci de girebilir. Öğrenciye verilen bilet, numarasını yazması için yaklaşık 108 saniye geçerlidir.

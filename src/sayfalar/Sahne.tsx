@@ -366,6 +366,9 @@ export default function Sahne() {
           araclar={araclar}
           kod={kodGoster ? kod : null}
           katilan={gelenler.length}
+          ileri={aktifSira < adimlar.length - 1 ? ileri : undefined}
+          geri={aktifSira > 0 ? geri : undefined}
+          sira={`${aktifSira + 1} / ${adimlar.length}`}
         />
       ) : (
         <YoklamaSahnesi
@@ -444,20 +447,59 @@ function SlaytSahnesi({
   araclar,
   kod,
   katilan,
+  ileri,
+  geri,
+  sira,
 }: {
   belge: Parameters<typeof SlaytCizimi>[0]['belge']
   sayfaNo: number
   araclar: React.ReactNode
   kod: string | null
   katilan: number
+  ileri?: () => void
+  geri?: () => void
+  sira: string
 }) {
+  // Telefonda kaydırarak geçiş: sola kaydır = sonraki, sağa kaydır = önceki
+  const baslangic = useRef<{ x: number; y: number } | null>(null)
   return (
-    <main className="h-screen bg-black flex flex-col relative group">
+    <main
+      className="h-screen bg-black flex flex-col relative group"
+      onTouchStart={(e) => {
+        baslangic.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+      }}
+      onTouchEnd={(e) => {
+        const b = baslangic.current
+        baslangic.current = null
+        if (!b) return
+        const dx = e.changedTouches[0].clientX - b.x
+        const dy = e.changedTouches[0].clientY - b.y
+        if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) (dx < 0 ? ileri : geri)?.()
+      }}
+    >
       <SlaytCizimi belge={belge} sayfaNo={sayfaNo} className="flex-1 min-h-0" />
-      {/* Araç çubuğu yalnızca fare üzerine gelince görünür; perdede slaytı kapatmaz. */}
-      <div className="absolute top-0 inset-x-0 p-3 flex justify-end opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity">
-        <div className="cam-panel rounded-2xl p-2">{araclar}</div>
+      {/* Araç çubuğu fareyle üzerine gelince görünür; dokunmatik ekranda (hover yok) her zaman görünür. */}
+      <div className="absolute top-0 inset-x-0 p-3 flex justify-end opacity-0 group-hover:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity">
+        <div className="cam-panel rounded-2xl p-2 max-w-full overflow-x-auto">{araclar}</div>
       </div>
+      {/* Her zaman görünen büyük oklar (telefon ve tablet için); fareyle üzerine gelince belirginleşir */}
+      <button
+        onClick={geri}
+        disabled={!geri}
+        aria-label="Önceki adım"
+        className="absolute left-2 top-1/2 -translate-y-1/2 h-16 w-12 rounded-2xl bg-slate-900/60 text-white text-3xl backdrop-blur opacity-60 hover:opacity-100 disabled:opacity-20 active:scale-95"
+      >
+        ‹
+      </button>
+      <button
+        onClick={ileri}
+        disabled={!ileri}
+        aria-label="Sonraki adım"
+        className="absolute right-2 top-1/2 -translate-y-1/2 h-16 w-12 rounded-2xl bg-slate-900/60 text-white text-3xl backdrop-blur opacity-60 hover:opacity-100 disabled:opacity-20 active:scale-95"
+      >
+        ›
+      </button>
+      <span className="absolute bottom-3 left-3 rounded-full bg-slate-900/60 px-3 py-1 text-xs text-slate-200 tabular-nums backdrop-blur">{sira}</span>
       {kod && (
         <div className="absolute bottom-3 right-3 cam-panel rounded-2xl px-4 py-2 flex items-center gap-4">
           <span className="text-xs text-slate-400">

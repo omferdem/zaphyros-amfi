@@ -155,6 +155,19 @@ h1, h2, h3, .baslik {
   .roket-yildizlar, .roket-ucus, .roket-varti, .roket-gezegen, .ejderha-nefes, .ejderha-ates, .ejderha-kahraman { animation: none; }
 }
 
+/* ------------------------------------------------------------------ son kalan arenası ve kule yarışı */
+.arena-zemin { background: radial-gradient(60% 50% at 50% 0%, rgba(99, 102, 241, 0.25), transparent 70%), linear-gradient(180deg, #0d1030 0%, #1a1038 100%); }
+.arena-platform { background: radial-gradient(70% 90% at 50% 40%, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02) 70%); border: 2px solid rgba(255, 255, 255, 0.14); box-shadow: 0 0 60px rgba(99, 102, 241, 0.25) inset; }
+.arena-savasci { animation: roket-titre 2.4s ease-in-out infinite; }
+.arena-lav { background: linear-gradient(180deg, rgba(239, 68, 68, 0.18), rgba(249, 115, 22, 0.4)); border-top: 2px solid rgba(251, 146, 60, 0.7); }
+.arena-baslik, .kule-baslik { background: linear-gradient(120deg, #a5b4fc, #fde68a 60%, #fdba74); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.kule-gokyuzu { background: linear-gradient(180deg, #1b2a5a 0%, #3b3170 55%, #5a3a6b 100%); }
+.kule-zemin { background: linear-gradient(180deg, #3d3a2a, #1c1a12); border-top: 2px solid rgba(255, 255, 255, 0.1); }
+.kule-blok { animation: kule-in 0.6s cubic-bezier(0.2, 1.4, 0.4, 1) both; box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.25); }
+.kule-tac { animation: roket-titre 1.2s ease-in-out infinite; filter: drop-shadow(0 0 10px rgba(253, 224, 71, 0.9)); }
+@keyframes kule-in { from { transform: translateY(-30px) scale(0.9); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .arena-savasci, .kule-blok, .kule-tac { animation: none; } }
+
 /* ------------------------------------------------------------------ düğmeler */
 .parlak-buton {
   background: linear-gradient(135deg, #ff4d9d 0%, #7c5cff 55%, #22b8ff 100%);

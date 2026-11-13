@@ -2,6 +2,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { OYUN_OLAYI, type OyunAnahtari } from '../lib/oyun'
 import { roketHesapla, type RoketDurumu } from '../lib/roket'
+import { arenaHesapla, ARENA_CANI, type ArenaDurumu } from '../lib/arena'
+import { kuleHesapla, type KuleDurumu, type KuleTakimi } from '../lib/kule'
+import { takimBilgisi } from '../lib/takim'
 import { EJDERHA_ORANI, KAHRAMAN_CANI, ejderhaHesapla, type EjderhaDurumu } from '../lib/ejderha'
 import type { ZombiOyuncusu, ZombiSorusu } from '../lib/zombi'
 import Konfeti from './Konfeti'
@@ -18,13 +21,14 @@ function karakter(ad: string, liste: string[]): string {
  * Ortak kabuk: oyunun açık/kapalı durumunu saklar, oyun olayını dinler, oyuncu verisini (zombi_goster) çeker ve
  * perdede küçük özet + büyük sahne arasında geçiş sağlar. Oyuna özgü kurallar ve görünüm dışarıdan verilir.
  */
-function OyunKabugu<D>({
+function OyunKabugu<D, V = Veri>({
   oyun,
   baslik,
   oturum,
   anahtar,
   mod,
   hesapla,
+  getir,
   ozet,
   sahne,
   konum,
@@ -34,7 +38,9 @@ function OyunKabugu<D>({
   oturum: string
   anahtar: string | null
   mod: 'perde' | 'kumanda'
-  hesapla: (v: Veri) => D | null
+  hesapla: (v: V) => D | null
+  /** Veri kaynağı; verilmezse oyuncu sonuçları (zombi_goster) çekilir */
+  getir?: (oturum: string, anahtar: string | null) => Promise<V | null>
   ozet: (d: D) => React.ReactNode
   sahne: (d: D, kucult: () => void) => React.ReactNode
   /** Kapalıyken düğmenin ve açıkken özet kutusunun perdedeki dikey yeri (Tailwind bottom sınıfı) */
@@ -49,12 +55,18 @@ function OyunKabugu<D>({
     }
   })
   const [buyuk, setBuyuk] = useState(false)
-  const [veri, setVeri] = useState<Veri | null>(null)
+  const [veri, setVeri] = useState<V | null>(null)
 
   const yenile = useCallback(async () => {
+    if (getir) {
+      const v = await getir(oturum, anahtar)
+      if (v) setVeri(v)
+      return
+    }
     const { data } = await supabase.rpc('zombi_goster', { p_session: oturum, p_anahtar: anahtar })
     const v = data as { sorular?: ZombiSorusu[]; oyuncular?: ZombiOyuncusu[] } | null
-    if (v?.sorular && v.oyuncular) setVeri({ sorular: v.sorular, oyuncular: v.oyuncular })
+    if (v?.sorular && v.oyuncular) setVeri({ sorular: v.sorular, oyuncular: v.oyuncular } as unknown as V)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [oturum, anahtar])
 
   useEffect(() => {
@@ -311,6 +323,189 @@ function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => void })
           </div>
         )}
       </div>
+    </div>
+  )
+}
+
+// ------------------------------------------------------------------------------------------- Son kalan arenası
+
+const ARENA_KARAKTERLERI = ['🥷', '🤺', '🧙', '🦸', '🧑‍🚀', '🦹', '🧝', '🤠', '👩‍🚀', '🧑‍🎤']
+
+export function ArenaPaneli({ oturum, anahtar, mod }: { oturum: string; anahtar: string | null; mod: 'perde' | 'kumanda' }) {
+  return (
+    <OyunKabugu<ArenaDurumu>
+      oyun="arena"
+      baslik="⚔️ Son kalan arenası"
+      oturum={oturum}
+      anahtar={anahtar}
+      mod={mod}
+      hesapla={(v) => arenaHesapla(v.sorular, v.oyuncular)}
+      konum="bottom-28"
+      ozet={(d) => (
+        <p className="text-sm">
+          Ayakta <b className="text-emerald-300">{d.ayakta}</b> / {d.oyuncular.length} · soru {d.oynanan} / {d.toplamSoru}
+        </p>
+      )}
+      sahne={(d, kucult) => <ArenaSahnesi d={d} kucult={kucult} />}
+    />
+  )
+}
+
+function ArenaSahnesi({ d, kucult }: { d: ArenaDurumu; kucult: () => void }) {
+  const n = d.oyuncular.length
+  const boy = n > 80 ? 'text-2xl' : n > 40 ? 'text-3xl' : n > 20 ? 'text-5xl' : 'text-6xl'
+  const adBoy = n > 40 ? 'text-[10px] max-w-16' : 'text-sm max-w-24'
+  const ayaktakiler = d.oyuncular.filter((o) => o.elendi === null)
+  const dusenler = d.oyuncular.filter((o) => o.elendi !== null)
+  const kazananlar = d.bitti ? d.siralama.filter((o) => o.elendi === null).slice(0, 3) : []
+  return (
+    <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
+      {d.bitti && <Konfeti />}
+      <div className="flex items-center gap-4 flex-wrap">
+        <h2 className="text-2xl sm:text-3xl font-display font-extrabold arena-baslik">⚔️ Son Kalan Arenası</h2>
+        <span className="text-sm text-slate-300">
+          Soru {d.oynanan} / {d.toplamSoru}
+        </span>
+        <span className="text-sm">
+          Ayakta <b className="text-emerald-300 tabular-nums">{d.ayakta}</b> / {n}
+        </span>
+        <span className="text-xs text-slate-400">{ARENA_CANI} can: yanlış ya da cevapsız bir can götürür, canı biten arenadan düşer.</span>
+        <button className="ikincil-buton ml-auto !py-1.5" onClick={kucult}>
+          Küçült
+        </button>
+      </div>
+      <div className="relative flex-1 min-h-0 rounded-3xl overflow-hidden arena-zemin border border-white/10 flex flex-col">
+        <div className="flex-1 min-h-0 overflow-y-auto p-4">
+          <ul className="flex flex-wrap justify-center gap-x-5 gap-y-4 arena-platform rounded-[2rem] p-5 mx-auto max-w-6xl">
+            {ayaktakiler.map((o, i) => (
+              <li key={`${o.ad}-${i}`} className="text-center leading-none arena-savasci">
+                <div className={boy}>{karakter(o.ad, ARENA_KARAKTERLERI)}</div>
+                <div className={`${adBoy} font-bold truncate mx-auto`}>{o.ad}</div>
+                <div className="text-xs">{'❤️'.repeat(Math.max(0, o.kalan)) + '🖤'.repeat(ARENA_CANI - Math.max(0, o.kalan))}</div>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="arena-lav px-4 py-2 flex flex-wrap items-center gap-x-3 gap-y-1 min-h-14">
+          <span className="text-xs font-bold text-orange-200 mr-1">🌋 Düşenler ({dusenler.length})</span>
+          {dusenler.map((o, i) => (
+            <span key={`${o.ad}-${i}`} className="text-xs text-orange-100/80">
+              💀 {o.ad}
+            </span>
+          ))}
+        </div>
+        {d.bitti && (
+          <div className="absolute inset-0 flex items-center justify-center bg-slate-950/60 backdrop-blur-[2px]">
+            <div className="cam-panel rounded-[2rem] p-8 text-center space-y-2 girdi">
+              <p className="text-7xl">👑</p>
+              <p className="text-4xl font-display font-extrabold">Arenanın son kalanları</p>
+              {kazananlar.map((o, i) => (
+                <p key={`${o.ad}-${i}`} className="text-2xl">
+                  {['🥇', '🥈', '🥉'][i]} {o.ad} <span className="text-slate-400 text-base">({o.dogru} doğru)</span>
+                </p>
+              ))}
+              {d.ayakta > 3 && <p className="text-slate-300 text-sm">… ve {d.ayakta - 3} kişi daha ayakta</p>}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------------------------- Kule yarışı
+
+interface KuleVeri {
+  takimlar: KuleTakimi[]
+  oynanan: number
+  toplam: number
+}
+
+async function kuleVerisi(oturum: string, anahtar: string | null): Promise<KuleVeri | null> {
+  const [t, z] = await Promise.all([
+    supabase.rpc('takim_goster', { p_session: oturum, p_anahtar: anahtar }),
+    supabase.rpc('zombi_goster', { p_session: oturum, p_anahtar: anahtar }),
+  ])
+  const takimlar = (t.data as { takimlar?: { takim: number; uye: number; dogru: number }[] } | null)?.takimlar
+  const sorular = (z.data as { sorular?: ZombiSorusu[] } | null)?.sorular
+  if (!takimlar || !sorular) return null
+  return { takimlar: takimlar.map((x) => ({ takim: x.takim, uye: x.uye, dogru: x.dogru })), oynanan: sorular.filter((s) => s.acildi).length, toplam: sorular.length }
+}
+
+export function KulePaneli({ oturum, anahtar, mod }: { oturum: string; anahtar: string | null; mod: 'perde' | 'kumanda' }) {
+  return (
+    <OyunKabugu<KuleDurumu, KuleVeri>
+      oyun="kule"
+      baslik="🏗️ Kule yarışı"
+      oturum={oturum}
+      anahtar={anahtar}
+      mod={mod}
+      getir={kuleVerisi}
+      hesapla={(v) => kuleHesapla(v.takimlar, v.oynanan, v.toplam)}
+      konum="bottom-28"
+      ozet={(d) => {
+        const en = [...d.satirlar].sort((a, b) => a.sira - b.sira)[0]
+        return (
+          <p className="text-sm">
+            Soru {d.oynanan} / {d.toplamSoru} · önde {en ? `${takimBilgisi(en.takim).emoji} ${takimBilgisi(en.takim).ad}` : '-'}
+          </p>
+        )
+      }}
+      sahne={(d, kucult) => <KuleSahnesi d={d} kucult={kucult} />}
+    />
+  )
+}
+
+function KuleSahnesi({ d, kucult }: { d: KuleDurumu; kucult: () => void }) {
+  const satirlar = [...d.satirlar].sort((a, b) => a.takim - b.takim)
+  return (
+    <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
+      {d.bitti && <Konfeti />}
+      <div className="flex items-center gap-4 flex-wrap">
+        <h2 className="text-2xl sm:text-3xl font-display font-extrabold kule-baslik">🏗️ Kule Yarışı</h2>
+        <span className="text-sm text-slate-300">
+          Soru {d.oynanan} / {d.toplamSoru}
+        </span>
+        <span className="text-sm text-slate-300">Hedef: kişi başına {d.hedef} doğru</span>
+        <button className="ikincil-buton ml-auto !py-1.5" onClick={kucult}>
+          Küçült
+        </button>
+      </div>
+      <div className="relative flex-1 min-h-0 rounded-3xl overflow-hidden kule-gokyuzu border border-white/10 flex items-end justify-around px-6 pb-12">
+        <div className="absolute inset-x-0 bottom-0 h-12 kule-zemin" />
+        <div className="absolute inset-x-6 top-[8%] border-t-2 border-dashed border-amber-300/50" aria-hidden>
+          <span className="absolute -top-5 right-0 text-xs text-amber-200">🏁 hedef: {d.hedef} kat</span>
+        </div>
+        {satirlar.map((s) => {
+          const b = takimBilgisi(s.takim)
+          const yukseklik = Math.min(1, s.blok / d.hedef)
+          const lider = s.sira === 1 && s.blok > 0
+          return (
+            <div key={s.takim} className="relative flex flex-col items-center justify-end h-full w-[18%] min-w-24">
+              {lider && <div className="text-4xl kule-tac mb-1" aria-hidden>👑</div>}
+              <div className="w-full flex flex-col-reverse justify-start overflow-hidden transition-all duration-1000 ease-out" style={{ height: `${yukseklik * 84}%` }}>
+                {Array.from({ length: Math.max(0, s.katlar) }, (_, k) => (
+                  <div key={k} className={`flex-1 min-h-3 mt-0.5 rounded-md bg-linear-to-br ${b.renk} kule-blok border border-white/20`} style={{ animationDelay: `${k * 60}ms` }} />
+                ))}
+              </div>
+              <p className="absolute -bottom-10 text-center text-sm font-bold whitespace-nowrap">
+                {b.emoji} {b.ad} <span className="text-slate-400 font-normal">({s.uye} kişi · {s.blok.toFixed(1)})</span>
+              </p>
+            </div>
+          )
+        })}
+        {d.bitti && d.kazanan !== null && (
+          <div className="absolute inset-0 flex items-center justify-center bg-slate-950/55 backdrop-blur-[2px]">
+            <div className="cam-panel rounded-[2rem] p-8 text-center space-y-2 girdi">
+              <p className="text-7xl">🏆</p>
+              <p className="text-4xl font-display font-extrabold">
+                {takimBilgisi(d.kazanan).emoji} {takimBilgisi(d.kazanan).ad} takım kazandı!
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+      <p className="text-xs text-slate-500 text-center">Her doğru cevap takımın kulesine kat ekler; sıralama kişi başına doğru sayısına göredir, böylece kalabalık takım avantajlı olmaz.</p>
     </div>
   )
 }

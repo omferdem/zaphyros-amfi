@@ -13,7 +13,7 @@ export async function oyunuAc(oturumId: string, anahtar: OyunAnahtari | null): P
     await supabase.rpc('hoca_yaris_ayarla', { p_session: oturumId, p_anahtar: null, p_acik: false })
     return true
   }
-  if (anahtar === 'takim' || anahtar === 'halat') {
+  if (anahtar === 'takim' || anahtar === 'halat' || anahtar === 'kule') {
     const { data, error } = await supabase.rpc('takim_ayarla', { p_session: oturumId, p_anahtar: null, p_sayi: anahtar === 'halat' ? 2 : 3 })
     hata = !!error || !!(data as { hata?: string })?.hata
   } else if (anahtar === 'hoca') {

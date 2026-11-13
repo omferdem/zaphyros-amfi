@@ -1,6 +1,6 @@
 // Akıştaki "oyun" adımı için oyun listesi ve açıklamaları (perde kartı ve akış düzenleyici kullanır).
 
-export type OyunAnahtari = 'takim' | 'halat' | 'hoca' | 'merdiven' | 'zombi' | 'roket' | 'ejderha'
+export type OyunAnahtari = 'takim' | 'halat' | 'hoca' | 'merdiven' | 'zombi' | 'roket' | 'ejderha' | 'arena' | 'kule'
 
 export interface OyunBilgisi {
   ad: string
@@ -29,6 +29,18 @@ export const OYUNLAR: Record<OyunAnahtari, OyunBilgisi> = {
     emoji: '🥊',
     nasil: 'Sınıf hocaya karşı oynar. Hoca her soruda cevabını gizlice verir; doğru bilen taraf puan alır. Skor perdede durur.',
     baslat: 'Hocayla yarış skorunu açar.',
+  },
+  arena: {
+    ad: 'Son kalan arenası',
+    emoji: '⚔️',
+    nasil: 'Bireysel eleme oyunu. Her öğrencinin 2 canı var; yanlış ya da cevapsız bir can götürür, canı bitenler arenadan düşer. Sonunda ayakta kalanlar kazanır.',
+    baslat: 'Son kalan arenası sahnesini perdede açar.',
+  },
+  kule: {
+    ad: 'Kule yarışı',
+    emoji: '🏗️',
+    nasil: 'Sınıf 3 takıma ayrılır. Her doğru cevap takımın kulesine bir kat ekler; sıralama kişi başına doğruya göredir. Önce hedef yüksekliğe çıkan takım kazanır.',
+    baslat: '3 takımlı takım modunu ve kule sahnesini açar.',
   },
   roket: {
     ad: 'Roket yarışı',

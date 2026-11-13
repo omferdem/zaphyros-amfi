@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.31.0 (14 Kasım 2026)
+İki yeni oyun: biri takım, biri bireysel.
+- **Kule yarışı (takım):** sınıf 3 takıma ayrılır, her takım blok blok bir kule yapar. Her doğru cevap bir kat ekler; sıralama kişi başına doğruya göredir (kalabalık takım avantajlı olmaz). Hedef yüksekliğe ilk çıkan takım kazanır, önde olan taç takar.
+- **Son kalan arenası (bireysel):** her öğrencinin 2 canı var; yanlış ya da cevapsız bir can götürür, canı bitenler arenadan lava düşer. Sonunda ayakta kalanlar podyuma çıkar.
+- İkisi de Kahoot geçişinde ve akıştaki oyun kartlarında seçilir; veritabanı değişikliği yoktur.
+
 ## v0.30.0 (14 Kasım 2026)
 Akış önizlemesi.
 - **Dersi başlatmadan önizleme:** akış düzenleme sayfasındaki "👁 Önizle" düğmesi, akışı adım adım perde (hoca), öğrenci telefonu ya da ikisi yan yana gösterir. Slayt, soru (isteğe bağlı doğru cevap), açık uçlu soru, kelime bulutu, oylama, video ve oyun adımları iki tarafın görünümüyle denenir; ok tuşları ve boşlukla ilerlenir, adım listesinden atlanır. Hiçbir şey kaydedilmez, oturum açılmaz.

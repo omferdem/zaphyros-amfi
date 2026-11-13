@@ -490,7 +490,7 @@ function YoklamaSahnesi({
   const oturumId = oturum.id
   const [qr, setQr] = useState<string | null>(null)
   const [qrHata, setQrHata] = useState(false)
-  const [kalan, setKalan] = useState({ ms: 10000, toplam: 10000, an: Date.now() })
+  const [kalan, setKalan] = useState({ ms: 6000, toplam: 6000, an: Date.now() })
   const [simdi, setSimdi] = useState(Date.now())
 
   // Dönen QR: sunucudan güncel kodu al, pencere bitince yenisini iste.
@@ -520,7 +520,7 @@ function YoklamaSahnesi({
       })
       if (iptal) return
       setQr(resim)
-      setKalan({ ms: kalan_ms, toplam: 10000, an: Date.now() })
+      setKalan({ ms: kalan_ms, toplam: 6000, an: Date.now() })
       zamanlayici = setTimeout(yenile, Math.max(500, kalan_ms + 150))
     }
     yenile()

@@ -1,6 +1,6 @@
 -- YALNIZCA YEREL TEST İÇİN (bkz. supabase_taklit.sql). Adlar uydurmadır.
 -- Düz SQL'dir: hepsi geçerse son satırda "0021 tamam" yazar.
--- Beklenen: ders kodu 10 saniyelik pencereye göre üretilir (kalan süre en fazla 10 sn); güncel ve önceki iki pencerenin kodu
+-- Beklenen: ders kodu 6 saniyelik pencereye göre üretilir (kalan süre en fazla 6 sn); güncel ve önceki iki pencerenin kodu
 -- kabul edilir, üç pencere öncesi ve uydurma kod reddedilir; yoklama açıksa bilet döner.
 
 insert into auth.users (id, email) values ('fc111111-1111-1111-1111-111111111111', 'hoca21@ornek.edu.tr');
@@ -22,7 +22,7 @@ declare
   pencere bigint := ozel.pencere();
   dakika bigint := floor(extract(epoch from clock_timestamp()) / 60)::bigint;
 begin
-  assert kalan > 0 and kalan <= 10000, 'HATA: kalan sure 10 saniyeyi asiyor: ' || kalan;
+  assert kalan > 0 and kalan <= 6000, 'HATA: kalan sure 6 saniyeyi asiyor: ' || kalan;
   select g.anahtar into anahtar from ozel.session_secrets g where g.session_id = current_setting('t21.sid')::uuid;
   -- Kodlar yetkili rolle önceden hesaplanır (anon ozel şemayı okuyamaz)
   perform set_config('t21.k1', ozel.ders_kodu(anahtar, pencere - 1), false);
@@ -43,7 +43,7 @@ begin
   assert v ->> 'oturum' = current_setting('t21.sid'), 'HATA: 1 onceki pencere kabul edilmedi: ' || v::text;
   v := kodla_katil(current_setting('t21.k2'), 'cihaz-kod-0000003');
   assert v ->> 'oturum' = current_setting('t21.sid'), 'HATA: 2 onceki pencere kabul edilmedi: ' || v::text;
-  -- Üç pencere öncesi (30 sn'den eski) reddedilir
+  -- Üç pencere öncesi (18 sn'den eski) reddedilir
   v := kodla_katil(current_setting('t21.k3'), 'cihaz-kod-0000004');
   assert v ->> 'hata' = 'kod_yanlis', 'HATA: eski kod kabul edildi: ' || v::text;
   -- Eski sistemdeki dakika bazlı kod artık tutmaz

@@ -18,7 +18,7 @@ const MODLAR: { anahtar: string; ad: string; nasil: string }[] = [
 ]
 
 /**
- * Kumandadan "Oyun / Kahoot başlat" ve "Quiz başlat". Telefonun hoca girişi yoktur; kumanda bir istek bırakır,
+ * Kumandadan "Oyun / Zapoot başlat" ve "Quiz başlat". Telefonun hoca girişi yoktur; kumanda bir istek bırakır,
  * perdedeki sahne ekranı (hoca girişli) bunu uygular. Bu yüzden sahne ekranı açık olmalıdır.
  */
 export default function KumandaBaslat({ oturum, anahtar }: { oturum: string; anahtar: string }) {
@@ -59,7 +59,7 @@ export default function KumandaBaslat({ oturum, anahtar }: { oturum: string; ana
     <section className="cam-panel rounded-3xl p-4 space-y-3">
       <div className="grid grid-cols-2 gap-2">
         <button className={bolum === 'oyun' ? 'parlak-buton rounded-xl py-3 font-bold' : 'ikincil-buton !py-3'} onClick={() => ac('oyun')}>
-          🎮 Oyun / Kahoot başlat
+          🎮 Oyun / Zapoot başlat
         </button>
         <button className={bolum === 'quiz' ? 'parlak-buton rounded-xl py-3 font-bold' : 'ikincil-buton !py-3'} onClick={() => ac('quiz')}>
           📝 Quiz başlat
@@ -92,7 +92,7 @@ export default function KumandaBaslat({ oturum, anahtar }: { oturum: string; ana
             <p className="text-[11px] text-slate-400">{MODLAR.find((m) => m.anahtar === mod)?.nasil}</p>
           </div>
           {!paketler && <p className="text-sm text-slate-400">Paketler yükleniyor…</p>}
-          {paketler && kahootlar.length === 0 && <p className="text-sm text-slate-400">Bu içerikte Kahoot paketi yok.</p>}
+          {paketler && kahootlar.length === 0 && <p className="text-sm text-slate-400">Bu içerikte Zapoot paketi yok.</p>}
           <ul className="space-y-1.5">
             {kahootlar.map((p) => (
               <li key={p.ad}>

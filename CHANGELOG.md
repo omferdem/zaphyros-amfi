@@ -1,5 +1,8 @@
 # Sürüm Geçmişi
 
+## v0.43.1 (14 Kasım 2026)
+- Arayüzde ve belgelerde "Kahoot" adı **Zapoot** oldu (🎮 Zapoot, "Zapoot'a git", "Oyun / Zapoot başlat"). Kod içi adlar ve eski sürüm notları değişmedi.
+
 ## v0.43.0 (14 Kasım 2026)
 Yarışma müziği, daha efektli sesler, kartları toptan silme. Veritabanı değişikliği yok.
 - **Yarışma müziği:** soru açıkken ve grafik oyunlar (zombi, roket, ejderha, arena, kule) sürerken tempolu bir döngü (bas, arpej, davul) çalar; sorular arasında kesilmez, sonuç açılınca ve oyun bitince yumuşakça söner. Hepsi tarayıcıda üretilir (dosya, telif ve ek trafik yok). "⋯ > 🎵 Yarışma müziğini kapat" ayrı bir anahtardır.

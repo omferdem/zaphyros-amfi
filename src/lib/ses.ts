@@ -366,7 +366,7 @@ export function useOyunSesi(oynanan: number, bitti: boolean, kazandi: boolean): 
 }
 
 /**
- * Soru sahnesinde (Kahoot, quiz kapısı): soru açıkken müzik, son 5 saniyede geri sayım tıkı, süre bitince zil,
+ * Soru sahnesinde (Zapoot, quiz kapısı): soru açıkken müzik, son 5 saniyede geri sayım tıkı, süre bitince zil,
  * sonuç açılınca "doğru" çanı. kalanSn null ise süre sesi çalmaz.
  */
 export function useSoruSesi(soruDurum: 'acik' | 'sonuc' | null, kalanSn: number | null): void {

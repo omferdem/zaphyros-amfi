@@ -156,7 +156,7 @@ export default function SoruBankasi({ icerikId }: { icerikId: string }) {
     yukle()
   }
 
-  /** Paketle yalnızca sorulardan oluşan yeni bir akış açar: slaytsız, Kahoot tarzı seri yarışma. */
+  /** Paketle yalnızca sorulardan oluşan yeni bir akış açar: slaytsız, Zapoot tarzı seri yarışma. */
   async function yarismaAkisiOlustur(g: PaketGrubu) {
     setMesgul(true)
     setHata(null)

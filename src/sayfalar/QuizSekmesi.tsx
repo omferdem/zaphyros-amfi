@@ -111,7 +111,7 @@ export default function QuizSekmesi({ ders, ogrenciler }: { ders: Ders; ogrencil
       <div className="cam-panel rounded-3xl p-5 space-y-2">
         <h2 className="text-xl font-extrabold">📝 Habersiz quiz</h2>
         <p className="text-sm text-slate-400">
-          Kahoot'tan ayrı, sessiz bir ölçme: soruları paketinden seç, quizi başlat, perdedeki 6 haneli kodu öğrencilerine göster.
+          Zapoot'tan ayrı, sessiz bir ölçme: soruları paketinden seç, quizi başlat, perdedeki 6 haneli kodu öğrencilerine göster.
           Öğrenciler kodla ve öğrenci numarasıyla girer, soruları kendi hızında çözer. Canlı sıralama yoktur; sonuçlar yalnızca
           sende görünür, öğrenciye bağlı kaydedilir ve <b>Gelişim</b> sekmesindeki konu raporuna eklenir.
         </p>

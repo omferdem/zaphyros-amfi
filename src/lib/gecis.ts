@@ -1,7 +1,7 @@
-// Ders sırasında "Kahoot'a git" / "Quize git" geçişleri için yardımcılar (Supabase'e bağımlı değil, birim testlenir).
+// Ders sırasında "Zapoot'a git" / "Quize git" geçişleri için yardımcılar (Supabase'e bağımlı değil, birim testlenir).
 import type { PaketGrubu } from './paket'
 
-/** Kahoot geçişi için açılan gizli akışların adı bu işaretle başlar; akış listelerinde görünmez. */
+/** Zapoot geçişi için açılan gizli akışların adı bu işaretle başlar; akış listelerinde görünmez. */
 export const KAHOOT_ISARETI = '⚡'
 
 export function kahootAkisAdi(paketAdi: string): string {
@@ -18,7 +18,7 @@ export function adaGoreHafta(ad: string | null | undefined): number | null {
   return m ? Number(m[1]) : null
 }
 
-/** Paket türü: adında "quiz" geçenler ciddi quiz, diğerleri Kahoot (hızlı yarışma) sayılır. */
+/** Paket türü: adında "quiz" geçenler ciddi quiz, diğerleri Zapoot (hızlı yarışma) sayılır. */
 export function paketTuru(ad: string): 'quiz' | 'kahoot' {
   return /quiz/i.test(ad) ? 'quiz' : 'kahoot'
 }

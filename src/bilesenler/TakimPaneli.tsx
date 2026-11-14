@@ -54,7 +54,7 @@ export default function TakimPaneli({ oturum, anahtar, mod, dugme = true }: { ot
 
   if (!d) return null
   const acik = d.sayi > 0
-  // dugme=false: takım modu kapalıyken kısayol düğmeleri gösterilmez (sahnede yalnızca Kahoot oturumunda görünür)
+  // dugme=false: takım modu kapalıyken kısayol düğmeleri gösterilmez (sahnede yalnızca Zapoot oturumunda görünür)
   if (!acik && !dugme) return null
   const perde = mod === 'perde'
 

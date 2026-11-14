@@ -47,7 +47,7 @@ function useSorular(icerikId: string) {
   return { sorular, hata }
 }
 
-/** "Kahoot'a git": hafta hafta hazırlanmış paketlerden birini seç; seçilince canlı yarışma başlar. */
+/** "Zapoot'a git": hafta hafta hazırlanmış paketlerden birini seç; seçilince canlı yarışma başlar. */
 export function KahootSecici({
   icerikId,
   hafta,
@@ -78,13 +78,13 @@ export function KahootSecici({
     try {
       await sec(ad, l, modu(l))
     } catch {
-      window.alert('Kahoot açılamadı. Bağlantını kontrol edip tekrar dene.')
+      window.alert('Zapoot açılamadı. Bağlantını kontrol edip tekrar dene.')
       setMesgul(null)
     }
   }
 
   return (
-    <Kutu baslik="🎮 Kahoot'a git" kapat={kapat}>
+    <Kutu baslik="🎮 Zapoot'a git" kapat={kapat}>
       <p className="text-sm text-slate-300">Bir paket seç: sorular tek tek perdeye gelir, puan tablosu tutulur. Bitince “Derse dön” ile kaldığın slayttan devam edersin.</p>
       <div className="space-y-1.5">
         <h3 className="text-xs font-bold text-slate-300">Nasıl oynansın?</h3>
@@ -113,7 +113,7 @@ export function KahootSecici({
       </div>
       {hata && <p className="text-rose-300 text-sm">Paketler yüklenemedi.</p>}
       {!sorular && !hata && <p className="text-slate-400 text-sm">Yükleniyor…</p>}
-      {sorular && liste.length === 0 && <p className="text-slate-400 text-sm">Bu içerikte Kahoot paketi yok. Ders düzenleme sayfasından soru paketi ekleyebilirsin.</p>}
+      {sorular && liste.length === 0 && <p className="text-slate-400 text-sm">Bu içerikte Zapoot paketi yok. Ders düzenleme sayfasından soru paketi ekleyebilirsin.</p>}
       <ul className="grid gap-2 sm:grid-cols-2">
         {liste.map((p) => (
           <li key={p.ad}>

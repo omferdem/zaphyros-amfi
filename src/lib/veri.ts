@@ -140,7 +140,7 @@ export const DERSI_BITIR_SORUSU =
  */
 /**
  * Bu şubede aynı akışla yapılmış son oturumun kaldığı adım (varsa). Böylece hoca bir sonraki hafta
- * "nerede kalmıştık" diye aramadan, akışı kaldığı yerden sürdürür. Kahoot geçişlerinin gizli (⚡) akışları sayılmaz.
+ * "nerede kalmıştık" diye aramadan, akışı kaldığı yerden sürdürür. Zapoot geçişlerinin gizli (⚡) akışları sayılmaz.
  */
 export async function kalinanAdim(dersId: string, akisId: string): Promise<{ adimId: string; sira: number; toplam: number } | null> {
   const { data } = await supabase
@@ -160,7 +160,7 @@ export async function kalinanAdim(dersId: string, akisId: string): Promise<{ adi
   return i > 0 ? { adimId, sira: i + 1, toplam: idler.length } : null
 }
 
-/** Bu şubede en son çalışılan (Kahoot geçişi olmayan) akış ve kaldığı adım; yeni derste "devam et" önerisi için. */
+/** Bu şubede en son çalışılan (Zapoot geçişi olmayan) akış ve kaldığı adım; yeni derste "devam et" önerisi için. */
 export async function sonAkisBilgisi(dersId: string): Promise<{ akisId: string; ad: string; sira: number; toplam: number } | null> {
   const { data } = await supabase
     .from('sessions')

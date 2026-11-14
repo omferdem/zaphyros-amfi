@@ -15,7 +15,7 @@ const BOLUMLER: { baslik: string; maddeler: string[] }[] = [
     maddeler: [
       'Yoklamayı aç, perdedeki karekodu öğrencilere okut. Geç gelen kodu yazarak girer (kod 6 saniyede bir değişir).',
       'Akışı yukarıdaki listeden seç. Önceki derste yarım kaldıysa “↺ Kaldığın yerden devam” çıkar.',
-      'Konu bitince “🎮 Kahoot’a git” (seri sorular, oyunlar) ya da “📝 Quize git” (ciddi quiz, sonuç perdede). Bitince “↩ Derse dön” kaldığın slayta götürür.',
+      'Konu bitince “🎮 Zapoot’a git” (seri sorular, oyunlar) ya da “📝 Quize git” (ciddi quiz, sonuç perdede). Bitince “↩ Derse dön” kaldığın slayta götürür.',
       'Telefondan yönetmek için “📱 Kumanda” karekodunu okut; projeksiyon yoksa yoklamayı “telefondan yönet” seçeneğiyle aç.',
     ],
   },

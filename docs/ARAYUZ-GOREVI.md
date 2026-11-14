@@ -86,7 +86,7 @@ KUMANDA (telefon, hoca dersi yürütürken; tek elle kullanım, büyük dokunma 
 - Büyük ◀ ▶ düğmeleri (adım geçişi), slayt notu kartı (hoca notu).
 - Soru adımında: "Soruyu aç", "Sonucu göster", cevap sayacı, süre uzat (+15 sn).
 - Açık uçlu/beyin fırtınası adımında: gelen cevaplar listesi, "Perdeye yansıt", gizle.
-- Hızlı eylem satırı: 🎮 Oyun / Kahoot başlat (oyun modu çipleri + paket listesi), 📝 Quiz başlat (paket + süre), ↩ Derse dön, ⏹ Quizi bitir.
+- Hızlı eylem satırı: 🎮 Oyun / Zapoot başlat (oyun modu çipleri + paket listesi), 📝 Quiz başlat (paket + süre), ↩ Derse dön, ⏹ Quizi bitir.
 - Sınıf paneli: "Anlamadım" sayacı, el kaldıranlar.
 - Telefon modu anahtarı (projeksiyon yoksa), ders kodu (büyük, kopyalanabilir), "Dersi bitir".
 ```
@@ -94,7 +94,7 @@ KUMANDA (telefon, hoca dersi yürütürken; tek elle kullanım, büyük dokunma 
 ## D. Perde / sahne (projeksiyon, 1920x1080)
 ```
 Perde (sahne) ekranlarını tasarla. 16:9, projeksiyonda arka sıradan okunmalı: ana metin en az 40 px, sayaçlar ve QR çok büyük, kontrast yüksek.
-Sağ üstte yarı saydam, fareyle belirginleşen hoca araç çubuğu (akış seçici, ◀ 5/28 ▶, 🎮 Kahoot, 📝 Quiz, 🏆, 📱, ⋯ menüsü, ⏹ Bitir).
+Sağ üstte yarı saydam, fareyle belirginleşen hoca araç çubuğu (akış seçici, ◀ 5/28 ▶, 🎮 Zapoot, 📝 Quiz, 🏆, 📱, ⋯ menüsü, ⏹ Bitir).
 
 Ekranlar:
 1. Yoklama ekranı: solda dev QR (beyaz kutuda, glow), altında 6 saniyelik geri sayım çubuğu ve "Ders kodu 482 913" şeridi; sağda "Katılan" büyük sayı
@@ -102,7 +102,7 @@ Ekranlar:
    Üstte "▶ Derse geç: 3. Hafta" büyük düğme. Yoklama kapalı hali: "Yoklama kapandı · 24 öğrenci derse katıldı" + yalnızca ders kodu.
 2. Slayt ekranı: slayt tam ekran (siyah zemin), köşelerde ‹ › okları, sol altta "5 / 28", sağ altta küçük katılan sayısı + ders kodu şeridi.
    Yoklama açıksa ortada karekod kartı (QR + kod + katılan sayısı + "Yoklamayı kapat" / "Karekodu gizle").
-3. Soru sahnesi (Kahoot tarzı): üstte soru (büyük), dört renkli şık kartı (şekil + harf), kalan süre halkası (son 5 sn kırmızıya ve titreşime döner),
+3. Soru sahnesi (Zapoot tarzı): üstte soru (büyük), dört renkli şık kartı (şekil + harf), kalan süre halkası (son 5 sn kırmızıya ve titreşime döner),
    cevap sayacı "18 / 24 cevapladı". Sonuç hali: doğru şık parlar, yanlışlar söner, her şıkta cevap dağılımı çubuğu, sağda ilk 5 sıralama (puanlar).
 4. Etkinlik sahneleri: (a) kelime bulutu (sözcükler çoklukla büyür, canlı), (b) beyin fırtınası kartları (post-it duvarı), (c) açık uçlu soru: süre bitene kadar
    "cevaplar toplanıyor" + "📣 Cevapları yansıt" sonrası kartlar, (d) şeytanın avukatı: iki taraflı dev oy çubuğu + gerekçe akışı, (e) video, (f) fotoğraf.

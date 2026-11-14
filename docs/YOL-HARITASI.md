@@ -51,7 +51,7 @@ Kullanıcı kararı (26 Ekim 2026): PowerPoint dosyasını sistem dışında PDF
 Kullanıcı istekleri (19 Ekim 2026): slaytsız, yalnızca hazır sorularla bilgi yarışması ya da oyun başlatılabilmeli; sorular ZOMR biçiminde hazır. Kullanıcı sırayı "önce quiz, sonra 2b ve 2c" olarak seçti.
 - Soru bankası ders içeriğine bağlı ve yıllarca kullanılır; ZOMR biçiminde (#QUESTION / #CORRECT / #WRONG ...) içe aktarma
 - Soru adımı akışa slaytların arasına eklenebilir; yalnızca sorulardan oluşan akış da olur (slaytsız yarışma)
-- Kullanıcı kararları: Kahoot gibi hız puanı (500-1000), yoklamasız derste takma ad
+- Kullanıcı kararları: Zapoot gibi hız puanı (500-1000), yoklamasız derste takma ad
 - Sıradaki: 2b (yalnız telefon modu), 2c (PPTX çevirisi), sonra Faz 4
 - Haftaya soru ekleme (elle ya da metin yapıştırarak)
 - Öğrenci gelişim raporu (v0.11.0): öğrenci x konu başarısı, eğilim, zayıf/güçlü konu, Excel. 
@@ -86,7 +86,7 @@ Kullanıcı istekleri (13 Kasım 2026):
 - Kovalamaca oyunu (soru doğru cevaplanınca hızlanma)
 
 ## Faz 5b: Davetle hoca katılımı (v0.37.0'da uygulandı: sahip e-posta ile davet eder, hoca bağlantıyla girer)
-Kullanıcı isteği (13 Kasım 2026): başka bir hoca, kullanıcının verdiği bir davet linkinden e-posta ve şifreyle üye olup hemen ders işleyebilsin (kurulum yapmadan). Veri modeli buna hazır (her kayıt `teacher_id` ile ayrı, RLS ile yalıtılı); eksik olan davet linki, kayıt ekranı ve sahibin davet yönetimi. KARAR (13 Kasım 2026, kullanıcı): programın kontrolü sahibinde kalacak ve ileride Kahoot gibi ticari olarak satılabilecek; bu yüzden "her hoca kendi kopyasını kurar" kararı yerine ORTAK SİSTEM seçildi (tek Supabase projesi, davet linkiyle hoca katılımı). Sonuçları: ortak kotalar (200 eşzamanlı Realtime, 500 MB veritabanı, 1 GB depo) kalabalıklaşınca Pro plana geçişi gerektirir; sahip diğer hocaların öğrencilerinin veri sorumlusu olur (KVKK aydınlatma metni ve kullanım koşulları gerekir); sahip için hoca yönetimi (davet, askıya alma) paneli gerekir. Uygulama sırası kullanıcının diğer taleplerinden sonra planlanacak.
+Kullanıcı isteği (13 Kasım 2026): başka bir hoca, kullanıcının verdiği bir davet linkinden e-posta ve şifreyle üye olup hemen ders işleyebilsin (kurulum yapmadan). Veri modeli buna hazır (her kayıt `teacher_id` ile ayrı, RLS ile yalıtılı); eksik olan davet linki, kayıt ekranı ve sahibin davet yönetimi. KARAR (13 Kasım 2026, kullanıcı): programın kontrolü sahibinde kalacak ve ileride Zapoot gibi ticari olarak satılabilecek; bu yüzden "her hoca kendi kopyasını kurar" kararı yerine ORTAK SİSTEM seçildi (tek Supabase projesi, davet linkiyle hoca katılımı). Sonuçları: ortak kotalar (200 eşzamanlı Realtime, 500 MB veritabanı, 1 GB depo) kalabalıklaşınca Pro plana geçişi gerektirir; sahip diğer hocaların öğrencilerinin veri sorumlusu olur (KVKK aydınlatma metni ve kullanım koşulları gerekir); sahip için hoca yönetimi (davet, askıya alma) paneli gerekir. Uygulama sırası kullanıcının diğer taleplerinden sonra planlanacak.
 
 ## Faz 6: Dağıtım paketi (v1.0)
 Karar (v0.2.1): Merkezi çok hocalı sistem yerine her hoca kendi bağımsız kopyasını kurar (`docs/KURULUM.md`).

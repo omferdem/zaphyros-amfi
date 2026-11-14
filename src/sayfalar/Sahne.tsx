@@ -107,7 +107,7 @@ export default function Sahne() {
   const [kodGoster, setKodGoster] = useState(true)
   const [kumandaAcik, setKumandaAcik] = useState(false)
   const [puanAcik, setPuanAcik] = useState(false)
-  const [kahootSecimi, setKahootSecimi] = useState(false)
+  const [kahootSecimi, setZapootSecimi] = useState(false)
   const [provaAcik, setProvaAcik] = useState(false)
   const [rehberAcik, setRehberAcik] = useState(false)
   const [sesAcik, sesAyarla] = useSesAyari()
@@ -129,19 +129,19 @@ export default function Sahne() {
   const [quizAcik, setQuizAcik] = useState(false)
   const [yoklamaKatmani, setYoklamaKatmani] = useState(true)
   const [quizBitirSinyali, setQuizBitirSinyali] = useState(0)
-  // Telefon kumandasından gelen istek (Kahoot, quiz, derse dön) bu işleyiciyle uygulanır; sahne açıkken hoca girişi burada vardır
+  // Telefon kumandasından gelen istek (Zapoot, quiz, derse dön) bu işleyiciyle uygulanır; sahne açıkken hoca girişi burada vardır
   const istekIsleyici = useRef<(i: KumandaIstegi) => void>(() => {})
   const sonIstek = useRef(0)
   /** Ekranda aynı anda tek panel açık kalır: biri açılırken öbürleri kapanır. */
   function tekAc(hangisi: 'kahoot' | 'quiz' | 'puan' | 'kumanda' | 'prova' | 'rehber' | null) {
-    setKahootSecimi(hangisi === 'kahoot')
+    setZapootSecimi(hangisi === 'kahoot')
     setQuizAcik(hangisi === 'quiz')
     setPuanAcik(hangisi === 'puan')
     setKumandaAcik(hangisi === 'kumanda')
     setProvaAcik(hangisi === 'prova')
     setRehberAcik(hangisi === 'rehber')
   }
-  const [kahootAkisi, setKahootAkisi] = useState<{ id: string; ad: string } | null>(null)
+  const [kahootAkisi, setZapootAkisi] = useState<{ id: string; ad: string } | null>(null)
 
   const acik = !!oturum && oturum.yoklama_acik && !oturum.bitti
   const kod = useDersKodu(oturumId, !!oturum && !oturum.bitti)
@@ -163,15 +163,15 @@ export default function Sahne() {
   }, [oturumId])
 
   const akisId = oturum?.lesson_id ?? null
-  // Kahoot geçişi sırasında oturum gizli (⚡) bir akışta olur; adı alınır ki araç çubuğu "Derse dön" gösterebilsin.
+  // Zapoot geçişi sırasında oturum gizli (⚡) bir akışta olur; adı alınır ki araç çubuğu "Derse dön" gösterebilsin.
   useEffect(() => {
     if (!akisId) {
-      setKahootAkisi(null)
+      setZapootAkisi(null)
       return
     }
     akisGetir(akisId)
-      .then((a) => setKahootAkisi(a && kahootAkisiMi(a.ad) ? { id: a.id, ad: a.ad } : null))
-      .catch(() => setKahootAkisi(null))
+      .then((a) => setZapootAkisi(a && kahootAkisiMi(a.ad) ? { id: a.id, ad: a.ad } : null))
+      .catch(() => setZapootAkisi(null))
   }, [akisId])
   const icerikId = oturum?.courses.subject_id
   useEffect(() => {
@@ -313,10 +313,10 @@ export default function Sahne() {
       return null
     }
   }
-  // Önerilen paket: şu an (ya da Kahoottan önce) hangi haftanın akışındaysak onun paketi
+  // Önerilen paket: şu an (ya da Zapoottan önce) hangi haftanın akışındaysak onun paketi
   const haftaNo = adaGoreHafta(akislar.find((a) => a.id === oturum?.lesson_id)?.ad ?? donusKaydi()?.ad) ?? oturum?.hafta_no ?? null
 
-  /** Seçilen soru paketini canlı Kahoot olarak açar: gizli bir akış (⚡ paket adı) paketin sorularıyla kurulur, dönüş noktası saklanır. */
+  /** Seçilen soru paketini canlı Zapoot olarak açar: gizli bir akış (⚡ paket adı) paketin sorularıyla kurulur, dönüş noktası saklanır. */
   async function kahootaGit(paketAdi: string, sorular: { id: string }[], mod: OyunAnahtari | null) {
     if (!icerikId || sorular.length === 0) throw new Error('bos')
     const ad = kahootAkisAdi(paketAdi)
@@ -353,10 +353,10 @@ export default function Sahne() {
     if (error) throw error
     setOturum((o) => (o ? { ...o, lesson_id: id, aktif_adim: idler[0] ?? null } : o))
     await oyunuAc(oturumId, mod)
-    setKahootSecimi(false)
+    setZapootSecimi(false)
   }
 
-  /** Kahoot bitince: kaldığın akışa ve slayta döner. */
+  /** Zapoot bitince: kaldığın akışa ve slayta döner. */
   async function dersedon() {
     const kayit = donusKaydi()
     const hedefAkis = kayit?.lesson_id && akislar.some((a) => a.id === kayit.lesson_id) ? kayit.lesson_id : null
@@ -371,7 +371,7 @@ export default function Sahne() {
         hedefAdim = (ilk?.[0]?.id as string | undefined) ?? null
       }
     }
-    // Dönülecek akış yoksa (ders yoklama ekranından açılmıştı) Kahoot akışından çıkılır ve yoklama ekranı açılır
+    // Dönülecek akış yoksa (ders yoklama ekranından açılmıştı) Zapoot akışından çıkılır ve yoklama ekranı açılır
     const degisiklik = hedefAkis ? { lesson_id: hedefAkis, aktif_adim: hedefAdim } : { lesson_id: null, aktif_adim: null }
     const { error } = await supabase.from('sessions').update(degisiklik).eq('id', oturumId)
     if (error) return window.alert('Derse dönülemedi. Bağlantını kontrol edip tekrar dene.')
@@ -503,14 +503,14 @@ export default function Sahne() {
         <button
           className={`parlak-buton rounded-xl px-4 py-1.5 text-sm font-bold ${aktifSira === adimlar.length - 1 ? 'nabiz' : ''}`}
           onClick={dersedon}
-          title="Kahoottan çık, kaldığın slayta dön"
+          title="Zapoottan çık, kaldığın slayta dön"
         >
           ↩ Derse dön
         </button>
       ) : (
         <>
-          <button className="ikincil-buton" onClick={() => tekAc('kahoot')} title="Hazır bir Kahoot paketini perdede oynat">
-            🎮 Kahoot
+          <button className="ikincil-buton" onClick={() => tekAc('kahoot')} title="Hazır bir Zapoot paketini perdede oynat">
+            🎮 Zapoot
           </button>
           <button className="ikincil-buton" onClick={() => tekAc('quiz')} title="Ciddi quizi başlat; bitince sonuçlar açıklanır">
             📝 Quiz
@@ -637,7 +637,7 @@ export default function Sahne() {
       <BaglantiUyarisi />
       {provaAcik && <OyunProvasi kapat={() => setProvaAcik(false)} />}
       {rehberAcik && <Rehber kapat={() => setRehberAcik(false)} />}
-      {kahootSecimi && icerikId && <KahootSecici icerikId={icerikId} hafta={haftaNo} sec={kahootaGit} kapat={() => setKahootSecimi(false)} />}
+      {kahootSecimi && icerikId && <KahootSecici icerikId={icerikId} hafta={haftaNo} sec={kahootaGit} kapat={() => setZapootSecimi(false)} />}
       {quizAcik && icerikId && <QuizPaneli dersId={oturum.course_id} icerikId={icerikId} hafta={haftaNo} katilan={gelenler.length} bitirSinyali={quizBitirSinyali} kapat={() => setQuizAcik(false)} />}
       {puanAcik && <PuanTablosu oturumId={oturum.id} kapat={() => setPuanAcik(false)} />}
       <SinifPaneli d={sinif.d} komut={sinif.komut} hata={sinif.hata} mod="perde" />

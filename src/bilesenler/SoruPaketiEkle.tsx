@@ -85,7 +85,7 @@ export default function SoruPaketiEkle({
   return (
     <div className="rounded-2xl bg-slate-950/60 border border-white/10 p-4 space-y-4">
       <div>
-        <p className="text-sm font-semibold">🎯 Soru paketi ekle (Kahoot tarzı yarışma)</p>
+        <p className="text-sm font-semibold">🎯 Soru paketi ekle (Zapoot tarzı yarışma)</p>
         <p className="text-xs text-slate-400 mt-1">
           Pakette ne kadar soru varsa hepsi arka arkaya perdeye gelir: her soru için süre, cevap dağılımı ve puan tablosu.
           Paketi akışın sonuna ya da bir slaytın arasına koyabilirsin.

@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import HataSiniri from './bilesenler/HataSiniri'
 import Marka from './bilesenler/Marka'
 import { supabase } from './lib/supabase'
 import Katil from './sayfalar/Katil'
@@ -36,9 +37,11 @@ function KokSayfa() {
 }
 
 export default function App() {
+  const konum = useLocation()
   return (
     <>
     <Marka />
+    <HataSiniri sifirla={konum.pathname}>
     <Suspense fallback={bekle}>
       <Routes>
         <Route path="/" element={<KokSayfa />} />
@@ -61,6 +64,7 @@ export default function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>
+    </HataSiniri>
     </>
   )
 }

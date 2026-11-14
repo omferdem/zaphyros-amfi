@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { sorulariGetir, sorulariGetirIdIle } from '../lib/akis'
 import { paketleriGrupla } from '../lib/paket'
 import { onerilenQuizSuresi, paketleriSirala } from '../lib/gecis'
@@ -154,12 +154,15 @@ export function QuizPaneli({
   icerikId,
   hafta,
   katilan,
+  bitirSinyali = 0,
   kapat,
 }: {
   dersId: string
   icerikId: string
   hafta: number | null
   katilan: number
+  /** Her artışta açık quiz (onay sormadan) bitirilir; telefon kumandasından gelir. */
+  bitirSinyali?: number
   kapat: () => void
 }) {
   const { sorular, hata } = useSorular(icerikId)
@@ -223,9 +226,9 @@ export function QuizPaneli({
     setMesgul(false)
   }
 
-  async function bitir() {
+  async function bitir(onay = true) {
     if (!quiz) return
-    if (!window.confirm('Quiz bitirilsin mi? Çözmeyi bitirmeyenlerin cevapları da kapanır.')) return
+    if (onay && !window.confirm('Quiz bitirilsin mi? Çözmeyi bitirmeyenlerin cevapları da kapanır.')) return
     setMesgul(true)
     try {
       await quizKapat(quiz.id)
@@ -249,6 +252,15 @@ export function QuizPaneli({
     }
     setMesgul(false)
   }
+
+  // Telefon kumandası "Quizi bitir" dediğinde (sinyal artınca) açık quiz bitirilir
+  const sonSinyal = useRef(bitirSinyali)
+  useEffect(() => {
+    if (bitirSinyali !== sonSinyal.current) {
+      sonSinyal.current = bitirSinyali
+      if (quiz && quiz.durum === 'acik') void bitir(false)
+    }
+  })
 
   if (sonuc) {
     const zor = sonuc.maddeler.filter((m) => m.oran !== null).slice(0, 3)
@@ -321,7 +333,7 @@ export function QuizPaneli({
         </p>
         {mesaj && <p className="text-rose-300 text-sm">{mesaj}</p>}
         <div className="flex gap-3 flex-wrap">
-          <button disabled={mesgul} className="parlak-buton rounded-xl px-6 py-2.5 font-bold" onClick={bitir}>
+          <button disabled={mesgul} className="parlak-buton rounded-xl px-6 py-2.5 font-bold" onClick={() => bitir()}>
             Quizi bitir ve sonuçları göster
           </button>
           <button className="ikincil-buton" onClick={kapat} title="Quiz arka planda sürer; ders slaytına dönebilirsin">

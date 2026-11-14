@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.41.0 (14 Kasım 2026)
+Kumandadan oyun/Kahoot/quiz başlatma, slaytın herkese telefonda görünmesi, çökme koruması. Veritabanı: `0031_kumanda_istegi.sql`, `0032_slayt_gorseli_herkese.sql`.
+- **Telefon kumandası:** gereksiz "Hocayla yarış / Takım modu" yazıları kalktı. Yerine "🎮 Oyun / Kahoot başlat" (oyun modu + paket seç), "📝 Quiz başlat" (paket seç, süre önerilir), "↩ Derse dön" ve "⏹ Quizi bitir" geldi. Kumandanın hoca girişi olmadığı için istek veritabanına bırakılır; perdedeki sahne ekranı (hoca girişli) isteği alıp uygular, bu yüzden sahne ekranı açık olmalıdır.
+- **Slayt öğrencinin telefonunda:** projeksiyonlu derste de perdedeki slaytın görseli öğrenci telefonunda görünür (yalnızca o anki slayt). Telefonda "📶 Veri tasarrufu" anahtarı görseli kapatır. Ücretsiz plandaki depo trafiği (ayda 5 GB) kalabalık derslerde hızlı dolabilir; Supabase panelinden "Egress" izlenmeli.
+- **Çökme koruması:** bir sayfa hata verirse boş (mavi) ekran yerine hata ve "🏠 Ana sayfaya dön" düğmesi çıkar. Yeni sürüm yayınlandıktan sonra eski açık sekmede sayfa dosyası bulunamazsa sayfa kendiliğinden bir kez yenilenir (ders sonunda "Yoklama listesi"ne basınca boş ekran çıkmasının olası nedeni buydu).
+
 ## v0.40.0 (14 Kasım 2026)
 Ders kodu sabit. Veritabanı: `0030_sabit_ders_kodu.sql`.
 - Ders giriş kodu yoklama yazdırmadığı için projeksiyonlu derste oturum boyunca değişmez; geç gelen öğrenci perdedeki aynı kodu yazar. Karekod (yoklama) 6 saniyede bir değişmeye devam eder.

@@ -11,6 +11,7 @@ import SinifPaneli, { useSinifDurumu } from '../bilesenler/SinifPaneli'
 import TakimPaneli from '../bilesenler/TakimPaneli'
 import HocaYarisiPaneli from '../bilesenler/HocaYarisiPaneli'
 import MerdivenPaneli from '../bilesenler/MerdivenPaneli'
+import KumandaBaslat from '../bilesenler/KumandaBaslat'
 import ZombiPaneli from '../bilesenler/ZombiPaneli'
 import BaglantiUyarisi from '../bilesenler/BaglantiUyarisi'
 import { ArenaPaneli, EjderhaPaneli, KulePaneli, RoketPaneli } from '../bilesenler/GrafikOyunlari'
@@ -176,9 +177,10 @@ export default function Kumanda() {
 
       <BaglantiUyarisi />
       <SinifPaneli d={sinif.d} komut={sinif.komut} hata={sinif.hata} mod="kumanda" />
-      {anahtar && <TakimPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
-      {anahtar && <HocaYarisiPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
-      {anahtar && <MerdivenPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
+      {anahtar && <TakimPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" dugme={false} />}
+      {anahtar && <HocaYarisiPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" dugme={false} />}
+      {anahtar && <MerdivenPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" dugme={false} />}
+      {anahtar && <KumandaBaslat oturum={oturum} anahtar={anahtar} />}
       {anahtar && <ZombiPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
       {anahtar && <RoketPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
       {anahtar && <EjderhaPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}

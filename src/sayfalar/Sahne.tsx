@@ -6,7 +6,9 @@ import type { Adim, Ders, DersDurumu, Oturum, PuanSatiri, Sunum } from '../lib/t
 import { DERSI_BITIR_SORUSU, oturumGetir, oturumuBitir, oturumuYenidenAc } from '../lib/veri'
 import Konfeti from '../bilesenler/Konfeti'
 import Halka from '../bilesenler/Halka'
-import { adimlariGetir, adimlarEkle, akisGetir, akislariGetir, sunumlariGetirIdIle } from '../lib/akis'
+import { adimlariGetir, adimlarEkle, akisGetir, akislariGetir, sorulariGetir, sunumlariGetirIdIle } from '../lib/akis'
+import { paketleriGrupla } from '../lib/paket'
+import { quizOlustur } from '../lib/quiz'
 import { adaGoreHafta, kahootAkisAdi, kahootAkisiMi } from '../lib/gecis'
 import { kalinanAdim, sonAkisBilgisi } from '../lib/veri'
 import { KahootSecici, QuizPaneli } from '../bilesenler/PaketGecisi'
@@ -15,7 +17,7 @@ import OyunProvasi from '../bilesenler/OyunProvasi'
 import Rehber from '../bilesenler/Rehber'
 import BaglantiUyarisi from '../bilesenler/BaglantiUyarisi'
 import { useSesAyari } from '../lib/ses'
-import type { OyunAnahtari } from '../lib/oyun'
+import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import { dersEtiketi, kisaAd, oturumAdi } from '../lib/bicim'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
 import { SIKLAR, bitisAni } from '../lib/yarisma'
@@ -28,6 +30,15 @@ import ZombiPaneli from '../bilesenler/ZombiPaneli'
 import { ArenaPaneli, EjderhaPaneli, KulePaneli, RoketPaneli } from '../bilesenler/GrafikOyunlari'
 import DersSayaci from '../bilesenler/DersSayaci'
 import OyunSahnesi from '../bilesenler/OyunSahnesi'
+
+/** Telefon kumandasının bıraktığı istek (veritabanında sessions.kumanda_istek). */
+interface KumandaIstegi {
+  tur: 'kahoot' | 'quiz' | 'quiz_bitir' | 'derse_don'
+  paket: string
+  mod: string
+  sure: number
+  t: number
+}
 
 interface Gelen {
   student_id: string
@@ -116,8 +127,12 @@ export default function Sahne() {
   }, [dersKimligi, akissizMi])
   const [quizAcik, setQuizAcik] = useState(false)
   const [yoklamaKatmani, setYoklamaKatmani] = useState(true)
+  const [quizBitirSinyali, setQuizBitirSinyali] = useState(0)
+  // Telefon kumandasından gelen istek (Kahoot, quiz, derse dön) bu işleyiciyle uygulanır; sahne açıkken hoca girişi burada vardır
+  const istekIsleyici = useRef<(i: KumandaIstegi) => void>(() => {})
+  const sonIstek = useRef(0)
   /** Ekranda aynı anda tek panel açık kalır: biri açılırken öbürleri kapanır. */
-  function tekAc(hangisi: 'kahoot' | 'quiz' | 'puan' | 'kumanda' | 'prova' | 'rehber') {
+  function tekAc(hangisi: 'kahoot' | 'quiz' | 'puan' | 'kumanda' | 'prova' | 'rehber' | null) {
     setKahootSecimi(hangisi === 'kahoot')
     setQuizAcik(hangisi === 'quiz')
     setPuanAcik(hangisi === 'puan')
@@ -213,9 +228,12 @@ export default function Sahne() {
       .channel(`sahne:${oturumId}`)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'attendance', filter: `session_id=eq.${oturumId}` }, tetikle)
       // Kumandadan gelen adım değişikliği ve yoklama durumu da bu yoldan gelir.
-      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'sessions', filter: `id=eq.${oturumId}` }, (p) =>
-        setOturum((o) => (o ? { ...o, ...(p.new as Partial<Oturum>) } : o)),
-      )
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'sessions', filter: `id=eq.${oturumId}` }, (p) => {
+        const yeni = p.new as Partial<Oturum> & { kumanda_istek?: KumandaIstegi | null }
+        const { kumanda_istek: istek, ...alanlar } = yeni
+        setOturum((o) => (o ? { ...o, ...alanlar } : o))
+        if (istek) istekIsleyici.current(istek)
+      })
       .subscribe()
     // Realtime bağlantısı koparsa diye 20 saniyede bir yedek yenileme
     const yedek = setInterval(() => {
@@ -361,6 +379,37 @@ export default function Sahne() {
       localStorage.removeItem(donusAnahtari)
     } catch {
       /* önemsiz */
+    }
+  }
+
+  istekIsleyici.current = async (i) => {
+    if (!oturum || i.t === sonIstek.current) return
+    sonIstek.current = i.t
+    await supabase.from('sessions').update({ kumanda_istek: null }).eq('id', oturumId)
+    try {
+      if (i.tur === 'derse_don') {
+        if (kahootAkisi) await dersedon()
+        return
+      }
+      if (i.tur === 'quiz_bitir') {
+        setQuizBitirSinyali((n) => n + 1)
+        tekAc('quiz')
+        return
+      }
+      if (!icerikId) return
+      const grup = paketleriGrupla(await sorulariGetir(icerikId)).find((g) => g.ad === i.paket)
+      if (!grup) return
+      if (i.tur === 'kahoot') {
+        const oneri = grup.sorular[0]?.ek?.mod
+        const mod = i.mod === 'oneri' ? (oneri && oneri in OYUNLAR ? (oneri as OyunAnahtari) : null) : i.mod === '' ? null : (i.mod as OyunAnahtari)
+        tekAc(null)
+        await kahootaGit(grup.ad, grup.sorular, mod)
+      } else {
+        await quizOlustur(oturum.course_id, grup.ad.slice(0, 200), i.sure, grup.sorular.map((s) => s.id), false)
+        tekAc('quiz')
+      }
+    } catch {
+      /* istek uygulanamadıysa perdede bir şey değişmez; hoca kumandadan yeniden dener */
     }
   }
 
@@ -585,7 +634,7 @@ export default function Sahne() {
       {provaAcik && <OyunProvasi kapat={() => setProvaAcik(false)} />}
       {rehberAcik && <Rehber kapat={() => setRehberAcik(false)} />}
       {kahootSecimi && icerikId && <KahootSecici icerikId={icerikId} hafta={haftaNo} sec={kahootaGit} kapat={() => setKahootSecimi(false)} />}
-      {quizAcik && icerikId && <QuizPaneli dersId={oturum.course_id} icerikId={icerikId} hafta={haftaNo} katilan={gelenler.length} kapat={() => setQuizAcik(false)} />}
+      {quizAcik && icerikId && <QuizPaneli dersId={oturum.course_id} icerikId={icerikId} hafta={haftaNo} katilan={gelenler.length} bitirSinyali={quizBitirSinyali} kapat={() => setQuizAcik(false)} />}
       {puanAcik && <PuanTablosu oturumId={oturum.id} kapat={() => setPuanAcik(false)} />}
       <SinifPaneli d={sinif.d} komut={sinif.komut} hata={sinif.hata} mod="perde" />
       <TakimPaneli oturum={oturum.id} anahtar={null} mod="perde" dugme={!!kahootAkisi} />

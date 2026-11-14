@@ -372,7 +372,9 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
   }, [dersBitti, oturum])
 
   const adim = durum?.adim
-  const gorsel = useSlaytGorseli(adim?.tur === 'slayt' ? adim.gorsel : null)
+  // Veri tasarrufu: açıkken slayt görseli telefona indirilmez (yalnızca slaytın yazısı görünür)
+  const [tasarruf, setTasarruf] = useState(() => oku('amfi_veri_tasarrufu') === '1')
+  const gorsel = useSlaytGorseli(adim?.tur === 'slayt' && !tasarruf ? adim.gorsel : null)
   const satirlar = (adim?.tur === 'slayt' ? adim.metin ?? '' : '').split('\n').filter(Boolean)
 
   return (
@@ -395,6 +397,19 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
       </header>
 
       <QuizBandi oturum={oturum} />
+
+      {adim?.tur === 'slayt' && adim.gorsel && (
+        <button
+          className="self-end text-[11px] text-slate-400 hover:text-white"
+          onClick={() => {
+            sakla('amfi_veri_tasarrufu', tasarruf ? '0' : '1')
+            setTasarruf(!tasarruf)
+          }}
+          title="Slayt görseli telefona indirilmez; mobil verin az gidiyorsa aç"
+        >
+          {tasarruf ? '🖼️ Slayt görselini göster' : '📶 Veri tasarrufu: görseli gizle'}
+        </button>
+      )}
 
       {ad === null && durum?.yoklama_acik && !durum.bitti && (
         <p className="rounded-2xl bg-amber-500/15 text-amber-100 text-sm p-3 text-center">

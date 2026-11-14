@@ -115,6 +115,16 @@ export default function Sahne() {
       .catch(() => setSonAkis(null))
   }, [dersKimligi, akissizMi])
   const [quizAcik, setQuizAcik] = useState(false)
+  const [yoklamaKatmani, setYoklamaKatmani] = useState(true)
+  /** Ekranda aynı anda tek panel açık kalır: biri açılırken öbürleri kapanır. */
+  function tekAc(hangisi: 'kahoot' | 'quiz' | 'puan' | 'kumanda' | 'prova' | 'rehber') {
+    setKahootSecimi(hangisi === 'kahoot')
+    setQuizAcik(hangisi === 'quiz')
+    setPuanAcik(hangisi === 'puan')
+    setKumandaAcik(hangisi === 'kumanda')
+    setProvaAcik(hangisi === 'prova')
+    setRehberAcik(hangisi === 'rehber')
+  }
   const [kahootAkisi, setKahootAkisi] = useState<{ id: string; ad: string } | null>(null)
 
   const acik = !!oturum && oturum.yoklama_acik && !oturum.bitti
@@ -355,6 +365,7 @@ export default function Sahne() {
   }
 
   async function yoklamaDurumu(ac: boolean) {
+    if (ac) setYoklamaKatmani(true)
     const { data } = await supabase
       .from('sessions')
       .update(ac ? { yoklama_acik: true, bitti: null } : { yoklama_acik: false })
@@ -383,6 +394,13 @@ export default function Sahne() {
     }
   }
 
+  const dersegecHedefi = (() => {
+    if (sonAkis && akislar.some((a) => a.id === sonAkis.akisId)) return { id: sonAkis.akisId, ad: sonAkis.ad }
+    const haftali = akislar.find((a) => oturum && adaGoreHafta(a.ad) === oturum.hafta_no)
+    const a = haftali ?? akislar[0]
+    return a ? { id: a.id, ad: a.ad } : null
+  })()
+
   if (oturum === undefined)
     return <main className="min-h-screen flex items-center justify-center text-slate-400">Yükleniyor…</main>
   if (oturum === null)
@@ -396,7 +414,7 @@ export default function Sahne() {
   if (oturum.bitti) return <DersBitti oturum={oturum} katilan={gelenler.length} yenidenAc={dersiYenidenAc} />
 
   const araclar = (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="relative z-40 flex flex-wrap items-center gap-2">
       <select
         className="giris-kutusu !w-auto !py-1.5 text-sm max-w-64"
         value={aktif ? (oturum.lesson_id ?? '') : ''}
@@ -441,10 +459,10 @@ export default function Sahne() {
         </button>
       ) : (
         <>
-          <button className="ikincil-buton" onClick={() => setKahootSecimi(true)} title="Hazır bir Kahoot paketini perdede oynat">
+          <button className="ikincil-buton" onClick={() => tekAc('kahoot')} title="Hazır bir Kahoot paketini perdede oynat">
             🎮 Kahoot
           </button>
-          <button className="ikincil-buton" onClick={() => setQuizAcik(true)} title="Ciddi quizi başlat; bitince sonuçlar açıklanır">
+          <button className="ikincil-buton" onClick={() => tekAc('quiz')} title="Ciddi quizi başlat; bitince sonuçlar açıklanır">
             📝 Quiz
           </button>
         </>
@@ -463,11 +481,11 @@ export default function Sahne() {
         </>
       )}
       {(adimlar.some((a) => a.tur === 'soru') || !!kahootAkisi) && (
-        <button className="ikincil-buton" onClick={() => setPuanAcik(true)} title="Puan tablosu" aria-label="Puan tablosu">
+        <button className="ikincil-buton" onClick={() => tekAc('puan')} title="Puan tablosu" aria-label="Puan tablosu">
           🏆
         </button>
       )}
-      <button className="ikincil-buton" onClick={() => setKumandaAcik(true)} title="Kumanda: telefondan yönetmek için karekod" aria-label="Kumanda">
+      <button className="ikincil-buton" onClick={() => tekAc('kumanda')} title="Kumanda: telefondan yönetmek için karekod" aria-label="Kumanda">
         📱
       </button>
       <DersSayaci oturum={oturum.id} />
@@ -475,7 +493,7 @@ export default function Sahne() {
         <summary className="ikincil-buton cursor-pointer list-none select-none" title="Yoklama, kod, tam ekran ve diğer ayarlar">
           ⋯
         </summary>
-        <div className="absolute right-0 top-full mt-1 z-50 w-56 cam-panel rounded-2xl p-2 grid gap-1 text-sm">
+        <div className="absolute right-0 top-full mt-1 z-[70] w-56 cam-panel rounded-2xl p-2 grid gap-1 text-sm">
           <button className="ikincil-buton text-left" onClick={() => yoklamaDurumu(!acik)}>
             {acik ? '🔒 Yoklamayı kapat' : '🔓 Yoklamayı aç'}
           </button>
@@ -490,10 +508,10 @@ export default function Sahne() {
           <button className="ikincil-buton text-left" onClick={() => sesAyarla(!sesAcik)}>
             {sesAcik ? '🔊 Oyun seslerini kapat' : '🔇 Oyun seslerini aç'}
           </button>
-          <button className="ikincil-buton text-left" onClick={() => setProvaAcik(true)}>
+          <button className="ikincil-buton text-left" onClick={() => tekAc('prova')}>
             🧪 Oyun provası
           </button>
-          <button className="ikincil-buton text-left" onClick={() => setRehberAcik(true)}>
+          <button className="ikincil-buton text-left" onClick={() => tekAc('rehber')}>
             ❓ Ders günü rehberi
           </button>
           <button className="ikincil-buton text-left" onClick={tamEkran}>
@@ -549,6 +567,7 @@ export default function Sahne() {
         />
       ) : (
         <YoklamaSahnesi
+          dersegec={dersegecHedefi ? { ad: dersegecHedefi.ad, git: () => akisSec(dersegecHedefi.id) } : null}
           oturum={oturum}
           acik={acik}
           gelenler={gelenler}
@@ -557,6 +576,9 @@ export default function Sahne() {
           kod={kodGoster ? kod : null}
           araclar={araclar}
         />
+      )}
+      {acik && yoklamaKatmani && (aktif?.tur === 'soru' || aktif?.tur === 'fikir' || aktif?.tur === 'oylama' || aktif?.tur === 'video' || aktif?.tur === 'oyun' || (slaytGorunumu && aktif)) && (
+        <YoklamaKatmani oturumId={oturum.id} kod={kod} katilan={gelenler.length} kapat={() => yoklamaDurumu(false)} gizle={() => setYoklamaKatmani(false)} />
       )}
       {kumandaAcik && <KumandaQr oturumId={oturum.id} kapat={() => setKumandaAcik(false)} />}
       <BaglantiUyarisi />
@@ -707,24 +729,8 @@ function SlaytSahnesi({
   )
 }
 
-function YoklamaSahnesi({
-  oturum,
-  acik,
-  gelenler,
-  mevcut,
-  mevcutGoster,
-  kod,
-  araclar,
-}: {
-  oturum: Oturum & { courses: Ders }
-  acik: boolean
-  gelenler: Gelen[]
-  mevcut: number
-  mevcutGoster: boolean
-  kod: string | null
-  araclar: React.ReactNode
-}) {
-  const oturumId = oturum.id
+/** Sunucudan dönen yoklama QR'ını (6 sn'de bir yenilenir) ve geri sayım oranını verir; yoklama kapalıysa QR yoktur. */
+function useDonenQr(oturumId: string, acik: boolean) {
   const [qr, setQr] = useState<string | null>(null)
   const [qrHata, setQrHata] = useState(false)
   const [kalan, setKalan] = useState({ ms: 6000, toplam: 6000, an: Date.now() })
@@ -773,6 +779,58 @@ function YoklamaSahnesi({
     return () => clearInterval(t)
   }, [])
   const kalanOran = Math.max(0, Math.min(1, (kalan.ms - (simdi - kalan.an)) / kalan.toplam))
+  return { qr, qrHata, kalanOran }
+}
+
+/** Slayt ya da etkinlik ekranındayken yoklama açılınca karekodu perdenin ortasında gösterir. */
+function YoklamaKatmani({ oturumId, kod, katilan, kapat, gizle }: { oturumId: string; kod: string | null; katilan: number; kapat: () => void; gizle: () => void }) {
+  const { qr, qrHata, kalanOran } = useDonenQr(oturumId, true)
+  return (
+    <div className="fixed left-1/2 top-16 -translate-x-1/2 z-50 cam-panel rounded-3xl p-4 flex flex-col items-center gap-3 shadow-[0_0_80px_rgba(124,92,255,0.55)] max-w-[92vw]">
+      <p className="text-lg font-display font-extrabold text-center">📲 Yoklama açık: QR'ı okut, numaranı gir</p>
+      <div className="bg-white rounded-3xl p-2 w-[min(55vh,440px)] aspect-square flex items-center justify-center">
+        {qr ? <img src={qr} alt="Yoklama QR kodu" className="w-full h-full [image-rendering:pixelated]" /> : <span className="text-slate-500 text-sm">{qrHata ? 'Sunucuya ulaşılamıyor, deneniyor…' : 'Hazırlanıyor…'}</span>}
+      </div>
+      <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
+        <div className="h-full bg-linear-to-r from-pink-500 to-violet-500 transition-[width] duration-200 ease-linear" style={{ width: `${kalanOran * 100}%` }} />
+      </div>
+      {kod && <KodSeridi kod={kod} />}
+      <p className="text-sm text-slate-300">
+        <b className="text-emerald-300">{katilan}</b> kişi katıldı
+      </p>
+      <div className="flex gap-2">
+        <button className="tehlike-buton !py-1.5 text-sm" onClick={kapat}>
+          🔒 Yoklamayı kapat
+        </button>
+        <button className="ikincil-buton !py-1.5 text-sm" onClick={gizle} title="Karekodu perdeden kaldırır; yoklama açık kalır">
+          Karekodu gizle
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function YoklamaSahnesi({
+  dersegec,
+  oturum,
+  acik,
+  gelenler,
+  mevcut,
+  mevcutGoster,
+  kod,
+  araclar,
+}: {
+  dersegec: { ad: string; git: () => void } | null
+  oturum: Oturum & { courses: Ders }
+  acik: boolean
+  gelenler: Gelen[]
+  mevcut: number
+  mevcutGoster: boolean
+  kod: string | null
+  araclar: React.ReactNode
+}) {
+  const oturumId = oturum.id
+  const { qr, qrHata, kalanOran } = useDonenQr(oturumId, acik)
   const oran = mevcut ? gelenler.length / mevcut : 0
 
   return (
@@ -784,6 +842,12 @@ function YoklamaSahnesi({
         </div>
         <div className="ml-auto opacity-60 hover:opacity-100 transition-opacity">{araclar}</div>
       </header>
+
+      {dersegec && (
+        <button className="parlak-buton rounded-2xl px-6 py-3 text-lg font-extrabold self-center" onClick={dersegec.git} title="Yoklama ekranından çıkıp ders akışına geç; yoklama açık kalır, ⋯ menüsünden kapatırsın">
+          ▶ Derse geç: {dersegec.ad.length > 40 ? `${dersegec.ad.slice(0, 39)}…` : dersegec.ad}
+        </button>
+      )}
 
       <div className="flex-1 grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] items-stretch">
         <section className="cam-panel rounded-3xl p-5 lg:p-6 flex flex-col items-center justify-center gap-4">

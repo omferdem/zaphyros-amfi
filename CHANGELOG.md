@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.39.1 (14 Kasım 2026)
+- **Yoklamayı açınca karekod her ekranda görünür:** slayt, soru ya da etkinlik ekranındayken "⋯ > Yoklamayı aç" dersen perdenin ortasında karekod, ders kodu ve katılan sayısı çıkar; "Yoklamayı kapat" ve "Karekodu gizle" düğmeleri vardır. Önceden karekod yalnızca yoklama ekranında görünüyordu.
+- **Paneller üst üste binmiyor:** Kahoot seçici, Quiz, puan tablosu, kumanda karekodu, oyun provası ve rehberden biri açılınca öbürleri kapanır. Araç çubuğu ve "⋯" menüsü etkinlik sahnelerinin üstünde kalır.
+- **Yoklama ekranından çıkış:** yoklama ekranına büyük "▶ Derse geç: <akış adı>" düğmesi eklendi (en son kalınan akış, yoksa yoklama haftasına ait akış, yoksa ilk akış). Yoklama açık kalır.
+
 ## v0.39.0 (14 Kasım 2026)
 Yoklama yalnızca karekodla. Veritabanı: `0029_kod_yoklama_vermez.sql`.
 - Perdedeki 6 haneli ders kodu artık yoklama yazdırmaz; öğrenciyi yalnızca derse (etkinlik, quiz, oyun) dahil eder. Yoklama bileti yalnızca karekodu okutan öğrenciye verilir.

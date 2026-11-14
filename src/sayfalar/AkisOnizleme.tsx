@@ -301,6 +301,14 @@ function PerdeIcerigi({ adim, soru, cevapGoster, belge }: { adim: Adim; soru: So
   }
   if (adim.tur === 'video') {
     const gomme = adim.ayar.url ? youtubeGomme(adim.ayar.url) : null
+    if (!adim.ayar.url) {
+      // Metin kartı: yalnızca yazı
+      return (
+        <div className="m-auto text-center px-4">
+          <p className="text-xl font-extrabold leading-relaxed whitespace-pre-line">{adim.ayar.baslik}</p>
+        </div>
+      )
+    }
     return gomme ? (
       <iframe title={adim.ayar.baslik ?? 'Video'} src={gomme} className="w-full h-full rounded-xl" allow="encrypted-media; picture-in-picture" allowFullScreen />
     ) : (

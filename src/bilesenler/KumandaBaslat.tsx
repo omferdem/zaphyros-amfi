@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
+import { GRUPLU_OYUNLAR, GRUP_SAYILARI } from '../lib/oyunAc'
 import { adaGoreHafta, onerilenQuizSuresi, paketTuru } from '../lib/gecis'
 
 interface Paket {
@@ -25,6 +26,7 @@ export default function KumandaBaslat({ oturum, anahtar }: { oturum: string; ana
   const [bolum, setBolum] = useState<Bolum>(null)
   const [paketler, setPaketler] = useState<Paket[] | null>(null)
   const [mod, setMod] = useState('oneri')
+  const [grup, setGrup] = useState(3)
   const [bilgi, setBilgi] = useState<string | null>(null)
   const [mesgul, setMesgul] = useState(false)
 
@@ -90,6 +92,21 @@ export default function KumandaBaslat({ oturum, anahtar }: { oturum: string; ana
               ))}
             </div>
             <p className="text-[11px] text-slate-400">{MODLAR.find((m) => m.anahtar === mod)?.nasil}</p>
+            {GRUPLU_OYUNLAR.includes(mod as OyunAnahtari) && (
+              <div className="space-y-1">
+                <p className="text-xs font-bold text-slate-300">Kaç grup?</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {GRUP_SAYILARI.map((n) => (
+                    <button key={n} onClick={() => setGrup(n)} className={`rounded-full border px-2.5 py-1 text-xs ${grup === n ? 'border-emerald-300 bg-emerald-500/25 font-bold' : 'border-white/10 bg-white/5'}`}>
+                      {n} grup
+                    </button>
+                  ))}
+                  <button onClick={() => setMod('')} className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs">
+                    🧑 Herkes bireysel
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
           {!paketler && <p className="text-sm text-slate-400">Paketler yükleniyor…</p>}
           {paketler && kahootlar.length === 0 && <p className="text-sm text-slate-400">Bu içerikte Zapoot paketi yok.</p>}
@@ -99,7 +116,7 @@ export default function KumandaBaslat({ oturum, anahtar }: { oturum: string; ana
                 <button
                   disabled={mesgul}
                   className="w-full text-left rounded-xl border border-white/10 bg-white/5 p-3 active:scale-[0.99]"
-                  onClick={() => istekGonder({ tur: 'kahoot', paket: p.ad, mod }, `"${p.ad}" başlatılıyor.`)}
+                  onClick={() => istekGonder({ tur: 'kahoot', paket: p.ad, mod, sure: GRUPLU_OYUNLAR.includes(mod as OyunAnahtari) ? grup : 0 }, `"${p.ad}" başlatılıyor.`)}
                 >
                   <b className="block text-sm">{p.ad}</b>
                   <span className="text-xs text-slate-400">{p.sayi} soru</span>

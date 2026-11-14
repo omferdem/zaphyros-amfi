@@ -92,6 +92,10 @@ function OyunKabugu<D, V = Veri>({
       if ((e as CustomEvent<{ oyun: string }>).detail?.oyun === oyun) {
         ac(true)
         setBuyuk(true)
+      } else {
+        // Başka bir oyun seçildi ya da bireysele dönüldü: bu oyun kapanır
+        ac(false)
+        setBuyuk(false)
       }
     }
     window.addEventListener(OYUN_OLAYI, dinle)
@@ -174,7 +178,7 @@ export function RoketSahnesi({ d, kucult }: { d: RoketDurumu; kucult: () => void
           Soru {d.oynanan} / {d.toplamSoru}
         </span>
         <span className="text-sm text-slate-300">Bitiş çizgisi: {d.hedef} doğru</span>
-        <button className="ikincil-buton ml-auto !py-1.5" onClick={kucult}>
+        <button className="ikincil-buton ml-auto !py-1.5 kucult-dugmesi" onClick={kucult}>
           Küçült
         </button>
       </div>
@@ -285,7 +289,7 @@ export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => 
           Ayakta <b className="text-emerald-300 tabular-nums">{d.ayakta}</b> / {n}
         </span>
         <span className="text-xs text-slate-400">Doğru cevap ejderhaya vurur; yanlış ya da cevapsız kahraman bir can kaybeder ({KAHRAMAN_CANI} can). Ejderha can: sınıf×soru×%{Math.round(EJDERHA_ORANI * 100)}</span>
-        <button className="ikincil-buton ml-auto !py-1.5" onClick={kucult}>
+        <button className="ikincil-buton ml-auto !py-1.5 kucult-dugmesi" onClick={kucult}>
           Küçült
         </button>
       </div>
@@ -376,7 +380,7 @@ export function ArenaSahnesi({ d, kucult }: { d: ArenaDurumu; kucult: () => void
           Ayakta <b className="text-emerald-300 tabular-nums">{d.ayakta}</b> / {n}
         </span>
         <span className="text-xs text-slate-400">{ARENA_CANI} can: yanlış ya da cevapsız bir can götürür, canı biten arenadan düşer.</span>
-        <button className="ikincil-buton ml-auto !py-1.5" onClick={kucult}>
+        <button className="ikincil-buton ml-auto !py-1.5 kucult-dugmesi" onClick={kucult}>
           Küçült
         </button>
       </div>
@@ -474,7 +478,7 @@ export function KuleSahnesi({ d, kucult }: { d: KuleDurumu; kucult: () => void }
           Soru {d.oynanan} / {d.toplamSoru}
         </span>
         <span className="text-sm text-slate-300">Hedef: kişi başına {d.hedef} doğru</span>
-        <button className="ikincil-buton ml-auto !py-1.5" onClick={kucult}>
+        <button className="ikincil-buton ml-auto !py-1.5 kucult-dugmesi" onClick={kucult}>
           Küçült
         </button>
       </div>

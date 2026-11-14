@@ -106,6 +106,8 @@ export interface AdimAyari {
   sure_sn?: number
   /** Fikir adımının kipi: 'bulut' (varsayılan), 'firtina' ya da 'acik' */
   mod?: 'bulut' | 'firtina' | 'acik'
+  /** Metin kartı: adresi olmayan video adımı; metin baslik alanında durur */
+  kart?: boolean
   /** Hocanın bu adım için notu (yalnızca düzenleme ekranında görünür) */
   not?: string
 }

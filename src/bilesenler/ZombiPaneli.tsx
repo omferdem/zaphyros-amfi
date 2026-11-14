@@ -60,6 +60,10 @@ export default function ZombiPaneli({ oturum, anahtar, mod }: { oturum: string; 
       if ((e as CustomEvent<{ oyun: string }>).detail?.oyun === 'zombi') {
         ac(true)
         setBuyuk(true)
+      } else {
+        // Başka bir oyun seçildi ya da bireysele dönüldü: zombi kapanır
+        ac(false)
+        setBuyuk(false)
       }
     }
     window.addEventListener(OYUN_OLAYI, dinle)
@@ -148,7 +152,7 @@ export function ZombiSahnesi({ d, kapat }: { d: ZombiDurumu; kapat: () => void }
           Yakalanan <b className="text-rose-300 text-lg tabular-nums">{d.yakalanan}</b>
         </span>
         <span className="text-xs text-slate-400">Kurtulmak için sınıfın %{Math.round(KURTULMA_ORANI * 100)}'i zirveye çıkmalı</span>
-        <button className="ikincil-buton ml-auto !py-1.5" onClick={kapat}>
+        <button className="ikincil-buton ml-auto !py-1.5 kucult-dugmesi" onClick={kapat}>
           Küçült
         </button>
       </div>

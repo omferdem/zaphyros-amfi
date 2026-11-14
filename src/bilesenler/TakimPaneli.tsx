@@ -37,7 +37,7 @@ export default function TakimPaneli({ oturum, anahtar, mod, dugme = true }: { ot
   useEffect(() => {
     function dinle(e: Event) {
       const oyun = (e as CustomEvent<{ oyun: string }>).detail?.oyun
-      if (oyun === 'halat') setHalat(true)
+      setHalat(oyun === 'halat')
       if (oyun === 'halat' || oyun === 'takim') setTimeout(yenile, 400)
     }
     window.addEventListener(OYUN_OLAYI, dinle)

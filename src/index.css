@@ -301,3 +301,6 @@ h1, h2, h3, .baslik {
 @media print {
   .marka-yazi { display: none; }
 }
+
+/* Zapoot oyun modunda sahne perdede kilitlidir: "Küçült" düğmeleri gizlenir */
+body.oyun-kilitli .kucult-dugmesi { display: none !important; }

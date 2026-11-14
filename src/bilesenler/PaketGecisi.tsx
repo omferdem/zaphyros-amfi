@@ -3,6 +3,7 @@ import { sorulariGetir, sorulariGetirIdIle } from '../lib/akis'
 import { paketleriGrupla } from '../lib/paket'
 import { onerilenQuizSuresi, paketleriSirala } from '../lib/gecis'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
+import { GRUPLU_OYUNLAR, GRUP_SAYILARI } from '../lib/oyunAc'
 import type { Soru } from '../lib/tipler'
 import {
   maddeAnalizi,
@@ -56,13 +57,14 @@ export function KahootSecici({
 }: {
   icerikId: string
   hafta: number | null
-  sec: (paketAdi: string, sorular: Soru[], mod: OyunAnahtari | null) => Promise<void>
+  sec: (paketAdi: string, sorular: Soru[], mod: OyunAnahtari | null, grup: number | null) => Promise<void>
   kapat: () => void
 }) {
   const { sorular, hata } = useSorular(icerikId)
   const [mesgul, setMesgul] = useState<string | null>(null)
   // undefined = her paketin önerilen modu (paketin ek bilgisindeki "mod"); yoksa bireysel
   const [mod, setMod] = useState<OyunAnahtari | null | undefined>(undefined)
+  const [grup, setGrup] = useState<number>(3)
   const liste = useMemo(() => (sorular ? paketleriSirala(paketleriGrupla(sorular), 'kahoot', hafta) : []), [sorular, hafta])
 
   function onerilenMod(l: Soru[]): OyunAnahtari | null {
@@ -76,7 +78,7 @@ export function KahootSecici({
   async function baslat(ad: string, l: Soru[]) {
     setMesgul(ad)
     try {
-      await sec(ad, l, modu(l))
+      await sec(ad, l, modu(l), GRUPLU_OYUNLAR.includes(modu(l) as OyunAnahtari) ? grup : null)
     } catch {
       window.alert('Zapoot açılamadı. Bağlantını kontrol edip tekrar dene.')
       setMesgul(null)
@@ -110,6 +112,27 @@ export function KahootSecici({
         <p className="text-xs text-slate-400">
           {mod === undefined ? 'Her paket kendi önerilen modunda açılır (kartta yazar); istersen yukarıdan değiştir.' : mod ? OYUNLAR[mod].nasil : 'Herkes kendi adına yarışır; bireysel puan tablosu tutulur.'}
         </p>
+        {mod && GRUPLU_OYUNLAR.includes(mod) && (
+          <div className="space-y-1.5 pt-1">
+            <h3 className="text-xs font-bold text-slate-300">Kaç grup olsun?</h3>
+            <div className="flex flex-wrap gap-2">
+              {GRUP_SAYILARI.map((n) => (
+                <button
+                  key={n}
+                  onClick={() => setGrup(n)}
+                  className={`rounded-full border px-3 py-1.5 text-sm ${grup === n ? 'border-emerald-300 bg-emerald-500/25 font-bold' : 'border-white/10 bg-white/5 hover:bg-white/10'}`}
+                >
+                  {n} grup
+                </button>
+              ))}
+              <button onClick={() => setMod(null)} className="rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-3 py-1.5 text-sm">
+                🧑 Herkes bireysel
+              </button>
+            </div>
+            <p className="text-xs text-slate-400">Öğrenciler telefonlarından grubunu seçer; puanlar grup bazında toplanır.</p>
+          </div>
+        )}
+        {mod === 'halat' && <p className="text-xs text-slate-400">Halat çekme her zaman 2 takımdır.</p>}
       </div>
       {hata && <p className="text-rose-300 text-sm">Paketler yüklenemedi.</p>}
       {!sorular && !hata && <p className="text-slate-400 text-sm">Yükleniyor…</p>}

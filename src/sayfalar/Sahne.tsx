@@ -142,6 +142,22 @@ export default function Sahne() {
     setRehberAcik(hangisi === 'rehber')
   }
   const [kahootAkisi, setZapootAkisi] = useState<{ id: string; ad: string } | null>(null)
+  // Zapoot'ta seçilen perde oyunu (zombi, roket...). Seçiliyken sahne o oyunda kilitli kalır; sorular telefonlarda, perdede oyun görünür.
+  const GRAFIK_OYUNLAR = ['zombi', 'roket', 'ejderha', 'arena', 'kule']
+  const oyunKaydi = `amfi_zapoot_oyun_${oturumId}`
+  const [zapootOyunu, setZapootOyunu] = useState<OyunAnahtari | null>(() => {
+    try {
+      const k = localStorage.getItem(oyunKaydi)
+      return k && GRAFIK_OYUNLAR.includes(k) ? (k as OyunAnahtari) : null
+    } catch {
+      return null
+    }
+  })
+  const oyunKilitli = !!kahootAkisi && zapootOyunu !== null
+  useEffect(() => {
+    document.body.classList.toggle('oyun-kilitli', oyunKilitli)
+    return () => document.body.classList.remove('oyun-kilitli')
+  }, [oyunKilitli])
 
   const acik = !!oturum && oturum.yoklama_acik && !oturum.bitti
   const kod = useDersKodu(oturumId, !!oturum && !oturum.bitti)
@@ -317,7 +333,7 @@ export default function Sahne() {
   const haftaNo = adaGoreHafta(akislar.find((a) => a.id === oturum?.lesson_id)?.ad ?? donusKaydi()?.ad) ?? oturum?.hafta_no ?? null
 
   /** Seçilen soru paketini canlı Zapoot olarak açar: gizli bir akış (⚡ paket adı) paketin sorularıyla kurulur, dönüş noktası saklanır. */
-  async function kahootaGit(paketAdi: string, sorular: { id: string }[], mod: OyunAnahtari | null) {
+  async function kahootaGit(paketAdi: string, sorular: { id: string }[], mod: OyunAnahtari | null, grup: number | null = null) {
     if (!icerikId || sorular.length === 0) throw new Error('bos')
     const ad = kahootAkisAdi(paketAdi)
     let id: string
@@ -352,7 +368,15 @@ export default function Sahne() {
     const { error } = await supabase.from('sessions').update({ lesson_id: id, aktif_adim: idler[0] ?? null }).eq('id', oturumId)
     if (error) throw error
     setOturum((o) => (o ? { ...o, lesson_id: id, aktif_adim: idler[0] ?? null } : o))
-    await oyunuAc(oturumId, mod)
+    await oyunuAc(oturumId, mod, grup)
+    const grafik = mod !== null && GRAFIK_OYUNLAR.includes(mod) ? mod : null
+    setZapootOyunu(grafik)
+    try {
+      if (grafik) localStorage.setItem(oyunKaydi, grafik)
+      else localStorage.removeItem(oyunKaydi)
+    } catch {
+      /* önemsiz */
+    }
     setZapootSecimi(false)
   }
 
@@ -376,7 +400,11 @@ export default function Sahne() {
     const { error } = await supabase.from('sessions').update(degisiklik).eq('id', oturumId)
     if (error) return window.alert('Derse dönülemedi. Bağlantını kontrol edip tekrar dene.')
     setOturum((o) => (o ? { ...o, ...degisiklik } : o))
+    // Zapoot bitti: oyun panelleri kapanır, perdede yalnızca ders akışı kalır
+    await oyunuAc(oturumId, null)
+    setZapootOyunu(null)
     try {
+      localStorage.removeItem(oyunKaydi)
       localStorage.removeItem(donusAnahtari)
     } catch {
       /* önemsiz */
@@ -404,7 +432,8 @@ export default function Sahne() {
         const oneri = grup.sorular[0]?.ek?.mod
         const mod = i.mod === 'oneri' ? (oneri && oneri in OYUNLAR ? (oneri as OyunAnahtari) : null) : i.mod === '' ? null : (i.mod as OyunAnahtari)
         tekAc(null)
-        await kahootaGit(grup.ad, grup.sorular, mod)
+        // Kumanda isteğinde grup sayısı `sure` alanında taşınır (2-6; başka değer varsayılan grup sayısı demektir)
+        await kahootaGit(grup.ad, grup.sorular, mod, i.sure >= 2 && i.sure <= 6 ? i.sure : null)
       } else {
         await quizOlustur(oturum.course_id, grup.ad.slice(0, 200), i.sure, grup.sorular.map((s) => s.id), false)
         tekAc('quiz')
@@ -595,6 +624,7 @@ export default function Sahne() {
           soruDurum={oturum.soru_durum}
           araclar={araclar}
           kod={kodGoster ? kod : null}
+          oyunKilitli={oyunKilitli && zapootOyunu ? { ad: OYUNLAR[zapootOyunu].ad, emoji: OYUNLAR[zapootOyunu].emoji, ileri: aktifSira < adimlar.length - 1 ? ileri : undefined, geri: aktifSira > 0 ? geri : undefined } : undefined}
         />
       ) : aktif && (aktif.tur === 'fikir' || aktif.tur === 'oylama' || aktif.tur === 'video') ? (
         <EtkinlikSahnesi
@@ -641,9 +671,9 @@ export default function Sahne() {
       {quizAcik && icerikId && <QuizPaneli dersId={oturum.course_id} icerikId={icerikId} hafta={haftaNo} katilan={gelenler.length} bitirSinyali={quizBitirSinyali} kapat={() => setQuizAcik(false)} />}
       {puanAcik && <PuanTablosu oturumId={oturum.id} kapat={() => setPuanAcik(false)} />}
       <SinifPaneli d={sinif.d} komut={sinif.komut} hata={sinif.hata} mod="perde" />
-      <TakimPaneli oturum={oturum.id} anahtar={null} mod="perde" dugme={!!kahootAkisi} />
-      <HocaYarisiPaneli oturum={oturum.id} anahtar={null} mod="perde" dugme={!!kahootAkisi} />
-      <MerdivenPaneli oturum={oturum.id} anahtar={null} mod="perde" dugme={!!kahootAkisi} />
+      <TakimPaneli oturum={oturum.id} anahtar={null} mod="perde" dugme={false} />
+      <HocaYarisiPaneli oturum={oturum.id} anahtar={null} mod="perde" dugme={false} />
+      <MerdivenPaneli oturum={oturum.id} anahtar={null} mod="perde" dugme={false} />
       <ZombiPaneli oturum={oturum.id} anahtar={null} mod="perde" />
       <RoketPaneli oturum={oturum.id} anahtar={null} mod="perde" />
       <EjderhaPaneli oturum={oturum.id} anahtar={null} mod="perde" />
@@ -1048,13 +1078,17 @@ function SoruSahnesi({
   soruDurum,
   araclar,
   kod,
+  oyunKilitli,
 }: {
   oturumId: string
   adimId: string
   soruDurum: 'acik' | 'sonuc' | null
   araclar: React.ReactNode
   kod: string | null
+  /** Zapoot'ta perde oyunu seçiliyse: soru ekranı yerine yalnızca kontrol çubuğu çizilir (sorular telefonlardadır) */
+  oyunKilitli?: { ad: string; emoji: string; ileri?: () => void; geri?: () => void }
 }) {
+  const [soruGoster, setSoruGoster] = useState(false)
   const [durum, setDurum] = useState<DersDurumu['adim']>(null)
   const [bitis, setBitis] = useState<number | null>(null)
   const [cevap, setCevap] = useState(0)
@@ -1138,6 +1172,70 @@ function SoruSahnesi({
   const toplamCevap = sonuc && durum?.dagilim ? durum.dagilim.reduce((a, b) => a + b, 0) : cevap
 
   const herkesYanlis = !!durum?.dagilim && (durum.dagilim[durum.dogru_index ?? -1] ?? 0) === 0
+
+  // Perde oyunu seçiliyse: oyun sahnesi tam ekrandır (ayrı bileşen). Burada yalnızca oyunun altındaki zemin, araç çubuğu ve
+  // soru kontrolü vardır; süre, sonuç ve müzik mantığı yukarıda aynen çalışmaya devam eder.
+  if (oyunKilitli) {
+    return (
+      <>
+        <main className="min-h-screen flex items-center justify-center p-6 text-center">
+          <div className="space-y-2">
+            <p className="text-6xl" aria-hidden>
+              {oyunKilitli.emoji}
+            </p>
+            <p className="text-3xl font-display font-extrabold">{oyunKilitli.ad}</p>
+            <p className="text-slate-400">İlk sorunun cevabı açılınca oyun perdede başlar. Sorular öğrencilerin telefonlarında.</p>
+          </div>
+        </main>
+        <div className="fixed top-2 right-2 z-[60] max-w-[96vw] cam-panel rounded-2xl p-2 opacity-70 hover:opacity-100 transition-opacity">{araclar}</div>
+        {soruGoster && (
+          <div className="fixed left-3 bottom-24 z-[60] cam-panel rounded-2xl p-4 max-w-[min(42rem,92vw)] space-y-2">
+            <p className="text-xl font-bold">{durum?.soru}</p>
+            <ul className="grid gap-1.5 sm:grid-cols-2 text-lg">
+              {secenekler.map((x, i) => (
+                <li key={i} className={`rounded-xl px-3 py-1.5 ${SIKLAR[i % SIKLAR.length].renk} ${sonuc && durum?.dogru_index !== i ? 'opacity-40' : ''}`}>
+                  <b>{SIKLAR[i % SIKLAR.length].harf}</b> {x}
+                  {sonuc && durum?.dogru_index === i && ' ✓'}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <div className="fixed bottom-3 left-1/2 -translate-x-1/2 z-[60] cam-panel rounded-2xl px-4 py-2.5 flex flex-wrap items-center justify-center gap-3 max-w-[96vw]">
+          <span className="text-sm font-mono text-fuchsia-300">
+            Soru {durum ? `${durum.sira} / ${durum.toplam}` : ''}
+          </span>
+          {!sonuc && kalan !== null && <b className="text-2xl tabular-nums w-10 text-center">{Math.ceil(kalan / 1000)}</b>}
+          <span className="text-sm text-slate-300">
+            <b className="text-white tabular-nums">{toplamCevap}</b> cevap
+          </span>
+          {oyunKilitli.geri && (
+            <button className="ikincil-buton !py-1.5" onClick={oyunKilitli.geri} aria-label="Önceki soru">
+              ◀
+            </button>
+          )}
+          {!sonuc && (
+            <button className="parlak-buton rounded-xl px-4 py-1.5 font-bold" onClick={sonucuGoster}>
+              Cevabı göster
+            </button>
+          )}
+          {!sonuc && (
+            <button className="ikincil-buton !py-1.5" onClick={() => sureUzat(10)} title="Süreyi 10 saniye uzat">
+              ⏱ +10
+            </button>
+          )}
+          {oyunKilitli.ileri && (
+            <button className={sonuc ? 'parlak-buton rounded-xl px-4 py-1.5 font-bold nabiz' : 'ikincil-buton !py-1.5'} onClick={oyunKilitli.ileri}>
+              Sonraki soru ▶
+            </button>
+          )}
+          <button className="ikincil-buton !py-1.5" onClick={() => setSoruGoster((g) => !g)} title="Soruyu ve şıkları perdede göster/gizle">
+            👁 Soru
+          </button>
+        </div>
+      </>
+    )
+  }
 
   return (
     <main className="min-h-screen flex flex-col p-5 lg:p-8 gap-5">
@@ -1285,7 +1383,7 @@ function EtkinlikSahnesi({
 
   const acikUclu = (durum?.mod ?? adim.ayar.mod) === 'acik'
   const kalanSn = useKalanSaniye(durum?.kalan_ms, adim.id)
-  const baslikEtiketi = adim.tur === 'fikir' ? '🧠 Beyin fırtınası' : adim.tur === 'oylama' ? '⚖️ Şeytanın avukatı' : '🎬 Video'
+  const baslikEtiketi = adim.tur === 'fikir' ? '🧠 Beyin fırtınası' : adim.tur === 'oylama' ? '⚖️ Şeytanın avukatı' : adim.ayar.url ? '🎬 Video' : '📝 Not'
 
   return (
     <main className="min-h-screen flex flex-col p-5 lg:p-8 gap-5">
@@ -1296,7 +1394,9 @@ function EtkinlikSahnesi({
 
       {adim.tur === 'video' ? (
         <section className="flex-1 flex flex-col items-center justify-center gap-4">
-          {adim.ayar.baslik && <h1 className="text-2xl lg:text-4xl font-extrabold text-center">{adim.ayar.baslik}</h1>}
+          {adim.ayar.baslik && (
+            <h1 className={`${adim.ayar.url ? 'text-2xl lg:text-4xl' : 'text-4xl lg:text-6xl leading-snug max-w-[90vw]'} font-extrabold text-center whitespace-pre-line`}>{adim.ayar.baslik}</h1>
+          )}
           {adim.ayar.url && <VideoOynatici adres={adim.ayar.url} baslik={adim.ayar.baslik} className="max-w-[min(90vw,calc(75vh*16/9))]" />}
         </section>
       ) : (

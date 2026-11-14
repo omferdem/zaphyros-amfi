@@ -40,7 +40,7 @@ export default function AkisDuzenle() {
   const [konum, setKonum] = useState('son')
   const [bilgi, setBilgi] = useState<string | null>(null)
   const soruPaneli = useRef<HTMLDivElement>(null)
-  const [etkinlikTuru, setEtkinlikTuru] = useState<'bulut' | 'firtina' | 'acik' | 'oylama' | 'video' | 'foto' | 'oyun'>('bulut')
+  const [etkinlikTuru, setEtkinlikTuru] = useState<'bulut' | 'firtina' | 'acik' | 'oylama' | 'video' | 'foto' | 'metin' | 'oyun'>('bulut')
   const [oyunSecimi, setOyunSecimi] = useState<OyunAnahtari>('takim')
   const [etkinlikSorusu, setEtkinlikSorusu] = useState('')
   // Cevap süresi (saniye); 0 = süresiz. Açık uçlu soruda varsayılan 90 sn.
@@ -50,6 +50,7 @@ export default function AkisDuzenle() {
   const [videoUrl, setVideoUrl] = useState('')
   const [videoBaslik, setVideoBaslik] = useState('')
   const [fotoDosya, setFotoDosya] = useState<File | null>(null)
+  const [kartMetni, setKartMetni] = useState('')
   const [duzenlenen, setDuzenlenen] = useState<string | null>(null)
   const [secim, setSecim] = useState<Set<string>>(new Set())
   const [digerAkislar, setDigerAkislar] = useState<Akis[]>([])
@@ -214,6 +215,14 @@ export default function AkisDuzenle() {
     let ayar: AdimAyari
     if (etkinlikTuru === 'oyun') {
       ayar = { oyun: oyunSecimi }
+    } else if (etkinlikTuru === 'metin') {
+      const metin = kartMetni.trim().slice(0, 1500)
+      if (!metin) {
+        setHata('Kartın metnini yaz.')
+        return
+      }
+      // Metin kartı: adres olmayan bir "video" adımıdır; metin başlık alanında taşınır ve perdede büyük, telefonda okunur gösterilir
+      ayar = { baslik: metin, kart: true }
     } else if (etkinlikTuru === 'foto') {
       if (!fotoDosya) {
         setHata('Bir fotoğraf seç.')
@@ -251,13 +260,14 @@ export default function AkisDuzenle() {
       }
     }
     try {
-      const yeniIdler = await adimlarEkle(akis.id, adimlar.length, [{ tur: etkinlikTuru === 'bulut' || etkinlikTuru === 'firtina' || etkinlikTuru === 'acik' ? 'fikir' : etkinlikTuru === 'foto' ? 'video' : etkinlikTuru, ayar }])
+      const yeniIdler = await adimlarEkle(akis.id, adimlar.length, [{ tur: etkinlikTuru === 'bulut' || etkinlikTuru === 'firtina' || etkinlikTuru === 'acik' ? 'fikir' : etkinlikTuru === 'foto' || etkinlikTuru === 'metin' ? 'video' : etkinlikTuru, ayar }])
       // Ekleme konumu seçilmişse ("+ Ekle" ya da konum kutusu) etkinlik oraya yerleşir
       if (konum !== 'son' && yeniIdler.length) await akisSirala(akis.id, adimSirasi(adimlar.map((a) => a.id), yeniIdler, konumuCoz(konum)))
       setEtkinlikSorusu('')
       setVideoUrl('')
       setVideoBaslik('')
       setFotoDosya(null)
+      setKartMetni('')
     } catch {
       setHata('Etkinlik eklenemedi.')
     }
@@ -512,6 +522,7 @@ export default function AkisDuzenle() {
                   ['firtina', '💡', 'Beyin fırtınası', 'Kısa cümlelik fikirler (en çok 3), perdede kartlar'],
                   ['oylama', '😈', 'Şeytanın avukatı', 'İki taraflı oylama; isteyen gerekçe yazar'],
                   ['video', '🎬', 'Video', 'Perdede ve telefonda oynatılır'],
+                  ['metin', '📝', 'Metin kartı', 'İstediğini yazarsın (not, tanım, ayet/metin, ödev); perdede büyük, telefonda okunur görünür'],
                   ['foto', '🖼️', 'Fotoğraf', 'Bilgisayardan ya da telefondan yüklenir; perdede büyük gösterilir'],
                   ['oyun', '🎮', 'Oyun', 'Zombi kaçışı, takım yarışı, halat çekme, hocayla yarış, bilgi merdiveni'],
                 ] as const
@@ -535,7 +546,7 @@ export default function AkisDuzenle() {
               ))}
             </div>
           </div>
-          {etkinlikTuru !== 'oyun' && etkinlikTuru !== 'video' && etkinlikTuru !== 'foto' && (
+          {etkinlikTuru !== 'oyun' && etkinlikTuru !== 'video' && etkinlikTuru !== 'foto' && etkinlikTuru !== 'metin' && (
             <label className="flex items-center gap-2 text-xs text-slate-300">
               Cevap süresi
               <select className="giris-kutusu !w-auto !py-1 text-sm" value={etkinlikSuresi} onChange={(e) => setEtkinlikSuresi(Number(e.target.value))}>
@@ -560,6 +571,16 @@ export default function AkisDuzenle() {
               </select>
               <p className="text-xs text-slate-400">{OYUNLAR[oyunSecimi].nasil}</p>
             </div>
+          ) : etkinlikTuru === 'metin' ? (
+            <textarea
+              className="giris-kutusu text-sm"
+              rows={5}
+              maxLength={1500}
+              placeholder="Kartın metni (satır sonları korunur)"
+              value={kartMetni}
+              onChange={(e) => setKartMetni(e.target.value)}
+              aria-label="Kartın metni"
+            />
           ) : etkinlikTuru === 'foto' ? (
             <div className="grid gap-2 sm:grid-cols-2">
               <input type="file" accept="image/*" className="giris-kutusu text-sm" onChange={(e) => setFotoDosya(e.target.files?.[0] ?? null)} aria-label="Fotoğraf dosyası" />
@@ -691,7 +712,7 @@ export default function AkisDuzenle() {
                   </div>
                 ) : a.tur === 'fikir' || a.tur === 'oylama' || a.tur === 'video' ? (
                   <div className="w-28 h-16 shrink-0 rounded bg-amber-500/10 flex items-center justify-center text-amber-300 text-xs font-bold text-center leading-tight">
-                    {a.tur === 'fikir' ? (a.ayar.mod === 'acik' ? 'AÇIK UÇLU' : a.ayar.mod === 'firtina' ? 'BEYİN FIRTINASI' : 'KELİME BULUTU') : a.tur === 'oylama' ? 'OYLAMA' : a.ayar.url && gorselMi(a.ayar.url) ? 'FOTOĞRAF' : 'VİDEO'}
+                    {a.tur === 'fikir' ? (a.ayar.mod === 'acik' ? 'AÇIK UÇLU' : a.ayar.mod === 'firtina' ? 'BEYİN FIRTINASI' : 'KELİME BULUTU') : a.tur === 'oylama' ? 'OYLAMA' : !a.ayar.url ? 'METİN' : gorselMi(a.ayar.url) ? 'FOTOĞRAF' : 'VİDEO'}
                   </div>
                 ) : a.tur === 'oyun' ? (
                   <div className="w-28 h-16 shrink-0 rounded bg-indigo-500/15 flex flex-col items-center justify-center text-indigo-200 text-xs font-bold text-center leading-tight">
@@ -745,8 +766,8 @@ export default function AkisDuzenle() {
                     </>
                   ) : a.tur === 'video' ? (
                     <>
-                      <p className="text-sm font-semibold truncate">{a.ayar.baslik || (a.ayar.url && gorselMi(a.ayar.url) ? 'Fotoğraf' : 'Video')}</p>
-                      <p className="text-xs text-slate-400 truncate">{a.ayar.url && gorselMi(a.ayar.url) ? 'Perdede büyük gösterilir' : a.ayar.url}</p>
+                      <p className="text-sm font-semibold truncate">{a.ayar.baslik?.split('\n')[0] || (a.ayar.url && gorselMi(a.ayar.url) ? 'Fotoğraf' : 'Video')}</p>
+                      <p className="text-xs text-slate-400 truncate">{!a.ayar.url ? 'Metin kartı · perdede büyük, telefonda okunur' : gorselMi(a.ayar.url) ? 'Perdede büyük gösterilir' : a.ayar.url}</p>
                     </>
                   ) : a.tur === 'oyun' ? (
                     <>

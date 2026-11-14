@@ -53,6 +53,7 @@ export default function MerdivenPaneli({ oturum, anahtar, mod, dugme = true }: {
   useEffect(() => {
     function dinle(e: Event) {
       if ((e as CustomEvent<{ oyun: string }>).detail?.oyun === 'merdiven') kaydet({ ...oku(oturum), acik: true })
+      else kaydet({ ...oku(oturum), acik: false })
     }
     window.addEventListener(OYUN_OLAYI, dinle)
     return () => window.removeEventListener(OYUN_OLAYI, dinle)

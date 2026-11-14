@@ -38,6 +38,7 @@ export default function AdimDuzenle({ adim, soru, ayarKaydet, soruKaydet, kapat 
   const [mesgul, setMesgul] = useState(false)
 
   const foto = adim.tur === 'video' && !!a.url && gorselMi(a.url)
+  const metinKarti = adim.tur === 'video' && !a.url
 
   async function kaydet() {
     setHata(null)
@@ -65,12 +66,13 @@ export default function AdimDuzenle({ adim, soru, ayarKaydet, soruKaydet, kapat 
           else delete yeni.etiketler
         }
         if (adim.tur === 'video') {
-          if (!foto) {
+          if (!foto && !metinKarti) {
             const u = videoAdresi(url)
             if (!u) return setHata('Video adresi https:// ile başlamalı.')
             yeni.url = u
           }
-          if (baslik.trim()) yeni.baslik = baslik.trim().slice(0, 120)
+          if (metinKarti && !baslik.trim()) return setHata('Kartın metni boş olamaz.')
+          if (baslik.trim()) yeni.baslik = baslik.trim().slice(0, metinKarti ? 1500 : 120)
           else delete yeni.baslik
         }
         await ayarKaydet(yeni)
@@ -170,7 +172,14 @@ export default function AdimDuzenle({ adim, soru, ayarKaydet, soruKaydet, kapat 
         </div>
       )}
 
-      {adim.tur === 'video' && (
+      {metinKarti && (
+        <label className="block space-y-1">
+          <span className="text-xs text-slate-300">Kartın metni</span>
+          <textarea className="giris-kutusu text-sm" rows={6} value={baslik} maxLength={1500} onChange={(e) => setBaslik(e.target.value)} />
+        </label>
+      )}
+
+      {adim.tur === 'video' && !metinKarti && (
         <div className="grid gap-2 sm:grid-cols-2">
           {foto ? (
             <img src={a.url} alt="" className="max-h-32 rounded-lg" />

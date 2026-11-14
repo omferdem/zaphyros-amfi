@@ -181,8 +181,8 @@ export function EtkinlikCevabi({ oturum, adim, telefonModu }: { oturum: string; 
   if (adim.tur === 'video') {
     return (
       <div className="space-y-3">
-        {adim.soru && <h1 className="text-xl font-extrabold">{adim.soru}</h1>}
-        {telefonModu && adim.video ? (
+        {adim.soru && <h1 className={`${adim.video ? 'text-xl' : 'text-2xl leading-relaxed'} font-extrabold whitespace-pre-line`}>{adim.soru}</h1>}
+        {!adim.video ? null : telefonModu ? (
           <VideoOynatici adres={adim.video} baslik={adim.soru} />
         ) : (
           <p className="text-slate-300">Perdedeki videoyu izle.</p>

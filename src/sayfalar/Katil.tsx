@@ -398,7 +398,7 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
 
       {ad === null && durum?.yoklama_acik && !durum.bitti && (
         <p className="rounded-2xl bg-amber-500/15 text-amber-100 text-sm p-3 text-center">
-          Yoklama şu an açık. Yoklamanın yazılması için telefonunun kamerasıyla perdedeki <b>QR kodu</b> okut; ders kodu yoklama yazmaz.
+          Yoklama şu an açık ama yoklaman henüz yazılmadı. Perdedeki <b>QR kodu</b> telefonunun kamerasıyla okut. (Ders kodu yoklama yazmaz; projeksiyonsuz derste hocan kodla yoklama alır.)
         </p>
       )}
 

@@ -5,6 +5,7 @@ import type { Donem, Icerik } from '../lib/tipler'
 import { icerikSil } from '../lib/akis'
 import { oku, sakla } from '../lib/cihaz'
 import SubeBaslat from '../bilesenler/SubeBaslat'
+import YedektenYukle from '../bilesenler/YedektenYukle'
 import {
   bosDonemiSil,
   donemAdiniDegistir,
@@ -185,6 +186,10 @@ export default function Panel() {
       )}
 
       {donemler && donemler.length > 0 && <YeniDonem donemler={donemler} secili={secili} tamam={(id) => donemleriYukle(id)} hataVer={setHata} />}
+
+      {donemler && donemler.length > 0 && (
+        <YedektenYukle donemler={donemler} secili={secili} icerikler={icerikler} tamam={() => secili && dersleriYukle(secili)} />
+      )}
 
       {kullanilmayan.length > 0 && (
         <section className="cam-panel rounded-2xl p-5 space-y-2">

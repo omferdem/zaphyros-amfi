@@ -8,6 +8,8 @@ import { misafirYoklamalari, raporHesapla, raporuExceleAktar } from '../lib/rapo
 import { oturumAdi, tarihSaat } from '../lib/bicim'
 import { akislariGetir, icerikSil } from '../lib/akis'
 import { dersiDuzenle, subeEtiketi, subeleriAc, subeleriGetir, type DersSatiri } from '../lib/plan'
+import { icerigiDisaAktar } from '../lib/icerikAktar'
+import { subeleriYedekle, yedegiIndir } from '../lib/subeYedegi'
 import DersAkislari from './DersAkislari'
 import YoklamaHaftalari from './YoklamaHaftalari'
 import Gelisim from './Gelisim'
@@ -51,14 +53,31 @@ export default function DersDetay() {
     yukle()
   }, [yukle])
 
+  /** Bu şubenin yedeğini dosya olarak indirir (sınıf listesi, oturumlar, yoklamalar). */
+  async function subeyiYedekle() {
+    if (!ders) return
+    setHata(null)
+    try {
+      yedegiIndir(await subeleriYedekle([ders.id]), [ders.ad, ders.sube].filter(Boolean).join(' '))
+    } catch {
+      setHata('Yedek alınamadı. Bağlantını kontrol edip tekrar dene.')
+    }
+  }
+
   async function dersiSil() {
     if (!ders) return
     if (
       !window.confirm(
-        `"${[ders.ad, ders.donem].filter(Boolean).join(', ')}" sınıf listesi ve bütün yoklama kayıtlarıyla birlikte silinecek. Ders içeriği (akışlar ve sunumlar) silinmez, başka dönemlerde kullanılmaya devam eder. Emin misin?`,
+        `"${[ders.ad, ders.donem].filter(Boolean).join(', ')}" sınıf listesi ve bütün yoklama kayıtlarıyla birlikte silinecek. Ders içeriği (akışlar ve sunumlar) silinmez, başka dönemlerde kullanılmaya devam eder.\n\nSilmeden önce bir yedek dosyası (.amfi-yedek) indirilecek; Panel > "Şube yedeğini geri yükle" ile geri alabilirsin. Devam edilsin mi?`,
       )
     )
       return
+    try {
+      yedegiIndir(await subeleriYedekle([ders.id]), [ders.ad, ders.sube].filter(Boolean).join(' '))
+    } catch {
+      setHata('Yedek alınamadığı için şube silinmedi. Bağlantını kontrol edip tekrar dene.')
+      return
+    }
     const { error } = await supabase.from('courses').delete().eq('id', ders.id)
     if (error) setHata('Şube silinemedi.')
     else navigate('/panel')
@@ -75,6 +94,15 @@ export default function DersDetay() {
     if (yazilan === null) return
     if (yazilan.trim() !== ders.ad.trim()) {
       setHata('Yazdığın ad dersin adıyla aynı değil; hiçbir şey silinmedi.')
+      return
+    }
+    try {
+      // Silmeden önce geri alınabilsin diye şubelerin yedeği ve içerik paketi indirilir
+      const kimlikler = ((subeler ?? []) as { id: string }[]).map((s) => s.id)
+      yedegiIndir(await subeleriYedekle(kimlikler), ders.ad)
+      await icerigiDisaAktar(ders.subject_id, ders.ad, () => {})
+    } catch {
+      setHata('Yedek alınamadığı için ders silinmedi. Bağlantını kontrol edip tekrar dene.')
       return
     }
     try {
@@ -157,6 +185,9 @@ export default function DersDetay() {
       {sekme === 'gelisim' &&<Gelisim ders={ders} ogrenciler={ogrenciler} oturumlar={oturumlar} />}
 
       <div className="pt-6 border-t border-white/5 flex flex-wrap gap-3 items-center">
+        <button className="ikincil-buton" onClick={subeyiYedekle} title="Sınıf listesi, oturumlar ve yoklamalar tek dosyaya indirilir">
+          💾 Şubeyi yedekle
+        </button>
         <button className="tehlike-buton" onClick={dersiSil}>
           Bu şubeyi sil
         </button>
@@ -165,6 +196,7 @@ export default function DersDetay() {
         </button>
         <p className="text-xs text-slate-500 basis-full">
           "Bu şubeyi sil" yalnızca bu şubenin listesini ve yoklamasını siler; içerik kalır. "Dersi tamamen sil" bütün şubeleri ve içeriği kaldırır.
+          İkisinde de silmeden önce yedek dosyası kendiliğinden iner; geri almak için Panel'deki "📥 Şube yedeğini geri yükle" ve dersin "İçeriği paylaş" bölümündeki "İçe aktar" düğmesini kullan.
         </p>
       </div>
     </div>

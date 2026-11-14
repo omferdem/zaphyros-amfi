@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.42.0 (14 Kasım 2026)
+Şube yedeği ve silinenleri geri alma. Veritabanı değişikliği yok.
+- **💾 Şubeyi yedekle:** ders sayfasından bir şubenin sınıf listesi, oturumları ve yoklamaları tek dosyaya (`.amfi-yedek`) indirilir.
+- **Silmeden önce otomatik yedek:** "Bu şubeyi sil" şube yedeğini, "Dersi tamamen sil" bütün şubelerin yedeğini ve içerik paketini (`.amfi`) kendiliğinden indirir; yedek alınamazsa silme yapılmaz.
+- **📥 Şube yedeğini geri yükle (Panel):** yedek dosyasını seçilen döneme ve içeriğe yeni şube olarak yükler; var olan veriye dokunmaz. Yoklamalar "elle" olarak yazılır (QR bilgisi taşınmaz); quiz ve oyun puanları ile misafir bağları yedeğe girmez. Ders içeriği için mevcut .amfi içe aktarma kullanılır.
+
 ## v0.41.1 (14 Kasım 2026)
 - **Slayt görseli yeniden yalnızca telefon modunda.** v0.41.0'daki "projeksiyonlu derste de öğrenci telefonuna slayt görseli" depo trafiğini (Supabase ücretsiz plan, ayda 5 GB) şişirebileceği için geri alındı. Öğrenci istemcisi telefon modu kapalıyken görseli indirmiyor (trafik hemen durur); `0033_slayt_gorseli_telefon_modu.sql` sunucu tarafını da eski hâline döndürür. Telefon modunda "📶 Veri tasarrufu" anahtarı durur.
 

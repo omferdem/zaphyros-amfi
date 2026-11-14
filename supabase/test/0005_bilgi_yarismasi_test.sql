@@ -51,6 +51,7 @@ with s as (insert into sessions (course_id, lesson_id, aktif_adim, yoklama_acik)
 select set_config('t5.sid', id::text, false) from s;
 select set_config('t5.kumanda', kumanda_anahtari(current_setting('t5.sid')::uuid), false);
 select set_config('t5.kod', ders_kodu(current_setting('t5.sid')::uuid) ->> 'kod', false);
+select set_config('t5.qr', qr_token(current_setting('t5.sid')::uuid) ->> 'token', false);
 
 do $$
 begin
@@ -96,7 +97,7 @@ begin
   assert cevap_ver(current_setting('t5.sid')::uuid, 'cihaz-oyun-0002', 9) ->> 'hata' in ('secim_gecersiz', 'zaten_cevapladin'), 'HATA: gecersiz secim';
 
   -- Yoklamaya giren öğrenci adıyla yarışır
-  v := kodla_katil(current_setting('t5.kod'), 'cihaz-oyun-0003');
+  v := katilim_bileti(current_setting('t5.sid')::uuid, current_setting('t5.qr'), 'cihaz-oyun-0003');
   v := check_in(current_setting('t5.sid')::uuid, v ->> 'bilet', 'cihaz-oyun-0003', '5001');
   assert v ->> 'durum' = 'tamam', 'HATA: yoklama: ' || v::text;
   assert cevap_ver(current_setting('t5.sid')::uuid, 'cihaz-oyun-0003', v_dogru) ->> 'durum' = 'tamam', 'HATA: yoklamali ogrenci cevap veremedi';

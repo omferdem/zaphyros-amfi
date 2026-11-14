@@ -1,6 +1,6 @@
 -- ZAPEDU kurulum SQL'i (bu dosya otomatik üretilir, elle düzenleme; kaynağı supabase/migrations)
 -- Yeni bir Supabase projesinde SQL Editor'e bu dosyanın tamamını yapıştırıp bir kez çalıştır.
--- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql, 0019_oyun_adimi.sql, 0020_yoklama_haftalari.sql, 0021_pencere_6sn.sql, 0022_oturum_quizi.sql, 0023_acik_uclu_zombi.sql, 0024_kumanda_notu.sql, 0025_acik_uclu_sure.sql, 0026_devam_serisi.sql, 0027_hoca_davetleri.sql, 0028_etkinlik_fotograflari.sql
+-- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql, 0019_oyun_adimi.sql, 0020_yoklama_haftalari.sql, 0021_pencere_6sn.sql, 0022_oturum_quizi.sql, 0023_acik_uclu_zombi.sql, 0024_kumanda_notu.sql, 0025_acik_uclu_sure.sql, 0026_devam_serisi.sql, 0027_hoca_davetleri.sql, 0028_etkinlik_fotograflari.sql, 0029_kod_yoklama_vermez.sql
 
 -- ===========================================================================
 -- 0001_saglik.sql
@@ -5093,3 +5093,54 @@ create policy "hoca kendi fotograflarini yukler" on storage.objects
 create policy "hoca kendi fotograflarini siler" on storage.objects
   for delete to authenticated
   using (bucket_id = 'etkinlik-fotograflari' and public.depo_dersi_benim(name));
+
+-- ===========================================================================
+-- 0029_kod_yoklama_vermez.sql
+-- ===========================================================================
+
+-- 0029: Derse katılım kodu yoklama yazdırmaz
+--
+-- Kullanıcı isteği (14 Kasım 2026): perdedeki 6 haneli ders kodu yalnızca öğrenciyi derse (etkinlik, quiz, oyun) dahil etsin;
+-- yoklama yalnızca karekodla alınsın. Hoca yoklamayı kapatınca yoklama durur; geç gelenler kodla derse girer, hoca isterse
+-- karekodu yeniden açıp onların da yoklamasını alır (aynı haftanın yoklamasına yazılır).
+-- kodla_katil artık hiçbir zaman yoklama bileti döndürmez; yoklama bileti yalnızca karekodu okutan öğrenciye
+-- (katilim_bileti) verilir. Dönen "yoklama" alanı yalnızca yoklamanın o an açık olup olmadığını bildirir.
+
+create or replace function public.kodla_katil(p_kod text, p_cihaz text)
+returns jsonb
+language plpgsql
+volatile
+security definer
+set search_path = ''
+as $$
+declare
+  v_kod     text := regexp_replace(coalesce(p_kod, ''), '[^0-9]', '', 'g');
+  v_pencere bigint := ozel.pencere();
+  r         record;
+begin
+  if p_cihaz is null or p_cihaz !~ '^[0-9A-Za-z-]{8,64}$' then
+    return jsonb_build_object('hata', 'cihaz_gecersiz');
+  end if;
+  if length(v_kod) <> 6 then
+    return jsonb_build_object('hata', 'kod_yanlis');
+  end if;
+
+  -- Kod içinde bulunulan ya da önceki iki pencerenin (6 sn) kodu olabilir (yazarken pencere dönebilir).
+  select s.id, s.yoklama_acik, s.baslik, c.ad || coalesce(' · ' || nullif(btrim(c.sube), ''), '') as ders
+    into r
+  from public.sessions s
+  join ozel.session_secrets g on g.session_id = s.id
+  join public.courses c on c.id = s.course_id
+  where s.bitti is null
+    and s.basladi > now() - interval '12 hours'
+    and v_kod in (ozel.ders_kodu(g.anahtar, v_pencere), ozel.ders_kodu(g.anahtar, v_pencere - 1), ozel.ders_kodu(g.anahtar, v_pencere - 2))
+  order by s.basladi desc
+  limit 1;
+
+  if not found then
+    return jsonb_build_object('hata', 'kod_yanlis');
+  end if;
+
+  return jsonb_build_object('oturum', r.id, 'ders', r.ders, 'baslik', r.baslik, 'yoklama', r.yoklama_acik);
+end;
+$$;

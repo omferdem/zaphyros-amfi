@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.39.0 (14 Kasım 2026)
+Yoklama yalnızca karekodla. Veritabanı: `0029_kod_yoklama_vermez.sql`.
+- Perdedeki 6 haneli ders kodu artık yoklama yazdırmaz; öğrenciyi yalnızca derse (etkinlik, quiz, oyun) dahil eder. Yoklama bileti yalnızca karekodu okutan öğrenciye verilir.
+- Hoca yoklamayı kapatınca yoklama durur, kod geç gelenler için kalır. Hoca isterse "⋯ > Yoklamayı aç" ile karekodu yeniden açıp geç gelenlerin yoklamasını da aynı haftaya yazdırır.
+- Yoklama açıkken kodla giren öğrencinin telefonunda "yoklama için QR'ı okut" uyarısı çıkar.
+- Yoklama haftası, şubede "▶ Başlat: N. hafta" ile açılan oturumdan gelir; derste seçilen akıştan etkilenmez (kodda zaten böyleydi).
+
 ## v0.38.2 (14 Kasım 2026)
 - Sunum sırasındaki üst araç çubuğu kısaldı (Kahoot, Quiz, 🏆, 📱, ⋯, Bitir) ve "⋯" menüsü artık kesilmiyor; önceden çubuk ekrana sığmayınca menü kaydırma alanının içinde kalıyordu.
 

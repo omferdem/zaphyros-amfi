@@ -396,6 +396,12 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
 
       <QuizBandi oturum={oturum} />
 
+      {ad === null && durum?.yoklama_acik && !durum.bitti && (
+        <p className="rounded-2xl bg-amber-500/15 text-amber-100 text-sm p-3 text-center">
+          Yoklama şu an açık. Yoklamanın yazılması için telefonunun kamerasıyla perdedeki <b>QR kodu</b> okut; ders kodu yoklama yazmaz.
+        </p>
+      )}
+
       <section className="cam-panel rounded-3xl p-5 flex-1 flex flex-col">
         {!durum ? (
           <p className="text-slate-400 text-sm m-auto">Bağlanıyor…</p>

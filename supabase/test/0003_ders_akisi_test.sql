@@ -92,6 +92,7 @@ begin
 end $$;
 
 select set_config('t.kod', ders_kodu(current_setting('t.sid')::uuid) ->> 'kod', false);
+select set_config('t.qr', qr_token(current_setting('t.sid')::uuid) ->> 'token', false);
 select set_config('t.kumanda', kumanda_anahtari(current_setting('t.sid')::uuid), false);
 do $$
 begin
@@ -144,10 +145,11 @@ begin
   assert (v -> 'adim' ->> 'sira')::int = 2 and (v -> 'adim' ->> 'toplam')::int = 3, 'HATA: adim sirasi/toplami: ' || v::text;
   assert ders_durumu(gen_random_uuid()) ->> 'hata' = 'oturum_yok', 'HATA: olmayan oturum';
 
-  -- Kodla katılım (yoklama açık): bilet döner, numara check_in ile girilir
+  -- Kodla katılım (yoklama açık): derse alır ama bilet vermez; yoklama yalnızca karekodla (katilim_bileti) alınır
   v := kodla_katil(current_setting('t.kod'), 'cihaz-kod-0001');
   assert v ->> 'oturum' = current_setting('t.sid'), 'HATA: kod oturumu bulamadi: ' || v::text;
-  assert (v ->> 'yoklama')::boolean and v ? 'bilet', 'HATA: yoklama acikken bilet donmedi';
+  assert (v ->> 'yoklama')::boolean and not v ? 'bilet', 'HATA: kod yoklama bileti verdi';
+  v := katilim_bileti(current_setting('t.sid')::uuid, current_setting('t.qr'), 'cihaz-kod-0001');
   v := check_in(current_setting('t.sid')::uuid, v ->> 'bilet', 'cihaz-kod-0001', '22010101001');
   assert v ->> 'durum' = 'tamam', 'HATA: kodla gelen yoklamaya giremedi: ' || v::text;
   assert kodla_katil('000000', 'cihaz-kod-0002') ->> 'hata' = 'kod_yanlis'

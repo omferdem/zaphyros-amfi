@@ -37,7 +37,7 @@ declare v jsonb;
 begin
   -- Güncel kod (hoca ekranından alınan) kabul edilir ve bilet verir
   v := kodla_katil(current_setting('t21.kod'), 'cihaz-kod-0000001');
-  assert v ->> 'oturum' = current_setting('t21.sid') and v ? 'bilet', 'HATA: guncel kod kabul edilmedi: ' || v::text;
+  assert v ->> 'oturum' = current_setting('t21.sid') and not v ? 'bilet', 'HATA: guncel kod kabul edilmedi ya da bilet verdi: ' || v::text;
   -- Önceki iki pencerenin kodu kabul edilir
   v := kodla_katil(current_setting('t21.k1'), 'cihaz-kod-0000002');
   assert v ->> 'oturum' = current_setting('t21.sid'), 'HATA: 1 onceki pencere kabul edilmedi: ' || v::text;

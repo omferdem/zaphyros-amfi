@@ -1,5 +1,8 @@
 # Sürüm Geçmişi
 
+## v0.38.2 (14 Kasım 2026)
+- Sunum sırasındaki üst araç çubuğu kısaldı (Kahoot, Quiz, 🏆, 📱, ⋯, Bitir) ve "⋯" menüsü artık kesilmiyor; önceden çubuk ekrana sığmayınca menü kaydırma alanının içinde kalıyordu.
+
 ## v0.38.1 (14 Kasım 2026)
 - Akış düzenleme listesinde "oyun" adımı artık oyunun adı ve simgesiyle görünür; daha önce yanlışlıkla "Yoklama" gibi görünüyordu (adım doğru ekleniyordu, yalnızca satır yanlış çiziliyordu).
 

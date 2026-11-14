@@ -442,10 +442,10 @@ export default function Sahne() {
       ) : (
         <>
           <button className="ikincil-buton" onClick={() => setKahootSecimi(true)} title="Hazır bir Kahoot paketini perdede oynat">
-            🎮 Kahoot'a git
+            🎮 Kahoot
           </button>
           <button className="ikincil-buton" onClick={() => setQuizAcik(true)} title="Ciddi quizi başlat; bitince sonuçlar açıklanır">
-            📝 Quize git
+            📝 Quiz
           </button>
         </>
       )}
@@ -463,17 +463,17 @@ export default function Sahne() {
         </>
       )}
       {(adimlar.some((a) => a.tur === 'soru') || !!kahootAkisi) && (
-        <button className="ikincil-buton" onClick={() => setPuanAcik(true)}>
-          Puan tablosu
+        <button className="ikincil-buton" onClick={() => setPuanAcik(true)} title="Puan tablosu" aria-label="Puan tablosu">
+          🏆
         </button>
       )}
-      <button className="ikincil-buton" onClick={() => setKumandaAcik(true)} title="Telefondan yönetmek için kumanda karekodu">
-        📱 Kumanda
+      <button className="ikincil-buton" onClick={() => setKumandaAcik(true)} title="Kumanda: telefondan yönetmek için karekod" aria-label="Kumanda">
+        📱
       </button>
       <DersSayaci oturum={oturum.id} />
       <details className="relative">
         <summary className="ikincil-buton cursor-pointer list-none select-none" title="Yoklama, kod, tam ekran ve diğer ayarlar">
-          ⋯ Diğer
+          ⋯
         </summary>
         <div className="absolute right-0 top-full mt-1 z-50 w-56 cam-panel rounded-2xl p-2 grid gap-1 text-sm">
           <button className="ikincil-buton text-left" onClick={() => yoklamaDurumu(!acik)}>
@@ -507,8 +507,8 @@ export default function Sahne() {
           </Link>
         </div>
       </details>
-      <button className="tehlike-buton" onClick={dersiBitir}>
-        ⏹ Dersi bitir
+      <button className="tehlike-buton" onClick={dersiBitir} title="Dersi bitir">
+        ⏹ Bitir
       </button>
     </div>
   )
@@ -675,7 +675,7 @@ function SlaytSahnesi({
       <SlaytCizimi belge={belge} sayfaNo={sayfaNo} className="flex-1 min-h-0" />
       {/* Araç çubuğu fareyle üzerine gelince görünür; dokunmatik ekranda (hover yok) her zaman görünür. */}
       <div className="absolute top-0 inset-x-0 p-3 flex justify-end opacity-0 group-hover:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity">
-        <div className="cam-panel rounded-2xl p-2 max-w-full overflow-x-auto">{araclar}</div>
+        <div className="cam-panel rounded-2xl p-2 max-w-full">{araclar}</div>
       </div>
       {/* Her zaman görünen büyük oklar (telefon ve tablet için); fareyle üzerine gelince belirginleşir */}
       <button

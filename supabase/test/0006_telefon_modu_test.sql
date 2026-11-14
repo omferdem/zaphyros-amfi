@@ -55,8 +55,7 @@ end $$;
 set request.jwt.claims = '{"sub":"62222222-2222-2222-2222-222222222222","email":"yabanci6@ornek.com"}';
 do $$
 begin
-  -- 0032'den sonra perdedeki slaytın görseli herkese (açık derste) okunur; diğer görseller yine kapalı
-  assert (select count(*) from storage.objects where bucket_id = 'slayt-gorselleri') = 1, 'HATA: yabanci yalnizca perdedeki gorseli gormeli';
+  assert (select count(*) from storage.objects where bucket_id = 'slayt-gorselleri') = 0, 'HATA: yabanci gorselleri goruyor';
   begin
     insert into storage.objects (bucket_id, name) values ('slayt-gorselleri', current_setting('t6.icerik') || '/' || gen_random_uuid()::text || '/1');
     raise exception 'HATA: yabanci baskasinin icerigine gorsel yazdi';
@@ -64,17 +63,17 @@ begin
   end;
 end $$;
 
--- ---------------------------------------------------------------- ANON: projeksiyon modunda da yalnızca perdedeki görsel (0032)
+-- ---------------------------------------------------------------- ANON: projeksiyon modunda görsel yok
 reset request.jwt.claims;
 set role anon;
 do $$
 declare
   v jsonb;
 begin
-  assert (select count(*) from storage.objects where bucket_id = 'slayt-gorselleri') = 1, 'HATA: projeksiyon modunda yalnizca perdedeki gorsel okunmali';
+  assert (select count(*) from storage.objects where bucket_id = 'slayt-gorselleri') = 0, 'HATA: projeksiyon modunda gorsel okundu';
   v := ders_durumu(current_setting('t6.sid')::uuid);
-  assert (v ->> 'telefon_modu')::boolean = false and v -> 'adim' ->> 'gorsel' = current_setting('t6.yol1'), 'HATA: projeksiyon modunda gorsel yolu: ' || v::text;
-  assert public.gorsel_gorunur(current_setting('t6.yol1')) and not public.gorsel_gorunur(current_setting('t6.yol2')), 'HATA: gorsel_gorunur projeksiyon modunda';
+  assert (v ->> 'telefon_modu')::boolean = false and v -> 'adim' -> 'gorsel' = 'null'::jsonb, 'HATA: projeksiyon modunda gorsel yolu: ' || v::text;
+  assert not public.gorsel_gorunur(current_setting('t6.yol1')), 'HATA: gorsel_gorunur projeksiyon modunda true';
 end $$;
 
 -- Kumanda telefon modunu açar
@@ -104,11 +103,11 @@ begin
   assert v -> 'adim' -> 'gorsel' = 'null'::jsonb and v -> 'adim' ->> 'metin' = 'Tek', 'HATA: gorselsiz sunum: ' || v::text;
   assert not public.gorsel_gorunur(current_setting('t6.yol3')), 'HATA: gorseli hazir olmayan sunum';
 
-  -- Telefon modunu kapatınca da perdedeki görsel okunur (0032)
+  -- Telefon modunu kapatınca erişim kapanır
   assert kumanda_komut(current_setting('t6.sid')::uuid, current_setting('t6.kumanda'), 'git', current_setting('t6.a1')::uuid) ->> 'durum' = 'tamam', 'HATA: git 1';
   assert public.gorsel_gorunur(current_setting('t6.yol1')), 'HATA: yeniden acilan gorsel';
   assert kumanda_komut(current_setting('t6.sid')::uuid, current_setting('t6.kumanda'), 'telefon_kapat') ->> 'durum' = 'tamam', 'HATA: telefon_kapat';
-  assert public.gorsel_gorunur(current_setting('t6.yol1')), 'HATA: telefon modu kapaliyken perdedeki gorsel de kapandi';
+  assert not public.gorsel_gorunur(current_setting('t6.yol1')), 'HATA: telefon modu kapaliyken gorsel acik';
   assert kumanda_komut(current_setting('t6.sid')::uuid, current_setting('t6.kumanda'), 'telefon_ac') ->> 'durum' = 'tamam', 'HATA: telefon_ac 2';
   assert kumanda_komut(current_setting('t6.sid')::uuid, current_setting('t6.kumanda'), 'bilinmeyen') ->> 'hata' = 'komut_gecersiz', 'HATA: bilinmeyen komut';
   assert kumanda_komut(current_setting('t6.sid')::uuid, repeat('0', 64), 'telefon_kapat') ->> 'hata' = 'anahtar_gecersiz', 'HATA: yanlis anahtar';

@@ -374,7 +374,8 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
   const adim = durum?.adim
   // Veri tasarrufu: açıkken slayt görseli telefona indirilmez (yalnızca slaytın yazısı görünür)
   const [tasarruf, setTasarruf] = useState(() => oku('amfi_veri_tasarrufu') === '1')
-  const gorsel = useSlaytGorseli(adim?.tur === 'slayt' && !tasarruf ? adim.gorsel : null)
+  const gorselGoster = !!adim?.gorsel && !!durum?.telefon_modu && !tasarruf
+  const gorsel = useSlaytGorseli(adim?.tur === 'slayt' && gorselGoster ? adim.gorsel : null)
   const satirlar = (adim?.tur === 'slayt' ? adim.metin ?? '' : '').split('\n').filter(Boolean)
 
   return (
@@ -398,7 +399,7 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
 
       <QuizBandi oturum={oturum} />
 
-      {adim?.tur === 'slayt' && adim.gorsel && (
+      {adim?.tur === 'slayt' && adim.gorsel && durum?.telefon_modu && (
         <button
           className="self-end text-[11px] text-slate-400 hover:text-white"
           onClick={() => {
@@ -439,7 +440,7 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
               Slayt {adim.sayfa_no}
               {adim.sayfa_sayisi ? ` / ${adim.sayfa_sayisi}` : ''}
             </p>
-            {adim.gorsel &&
+            {gorselGoster &&
               (gorsel.url ? (
                 <img
                   src={gorsel.url}
@@ -452,7 +453,7 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
                 </div>
               ))}
             {satirlar.length ? (
-              adim.gorsel ? (
+              gorselGoster ? (
                 <details className="text-sm text-slate-300" open={gorsel.hata}>
                   <summary className="cursor-pointer text-slate-400">Slaytın metni</summary>
                   <div className="mt-2 space-y-2">
@@ -471,7 +472,7 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
                   ))}
                 </>
               )
-            ) : adim.gorsel ? null : (
+            ) : gorselGoster ? null : (
               <p className="text-slate-400">{durum?.telefon_modu ? 'Bu slaytta yazı yok.' : 'Bu slaytta yazı yok; perdeye bak.'}</p>
             )}
           </div>

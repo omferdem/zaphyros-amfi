@@ -1,5 +1,8 @@
 # Sürüm Geçmişi
 
+## v0.41.1 (14 Kasım 2026)
+- **Slayt görseli yeniden yalnızca telefon modunda.** v0.41.0'daki "projeksiyonlu derste de öğrenci telefonuna slayt görseli" depo trafiğini (Supabase ücretsiz plan, ayda 5 GB) şişirebileceği için geri alındı. Öğrenci istemcisi telefon modu kapalıyken görseli indirmiyor (trafik hemen durur); `0033_slayt_gorseli_telefon_modu.sql` sunucu tarafını da eski hâline döndürür. Telefon modunda "📶 Veri tasarrufu" anahtarı durur.
+
 ## v0.41.0 (14 Kasım 2026)
 Kumandadan oyun/Kahoot/quiz başlatma, slaytın herkese telefonda görünmesi, çökme koruması. Veritabanı: `0031_kumanda_istegi.sql`, `0032_slayt_gorseli_herkese.sql`.
 - **Telefon kumandası:** gereksiz "Hocayla yarış / Takım modu" yazıları kalktı. Yerine "🎮 Oyun / Kahoot başlat" (oyun modu + paket seç), "📝 Quiz başlat" (paket seç, süre önerilir), "↩ Derse dön" ve "⏹ Quizi bitir" geldi. Kumandanın hoca girişi olmadığı için istek veritabanına bırakılır; perdedeki sahne ekranı (hoca girişli) isteği alıp uygular, bu yüzden sahne ekranı açık olmalıdır.

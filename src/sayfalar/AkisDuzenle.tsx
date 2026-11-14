@@ -54,6 +54,7 @@ export default function AkisDuzenle() {
   const [secim, setSecim] = useState<Set<string>>(new Set())
   const [digerAkislar, setDigerAkislar] = useState<Akis[]>([])
   const [hedefAkis, setHedefAkis] = useState('')
+  const [sonSecilen, setSonSecilen] = useState<number | null>(null)
 
   const yukle = useCallback(async () => {
     try {
@@ -338,6 +339,23 @@ export default function AkisDuzenle() {
     }
   }
 
+  /** Seçili kartları toptan siler (onayla). Soru adımında soru bankasındaki soru silinmez; yalnızca akıştan çıkar. */
+  async function secilileriSil() {
+    if (secim.size === 0) return
+    if (!window.confirm(`${secim.size} kart bu akıştan silinecek. Slayt dosyaları ve soru bankası etkilenmez; yalnızca akıştan çıkarılır. Devam edilsin mi?`)) return
+    setHata(null)
+    setBilgi(null)
+    const idler = [...secim]
+    const { error } = await supabase.from('lesson_steps').delete().in('id', idler)
+    if (error) {
+      setHata('Kartlar silinemedi. Bağlantını kontrol edip tekrar dene.')
+      return
+    }
+    setBilgi(`${idler.length} kart silindi.`)
+    setSecim(new Set())
+    await yukle()
+  }
+
   function secimiDegistir(id: string, secili: boolean) {
     setSecim((s) => {
       const y = new Set(s)
@@ -602,6 +620,12 @@ export default function AkisDuzenle() {
         <p className="text-sm text-slate-400">Akış boş. Bir sunum yükleyerek ya da yoklama adımı ekleyerek başla.</p>
       ) : (
         <>
+        <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400">
+          <button className="ikincil-buton !py-1 text-xs" onClick={() => setSecim(new Set(adimlar.map((a) => a.id)))}>
+            Hepsini seç
+          </button>
+          <span>Kutuyu işaretleyip Shift basılı başka bir kutuya tıklarsan aradaki kartlar da seçilir.</span>
+        </div>
         {secim.size > 0 && (
           <div className="sticky top-16 z-20 cam-panel rounded-2xl p-3 flex flex-wrap items-center gap-2 border border-indigo-400/40">
             <span className="text-sm font-bold">{secim.size} kart seçili</span>
@@ -618,6 +642,9 @@ export default function AkisDuzenle() {
             </button>
             <button className="ikincil-buton !py-1.5 text-sm" disabled={!hedefAkis} onClick={() => gonder(true)} title="Kartları bu akıştan çıkarıp hedef akışın sonuna koyar">
               Taşı
+            </button>
+            <button className="tehlike-buton !py-1.5 text-sm" onClick={secilileriSil} title="Seçili kartları akıştan siler">
+              🗑 Seçilenleri sil
             </button>
             <button className="text-xs text-slate-400 hover:text-white ml-auto" onClick={() => setSecim(new Set())}>
               Seçimi temizle
@@ -641,7 +668,7 @@ export default function AkisDuzenle() {
                 }}
                 className={`cam-panel rounded-2xl p-3 flex flex-wrap items-center gap-3 cursor-grab ${suruklenen === i ? 'opacity-40' : ''} ${secim.has(a.id) ? 'ring-2 ring-indigo-400/60' : ''}`}
               >
-                <input type="checkbox" className="accent-indigo-500 w-4 h-4" checked={secim.has(a.id)} onChange={(e) => secimiDegistir(a.id, e.target.checked)} aria-label={`${i + 1}. kartı seç`} title="Başka haftaya göndermek için seç" />
+                <input type="checkbox" className="accent-indigo-500 w-4 h-4" checked={secim.has(a.id)} onChange={(e) => secimiDegistir(a.id, e.target.checked)} onClick={(e) => { if (e.shiftKey && sonSecilen !== null) { const [x, y] = [Math.min(sonSecilen, i), Math.max(sonSecilen, i)]; setSecim((s) => new Set([...s, ...adimlar.slice(x, y + 1).map((k) => k.id)])) } setSonSecilen(i) }} aria-label={`${i + 1}. kartı seç`} title="Başka haftaya göndermek için seç" />
                 <span className="w-7 text-right font-mono text-xs text-slate-500">{i + 1}</span>
                 {a.tur === 'slayt' ? (
                   <button

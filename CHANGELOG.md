@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.43.0 (14 Kasım 2026)
+Yarışma müziği, daha efektli sesler, kartları toptan silme. Veritabanı değişikliği yok.
+- **Yarışma müziği:** soru açıkken ve grafik oyunlar (zombi, roket, ejderha, arena, kule) sürerken tempolu bir döngü (bas, arpej, davul) çalar; sorular arasında kesilmez, sonuç açılınca ve oyun bitince yumuşakça söner. Hepsi tarayıcıda üretilir (dosya, telif ve ek trafik yok). "⋯ > 🎵 Yarışma müziğini kapat" ayrı bir anahtardır.
+- **Yeni sesler:** ışıltılı doğru çanı, düşen testere "yanlış", fanfar ve alkışlı zafer, üzgün trombon, son 5 saniyede geri sayım tıkı, süre bitince zil, "yarışma başlıyor" süpürmesi.
+- **Kartları toptan silme:** akış düzenlemede kartların kutusunu işaretle (Shift ile aralık, "Hepsini seç"), çubuktan "🗑 Seçilenleri sil". Slayt dosyaları ve soru bankası etkilenmez; kartlar yalnızca akıştan çıkar.
+
 ## v0.42.0 (14 Kasım 2026)
 Şube yedeği ve silinenleri geri alma. Veritabanı değişikliği yok.
 - **💾 Şubeyi yedekle:** ders sayfasından bir şubenin sınıf listesi, oturumları ve yoklamaları tek dosyaya (`.amfi-yedek`) indirilir.

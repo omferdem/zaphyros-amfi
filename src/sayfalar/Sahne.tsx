@@ -16,7 +16,7 @@ import { oyunuAc } from '../lib/oyunAc'
 import OyunProvasi from '../bilesenler/OyunProvasi'
 import Rehber from '../bilesenler/Rehber'
 import BaglantiUyarisi from '../bilesenler/BaglantiUyarisi'
-import { useSesAyari } from '../lib/ses'
+import { useMuzikAyari, useSesAyari, useSoruSesi } from '../lib/ses'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import { dersEtiketi, kisaAd, oturumAdi } from '../lib/bicim'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
@@ -111,6 +111,7 @@ export default function Sahne() {
   const [provaAcik, setProvaAcik] = useState(false)
   const [rehberAcik, setRehberAcik] = useState(false)
   const [sesAcik, sesAyarla] = useSesAyari()
+  const [muzikAcik, muzikAyarla] = useMuzikAyari()
   const [devam, setDevam] = useState<{ akis: string; baslangic: string | null; metin: string } | null>(null)
   // Akış seçilmemişse bu şubede en son kalınan akış önerilir
   const [sonAkis, setSonAkis] = useState<{ akisId: string; ad: string; sira: number; toplam: number } | null>(null)
@@ -555,7 +556,10 @@ export default function Sahne() {
             </button>
           )}
           <button className="ikincil-buton text-left" onClick={() => sesAyarla(!sesAcik)}>
-            {sesAcik ? '🔊 Oyun seslerini kapat' : '🔇 Oyun seslerini aç'}
+            {sesAcik ? '🔊 Ses efektlerini kapat' : '🔇 Ses efektlerini aç'}
+          </button>
+          <button className="ikincil-buton text-left" onClick={() => muzikAyarla(!muzikAcik)}>
+            {muzikAcik ? '🎵 Yarışma müziğini kapat' : '🎵 Yarışma müziğini aç'}
           </button>
           <button className="ikincil-buton text-left" onClick={() => tekAc('prova')}>
             🧪 Oyun provası
@@ -1102,6 +1106,8 @@ function SoruSahnesi({
   }, [])
 
   const kalan = bitis === null ? null : Math.max(0, bitis - simdi)
+  // Yarışma müziği, son 5 saniyede geri sayım tıkı, süre bitince zil, sonuçta çan
+  useSoruSesi(soruDurum, kalan === null ? null : Math.ceil(kalan / 1000))
 
   const sonucuGoster = useCallback(() => {
     kapatildi.current = adimId

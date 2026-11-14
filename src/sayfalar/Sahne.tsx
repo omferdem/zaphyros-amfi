@@ -54,7 +54,7 @@ function kodBicimle(kod: string): string {
   return `${kod.slice(0, 3)} ${kod.slice(3)}`
 }
 
-/** Dakikada bir değişen ders kodu (geç gelenler için). */
+/** Ders kodu (geç gelenler için): sabittir; projeksiyonsuz derste dakikada bir değişir. */
 function useDersKodu(oturumId: string, etkin: boolean) {
   const [kod, setKod] = useState<string | null>(null)
   useEffect(() => {
@@ -867,7 +867,7 @@ function YoklamaSahnesi({
               {kod ? (
                 <KodSeridi kod={kod} buyuk />
               ) : (
-                <p className="text-xs text-slate-500">Kod birkaç saniyede bir değişir. Fotoğrafı başkasına gönderilen kod işe yaramaz.</p>
+                <p className="text-xs text-slate-500">Karekod birkaç saniyede bir değişir; fotoğrafı başkasına gönderilen karekod işe yaramaz.</p>
               )}
             </>
           ) : (

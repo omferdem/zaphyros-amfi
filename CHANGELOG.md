@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.40.0 (14 Kasım 2026)
+Ders kodu sabit. Veritabanı: `0030_sabit_ders_kodu.sql`.
+- Ders giriş kodu yoklama yazdırmadığı için projeksiyonlu derste oturum boyunca değişmez; geç gelen öğrenci perdedeki aynı kodu yazar. Karekod (yoklama) 6 saniyede bir değişmeye devam eder.
+- Projeksiyonsuz derste (kod yoklamayı da yazdırır) kod 60 saniyede bir değişir; hoca sesli okuyabilir. Güncel ve önceki iki dakikanın kodu kabul edilir.
+
 ## v0.39.1 (14 Kasım 2026)
 - **Yoklamayı açınca karekod her ekranda görünür:** slayt, soru ya da etkinlik ekranındayken "⋯ > Yoklamayı aç" dersen perdenin ortasında karekod, ders kodu ve katılan sayısı çıkar; "Yoklamayı kapat" ve "Karekodu gizle" düğmeleri vardır. Önceden karekod yalnızca yoklama ekranında görünüyordu.
 - **Paneller üst üste binmiyor:** Kahoot seçici, Quiz, puan tablosu, kumanda karekodu, oyun provası ve rehberden biri açılınca öbürleri kapanır. Araç çubuğu ve "⋯" menüsü etkinlik sahnelerinin üstünde kalır.

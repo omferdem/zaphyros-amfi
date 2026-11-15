@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { OYUN_OLAYI, type OyunAnahtari } from '../lib/oyun'
 import { roketHesapla, type RoketDurumu } from '../lib/roket'
@@ -6,6 +6,7 @@ import { arenaHesapla, ARENA_CANI, type ArenaDurumu } from '../lib/arena'
 import { kuleHesapla, type KuleDurumu, type KuleTakimi } from '../lib/kule'
 import { kaleHesapla, type KaleDurumu } from '../lib/kale'
 import Gorsel, { adIndeksi, arkaPlan, gorselAdresi } from './Gorsel'
+import { SILAHLAR, useRaund } from './Hareket'
 import { takimBilgisi } from '../lib/takim'
 import { EJDERHA_ORANI, KAHRAMAN_CANI, ejderhaHesapla, type EjderhaDurumu } from '../lib/ejderha'
 import type { ZombiOyuncusu, ZombiSorusu } from '../lib/zombi'
@@ -171,6 +172,7 @@ export function RoketSahnesi({ d, kucult }: { d: RoketDurumu; kucult: () => void
   const seritSayisi = Math.max(4, Math.min(14, n))
   const boy = n > 60 ? 'text-xl' : n > 30 ? 'text-2xl' : 'text-3xl'
   const podyum = d.siralama.slice(0, 3)
+  const { aktif: aktifRaund } = useRaund(d.oynanan)
   return (
     <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
       {d.bitti && <Konfeti />}
@@ -198,11 +200,12 @@ export function RoketSahnesi({ d, kucult }: { d: RoketDurumu; kucult: () => void
           return (
             <div
               key={`${o.ad}-${i}`}
-              className="absolute -translate-y-1/2 transition-all duration-1000 ease-out flex items-center"
+              className={`absolute -translate-y-1/2 transition-all duration-1000 ease-out flex items-center ${aktifRaund && o.son === 1 ? 'roket-hizlan' : aktifRaund && o.son !== null && o.son !== 1 && !bitti ? 'roket-sarsil' : ''}`}
               style={{ left: `${4 + oran * 84}%`, top: `${8 + (serit / seritSayisi) * 84 + 4}%` }}
               title={`${o.ad}: ${o.ilerleme} doğru`}
             >
               <span className="roket-iz" style={{ width: `${Math.max(1, oran * 14)}vw` }} aria-hidden />
+              {aktifRaund && o.son === 1 && <Gorsel ad="efekt-turbo.webp" emoji="" className="roket-turbo absolute -left-10 top-1/2 -translate-y-1/2 w-20 h-20 pointer-events-none" />}
               <span className={`inline-block ${bitti ? 'roket-varti' : 'roket-ucus'}`}>
                 <span className="inline-block" style={{ transform: 'rotate(90deg)' }}>
                   <Gorsel ad={`roket-${adIndeksi(o.ad, 6)}.webp`} emoji={karakter(o.ad, ROKETLER)} className={n > 60 ? 'w-8 h-8' : n > 30 ? 'w-11 h-11' : 'w-14 h-14'} emojiClass={`${boy} inline-block`} />
@@ -278,9 +281,47 @@ export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => 
   const adBoy = n > 40 ? 'text-[10px] max-w-16' : 'text-sm max-w-24'
   const sonHasar = d.hasarlar[d.hasarlar.length - 1] ?? 0
   const oran = d.can / d.enCok
+  const { raund, aktif } = useRaund(d.oynanan)
+  const ejderhaRef = useRef<HTMLDivElement>(null)
+  const kahramanRef = useRef<Map<number, HTMLLIElement>>(new Map())
+  const [ucanlar, setUcanlar] = useState<{ i: number; x: number; y: number; dx: number; dy: number; gecik: number }[]>([])
+  const kaybedenVar = d.kahramanlar.some((h) => h.dustu === null && h.son !== null && h.son !== 1) || d.kahramanlar.some((h) => h.dustu === d.oynanan)
+  // Yeni raundda doğru bilen kahramanlar ejderhaya doğru koşar: her birinin ejderhaya uzaklığı ölçülüp animasyona verilir
+  useLayoutEffect(() => {
+    if (raund === 0 || !ejderhaRef.current) return
+    const e = ejderhaRef.current.getBoundingClientRect()
+    const ex = e.left + e.width / 2
+    const ey = e.top + e.height * 0.62
+    const liste: { i: number; x: number; y: number; dx: number; dy: number; gecik: number }[] = []
+    d.kahramanlar.forEach((h, i) => {
+      const li = kahramanRef.current.get(i)
+      if (!li || h.son !== 1 || h.dustu !== null || liste.length >= 40) return
+      const r = li.getBoundingClientRect()
+      if (r.bottom < 0 || r.top > window.innerHeight) return
+      const x = r.left + r.width / 2
+      const y = r.top + r.height / 2
+      liste.push({ i, x, y, dx: Math.round(ex - x + (Math.random() - 0.5) * 120), dy: Math.round(ey - y + (Math.random() - 0.5) * 60), gecik: Math.round(Math.random() * 800) })
+    })
+    setUcanlar(liste)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [raund])
   return (
     <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
       {d.bitti && d.kazandi && <Konfeti />}
+      {aktif &&
+        ucanlar.map((u) => {
+          const h = d.kahramanlar[u.i]
+          return (
+            <div
+              key={`u-${raund}-${u.i}`}
+              className="ej-ucus fixed z-50 pointer-events-none"
+              style={{ left: u.x - 32, top: u.y - 32, width: 64, height: 64, ['--dx' as string]: `${u.dx}px`, ['--dy' as string]: `${u.dy}px`, animationDelay: `${u.gecik}ms` }}
+            >
+              <Gorsel ad={`kahraman-${adIndeksi(h.ad, 8)}.webp`} emoji={karakter(h.ad, KAHRAMANLAR)} className="w-16 h-16" emojiClass="text-5xl" />
+              <span className="absolute -right-2 -top-1 text-2xl">{SILAHLAR[adIndeksi(h.ad, SILAHLAR.length) - 1]}</span>
+            </div>
+          )
+        })}
       <div className="flex items-center gap-4 flex-wrap">
         <h2 className="text-2xl sm:text-3xl font-display font-extrabold ejderha-baslik">🐉 Ejderha Savaşı</h2>
         <span className="text-sm text-slate-300">
@@ -296,7 +337,13 @@ export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => 
       </div>
       <div className="relative flex-1 min-h-0 rounded-3xl overflow-hidden ejderha-magara border border-white/10 flex flex-col" style={arkaPlan('arka-ejderha.webp')}>
         <div className="relative flex flex-col items-center pt-4 pb-2 gap-2">
-          <div className={`leading-none ${d.kazandi ? 'ejderha-oldu' : 'ejderha-nefes'}`}>
+          <div ref={ejderhaRef} className={`relative leading-none ${d.kazandi ? 'ejderha-oldu' : 'ejderha-nefes'} ${aktif && sonHasar > 0 ? 'ej-vuruldu' : ''}`} key={`ej-${raund}`}>
+            {aktif && sonHasar > 0 && (
+              <span className="ej-sayi absolute left-1/2 top-[20%] -translate-x-1/2 text-5xl sm:text-7xl font-display font-extrabold text-rose-200 pointer-events-none z-10" style={{ textShadow: '0 0 18px #ef4444, 0 3px 0 #7f1d1d' }}>
+                −{sonHasar}
+              </span>
+            )}
+            {aktif && sonHasar > 0 && <Gorsel ad="efekt-darbe.webp" emoji="💥" className="ej-patla absolute left-1/2 top-[25%] -translate-x-1/2 w-40 h-40 pointer-events-none z-10" emojiClass="ej-patla absolute left-1/2 top-[25%] -translate-x-1/2 text-8xl pointer-events-none z-10" />}
             <Gorsel
               ad={d.kazandi ? 'ejderha-oldu.webp' : oran < 0.4 ? 'ejderha-yaralandi.webp' : 'ejderha.webp'}
               emoji={d.kazandi ? '💀' : '🐉'}
@@ -304,6 +351,7 @@ export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => 
               emojiClass="text-[11rem] leading-none"
             />
           </div>
+          {aktif && kaybedenVar && !d.kazandi && <Gorsel ad="efekt-ates.webp" emoji="🔥" className="ej-ates-yolu absolute left-1/2 top-[55%] -translate-x-1/2 w-32 h-32 pointer-events-none z-10" emojiClass="ej-ates-yolu absolute left-1/2 top-[55%] -translate-x-1/2 text-8xl pointer-events-none z-10" />}
           {!d.kazandi && d.oynanan > 0 && <Gorsel ad="efekt-ates.webp" emoji="🔥" className="absolute left-[18%] top-[30%] w-24 h-24 ejderha-ates" emojiClass="absolute right-[26%] top-16 text-7xl ejderha-ates" />}
           <div className="w-[min(40rem,86%)] space-y-1">
             <div className="h-6 rounded-full bg-black/50 border border-white/15 overflow-hidden">
@@ -319,7 +367,16 @@ export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => 
             {d.kahramanlar.map((h, i) => {
               const dustu = h.dustu !== null
               return (
-                <li key={`${h.ad}-${i}`} className={`text-center leading-none transition-all duration-700 ${dustu ? 'opacity-40 grayscale' : 'ejderha-kahraman'}`}>
+                <li
+                  key={`${h.ad}-${i}`}
+                  ref={(el) => {
+                    if (el) kahramanRef.current.set(i, el)
+                    else kahramanRef.current.delete(i)
+                  }}
+                  className={`relative text-center leading-none transition-opacity duration-700 ${dustu ? 'opacity-40 grayscale' : aktif && h.son === 1 ? 'ej-gitti' : aktif && h.son !== null && h.son !== 1 ? 'ej-yedi' : 'ejderha-kahraman'}`}
+                >
+                  {!dustu && <span className="absolute -right-1 top-0 text-base sm:text-xl pointer-events-none" aria-hidden>{SILAHLAR[adIndeksi(h.ad, SILAHLAR.length) - 1]}</span>}
+                  {aktif && !dustu && h.son !== null && h.son !== 1 && <span className="ej-yedi-patla absolute inset-0 flex items-center justify-center text-3xl pointer-events-none" aria-hidden>🔥</span>}
                   <div className={boy}>{dustu ? '💤' : <Gorsel ad={`kahraman-${adIndeksi(h.ad, 8)}.webp`} emoji={karakter(h.ad, KAHRAMANLAR)} className={n > 80 ? 'w-8 h-8' : n > 40 ? 'w-12 h-12' : n > 20 ? 'w-16 h-16' : 'w-20 h-20'} emojiClass={boy} />}</div>
                   <div className={`${adBoy} font-bold truncate mx-auto`}>{h.ad}</div>
                   <div className={n > 40 ? "text-[9px] tracking-tighter" : "text-xs tracking-tighter"}>{'❤️'.repeat(Math.max(0, h.kalan)) + '🖤'.repeat(KAHRAMAN_CANI - Math.max(0, h.kalan))}</div>
@@ -368,6 +425,7 @@ export function ArenaPaneli({ oturum, anahtar, mod }: { oturum: string; anahtar:
 
 export function ArenaSahnesi({ d, kucult }: { d: ArenaDurumu; kucult: () => void }) {
   useOyunSesi(d.oynanan, d.bitti, true)
+  const { aktif } = useRaund(d.oynanan)
   const n = d.oyuncular.length
   const boy = n > 80 ? 'text-2xl' : n > 40 ? 'text-3xl' : n > 20 ? 'text-5xl' : 'text-6xl'
   const adBoy = n > 40 ? 'text-[10px] max-w-16' : 'text-sm max-w-24'
@@ -394,7 +452,8 @@ export function ArenaSahnesi({ d, kucult }: { d: ArenaDurumu; kucult: () => void
         <div className="flex-1 min-h-0 overflow-y-auto p-4">
           <ul className="flex flex-wrap justify-center gap-x-5 gap-y-4 arena-platform rounded-[2rem] p-5 mx-auto max-w-6xl">
             {ayaktakiler.map((o, i) => (
-              <li key={`${o.ad}-${i}`} className="text-center leading-none arena-savasci">
+              <li key={`${o.ad}-${i}`} className={`relative text-center leading-none ${aktif && o.son === 1 ? 'arena-vur' : aktif && o.son !== null && o.son !== 1 ? 'arena-darbe' : 'arena-savasci'}`}>
+                {aktif && o.son !== null && o.son !== 1 && <Gorsel ad="efekt-darbe.webp" emoji="💥" className="ej-patla absolute inset-0 m-auto w-16 h-16 pointer-events-none z-10" emojiClass="ej-patla absolute inset-0 flex items-center justify-center text-4xl pointer-events-none z-10" />}
                 <div className={boy}><Gorsel ad={`kahraman-${adIndeksi(o.ad, 8)}.webp`} emoji={karakter(o.ad, ARENA_KARAKTERLERI)} className={n > 80 ? 'w-8 h-8' : n > 40 ? 'w-10 h-10' : n > 20 ? 'w-16 h-16' : 'w-20 h-20'} emojiClass={boy} /></div>
                 <div className={`${adBoy} font-bold truncate mx-auto`}>{o.ad}</div>
                 <div className="text-xs">{'❤️'.repeat(Math.max(0, o.kalan)) + '🖤'.repeat(ARENA_CANI - Math.max(0, o.kalan))}</div>

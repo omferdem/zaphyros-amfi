@@ -1,5 +1,13 @@
 # Sürüm Geçmişi
 
+## v0.46.0 (15 Kasım 2026)
+Oyunlarda hareket. Veritabanı değişikliği yok.
+- **Ejderha savaşı:** her yeni soruda doğru bilen kahramanlar silahlarıyla (kılıç, yay, asa, balta...) ejderhaya doğru koşup vurur; ejderha sarsılır, patlama ve "−7" gibi hasar sayısı çıkar; ejderha ateş püskürür, yanlış bilen kahraman sarsılıp yanar. Her kahramanın elinde ayrı bir silah vardır.
+- **Roket yarışı:** doğru bilen roket turbo patlamasıyla hızlanıp büyür, yanlış bilen sarsılır.
+- **Zombi kaçışı:** doğru bilen karakter zıplar, yakalanan patlamayla yok olur, zirveye çıkan parıltı efekti alır.
+- **Son kalan arenası:** doğru bilen savaşçı atılıp vurur, yanlış bilen darbe alıp kızarır.
+- Hareketler yalnızca yeni bir sorunun sonucu açılınca çalışır (sahne açılırken eski sorular tekrar oynatılmaz); "hareketi azalt" ayarı olan cihazlarda kapalıdır.
+
 ## v0.45.0 (15 Kasım 2026)
 Antigravity görselleri, Kale kuşatması, not defteri, yoklama güvenliği. Veritabanı: `0034_not_defteri.sql`, `0035_kumanda_kale.sql`.
 - **Görseller:** `canli-ders-oyunu2` klasöründeki üç boyutlu görseller sisteme girdi (`public/gorseller`, 16 MB'lık PNG'ler WebP'ye çevrilip 5 MB'a indi). Zombi, roket, ejderha (sağlığa göre sağlam/yaralı/ölü), arena, kule ve halat sahnelerinde arka planlar ve karakterler; hocayla yarışta hoca ve sınıf resmi; birinciye kupa; devam serisi rozetleri; sahne ve telefon arka planları. Görsel bulunamazsa eski emoji görünümü kalır. Yeni logo dosyaları (`logo-zapedu*.svg`) klasörde durur ama mevcut ZE logosu değiştirilmedi.

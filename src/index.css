@@ -318,3 +318,84 @@ body::after {
 @media (max-width: 640px) {
   body::after { background-image: url("/gorseller/arka-telefon.webp"); }
 }
+
+/* ---------------------------------------------------------------- Oyun hareketleri (her yeni soruda bir kez çalar) */
+.ej-ucus { animation: ej-saldir 2.4s cubic-bezier(0.5, 0, 0.3, 1) both; }
+.ej-gitti { animation: ej-gitti 3.2s ease-in-out both; }
+.ej-yedi { animation: ej-yedi 1.1s ease-in-out both; animation-delay: calc(1.5s + var(--gecik, 0ms) * 0.4); }
+.ej-yedi-patla { animation: ej-patla 1s ease-out both; animation-delay: calc(1.5s + var(--gecik, 0ms) * 0.4); }
+.ej-vuruldu { animation: ej-vuruldu 1.1s ease-in-out both; animation-delay: 0.9s; }
+.ej-sayi { animation: ej-sayi 1.8s ease-out both; animation-delay: 1s; opacity: 0; }
+.ej-patla { animation: ej-patla 0.9s ease-out both; animation-delay: 0.95s; opacity: 0; }
+.ej-ates-yolu { animation: ej-ates-yolu 1.2s ease-in both; animation-delay: 1.3s; opacity: 0; }
+.arena-vur { animation: arena-vur 1.2s ease-in-out both; }
+.arena-darbe { animation: arena-darbe 1s ease-in-out both; }
+.roket-hizlan { animation: roket-hizlan 1.6s ease-out both; filter: drop-shadow(0 0 14px #67e8f9); z-index: 5; }
+.roket-sarsil { animation: ej-yedi 1s ease-in-out both; }
+.roket-turbo { animation: ej-patla 1.3s ease-out both; }
+.zombi-zipla { animation: zombi-zipla 0.9s ease-out both; }
+@keyframes ej-saldir {
+  0% { transform: translate(0, 0) scale(1); }
+  38% { transform: translate(calc(var(--dx, 0px) * 0.92), calc(var(--dy, 0px) * 0.86)) scale(1.3) rotate(-10deg); }
+  46% { transform: translate(calc(var(--dx, 0px) * 0.95), calc(var(--dy, 0px) * 0.9)) scale(1.4) rotate(14deg); }
+  62% { transform: translate(calc(var(--dx, 0px) * 0.6), calc(var(--dy, 0px) * 0.55)) scale(1.1) rotate(0deg); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes ej-gitti {
+  0%, 85% { opacity: 0.15; }
+  100% { opacity: 1; }
+}
+@keyframes ej-yedi {
+  0%, 100% { transform: translate(0, 0); filter: none; }
+  15% { transform: translate(-6px, 2px) rotate(-6deg); filter: drop-shadow(0 0 10px #ef4444) brightness(1.4) sepia(1) hue-rotate(-30deg); }
+  35% { transform: translate(6px, -2px) rotate(6deg); }
+  55% { transform: translate(-4px, 1px) rotate(-4deg); filter: drop-shadow(0 0 8px #ef4444); }
+  75% { transform: translate(3px, 0) rotate(3deg); }
+}
+@keyframes ej-vuruldu {
+  0%, 100% { transform: translate(0, 0) scale(1); filter: drop-shadow(0 0 24px rgba(239, 68, 68, 0.6)); }
+  15% { transform: translate(-14px, 4px) scale(1.04); filter: brightness(2) saturate(0.4) drop-shadow(0 0 40px #fff); }
+  35% { transform: translate(12px, -3px); filter: brightness(1.5) drop-shadow(0 0 30px #ef4444); }
+  60% { transform: translate(-8px, 2px); }
+  80% { transform: translate(5px, 0); }
+}
+@keyframes ej-sayi {
+  0% { transform: translate(-50%, 10px) scale(0.5); opacity: 0; }
+  20% { transform: translate(-50%, -10px) scale(1.25); opacity: 1; }
+  100% { transform: translate(-50%, -90px) scale(1); opacity: 0; }
+}
+@keyframes ej-patla {
+  0% { transform: scale(0.2); opacity: 0; }
+  30% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+@keyframes ej-ates-yolu {
+  0% { transform: translate(-50%, 0) scale(0.5); opacity: 0; }
+  15% { opacity: 1; }
+  100% { transform: translate(-50%, 38vh) scale(1.6); opacity: 0; }
+}
+@keyframes arena-vur {
+  0%, 100% { transform: scale(1) rotate(0); }
+  25% { transform: scale(1.35) rotate(-12deg) translateY(-10px); }
+  45% { transform: scale(1.3) rotate(14deg) translateX(8px); }
+  70% { transform: scale(1.1) rotate(0); }
+}
+@keyframes arena-darbe {
+  0%, 100% { transform: translate(0, 0); filter: none; }
+  20% { transform: translate(-8px, 3px) rotate(-8deg); filter: brightness(1.6) sepia(1) hue-rotate(-40deg) drop-shadow(0 0 10px #ef4444); }
+  40% { transform: translate(8px, -3px) rotate(8deg); }
+  60% { transform: translate(-5px, 0) rotate(-4deg); }
+}
+@keyframes roket-hizlan {
+  0% { transform: translateY(-50%) scale(1); }
+  35% { transform: translateY(-50%) scale(1.35) translateX(10px); }
+  100% { transform: translateY(-50%) scale(1); }
+}
+@keyframes zombi-zipla {
+  0% { transform: translateX(-50%) translateY(0) scale(1); }
+  35% { transform: translateX(-50%) translateY(-22px) scale(1.25); }
+  100% { transform: translateX(-50%) translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ej-ucus, .ej-gitti, .ej-yedi, .ej-yedi-patla, .ej-vuruldu, .ej-sayi, .ej-patla, .ej-ates-yolu, .arena-vur, .arena-darbe, .roket-hizlan, .roket-sarsil, .roket-turbo, .zombi-zipla { animation: none; }
+}

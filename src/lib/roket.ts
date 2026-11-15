@@ -8,6 +8,8 @@ export interface RoketOyuncusu {
   ilerleme: number
   /** Bitiş çizgisine ulaştığı soru sırası (1'den); ulaşmadıysa null */
   bitirdi: number | null
+  /** Son oynanan sorudaki sonucu (1 doğru, 0 yanlış, -1 cevapsız); animasyonlar için */
+  son: 1 | 0 | -1 | null
 }
 
 export interface RoketDurumu {
@@ -39,7 +41,8 @@ export function roketHesapla(sorular: ZombiSorusu[], oyuncular: ZombiOyuncusu[])
       if (o.sonuc[idx] === 1) ilerleme++
       if (ilerleme >= hedef) bitirdi = k + 1
     })
-    return { ad: o.ad, ilerleme, bitirdi }
+    const sonIdx = acik[acik.length - 1]
+    return { ad: o.ad, ilerleme, bitirdi, son: sonIdx === undefined ? null : (o.sonuc[sonIdx] ?? null) }
   })
   const siralama = [...liste].sort((a, b) => {
     if (a.bitirdi !== null || b.bitirdi !== null) {

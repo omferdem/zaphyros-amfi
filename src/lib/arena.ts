@@ -10,6 +10,8 @@ export interface ArenaOyuncusu {
   /** Arenadan düştüğü soru sırası (1'den); hâlâ ayaktaysa null */
   elendi: number | null
   dogru: number
+  /** Son oynanan sorudaki sonucu (1 doğru, 0 yanlış, -1 cevapsız); animasyonlar için */
+  son: 1 | 0 | -1 | null
 }
 
 export interface ArenaDurumu {
@@ -26,7 +28,8 @@ export function arenaHesapla(sorular: ZombiSorusu[], oyuncular: ZombiOyuncusu[])
   const toplamSoru = sorular.length
   if (toplamSoru === 0 || oyuncular.length === 0) return null
   const acik = sorular.map((s, i) => (s.acildi ? i : -1)).filter((i) => i >= 0)
-  const liste: ArenaOyuncusu[] = oyuncular.map((o) => ({ ad: o.ad, kalan: ARENA_CANI, elendi: null, dogru: 0 }))
+  const sonIdx = acik[acik.length - 1]
+  const liste: ArenaOyuncusu[] = oyuncular.map((o) => ({ ad: o.ad, kalan: ARENA_CANI, elendi: null, dogru: 0, son: sonIdx === undefined ? null : (o.sonuc[sonIdx] ?? null) }))
   let bittigi = false
   acik.forEach((idx, k) => {
     if (bittigi) return

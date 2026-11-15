@@ -23,6 +23,10 @@ export interface ZombiOyuncuDurumu {
   durum: OyuncuDurumu
   /** Yakalandıysa hangi seviyede yakalandı */
   yakalandigiSeviye: number | null
+  /** Son oynanan sorudaki sonucu (1 doğru, 0 yanlış, -1 cevapsız); animasyonlar için */
+  son: 1 | 0 | -1 | null
+  /** Hangi soruda yakalandı ya da zirveye çıktı (1'den); henüz olmadıysa null */
+  bittigiSoru: number | null
 }
 
 export interface ZombiDurumu {
@@ -66,20 +70,24 @@ export function zombiHesapla(sorular: ZombiSorusu[], oyuncular: ZombiOyuncusu[])
     let seviye = 0
     let durum: OyuncuDurumu = 'canli'
     let yakalandigi: number | null = null
+    let bittigiSoru: number | null = null
     acik.forEach((idx, k) => {
       if (durum !== 'canli') return
       if (o.sonuc[idx] === 1) seviye = Math.min(zirve, seviye + 1)
       if (seviye >= zirve) {
         durum = 'zirve'
+        bittigiSoru = k + 1
         return
       }
       // Zombi sürüsü oyuncunun altından geçtiyse oyuncu yakalanır
       if (seviye < zombiSeviyesi(k + 1, toplamSoru, zirve)) {
         durum = 'yakalandi'
         yakalandigi = seviye
+        bittigiSoru = k + 1
       }
     })
-    return { ad: o.ad, seviye, durum, yakalandigiSeviye: yakalandigi }
+    const sonIdx = acik[acik.length - 1]
+    return { ad: o.ad, seviye, durum, yakalandigiSeviye: yakalandigi, son: sonIdx === undefined ? null : (o.sonuc[sonIdx] ?? null), bittigiSoru }
   })
   const zirvede = sonuclar.filter((o) => o.durum === 'zirve').length
   const yakalanan = sonuclar.filter((o) => o.durum === 'yakalandi').length

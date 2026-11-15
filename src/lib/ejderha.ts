@@ -12,6 +12,8 @@ export interface Kahraman {
   /** Savaş dışı kaldığı soru sırası (1'den); hâlâ ayaktaysa null */
   dustu: number | null
   vurus: number
+  /** Son oynanan sorudaki sonucu (1 doğru, 0 yanlış, -1 cevapsız); sonuç yoksa null. Perde animasyonları bunu kullanır. */
+  son: 1 | 0 | -1 | null
 }
 
 export interface EjderhaDurumu {
@@ -32,8 +34,12 @@ export function ejderhaHesapla(sorular: ZombiSorusu[], oyuncular: ZombiOyuncusu[
   if (toplamSoru === 0 || oyuncular.length === 0) return null
   const enCok = Math.max(1, Math.ceil(oyuncular.length * toplamSoru * EJDERHA_ORANI))
   const acik = sorular.map((s, i) => (s.acildi ? i : -1)).filter((i) => i >= 0)
-  const kahramanlar: Kahraman[] = oyuncular.map((o) => ({ ad: o.ad, kalan: KAHRAMAN_CANI, dustu: null, vurus: 0 }))
+  const kahramanlar: Kahraman[] = oyuncular.map((o) => ({ ad: o.ad, kalan: KAHRAMAN_CANI, dustu: null, vurus: 0, son: null }))
   const hasarlar: number[] = []
+  const sonIdx = acik[acik.length - 1]
+  oyuncular.forEach((o, j) => {
+    kahramanlar[j].son = sonIdx === undefined ? null : (o.sonuc[sonIdx] ?? null)
+  })
   let toplamHasar = 0
   let bittigiSoru: number | null = null
   acik.forEach((idx, k) => {

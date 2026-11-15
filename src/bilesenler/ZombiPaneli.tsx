@@ -5,6 +5,7 @@ import { KURTULMA_ORANI, zombiHesapla, type ZombiDurumu, type ZombiOyuncuDurumu,
 import Konfeti from './Konfeti'
 import { useOyunSesi } from '../lib/ses'
 import Gorsel, { adIndeksi, arkaPlan } from './Gorsel'
+import { useRaund } from './Hareket'
 
 const ANAHTAR = (oturum: string) => `amfi_zombi_${oturum}`
 const KARAKTERLER = ['🧑‍🎓', '👩‍🎓', '🧙', '🦸', '🥷', '🧑‍🚀', '👨‍🔬', '👩‍🎨', '🧝', '🕵️', '👩‍🚀', '🧑‍🍳', '🦹', '🤠', '👩‍🏫', '🧑‍🎤']
@@ -123,6 +124,7 @@ function Ozet({ d, kapat }: { d: ZombiDurumu; kapat: () => void }) {
 /** Tam ekran sahne: piramit, karakterler ve zombi sürüsü. */
 export function ZombiSahnesi({ d, kapat }: { d: ZombiDurumu; kapat: () => void }) {
   useOyunSesi(d.oynanan, d.bitti, d.kazandi)
+  const { aktif } = useRaund(d.oynanan)
   const kat = d.zirve
   const birim = 100 / (kat + 2) // yüzde cinsinden bir katın yüksekliği (zemin ve bayrak payı dahil)
   // Katlardaki oyuncuları yan yana diz: aynı seviyedekiler eşit aralıkla dağılır
@@ -201,10 +203,12 @@ export function ZombiSahnesi({ d, kapat }: { d: ZombiDurumu; kapat: () => void }
             return (
               <div
                 key={`${o.ad}-${i}`}
-                className={`absolute -translate-x-1/2 text-center leading-none transition-all duration-1000 ease-out ${zombi ? 'zombi-yakalanan' : o.durum === 'zirve' ? 'zombi-zirvede' : 'zombi-yuruyen'}`}
+                className={`absolute -translate-x-1/2 text-center leading-none transition-all duration-1000 ease-out ${zombi ? 'zombi-yakalanan' : o.durum === 'zirve' ? 'zombi-zirvede' : 'zombi-yuruyen'} ${aktif && !zombi && o.son === 1 ? 'zombi-zipla' : ''}`}
                 style={{ left: `${Math.max(4, Math.min(96, sol))}%`, bottom: `${altta}%` }}
                 title={o.ad}
               >
+                {aktif && zombi && o.bittigiSoru === d.oynanan && <Gorsel ad="efekt-yakalandi.webp" emoji="💥" className="ej-patla absolute inset-0 m-auto w-24 h-24 pointer-events-none z-10" emojiClass="ej-patla absolute inset-0 text-4xl" />}
+                {aktif && !zombi && o.durum === 'zirve' && o.bittigiSoru === d.oynanan && <Gorsel ad="efekt-kurtuldu.webp" emoji="✨" className="ej-patla absolute inset-0 m-auto w-24 h-24 pointer-events-none z-10" emojiClass="ej-patla absolute inset-0 text-4xl" />}
                 <div className={boy}>{zombi ? <Gorsel ad={`zombi-${adIndeksi(o.ad, 3)}.webp`} emoji="🧟" className={gBoy} emojiClass={boy} /> : <Gorsel ad={`ogrenci-${adIndeksi(o.ad, 8)}.webp`} emoji={karakter(o.ad)} className={gBoy} emojiClass={boy} />}</div>
                 <div className={`${ad} font-bold px-1 rounded bg-slate-950/70 whitespace-nowrap max-w-20 truncate ${zombi ? 'text-rose-300' : o.durum === 'zirve' ? 'text-amber-200' : 'text-white'}`}>{o.ad}</div>
               </div>

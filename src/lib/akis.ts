@@ -10,7 +10,7 @@ import type { PdfBelgesi } from './pdf'
 const KOVA = 'sunumlar'
 const GORSEL_KOVA = 'slayt-gorselleri'
 const SUNUM_ALANLARI = 'id, subject_id, ad, kaynak, durum, sayfa_sayisi, metinler, gorseller_hazir, olusturuldu'
-const ADIM_ALANLARI = 'id, lesson_id, sira, tur, presentation_id, sayfa_no, question_id, ayar'
+const ADIM_ALANLARI = 'id, lesson_id, sira, tur, presentation_id, sayfa_no, question_id, ayar, tur_id'
 const SORU_ALANLARI = 'id, subject_id, soru, dogru, yanlislar, sure_sn, ek, olusturuldu'
 
 /** Telefon modunda öğrenciye giden sayfa görselinin yolu (veritabanı da aynı yolu üretir). */
@@ -190,7 +190,7 @@ export async function adimlariGetir(akisId: string): Promise<Adim[]> {
 export async function adimlarEkle(
   akisId: string,
   _mevcutSayi: number,
-  yeni: { tur: Adim['tur']; presentation_id?: string; sayfa_no?: number; question_id?: string; ayar?: AdimAyari }[],
+  yeni: { tur: Adim['tur']; presentation_id?: string; sayfa_no?: number; question_id?: string; ayar?: AdimAyari; tur_id?: string }[],
 ): Promise<string[]> {
   if (yeni.length === 0) return []
   const { data: son } = await supabase.from('lesson_steps').select('sira').eq('lesson_id', akisId).order('sira', { ascending: false }).limit(1)

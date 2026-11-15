@@ -214,6 +214,7 @@ export default function Sahne() {
       .then((a) => setAkislar(a.map((x) => ({ id: x.id, ad: x.ad }))))
       .catch(() => setAkislar([]))
   }, [icerikId])
+  const aktifTur = oturum?.aktif_tur ?? null
   useEffect(() => {
     if (!akisId) {
       setAdimlar([])
@@ -221,13 +222,13 @@ export default function Sahne() {
     }
     adimlariGetir(akisId)
       .then(async (a) => {
-        setAdimlar(a)
+        setAdimlar(a.filter((x) => (x.tur_id ?? null) === aktifTur))
         const idler = [...new Set(a.flatMap((x) => (x.presentation_id ? [x.presentation_id] : [])))]
         const s = await sunumlariGetirIdIle(idler)
         setSunumlar(new Map(s.map((x) => [x.id, x])))
       })
       .catch(() => setAdimlar([]))
-  }, [akisId])
+  }, [akisId, aktifTur])
 
   const { belgeler } = usePdfBelgeleri(oturum?.courses.subject_id, [...sunumlar.keys()])
 
@@ -328,7 +329,7 @@ export default function Sahne() {
       setOturum((o) => (o ? { ...o, aktif_adim: null } : o))
       return
     }
-    const { data } = await supabase.from('lesson_steps').select('id').eq('lesson_id', deger).order('sira').order('id').limit(1)
+    const { data } = await supabase.from('lesson_steps').select('id').eq('lesson_id', deger).is('tur_id', null).order('sira').order('id').limit(1)
     const baslangic = (data?.[0]?.id as string | undefined) ?? null
     // Bu şubede bu akış daha önce yarım kaldıysa kaldığı adımdan devam edilir (hoca "başa dön" diyebilir)
     const kalinan = oturum ? await kalinanAdim(oturum.course_id, deger).catch(() => null) : null
@@ -362,17 +363,15 @@ export default function Sahne() {
       if (error || !data) throw error ?? new Error('akis')
       id = data.id as string
     }
-    // Aynı paket yeniden açılıyorsa mevcut adımlar korunur (bu oturumdaki cevaplar ve puanlar silinmesin);
-    // paket değişmişse adımlar yeniden kurulur.
-    const { data: eski } = await supabase.from('lesson_steps').select('id, question_id').eq('lesson_id', id).order('sira').order('id')
-    const ayni = (eski ?? []).length === sorular.length && (eski ?? []).every((x, i) => x.question_id === sorular[i].id)
-    let idler: string[]
-    if (ayni) idler = (eski ?? []).map((x) => x.id as string)
-    else {
-      const { error: silHatasi } = await supabase.from('lesson_steps').delete().eq('lesson_id', id)
-      if (silHatasi) throw silHatasi
-      idler = await adimlarEkle(id, 0, sorular.map((s) => ({ tur: 'soru' as const, question_id: s.id, ayar: {} })))
-    }
+    // Her başlatma yeni bir oyun turudur: kendi adım satırlarını taşır, önceki turun cevapları karışmaz.
+    const { data: tur, error: turHatasi } = await supabase
+      .from('oyun_turlari')
+      .insert({ session_id: oturumId, lesson_id: id, paket: paketAdi.slice(0, 200), mod, grup })
+      .select('id')
+      .single()
+    if (turHatasi || !tur) throw turHatasi ?? new Error('tur')
+    const turId = tur.id as string
+    const idler = await adimlarEkle(id, 0, sorular.map((s) => ({ tur: 'soru' as const, question_id: s.id, ayar: {}, tur_id: turId })))
     if (!kahootAkisi) {
       try {
         localStorage.setItem(
@@ -383,9 +382,9 @@ export default function Sahne() {
         /* saklanamazsa dönüşte yoklama ekranı açılır */
       }
     }
-    const { error } = await supabase.from('sessions').update({ lesson_id: id, aktif_adim: idler[0] ?? null }).eq('id', oturumId)
+    const { error } = await supabase.from('sessions').update({ lesson_id: id, aktif_adim: idler[0] ?? null, aktif_tur: turId }).eq('id', oturumId)
     if (error) throw error
-    setOturum((o) => (o ? { ...o, lesson_id: id, aktif_adim: idler[0] ?? null } : o))
+    setOturum((o) => (o ? { ...o, lesson_id: id, aktif_adim: idler[0] ?? null, aktif_tur: turId } : o))
     await oyunuAc(oturumId, mod, grup)
     const grafik = mod !== null && GRAFIK_OYUNLAR.includes(mod) ? mod : null
     setZapootOyunu(grafik)
@@ -409,12 +408,12 @@ export default function Sahne() {
         hedefAdim = (data?.id as string | undefined) ?? null
       }
       if (!hedefAdim) {
-        const { data: ilk } = await supabase.from('lesson_steps').select('id').eq('lesson_id', hedefAkis).order('sira').order('id').limit(1)
+        const { data: ilk } = await supabase.from('lesson_steps').select('id').eq('lesson_id', hedefAkis).is('tur_id', null).order('sira').order('id').limit(1)
         hedefAdim = (ilk?.[0]?.id as string | undefined) ?? null
       }
     }
     // Dönülecek akış yoksa (ders yoklama ekranından açılmıştı) Zapoot akışından çıkılır ve yoklama ekranı açılır
-    const degisiklik = hedefAkis ? { lesson_id: hedefAkis, aktif_adim: hedefAdim } : { lesson_id: null, aktif_adim: null }
+    const degisiklik = hedefAkis ? { lesson_id: hedefAkis, aktif_adim: hedefAdim, aktif_tur: null } : { lesson_id: null, aktif_adim: null, aktif_tur: null }
     const { error } = await supabase.from('sessions').update(degisiklik).eq('id', oturumId)
     if (error) return window.alert('Derse dönülemedi. Bağlantını kontrol edip tekrar dene.')
     setOturum((o) => (o ? { ...o, ...degisiklik } : o))

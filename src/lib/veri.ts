@@ -129,7 +129,7 @@ export async function ogrencileriGetir(dersId: string): Promise<Ogrenci[]> {
 export async function oturumlariGetir(dersId: string): Promise<Oturum[]> {
   const { data, error } = await supabase
     .from('sessions')
-    .select('id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, soru_durum, telefon_modu, hafta_no')
+    .select('id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, aktif_tur, soru_durum, telefon_modu, hafta_no')
     .eq('course_id', dersId)
     .order('basladi', { ascending: false })
   if (error) throw error
@@ -139,14 +139,14 @@ export async function oturumlariGetir(dersId: string): Promise<Oturum[]> {
 export async function oturumGetir(id: string): Promise<(Oturum & { courses: Ders }) | null> {
   const { data, error } = await supabase
     .from('sessions')
-    .select('id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, soru_durum, telefon_modu, hafta_no, courses(id, subject_id, term_id, ad, kod, donem, sube, yoklama_sayisi, yoklama_birimi, olusturuldu)')
+    .select('id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, aktif_tur, soru_durum, telefon_modu, hafta_no, courses(id, subject_id, term_id, ad, kod, donem, sube, yoklama_sayisi, yoklama_birimi, olusturuldu)')
     .eq('id', id)
     .maybeSingle()
   if (error) throw error
   return data as unknown as (Oturum & { courses: Ders }) | null
 }
 
-const OTURUM_ALANLARI = 'id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, soru_durum, telefon_modu, hafta_no'
+const OTURUM_ALANLARI = 'id, course_id, baslik, yoklama_acik, basladi, bitti, lesson_id, aktif_adim, aktif_tur, soru_durum, telefon_modu, hafta_no'
 
 /** Dersi bitirir: yoklama kapanır, öğrencilerin telefonunda "Ders bitti" görünür. Silmez; yeniden açılabilir. */
 export async function oturumuBitir(id: string): Promise<Oturum> {

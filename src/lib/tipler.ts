@@ -48,6 +48,8 @@ export interface Oturum {
   bitti: string | null
   lesson_id: string | null
   aktif_adim: string | null
+  /** Perdedeki Zapoot oyun turu (boşsa oyun yok) */
+  aktif_tur?: string | null
   soru_durum: 'acik' | 'sonuc' | null
   telefon_modu: boolean
   /** Oturumun ait olduğu yoklama haftası (boşsa ek ders ya da yoklamasız oturum) */
@@ -121,6 +123,8 @@ export interface Adim {
   sayfa_no: number | null
   question_id: string | null
   ayar: AdimAyari
+  /** Zapoot oyun turu (boşsa ders akışının kendi adımı) */
+  tur_id?: string | null
 }
 
 /** Öğrenci ve kumandanın gördüğü ders durumu (ders_durumu / kumanda_durumu RPC'leri). */

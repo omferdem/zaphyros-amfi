@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.50.2 (15 Kasım 2026)
+Faz 1 (v0.51.0) hazırlığı: oyun turu.
+- **Oyun turu (0036_oyun_turlari.sql, SQL ile uygulandı):** Zapoot her başlatıldığında yeni bir tur açılır, tur kendi adım satırlarını taşır. İkinci oyun öncekinin cevaplarını, takım puanlarını ve zombi sonuçlarını devralmaz; takım, zombi, hocayla yarış ve merdiven sayımları yalnızca perdedeki turu sayar. "Derse dön" turu kapatır. Eski kayıtlar etkilenmez.
+
 ## v0.50.1 (15 Kasım 2026)
 Faz 1'in veritabanı gerektirmeyen bölümü (v0.51.0'a hazırlık).
 - **Perde yerleşim haritası:** el kaldırma ve soru zarfları sağ sütunda alt alta (en çok 5 el, 4 soru, fazlası "+N daha"); sıkıldım göstergesi sol alta, oyun kontrol çubuğu alt ortaya, ders kodu sağ alta taşındı; birbirinin üstüne binmez.

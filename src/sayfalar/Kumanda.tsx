@@ -1,4 +1,5 @@
 import LazerYuzeyi from '../bilesenler/LazerYuzeyi'
+import KumandaNotu from '../bilesenler/KumandaNotu'
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { DERSI_BITIR_SORUSU } from '../lib/veri'
@@ -217,6 +218,7 @@ export default function Kumanda() {
 
       <BaglantiUyarisi />
       {sekme === 'ders' && <LazerYuzeyi oturum={oturum} />}
+      {sekme === 'ders' && anahtar && <KumandaNotu oturum={oturum} anahtar={anahtar} />}
       {sekme === 'ders' && <SinifPaneli d={sinif.d} komut={sinif.komut} hata={sinif.hata} mod="kumanda" />}
       {sekme === 'oyun' && (
         <>

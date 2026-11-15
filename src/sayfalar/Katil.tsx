@@ -632,7 +632,7 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
             ) : gorselGoster ? null : (
               <p className="text-slate-400">{durum?.telefon_modu ? 'Bu slaytta yazı yok.' : 'Bu slaytta yazı yok; perdeye bak.'}</p>
             )}
-            {(satirlar.length > 0 || gorsel.url) && (
+            {durum?.ekran_goruntusu !== false && (satirlar.length > 0 || gorsel.url) && (
               <button
                 className="ikincil-buton w-full !py-2.5 text-sm"
                 disabled={kartMesgul}

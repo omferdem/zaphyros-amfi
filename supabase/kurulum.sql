@@ -1,6 +1,6 @@
 -- ZAPEDU kurulum SQL'i (bu dosya otomatik üretilir, elle düzenleme; kaynağı supabase/migrations)
 -- Yeni bir Supabase projesinde SQL Editor'e bu dosyanın tamamını yapıştırıp bir kez çalıştır.
--- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql, 0019_oyun_adimi.sql, 0020_yoklama_haftalari.sql, 0021_pencere_6sn.sql, 0022_oturum_quizi.sql, 0023_acik_uclu_zombi.sql, 0024_kumanda_notu.sql, 0025_acik_uclu_sure.sql, 0026_devam_serisi.sql, 0027_hoca_davetleri.sql, 0028_etkinlik_fotograflari.sql, 0029_kod_yoklama_vermez.sql, 0030_sabit_ders_kodu.sql, 0031_kumanda_istegi.sql, 0032_slayt_gorseli_herkese.sql, 0033_slayt_gorseli_telefon_modu.sql, 0034_not_defteri.sql, 0035_kumanda_kale.sql, 0036_oyun_turlari.sql, 0037_katki_sil_hoca_yaris.sql, 0038_puan_turu_lobi.sql, 0039_takim_soru_ozeti.sql, 0040_kumanda_soru_sayisi.sql, 0041_takim_oyuncu_sonuclari.sql, 0042_soru_jokerleri.sql, 0043_kumanda_orman.sql, 0044_hizli_cevap.sql
+-- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql, 0019_oyun_adimi.sql, 0020_yoklama_haftalari.sql, 0021_pencere_6sn.sql, 0022_oturum_quizi.sql, 0023_acik_uclu_zombi.sql, 0024_kumanda_notu.sql, 0025_acik_uclu_sure.sql, 0026_devam_serisi.sql, 0027_hoca_davetleri.sql, 0028_etkinlik_fotograflari.sql, 0029_kod_yoklama_vermez.sql, 0030_sabit_ders_kodu.sql, 0031_kumanda_istegi.sql, 0032_slayt_gorseli_herkese.sql, 0033_slayt_gorseli_telefon_modu.sql, 0034_not_defteri.sql, 0035_kumanda_kale.sql, 0036_oyun_turlari.sql, 0037_katki_sil_hoca_yaris.sql, 0038_puan_turu_lobi.sql, 0039_takim_soru_ozeti.sql, 0040_kumanda_soru_sayisi.sql, 0041_takim_oyuncu_sonuclari.sql, 0042_soru_jokerleri.sql, 0043_kumanda_orman.sql, 0044_hizli_cevap.sql, 0045_ekran_goruntusu_kumanda_notu.sql
 
 -- ===========================================================================
 -- 0001_saglik.sql
@@ -6666,3 +6666,107 @@ begin
   );
 end;
 $$;
+
+-- ===========================================================================
+-- 0045_ekran_goruntusu_kumanda_notu.sql
+-- ===========================================================================
+
+-- 0045: Ekran görüntüsü düğmesini hoca kapatabilsin; kumandadan not yazma
+--
+-- * sessions.ekran_goruntusu (varsayılan açık): kapalıysa öğrenci telefonunda "Ekran görüntüsü" düğmesi görünmez (ders_durumu bu alanı verir).
+-- * kumanda_not_ekle: telefon kumandası (anahtarla) şubenin not defterine yeni bir not ekler; not oturumun hocasına yazılır.
+
+alter table public.sessions add column ekran_goruntusu boolean not null default true;
+
+create or replace function ozel.durum(p_session uuid)
+returns jsonb
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select jsonb_build_object(
+    'ders', c.ad || coalesce(' · ' || nullif(btrim(c.sube), ''), ''),
+    'baslik', s.baslik,
+    'bitti', s.bitti is not null,
+    'yoklama_acik', s.yoklama_acik and s.bitti is null,
+    'telefon_modu', s.telefon_modu,
+    'ekran_goruntusu', s.ekran_goruntusu,
+    'adim', (
+      select jsonb_build_object(
+        'id', a.id,
+        'tur', a.tur,
+        'sira', a.no,
+        'toplam', a.toplam,
+        'sunum', p.ad,
+        'sayfa_no', a.sayfa_no,
+        'sayfa_sayisi', p.sayfa_sayisi,
+        'metin', case when a.tur = 'slayt' then p.metinler ->> (a.sayfa_no - 1) end,
+        'gorsel', case when s.telefon_modu and a.tur = 'slayt' and p.gorseller_hazir
+          then p.subject_id::text || '/' || p.id::text || '/' || a.sayfa_no::text end
+      ) || case when a.tur = 'soru' then (
+        select jsonb_build_object(
+          'soru', q.soru,
+          'secenekler', to_jsonb(ozel.secenekler(s.id, q.id)),
+          'elenen', (select j.veri -> 'elenen' from public.soru_jokerleri j where j.session_id = s.id and j.step_id = a.id and j.tur = 'yarim'),
+          'sure_sn', q.sure_sn,
+          'soru_durum', s.soru_durum,
+          'kalan_ms', case when s.soru_durum = 'acik'
+            then greatest(0, ceil(extract(epoch from (s.soru_basladi + make_interval(secs => q.sure_sn) - clock_timestamp())) * 1000))::integer
+            end,
+          'cevap_sayisi', (select count(*) from public.responses r where r.session_id = s.id and r.step_id = a.id),
+          'dogru_index', case when s.soru_durum = 'sonuc' then array_position(ozel.secenekler(s.id, q.id), q.dogru) - 1 end,
+          'dagilim', case when s.soru_durum = 'sonuc' then (
+            select jsonb_agg((select count(*) from public.responses r where r.session_id = s.id and r.step_id = a.id and r.secim = i - 1) order by i)
+            from generate_series(1, cardinality(ozel.secenekler(s.id, q.id))) as i
+          ) end
+        )
+        from public.questions q where q.id = a.question_id
+      )
+      when a.tur in ('fikir', 'oylama', 'video') then ozel.etkinlik(s.id, a.id)
+      else '{}'::jsonb end
+      from (
+        select st.*, row_number() over (order by st.sira, st.id) as no, count(*) over () as toplam
+        from public.lesson_steps st
+        where st.lesson_id = s.lesson_id
+      ) a
+      left join public.presentations p on p.id = a.presentation_id
+      where a.id = s.aktif_adim
+    )
+  )
+  from public.sessions s
+  join public.courses c on c.id = s.course_id
+  where s.id = p_session;
+$$;
+
+create function public.kumanda_not_ekle(p_session uuid, p_anahtar text, p_metin text)
+returns jsonb
+language plpgsql
+volatile
+security definer
+set search_path = ''
+as $$
+declare
+  v_metin text := btrim(coalesce(p_metin, ''));
+  v_id    uuid;
+begin
+  if not ozel.kumanda_dogru(p_session, p_anahtar) then
+    return jsonb_build_object('hata', 'yetki_yok');
+  end if;
+  if length(v_metin) < 1 then
+    return jsonb_build_object('hata', 'metin_bos');
+  end if;
+  insert into public.notlar (teacher_id, course_id, metin)
+  select c.teacher_id, c.id, left(v_metin, 20000)
+  from public.sessions s join public.courses c on c.id = s.course_id
+  where s.id = p_session
+  returning id into v_id;
+  if v_id is null then
+    return jsonb_build_object('hata', 'oturum_yok');
+  end if;
+  return jsonb_build_object('durum', 'tamam', 'id', v_id);
+end;
+$$;
+
+revoke all on function public.kumanda_not_ekle(uuid, text, text) from public;
+grant execute on function public.kumanda_not_ekle(uuid, text, text) to anon, authenticated;

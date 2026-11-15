@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.63.0 (16 Kasım 2026)
+- **Ekran görüntüsü düğmesi hocanın elinde (0045_ekran_goruntusu_kumanda_notu.sql, SQL ile uygulandı):** perdedeki "⋯" menüsünde "Ekran görüntüsü: açık/kapalı"; kapalıyken öğrenci telefonunda düğme görünmez (varsayılan açık).
+- **Kumandadan hızlı not:** telefon kumandasının Ders sekmesinde "Hızlı not" kutusu; not şubenin not defterine yeni kart olarak eklenir (kumanda anahtarıyla, hoca girişi gerekmeden; `kumanda_not_ekle`).
+- Prompt'tan açıkta kalan madde kalmadı.
+
 ## v0.62.1 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Kale kuşatması animasyonları:** her soruda yeni alınan hücreye asker evinden koşar, bayrak diker; ele geçirmede 💥 çarpışma; mancınık taşları 🪨 kaleye düşer. Tarayıcıda çalıştığı görüldü.

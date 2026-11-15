@@ -700,6 +700,17 @@ export default function Sahne() {
           <button className="ikincil-buton text-left" onClick={() => otoGecAyarla(!otoGec)} title="Soruda çevrimiçi herkes cevap verince süre dolmasını bekleme">
             {otoGec ? '⏭ Herkes cevaplayınca geç: açık' : '⏭ Herkes cevaplayınca geç: kapalı'}
           </button>
+          <button
+            className="ikincil-buton text-left"
+            onClick={async () => {
+              const yeni = oturum.ekran_goruntusu === false
+              await supabase.from('sessions').update({ ekran_goruntusu: yeni }).eq('id', oturumId)
+              setOturum((o) => (o ? { ...o, ekran_goruntusu: yeni } : o))
+            }}
+            title="Öğrenci telefonlarındaki 'Ekran görüntüsü' düğmesini aç ya da kapat"
+          >
+            {oturum.ekran_goruntusu === false ? '📸 Ekran görüntüsü: kapalı' : '📸 Ekran görüntüsü: açık'}
+          </button>
           <button className="ikincil-buton text-left" onClick={() => tepkiAyarla(!tepkiAcik)} title="Öğrencilerin emoji tepkileri perdede uçar; quiz sırasında kendiliğinden kapalıdır">
             {tepkiAcik ? '😀 Emoji tepkilerini kapat' : '😶 Emoji tepkilerini aç'}
           </button>

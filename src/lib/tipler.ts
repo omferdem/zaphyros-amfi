@@ -52,6 +52,7 @@ export interface Oturum {
   aktif_tur?: string | null
   soru_durum: 'acik' | 'sonuc' | null
   telefon_modu: boolean
+  ekran_goruntusu?: boolean
   /** Oturumun ait olduğu yoklama haftası (boşsa ek ders ya da yoklamasız oturum) */
   hafta_no?: number | null
 }
@@ -134,6 +135,8 @@ export interface DersDurumu {
   bitti: boolean
   yoklama_acik: boolean
   telefon_modu?: boolean
+  /** Öğrenci telefonunda "Ekran görüntüsü" düğmesi görünsün mü (boşsa evet) */
+  ekran_goruntusu?: boolean
   adim: {
     id: string
     tur: AdimTuru

@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.62.1 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Kale kuşatması animasyonları:** her soruda yeni alınan hücreye asker evinden koşar, bayrak diker; ele geçirmede 💥 çarpışma; mancınık taşları 🪨 kaleye düşer. Tarayıcıda çalıştığı görüldü.
+- **Hocayla yarış:** skor sayıları sonuç açılınca döner, hoca ya da sınıf puan alınca 🥊 darbesi vurur. (Boks animasyonu tarayıcıda denenmedi.)
+- Prompt'taki iş listesi bununla tamamlandı; açık kalanlar: enerji ve hızlı bonus gerçek derste ayarlanacak, kumandadan not yazma, hoca ayarından ekran görüntüsü düğmesini kapatma.
+
 ## v0.62.0 (16 Kasım 2026)
 - **Hızlı doğru ve "cevap verdi" (0044_hizli_cevap.sql, SQL ile uygulandı):** `zombi_goster` her oyuncu için `hizli` (doğru ve sürenin ilk üçte birinde cevaplandı) ve `cevapladi` (açık soruda cevap verdi, doğruluğu sızdırmaz) alanlarını da döndürür; eski alanlar aynen durur.
 - **Roket:** hızlı doğru +1 ek itki (soru başına en çok 1).

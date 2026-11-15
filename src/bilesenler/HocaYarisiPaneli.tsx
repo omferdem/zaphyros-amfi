@@ -81,8 +81,13 @@ export default function HocaYarisiPaneli({ oturum, anahtar, mod, dugme = true }:
     <div className={perde ? 'fixed left-1/2 -translate-x-1/2 bottom-14 z-30 flex flex-col items-center gap-2 max-w-[22rem]' : 'cam-panel rounded-2xl p-4 space-y-3'}>
       <div className="cam-panel rounded-2xl px-4 py-2 flex items-center gap-3">
         <Gorsel ad="hoca-yaris.webp" emoji="🥊" className="w-12 h-12" emojiClass="text-xl" />
-        <span className="font-display font-extrabold tabular-nums text-lg">
-          Hoca {y.hoca} <span className="text-slate-500">–</span> {y.sinif} Sınıf
+        <span className="font-display font-extrabold tabular-nums text-lg relative">
+          Hoca <span key={`h${y.hoca}`} className="skor-don inline-block">{y.hoca}</span> <span className="text-slate-500">–</span> <span key={`s${y.sinif}`} className="skor-don inline-block">{y.sinif}</span> Sınıf
+          {y.son && (
+            <span key={`b${y.hoca}-${y.sinif}`} className={`absolute top-1/2 -translate-y-1/2 text-2xl ${y.son.hoca_dogru ? 'boks-hoca' : 'boks-sinif'}`} aria-hidden>
+              🥊
+            </span>
+          )}
         </span>
         <Gorsel ad="ogrenci-sinif.webp" emoji="" className="w-12 h-12" />
         <button className="text-xs text-slate-500 hover:text-white" onClick={() => ayarla(false)} title="Hocayla yarışı kapat">

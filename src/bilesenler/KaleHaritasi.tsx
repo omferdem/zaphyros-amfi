@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabase'
-import { HALKA_SAYISI, HUCRE_SAYISI, kaleHaritasiHesapla, type KaleHaritasi, type KaleOyuncusu } from '../lib/kaleHarita'
+import { HALKA_SAYISI, HUCRE_SAYISI, evDilimi, kaleHaritasiHesapla, type KaleHaritasi, type KaleOyuncusu } from '../lib/kaleHarita'
 import { takimBilgisi } from '../lib/takim'
 import Konfeti from './Konfeti'
 
@@ -77,6 +77,48 @@ export function KaleHaritaSahnesi({ h, takimSayisi, kucult }: { h: KaleHaritasi;
                 return (
                   <text key={`t-${c.halka}-${c.dilim}`} x={p.x} y={p.y + 1} fontSize="2.6" textAnchor="middle" fill="white" fontWeight="bold">
                     {`⚑${(c.sahip ?? '').trim()[0]?.toLocaleUpperCase('tr') ?? ''}`}
+                  </text>
+                )
+              })}
+            {/* Bu sorudaki hamleler: asker evinden hücreye koşar, bayrak diker; ele geçirmede iki asker çarpışır */}
+            {h.oynanan > 0 &&
+              h.hucreler
+                .filter((c) => c.takim !== null && c.soru === h.oynanan)
+                .map((c, i) => {
+                  const ev = merkez(0, evDilimi(c.takim ?? 1, takimSayisi))
+                  const hedef = merkez(c.halka, c.dilim)
+                  const gecikme = Math.min(2.5, i * 0.12)
+                  return (
+                    <g key={`hamle-${h.oynanan}-${c.halka}-${c.dilim}`}>
+                      <text fontSize="3.4" textAnchor="middle" opacity="0">
+                        🪖
+                        <animateMotion path={`M ${ev.x} ${ev.y} L ${hedef.x} ${hedef.y}`} dur="1.1s" begin={`${gecikme}s`} fill="freeze" />
+                        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="1.1s" begin={`${gecikme}s`} fill="freeze" />
+                      </text>
+                      {c.geriAlindi && (
+                        <text x={hedef.x} y={hedef.y} fontSize="5" textAnchor="middle" opacity="0">
+                          💥
+                          <animate attributeName="opacity" values="0;1;0" dur="0.8s" begin={`${gecikme + 1}s`} fill="freeze" />
+                        </text>
+                      )}
+                      <text x={hedef.x} y={hedef.y - 2.6} fontSize="3" textAnchor="middle" opacity="0">
+                        🚩
+                        <animate attributeName="opacity" values="0;1" dur="0.3s" begin={`${gecikme + 1.1}s`} fill="freeze" />
+                      </text>
+                    </g>
+                  )
+                })}
+            {/* Mancınık: her soruda taşlar kaleye düşer */}
+            {h.oynanan > 0 &&
+              Array.from({ length: Math.min(5, Math.max(1, h.hucreler.filter((c) => c.soru === h.oynanan).length)) }, (_, i) => {
+                const a = ((i * 2.4 + h.oynanan) % (2 * Math.PI)) - Math.PI / 2
+                const x0 = 50 + (R_DIS + 1) * Math.cos(a)
+                const y0 = 50 + (R_DIS + 1) * Math.sin(a)
+                return (
+                  <text key={`tas-${h.oynanan}-${i}`} fontSize="3" textAnchor="middle" opacity="0">
+                    🪨
+                    <animateMotion path={`M ${x0} ${y0} Q 50 ${y0 - 30} 50 50`} dur="1.4s" begin={`${0.3 + i * 0.35}s`} fill="freeze" />
+                    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="1.4s" begin={`${0.3 + i * 0.35}s`} fill="freeze" />
                   </text>
                 )
               })}

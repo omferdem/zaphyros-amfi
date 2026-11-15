@@ -24,6 +24,8 @@ export interface Hucre {
   sahip: string | null
   /** Hücrenin alındığı ya da ele geçirildiği soru (1'den) */
   soru: number | null
+  /** Hücre bu soruda rakipten ele geçirildi (animasyon için) */
+  geriAlindi?: boolean
 }
 
 export interface KaleHaritasi {
@@ -97,6 +99,7 @@ export function kaleHaritasiHesapla(oyuncular: KaleOyuncusu[], takimSayisi: numb
       secilen.takim = t
       secilen.sahip = o.ad
       secilen.soru = q + 1
+      secilen.geriAlindi = geriAlma
       const kayit = alinan.get(t) ?? {}
       kayit[o.ad] = (kayit[o.ad] ?? 0) + 1
       alinan.set(t, kayit)

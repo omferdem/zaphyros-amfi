@@ -12,6 +12,10 @@ export interface ZombiOyuncusu {
   ad: string
   /** Soru sırasıyla: 1 doğru, 0 yanlış, -1 cevapsız; sonucu açılmamış soruda null */
   sonuc: (1 | 0 | -1 | null)[]
+  /** Soru sırasıyla 1: doğru ve sürenin ilk üçte birinde cevaplandı (0044) */
+  hizli?: (1 | 0)[]
+  /** Açık soruda cevap verdi mi (doğruluğu sızdırmaz) */
+  cevapladi?: boolean
 }
 
 export type OyuncuDurumu = 'canli' | 'zirve' | 'yakalandi'

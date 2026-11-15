@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.62.0 (16 Kasım 2026)
+- **Hızlı doğru ve "cevap verdi" (0044_hizli_cevap.sql, SQL ile uygulandı):** `zombi_goster` her oyuncu için `hizli` (doğru ve sürenin ilk üçte birinde cevaplandı) ve `cevapladi` (açık soruda cevap verdi, doğruluğu sızdırmaz) alanlarını da döndürür; eski alanlar aynen durur.
+- **Roket:** hızlı doğru +1 ek itki (soru başına en çok 1).
+- **Enerji:** hızlı doğru +5 ek enerji; enerji şeridinde cevap veren oyuncunun karakteri parlar ve ✋ rozeti çıkar (doğruluk sızmaz). Birim testli.
+
 ## v0.61.2 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Enerji barı büyük oyun sahnelerinde:** zombi, roket, ejderha, arena ve orman sahnesi açıkken sol altta "⚡ Enerji" düğmesi; açılınca her oyuncunun 0-100 enerji barı (düşük enerjili soluk ve kırmızımsı, sonuç açılınca +1/−1 ve 🔥) görünür. Sahnelerin kendi düzenine dokunulmaz.

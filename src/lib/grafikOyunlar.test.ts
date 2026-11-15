@@ -43,6 +43,14 @@ describe('roket yarışı', () => {
   })
 })
 
+describe('roket hızlı itki', () => {
+  it('hızlı doğru +1 ek itki verir (soru başına en çok 1)', () => {
+    const d = roketHesapla(sorular(10, 3), [{ ad: 'H', sonuc: sonuc(10, 3, () => 1), hizli: [1, 1, 0] }, { ad: 'Y', sonuc: sonuc(10, 3, () => 1) }])!
+    expect(d.oyuncular[0].ilerleme).toBe(5)
+    expect(d.oyuncular[1].ilerleme).toBe(3)
+  })
+})
+
 describe('ejderha savaşı', () => {
   it('sınıf yeterince doğru bilirse ejderha yenilir', () => {
     const oy = Array.from({ length: 10 }, (_, i) => ({ ad: `K${i}`, sonuc: sonuc(20, 20, () => 1) }))

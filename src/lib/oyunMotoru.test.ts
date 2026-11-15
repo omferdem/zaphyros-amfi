@@ -29,6 +29,14 @@ describe('enerjiHesapla', () => {
   })
 })
 
+describe('hızlı doğru', () => {
+  it('sürenin ilk üçte birindeki doğru +5 ek enerji verir', () => {
+    expect(enerjiHesapla([1], [1]).enerji).toBe(70)
+    expect(enerjiHesapla([1], [0]).enerji).toBe(65)
+    expect(enerjiHesapla([0], [1]).enerji).toBe(35)
+  })
+})
+
 describe('kalabalık', () => {
   it('80 oyuncuya kadar ölçek küçülür, 40 üstünde adlar yalnızca özel oyuncularda', () => {
     expect(kalabalikAyari(10).isim).toBe('tam')

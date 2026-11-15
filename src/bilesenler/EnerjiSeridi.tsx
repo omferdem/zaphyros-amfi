@@ -5,6 +5,8 @@ import { supabase } from '../lib/supabase'
 export interface SeritOyuncusu {
   ad: string
   sonuc: OyuncuSonucu[]
+  hizli?: (1 | 0)[]
+  cevapladi?: boolean
 }
 
 /** Oyun açıkken oyuncuların soru sonuçlarını periyodik çeker (zombi_goster aktif turu sayar). */
@@ -33,7 +35,7 @@ export function useOyuncuSonuclari(oturum: string, etkin: boolean): SeritOyuncus
  * oyuncunun üstünde "+1" ya da "−1" yükselir, seri yapanda 🔥 görünür. Kalabalıkta karakterler küçülür, adlar kısalır.
  */
 export function EnerjiSeridi({ oyuncular, enAz = 1 }: { oyuncular: SeritOyuncusu[]; enAz?: number }) {
-  const durumlar = useMemo(() => oyuncular.map((o) => ({ ...o, d: enerjiHesapla(o.sonuc), acilan: o.sonuc.filter((s) => s !== null).length })), [oyuncular])
+  const durumlar = useMemo(() => oyuncular.map((o) => ({ ...o, d: enerjiHesapla(o.sonuc, o.hizli), acilan: o.sonuc.filter((s) => s !== null).length })), [oyuncular])
   const ayar = kalabalikAyari(durumlar.length)
   const [isaret, setIsaret] = useState<Record<string, { tip: 'arti' | 'eksi' | 'bos'; seri: number }>>({})
   const onceki = useRef<Map<string, number>>(new Map())
@@ -72,10 +74,15 @@ export function EnerjiSeridi({ oyuncular, enAz = 1 }: { oyuncular: SeritOyuncusu
                 </span>
               )}
               <span
-                className={`rounded-full flex items-center justify-center font-bold text-white ${dusuk ? 'bg-rose-700' : 'bg-linear-to-br from-ze-pink to-ze-purple'}`}
+                className={`relative rounded-full flex items-center justify-center font-bold text-white ${o.cevapladi ? 'animate-pop ring-2 ring-ze-lime' : ''} ${dusuk ? 'bg-rose-700' : 'bg-linear-to-br from-ze-pink to-ze-purple'}`}
                 style={{ width: boy, height: boy, fontSize: Math.round(18 * ayar.olcek) }}
               >
                 {(o.ad.trim()[0] ?? '?').toLocaleUpperCase('tr')}
+                {o.cevapladi && (
+                  <span className="absolute -top-1 -right-1 text-xs" aria-label="cevap verdi">
+                    ✋
+                  </span>
+                )}
               </span>
               <span className="block w-full h-1.5 rounded-full bg-white/10 mt-1 overflow-hidden" role="meter" aria-valuenow={o.d.enerji} aria-valuemin={0} aria-valuemax={100}>
                 <span className={`block h-full ${dusuk ? 'bg-rose-500' : 'bg-ze-lime'}`} style={{ width: `${o.d.enerji}%` }} />

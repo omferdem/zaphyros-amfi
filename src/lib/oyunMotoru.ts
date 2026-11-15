@@ -7,6 +7,8 @@ export const ENERJI_DOGRU = 15
 export const ENERJI_YANLIS = -15
 export const ENERJI_CEVAPSIZ = -10
 export const ENERJI_SERI = 10
+/** Sürenin ilk üçte birinde verilen doğru cevaba ek enerji */
+export const ENERJI_HIZLI = 5
 export const SERI_UZUNLUGU = 3
 
 export interface EnerjiDurumu {
@@ -28,17 +30,17 @@ const sinirla = (n: number) => Math.max(0, Math.min(100, n))
  * Oyuncunun enerjisi: başlangıç 50; doğru +15, yanlış −15, cevapsız −10, her 3'lü doğru seride ek +10.
  * Açılmamış sorular (null) sayılmaz.
  */
-export function enerjiHesapla(sonuclar: OyuncuSonucu[]): EnerjiDurumu {
+export function enerjiHesapla(sonuclar: OyuncuSonucu[], hizli: (1 | 0)[] = []): EnerjiDurumu {
   let enerji = ENERJI_BASLANGIC
   let seri = 0
   let enSeri = 0
   let son: EnerjiDurumu['son'] = null
   let sonDegisim = 0
-  for (const s of sonuclar) {
+  for (const [i, s] of sonuclar.entries()) {
     if (s === null) continue
     let d = 0
     if (s === 1) {
-      d = ENERJI_DOGRU
+      d = ENERJI_DOGRU + (hizli[i] === 1 ? ENERJI_HIZLI : 0)
       seri += 1
       if (seri % SERI_UZUNLUGU === 0) d += ENERJI_SERI
       son = 'arti'

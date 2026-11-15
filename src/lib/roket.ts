@@ -44,7 +44,11 @@ export function roketHesapla(sorular: ZombiSorusu[], oyuncular: ZombiOyuncusu[])
       if (o.sonuc[idx] === 1) {
         // Motor arızası: yanlıştan sonraki ilk soruda doğru bile ilerletmez, ama geri de gitmez
         if (ariza) ariza = false
-        else ilerleme++
+        else {
+          ilerleme++
+          // Hızlı doğru +1 ek itki (soru başına en çok 1)
+          if (o.hizli?.[idx] === 1) ilerleme++
+        }
       } else ariza = true
       if (ilerleme >= hedef) bitirdi = k + 1
     })

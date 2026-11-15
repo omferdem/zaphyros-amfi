@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.61.2 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Enerji barı büyük oyun sahnelerinde:** zombi, roket, ejderha, arena ve orman sahnesi açıkken sol altta "⚡ Enerji" düğmesi; açılınca her oyuncunun 0-100 enerji barı (düşük enerjili soluk ve kırmızımsı, sonuç açılınca +1/−1 ve 🔥) görünür. Sahnelerin kendi düzenine dokunulmaz.
+- Henüz yok: "cevap verdi" hareketi ve hızlı doğruya itki/enerji bonusu (sunucudan cevap süresi ve soru başına kimin cevapladığı bilgisi gerekir).
+
 ## v0.61.1 (15 Kasım 2026)
 - **Kumandadan Orman:** telefon kumandasındaki oyun listesinde "Orman'dan eve dönüş" seçilip başlatılabilir (0043_kumanda_orman.sql, SQL ile uygulandı; yalnızca kumanda isteğinin mod listesi genişledi).
 

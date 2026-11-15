@@ -17,6 +17,7 @@ import { takimBilgisi } from '../lib/takim'
 import { EJDERHA_ORANI, KAHRAMAN_CANI, ejderhaHesapla, type EjderhaDurumu } from '../lib/ejderha'
 import type { ZombiOyuncusu, ZombiSorusu } from '../lib/zombi'
 import Konfeti from './Konfeti'
+import { EnerjiSeridi, type SeritOyuncusu } from './EnerjiSeridi'
 import { sesCal, useOyunSesi } from '../lib/ses'
 
 type Veri = { sorular: ZombiSorusu[]; oyuncular: ZombiOyuncusu[] }
@@ -65,6 +66,7 @@ function OyunKabugu<D, V = Veri>({
     }
   })
   const [buyuk, setBuyuk] = useState(false)
+  const [enerjiAcik, setEnerjiAcik] = useState(false)
   const [veri, setVeri] = useState<V | null>(null)
 
   const yenile = useCallback(async () => {
@@ -144,6 +146,18 @@ function OyunKabugu<D, V = Veri>({
         </div>
       )}
       {buyuk && sahne(d, () => setBuyuk(false))}
+      {buyuk && Array.isArray((veri as { oyuncular?: unknown } | null)?.oyuncular) && ((veri as unknown as { oyuncular: SeritOyuncusu[] }).oyuncular[0]?.sonuc !== undefined) && (
+        <div className="fixed left-3 bottom-3 z-[46] flex flex-col items-start gap-1 max-w-[min(46rem,70vw)]">
+          {enerjiAcik && (
+            <div className="max-h-[24vh] overflow-hidden">
+              <EnerjiSeridi oyuncular={(veri as unknown as { oyuncular: SeritOyuncusu[] }).oyuncular} />
+            </div>
+          )}
+          <button className="ikincil-buton !py-1 !px-2 text-xs" onClick={() => setEnerjiAcik((a) => !a)} title="Oyuncuların enerji barlarını göster ya da gizle">
+            ⚡ Enerji {enerjiAcik ? '▾' : '▸'}
+          </button>
+        </div>
+      )}
     </>
   )
 }

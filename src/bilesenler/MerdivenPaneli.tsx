@@ -84,7 +84,7 @@ export default function MerdivenPaneli({ oturum, anahtar, mod, dugme = true }: {
   )
 }
 
-function Merdiven({ d, sonSonuc, kucuk, joker, kapat }: { d: MerdivenDurumu; sonSonuc: 'cikti' | 'dustu' | 'joker' | null; kucuk: boolean; joker: () => void; kapat: () => void }) {
+export function Merdiven({ d, sonSonuc, kucuk, joker, kapat }: { d: MerdivenDurumu; sonSonuc: 'cikti' | 'dustu' | 'joker' | null; kucuk: boolean; joker: () => void; kapat: () => void }) {
   const basamaklar = Array.from({ length: d.toplam }, (_, i) => i + 1)
   return (
     <div className={`cam-panel rounded-3xl p-4 space-y-3 ${kucuk ? 'w-full' : 'w-[min(60rem,94vw)]'}`}>

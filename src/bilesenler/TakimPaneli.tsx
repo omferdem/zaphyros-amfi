@@ -120,7 +120,7 @@ export default function TakimPaneli({ oturum, anahtar, mod, dugme = true }: { ot
 }
 
 /** İki takımın halat çekme görünümü: doğru cevaplar halatı kendi tarafına çeker; fark eşiği aşınca takım kazanır. */
-function Halat({ h, kucuk }: { h: HalatDurumu; kucuk: boolean }) {
+export function Halat({ h, kucuk }: { h: HalatDurumu; kucuk: boolean }) {
   const a = takimBilgisi(1)
   const b = takimBilgisi(2)
   // Düğüm: konum -1 (sol uç) ile +1 (sağ uç) arasında; kenarlara taşmasın diye %6 ile %94 arasına yerleşir

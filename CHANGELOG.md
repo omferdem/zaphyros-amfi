@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.59.0 (15 Kasım 2026)
+- **Lobi:** bireysel modda yoklamadan gelen katılımcıların adları balonlarda görünür (adı henüz görünmeyen bağlı telefonlar silik balon olarak kalır).
+- **Oyun provası** artık kale, halat, merdiven ve hocayla yarışı da içerir (kule yeni blok kuralıyla); 5/30/80 oyuncu ve %30/60/90 başarı seçenekleri bunlarda da çalışır.
+- **Roket finali:** bitişe varanlar uzaya fırlar, podyumdakiler gezegenlere iner, "Tümünü göster" tam sıralamayı açar. Motor arızalı roketin yanında 💨 görünür.
+- **Kale kuşatması hücre haritası (0041_takim_oyuncu_sonuclari.sql, SQL ile uygulandı):** ortada kale, 3 halkada 12'şer hücre; her öğrenci 2 doğruda 1 hücre alır (önce boş, dıştan içe, kendi toprağına komşu), boş komşu kalmayınca rakip hücresi ele geçirilir (sahibi o soruda doğru bildiyse alınamaz). İç halkayı tamamen tutan kaleyi kuşatır; soru bitince iç halkada en çok hücresi olan kazanır. Kurallar birim testli, harita tarayıcıda çizildi.
+- Henüz yok: kale hücresine asker koşusu ve mancınık animasyonu.
+
 ## v0.58.2 (15 Kasım 2026)
 - **Kumandadan soru sayısı (0040_kumanda_soru_sayisi.sql, SQL ile uygulandı):** telefondan Zapoot ya da quiz başlatırken "Kaç soru?" seçilir (10/20/30/40, varsayılan 20); perde pakette bu kadar soruyu karışık çeker, quiz süresi soru başına 1 dakika önerilir.
 - Mevcut bütün Zapoot sorularının süresi 20 saniyeye çekildi (veri güncellemesi; soru bazında değiştirilebilir).

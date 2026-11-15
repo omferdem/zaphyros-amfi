@@ -145,6 +145,8 @@ h1, h2, h3, .baslik {
 .roket-bitis { background: repeating-linear-gradient(0deg, rgba(255,255,255,0.18) 0 20px, rgba(0,0,0,0.25) 20px 40px); border-left: 2px dashed rgba(255,255,255,0.5); }
 .roket-iz { height: 4px; border-radius: 9999px; background: linear-gradient(90deg, transparent, rgba(251, 146, 60, 0.85)); filter: blur(1px); margin-right: -4px; }
 .roket-ucus { animation: roket-titre 0.7s ease-in-out infinite; filter: drop-shadow(0 0 8px rgba(251, 146, 60, 0.7)); }
+.roket-fisla { display: inline-block; animation: roket-fisla 1.2s ease-in forwards; }
+@keyframes roket-fisla { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-40vh) scale(0.4); opacity: 0; } }
 .roket-varti { filter: drop-shadow(0 0 12px rgba(253, 224, 71, 0.95)); animation: roket-titre 1.4s ease-in-out infinite; }
 .roket-gezegen { animation: roket-yuz 14s ease-in-out infinite; }
 .roket-baslik { background: linear-gradient(120deg, #a5b4fc, #fdba74 60%, #fde68a); -webkit-background-clip: text; background-clip: text; color: transparent; }

@@ -3,9 +3,11 @@ import { supabase } from '../lib/supabase'
 import { OYUN_OLAYI, type OyunAnahtari } from '../lib/oyun'
 import { roketHesapla, type RoketDurumu } from '../lib/roket'
 import { arenaHesapla, type ArenaDurumu } from '../lib/arena'
-import { type KuleDurumu, type KuleTakimi } from '../lib/kule'
+import { type KuleDurumu } from '../lib/kule'
 import { kuleTurHesapla, type TakimOzeti } from '../lib/takimOyunlari'
-import { kaleHesapla, type KaleDurumu } from '../lib/kale'
+import { HUCRE_SAYISI, type KaleHaritasi } from '../lib/kaleHarita'
+import { KaleHaritaSahnesi, kaleHaritaHesapla, kaleHaritaVerisi, type KaleHaritaGirdisi } from './KaleHaritasi'
+import { type KaleDurumu } from '../lib/kale'
 import Gorsel, { adIndeksi, arkaPlan, gorselAdresi } from './Gorsel'
 import { SILAHLAR, useRaund } from './Hareket'
 import { Sinema, merkez, rastgele } from './Sinema'
@@ -247,6 +249,11 @@ export function RoketSahnesi({ d, kucult }: { d: RoketDurumu; kucult: () => void
                   <Gorsel ad={`roket-${adIndeksi(o.ad, 6)}.webp`} emoji={karakter(o.ad, ROKETLER)} className={n > 60 ? 'w-8 h-8' : n > 30 ? 'w-11 h-11' : 'w-14 h-14'} emojiClass={`${boy} inline-block`} />
                 </span>
               </span>
+              {o.ariza && !bitti && (
+                <span className="ml-1 text-lg" title="Motor arızası: bu soruda ilerleyemez" aria-label="Motor arızası">
+                  💨
+                </span>
+              )}
               <span className="text-[10px] font-bold px-1 rounded bg-slate-950/70 whitespace-nowrap ml-1 max-w-24 truncate">{o.ad}</span>
             </div>
           )
@@ -261,21 +268,71 @@ export function RoketSahnesi({ d, kucult }: { d: RoketDurumu; kucult: () => void
             ))}
           </div>
         )}
-        {d.bitti && (
-          <div className="absolute inset-0 flex items-center justify-center bg-slate-950/55 backdrop-blur-[2px] z-20">
-            <div className="cam-panel rounded-[2rem] p-8 text-center space-y-3 girdi">
-              <p className="text-6xl">🏁</p>
-              <p className="text-3xl font-display font-extrabold">Yarış bitti</p>
+        {d.bitti && <RoketFinali siralama={d.siralama} podyum={podyum} hedef={d.hedef} />}
+      </div>
+      <p className="text-xs text-slate-500 text-center">Her doğru cevap roketi ileri iter. Cevap vermeyen ya da yanlış bilen yerinde kalır.</p>
+    </div>
+  )
+}
+
+/** Roket finali: bitişe varanlar uzaya fırlar, sırayla gezegenlere iner; ardından podyum ve tam sıralama. */
+function RoketFinali({ siralama, podyum, hedef }: { siralama: RoketDurumu['siralama']; podyum: RoketDurumu['siralama']; hedef: number }) {
+  const [asama, setAsama] = useState(0)
+  const [hepsi, setHepsi] = useState(false)
+  useEffect(() => {
+    const t = [1200, 3200, 5200].map((ms, i) => setTimeout(() => setAsama(i + 1), ms))
+    return () => t.forEach(clearTimeout)
+  }, [])
+  const GEZEGENLER = ['🪐', '🌕', '🔴']
+  const bitirenler = siralama.filter((o) => o.bitirdi !== null)
+  return (
+    <div className="absolute inset-0 z-20 bg-slate-950/80 backdrop-blur-[2px] overflow-y-auto">
+      <div className="min-h-full flex flex-col items-center justify-center gap-4 p-6 text-center">
+        {asama === 0 && (
+          <div className="space-y-2">
+            <p className="text-7xl roket-fisla" aria-hidden>
+              🚀
+            </p>
+            <p className="text-3xl font-display font-extrabold">{bitirenler.length > 0 ? 'Bitişe varanlar uzaya fırlıyor!' : 'Yarış bitti'}</p>
+          </div>
+        )}
+        {asama >= 1 && (
+          <>
+            <p className="text-3xl font-display font-extrabold">🏁 Yarış bitti</p>
+            <div className="flex items-end justify-center gap-6 flex-wrap">
               {podyum.map((o, i) => (
-                <p key={`${o.ad}-${i}`} className="text-2xl">
-                  {['🥇', '🥈', '🥉'][i]} {o.ad}
-                </p>
+                <div key={`${o.ad}-${i}`} className={`text-center transition-all duration-700 ${asama >= 3 - i ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+                  <p className="text-6xl">{GEZEGENLER[i]}</p>
+                  <p className="text-4xl -mt-3">{o.bitirdi !== null ? '🚀' : '🛰️'}</p>
+                  <p className="text-xl font-bold">
+                    {['🥇', '🥈', '🥉'][i]} {o.ad}
+                  </p>
+                  <p className="text-xs text-slate-400">{o.bitirdi !== null ? `${o.bitirdi}. soruda vardı` : `${o.ilerleme} / ${hedef} doğru`}</p>
+                </div>
               ))}
             </div>
+          </>
+        )}
+        {asama >= 3 && siralama.length > 3 && (
+          <div className="space-y-2">
+            <button className="ikincil-buton" onClick={() => setHepsi((h) => !h)}>
+              {hepsi ? 'Gizle' : 'Tümünü göster'}
+            </button>
+            {hepsi && (
+              <ol className="max-w-md text-left space-y-1">
+                {siralama.slice(3).map((o, i) => (
+                  <li key={`${o.ad}-${i}`} className="glass-panel px-4 py-1 flex justify-between text-sm">
+                    <span>
+                      {i + 4}. {o.ad}
+                    </span>
+                    <span className="font-mono">{o.bitirdi !== null ? `${o.bitirdi}. soru` : `${o.ilerleme} doğru`}</span>
+                  </li>
+                ))}
+              </ol>
+            )}
           </div>
         )}
       </div>
-      <p className="text-xs text-slate-500 text-center">Her doğru cevap roketi ileri iter. Cevap vermeyen ya da yanlış bilen yerinde kalır.</p>
     </div>
   )
 }
@@ -618,23 +675,6 @@ export function ArenaSahnesi({ d, kucult }: { d: ArenaDurumu; kucult: () => void
 
 // ---------------------------------------------------------------------------------------------- Kule yarışı
 
-interface KuleVeri {
-  takimlar: KuleTakimi[]
-  oynanan: number
-  toplam: number
-}
-
-async function kuleVerisi(oturum: string, anahtar: string | null): Promise<KuleVeri | null> {
-  const [t, z] = await Promise.all([
-    supabase.rpc('takim_goster', { p_session: oturum, p_anahtar: anahtar }),
-    supabase.rpc('zombi_goster', { p_session: oturum, p_anahtar: anahtar }),
-  ])
-  const takimlar = (t.data as { takimlar?: { takim: number; uye: number; dogru: number }[] } | null)?.takimlar
-  const sorular = (z.data as { sorular?: ZombiSorusu[] } | null)?.sorular
-  if (!takimlar || !sorular) return null
-  return { takimlar: takimlar.map((x) => ({ takim: x.takim, uye: x.uye, dogru: x.dogru })), oynanan: sorular.filter((s) => s.acildi).length, toplam: sorular.length }
-}
-
 async function kuleOzeti(oturum: string, anahtar: string | null): Promise<TakimOzeti | null> {
   const { data } = await supabase.rpc('takim_soru_ozeti', { p_session: oturum, p_anahtar: anahtar })
   const v = data as (TakimOzeti & { hata?: string }) | null
@@ -726,24 +766,24 @@ const KALE_RENKLERI = ['#f43f5e', '#0ea5e9', '#10b981', '#f59e0b', '#8b5cf6', '#
 
 export function KalePaneli({ oturum, anahtar, mod }: { oturum: string; anahtar: string | null; mod: 'perde' | 'kumanda' }) {
   return (
-    <OyunKabugu<KaleDurumu, KuleVeri>
+    <OyunKabugu<KaleHaritasi, KaleHaritaGirdisi>
       oyun="kale"
       baslik="🏰 Kale kuşatması"
       oturum={oturum}
       anahtar={anahtar}
       mod={mod}
-      getir={kuleVerisi}
-      hesapla={(v) => kaleHesapla(v.takimlar, v.oynanan, v.toplam)}
+      getir={kaleHaritaVerisi}
+      hesapla={kaleHaritaHesapla}
       konum="bottom-28"
       ozet={(d) => {
-        const en = [...d.satirlar].sort((a, b) => a.sira - b.sira)[0]
+        const en = [...d.takimlar].sort((a, b) => b.ic - a.ic || b.toplam - a.toplam)[0]
         return (
           <p className="text-sm">
-            Soru {d.oynanan} / {d.toplamSoru} · önde {en ? `${takimBilgisi(en.takim).emoji} ${takimBilgisi(en.takim).ad}` : '-'}
+            Soru {d.oynanan} · önde {en && en.toplam > 0 ? `${takimBilgisi(en.takim).emoji} ${takimBilgisi(en.takim).ad} (iç halka ${en.ic}/${HUCRE_SAYISI})` : '-'}
           </p>
         )
       }}
-      sahne={(d, kucult) => <KaleSahnesi d={d} kucult={kucult} />}
+      sahne={(d, kucult) => <KaleHaritaSahnesi h={d} takimSayisi={d.takimlar.length} kucult={kucult} />}
     />
   )
 }

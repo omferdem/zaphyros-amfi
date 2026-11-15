@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import { GRUPLU_OYUNLAR } from '../lib/oyunAc'
+import { ilkAd } from '../lib/oyunMotoru'
 import { sesCal } from '../lib/ses'
 import { supabase } from '../lib/supabase'
 import type { PuanSatiri } from '../lib/tipler'
@@ -17,6 +18,7 @@ export function Lobi({
   soruSayisi,
   sureDk,
   cevrimici,
+  adlar = [],
   basla,
   iptal,
 }: {
@@ -26,6 +28,8 @@ export function Lobi({
   soruSayisi: number
   sureDk: number | null
   cevrimici: number
+  /** Yoklamadan gelen katılımcı adları (bireysel modda balonlarda görünür) */
+  adlar?: string[]
   basla: () => Promise<void>
   iptal: () => void
 }) {
@@ -101,7 +105,7 @@ export function Lobi({
             <p className="text-slate-300">
               {paketAdi} · {sureDk ? `${sureDk} dakika` : `${soruSayisi} soru`}
             </p>
-            <p className="text-lg font-bold text-ze-lime">{takimli ? `${toplamUye} kişi takımını seçti` : `${cevrimici} öğrenci bağlı`}</p>
+            <p className="text-lg font-bold text-ze-lime">{takimli ? `${toplamUye} kişi takımını seçti` : `${Math.max(cevrimici, adlar.length)} öğrenci katıldı`}</p>
           </div>
           {takimli ? (
             <div
@@ -128,16 +132,18 @@ export function Lobi({
             </div>
           ) : (
             <div className="flex flex-wrap justify-center gap-3 max-w-4xl">
-              {Array.from({ length: Math.min(cevrimici, 80) }, (_, i) => (
-                <span
-                  key={i}
-                  className="w-12 h-12 rounded-full bg-linear-to-br from-ze-pink to-ze-purple flex items-center justify-center text-xl animate-breathe"
-                  style={{ animationDelay: `${(i % 7) * 120}ms` }}
-                >
+              {adlar.slice(0, 80).map((ad, i) => (
+                <span key={`ad-${i}`} className="flex flex-col items-center gap-1 w-20 animate-breathe" style={{ animationDelay: `${(i % 7) * 120}ms` }}>
+                  <span className="w-12 h-12 rounded-full bg-linear-to-br from-ze-pink to-ze-purple flex items-center justify-center text-xl font-bold">{(ad.trim()[0] ?? '?').toLocaleUpperCase('tr')}</span>
+                  <span className="text-xs truncate w-full text-center text-slate-200">{ilkAd(ad)}</span>
+                </span>
+              ))}
+              {Array.from({ length: Math.max(0, Math.min(cevrimici - adlar.length, 80 - adlar.length)) }, (_, i) => (
+                <span key={`anon-${i}`} className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-xl animate-breathe" style={{ animationDelay: `${(i % 7) * 120}ms` }} title="Adı henüz görünmeyen katılımcı">
                   🙂
                 </span>
               ))}
-              {cevrimici === 0 && <p className="text-slate-400">Öğrenciler telefonundan katıldıkça burada görünür.</p>}
+              {cevrimici === 0 && adlar.length === 0 && <p className="text-slate-400">Öğrenciler telefonundan katıldıkça burada görünür.</p>}
             </div>
           )}
           <div className="flex flex-wrap justify-center gap-3">

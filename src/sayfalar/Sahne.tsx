@@ -806,6 +806,7 @@ export default function Sahne() {
           soruSayisi={lobi.sayi}
           sureDk={lobi.sureDk}
           cevrimici={cevrimici}
+          adlar={gelenler.map((g) => g.ad).filter(Boolean)}
           basla={lobidenBasla}
           iptal={() => void dersedon().then(() => setLobi(null))}
         />

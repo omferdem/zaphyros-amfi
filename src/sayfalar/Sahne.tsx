@@ -745,13 +745,23 @@ function AdresSeridi({ buyuk = false }: { buyuk?: boolean }) {
 }
 
 function KodSeridi({ kod, buyuk = false }: { kod: string; buyuk?: boolean }) {
+  if (buyuk) {
+    return (
+      <div className="w-full space-y-2">
+        <div className="w-full rounded-2xl bg-sari/15 border-2 border-sari px-4 py-2.5 text-center">
+          <span className="text-sm lg:text-base font-bold text-slate-200 mr-3">Ders kodu</span>
+          <b className="font-mono font-extrabold text-3xl lg:text-4xl tracking-wider text-sari">{kodBicimle(kod)}</b>
+        </div>
+        <AdresSeridi buyuk />
+      </div>
+    )
+  }
   return (
-    <div className={`text-center text-slate-300 space-y-0.5 ${buyuk ? 'text-base lg:text-lg' : 'text-sm'}`}>
+    <div className="text-center text-slate-300 space-y-0.5 text-sm">
       <p>
-        Derse katıl kodu:{' '}
-        <b className={`font-mono text-white tracking-widest ${buyuk ? 'text-2xl lg:text-3xl' : 'text-xl'}`}>{kodBicimle(kod)}</b>
+        Derse katıl kodu: <b className="font-mono text-sari tracking-widest text-xl">{kodBicimle(kod)}</b>
       </p>
-      <AdresSeridi buyuk={buyuk} />
+      <AdresSeridi />
     </div>
   )
 }
@@ -979,7 +989,7 @@ function YoklamaSahnesi({
                   <p className="text-slate-300">öğrenci derse katıldı</p>
                 </>
               )}
-              {kod && <KodSeridi kod={kod} />}
+              {kod && <KodSeridi kod={kod} buyuk />}
             </div>
           )}
         </section>
@@ -1268,7 +1278,9 @@ function SoruSahnesi({
       <section className="cam-panel rounded-3xl p-6 lg:p-10 flex items-center gap-6">
         <h1 className="flex-1 text-3xl lg:text-5xl font-extrabold leading-tight whitespace-pre-line">{durum?.soru ?? 'Yükleniyor…'}</h1>
         {!sonuc && kalan !== null && (
-          <Halka oran={kalan / ((durum?.sure_sn ?? 20) * 1000)} etiket={Math.ceil(kalan / 1000)} boyut={150} />
+          <div className={Math.ceil(kalan / 1000) <= 5 ? 'acil-halka' : ''}>
+            <Halka oran={kalan / ((durum?.sure_sn ?? 20) * 1000)} etiket={Math.ceil(kalan / 1000)} boyut={150} />
+          </div>
         )}
       </section>
 
@@ -1292,7 +1304,12 @@ function SoruSahnesi({
                 <span className="flex flex-col items-center leading-none"><span className="text-xs lg:text-sm opacity-80">{sik.sekil}</span>{sik.harf}</span>
               </span>
               <span className="relative flex-1">{x}</span>
-              {sonuc && <span className="relative font-mono text-xl lg:text-3xl">{sayi}</span>}
+              {sonuc && (
+                <span className="relative font-mono text-xl lg:text-3xl text-right leading-tight">
+                  %{toplamCevap > 0 ? Math.round((sayi / toplamCevap) * 100) : 0}
+                  <span className="block text-xs lg:text-sm opacity-80">{sayi} kişi</span>
+                </span>
+              )}
               {dogru && <span className="relative text-3xl lg:text-5xl">✓</span>}
             </div>
           )

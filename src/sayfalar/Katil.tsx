@@ -381,18 +381,18 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
 
   return (
     <main className="min-h-screen p-4 flex flex-col gap-4 max-w-lg mx-auto">
-      <header className="flex items-center gap-3">
+      <header className="flex items-center justify-between gap-2 border-b border-white/10 pb-2.5">
         <div className="min-w-0 flex-1">
-          <p className="text-xs font-mono text-indigo-300 truncate">{durum?.ders ?? ders}</p>
-          {durum?.baslik && <p className="text-sm text-slate-400 truncate">{durum.baslik}</p>}
+          <p className="text-[11px] font-mono font-semibold text-slate-300 truncate">{durum?.ders ?? ders}</p>
+          {durum?.baslik && <p className="text-xs text-slate-500 truncate">{durum.baslik}</p>}
         </div>
         {ad !== null && (
-          <span className="nabiz text-[11px] font-bold text-emerald-300 bg-emerald-500/15 rounded-full px-2.5 py-1 whitespace-nowrap">
+          <span className="nabiz shrink-0 inline-flex items-center gap-1 text-[11px] font-semibold text-lime bg-lime/15 border border-lime/35 rounded-lg px-2 py-1 whitespace-nowrap">
             ✓ {ad ? `${ad}, ` : ''}yoklama alındı
           </span>
         )}
         {seri && seri.seri >= 2 && (
-          <span className="text-[11px] font-bold text-amber-200 bg-amber-500/15 rounded-full px-2.5 py-1 whitespace-nowrap" title={`${seri.toplam} dersin ${seri.katilan}'ine katıldın`}>
+          <span className="shrink-0 text-[11px] font-mono font-bold text-sari bg-sari/15 border border-sari/35 rounded-lg px-2 py-1 whitespace-nowrap" title={`${seri.toplam} dersin ${seri.katilan}'ine katıldın`}>
             <Gorsel ad={`rozet-seri-${seri.seri >= 10 ? 3 : seri.seri >= 5 ? 2 : 1}.webp`} emoji={seri.seri >= 5 ? '⭐' : '🔥'} className="inline-block w-5 h-5 align-text-bottom mr-0.5" emojiClass="" /> {seri.seri} ders üst üste
           </span>
         )}
@@ -401,27 +401,50 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
       <QuizBandi oturum={oturum} />
 
       {adim?.tur === 'slayt' && adim.gorsel && durum?.telefon_modu && (
-        <button
-          className="self-end text-[11px] text-slate-400 hover:text-white"
-          onClick={() => {
-            sakla('amfi_veri_tasarrufu', tasarruf ? '0' : '1')
-            setTasarruf(!tasarruf)
-          }}
-          title="Slayt görseli telefona indirilmez; mobil verin az gidiyorsa aç"
-        >
-          {tasarruf ? '🖼️ Slayt görselini göster' : '📶 Veri tasarrufu: görseli gizle'}
-        </button>
+        <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-white/[0.03] border border-white/10">
+          <span className="text-xs text-slate-300">Veri tasarrufu (slayt görsellerini gizle)</span>
+          <button
+            role="switch"
+            aria-checked={tasarruf}
+            aria-label="Veri tasarrufu"
+            onClick={() => {
+              sakla('amfi_veri_tasarrufu', tasarruf ? '0' : '1')
+              setTasarruf(!tasarruf)
+            }}
+            className={`w-11 h-6 rounded-full p-0.5 transition-colors ${tasarruf ? 'bg-turkuaz' : 'bg-white/15'}`}
+          >
+            <span className={`block w-5 h-5 rounded-full bg-zemin transition-transform ${tasarruf ? 'translate-x-5' : 'translate-x-0'}`} />
+          </button>
+        </div>
       )}
 
       {ad === null && durum?.yoklama_acik && !durum.bitti && (
-        <p className="rounded-2xl bg-amber-500/15 text-amber-100 text-sm p-3 text-center">
-          Yoklama şu an açık ama yoklaman henüz yazılmadı. Perdedeki <b>QR kodu</b> telefonunun kamerasıyla okut. (Ders kodu yoklama yazmaz; projeksiyonsuz derste hocan kodla yoklama alır.)
-        </p>
+        <div className="rounded-2xl bg-sari/10 border border-sari/35 p-3 flex gap-3 items-start">
+          <span className="w-9 h-9 shrink-0 rounded-xl bg-sari/20 text-sari flex items-center justify-center text-lg" aria-hidden>
+            📲
+          </span>
+          <p className="text-sm text-amber-100">
+            <b className="block text-sari">Yoklama şu an açık</b>
+            Yoklaman henüz yazılmadı. Perdedeki <b>QR kodu</b> telefonunun kamerasıyla okut. (Ders kodu yoklama yazmaz; projeksiyonsuz derste hocan kodla yoklama alır.)
+          </p>
+        </div>
       )}
 
       <section className="cam-panel rounded-3xl p-5 flex-1 flex flex-col">
         {!durum ? (
-          <p className="text-slate-400 text-sm m-auto">Bağlanıyor…</p>
+          <div className="my-auto space-y-4" aria-busy="true">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl p-1 animate-spin" style={{ background: 'conic-gradient(from 0deg, #ff4d9d, #7c5cff, #22e3d2, #ff4d9d)' }}>
+                <div className="w-full h-full bg-zemin rounded-lg" />
+              </div>
+              <div>
+                <p className="text-sm font-bold">Ders adımı yükleniyor…</p>
+                <p className="text-[11px] font-mono text-slate-400">Bağlanıyor</p>
+              </div>
+            </div>
+            <div className="h-28 rounded-2xl bg-white/5 animate-pulse" />
+            <div className="h-10 rounded-xl bg-white/10 animate-pulse" />
+          </div>
         ) : durum.bitti ? (
           <div className="m-auto text-center space-y-2 girdi">
             <p className="text-6xl suzul" aria-hidden>
@@ -482,9 +505,25 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
         ) : adim?.tur === 'fikir' || adim?.tur === 'oylama' || adim?.tur === 'video' ? (
           <EtkinlikCevabi key={adim.id} oturum={oturum} adim={adim} telefonModu={!!durum?.telefon_modu} />
         ) : adim?.tur === 'yoklama' ? (
-          <p className="text-slate-300 m-auto text-center">Yoklama alınıyor. Perdeye bak.</p>
+          <div className="m-auto text-center space-y-3 pop">
+            <div className="w-16 h-16 rounded-2xl bg-turkuaz/15 border border-turkuaz/40 text-turkuaz flex items-center justify-center mx-auto text-3xl" aria-hidden>
+              ▣
+            </div>
+            <p className="font-mono text-xs uppercase tracking-wider text-turkuaz font-bold">Canlı yoklama açık</p>
+            <h1 className="font-display font-extrabold text-2xl">Perdeye bak, QR'ı okut</h1>
+            <p className="text-xs text-slate-300">Kameranı perdedeki QR koda doğrult, numaranı gir.</p>
+          </div>
         ) : (
-          <p className="text-slate-300 m-auto text-center">Hocanın ekranını izle. Bir sonraki adım burada görünecek.</p>
+          <div className="m-auto text-center space-y-5 pop">
+            <div className="relative w-20 h-20 mx-auto flex items-center justify-center">
+              <div className="absolute inset-0 rounded-full opacity-30 blur-md nefes" style={{ background: 'linear-gradient(135deg, #ff4d9d, #7c5cff 52%, #22e3d2)' }} />
+              <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" className="relative z-10 w-14 h-14" />
+            </div>
+            <div className="space-y-2">
+              <h1 className="font-display font-bold text-xl leading-snug">Hocanın ekranını izle. Bir sonraki adım burada görünecek.</h1>
+              <p className="text-xs text-slate-400">Ders akışı canlı bağlı. Yeni soru ya da etkinlik başlayınca ekranın kendiliğinden açılır.</p>
+            </div>
+          </div>
         )}
       </section>
 

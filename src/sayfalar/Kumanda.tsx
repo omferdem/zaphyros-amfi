@@ -40,6 +40,8 @@ export default function Kumanda() {
   const [parametreler, setParametreler] = useSearchParams()
   const oturum = parametreler.get('s') ?? ''
   const [anahtar, setAnahtar] = useState<string | null | undefined>(undefined)
+  const [sekme, setSekme] = useState<'ders' | 'oyun' | 'ayar'>('ders')
+  const [kopyalandi, setKopyalandi] = useState(false)
   const [durum, setDurum] = useState<KumandaDurumu | null>(null)
   const [hata, setHata] = useState<string | null>(null)
   const [mesgul, setMesgul] = useState(false)
@@ -168,26 +170,68 @@ export default function Kumanda() {
 
   return (
     <main className="min-h-screen p-4 flex flex-col gap-4 max-w-md mx-auto">
-      <header>
-        <p className="text-xs font-mono text-indigo-300">{durum.ders}</p>
-        <h1 className="text-lg font-extrabold">{durum.baslik ?? 'Ders'}</h1>
+      <header className="flex items-center justify-between gap-3 border-b border-white/10 pb-3">
+        <div className="min-w-0">
+          <p className="text-[11px] font-mono font-bold text-turkuaz truncate">{durum.ders}</p>
+          <h1 className="text-base font-extrabold truncate">{durum.baslik ?? 'Ders'}</h1>
+        </div>
+        {durum.kod && (
+          <button
+            className="shrink-0 rounded-xl bg-sari/15 border border-sari/40 px-2.5 py-1 font-mono text-xs font-extrabold text-sari"
+            title="Ders kodunu kopyala (geç gelenler için; yoklama yazmaz)"
+            onClick={() => {
+              void navigator.clipboard?.writeText(durum.kod!.kod).then(() => {
+                setKopyalandi(true)
+                setTimeout(() => setKopyalandi(false), 1500)
+              })
+            }}
+          >
+            {kopyalandi ? 'Kopyalandı' : `Kod: ${durum.kod.kod.slice(0, 3)} ${durum.kod.kod.slice(3)}`}
+          </button>
+        )}
       </header>
+
+      <nav className="grid grid-cols-3 gap-1.5" role="tablist" aria-label="Kumanda bölümleri">
+        {(
+          [
+            ['ders', '🎬 Ders'],
+            ['oyun', '🎮 Zapoot ve Quiz'],
+            ['ayar', '⚙️ Ayarlar'],
+          ] as const
+        ).map(([k, etiket]) => (
+          <button
+            key={k}
+            role="tab"
+            aria-selected={sekme === k}
+            onClick={() => setSekme(k)}
+            className={`rounded-xl px-2 py-2.5 text-xs font-bold transition-colors ${sekme === k ? 'bg-pembe text-white shadow-[0_6px_20px_rgba(255,77,157,0.35)]' : 'bg-white/[0.06] border border-white/10 text-slate-300'}`}
+          >
+            {etiket}
+          </button>
+        ))}
+      </nav>
 
       {hata && <p className="text-sm text-rose-200 bg-rose-500/10 rounded-xl p-3">{hata}</p>}
 
       <BaglantiUyarisi />
-      <SinifPaneli d={sinif.d} komut={sinif.komut} hata={sinif.hata} mod="kumanda" />
-      {anahtar && <TakimPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" dugme={false} />}
-      {anahtar && <HocaYarisiPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" dugme={false} />}
-      {anahtar && <MerdivenPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" dugme={false} />}
-      {anahtar && <KumandaBaslat oturum={oturum} anahtar={anahtar} />}
-      {anahtar && <ZombiPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
-      {anahtar && <RoketPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
-      {anahtar && <EjderhaPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
-      {anahtar && <ArenaPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
-      {anahtar && <KulePaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
-      {anahtar && <KalePaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
+      {sekme === 'ders' && <SinifPaneli d={sinif.d} komut={sinif.komut} hata={sinif.hata} mod="kumanda" />}
+      {sekme === 'oyun' && (
+        <>
+          {anahtar && <TakimPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" dugme={false} />}
+          {anahtar && <HocaYarisiPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" dugme={false} />}
+          {anahtar && <MerdivenPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" dugme={false} />}
+          {anahtar && <KumandaBaslat oturum={oturum} anahtar={anahtar} />}
+          {anahtar && <ZombiPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
+          {anahtar && <RoketPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
+          {anahtar && <EjderhaPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
+          {anahtar && <ArenaPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
+          {anahtar && <KulePaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
+          {anahtar && <KalePaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
+        </>
+      )}
 
+      {sekme === 'ders' && (
+        <>
       <section className="cam-panel rounded-3xl p-5 space-y-2 min-h-40">
         {durum.adim ? (
           <>
@@ -281,6 +325,8 @@ export default function Kumanda() {
           <p className="whitespace-pre-line">{adimlar[sira]?.not}</p>
         </section>
       )}
+        </>
+      )}
 
       {adimlar.length > 0 && (
         <div className="grid grid-cols-2 gap-3">
@@ -301,7 +347,7 @@ export default function Kumanda() {
         </div>
       )}
 
-      {durum.adim?.tur === 'soru' && durum.adim.soru_durum === 'sonuc' && durum.puanlar.length > 0 && (
+      {sekme === 'ders' && durum.adim?.tur === 'soru' && durum.adim.soru_durum === 'sonuc' && durum.puanlar.length > 0 && (
         <section className="cam-panel rounded-2xl p-4 space-y-1">
           <p className="text-xs font-mono uppercase tracking-widest text-amber-300">İlk 5</p>
           <ol className="text-sm">
@@ -316,6 +362,8 @@ export default function Kumanda() {
         </section>
       )}
 
+      {sekme === 'ayar' && (
+        <>
       <section className="cam-panel rounded-2xl p-4 flex items-center gap-3">
         <div className="flex-1">
           <p className="text-2xl font-extrabold tabular-nums">
@@ -402,6 +450,8 @@ export default function Kumanda() {
             </ol>
           )}
         </section>
+      )}
+        </>
       )}
     </main>
   )

@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.47.0 (15 Kasım 2026)
+Yeni arayüz tasarımı (zapedu2): öğrenci, perde, kumanda. Veritabanı değişikliği yok.
+- **Kumanda üç sekmeli:** "🎬 Ders" (adım kartı, hoca notu, sınıf paneli, puanlar), "🎮 Zapoot ve Quiz" (oyun seçimi, paket, Derse dön, Quizi bitir) ve "⚙️ Ayarlar" (yoklama, telefon modu, ana sayfa/dersi bitir, bütün adımlar). Önceki/Sonraki düğmeleri her sekmede üstte durur. Başlıkta ders ve oturum adı, dokununca kopyalanan ders kodu. Uzun tek sayfa dağınıklığı bitti.
+- **Öğrenci telefonu:** alt çizgili üst şerit (ders adı mono, yeşil "yoklama alındı" ve sarı "ders üst üste" rozetleri), nefes alan ZE logolu bekleme kartı, "Perdeye bak, QR'ı okut" yoklama kartı, veri tasarrufu için anahtar, yükleniyor iskeleti, sarı yoklama uyarısı kartı.
+- **Perde:** ders kodu altın rengi büyük rozet (QR altında ve yoklama kapalıyken), soru sonucunda şık başına yüzde ve kişi sayısı, son 5 saniyede kırmızı atan geri sayım halkası.
+
 ## v0.46.0 (15 Kasım 2026)
 Oyunlarda hareket. Veritabanı değişikliği yok.
 - **Ejderha savaşı:** her yeni soruda doğru bilen kahramanlar silahlarıyla (kılıç, yay, asa, balta...) ejderhaya doğru koşup vurur; ejderha sarsılır, patlama ve "−7" gibi hasar sayısı çıkar; ejderha ateş püskürür, yanlış bilen kahraman sarsılıp yanar. Her kahramanın elinde ayrı bir silah vardır.

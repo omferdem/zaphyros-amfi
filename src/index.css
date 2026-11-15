@@ -399,3 +399,13 @@ body::after {
 @media (prefers-reduced-motion: reduce) {
   .ej-ucus, .ej-gitti, .ej-yedi, .ej-yedi-patla, .ej-vuruldu, .ej-sayi, .ej-patla, .ej-ates-yolu, .arena-vur, .arena-darbe, .roket-hizlan, .roket-sarsil, .roket-turbo, .zombi-zipla { animation: none; }
 }
+
+/* Sakin nefes alma animasyonu (öğrenci bekleme kartı) */
+.nefes { animation: nefes 3.2s ease-in-out infinite; }
+@keyframes nefes { 0%, 100% { transform: scale(0.96); opacity: 0.55; } 50% { transform: scale(1.08); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .nefes { animation: none; } }
+
+/* Son 5 saniye: geri sayım halkası kırmızıya döner ve atar */
+.acil-halka { animation: acil 0.8s ease-in-out infinite; filter: hue-rotate(150deg) saturate(1.6) drop-shadow(0 0 14px rgba(255, 71, 87, 0.8)); }
+@keyframes acil { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+@media (prefers-reduced-motion: reduce) { .acil-halka { animation: none; } }

@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.51.0 (15 Kasım 2026)
+Faz 1: hatalar ve hızlı düzeltmeler (tamamlandı).
+- Oyun turu (0036, v0.50.2) ile takım, zombi, hocayla yarış ve merdiven sayımları yalnızca perdedeki turu sayar; tekrar oynanan paket temiz başlar.
+- **Fikir silme (0037_katki_sil_hoca_yaris.sql, SQL ile uygulandı):** öğrenci beyin fırtınasında gönderdiği fikri, toplama açıkken ✕ ile silebilir; yalnızca kendi cihazının fikri silinir, hakkı geri gelir.
+- **Hocayla yarış skoru:** hocanın cevabı verilmiş ve geçilmiş her soru sayılır; sınıfın hiç cevap vermediği soruda da skor işler. Kök neden: sınıf cevabı yoksa soru hiç sayılmıyordu.
+- Kumandada "Derse dön" zaten vardı; "Bitir" podyumu Faz 2'de.
+
 ## v0.50.2 (15 Kasım 2026)
 Faz 1 (v0.51.0) hazırlığı: oyun turu.
 - **Oyun turu (0036_oyun_turlari.sql, SQL ile uygulandı):** Zapoot her başlatıldığında yeni bir tur açılır, tur kendi adım satırlarını taşır. İkinci oyun öncekinin cevaplarını, takım puanlarını ve zombi sonuçlarını devralmaz; takım, zombi, hocayla yarış ve merdiven sayımları yalnızca perdedeki turu sayar. "Derse dön" turu kapatır. Eski kayıtlar etkilenmez.

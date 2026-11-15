@@ -254,6 +254,19 @@ function FikirFormu({ oturum, adim, acik }: { oturum: string; adim: Adim; acik: 
     setMetin('')
   }
 
+  async function sil(m: string) {
+    setHata(null)
+    const { data, error } = await supabase.rpc('katki_sil', { p_session: oturum, p_cihaz: cihazKimligi(), p_metin: m })
+    const s = (data ?? {}) as { durum?: string; hata?: string }
+    if (error || !s.durum) {
+      setHata(s.hata === 'kapali' ? 'Toplama kapandı, artık silinemez.' : 'Silinemedi, tekrar dene.')
+      return
+    }
+    const yeni = yazilanlar.filter((y) => y !== m && y !== '…')
+    setYazilanlar(yeni)
+    sakla(fikirAnahtari(oturum, adim.id), JSON.stringify(yeni))
+  }
+
   const etiket = mod === 'acik' ? 'Açık uçlu soru' : mod === 'firtina' ? 'Beyin fırtınası' : 'Kelime bulutu'
   const etiketRenk = mod === 'acik' ? 'text-ze-lime' : mod === 'firtina' ? 'text-ze-pink' : 'text-ze-cyan'
   return (
@@ -316,7 +329,12 @@ function FikirFormu({ oturum, adim, acik }: { oturum: string; adim: Adim; acik: 
           {yazilanlar.filter((y) => y !== '…').map((y, i) => (
             <div key={y} className="p-2.5 rounded-xl bg-white/5 text-xs text-slate-200 flex items-start gap-2">
               <span className="font-mono text-ze-cyan font-bold">#{i + 1}</span>
-              <span>{y}</span>
+              <span className="flex-1">{y}</span>
+              {acik && (
+                <button type="button" onClick={() => void sil(y)} className="text-ze-danger font-bold px-1" aria-label="Fikri sil" title="Fikri sil">
+                  ✕
+                </button>
+              )}
             </div>
           ))}
         </div>

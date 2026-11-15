@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.58.2 (15 Kasım 2026)
+- **Kumandadan soru sayısı (0040_kumanda_soru_sayisi.sql, SQL ile uygulandı):** telefondan Zapoot ya da quiz başlatırken "Kaç soru?" seçilir (10/20/30/40, varsayılan 20); perde pakette bu kadar soruyu karışık çeker, quiz süresi soru başına 1 dakika önerilir.
+- Mevcut bütün Zapoot sorularının süresi 20 saniyeye çekildi (veri güncellemesi; soru bazında değiştirilebilir).
+
 ## v0.58.1 (15 Kasım 2026)
 Geri bildirim düzeltmeleri ve soru deposu.
 - **Soru sayısı sorulur:** Zapoot, Oyunlar ve Quiz başlarken kaç soru oynanacağı seçilir (varsayılan 20; 10/20/30/40/hepsi). Seçilen paketlerden karışık çekilir, ama oynanma sırası paketin özgün sırasıdır; her turda havuzdan farklı sorular gelir, son iki turda sorulanlar sona kalır. Quizde de soru sayısı seçilir; süre soru başına 1 dakika olarak önerilir (değiştirilebilir).

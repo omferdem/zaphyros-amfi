@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import { GRUPLU_OYUNLAR, GRUP_SAYILARI } from '../lib/oyunAc'
-import { adaGoreHafta, onerilenQuizSuresi, paketTuru } from '../lib/gecis'
+import { adaGoreHafta, paketTuru } from '../lib/gecis'
 
 interface Paket {
   ad: string
@@ -27,6 +27,7 @@ export default function KumandaBaslat({ oturum, anahtar }: { oturum: string; ana
   const [paketler, setPaketler] = useState<Paket[] | null>(null)
   const [mod, setMod] = useState('oneri')
   const [grup, setGrup] = useState(3)
+  const [adet, setAdet] = useState(20)
   const [bilgi, setBilgi] = useState<string | null>(null)
   const [mesgul, setMesgul] = useState(false)
 
@@ -108,6 +109,14 @@ export default function KumandaBaslat({ oturum, anahtar }: { oturum: string; ana
               </div>
             )}
           </div>
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-xs font-bold text-slate-300">Kaç soru?</span>
+            {[10, 20, 30, 40].map((n) => (
+              <button key={n} onClick={() => setAdet(n)} className={`rounded-full border px-2.5 py-1 text-xs ${adet === n ? 'border-emerald-300 bg-emerald-500/25 font-bold' : 'border-white/10 bg-white/5'}`}>
+                {n}
+              </button>
+            ))}
+          </div>
           {!paketler && <p className="text-sm text-slate-400">Paketler yükleniyor…</p>}
           {paketler && kahootlar.length === 0 && <p className="text-sm text-slate-400">Bu içerikte Zapoot paketi yok.</p>}
           <ul className="space-y-1.5">
@@ -116,7 +125,7 @@ export default function KumandaBaslat({ oturum, anahtar }: { oturum: string; ana
                 <button
                   disabled={mesgul}
                   className="w-full text-left rounded-xl border border-white/10 bg-white/5 p-3 active:scale-[0.99]"
-                  onClick={() => istekGonder({ tur: 'kahoot', paket: p.ad, mod, sure: GRUPLU_OYUNLAR.includes(mod as OyunAnahtari) ? grup : 0 }, `"${p.ad}" başlatılıyor.`)}
+                  onClick={() => istekGonder({ tur: 'kahoot', paket: p.ad, mod, adet, sure: GRUPLU_OYUNLAR.includes(mod as OyunAnahtari) ? grup : 0 }, `"${p.ad}" başlatılıyor (${Math.min(adet, p.sayi)} soru).`)}
                 >
                   <b className="block text-sm">{p.ad}</b>
                   <span className="text-xs text-slate-400">{p.sayi} soru</span>
@@ -129,6 +138,14 @@ export default function KumandaBaslat({ oturum, anahtar }: { oturum: string; ana
 
       {bolum === 'quiz' && (
         <div className="space-y-2">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-xs font-bold text-slate-300">Kaç soru?</span>
+            {[10, 20, 30, 40].map((n) => (
+              <button key={n} onClick={() => setAdet(n)} className={`rounded-full border px-2.5 py-1 text-xs ${adet === n ? 'border-emerald-300 bg-emerald-500/25 font-bold' : 'border-white/10 bg-white/5'}`}>
+                {n}
+              </button>
+            ))}
+          </div>
           {!paketler && <p className="text-sm text-slate-400">Paketler yükleniyor…</p>}
           {paketler && quizler.length === 0 && <p className="text-sm text-slate-400">Bu içerikte soru paketi yok.</p>}
           <ul className="space-y-1.5">
@@ -137,11 +154,11 @@ export default function KumandaBaslat({ oturum, anahtar }: { oturum: string; ana
                 <button
                   disabled={mesgul}
                   className="w-full text-left rounded-xl border border-white/10 bg-white/5 p-3 active:scale-[0.99]"
-                  onClick={() => istekGonder({ tur: 'quiz', paket: p.ad, sure: onerilenQuizSuresi(p.sayi) }, `"${p.ad}" quizi başlatılıyor (${onerilenQuizSuresi(p.sayi)} dk).`)}
+                  onClick={() => istekGonder({ tur: 'quiz', paket: p.ad, adet, sure: Math.min(adet, p.sayi) }, `"${p.ad}" quizi başlatılıyor (${Math.min(adet, p.sayi)} soru, ${Math.min(adet, p.sayi)} dk).`)}
                 >
                   <b className="block text-sm">{p.ad}</b>
                   <span className="text-xs text-slate-400">
-                    {p.sayi} soru · {onerilenQuizSuresi(p.sayi)} dk
+                    {p.sayi} soru · {Math.min(adet, p.sayi)} dk önerilir
                   </span>
                 </button>
               </li>

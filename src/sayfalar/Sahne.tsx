@@ -17,6 +17,7 @@ import { Final, Lobi, takimliMi } from '../bilesenler/LobiFinal'
 import { EnerjiSeridi, useOyuncuSonuclari } from '../bilesenler/EnerjiSeridi'
 import TepkiKatmani from '../bilesenler/TepkiKatmani'
 import Cizim, { type CizimModu } from '../bilesenler/Cizim'
+import { dengeliSec, havuzSirasinaDiz, sonSorulanlar, turuKaydet } from '../lib/soruSec'
 import PerdeNotu from '../bilesenler/PerdeNotu'
 import { oyunuAc } from '../lib/oyunAc'
 import OyunProvasi from '../bilesenler/OyunProvasi'
@@ -45,6 +46,8 @@ interface KumandaIstegi {
   paket: string
   mod: string
   sure: number
+  /** Oynanacak soru sayısı (kumandadan; boşsa 20) */
+  adet?: number
   t: number
 }
 
@@ -509,9 +512,13 @@ export default function Sahne() {
         const mod = i.mod === 'oneri' ? (oneri && oneri in OYUNLAR ? (oneri as OyunAnahtari) : null) : i.mod === '' ? null : (i.mod as OyunAnahtari)
         tekAc(null)
         // Kumanda isteğinde grup sayısı `sure` alanında taşınır (2-6; başka değer varsayılan grup sayısı demektir)
-        await kahootaGit(grup.ad, grup.sorular, mod, i.sure >= 2 && i.sure <= 6 ? i.sure : null)
+        const secilen = havuzSirasinaDiz(dengeliSec([{ ad: grup.ad, sorular: grup.sorular }], Math.min(i.adet ?? 20, grup.sorular.length), (s) => s.id, sonSorulanlar(oturumId)), grup.sorular)
+        turuKaydet(oturumId, secilen.map((s) => s.id))
+        await kahootaGit(grup.ad, secilen, mod, i.sure >= 2 && i.sure <= 6 ? i.sure : null)
       } else {
-        await quizOlustur(oturum.course_id, grup.ad.slice(0, 200), i.sure, grup.sorular.map((s) => s.id), false)
+        const secilenQ = havuzSirasinaDiz(dengeliSec([{ ad: grup.ad, sorular: grup.sorular }], Math.min(i.adet ?? 20, grup.sorular.length), (s) => s.id, sonSorulanlar(oturum.course_id)), grup.sorular)
+        turuKaydet(oturum.course_id, secilenQ.map((s) => s.id))
+        await quizOlustur(oturum.course_id, grup.ad.slice(0, 200), i.sure, secilenQ.map((s) => s.id), false)
         tekAc('quiz')
       }
     } catch {

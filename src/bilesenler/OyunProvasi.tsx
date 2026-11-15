@@ -1,39 +1,18 @@
 import { useEffect, useMemo, useState } from 'react'
-import { zombiHesapla, type ZombiOyuncusu, type ZombiSorusu } from '../lib/zombi'
+import { zombiHesapla, type ZombiSorusu } from '../lib/zombi'
 import { roketHesapla } from '../lib/roket'
 import { ejderhaHesapla } from '../lib/ejderha'
 import { arenaHesapla } from '../lib/arena'
 import { kuleHesapla } from '../lib/kule'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
+import { sahteOyuncular } from '../lib/oyunMotoru'
 import { ZombiSahnesi } from './ZombiPaneli'
 import { ArenaSahnesi, EjderhaSahnesi, KuleSahnesi, RoketSahnesi } from './GrafikOyunlari'
 
-const ISIMLER = ['Ayşe', 'Mehmet', 'Zeynep', 'Ali', 'Elif', 'Can', 'Selin', 'Burak', 'Deniz', 'Ece', 'Emre', 'Hira', 'Kaan', 'Mina', 'Ozan', 'Pınar', 'Yusuf', 'Rabia', 'Tuğba', 'Eren']
 const TOPLAM = 20
 const OYUNLAR_LISTESI: OyunAnahtari[] = ['zombi', 'roket', 'ejderha', 'arena', 'kule']
-
-/** Tekrarlanabilir sahte rastgelelik: aynı oyuncu hep aynı başarı düzeyinde olsun. */
-function tohum(n: number): () => number {
-  let s = n >>> 0
-  return () => {
-    s = (s * 1664525 + 1013904223) >>> 0
-    return s / 4294967296
-  }
-}
-
-function sahteOyuncular(): ZombiOyuncusu[] {
-  const r = tohum(42)
-  return ISIMLER.map((ad, i) => {
-    const basari = 0.35 + (i % 7) * 0.09
-    return {
-      ad,
-      sonuc: Array.from({ length: TOPLAM }, () => {
-        const x = r()
-        return x < basari ? 1 : x < basari + (1 - basari) * 0.7 ? 0 : -1
-      }) as (1 | 0 | -1)[],
-    }
-  })
-}
+const OYUNCU_SAYILARI = [5, 30, 80]
+const BASARILAR = [0.3, 0.6, 0.9]
 
 /**
  * Oyun provası: sahte öğrencilerle bir oyunu baştan sona, gerçek derste göreceğin perde görünümüyle izlersin.
@@ -43,7 +22,9 @@ export default function OyunProvasi({ kapat, baslangic = 'zombi' }: { kapat: () 
   const [oyun, setOyun] = useState<OyunAnahtari>(OYUNLAR_LISTESI.includes(baslangic) ? baslangic : 'zombi')
   const [k, setK] = useState(3)
   const [oynuyor, setOynuyor] = useState(true)
-  const oyuncular = useMemo(sahteOyuncular, [])
+  const [sayi, setSayi] = useState(20)
+  const [basari, setBasari] = useState(0.6)
+  const oyuncular = useMemo(() => sahteOyuncular(sayi, basari, TOPLAM), [sayi, basari])
   const sorular: ZombiSorusu[] = useMemo(() => Array.from({ length: TOPLAM }, (_, i) => ({ adim: `p${i}`, sira: i + 1, acildi: i < k })), [k])
 
   useEffect(() => {
@@ -97,6 +78,20 @@ export default function OyunProvasi({ kapat, baslangic = 'zombi' }: { kapat: () 
               className={`rounded-full px-2.5 py-1 text-xs border ${oyun === a ? 'border-indigo-300 bg-indigo-500/30 font-bold' : 'border-white/10 bg-white/5 hover:bg-white/10'}`}
             >
               {OYUNLAR[a].emoji} {OYUNLAR[a].ad}
+            </button>
+          ))}
+        </div>
+        <div className="flex gap-1" aria-label="Oyuncu sayısı">
+          {OYUNCU_SAYILARI.map((n) => (
+            <button key={n} onClick={() => setSayi(n)} className={`rounded-full px-2 py-1 text-xs border ${sayi === n ? 'border-emerald-300 bg-emerald-500/30 font-bold' : 'border-white/10 bg-white/5'}`}>
+              {n} kişi
+            </button>
+          ))}
+        </div>
+        <div className="flex gap-1" aria-label="Başarı oranı">
+          {BASARILAR.map((n) => (
+            <button key={n} onClick={() => setBasari(n)} className={`rounded-full px-2 py-1 text-xs border ${basari === n ? 'border-amber-300 bg-amber-500/30 font-bold' : 'border-white/10 bg-white/5'}`}>
+              %{Math.round(n * 100)}
             </button>
           ))}
         </div>

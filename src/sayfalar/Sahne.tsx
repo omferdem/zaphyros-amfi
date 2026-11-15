@@ -14,6 +14,7 @@ import { kalinanAdim, sonAkisBilgisi } from '../lib/veri'
 import { QuizPaneli } from '../bilesenler/PaketGecisi'
 import { OyunSihirbazi, type TurIstegi } from '../bilesenler/OyunSihirbazi'
 import { Final, Lobi, takimliMi } from '../bilesenler/LobiFinal'
+import { EnerjiSeridi, useOyuncuSonuclari } from '../bilesenler/EnerjiSeridi'
 import { oyunuAc } from '../lib/oyunAc'
 import OyunProvasi from '../bilesenler/OyunProvasi'
 import Rehber from '../bilesenler/Rehber'
@@ -180,6 +181,7 @@ export default function Sahne() {
     }
   })
   const oyunKilitli = !!kahootAkisi && zapootOyunu !== null
+  const seritSonuclari = useOyuncuSonuclari(oturumId, !!kahootAkisi && zapootOyunu === null && !lobi && !finalAcik)
   // Süreli oyun: süre dolunca o anki soru bitince (sonuç açılınca) final açılır
   useEffect(() => {
     if (!turBitis) return
@@ -742,6 +744,11 @@ export default function Sahne() {
             setOyunSecimi(false)
           }}
         />
+      )}
+      {kahootAkisi && zapootOyunu === null && !lobi && !finalAcik && seritSonuclari.length > 0 && (
+        <div className="fixed left-4 bottom-20 z-20 w-[min(46vw,640px)] max-h-[28vh] overflow-hidden">
+          <EnerjiSeridi oyuncular={seritSonuclari} />
+        </div>
       )}
       {lobi && (
         <Lobi

@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.53.0 (15 Kasım 2026)
+Faz 3: ortak oyun motoru (kısmi). Veritabanı değişikliği yok.
+- **`oyunMotoru.ts`:** enerji kuralları (başlangıç 50; doğru +15, yanlış −15, cevapsız −10, her 3'lü doğru seride +10; 0-100), kalabalık ayarı (karakter ölçeği küçülür, adlar ilk ada iner, 40'ın üstünde yalnızca lider ve son durumdakilerde ad görünür), prova oyuncu üretici. Birim testli.
+- **Enerji şeridi:** grafik oyun dışındaki Zapoot turlarında (takım, hocayla yarış, bireysel vb.) perdenin sol altında her oyuncunun enerji barı; düşük enerjili soluk ve kırmızımsı, sonuç açılınca "+1" ya da "−1" yükselir, seri yapanda 🔥.
+- **Prova:** 5, 30 ve 80 sahte oyuncu, %30, %60 ve %90 başarı oranı seçilebilir.
+- Henüz yapılmayanlar: enerji barının grafik oyun sahnelerinin içine taşınması, "cevap verdi" hareketi (cevap veren karakter, doğruluk sızdırmadan) ve "hızlı doğruya +5" (sunucudan süre bilgisi gerekir), halat/orman/kale provaları (Faz 4 ile).
+
 ## v0.52.0 (15 Kasım 2026)
 Faz 2: Zapoot, Oyunlar ve Quiz ayrıldı; lobi; puanlama; final töreni.
 - **Araç çubuğu:** 🎮 Zapoot, 🕹️ Oyunlar, 📝 Quiz ayrı düğmeler. Zapoot sihirbazı: bireysel/takım (2-6 takım), paket(ler), soru sayısı. Oyunlar sihirbazı: oyun kartları (kısa kural, bireysel/takım etiketi), paket(ler), soru sayısı ya da süre (süre dolunca o anki soru bitince final açılır).

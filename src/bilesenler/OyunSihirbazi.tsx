@@ -19,6 +19,11 @@ export interface TurIstegi {
 type Etiket = 'bireysel' | 'takim' | 'ikisi'
 const OYUN_LISTESI: { anahtar: OyunAnahtari; etiket: Etiket; kural: string }[] = [
   {
+    anahtar: 'orman',
+    etiket: 'bireysel',
+    kural: 'Patikada yürü, kalplerini koru; kurda yakalanma.',
+  },
+  {
     anahtar: 'zombi',
     etiket: 'bireysel',
     kural: 'Doğru cevap bir kat çıkarır; zombiler yaklaşır.',

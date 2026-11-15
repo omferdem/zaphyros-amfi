@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { zombiHesapla, type ZombiSorusu } from '../lib/zombi'
 import { roketHesapla } from '../lib/roket'
+import { ormanHesapla } from '../lib/orman'
+import { OrmanSahnesi } from './OrmanSahnesi'
 import { ejderhaHesapla } from '../lib/ejderha'
 import { arenaHesapla } from '../lib/arena'
 import { kaleHaritasiHesapla } from '../lib/kaleHarita'
@@ -15,7 +17,7 @@ import { Merdiven } from './MerdivenPaneli'
 import { Halat } from './TakimPaneli'
 
 const TOPLAM = 20
-const OYUNLAR_LISTESI: OyunAnahtari[] = ['zombi', 'roket', 'ejderha', 'arena', 'kule', 'kale', 'halat', 'merdiven', 'hoca']
+const OYUNLAR_LISTESI: OyunAnahtari[] = ['orman', 'zombi', 'roket', 'ejderha', 'arena', 'kule', 'kale', 'halat', 'merdiven', 'hoca']
 
 /** Prova oyuncularını takımlara böler ve takım_soru_ozeti çıktısının aynısını üretir. */
 function takimOzeti(oyuncular: { sonuc: (1 | 0 | -1)[] }[], takimSayisi: number, k: number): TakimOzeti {
@@ -61,6 +63,10 @@ export default function OyunProvasi({ kapat, baslangic = 'zombi' }: { kapat: () 
     if (oyun === 'zombi') {
       const d = zombiHesapla(sorular, oyuncular)
       return d ? <ZombiSahnesi d={d} kapat={kapat} /> : null
+    }
+    if (oyun === 'orman') {
+      const d = ormanHesapla(sorular, oyuncular)
+      return d ? <OrmanSahnesi d={d} kucult={kapat} /> : null
     }
     if (oyun === 'roket') {
       const d = roketHesapla(sorular, oyuncular)

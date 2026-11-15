@@ -16,7 +16,7 @@ import KumandaBaslat from '../bilesenler/KumandaBaslat'
 import ZombiPaneli from '../bilesenler/ZombiPaneli'
 import BaglantiUyarisi from '../bilesenler/BaglantiUyarisi'
 import { tepkiAyarGonder } from '../lib/tepki'
-import { ArenaPaneli, EjderhaPaneli, KulePaneli, RoketPaneli, KalePaneli } from '../bilesenler/GrafikOyunlari'
+import { ArenaPaneli, EjderhaPaneli, KulePaneli, OrmanPaneli, RoketPaneli, KalePaneli } from '../bilesenler/GrafikOyunlari'
 
 interface KumandaDurumu extends DersDurumu {
   katilan: number
@@ -228,6 +228,7 @@ export default function Kumanda() {
           {anahtar && <RoketPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
           {anahtar && <EjderhaPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
           {anahtar && <ArenaPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
+          {anahtar && <OrmanPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
           {anahtar && <KulePaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
           {anahtar && <KalePaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
         </>

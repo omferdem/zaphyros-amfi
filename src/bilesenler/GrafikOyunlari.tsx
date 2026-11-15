@@ -6,6 +6,8 @@ import { arenaHesapla, type ArenaDurumu } from '../lib/arena'
 import { type KuleDurumu } from '../lib/kule'
 import { kuleTurHesapla, type TakimOzeti } from '../lib/takimOyunlari'
 import { HUCRE_SAYISI, type KaleHaritasi } from '../lib/kaleHarita'
+import { OrmanSahnesi } from './OrmanSahnesi'
+import { ormanHesapla, type OrmanSonucu } from '../lib/orman'
 import { KaleHaritaSahnesi, kaleHaritaHesapla, kaleHaritaVerisi, type KaleHaritaGirdisi } from './KaleHaritasi'
 import { type KaleDurumu } from '../lib/kale'
 import Gorsel, { adIndeksi, arkaPlan, gorselAdresi } from './Gorsel'
@@ -536,6 +538,26 @@ export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => 
 // ------------------------------------------------------------------------------------------- Son kalan arenası
 
 const ARENA_KARAKTERLERI = ['🥷', '🤺', '🧙', '🦸', '🧑‍🚀', '🦹', '🧝', '🤠', '👩‍🚀', '🧑‍🎤']
+
+export function OrmanPaneli({ oturum, anahtar, mod }: { oturum: string; anahtar: string | null; mod: 'perde' | 'kumanda' }) {
+  return (
+    <OyunKabugu<OrmanSonucu>
+      oyun="orman"
+      baslik="🌲 Orman'dan eve dönüş"
+      oturum={oturum}
+      anahtar={anahtar}
+      mod={mod}
+      hesapla={(v) => ormanHesapla(v.sorular, v.oyuncular)}
+      konum="bottom-28"
+      ozet={(d) => (
+        <p className="text-sm">
+          Evde <b className="text-emerald-300">{d.oyuncular.filter((o) => o.durum === 'evde').length}</b> / {d.oyuncular.length} · soru {d.oynanan} / {d.toplamSoru}
+        </p>
+      )}
+      sahne={(d, kucult) => <OrmanSahnesi d={d} kucult={kucult} />}
+    />
+  )
+}
 
 export function ArenaPaneli({ oturum, anahtar, mod }: { oturum: string; anahtar: string | null; mod: 'perde' | 'kumanda' }) {
   return (

@@ -36,7 +36,7 @@ import TakimPaneli from '../bilesenler/TakimPaneli'
 import HocaYarisiPaneli from '../bilesenler/HocaYarisiPaneli'
 import MerdivenPaneli from '../bilesenler/MerdivenPaneli'
 import ZombiPaneli from '../bilesenler/ZombiPaneli'
-import { ArenaPaneli, EjderhaPaneli, KalePaneli, KulePaneli, RoketPaneli } from '../bilesenler/GrafikOyunlari'
+import { ArenaPaneli, EjderhaPaneli, KalePaneli, KulePaneli, OrmanPaneli, RoketPaneli } from '../bilesenler/GrafikOyunlari'
 import DersSayaci from '../bilesenler/DersSayaci'
 import OyunSahnesi from '../bilesenler/OyunSahnesi'
 
@@ -194,7 +194,7 @@ export default function Sahne() {
   }
   const [kahootAkisi, setZapootAkisi] = useState<{ id: string; ad: string } | null>(null)
   // Zapoot'ta seçilen perde oyunu (zombi, roket...). Seçiliyken sahne o oyunda kilitli kalır; sorular telefonlarda, perdede oyun görünür.
-  const GRAFIK_OYUNLAR = ['zombi', 'roket', 'ejderha', 'arena', 'kule', 'kale']
+  const GRAFIK_OYUNLAR = ['zombi', 'roket', 'ejderha', 'arena', 'kule', 'kale', 'orman']
   const oyunKaydi = `amfi_zapoot_oyun_${oturumId}`
   const [zapootOyunu, setZapootOyunu] = useState<OyunAnahtari | null>(() => {
     try {
@@ -832,6 +832,7 @@ export default function Sahne() {
       <RoketPaneli oturum={oturum.id} anahtar={null} mod="perde" />
       <EjderhaPaneli oturum={oturum.id} anahtar={null} mod="perde" />
       <ArenaPaneli oturum={oturum.id} anahtar={null} mod="perde" />
+      <OrmanPaneli oturum={oturum.id} anahtar={null} mod="perde" />
       <KulePaneli oturum={oturum.id} anahtar={null} mod="perde" />
       <KalePaneli oturum={oturum.id} anahtar={null} mod="perde" />
     </>

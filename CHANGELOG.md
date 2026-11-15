@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.60.0 (15 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Orman'dan eve dönüş (yeni oyun):** Oyunlar sihirbazında bireysel oyun olarak seçilir. Sol alttan sağ üstteki eve kıvrılan patika (köprü, dere, ağaçlar); her öğrenci adıyla patikada yürür, her doğru 1 adım, yanlış ya da cevapsız 1 kalp götürür (3 kalp). Kalbi biten kurda yakalanır (pati izi ve toz bulutu, korkutucu görüntü yok); üst üste 3 doğru fener bulup kalp kazandırır; kalbi 1'e düşen olunca çalıların arasında kurt gözleri parlar; sorular ilerledikçe gökyüzü kararır. Eve varanlar evin yanında toplanır, ev ışıklarını yakar; final podyumu varış sırasına göredir. Oyun provasında da var. Çizim tarayıcıda denendi.
+- Kale kuşatması açıklaması hücre haritası kuralına göre güncellendi.
+- Sınır: telefon kumandasındaki "oyun başlat" listesi henüz Orman'ı içermiyor (kumanda isteği veritabanında oyun adlarını denetliyor, yeni migration gerekir); perdeden başlatılır.
+
 ## v0.59.1 (15 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Telefonda final ekranı:** perdede final açılınca öğrencinin telefonunda kendi sırası, puanı, doğru sayısı ve en iyi serisi görünür (herkese açık Broadcast kanalı, HTTP ile; telefon sonucunu `benim_sonucum` RPC'siyle kendisi çeker). Perdede final kapanınca telefonda da kapanır.

@@ -1,6 +1,6 @@
 // Akıştaki "oyun" adımı için oyun listesi ve açıklamaları (perde kartı ve akış düzenleyici kullanır).
 
-export type OyunAnahtari = 'takim' | 'halat' | 'hoca' | 'merdiven' | 'zombi' | 'roket' | 'ejderha' | 'arena' | 'kule' | 'kale'
+export type OyunAnahtari = 'takim' | 'halat' | 'hoca' | 'merdiven' | 'zombi' | 'roket' | 'ejderha' | 'arena' | 'kule' | 'kale' | 'orman'
 
 export interface OyunBilgisi {
   ad: string
@@ -45,8 +45,14 @@ export const OYUNLAR: Record<OyunAnahtari, OyunBilgisi> = {
   kale: {
     ad: 'Kale kuşatması',
     emoji: '🏰',
-    nasil: 'Her takımın bir kalesi var. Doğru cevaplar takımın ordusunu bir sonraki takımın kalesine yürütür, sonra kalenin etrafını sarar. Hedef kaleyi önce tamamen kuşatan takım kazanır; sıralama kişi başına doğruya göredir.',
-    baslat: '3 takımlı takım modunu ve kale kuşatması sahnesini açar.',
+    nasil: 'Ortada hedef kale, etrafında toprak hücreleri var. Her öğrenci 2 doğruda 1 hücre alır; boş toprak bitince rakibin komşu hücresi ele geçirilir. İç halkayı tamamen tutan takım kaleyi kuşatır.',
+    baslat: 'Takımlı modu ve kale kuşatması haritasını açar.',
+  },
+  orman: {
+    ad: "Orman'dan eve dönüş",
+    emoji: '🌲',
+    nasil: 'Öğrenciler ormanda kaybolmuştur; her doğru bir adım, her yanlış ya da cevapsız bir kalp götürür. 3 kalbi biten kurda yakalanır, üst üste 3 doğru fener bulup kalp kazandırır. Eve varanlar evin ışığını yakar.',
+    baslat: 'Orman patikası sahnesini perdede açar.',
   },
   roket: {
     ad: 'Roket yarışı',

@@ -15,6 +15,7 @@ import MerdivenPaneli from '../bilesenler/MerdivenPaneli'
 import KumandaBaslat from '../bilesenler/KumandaBaslat'
 import ZombiPaneli from '../bilesenler/ZombiPaneli'
 import BaglantiUyarisi from '../bilesenler/BaglantiUyarisi'
+import { tepkiAyarGonder } from '../lib/tepki'
 import { ArenaPaneli, EjderhaPaneli, KulePaneli, RoketPaneli, KalePaneli } from '../bilesenler/GrafikOyunlari'
 
 interface KumandaDurumu extends DersDurumu {
@@ -366,6 +367,17 @@ export default function Kumanda() {
 
       {sekme === 'ayar' && (
         <>
+      <section className="cam-panel rounded-2xl p-4 space-y-2">
+        <h3 className="text-xs font-bold text-slate-300">😀 Emoji tepkileri (perde)</h3>
+        <div className="grid grid-cols-2 gap-2">
+          <button className="ikincil-buton !py-2 text-sm" onClick={() => tepkiAyarGonder(oturum, false)}>
+            Kapat
+          </button>
+          <button className="ikincil-buton !py-2 text-sm" onClick={() => tepkiAyarGonder(oturum, true)}>
+            Aç
+          </button>
+        </div>
+      </section>
       <section className="cam-panel rounded-2xl p-4 flex items-center gap-3">
         <div className="flex-1">
           <p className="text-2xl font-extrabold tabular-nums">

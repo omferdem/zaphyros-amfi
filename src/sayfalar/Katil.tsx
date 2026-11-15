@@ -1,4 +1,5 @@
 import TepkiSeridi from '../bilesenler/TepkiSeridi'
+import TelefonFinali from '../bilesenler/TelefonFinali'
 import { kartiKaydet, slaytKartiOlustur } from '../lib/slaytKarti'
 import Gorsel from '../bilesenler/Gorsel'
 import { varlikBildir } from '../lib/varlik'
@@ -685,6 +686,7 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
       </section>
 
       {durum && !durum.bitti && <SinifDugmeleri oturum={oturum} />}
+      <TelefonFinali oturum={oturum} />
       {durum && !durum.bitti && !(adim?.tur === 'soru' && adim.soru_durum === 'acik') && <TepkiSeridi oturum={oturum} />}
       {oturumKodu && !durum?.bitti && (
         <span className="fixed right-3 bottom-3 z-20 rounded-lg bg-ze-bg/80 border border-white/10 px-2 py-1 font-mono text-[11px] text-slate-400 backdrop-blur" title="Ders kodu (sayfa yenilenirse kod sorulmaz)">

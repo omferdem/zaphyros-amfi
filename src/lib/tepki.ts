@@ -32,9 +32,11 @@ export function tepkiGonder(oturum: string, tepki: Tepki): boolean {
 }
 
 /** Perde: tepkileri dinler. Aynı kişiden 3 saniyeden sık gelenler yok sayılır. */
-export function useTepkiDinle(oturum: string, etkin: boolean, geldi: (t: Tepki) => void): void {
+export function useTepkiDinle(oturum: string, etkin: boolean, geldi: (t: Tepki) => void, ayar?: (acik: boolean) => void): void {
   const geldiRef = useRef(geldi)
   geldiRef.current = geldi
+  const ayarRef = useRef(ayar)
+  ayarRef.current = ayar
   useEffect(() => {
     if (!etkin) return
     const son = new Map<string, number>()
@@ -47,9 +49,20 @@ export function useTepkiDinle(oturum: string, etkin: boolean, geldi: (t: Tepki) 
       son.set(p.k, simdi)
       geldiRef.current(p.e as Tepki)
     })
+    // Kumandadan açma/kapama: { acik: boolean }
+    kanal.on('broadcast', { event: 'ayar' }, ({ payload }) => {
+      const p = payload as { acik?: boolean } | null
+      if (typeof p?.acik === 'boolean') ayarRef.current?.(p.acik)
+    })
     kanal.subscribe()
     return () => {
       void supabase.removeChannel(kanal)
     }
   }, [oturum, etkin])
+}
+
+/** Kumanda: perdedeki emoji tepkilerini açar ya da kapatır. */
+export function tepkiAyarGonder(oturum: string, acik: boolean): void {
+  const kanal = supabase.channel(kanalAdi(oturum), { config: { broadcast: { self: false } } })
+  void kanal.httpSend('ayar', { acik }).catch(() => {})
 }

@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.59.1 (15 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Telefonda final ekranı:** perdede final açılınca öğrencinin telefonunda kendi sırası, puanı, doğru sayısı ve en iyi serisi görünür (herkese açık Broadcast kanalı, HTTP ile; telefon sonucunu `benim_sonucum` RPC'siyle kendisi çeker). Perdede final kapanınca telefonda da kapanır.
+- **Kumandadan emoji tepkileri:** kumandanın Ayarlar sekmesinde "Emoji tepkileri: Aç / Kapat"; perde bu komutu her zaman dinler, kapalıyken gelen emojiler yok sayılır.
+
 ## v0.59.0 (15 Kasım 2026)
 - **Lobi:** bireysel modda yoklamadan gelen katılımcıların adları balonlarda görünür (adı henüz görünmeyen bağlı telefonlar silik balon olarak kalır).
 - **Oyun provası** artık kale, halat, merdiven ve hocayla yarışı da içerir (kule yeni blok kuralıyla); 5/30/80 oyuncu ve %30/60/90 başarı seçenekleri bunlarda da çalışır.

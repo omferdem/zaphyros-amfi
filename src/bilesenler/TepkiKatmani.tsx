@@ -18,7 +18,7 @@ interface Ucan {
  * Perde: öğrencilerin emojileri alttan yukarı kıvrımlı bir yolda yükselip solar. ❤️ sağ alttaki hoca karakterine uçar;
  * hoca gülümser, kalpler üst üste gelirse mutlu zıplar. Aynı anda en çok 25 emoji uçar, fazlası "×N" olarak birleşir.
  */
-export default function TepkiKatmani({ oturum, etkin }: { oturum: string; etkin: boolean }) {
+export default function TepkiKatmani({ oturum, etkin, ayar }: { oturum: string; etkin: boolean; ayar?: (acik: boolean) => void }) {
   const [ucanlar, setUcanlar] = useState<Ucan[]>([])
   const [hocaDurumu, setHocaDurumu] = useState<'sakin' | 'gulumse' | 'ziplar'>('sakin')
   const sayac = useRef(0)
@@ -50,7 +50,10 @@ export default function TepkiKatmani({ oturum, etkin }: { oturum: string; etkin:
     setTimeout(() => setUcanlar((l) => l.filter((u) => u.id !== id)), 6200)
   }, [])
 
-  useTepkiDinle(oturum, etkin, geldi)
+  // Kanal her zaman dinlenir ki kumandadan "aç" komutu kapalıyken de alınsın; kapalıyken gelen emojiler yok sayılır
+  const etkinRef = useRef(etkin)
+  etkinRef.current = etkin
+  useTepkiDinle(oturum, true, (t) => etkinRef.current && geldi(t), ayar)
   useEffect(
     () => () => {
       if (hocaZamanlayici.current) clearTimeout(hocaZamanlayici.current)

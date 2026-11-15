@@ -205,6 +205,16 @@ export default function Sahne() {
     }
   })
   const oyunKilitli = !!kahootAkisi && zapootOyunu !== null
+  // Final açılınca ve kapanınca telefonlara haber verilir (herkese açık Broadcast kanalı, HTTP ile; telefon kendi sonucunu RPC ile çeker)
+  const ilkFinal = useRef(true)
+  useEffect(() => {
+    if (ilkFinal.current) {
+      ilkFinal.current = false
+      if (!finalAcik) return
+    }
+    const kanal = supabase.channel(`final:${oturumId}`, { config: { broadcast: { self: false } } })
+    void kanal.httpSend(finalAcik ? 'final' : 'kapat', { t: Date.now() }).catch(() => {})
+  }, [finalAcik, oturumId])
   const seritSonuclari = useOyuncuSonuclari(oturumId, !!kahootAkisi && zapootOyunu === null && !lobi && !finalAcik)
   // Süreli oyun: süre dolunca o anki soru bitince (sonuç açılınca) final açılır
   useEffect(() => {
@@ -797,7 +807,7 @@ export default function Sahne() {
       )}
       <Cizim oturum={oturum.id} anahtar={oturum.aktif_adim ?? 'yok'} mod={cizimModu} kapat={() => setCizimModu('kapali')} bitti={!!oturum.bitti} ac={() => setCizimModu('lazer')} />
       {notAcik && <PerdeNotu key={oturum.id} dersId={oturum.course_id} baglam={`${new Date().toLocaleString('tr-TR')} · ${oturum.courses.ad}${oturum.baslik ? ` · ${oturum.baslik}` : ''}`} kapat={() => setNotAcik(false)} />}
-      <TepkiKatmani oturum={oturum.id} etkin={tepkiAcik && !quizAcik && !lobi && !finalAcik} />
+      <TepkiKatmani oturum={oturum.id} etkin={tepkiAcik && !quizAcik && !lobi && !finalAcik} ayar={tepkiAyarla} />
       {lobi && (
         <Lobi
           oturumId={oturum.id}

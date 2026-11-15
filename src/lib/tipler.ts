@@ -154,6 +154,8 @@ export interface DersDurumu {
     cevap_sayisi?: number
     dogru_index?: number | null
     dagilim?: number[] | null
+    /** Yarı yarıya jokeri: telefonda silinen şıkların sırası */
+    elenen?: number[] | null
     // Beyin fırtınası, oylama ve video adımlarında (soru, soru_durum ve cevap_sayisi alanları ortaktır)
     video?: string | null
     fikirler?: { m: string; n: number }[]

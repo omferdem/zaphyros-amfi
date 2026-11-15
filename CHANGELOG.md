@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.61.0 (15 Kasım 2026)
+- **Bilgi merdiveni jokerleri (0042_soru_jokerleri.sql, SQL ile uygulandı):** hoca açık soruda, perdeden ya da kumandadan, turda birer kez kullanır: **✂ Yarı yarıya** (telefonlarda 2 yanlış şık silinir, doğru şık asla), **👥 Seyirci** (ilk 10 saniyedeki cevapların şık dağılımı perdede çubuk grafik), **⏱ +15 sn** (soru başlangıcı 15 saniye ileri alınır; telefon, perde ve cevap kabulü aynı süreyi kullanır). `ozel.durum` telefonlara `elenen` alanını verir.
+- Not: mevcut "kurtarma" jokeri (yanlışta basamağı koruma) olduğu gibi duruyor.
+
 ## v0.60.0 (15 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Orman'dan eve dönüş (yeni oyun):** Oyunlar sihirbazında bireysel oyun olarak seçilir. Sol alttan sağ üstteki eve kıvrılan patika (köprü, dere, ağaçlar); her öğrenci adıyla patikada yürür, her doğru 1 adım, yanlış ya da cevapsız 1 kalp götürür (3 kalp). Kalbi biten kurda yakalanır (pati izi ve toz bulutu, korkutucu görüntü yok); üst üste 3 doğru fener bulup kalp kazandırır; kalbi 1'e düşen olunca çalıların arasında kurt gözleri parlar; sorular ilerledikçe gökyüzü kararır. Eve varanlar evin yanında toplanır, ev ışıklarını yakar; final podyumu varış sırasına göredir. Oyun provasında da var. Çizim tarayıcıda denendi.

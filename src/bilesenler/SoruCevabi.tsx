@@ -96,6 +96,7 @@ export default function SoruCevabi({ oturum, adim, yoklamali }: { oturum: string
   }
 
   const secenekler = adim.secenekler ?? []
+  const elenen = adim.elenen ?? []
   const kalan = bitis === null ? null : Math.max(0, bitis - simdi)
 
   if (acik && (!kimlikVar || adSor))
@@ -176,16 +177,17 @@ export default function SoruCevabi({ oturum, adim, yoklamali }: { oturum: string
           {secenekler.map((x, i) => {
             const z = ZE_SIKLAR[i % ZE_SIKLAR.length]
             const secildi = secim === i
+            const elendi = elenen.includes(i)
             return (
               <button
                 key={i}
                 onClick={() => cevapla(i)}
-                disabled={!acik || kalan === 0 || secimli}
+                disabled={!acik || kalan === 0 || secimli || elendi}
                 role="radio"
                 aria-checked={secildi}
                 className={`pressable w-full min-h-[64px] p-3.5 rounded-2xl text-left flex items-center justify-between gap-3 border-2 transition-all ${
                   secildi ? 'bg-white/15 border-white shadow-[0_0_25px_rgba(255,255,255,0.2)]' : 'bg-white/[0.05] border-white/10 hover:bg-white/10'
-                } ${secimli && !secildi ? 'opacity-45' : ''}`}
+                } ${secimli && !secildi ? 'opacity-45' : ''} ${elendi ? 'opacity-25 line-through' : ''}`}
               >
                 <div className="flex items-center gap-3">
                   <span className="w-11 h-11 rounded-xl flex flex-col items-center justify-center font-display font-extrabold text-sm shrink-0 leading-none text-ze-bg" style={{ background: z.hex }}>
@@ -194,6 +196,7 @@ export default function SoruCevabi({ oturum, adim, yoklamali }: { oturum: string
                   </span>
                   <span className="font-bold text-sm leading-snug">{x}</span>
                 </div>
+                {elendi && <span className="text-xs text-slate-400">elendi</span>}
                 {secildi && <span className="text-ze-lime text-lg">✓</span>}
               </button>
             )

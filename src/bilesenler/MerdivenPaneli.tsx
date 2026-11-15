@@ -28,11 +28,27 @@ export default function MerdivenPaneli({ oturum, anahtar, mod, dugme = true }: {
   const [kayit, setKayit] = useState<Kayit>(() => oku(oturum))
   const [sorular, setSorular] = useState<MerdivenSorusu[]>([])
 
+  const [jokerDurumu, setJokerDurumu] = useState<{ kullanilan: string[]; seyirci: number[] | null }>({ kullanilan: [], seyirci: null })
+  const [jokerHata, setJokerHata] = useState<string | null>(null)
+
   const yenile = useCallback(async () => {
-    const { data } = await supabase.rpc('merdiven_goster', { p_session: oturum, p_anahtar: anahtar })
+    const [{ data }, { data: j }] = await Promise.all([
+      supabase.rpc('merdiven_goster', { p_session: oturum, p_anahtar: anahtar }),
+      supabase.rpc('joker_durumu', { p_session: oturum, p_anahtar: anahtar }),
+    ])
     const s = (data as { sorular?: MerdivenSorusu[] } | null)?.sorular
     if (s) setSorular(s)
+    const jd = j as { kullanilan?: string[]; bu_soru?: { seyirci?: { dagilim?: number[] } } } | null
+    if (jd?.kullanilan) setJokerDurumu({ kullanilan: jd.kullanilan, seyirci: jd.bu_soru?.seyirci?.dagilim ?? null })
   }, [oturum, anahtar])
+
+  async function jokerKullan(tur: 'yarim' | 'seyirci' | 'sure') {
+    setJokerHata(null)
+    const { data, error } = await supabase.rpc('joker_kullan', { p_session: oturum, p_anahtar: anahtar, p_tur: tur })
+    const h = (data as { hata?: string } | null)?.hata
+    if (error || h) setJokerHata(h === 'soru_acik_degil' ? 'Soru açıkken kullanılır.' : h === 'kullanildi' ? 'Bu joker kullanıldı.' : 'Joker kullanılamadı.')
+    await yenile()
+  }
 
   useEffect(() => {
     yenile()
@@ -79,12 +95,22 @@ export default function MerdivenPaneli({ oturum, anahtar, mod, dugme = true }: {
 
   return (
     <div className={perde ? 'fixed inset-x-4 bottom-28 z-30 flex justify-center' : ''}>
-      <Merdiven d={d} sonSonuc={sonSonuc?.sonuc ?? null} kucuk={!perde} joker={() => d.jokerlenebilir && kaydet({ ...kayit, jokerler: [...kayit.jokerler, d.jokerlenebilir] })} kapat={() => kaydet({ ...kayit, acik: false })} />
+      <Merdiven d={d} jokerler={{ kullanilan: jokerDurumu.kullanilan, seyirci: jokerDurumu.seyirci, kullan: jokerKullan, hata: jokerHata }} sonSonuc={sonSonuc?.sonuc ?? null} kucuk={!perde} joker={() => d.jokerlenebilir && kaydet({ ...kayit, jokerler: [...kayit.jokerler, d.jokerlenebilir] })} kapat={() => kaydet({ ...kayit, acik: false })} />
     </div>
   )
 }
 
-export function Merdiven({ d, sonSonuc, kucuk, joker, kapat }: { d: MerdivenDurumu; sonSonuc: 'cikti' | 'dustu' | 'joker' | null; kucuk: boolean; joker: () => void; kapat: () => void }) {
+export interface SoruJokerleri {
+  kullanilan: string[]
+  /** Seyirci jokerinin ilk 10 saniyedeki şık dağılımı */
+  seyirci: number[] | null
+  kullan: (tur: 'yarim' | 'seyirci' | 'sure') => void
+  hata: string | null
+}
+
+const SIK_HARFLERI = ['A', 'B', 'C', 'D', 'E', 'F']
+
+export function Merdiven({ d, sonSonuc, kucuk, joker, kapat, jokerler }: { d: MerdivenDurumu; sonSonuc: 'cikti' | 'dustu' | 'joker' | null; kucuk: boolean; joker: () => void; kapat: () => void; jokerler?: SoruJokerleri }) {
   const basamaklar = Array.from({ length: d.toplam }, (_, i) => i + 1)
   return (
     <div className={`cam-panel rounded-3xl p-4 space-y-3 ${kucuk ? 'w-full' : 'w-[min(60rem,94vw)]'}`}>
@@ -138,6 +164,44 @@ export function Merdiven({ d, sonSonuc, kucuk, joker, kapat }: { d: MerdivenDuru
         )}
         {!d.jokerlenebilir && d.jokerKalan < 2 && <span className="text-xs text-slate-500">Kalan joker: {d.jokerKalan}</span>}
       </div>
+      {jokerler && (
+        <div className="space-y-2 border-t border-white/10 pt-2">
+          <div className="flex flex-wrap items-center gap-2 text-sm">
+            <span className="text-xs font-bold text-slate-300">Soru jokerleri:</span>
+            {(
+              [
+                ['yarim', '✂ Yarı yarıya', 'Telefonlarda 2 yanlış şık silinir'],
+                ['seyirci', '👥 Seyirci', 'İlk 10 saniyedeki cevap dağılımını perdede göster'],
+                ['sure', '⏱ +15 sn', 'Açık sorunun süresini 15 saniye uzat'],
+              ] as const
+            ).map(([tur, ad, ipucu]) => {
+              const kullanildi = jokerler.kullanilan.includes(tur)
+              return (
+                <button key={tur} disabled={kullanildi} title={ipucu} onClick={() => jokerler.kullan(tur)} className={kullanildi ? 'ikincil-buton !py-1 !px-2 text-xs opacity-40' : 'ikincil-buton !py-1 !px-2 text-xs'}>
+                  {ad}
+                  {kullanildi ? ' ✓' : ''}
+                </button>
+              )
+            })}
+            {jokerler.hata && <span className="text-xs text-rose-300">{jokerler.hata}</span>}
+          </div>
+          {jokerler.seyirci && (
+            <div className="flex items-end gap-3 h-20" aria-label="Seyirci dağılımı">
+              {(() => {
+                const toplam = jokerler.seyirci.reduce((a, b) => a + b, 0)
+                return jokerler.seyirci.map((n, i) => (
+                  <div key={i} className="flex flex-col items-center justify-end gap-1 w-12 h-full">
+                    <span className="text-[11px] tabular-nums">{toplam > 0 ? `%${Math.round((100 * n) / toplam)}` : '–'}</span>
+                    <span className="w-full rounded-t bg-gradient-to-t from-indigo-500 to-fuchsia-400" style={{ height: `${toplam > 0 ? Math.max(4, (n / toplam) * 100) : 4}%` }} />
+                    <span className="text-xs font-bold">{SIK_HARFLERI[i]}</span>
+                  </div>
+                ))
+              })()}
+              <span className="text-[11px] text-slate-400 pb-5">ilk 10 saniyedeki cevaplar</span>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }

@@ -132,7 +132,7 @@ export default function SoruCevabi({ oturum, adim, yoklamali }: { oturum: string
                 style={{ animationDelay: `${i * 60}ms` }}
                 className={`${sik.renk} pop rounded-3xl px-4 py-5 flex items-center gap-3 text-left text-lg font-bold active:scale-[0.97] transition-transform disabled:opacity-50`}
               >
-                <span className="w-9 h-9 rounded-lg bg-black/25 flex items-center justify-center shrink-0">{sik.harf}</span>
+                <span className="w-9 h-9 rounded-lg bg-black/25 flex flex-col items-center justify-center shrink-0 leading-none"><span className="text-[10px] opacity-80">{sik.sekil}</span>{sik.harf}</span>
                 <span className="flex-1">{x}</span>
               </button>
             )

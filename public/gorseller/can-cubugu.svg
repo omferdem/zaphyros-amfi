@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 100" width="800" height="100">
+  <defs>
+    <!-- Gold metallic gradients -->
+    <linearGradient id="goldMain" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="28%" stop-color="#fbbf24"/>
+      <stop offset="72%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#78350f"/>
+    </linearGradient>
+    <linearGradient id="goldBevel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fffbeb"/>
+      <stop offset="45%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#92400e"/>
+    </linearGradient>
+    <!-- Carved dark stone gradients -->
+    <linearGradient id="stoneBody" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#312e81"/>
+      <stop offset="45%" stop-color="#1a1450"/>
+      <stop offset="100%" stop-color="#070a1f"/>
+    </linearGradient>
+    <linearGradient id="stoneFacet" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4c1d95"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <!-- Glowing gem gradients -->
+    <radialGradient id="gemPurple" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#f5d0fe"/>
+      <stop offset="40%" stop-color="#c084fc"/>
+      <stop offset="80%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#3b0764"/>
+    </radialGradient>
+    <radialGradient id="gemCyan" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#ecfeff"/>
+      <stop offset="45%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#0e7490"/>
+    </radialGradient>
+    <!-- Soft outer glow -->
+    <filter id="barGlow" x="-10%" y="-25%" width="120%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#070a1f" flood-opacity="0.75"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#fbbf24" flood-opacity="0.35"/>
+    </filter>
+    <!-- Mask to keep the inner health slot (x=108..762, y=28..72) completely hollow/transparent -->
+    <mask id="hollowSlotMask">
+      <rect x="0" y="0" width="800" height="100" fill="#ffffff"/>
+      <rect x="108" y="28" width="654" height="44" rx="14" fill="#000000"/>
+    </mask>
+  </defs>
+
+  <g filter="url(#barGlow)">
+    <!-- Outer Stone & Gold Frame with Hollow Inner Slot -->
+    <g mask="url(#hollowSlotMask)">
+      <!-- Ornate Stone Base Plate -->
+      <path d="M 86 14 L 764 14 L 786 34 L 786 66 L 764 86 L 86 86 L 68 66 L 68 34 Z"
+            fill="url(#stoneBody)" stroke="#0f0a24" stroke-width="6" stroke-linejoin="round"/>
+
+      <!-- Stone Chiseled Top & Bottom Bevels -->
+      <path d="M 92 18 L 758 18 L 776 34 L 766 34 L 752 24 L 96 24 Z" fill="url(#stoneFacet)" opacity="0.85"/>
+      <path d="M 92 82 L 758 82 L 776 66 L 766 66 L 752 76 L 96 76 Z" fill="#050714" opacity="0.75"/>
+
+      <!-- Stone Carvings / Cracks -->
+      <path d="M 240 15 L 246 23 L 242 27 M 460 15 L 455 23 L 461 27 M 620 85 L 626 77 L 622 73 M 350 85 L 344 76"
+            fill="none" stroke="#09071a" stroke-width="2.5" stroke-linecap="round"/>
+
+      <!-- Ornate Gold Outer Trim Rails -->
+      <path d="M 94 12 L 210 12 L 220 20 L 98 20 Z" fill="url(#goldMain)" stroke="#0f0a24" stroke-width="3.5" stroke-linejoin="round"/>
+      <path d="M 380 12 L 490 12 L 482 20 L 388 20 Z" fill="url(#goldMain)" stroke="#0f0a24" stroke-width="3.5" stroke-linejoin="round"/>
+      <path d="M 640 12 L 762 12 L 772 22 L 632 20 Z" fill="url(#goldMain)" stroke="#0f0a24" stroke-width="3.5" stroke-linejoin="round"/>
+
+      <path d="M 94 88 L 210 88 L 220 80 L 98 80 Z" fill="url(#goldMain)" stroke="#0f0a24" stroke-width="3.5" stroke-linejoin="round"/>
+      <path d="M 380 88 L 490 88 L 482 80 L 388 80 Z" fill="url(#goldMain)" stroke="#0f0a24" stroke-width="3.5" stroke-linejoin="round"/>
+      <path d="M 640 88 L 762 88 L 772 78 L 632 80 Z" fill="url(#goldMain)" stroke="#0f0a24" stroke-width="3.5" stroke-linejoin="round"/>
+
+      <!-- Right End Golden Dragon-Horn Clasp -->
+      <path d="M 754 10 L 776 22 L 792 14 L 786 38 L 794 50 L 786 62 L 792 86 L 776 78 L 754 90 L 768 70 L 768 30 Z"
+            fill="url(#goldBevel)" stroke="#0f0a24" stroke-width="4.5" stroke-linejoin="round"/>
+      <circle cx="776" cy="50" r="6" fill="url(#gemCyan)" stroke="#0f0a24" stroke-width="2.5"/>
+    </g>
+
+    <!-- Golden Inner Bezel Ring Around the Hollow Slot (x=108..762, y=28..72) -->
+    <rect x="106" y="26" width="658" height="48" rx="16"
+          fill="none" stroke="url(#goldMain)" stroke-width="5"/>
+    <rect x="108" y="28" width="654" height="44" rx="14"
+          fill="none" stroke="#0f0a24" stroke-width="3"/>
+
+    <!-- Subtle Top Gloss Highlight Over Hollow Slot (allows code-drawn fill bar underneath to shine) -->
+    <rect x="114" y="31" width="642" height="10" rx="5" fill="#ffffff" opacity="0.16"/>
+
+    <!-- Notch Tick Marks Along Top of Slot (25%, 50%, 75%) -->
+    <line x1="271.5" y1="26" x2="271.5" y2="35" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+    <line x1="435.0" y1="26" x2="435.0" y2="37" stroke="#fbbf24" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="598.5" y1="26" x2="598.5" y2="35" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Left Ornate Boss Crest / Dragon Medallion Mount -->
+    <g>
+      <!-- Outer Spiked Golden Shield -->
+      <path d="M 56 6 L 82 14 L 102 32 L 102 68 L 82 86 L 56 94 L 26 84 L 10 64 L 6 50 L 10 36 L 26 16 Z"
+            fill="url(#goldBevel)" stroke="#0f0a24" stroke-width="5" stroke-linejoin="round"/>
+      <!-- Carved Dark Stone Inner Shield -->
+      <polygon points="56,15 78,22 92,36 92,64 78,78 56,85 32,77 18,60 18,40 32,23"
+               fill="url(#stoneBody)" stroke="#0f0a24" stroke-width="3.5" stroke-linejoin="round"/>
+      <!-- Glowing Dragon Eye / Boss Gem in Center -->
+      <circle cx="55" cy="50" r="20" fill="url(#gemPurple)" stroke="#fbbf24" stroke-width="3.5"/>
+      <!-- Vertical Dragon Slit Pupil -->
+      <path d="M 55 34 Q 61 50 55 66 Q 49 50 55 34 Z" fill="#fef08a"/>
+      <ellipse cx="48" cy="42" rx="5" ry="3" transform="rotate(-30 48 42)" fill="#ffffff" opacity="0.85"/>
+      <!-- Corner Gold Rivets -->
+      <circle cx="56" cy="11" r="3" fill="#fef08a"/>
+      <circle cx="56" cy="89" r="3" fill="#fef08a"/>
+      <circle cx="14" cy="50" r="3" fill="#fef08a"/>
+    </g>
+  </g>
+</svg>

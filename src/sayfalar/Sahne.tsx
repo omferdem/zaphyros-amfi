@@ -23,11 +23,12 @@ import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
 import { SIKLAR, bitisAni } from '../lib/yarisma'
 import { KelimeBulutu, OylamaSonucu, VideoOynatici, useKalanSaniye } from '../bilesenler/Etkinlik'
 import SinifPaneli, { useSinifDurumu } from '../bilesenler/SinifPaneli'
+import Gorsel from '../bilesenler/Gorsel'
 import TakimPaneli from '../bilesenler/TakimPaneli'
 import HocaYarisiPaneli from '../bilesenler/HocaYarisiPaneli'
 import MerdivenPaneli from '../bilesenler/MerdivenPaneli'
 import ZombiPaneli from '../bilesenler/ZombiPaneli'
-import { ArenaPaneli, EjderhaPaneli, KulePaneli, RoketPaneli } from '../bilesenler/GrafikOyunlari'
+import { ArenaPaneli, EjderhaPaneli, KalePaneli, KulePaneli, RoketPaneli } from '../bilesenler/GrafikOyunlari'
 import DersSayaci from '../bilesenler/DersSayaci'
 import OyunSahnesi from '../bilesenler/OyunSahnesi'
 
@@ -143,7 +144,7 @@ export default function Sahne() {
   }
   const [kahootAkisi, setZapootAkisi] = useState<{ id: string; ad: string } | null>(null)
   // Zapoot'ta seçilen perde oyunu (zombi, roket...). Seçiliyken sahne o oyunda kilitli kalır; sorular telefonlarda, perdede oyun görünür.
-  const GRAFIK_OYUNLAR = ['zombi', 'roket', 'ejderha', 'arena', 'kule']
+  const GRAFIK_OYUNLAR = ['zombi', 'roket', 'ejderha', 'arena', 'kule', 'kale']
   const oyunKaydi = `amfi_zapoot_oyun_${oturumId}`
   const [zapootOyunu, setZapootOyunu] = useState<OyunAnahtari | null>(() => {
     try {
@@ -679,6 +680,7 @@ export default function Sahne() {
       <EjderhaPaneli oturum={oturum.id} anahtar={null} mod="perde" />
       <ArenaPaneli oturum={oturum.id} anahtar={null} mod="perde" />
       <KulePaneli oturum={oturum.id} anahtar={null} mod="perde" />
+      <KalePaneli oturum={oturum.id} anahtar={null} mod="perde" />
     </>
   )
 }
@@ -732,12 +734,25 @@ function tamEkran() {
 
 // ---------------------------------------------------------------------------
 
+/** Öğrencinin tarayıcıya yazacağı site adresi (ders kodunun altında ve yoklama ekranının altında görünür). */
+function AdresSeridi({ buyuk = false }: { buyuk?: boolean }) {
+  return (
+    <p className={`text-center ${buyuk ? 'text-lg lg:text-2xl' : 'text-sm'}`}>
+      <span className="text-slate-400">🌐 Adres: </span>
+      <b className="font-mono text-cyan-200 select-all">{kisaAdres()}</b>
+    </p>
+  )
+}
+
 function KodSeridi({ kod, buyuk = false }: { kod: string; buyuk?: boolean }) {
   return (
-    <p className={`text-center text-slate-300 ${buyuk ? 'text-base lg:text-lg' : 'text-sm'}`}>
-      Geç mi kaldın? <b className="text-white">{kisaAdres()}</b> adresine gir, kodu yaz:{' '}
-      <b className={`font-mono text-white tracking-widest ${buyuk ? 'text-2xl lg:text-3xl' : 'text-xl'}`}>{kodBicimle(kod)}</b>
-    </p>
+    <div className={`text-center text-slate-300 space-y-0.5 ${buyuk ? 'text-base lg:text-lg' : 'text-sm'}`}>
+      <p>
+        Derse katıl kodu:{' '}
+        <b className={`font-mono text-white tracking-widest ${buyuk ? 'text-2xl lg:text-3xl' : 'text-xl'}`}>{kodBicimle(kod)}</b>
+      </p>
+      <AdresSeridi buyuk={buyuk} />
+    </div>
   )
 }
 
@@ -877,7 +892,7 @@ function YoklamaKatmani({ oturumId, kod, katilan, kapat, gizle }: { oturumId: st
       <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
         <div className="h-full bg-linear-to-r from-pink-500 to-violet-500 transition-[width] duration-200 ease-linear" style={{ width: `${kalanOran * 100}%` }} />
       </div>
-      {kod && <KodSeridi kod={kod} />}
+      {kod ? <KodSeridi kod={kod} /> : <AdresSeridi />}
       <p className="text-sm text-slate-300">
         <b className="text-emerald-300">{katilan}</b> kişi katıldı
       </p>
@@ -996,6 +1011,9 @@ function YoklamaSahnesi({
           </ul>
         </section>
       </div>
+      <footer className="cam-panel rounded-2xl px-5 py-3 text-center">
+        <AdresSeridi buyuk />
+      </footer>
     </main>
   )
 }
@@ -1271,7 +1289,7 @@ function SoruSahnesi({
                 <div className="absolute inset-y-0 left-0 bg-black/25" style={{ width: `${(sayi / toplamCevap) * 100}%` }} />
               )}
               <span className="relative w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-black/25 flex items-center justify-center shrink-0">
-                {sik.harf}
+                <span className="flex flex-col items-center leading-none"><span className="text-xs lg:text-sm opacity-80">{sik.sekil}</span>{sik.harf}</span>
               </span>
               <span className="relative flex-1">{x}</span>
               {sonuc && <span className="relative font-mono text-xl lg:text-3xl">{sayi}</span>}
@@ -1473,7 +1491,7 @@ function Podyum({ puanlar }: { puanlar: PuanSatiri[] }) {
     <div className="grid grid-cols-3 items-end gap-3 pt-4">
       {duzen.map((d, i) => (
         <div key={i} className="text-center pop" style={{ animationDelay: `${(i === 1 ? 0 : i === 0 ? 1 : 2) * 150}ms` }}>
-          <p className="text-4xl">{d.madalya}</p>
+          {d.madalya === '🥇' ? <Gorsel ad="kupa.webp" emoji="🥇" className="w-20 h-20 mx-auto" emojiClass="text-4xl" /> : <p className="text-4xl">{d.madalya}</p>}
           <p className="font-display font-extrabold text-xl truncate px-1">{d.p.ad}</p>
           <p className="font-mono text-slate-300 mb-2">{d.p.puan}</p>
           <div className={`${d.yukseklik} rounded-t-2xl bg-linear-to-b ${d.renk} shadow-lg`} />

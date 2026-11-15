@@ -69,6 +69,42 @@ export function oturumKatilimlari(oturumIdleri: string[]): Promise<KatilimKaydi[
   )
 }
 
+/**
+ * Aynı telefondan birden çok öğrenci adına yoklama verilmiş mi? Şubenin bütün oturumlarındaki QR yoklamalarının cihaz kimliklerine
+ * bakar ve ortak telefon kullanan öğrencileri döndürür (öğrenci kimliği -> aynı telefonu kullanan öteki öğrencilerin kimlikleri).
+ * Cihaz kimliği kişisel veri değildir; hoca yalnızca "şüpheli" işaretini görür.
+ */
+export async function ortakTelefonlar(oturumIdleri: string[]): Promise<Map<string, Set<string>>> {
+  const sonuc = new Map<string, Set<string>>()
+  if (oturumIdleri.length === 0) return sonuc
+  const cihazOgrenci = new Map<string, Set<string>>()
+  for (let bas = 0; ; bas += SAYFA) {
+    const { data, error } = await supabase
+      .from('attendance')
+      .select('student_id, cihaz_id')
+      .in('session_id', oturumIdleri)
+      .not('cihaz_id', 'is', null)
+      .order('student_id')
+      .range(bas, bas + SAYFA - 1)
+    if (error) throw error
+    for (const r of data as { student_id: string; cihaz_id: string }[]) {
+      const l = cihazOgrenci.get(r.cihaz_id) ?? new Set<string>()
+      l.add(r.student_id)
+      cihazOgrenci.set(r.cihaz_id, l)
+    }
+    if (data.length < SAYFA) break
+  }
+  for (const ogrenciler of cihazOgrenci.values()) {
+    if (ogrenciler.size < 2) continue
+    for (const o of ogrenciler) {
+      const l = sonuc.get(o) ?? new Set<string>()
+      for (const d of ogrenciler) if (d !== o) l.add(d)
+      sonuc.set(o, l)
+    }
+  }
+  return sonuc
+}
+
 export async function oturumYoklamalari(oturumId: string): Promise<Yoklama[]> {
   return dersYoklamalari([oturumId])
 }

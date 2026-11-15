@@ -10,13 +10,14 @@ import { akislariGetir, icerikSil } from '../lib/akis'
 import { dersiDuzenle, subeEtiketi, subeleriAc, subeleriGetir, type DersSatiri } from '../lib/plan'
 import { icerigiDisaAktar } from '../lib/icerikAktar'
 import { subeleriYedekle, yedegiIndir } from '../lib/subeYedegi'
+import NotDefteri from '../bilesenler/NotDefteri'
 import DersAkislari from './DersAkislari'
 import YoklamaHaftalari from './YoklamaHaftalari'
 import Gelisim from './Gelisim'
 import QuizSekmesi from './QuizSekmesi'
 import DonemOzeti from './DonemOzeti'
 
-type Sekme = 'oturumlar' | 'akislar' | 'liste' | 'rapor' | 'quiz' | 'gelisim' | 'ozet'
+type Sekme = 'oturumlar' | 'akislar' | 'liste' | 'rapor' | 'quiz' | 'gelisim' | 'ozet' | 'notlar'
 
 export default function DersDetay() {
   const { dersId = '' } = useParams()
@@ -153,6 +154,7 @@ export default function DersDetay() {
             ['quiz', '📝 Quiz'],
             ['gelisim', '📈 Gelişim'],
             ['ozet', '📊 Dönem özeti'],
+            ['notlar', '📓 Notlar'],
           ] as [Sekme, string][]
         ).map(([k, ad]) => (
           <button
@@ -182,6 +184,7 @@ export default function DersDetay() {
       {sekme === 'rapor' && <Rapor ders={ders} ogrenciler={ogrenciler} oturumlar={oturumlar} yoklamalar={yoklamalar} yenile={yukle} />}
       {sekme === 'quiz' && <QuizSekmesi ders={ders} ogrenciler={ogrenciler} />}
       {sekme === 'ozet' && <DonemOzeti ders={ders} ogrenciler={ogrenciler} oturumlar={oturumlar} yoklamalar={yoklamalar} />}
+      {sekme === 'notlar' && <NotDefteri dersId={ders.id} baslik={`${ders.ad}${ders.sube?.trim() ? ' · ' + ders.sube.trim() : ''} notları`} />}
       {sekme === 'gelisim' &&<Gelisim ders={ders} ogrenciler={ogrenciler} oturumlar={oturumlar} />}
 
       <div className="pt-6 border-t border-white/5 flex flex-wrap gap-3 items-center">

@@ -1,3 +1,4 @@
+import Gorsel from '../bilesenler/Gorsel'
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
@@ -392,7 +393,7 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
         )}
         {seri && seri.seri >= 2 && (
           <span className="text-[11px] font-bold text-amber-200 bg-amber-500/15 rounded-full px-2.5 py-1 whitespace-nowrap" title={`${seri.toplam} dersin ${seri.katilan}'ine katıldın`}>
-            {seri.seri >= 5 ? '⭐' : '🔥'} {seri.seri} ders üst üste
+            <Gorsel ad={`rozet-seri-${seri.seri >= 10 ? 3 : seri.seri >= 5 ? 2 : 1}.webp`} emoji={seri.seri >= 5 ? '⭐' : '🔥'} className="inline-block w-5 h-5 align-text-bottom mr-0.5" emojiClass="" /> {seri.seri} ders üst üste
           </span>
         )}
       </header>

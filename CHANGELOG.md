@@ -1,5 +1,14 @@
 # Sürüm Geçmişi
 
+## v0.45.0 (15 Kasım 2026)
+Antigravity görselleri, Kale kuşatması, not defteri, yoklama güvenliği. Veritabanı: `0034_not_defteri.sql`, `0035_kumanda_kale.sql`.
+- **Görseller:** `canli-ders-oyunu2` klasöründeki üç boyutlu görseller sisteme girdi (`public/gorseller`, 16 MB'lık PNG'ler WebP'ye çevrilip 5 MB'a indi). Zombi, roket, ejderha (sağlığa göre sağlam/yaralı/ölü), arena, kule ve halat sahnelerinde arka planlar ve karakterler; hocayla yarışta hoca ve sınıf resmi; birinciye kupa; devam serisi rozetleri; sahne ve telefon arka planları. Görsel bulunamazsa eski emoji görünümü kalır. Yeni logo dosyaları (`logo-zapedu*.svg`) klasörde durur ama mevcut ZE logosu değiştirilmedi.
+- **Cevap şıklarına şekil:** A/B/C/D harflerinin üstünde ▲ ◆ ● ■ simgeleri (renk körlüğü ve uzaktan okuma için); perdede, telefonda ve önizlemede.
+- **🏰 Kale kuşatması (takımlı oyun):** her takımın bir kalesi var; doğru cevaplar ordusunu bir sonraki takımın kalesine yürütür, sonra kalenin etrafını sarar. Hedef kaleyi önce tamamen kuşatan kazanır (kişi başına doğruya göre, kalabalık takım avantajlı olmaz). 2 ile 6 grup; sahnede ve kumandada seçilir.
+- **Site adresi:** ders kodunun hemen altında ve yoklama ekranının altında "🌐 Adres: ..." satırı.
+- **📓 Not defteri:** Panel'de "Genel notlarım", her şubede "📓 Notlar" sekmesi; yazdıkça kaydedilir.
+- **Yoklama güvenliği:** cihaz kimliği çerezde de saklanır (yalnızca site verisini temizleyen öğrenci yeni kimlik alamaz). Yoklama listesinde aynı telefondan birden çok öğrenci adına yoklama verilmişse "⚠ ortak telefon" işareti çıkar. Aynı oturumda tek telefon tek numara kuralı zaten sunucuda vardı.
+
 ## v0.44.0 (14 Kasım 2026)
 (15 Kasım 2026: veritabanındaki 14 paket adı ve 4 gizli akış adı "Kahoot" yerine "Zapoot" olarak güncellendi; SQL Editor'den, şema değişikliği değil veri güncellemesi.)
 Zapoot oyun akışı sadeleşti, metin kartı eklendi. Veritabanı değişikliği yok.

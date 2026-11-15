@@ -31,6 +31,8 @@ begin
   assert v ->> 'durum' = 'tamam', 'HATA: istek: ' || v::text;
   assert kumanda_istek(current_setting('t31.sid')::uuid, current_setting('t31.k'), '{"tur":"quiz","paket":"1. Hafta Quiz","sure":15}') ->> 'durum' = 'tamam', 'HATA: quiz istegi';
   assert kumanda_istek(current_setting('t31.sid')::uuid, current_setting('t31.k'), '{"tur":"derse_don"}') ->> 'durum' = 'tamam', 'HATA: derse don istegi';
+  assert kumanda_istek(current_setting('t31.sid')::uuid, current_setting('t31.k'), '{"tur":"kahoot","paket":"1. Hafta Kahoot","mod":"kale","sure":4}') ->> 'durum' = 'tamam', 'HATA: kale istegi';
+  assert kumanda_istek(current_setting('t31.sid')::uuid, current_setting('t31.k'), '{"tur":"derse_don"}') ->> 'durum' = 'tamam', 'HATA: derse don istegi 2';
   assert kumanda_istek(current_setting('t31.sid')::uuid, 'yanlis-anahtar', '{"tur":"derse_don"}') ->> 'hata' = 'yetki_yok', 'HATA: yanlis anahtarla istek';
   assert kumanda_istek(current_setting('t31.sid')::uuid, current_setting('t31.k'), '{"tur":"sil"}') ->> 'hata' = 'istek_gecersiz', 'HATA: gecersiz tur';
   assert kumanda_istek(current_setting('t31.sid')::uuid, current_setting('t31.k'), '{"tur":"kahoot","paket":"x","mod":"hile"}') ->> 'hata' = 'istek_gecersiz', 'HATA: gecersiz mod';

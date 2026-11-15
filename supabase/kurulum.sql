@@ -1,6 +1,6 @@
 -- ZAPEDU kurulum SQL'i (bu dosya otomatik üretilir, elle düzenleme; kaynağı supabase/migrations)
 -- Yeni bir Supabase projesinde SQL Editor'e bu dosyanın tamamını yapıştırıp bir kez çalıştır.
--- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql, 0019_oyun_adimi.sql, 0020_yoklama_haftalari.sql, 0021_pencere_6sn.sql, 0022_oturum_quizi.sql, 0023_acik_uclu_zombi.sql, 0024_kumanda_notu.sql, 0025_acik_uclu_sure.sql, 0026_devam_serisi.sql, 0027_hoca_davetleri.sql, 0028_etkinlik_fotograflari.sql, 0029_kod_yoklama_vermez.sql, 0030_sabit_ders_kodu.sql, 0031_kumanda_istegi.sql, 0032_slayt_gorseli_herkese.sql, 0033_slayt_gorseli_telefon_modu.sql
+-- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql, 0019_oyun_adimi.sql, 0020_yoklama_haftalari.sql, 0021_pencere_6sn.sql, 0022_oturum_quizi.sql, 0023_acik_uclu_zombi.sql, 0024_kumanda_notu.sql, 0025_acik_uclu_sure.sql, 0026_devam_serisi.sql, 0027_hoca_davetleri.sql, 0028_etkinlik_fotograflari.sql, 0029_kod_yoklama_vermez.sql, 0030_sabit_ders_kodu.sql, 0031_kumanda_istegi.sql, 0032_slayt_gorseli_herkese.sql, 0033_slayt_gorseli_telefon_modu.sql, 0034_not_defteri.sql, 0035_kumanda_kale.sql
 
 -- ===========================================================================
 -- 0001_saglik.sql
@@ -5506,4 +5506,99 @@ as $$
       and split_part(p_yol, '/', 2) = p.id::text
       and split_part(p_yol, '/', 3) = st.sayfa_no::text
   );
+$$;
+
+-- ===========================================================================
+-- 0034_not_defteri.sql
+-- ===========================================================================
+
+-- 0034: Not defteri
+--
+-- Kullanıcı isteği (15 Kasım 2026): ana sayfada genel notlar, her şubede o şubeye özel notlar tutulabilsin.
+-- * notlar: hocaya ait not kartları. course_id boşsa genel not, doluysa o şubenin notudur (şube silinirse notları da silinir).
+-- Yalnızca notun sahibi hoca okur, yazar, siler; başka hoca (sahip dahil) görmez.
+
+create table public.notlar (
+  id           uuid primary key default gen_random_uuid(),
+  teacher_id   uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  course_id    uuid references public.courses (id) on delete cascade,
+  metin        text not null default '' check (length(metin) <= 20000),
+  olusturuldu  timestamptz not null default now(),
+  guncellendi  timestamptz not null default now()
+);
+create index notlar_teacher_idx on public.notlar (teacher_id, course_id, guncellendi desc);
+alter table public.notlar enable row level security;
+
+create policy "hoca kendi notlarini yonetir" on public.notlar
+  for all to authenticated
+  using (teacher_id = (select auth.uid()))
+  with check (
+    teacher_id = (select auth.uid())
+    and (select public.hoca_mi())
+    and (course_id is null or public.ders_benim(course_id))
+  );
+
+-- Güncelleme zamanı kendiliğinden yenilenir
+create function ozel.not_guncellendi()
+returns trigger
+language plpgsql
+set search_path = ''
+as $$
+begin
+  new.guncellendi := clock_timestamp();
+  return new;
+end;
+$$;
+
+create trigger notlar_guncellendi
+  before update on public.notlar
+  for each row execute function ozel.not_guncellendi();
+
+grant select, insert, update, delete on public.notlar to authenticated;
+revoke all on function ozel.not_guncellendi() from public;
+
+-- ===========================================================================
+-- 0035_kumanda_kale.sql
+-- ===========================================================================
+
+-- 0035: Kumandadan "Kale kuşatması" oyun modu
+--
+-- Yeni oyun modu 'kale' (takımlı kuşatma yarışı) kumanda isteğinde kabul edilir; öteki kurallar 0031 ile aynıdır.
+
+create or replace function public.kumanda_istek(p_session uuid, p_anahtar text, p_istek jsonb)
+returns jsonb
+language plpgsql
+volatile
+security definer
+set search_path = ''
+as $$
+declare
+  v_tur   text := p_istek ->> 'tur';
+  v_paket text := left(btrim(coalesce(p_istek ->> 'paket', '')), 200);
+  v_mod   text := coalesce(p_istek ->> 'mod', 'oneri');
+  v_sure  integer;
+begin
+  if not ozel.kumanda_dogru(p_session, p_anahtar) then
+    return jsonb_build_object('hata', 'yetki_yok');
+  end if;
+  if v_tur is null or v_tur not in ('kahoot', 'quiz', 'quiz_bitir', 'derse_don') then
+    return jsonb_build_object('hata', 'istek_gecersiz');
+  end if;
+  if v_tur in ('kahoot', 'quiz') and v_paket = '' then
+    return jsonb_build_object('hata', 'paket_yok');
+  end if;
+  if v_mod not in ('oneri', '', 'takim', 'halat', 'hoca', 'zombi', 'roket', 'ejderha', 'arena', 'kule', 'kale', 'merdiven') then
+    return jsonb_build_object('hata', 'istek_gecersiz');
+  end if;
+  v_sure := least(240, greatest(1, coalesce((p_istek ->> 'sure')::integer, 10)));
+
+  update public.sessions
+     set kumanda_istek = jsonb_build_object('tur', v_tur, 'paket', v_paket, 'mod', v_mod, 'sure', v_sure,
+                                            't', floor(extract(epoch from clock_timestamp()) * 1000)::bigint)
+   where id = p_session and bitti is null;
+  if not found then
+    return jsonb_build_object('hata', 'oturum_yok');
+  end if;
+  return jsonb_build_object('durum', 'tamam');
+end;
 $$;

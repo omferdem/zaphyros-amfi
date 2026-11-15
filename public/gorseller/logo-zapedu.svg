@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Primary Turquoise -> Purple -> Pink Neon Gradient -->
+    <linearGradient id="zeNeonMain" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee" />
+      <stop offset="50%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#f472b6" />
+    </linearGradient>
+
+    <!-- Secondary Cyan -> Electric Violet Gradient for Z Bolt -->
+    <linearGradient id="zBoltGrad" x1="0%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#67e8f9" />
+      <stop offset="45%" stop-color="#22d3ee" />
+      <stop offset="100%" stop-color="#8b5cf6" />
+    </linearGradient>
+
+    <!-- Tertiary Purple -> Hot Pink -> Amber Gradient for E Ribbon -->
+    <linearGradient id="eRibbonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6" />
+      <stop offset="65%" stop-color="#f472b6" />
+      <stop offset="100%" stop-color="#fbbf24" />
+    </linearGradient>
+
+    <!-- Lightning Spark Core Gradient -->
+    <linearGradient id="sparkGrad" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#22d3ee" />
+      <stop offset="55%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#f472b6" />
+    </linearGradient>
+
+    <!-- Dark Shield / Emblem Backing Gradient -->
+    <radialGradient id="bgHexGrad" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#1e1b4b" />
+      <stop offset="70%" stop-color="#0f102e" />
+      <stop offset="100%" stop-color="#070a1f" />
+    </radialGradient>
+
+    <!-- Neon Outer Glow Filter -->
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur1" />
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur1" />
+        <feMergeNode in="blur2" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Outer Rounded Hexagonal Energy Badge -->
+  <path d="M 256 26 L 454 134 C 468 142 476 156 476 172 L 476 340 C 476 356 468 370 454 378 L 256 486 C 242 494 226 494 212 486 L 58 378 C 44 370 36 356 36 340 L 36 172 C 36 156 44 142 58 134 L 256 26 Z"
+        fill="url(#bgHexGrad)" stroke="url(#zeNeonMain)" stroke-width="10" stroke-linejoin="round" />
+
+  <!-- Subtle Inner Circuit Rim -->
+  <path d="M 256 48 L 436 146 L 436 366 L 256 464 L 76 366 L 76 146 Z"
+        fill="none" stroke="#22d3ee" stroke-width="2" stroke-opacity="0.28" stroke-linejoin="round" />
+
+  <!-- Ambient Back Glow behind ZE Monogram -->
+  <g opacity="0.45" filter="url(#neonGlow)">
+    <path d="M 96 144 H 284 L 156 320 H 276 V 368 H 92 L 220 192 H 96 Z" fill="#22d3ee" />
+    <path d="M 268 144 H 416 V 192 H 316 V 320 H 416 V 368 H 268 Z" fill="#f472b6" />
+  </g>
+
+  <!-- CLEVER CONNECTED "ZE" MONOGRAM:
+       1) The "Z" top bar + diagonal lightning slash + bottom bar seamlessly locks into the vertical spine of "E"
+       2) The central electric lightning bolt shoots across from the Z diagonal to form the middle bar of the "E"! -->
+  <g filter="url(#neonGlow)">
+    <!-- Letter "E" Main Frame (Top bar, Spine, and Bottom bar locking with Z's base) -->
+    <path d="M 264 138
+             H 414
+             C 423 138 428 144 426 153
+             L 416 190
+             H 316
+             V 322
+             H 416
+             L 426 359
+             C 428 368 423 374 414 374
+             H 264
+             V 138 Z"
+          fill="url(#eRibbonGrad)" stroke="#070a1f" stroke-width="8" stroke-linejoin="round" />
+
+    <!-- Letter "Z" (Top horizontal bar + high-voltage diagonal slash + bottom bar fused into E's lower spine) -->
+    <path d="M 94 138
+             H 288
+             L 172 322
+             H 284
+             V 374
+             H 86
+             C 77 374 72 366 77 358
+             L 204 190
+             H 86
+             L 94 138 Z"
+          fill="url(#zBoltGrad)" stroke="#070a1f" stroke-width="8" stroke-linejoin="round" />
+
+    <!-- Clever Connecting Bridge: Electric Lightning Bolt shooting from the center of "Z"'s diagonal directly into "E"'s middle crossbar! -->
+    <path d="M 184 252
+             L 254 218
+             L 244 244
+             H 404
+             L 382 280
+             H 222
+             L 232 254
+             Z"
+          fill="url(#sparkGrad)" stroke="#070a1f" stroke-width="7" stroke-linejoin="round" />
+  </g>
+
+  <!-- Crisp Specular 3D Rim Highlights on ZE Monogram -->
+  <path d="M 100 148 H 270 L 160 322" fill="none" stroke="#cffafe" stroke-width="4" stroke-linecap="round" opacity="0.85" />
+  <path d="M 274 148 H 414" fill="none" stroke="#fbcfe8" stroke-width="4" stroke-linecap="round" opacity="0.85" />
+  <path d="M 248 252 H 390" fill="none" stroke="#fef08a" stroke-width="3.5" stroke-linecap="round" opacity="0.95" />
+
+  <!-- Glowing Energy Spark Diamonds at Top & Bottom Corners -->
+  <polygon points="256,64 264,80 280,88 264,96 256,112 248,96 232,88 248,80" fill="#22d3ee" />
+  <polygon points="256,404 262,416 274,422 262,428 256,440 250,428 238,422 250,416" fill="#f472b6" />
+</svg>

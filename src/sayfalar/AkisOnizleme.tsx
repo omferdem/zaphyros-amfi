@@ -246,7 +246,7 @@ function PerdeIcerigi({ adim, soru, cevapGoster, belge }: { adim: Adim; soru: So
         <div className="grid grid-cols-2 gap-3 flex-1 min-h-0">
           {s.map((x, k) => (
             <div key={k} className={`${SIKLAR[k % SIKLAR.length].renk} rounded-2xl px-4 flex items-center gap-3 text-lg lg:text-xl font-bold ${cevapGoster && x !== soru.dogru ? 'opacity-30' : ''}`}>
-              <span className="w-9 h-9 rounded-lg bg-black/20 flex items-center justify-center shrink-0">{SIKLAR[k % SIKLAR.length].harf}</span>
+              <span className="w-9 h-9 rounded-lg bg-black/20 flex flex-col items-center justify-center shrink-0 leading-none"><span className="text-[10px] opacity-80">{SIKLAR[k % SIKLAR.length].sekil}</span>{SIKLAR[k % SIKLAR.length].harf}</span>
               <span>{x}</span>
               {cevapGoster && x === soru.dogru && <span className="ml-auto">✓</span>}
             </div>

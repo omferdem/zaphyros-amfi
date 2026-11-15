@@ -4,6 +4,8 @@ import { OYUN_OLAYI, type OyunAnahtari } from '../lib/oyun'
 import { roketHesapla, type RoketDurumu } from '../lib/roket'
 import { arenaHesapla, ARENA_CANI, type ArenaDurumu } from '../lib/arena'
 import { kuleHesapla, type KuleDurumu, type KuleTakimi } from '../lib/kule'
+import { kaleHesapla, type KaleDurumu } from '../lib/kale'
+import Gorsel, { adIndeksi, arkaPlan, gorselAdresi } from './Gorsel'
 import { takimBilgisi } from '../lib/takim'
 import { EJDERHA_ORANI, KAHRAMAN_CANI, ejderhaHesapla, type EjderhaDurumu } from '../lib/ejderha'
 import type { ZombiOyuncusu, ZombiSorusu } from '../lib/zombi'
@@ -182,8 +184,7 @@ export function RoketSahnesi({ d, kucult }: { d: RoketDurumu; kucult: () => void
           Küçült
         </button>
       </div>
-      <div className="relative flex-1 min-h-0 rounded-3xl overflow-hidden roket-uzay border border-white/10">
-        <div className="roket-yildizlar" aria-hidden />
+      <div className="relative flex-1 min-h-0 rounded-3xl overflow-hidden roket-uzay border border-white/10" style={arkaPlan('arka-roket-yatay.webp')}>
         <div className="absolute left-[3%] top-[8%] text-6xl opacity-70 roket-gezegen" aria-hidden>
           🪐
         </div>
@@ -202,9 +203,9 @@ export function RoketSahnesi({ d, kucult }: { d: RoketDurumu; kucult: () => void
               title={`${o.ad}: ${o.ilerleme} doğru`}
             >
               <span className="roket-iz" style={{ width: `${Math.max(1, oran * 14)}vw` }} aria-hidden />
-              <span className={`${boy} inline-block ${bitti ? 'roket-varti' : 'roket-ucus'}`}>
-                <span className="inline-block" style={{ transform: 'rotate(45deg)' }}>
-                  {karakter(o.ad, ROKETLER)}
+              <span className={`inline-block ${bitti ? 'roket-varti' : 'roket-ucus'}`}>
+                <span className="inline-block" style={{ transform: 'rotate(90deg)' }}>
+                  <Gorsel ad={`roket-${adIndeksi(o.ad, 6)}.webp`} emoji={karakter(o.ad, ROKETLER)} className={n > 60 ? 'w-8 h-8' : n > 30 ? 'w-11 h-11' : 'w-14 h-14'} emojiClass={`${boy} inline-block`} />
                 </span>
               </span>
               <span className="text-[10px] font-bold px-1 rounded bg-slate-950/70 whitespace-nowrap ml-1 max-w-24 truncate">{o.ad}</span>
@@ -293,12 +294,17 @@ export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => 
           Küçült
         </button>
       </div>
-      <div className="relative flex-1 min-h-0 rounded-3xl overflow-hidden ejderha-magara border border-white/10 flex flex-col">
+      <div className="relative flex-1 min-h-0 rounded-3xl overflow-hidden ejderha-magara border border-white/10 flex flex-col" style={arkaPlan('arka-ejderha.webp')}>
         <div className="relative flex flex-col items-center pt-4 pb-2 gap-2">
-          <div className={`text-[11rem] leading-none ${d.kazandi ? 'ejderha-oldu' : 'ejderha-nefes'}`} aria-hidden>
-            {d.kazandi ? '💀' : '🐉'}
+          <div className={`leading-none ${d.kazandi ? 'ejderha-oldu' : 'ejderha-nefes'}`}>
+            <Gorsel
+              ad={d.kazandi ? 'ejderha-oldu.webp' : oran < 0.4 ? 'ejderha-yaralandi.webp' : 'ejderha.webp'}
+              emoji={d.kazandi ? '💀' : '🐉'}
+              className="h-[min(34vh,22rem)] w-auto"
+              emojiClass="text-[11rem] leading-none"
+            />
           </div>
-          {!d.kazandi && d.oynanan > 0 && <div className="absolute right-[26%] top-16 text-7xl ejderha-ates" aria-hidden>🔥</div>}
+          {!d.kazandi && d.oynanan > 0 && <Gorsel ad="efekt-ates.webp" emoji="🔥" className="absolute left-[18%] top-[30%] w-24 h-24 ejderha-ates" emojiClass="absolute right-[26%] top-16 text-7xl ejderha-ates" />}
           <div className="w-[min(40rem,86%)] space-y-1">
             <div className="h-6 rounded-full bg-black/50 border border-white/15 overflow-hidden">
               <div className="h-full bg-linear-to-r from-rose-600 via-orange-500 to-amber-300 transition-[width] duration-1000 ease-out" style={{ width: `${Math.max(0, oran) * 100}%` }} />
@@ -314,7 +320,7 @@ export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => 
               const dustu = h.dustu !== null
               return (
                 <li key={`${h.ad}-${i}`} className={`text-center leading-none transition-all duration-700 ${dustu ? 'opacity-40 grayscale' : 'ejderha-kahraman'}`}>
-                  <div className={boy}>{dustu ? '💤' : karakter(h.ad, KAHRAMANLAR)}</div>
+                  <div className={boy}>{dustu ? '💤' : <Gorsel ad={`kahraman-${adIndeksi(h.ad, 8)}.webp`} emoji={karakter(h.ad, KAHRAMANLAR)} className={n > 80 ? 'w-8 h-8' : n > 40 ? 'w-12 h-12' : n > 20 ? 'w-16 h-16' : 'w-20 h-20'} emojiClass={boy} />}</div>
                   <div className={`${adBoy} font-bold truncate mx-auto`}>{h.ad}</div>
                   <div className={n > 40 ? "text-[9px] tracking-tighter" : "text-xs tracking-tighter"}>{'❤️'.repeat(Math.max(0, h.kalan)) + '🖤'.repeat(KAHRAMAN_CANI - Math.max(0, h.kalan))}</div>
                 </li>
@@ -384,12 +390,12 @@ export function ArenaSahnesi({ d, kucult }: { d: ArenaDurumu; kucult: () => void
           Küçült
         </button>
       </div>
-      <div className="relative flex-1 min-h-0 rounded-3xl overflow-hidden arena-zemin border border-white/10 flex flex-col">
+      <div className="relative flex-1 min-h-0 rounded-3xl overflow-hidden arena-zemin border border-white/10 flex flex-col" style={arkaPlan('arka-arena.webp')}>
         <div className="flex-1 min-h-0 overflow-y-auto p-4">
           <ul className="flex flex-wrap justify-center gap-x-5 gap-y-4 arena-platform rounded-[2rem] p-5 mx-auto max-w-6xl">
             {ayaktakiler.map((o, i) => (
               <li key={`${o.ad}-${i}`} className="text-center leading-none arena-savasci">
-                <div className={boy}>{karakter(o.ad, ARENA_KARAKTERLERI)}</div>
+                <div className={boy}><Gorsel ad={`kahraman-${adIndeksi(o.ad, 8)}.webp`} emoji={karakter(o.ad, ARENA_KARAKTERLERI)} className={n > 80 ? 'w-8 h-8' : n > 40 ? 'w-10 h-10' : n > 20 ? 'w-16 h-16' : 'w-20 h-20'} emojiClass={boy} /></div>
                 <div className={`${adBoy} font-bold truncate mx-auto`}>{o.ad}</div>
                 <div className="text-xs">{'❤️'.repeat(Math.max(0, o.kalan)) + '🖤'.repeat(ARENA_CANI - Math.max(0, o.kalan))}</div>
               </li>
@@ -482,8 +488,8 @@ export function KuleSahnesi({ d, kucult }: { d: KuleDurumu; kucult: () => void }
           Küçült
         </button>
       </div>
-      <div className="relative flex-1 min-h-0 rounded-3xl overflow-hidden kule-gokyuzu border border-white/10 flex items-end justify-around px-6 pb-12">
-        <div className="absolute inset-x-0 bottom-0 h-12 kule-zemin" />
+      <div className="relative flex-1 min-h-0 rounded-3xl overflow-hidden kule-gokyuzu border border-white/10 flex items-end justify-around px-6 pb-12" style={arkaPlan('arka-kule.webp')}>
+        <div className="absolute inset-x-0 bottom-0 h-12 kule-zemin" style={{ backgroundImage: `url("${gorselAdresi('kule-zemin.webp')}")`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
         <div className="absolute inset-x-6 top-[8%] border-t-2 border-dashed border-amber-300/50" aria-hidden>
           <span className="absolute -top-5 right-0 text-xs text-amber-200">🏁 hedef: {d.hedef} kat</span>
         </div>
@@ -496,7 +502,7 @@ export function KuleSahnesi({ d, kucult }: { d: KuleDurumu; kucult: () => void }
               {lider && <div className="text-4xl kule-tac mb-1" aria-hidden>👑</div>}
               <div className="w-full flex flex-col-reverse justify-start overflow-hidden transition-all duration-1000 ease-out" style={{ height: `${yukseklik * 84}%` }}>
                 {Array.from({ length: Math.max(0, s.katlar) }, (_, k) => (
-                  <div key={k} className={`flex-1 min-h-3 mt-0.5 rounded-md bg-linear-to-br ${b.renk} kule-blok border border-white/20`} style={{ animationDelay: `${k * 60}ms` }} />
+                  <div key={k} className={`flex-1 min-h-3 mt-0.5 rounded-md bg-linear-to-br ${b.renk} kule-blok border border-white/20`} style={{ animationDelay: `${k * 60}ms`, backgroundImage: `url("${gorselAdresi(`blok-${s.takim}.webp`)}")`, backgroundSize: '100% 100%' }} />
                 ))}
               </div>
               <p className="absolute -bottom-10 text-center text-sm font-bold whitespace-nowrap">
@@ -517,6 +523,154 @@ export function KuleSahnesi({ d, kucult }: { d: KuleDurumu; kucult: () => void }
         )}
       </div>
       <p className="text-xs text-slate-500 text-center">Her doğru cevap takımın kulesine kat ekler; sıralama kişi başına doğru sayısına göredir, böylece kalabalık takım avantajlı olmaz.</p>
+    </div>
+  )
+}
+
+// -------------------------------------------------------------------------------------------------- Kale kuşatması
+
+const KALE_RENKLERI = ['#f43f5e', '#0ea5e9', '#10b981', '#f59e0b', '#8b5cf6', '#f97316']
+
+export function KalePaneli({ oturum, anahtar, mod }: { oturum: string; anahtar: string | null; mod: 'perde' | 'kumanda' }) {
+  return (
+    <OyunKabugu<KaleDurumu, KuleVeri>
+      oyun="kale"
+      baslik="🏰 Kale kuşatması"
+      oturum={oturum}
+      anahtar={anahtar}
+      mod={mod}
+      getir={kuleVerisi}
+      hesapla={(v) => kaleHesapla(v.takimlar, v.oynanan, v.toplam)}
+      konum="bottom-28"
+      ozet={(d) => {
+        const en = [...d.satirlar].sort((a, b) => a.sira - b.sira)[0]
+        return (
+          <p className="text-sm">
+            Soru {d.oynanan} / {d.toplamSoru} · önde {en ? `${takimBilgisi(en.takim).emoji} ${takimBilgisi(en.takim).ad}` : '-'}
+          </p>
+        )
+      }}
+      sahne={(d, kucult) => <KaleSahnesi d={d} kucult={kucult} />}
+    />
+  )
+}
+
+/** Kaleler çemberin üzerinde eşit aralıkla durur; konumlar harita kutusunun yüzdesidir. */
+function kaleKonumu(sira: number, toplam: number): { x: number; y: number } {
+  const a = -Math.PI / 2 + (sira * 2 * Math.PI) / toplam
+  return { x: 50 + 34 * Math.cos(a), y: 50 + 33 * Math.sin(a) }
+}
+
+export function KaleSahnesi({ d, kucult }: { d: KaleDurumu; kucult: () => void }) {
+  useOyunSesi(d.oynanan, d.bitti, true)
+  const satirlar = [...d.satirlar].sort((a, b) => a.takim - b.takim)
+  const konum = new Map(satirlar.map((s, i) => [s.takim, kaleKonumu(i, satirlar.length)]))
+  const KALE_YARICAPI = 7
+  return (
+    <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
+      {d.bitti && <Konfeti />}
+      <div className="flex items-center gap-4 flex-wrap">
+        <h2 className="text-2xl sm:text-3xl font-display font-extrabold kule-baslik">🏰 Kale Kuşatması</h2>
+        <span className="text-sm text-slate-300">
+          Soru {d.oynanan} / {d.toplamSoru}
+        </span>
+        <span className="text-sm text-slate-300">
+          Hedef: kişi başına {d.hedef} doğru ({d.yuruyus} yürüyüş + {d.kusatma} kuşatma)
+        </span>
+        <button className="ikincil-buton ml-auto !py-1.5 kucult-dugmesi" onClick={kucult}>
+          Küçült
+        </button>
+      </div>
+      <div className="relative flex-1 min-h-0 rounded-3xl overflow-hidden border border-white/10" style={arkaPlan('arka-kule.webp')}>
+        {/* Saldırı yolları */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
+          {satirlar.map((s) => {
+            const a = konum.get(s.takim)!
+            const b = konum.get(s.hedefTakim)!
+            return <line key={s.takim} x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke={KALE_RENKLERI[(s.takim - 1) % 6]} strokeWidth="0.35" strokeDasharray="1.2 1.2" opacity="0.55" />
+          })}
+        </svg>
+
+        {/* Ordular: yürüyüş yolunda ilerler, kuşatma başlayınca hedef kalenin etrafına dizilir */}
+        {satirlar.map((s) => {
+          const a = konum.get(s.takim)!
+          const b = konum.get(s.hedefTakim)!
+          const dx = b.x - a.x
+          const dy = b.y - a.y
+          const uzunluk = Math.hypot(dx, dy) || 1
+          // Ordu, hedef kalenin kuşatma halkasının kenarında durur
+          const yol = Math.max(0, uzunluk - KALE_YARICAPI * 1.9)
+          const x = a.x + (dx / uzunluk) * (KALE_YARICAPI + yol * s.yuruyusOrani)
+          const y = a.y + (dy / uzunluk) * (KALE_YARICAPI + yol * s.yuruyusOrani)
+          const renk = KALE_RENKLERI[(s.takim - 1) % 6]
+          const bakis = Math.atan2(-dy, -dx) // hedef kaleden saldıran orduya doğru
+          return (
+            <div key={`ordu-${s.takim}`}>
+              {s.asama === 'yuruyor' && (
+                <div className="absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-1000 ease-out text-3xl" style={{ left: `${x}%`, top: `${y}%`, filter: `drop-shadow(0 0 8px ${renk})` }} title={`${takimBilgisi(s.takim).ad} ordusu yürüyor`}>
+                  ⚔️
+                </div>
+              )}
+              {Array.from({ length: s.kusatan }, (_, k) => {
+                // Kuşatma sırası: saldıran tarafta başlar, iki yana açılır
+                const kayma = (Math.floor((k + 1) / 2) * (k % 2 === 1 ? -1 : 1) * 2 * Math.PI) / Math.max(1, d.kusatma)
+                const ac = bakis + kayma
+                const hx = b.x + Math.cos(ac) * KALE_YARICAPI * 1.35
+                const hy = b.y + Math.sin(ac) * KALE_YARICAPI * 1.35
+                return (
+                  <div
+                    key={k}
+                    className="absolute -translate-x-1/2 -translate-y-1/2 text-xl kule-blok transition-all duration-700"
+                    style={{ left: `${hx}%`, top: `${hy}%`, filter: `drop-shadow(0 0 6px ${renk})`, animationDelay: `${k * 80}ms` }}
+                    title={`${takimBilgisi(s.takim).ad} askeri`}
+                  >
+                    🛡️
+                  </div>
+                )
+              })}
+            </div>
+          )
+        })}
+
+        {/* Kaleler */}
+        {satirlar.map((s) => {
+          const p = konum.get(s.takim)!
+          const b = takimBilgisi(s.takim)
+          const dustu = d.dusen.includes(s.takim)
+          const lider = s.sira === 1 && s.blok > 0
+          return (
+            <div key={`kale-${s.takim}`} className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center" style={{ left: `${p.x}%`, top: `${p.y}%` }}>
+              {lider && !d.bitti && <div className="text-2xl kule-tac -mb-1" aria-hidden>👑</div>}
+              <div className={`relative ${dustu ? 'grayscale opacity-70' : ''}`}>
+                <Gorsel ad={`takim-kalkan-${s.takim}.webp`} emoji={b.emoji} className="w-16 h-16 sm:w-20 sm:h-20" alt={b.ad} />
+                <span className="absolute -bottom-2 -right-3 text-4xl sm:text-5xl" aria-hidden>
+                  {dustu ? '🔥' : '🏰'}
+                </span>
+              </div>
+              <p className="mt-2 text-center text-xs sm:text-sm font-bold whitespace-nowrap px-2 py-0.5 rounded-full bg-slate-950/70">
+                {b.ad} <span className="text-slate-400 font-normal">({s.uye} kişi · {s.blok.toFixed(1)})</span>
+              </p>
+              <div className="mt-1 h-1.5 w-24 rounded-full bg-white/15 overflow-hidden">
+                <div className="h-full transition-[width] duration-1000" style={{ width: `${(s.ilerleme / d.hedef) * 100}%`, background: KALE_RENKLERI[(s.takim - 1) % 6] }} />
+              </div>
+              <p className="text-[10px] text-slate-300 mt-0.5">{dustu ? 'kuşatıldı!' : s.asama === 'yuruyor' ? 'yürüyor' : s.asama === 'kusatiyor' ? `kuşatıyor ${s.kusatan}/${d.kusatma}` : 'kuşattı'}</p>
+            </div>
+          )
+        })}
+
+        {d.bitti && d.kazanan !== null && (
+          <div className="absolute inset-0 flex items-center justify-center bg-slate-950/55 backdrop-blur-[2px] z-20">
+            <div className="cam-panel rounded-[2rem] p-8 text-center space-y-2 girdi">
+              <p className="text-7xl">🏆</p>
+              <p className="text-4xl font-display font-extrabold">
+                {takimBilgisi(d.kazanan).emoji} {takimBilgisi(d.kazanan).ad} takım kazandı!
+              </p>
+              {d.dusen.length > 0 && <p className="text-slate-300">{d.dusen.map((t) => takimBilgisi(t).ad).join(', ')} kalesi kuşatıldı.</p>}
+            </div>
+          </div>
+        )}
+      </div>
+      <p className="text-xs text-slate-500 text-center">Her takım bir sonraki takımın kalesine saldırır. Doğru cevaplar ordunu yürütür, sonra kalenin etrafını sarar; sıralama kişi başına doğruya göredir.</p>
     </div>
   )
 }

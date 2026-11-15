@@ -304,3 +304,17 @@ h1, h2, h3, .baslik {
 
 /* Zapoot oyun modunda sahne perdede kilitlidir: "Küçült" düğmeleri gizlenir */
 body.oyun-kilitli .kucult-dugmesi { display: none !important; }
+
+/* Arka plan görseli (Antigravity): geniş ekranda sahne, telefonda telefon arka planı; aurora üstte kalır */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background: url("/gorseller/arka-sahne.webp") center / cover no-repeat;
+  opacity: 0.55;
+}
+@media (max-width: 640px) {
+  body::after { background-image: url("/gorseller/arka-telefon.webp"); }
+}

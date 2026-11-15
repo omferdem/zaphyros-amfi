@@ -6,6 +6,7 @@ import { icerikSil } from '../lib/akis'
 import { oku, sakla } from '../lib/cihaz'
 import SubeBaslat from '../bilesenler/SubeBaslat'
 import YedektenYukle from '../bilesenler/YedektenYukle'
+import NotDefteri from '../bilesenler/NotDefteri'
 import {
   bosDonemiSil,
   donemAdiniDegistir,
@@ -186,6 +187,13 @@ export default function Panel() {
       )}
 
       {donemler && donemler.length > 0 && <YeniDonem donemler={donemler} secili={secili} tamam={(id) => donemleriYukle(id)} hataVer={setHata} />}
+
+      <details className="group">
+        <summary className="ikincil-buton cursor-pointer list-none inline-block select-none">📓 Genel notlarım</summary>
+        <div className="mt-3">
+          <NotDefteri baslik="Genel notlar" />
+        </div>
+      </details>
 
       {donemler && donemler.length > 0 && (
         <YedektenYukle donemler={donemler} secili={secili} icerikler={icerikler} tamam={() => secili && dersleriYukle(secili)} />

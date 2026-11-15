@@ -1,6 +1,6 @@
 // Akıştaki "oyun" adımı için oyun listesi ve açıklamaları (perde kartı ve akış düzenleyici kullanır).
 
-export type OyunAnahtari = 'takim' | 'halat' | 'hoca' | 'merdiven' | 'zombi' | 'roket' | 'ejderha' | 'arena' | 'kule'
+export type OyunAnahtari = 'takim' | 'halat' | 'hoca' | 'merdiven' | 'zombi' | 'roket' | 'ejderha' | 'arena' | 'kule' | 'kale'
 
 export interface OyunBilgisi {
   ad: string
@@ -41,6 +41,12 @@ export const OYUNLAR: Record<OyunAnahtari, OyunBilgisi> = {
     emoji: '🏗️',
     nasil: 'Sınıf 3 takıma ayrılır. Her doğru cevap takımın kulesine bir kat ekler; sıralama kişi başına doğruya göredir. Önce hedef yüksekliğe çıkan takım kazanır.',
     baslat: '3 takımlı takım modunu ve kule sahnesini açar.',
+  },
+  kale: {
+    ad: 'Kale kuşatması',
+    emoji: '🏰',
+    nasil: 'Her takımın bir kalesi var. Doğru cevaplar takımın ordusunu bir sonraki takımın kalesine yürütür, sonra kalenin etrafını sarar. Hedef kaleyi önce tamamen kuşatan takım kazanır; sıralama kişi başına doğruya göredir.',
+    baslat: '3 takımlı takım modunu ve kale kuşatması sahnesini açar.',
   },
   roket: {
     ad: 'Roket yarışı',

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
+import Gorsel from './Gorsel'
 
 interface Yaris {
   acik: boolean
@@ -79,12 +80,11 @@ export default function HocaYarisiPaneli({ oturum, anahtar, mod, dugme = true }:
   return (
     <div className={perde ? 'fixed left-1/2 -translate-x-1/2 bottom-14 z-30 flex flex-col items-center gap-2 max-w-[22rem]' : 'cam-panel rounded-2xl p-4 space-y-3'}>
       <div className="cam-panel rounded-2xl px-4 py-2 flex items-center gap-3">
-        <span aria-hidden className="text-xl">
-          🥊
-        </span>
+        <Gorsel ad="hoca-yaris.webp" emoji="🥊" className="w-12 h-12" emojiClass="text-xl" />
         <span className="font-display font-extrabold tabular-nums text-lg">
           Hoca {y.hoca} <span className="text-slate-500">–</span> {y.sinif} Sınıf
         </span>
+        <Gorsel ad="ogrenci-sinif.webp" emoji="" className="w-12 h-12" />
         <button className="text-xs text-slate-500 hover:text-white" onClick={() => ayarla(false)} title="Hocayla yarışı kapat">
           ✕
         </button>

@@ -14,7 +14,7 @@ import MerdivenPaneli from '../bilesenler/MerdivenPaneli'
 import KumandaBaslat from '../bilesenler/KumandaBaslat'
 import ZombiPaneli from '../bilesenler/ZombiPaneli'
 import BaglantiUyarisi from '../bilesenler/BaglantiUyarisi'
-import { ArenaPaneli, EjderhaPaneli, KulePaneli, RoketPaneli } from '../bilesenler/GrafikOyunlari'
+import { ArenaPaneli, EjderhaPaneli, KulePaneli, RoketPaneli, KalePaneli } from '../bilesenler/GrafikOyunlari'
 
 interface KumandaDurumu extends DersDurumu {
   katilan: number
@@ -186,6 +186,7 @@ export default function Kumanda() {
       {anahtar && <EjderhaPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
       {anahtar && <ArenaPaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
       {anahtar && <KulePaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
+      {anahtar && <KalePaneli oturum={oturum} anahtar={anahtar} mod="kumanda" />}
 
       <section className="cam-panel rounded-3xl p-5 space-y-2 min-h-40">
         {durum.adim ? (

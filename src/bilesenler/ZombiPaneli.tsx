@@ -4,6 +4,7 @@ import { OYUN_OLAYI } from '../lib/oyun'
 import { KURTULMA_ORANI, zombiHesapla, type ZombiDurumu, type ZombiOyuncuDurumu, type ZombiOyuncusu, type ZombiSorusu } from '../lib/zombi'
 import Konfeti from './Konfeti'
 import { useOyunSesi } from '../lib/ses'
+import Gorsel, { adIndeksi, arkaPlan } from './Gorsel'
 
 const ANAHTAR = (oturum: string) => `amfi_zombi_${oturum}`
 const KARAKTERLER = ['🧑‍🎓', '👩‍🎓', '🧙', '🦸', '🥷', '🧑‍🚀', '👨‍🔬', '👩‍🎨', '🧝', '🕵️', '👩‍🚀', '🧑‍🍳', '🦹', '🤠', '👩‍🏫', '🧑‍🎤']
@@ -136,6 +137,7 @@ export function ZombiSahnesi({ d, kapat }: { d: ZombiDurumu; kapat: () => void }
   const kalabalik = d.oyuncular.length
   const boy = kalabalik > 90 ? 'text-lg' : kalabalik > 50 ? 'text-2xl' : kalabalik > 24 ? 'text-3xl' : 'text-4xl'
   const ad = kalabalik > 90 ? 'text-[8px]' : kalabalik > 50 ? 'text-[9px]' : 'text-[11px]'
+  const gBoy = kalabalik > 90 ? 'w-6 h-6' : kalabalik > 50 ? 'w-9 h-9' : kalabalik > 24 ? 'w-12 h-12' : 'w-16 h-16'
 
   return (
     <div className="fixed inset-0 z-40 bg-slate-950/95 backdrop-blur-sm flex flex-col p-3 sm:p-5 gap-3">
@@ -156,7 +158,7 @@ export function ZombiSahnesi({ d, kapat }: { d: ZombiDurumu; kapat: () => void }
           Küçült
         </button>
       </div>
-      <div className="relative flex-1 min-h-0 rounded-3xl overflow-hidden zombi-gokyuzu border border-white/10">
+      <div className="relative flex-1 min-h-0 rounded-3xl overflow-hidden zombi-gokyuzu border border-white/10" style={arkaPlan('arka-zombi.webp')}>
         {/* Zemin */}
         <div className="absolute inset-x-0 bottom-0 zombi-zemin" style={{ height: `${birim}%` }} />
         {/* Piramit katları: yukarı çıktıkça daralır */}
@@ -184,7 +186,7 @@ export function ZombiSahnesi({ d, kapat }: { d: ZombiDurumu; kapat: () => void }
           <div className="absolute inset-x-0 top-0 flex justify-around text-4xl -translate-y-1/2 zombi-yuru" aria-hidden>
             {Array.from({ length: 9 }, (_, i) => (
               <span key={i} style={{ animationDelay: `${i * 180}ms` }}>
-                🧟
+                <Gorsel ad={`zombi-${(i % 3) + 1}.webp`} emoji="🧟" className="w-14 h-14 sm:w-20 sm:h-20" emojiClass="text-4xl" />
               </span>
             ))}
           </div>
@@ -203,7 +205,7 @@ export function ZombiSahnesi({ d, kapat }: { d: ZombiDurumu; kapat: () => void }
                 style={{ left: `${Math.max(4, Math.min(96, sol))}%`, bottom: `${altta}%` }}
                 title={o.ad}
               >
-                <div className={boy}>{zombi ? '🧟' : karakter(o.ad)}</div>
+                <div className={boy}>{zombi ? <Gorsel ad={`zombi-${adIndeksi(o.ad, 3)}.webp`} emoji="🧟" className={gBoy} emojiClass={boy} /> : <Gorsel ad={`ogrenci-${adIndeksi(o.ad, 8)}.webp`} emoji={karakter(o.ad)} className={gBoy} emojiClass={boy} />}</div>
                 <div className={`${ad} font-bold px-1 rounded bg-slate-950/70 whitespace-nowrap max-w-20 truncate ${zombi ? 'text-rose-300' : o.durum === 'zirve' ? 'text-amber-200' : 'text-white'}`}>{o.ad}</div>
               </div>
             )

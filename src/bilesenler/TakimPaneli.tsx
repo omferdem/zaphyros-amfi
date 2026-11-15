@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { OYUN_OLAYI } from '../lib/oyun'
+import Gorsel, { arkaPlan } from './Gorsel'
 import { TAKIM_SAYILARI, halatHesapla, takimBilgisi, type HalatTarafi, type TakimDurumu } from '../lib/takim'
 
 /** Takım yarışması: hoca takım sayısını seçer, takımların üye başına ortalama puanı canlı görünür. */
@@ -121,7 +122,7 @@ function Halat({ bir, iki, kucuk }: { bir: HalatTarafi; iki: HalatTarafi; kucuk:
   // Düğüm: konum -1 (sol uç) ile +1 (sağ uç) arasında; kenarlara taşmasın diye %6 ile %94 arasına yerleşir
   const yuzde = 50 + h.konum * 44
   return (
-    <div className={`cam-panel rounded-3xl p-4 space-y-2 ${kucuk ? 'w-full' : 'w-[min(52rem,92vw)] mb-2'}`}>
+    <div className={`cam-panel rounded-3xl p-4 space-y-2 ${kucuk ? 'w-full' : 'w-[min(52rem,92vw)] mb-2'}`} style={arkaPlan('arka-halat.webp', 'transparent')}>
       <div className="flex items-center justify-between text-sm font-bold">
         <span>
           {a.emoji} {a.ad}
@@ -131,8 +132,11 @@ function Halat({ bir, iki, kucuk }: { bir: HalatTarafi; iki: HalatTarafi; kucuk:
           {b.ad} {b.emoji}
         </span>
       </div>
-      <div className="relative h-10">
+      <div className={`relative ${kucuk ? 'h-14' : 'h-24'}`}>
         <div className="absolute inset-x-0 top-1/2 h-2 -translate-y-1/2 rounded-full bg-gradient-to-r from-rose-500 via-slate-600 to-sky-500" />
+        <Gorsel ad="halat.webp" emoji="" className="absolute inset-x-[12%] top-1/2 -translate-y-1/2 h-7 w-[76%] object-fill" />
+        <Gorsel ad="takim-halat-sol.webp" emoji="" className="absolute left-0 top-1/2 -translate-y-1/2 h-full w-auto" />
+        <Gorsel ad="takim-halat-sag.webp" emoji="" className="absolute right-0 top-1/2 -translate-y-1/2 h-full w-auto" />
         <div className="absolute left-1/2 top-0 h-full w-px bg-white/30" title="Orta çizgi" />
         <div
           className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-all duration-700 ease-out"

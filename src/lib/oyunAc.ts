@@ -2,7 +2,7 @@ import { supabase } from './supabase'
 import { OYUN_OLAYI, type OyunAnahtari } from './oyun'
 
 /** Takımla oynanabilen oyunlar ve seçilebilir grup sayıları (halat çekme her zaman 2 takımdır). */
-export const GRUPLU_OYUNLAR: OyunAnahtari[] = ['takim', 'kule']
+export const GRUPLU_OYUNLAR: OyunAnahtari[] = ['takim', 'kule', 'kale']
 export const GRUP_SAYILARI = [2, 3, 4, 5, 6] as const
 
 /**
@@ -11,7 +11,7 @@ export const GRUP_SAYILARI = [2, 3, 4, 5, 6] as const
  * Hata varsa false döner.
  */
 export async function oyunuAc(oturumId: string, anahtar: OyunAnahtari | null, grup: number | null = null): Promise<boolean> {
-  const takimli = anahtar === 'takim' || anahtar === 'halat' || anahtar === 'kule'
+  const takimli = anahtar === 'takim' || anahtar === 'halat' || anahtar === 'kule' || anahtar === 'kale'
   // Seçilmeyen kipler kapanır (hata önemsenmez, zaten kapalı olabilir)
   if (!takimli) await supabase.rpc('takim_ayarla', { p_session: oturumId, p_anahtar: null, p_sayi: 0 })
   if (anahtar !== 'hoca') await supabase.rpc('hoca_yaris_ayarla', { p_session: oturumId, p_anahtar: null, p_acik: false })

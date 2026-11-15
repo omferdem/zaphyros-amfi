@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import type { Ders, Ogrenci, Oturum, PuanSatiri, Yoklama } from '../lib/tipler'
-import { DERSI_BITIR_SORUSU, ogrencileriGetir, oturumGetir, oturumYoklamalari, oturumuBitir, oturumuYenidenAc } from '../lib/veri'
+import { DERSI_BITIR_SORUSU, ogrencileriGetir, ortakTelefonlar, oturumGetir, oturumlariGetir, oturumYoklamalari, oturumuBitir, oturumuYenidenAc } from '../lib/veri'
 import { oturumuExceleAktar, yarismayiExceleAktar } from '../lib/rapor'
 import { dersEtiketi, oturumAdi, saat, tarihSaat } from '../lib/bicim'
 
@@ -15,6 +15,7 @@ export default function OturumDetay() {
   const [filtre, setFiltre] = useState<'hepsi' | 'var' | 'yok'>('hepsi')
   const [hata, setHata] = useState<string | null>(null)
   const [puanlar, setPuanlar] = useState<PuanSatiri[]>([])
+  const [ortak, setOrtak] = useState<Map<string, Set<string>>>(new Map())
 
   const yukle = useCallback(async () => {
     try {
@@ -26,6 +27,11 @@ export default function OturumDetay() {
       setYoklamalar(y)
       const { data: p } = await supabase.rpc('puan_tablosu', { p_session: o.id, p_limit: 1000 })
       setPuanlar((p as PuanSatiri[] | null) ?? [])
+      // Aynı telefondan birden çok öğrenci adına verilen yoklamalar işaretlenir (başarısız olursa işaret görünmez)
+      oturumlariGetir(o.course_id)
+        .then((l) => ortakTelefonlar(l.map((x) => x.id)))
+        .then(setOrtak)
+        .catch(() => {})
     } catch {
       setHata('Yoklama listesi yüklenemedi.')
     }
@@ -168,7 +174,17 @@ export default function OturumDetay() {
               return (
                 <tr key={o.id} className="border-t border-white/5">
                   <td className="py-1.5 pr-3 font-mono text-slate-300 w-32">{o.ogrenci_no}</td>
-                  <td className="py-1.5">{o.ad_soyad}</td>
+                  <td className="py-1.5">
+                    {o.ad_soyad}
+                    {ortak.has(o.id) && (
+                      <span
+                        className="ml-2 text-[11px] font-bold text-amber-300 bg-amber-500/15 rounded-full px-2 py-0.5"
+                        title={`Bu telefondan başka öğrenci(ler) adına da yoklama verilmiş: ${[...(ortak.get(o.id) ?? [])].map((id) => ogrenciler.find((x) => x.id === id)?.ogrenci_no ?? '?').join(', ')}`}
+                      >
+                        ⚠ ortak telefon
+                      </span>
+                    )}
+                  </td>
                   <td className="py-1.5 text-xs text-slate-400 w-28">
                     {y && `${saat(y.zaman)} ${y.yontem === 'elle' ? '(elle)' : ''}`}
                   </td>

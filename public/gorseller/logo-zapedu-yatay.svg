@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="1200" height="320">
+  <defs>
+    <linearGradient id="zeNeonMainH" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee" />
+      <stop offset="50%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#f472b6" />
+    </linearGradient>
+
+    <linearGradient id="zBoltGradH" x1="0%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#67e8f9" />
+      <stop offset="45%" stop-color="#22d3ee" />
+      <stop offset="100%" stop-color="#8b5cf6" />
+    </linearGradient>
+
+    <linearGradient id="eRibbonGradH" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6" />
+      <stop offset="65%" stop-color="#f472b6" />
+      <stop offset="100%" stop-color="#fbbf24" />
+    </linearGradient>
+
+    <linearGradient id="sparkGradH" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#22d3ee" />
+      <stop offset="55%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#f472b6" />
+    </linearGradient>
+
+    <linearGradient id="zapTextGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="65%" stop-color="#bae6fd" />
+      <stop offset="100%" stop-color="#22d3ee" />
+    </linearGradient>
+
+    <linearGradient id="eduTextGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee" />
+      <stop offset="50%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#f472b6" />
+    </linearGradient>
+
+    <radialGradient id="bgHexGradH" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#1e1b4b" />
+      <stop offset="70%" stop-color="#0f102e" />
+      <stop offset="100%" stop-color="#070a1f" />
+    </radialGradient>
+
+    <filter id="neonGlowH" x="-15%" y="-15%" width="130%" height="130%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur1" />
+      <feMerge>
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- LEFT ICON: Connected "ZE" Monogram Badge (scaled cleanly into 280x280 at x=20, y=20) -->
+  <g transform="translate(20, 4) scale(0.61)">
+    <path d="M 256 26 L 454 134 C 468 142 476 156 476 172 L 476 340 C 476 356 468 370 454 378 L 256 486 C 242 494 226 494 212 486 L 58 378 C 44 370 36 356 36 340 L 36 172 C 36 156 44 142 58 134 L 256 26 Z"
+          fill="url(#bgHexGradH)" stroke="url(#zeNeonMainH)" stroke-width="11" stroke-linejoin="round" />
+    <g filter="url(#neonGlowH)">
+      <path d="M 264 138 H 414 C 423 138 428 144 426 153 L 416 190 H 316 V 322 H 416 L 426 359 C 428 368 423 374 414 374 H 264 V 138 Z"
+            fill="url(#eRibbonGradH)" stroke="#070a1f" stroke-width="8" stroke-linejoin="round" />
+      <path d="M 94 138 H 288 L 172 322 H 284 V 374 H 86 C 77 374 72 366 77 358 L 204 190 H 86 L 94 138 Z"
+            fill="url(#zBoltGradH)" stroke="#070a1f" stroke-width="8" stroke-linejoin="round" />
+      <path d="M 184 252 L 254 218 L 244 244 H 404 L 382 280 H 222 L 232 254 Z"
+            fill="url(#sparkGradH)" stroke="#070a1f" stroke-width="7" stroke-linejoin="round" />
+    </g>
+    <path d="M 100 148 H 270 L 160 322" fill="none" stroke="#cffafe" stroke-width="4" stroke-linecap="round" opacity="0.85" />
+    <path d="M 274 148 H 414" fill="none" stroke="#fbcfe8" stroke-width="4" stroke-linecap="round" opacity="0.85" />
+    <path d="M 248 252 H 390" fill="none" stroke="#fef08a" stroke-width="3.5" stroke-linecap="round" opacity="0.95" />
+  </g>
+
+  <!-- RIGHT WORDMARK: Custom Geometric Vector Paths for "ZAPEDU" (zero external font dependency!) -->
+  <g filter="url(#neonGlowH)" transform="translate(345, 76)">
+    <!-- "Z" (x: 0..118) -->
+    <path d="M 6 12 H 118 L 48 124 H 118 L 112 156 H 0 L 70 44 H 0 Z"
+          fill="url(#zapTextGrad)" stroke="#070a1f" stroke-width="8" stroke-linejoin="round" />
+
+    <!-- "A" (x: 132..262) with electric bolt crossbar -->
+    <path d="M 182 12 H 218 L 262 156 H 222 L 212 122 H 176 L 164 156 H 126 L 182 12 Z M 196 52 L 183 94 H 206 L 196 52 Z"
+          fill="url(#zapTextGrad)" fill-rule="evenodd" stroke="#070a1f" stroke-width="8" stroke-linejoin="round" />
+
+    <!-- "P" (x: 278..396) -->
+    <path d="M 280 12 H 356 C 384 12 400 28 400 58 C 400 88 382 106 352 106 H 318 V 156 H 280 V 12 Z M 318 42 V 76 H 348 C 358 76 364 70 364 59 C 364 48 358 42 348 42 H 318 Z"
+          fill="url(#zapTextGrad)" fill-rule="evenodd" stroke="#070a1f" stroke-width="8" stroke-linejoin="round" />
+
+    <!-- Electric Lightning Connector Slash between ZAP and EDU (x: 405..445) -->
+    <path d="M 426 24 L 404 88 H 426 L 410 146 L 448 76 H 424 Z"
+          fill="#fbbf24" stroke="#070a1f" stroke-width="6" stroke-linejoin="round" />
+
+    <!-- "E" (x: 458..568) -->
+    <path d="M 460 12 H 568 L 562 44 H 498 V 68 H 556 L 550 98 H 498 V 124 H 568 L 562 156 H 460 V 12 Z"
+          fill="url(#eduTextGrad)" stroke="#070a1f" stroke-width="8" stroke-linejoin="round" />
+
+    <!-- "D" (x: 586..712) -->
+    <path d="M 588 12 H 654 C 694 12 716 38 716 84 C 716 130 692 156 652 156 H 588 V 12 Z M 626 44 V 124 H 650 C 668 124 678 110 678 84 C 678 58 668 44 650 44 H 626 Z"
+          fill="url(#eduTextGrad)" fill-rule="evenodd" stroke="#070a1f" stroke-width="8" stroke-linejoin="round" />
+
+    <!-- "U" (x: 732..848) -->
+    <path d="M 732 12 H 770 V 102 C 770 118 778 126 792 126 C 806 126 814 118 814 102 V 12 H 852 V 104 C 852 138 828 160 792 160 C 756 160 732 138 732 104 V 12 Z"
+          fill="url(#eduTextGrad)" stroke="#070a1f" stroke-width="8" stroke-linejoin="round" />
+  </g>
+
+  <!-- Glowing Neon Underline Accent Strip under ZAPEDU -->
+  <rect x="350" y="256" width="818" height="8" rx="4" fill="url(#zeNeonMainH)" opacity="0.85" />
+  <circle cx="350" cy="260" r="6" fill="#22d3ee" />
+  <circle cx="1168" cy="260" r="6" fill="#f472b6" />
+</svg>

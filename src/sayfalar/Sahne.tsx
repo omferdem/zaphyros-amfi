@@ -17,6 +17,7 @@ import { Final, Lobi, takimliMi } from '../bilesenler/LobiFinal'
 import { EnerjiSeridi, useOyuncuSonuclari } from '../bilesenler/EnerjiSeridi'
 import TepkiKatmani from '../bilesenler/TepkiKatmani'
 import Cizim, { type CizimModu } from '../bilesenler/Cizim'
+import PerdeNotu from '../bilesenler/PerdeNotu'
 import { oyunuAc } from '../lib/oyunAc'
 import OyunProvasi from '../bilesenler/OyunProvasi'
 import Rehber from '../bilesenler/Rehber'
@@ -119,6 +120,7 @@ export default function Sahne() {
   const [lobi, setLobi] = useState<{ ad: string; mod: OyunAnahtari | null; sayi: number; sureDk: number | null; ilk: string | null } | null>(null)
   const [finalAcik, setFinalAcik] = useState(false)
   const [cizimModu, setCizimModu] = useState<CizimModu>('kapali')
+  const [notAcik, setNotAcik] = useState(false)
   const [tepkiAcik, setTepkiDurum] = useState(() => {
     try {
       return localStorage.getItem('amfi_tepki') !== '0'
@@ -626,6 +628,9 @@ export default function Sahne() {
           </button>
         </>
       )}
+      <button className="ikincil-buton" onClick={() => setNotAcik((a) => !a)} title="Not al: şubenin not defterine kaydedilir">
+        📓 Not
+      </button>
       <button className="ikincil-buton" onClick={() => setCizimModu((m) => (m === 'tahta' ? 'kapali' : 'tahta'))} title="Boş tahta aç (beyaz ya da kara)">
         🖍️ Tahta
       </button>
@@ -780,6 +785,7 @@ export default function Sahne() {
         </div>
       )}
       <Cizim oturum={oturum.id} anahtar={oturum.aktif_adim ?? 'yok'} mod={cizimModu} kapat={() => setCizimModu('kapali')} bitti={!!oturum.bitti} ac={() => setCizimModu('lazer')} />
+      {notAcik && <PerdeNotu key={oturum.id} dersId={oturum.course_id} baglam={`${new Date().toLocaleString('tr-TR')} · ${oturum.courses.ad}${oturum.baslik ? ` · ${oturum.baslik}` : ''}`} kapat={() => setNotAcik(false)} />}
       <TepkiKatmani oturum={oturum.id} etkin={tepkiAcik && !quizAcik && !lobi && !finalAcik} />
       {lobi && (
         <Lobi

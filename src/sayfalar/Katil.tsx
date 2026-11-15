@@ -1,4 +1,5 @@
 import TepkiSeridi from '../bilesenler/TepkiSeridi'
+import { kartiKaydet, slaytKartiOlustur } from '../lib/slaytKarti'
 import Gorsel from '../bilesenler/Gorsel'
 import { varlikBildir } from '../lib/varlik'
 import { useEffect, useRef, useState } from 'react'
@@ -465,6 +466,7 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
   const [tasarruf, setTasarruf] = useState(() => oku('amfi_veri_tasarrufu') === '1')
   const gorselGoster = !!adim?.gorsel && !!durum?.telefon_modu && !tasarruf
   const gorsel = useSlaytGorseli(adim?.tur === 'slayt' && gorselGoster ? adim.gorsel : null)
+  const [kartMesgul, setKartMesgul] = useState(false)
   const satirlar = (adim?.tur === 'slayt' ? adim.metin ?? '' : '').split('\n').filter(Boolean)
 
   return (
@@ -628,6 +630,31 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
               )
             ) : gorselGoster ? null : (
               <p className="text-slate-400">{durum?.telefon_modu ? 'Bu slaytta yazı yok.' : 'Bu slaytta yazı yok; perdeye bak.'}</p>
+            )}
+            {(satirlar.length > 0 || gorsel.url) && (
+              <button
+                className="ikincil-buton w-full !py-2.5 text-sm"
+                disabled={kartMesgul}
+                onClick={async () => {
+                  setKartMesgul(true)
+                  try {
+                    // Tamamen telefonda üretilir; sunucuya hiçbir istek gitmez
+                    const blob = await slaytKartiOlustur({
+                      ders: durum?.ders ?? ders,
+                      hafta: durum?.baslik ?? null,
+                      slayt: adim.sayfa_no ?? null,
+                      sayfaSayisi: adim.sayfa_sayisi ?? null,
+                      satirlar,
+                      gorselUrl: gorselGoster ? gorsel.url : null,
+                    })
+                    if (blob) await kartiKaydet(blob, dosyaAdi(durum?.ders ?? ders, durum?.baslik, adim.sayfa_no))
+                  } finally {
+                    setKartMesgul(false)
+                  }
+                }}
+              >
+                📸 Ekran görüntüsü
+              </button>
             )}
           </div>
         ) : adim?.tur === 'soru' ? (

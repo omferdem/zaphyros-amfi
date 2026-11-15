@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.57.0 (15 Kasım 2026)
+Faz 7: öğrenci ekran görüntüsü ve perde notu. Veritabanı değişikliği yok.
+- **📸 Ekran görüntüsü (telefon):** slayt ekranında düğme; kart tamamen telefonda bir canvas üzerinde çizilir (ders adı, hafta, slayt numarası, slaytın bütün metni, telefon modunda zaten inmiş görsel), metin uzadıkça kart aşağı uzar, hiçbir satır kesilmez. Sunucuya hiçbir istek gitmez. Paylaşım menüsü (Web Share) destekleniyorsa o açılır, yoksa PNG iner; dosya adı `DersAdi_Hafta3_Slayt12.png`. Satır bölme birim testli.
+- **📓 Not (perde):** araç çubuğunda düğme; yazdıkça şubenin not defterine yeni bir kart olarak kendiliğinden kaydedilir (tarih, ders ve hafta başlığıyla). "Perdeyi karart" seçeneği projeksiyonu karartır, not kutusu görünür kalır; telefonlardaki ders görüntüsü değişmez.
+- Yapılmayanlar: hoca ders ayarından ekran görüntüsü düğmesini kapatma; kumandadan not yazma (kumanda hoca girişi olmadan anahtarla çalışıyor, not tablosu hoca oturumu istiyor); projeksiyon modunda slayt görselini bu düğme için indirme (veri tasarrufu kararına uyularak yalnızca metin kartı çiziliyor).
+
 ## v0.56.0 (15 Kasım 2026)
 Faz 6: tahta, lazer ve kalem. Veritabanı değişikliği yok.
 - **🖍️ Tahta:** perdede boş kara ya da beyaz tahta; kalem renkleri (beyaz, sarı, kırmızı, mavi, yeşil), 3 kalınlık, silgi, geri al, temizle. Fare, dokunmatik ve kalem (pointer events). Tarayıcıda çizim denendi.

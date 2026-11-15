@@ -1,4 +1,5 @@
 import Gorsel from '../bilesenler/Gorsel'
+import { varlikBildir } from '../lib/varlik'
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
@@ -67,9 +68,25 @@ export default function Katil() {
     basladi.current = true
 
     if (!oturum) {
+      // Sayfa yenilendi ya da bağlantı kopup geldi: son 12 saatte katıldığı açık derse kod sorulmadan geri dön
+      try {
+        const kayit = JSON.parse(oku('amfi_son_oturum') ?? 'null') as { s: string; t: number } | null
+        if (kayit && Date.now() - kayit.t < 12 * 3600 * 1000) {
+          supabase.rpc('ders_durumu', { p_session: kayit.s }).then(({ data }) => {
+            const d = data as { bitti?: boolean; hata?: string; ders?: string } | null
+            if (d && !d.hata && !d.bitti && oku(katildiAnahtari(kayit.s) ) !== null) navigate(`/katil?s=${kayit.s}`, { replace: true })
+            else if (d && !d.hata && !d.bitti && oku(dersAnahtari(kayit.s)) !== null) navigate(`/katil?s=${kayit.s}`, { replace: true })
+            else setDurum({ tur: 'kod' })
+          })
+          return
+        }
+      } catch {
+        /* kayıt okunamadıysa kod ekranı açılır */
+      }
       setDurum({ tur: 'kod' })
       return
     }
+    sakla('amfi_son_oturum', JSON.stringify({ s: oturum, t: Date.now() }))
 
     if (!token) {
       // Yoklamaya zaten girildiyse ya da derse kodla katıldıysa ders görünümü, sayfa yenilendiyse
@@ -175,6 +192,8 @@ export default function Katil() {
       setDurum({ tur: 'form', bilet })
     } else {
       sakla(dersAnahtari(s), JSON.stringify({ ders }))
+      sakla(`amfi_kod_${s}`, kod)
+      sakla('amfi_son_oturum', JSON.stringify({ s, t: Date.now() }))
       setDurum({ tur: 'ders', ad: null, ders })
     }
     // Adres oturuma bağlanır; sayfa yenilenirse aynı ekran kayıtlı bilgiden geri gelir.
@@ -374,6 +393,22 @@ function QuizBandi({ oturum }: { oturum: string }) {
   )
 }
 
+/** Kaydedilen görsellerin ve indirmelerin adı: DersAdi_Hafta3_Slayt12.png (Türkçe karakterler sadeleşir). */
+function dosyaAdi(ders: string, baslik: string | null | undefined, slayt: number | null): string {
+  const sade = (m: string) =>
+    m
+      .replace(/ç/gi, (c) => (c === 'ç' ? 'c' : 'C'))
+      .replace(/ğ/gi, (c) => (c === 'ğ' ? 'g' : 'G'))
+      .replace(/ı/g, 'i')
+      .replace(/İ/g, 'I')
+      .replace(/ö/gi, (c) => (c === 'ö' ? 'o' : 'O'))
+      .replace(/ş/gi, (c) => (c === 'ş' ? 's' : 'S'))
+      .replace(/ü/gi, (c) => (c === 'ü' ? 'u' : 'U'))
+      .replace(/[^A-Za-z0-9]+/g, '')
+  const hafta = baslik?.match(/(\d+)/)?.[1]
+  return `${sade(ders) || 'Ders'}_${hafta ? `Hafta${hafta}_` : ''}Slayt${slayt ?? 0}.png`
+}
+
 function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; ders: string }) {
   const [durum, setDurum] = useState<DersDurumu | null>(null)
 
@@ -398,6 +433,10 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
       supabase.removeChannel(kanal)
     }
   }, [oturum])
+
+  // Çevrimiçi sayısı için sahneye "bağlıyım" bildirimi (veritabanına yazılmaz)
+  useEffect(() => varlikBildir(oturum, cihazKimligi()), [oturum])
+  const [oturumKodu] = useState(() => oku(`amfi_kod_${oturum}`))
 
   // Devam serisi: yoklaması alınmış öğrenciye "🔥 N ders üst üste" rozeti (fonksiyon yoksa ya da hata olursa sessizce görünmez)
   const [seri, setSeri] = useState<{ seri: number; katilan: number; toplam: number } | null>(null)
@@ -547,11 +586,20 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
             </p>
             {gorselGoster &&
               (gorsel.url ? (
-                <img
-                  src={gorsel.url}
-                  alt={`Slayt ${adim.sayfa_no}`}
-                  className={`w-full rounded-xl bg-white transition-opacity ${gorsel.gecis ? 'opacity-50' : ''}`}
-                />
+                <>
+                  <img
+                    src={gorsel.url}
+                    alt={`Slayt ${adim.sayfa_no}`}
+                    className={`w-full rounded-xl bg-white transition-opacity ${gorsel.gecis ? 'opacity-50' : ''}`}
+                  />
+                  <a
+                    href={gorsel.url}
+                    download={dosyaAdi(durum?.ders ?? ders, durum?.baslik, adim.sayfa_no)}
+                    className="text-[11px] text-slate-400 hover:text-white underline self-end"
+                  >
+                    Görseli kaydet
+                  </a>
+                </>
               ) : (
                 <div className="aspect-video rounded-xl bg-white/5 flex items-center justify-center text-sm text-slate-400 text-center px-4">
                   {gorsel.hata ? 'Görsel yüklenemedi. Aşağıdaki metne bak.' : 'Slayt yükleniyor…'}
@@ -609,6 +657,11 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
       </section>
 
       {durum && !durum.bitti && <SinifDugmeleri oturum={oturum} />}
+      {oturumKodu && !durum?.bitti && (
+        <span className="fixed right-3 bottom-3 z-20 rounded-lg bg-ze-bg/80 border border-white/10 px-2 py-1 font-mono text-[11px] text-slate-400 backdrop-blur" title="Ders kodu (sayfa yenilenirse kod sorulmaz)">
+          Kod {oturumKodu.slice(0, 3)} {oturumKodu.slice(3)}
+        </span>
+      )}
     </main>
   )
 }

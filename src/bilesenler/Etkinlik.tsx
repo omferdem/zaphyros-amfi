@@ -168,11 +168,26 @@ const HATALAR: Record<string, string> = {
   cihaz_gecersiz: 'Tarayıcın tanınamadı. Sayfayı yenile.',
 }
 
-function fikirAnahtari(adim: string) {
-  return `amfi_fikir_${adim}`
+// Anahtarlara oturum kimliği de girer: aynı akış adımı başka haftada ya da başka şubede açılınca eski fikirler ve "hakkın doldu"
+// durumu gelmez. Oturum kimliği olmayan eski anahtarlar bir kez temizlenir.
+function fikirAnahtari(oturum: string, adim: string) {
+  return `amfi_fikir_${oturum}_${adim}`
 }
-function oyAnahtari(adim: string) {
-  return `amfi_oy_${adim}`
+function oyAnahtari(oturum: string, adim: string) {
+  return `amfi_oy_${oturum}_${adim}`
+}
+
+/** Eski (oturumsuz) fikir ve oy kayıtlarını bir kez siler. */
+function eskiKayitlariTemizle() {
+  try {
+    if (localStorage.getItem('amfi_fikir_temizlendi') === '1') return
+    for (const k of Object.keys(localStorage)) {
+      if (/^amfi_(fikir|oy)_[0-9a-f-]{36}$/.test(k)) localStorage.removeItem(k)
+    }
+    localStorage.setItem('amfi_fikir_temizlendi', '1')
+  } catch {
+    /* depolama kapalıysa önemsiz */
+  }
 }
 
 /** Beyin fırtınası, oylama ve video için öğrenci ekranı. */
@@ -200,7 +215,8 @@ export function EtkinlikCevabi({ oturum, adim, telefonModu }: { oturum: string; 
 function FikirFormu({ oturum, adim, acik }: { oturum: string; adim: Adim; acik: boolean }) {
   const [yazilanlar, setYazilanlar] = useState<string[]>(() => {
     try {
-      return JSON.parse(oku(fikirAnahtari(adim.id)) ?? '[]') as string[]
+      eskiKayitlariTemizle()
+      return JSON.parse(oku(fikirAnahtari(oturum, adim.id)) ?? '[]') as string[]
     } catch {
       return []
     }
@@ -234,7 +250,7 @@ function FikirFormu({ oturum, adim, acik }: { oturum: string; adim: Adim; acik: 
     }
     const yeni = [...yazilanlar, m]
     setYazilanlar(yeni)
-    sakla(fikirAnahtari(adim.id), JSON.stringify(yeni))
+    sakla(fikirAnahtari(oturum, adim.id), JSON.stringify(yeni))
     setMetin('')
   }
 
@@ -312,7 +328,8 @@ function FikirFormu({ oturum, adim, acik }: { oturum: string; adim: Adim; acik: 
 function OyFormu({ oturum, adim, acik }: { oturum: string; adim: Adim; acik: boolean }) {
   const kayit = (() => {
     try {
-      return JSON.parse(oku(oyAnahtari(adim.id)) ?? 'null') as { taraf: number; metin: string } | null
+      eskiKayitlariTemizle()
+      return JSON.parse(oku(oyAnahtari(oturum, adim.id)) ?? 'null') as { taraf: number; metin: string } | null
     } catch {
       return null
     }
@@ -340,7 +357,7 @@ function OyFormu({ oturum, adim, acik }: { oturum: string; adim: Adim; acik: boo
       setHata(HATALAR[s.hata] ?? 'Oy alınamadı.')
       return
     }
-    sakla(oyAnahtari(adim.id), JSON.stringify({ taraf, metin }))
+    sakla(oyAnahtari(oturum, adim.id), JSON.stringify({ taraf, metin }))
     setGonderildi(true)
   }
 

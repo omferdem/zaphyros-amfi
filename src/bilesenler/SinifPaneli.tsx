@@ -152,8 +152,8 @@ export default function SinifPaneli({
   )
 
   const sorularPaneli = sorular.length > 0 && (
-    <div className={perde ? 'fixed left-4 bottom-4 z-30 flex flex-col gap-2 items-start max-w-[40vw]' : 'space-y-2'}>
-      {sorular.map((s) => (
+    <div className={perde ? 'flex flex-col gap-2 items-end' : 'space-y-2'}>
+      {sorular.slice(0, perde ? 4 : sorular.length).map((s) => (
         <button
           key={s.id}
           onClick={() => setAcikSoru(s.id)}
@@ -166,12 +166,13 @@ export default function SinifPaneli({
           {!perde && <span className="text-xs text-slate-300 truncate">{s.metin}</span>}
         </button>
       ))}
+      {perde && sorular.length > 4 && <span className="text-xs font-bold text-sky-200">+{sorular.length - 4} soru daha</span>}
     </div>
   )
 
   const ellerPaneli = eller.length > 0 && (
-    <div className={perde ? 'fixed right-4 top-24 z-30 flex flex-col gap-2 items-end' : 'space-y-2'}>
-      {eller.map((o, i) => (
+    <div className={perde ? 'flex flex-col gap-2 items-end' : 'space-y-2'}>
+      {eller.slice(0, perde ? 5 : eller.length).map((o, i) => (
         <button
           key={o.id}
           onClick={() => komut('el_indir', o.id)}
@@ -185,6 +186,7 @@ export default function SinifPaneli({
           <span className="font-bold">{o.ad}</span>
         </button>
       ))}
+      {perde && eller.length > 5 && <span className="text-xs font-bold text-amber-200">+{eller.length - 5} el daha</span>}
       {eller.length > 1 && (
         <button className="text-xs text-slate-400 hover:text-white" onClick={() => komut('eller_indir')}>
           Hepsini indir
@@ -220,7 +222,7 @@ export default function SinifPaneli({
     <div
       className={
         perde
-          ? 'fixed left-1/2 -translate-x-1/2 bottom-4 z-30 rounded-full bg-fuchsia-500/20 border border-fuchsia-300/40 px-4 py-1.5 text-sm font-bold'
+          ? 'fixed left-4 bottom-4 z-30 rounded-full bg-fuchsia-500/20 border border-fuchsia-300/40 px-4 py-1.5 text-sm font-bold'
           : 'text-sm font-bold text-fuchsia-200'
       }
     >
@@ -259,8 +261,14 @@ export default function SinifPaneli({
 
   return (
     <>
-      {ellerPaneli}
-      {sorularPaneli}
+      {/* Perde yerleşim haritası: sağ sütun (üstten) el kaldırma, altında soru zarfları; sol altta sıkıldım göstergesi.
+          Alt orta (oyun kontrol çubuğu) ve sağ alt (ders kodu) başka bileşenlere ayrılmıştır; hiçbiri üst üste binmez. */}
+      {(eller.length > 0 || sorular.length > 0) && (
+        <div className="fixed right-4 top-20 z-30 flex flex-col gap-3 items-end max-w-[30vw] max-h-[60vh] overflow-hidden">
+          {ellerPaneli}
+          {sorularPaneli}
+        </div>
+      )}
       {gosterge}
       {uyariPaneli}
       {molaPaneli}

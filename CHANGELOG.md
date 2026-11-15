@@ -1,5 +1,13 @@
 # Sürüm Geçmişi
 
+## v0.50.1 (15 Kasım 2026)
+Faz 1'in veritabanı gerektirmeyen bölümü (v0.51.0'a hazırlık).
+- **Perde yerleşim haritası:** el kaldırma ve soru zarfları sağ sütunda alt alta (en çok 5 el, 4 soru, fazlası "+N daha"); sıkıldım göstergesi sol alta, oyun kontrol çubuğu alt ortaya, ders kodu sağ alta taşındı; birbirinin üstüne binmez.
+- **Herkes cevaplayınca geç:** derse bağlı telefon sayısı (Realtime presence; veritabanına yazılmaz) kadar cevap gelince soru 1,5 saniye sonra kapanır ve sonuç açılır. "⋯ > Herkes cevaplayınca geç" anahtarı, varsayılan açık.
+- **Öğrenci geri dönüşü:** ders kodu telefonda sağ altta küçük rozet olarak görünür; sayfa yenilenince ya da bağlantı kopup gelince son 12 saatte katıldığı açık derse kod sorulmadan dönülür.
+- **Beyin fırtınası ve oylama kayıtları** artık oturum kimliğiyle tutulur (başka hafta ya da şubede eski fikirler ve "hakkın doldu" durumu gelmez); eski kayıtlar bir kez temizlenir.
+- **Görsel kaydetme adı:** slayt görseli "DersAdi_Hafta3_Slayt12.png" biçiminde adlandırılır (Görseli kaydet bağlantısı). "preencoded.png" adı depoda geçmiyor; tarayıcının blob görsele verdiği ad olduğu için görsel artık adlandırılmış bağlantıyla kaydedilir.
+
 ## v0.50.0 (15 Kasım 2026)
 Öğrenci ekranları zapedu2 tasarımına birebir taşındı. Veritabanı değişikliği yok.
 - **Stil sistemi:** zapedu2'deki renk adları (`ze-pink`, `ze-cyan`...) ve bileşenler (`glass-panel`, `btn-primary`, `btn-secondary`, `btn-danger`, `pressable`, `animate-pop`, `animate-breathe`) `index.css` içine alındı.

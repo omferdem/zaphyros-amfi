@@ -17,6 +17,7 @@ import OyunProvasi from '../bilesenler/OyunProvasi'
 import Rehber from '../bilesenler/Rehber'
 import BaglantiUyarisi from '../bilesenler/BaglantiUyarisi'
 import { useMuzikAyari, useSesAyari, useSoruSesi } from '../lib/ses'
+import { useVarlikSayisi } from '../lib/varlik'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import { dersEtiketi, kisaAd, oturumAdi } from '../lib/bicim'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
@@ -113,6 +114,22 @@ export default function Sahne() {
   const [rehberAcik, setRehberAcik] = useState(false)
   const [sesAcik, sesAyarla] = useSesAyari()
   const [muzikAcik, muzikAyarla] = useMuzikAyari()
+  const cevrimici = useVarlikSayisi(oturumId, true)
+  const [otoGec, setOtoGecDurum] = useState(() => {
+    try {
+      return localStorage.getItem('amfi_oto_gec') !== '0'
+    } catch {
+      return true
+    }
+  })
+  function otoGecAyarla(a: boolean) {
+    setOtoGecDurum(a)
+    try {
+      localStorage.setItem('amfi_oto_gec', a ? '1' : '0')
+    } catch {
+      /* önemsiz */
+    }
+  }
   const [devam, setDevam] = useState<{ akis: string; baslangic: string | null; metin: string } | null>(null)
   // Akış seçilmemişse bu şubede en son kalınan akış önerilir
   const [sonAkis, setSonAkis] = useState<{ akisId: string; ad: string; sira: number; toplam: number } | null>(null)
@@ -588,6 +605,9 @@ export default function Sahne() {
           <button className="ikincil-buton text-left" onClick={() => sesAyarla(!sesAcik)}>
             {sesAcik ? '🔊 Ses efektlerini kapat' : '🔇 Ses efektlerini aç'}
           </button>
+          <button className="ikincil-buton text-left" onClick={() => otoGecAyarla(!otoGec)} title="Soruda çevrimiçi herkes cevap verince süre dolmasını bekleme">
+            {otoGec ? '⏭ Herkes cevaplayınca geç: açık' : '⏭ Herkes cevaplayınca geç: kapalı'}
+          </button>
           <button className="ikincil-buton text-left" onClick={() => muzikAyarla(!muzikAcik)}>
             {muzikAcik ? '🎵 Yarışma müziğini kapat' : '🎵 Yarışma müziğini aç'}
           </button>
@@ -625,6 +645,8 @@ export default function Sahne() {
           soruDurum={oturum.soru_durum}
           araclar={araclar}
           kod={kodGoster ? kod : null}
+          cevrimici={cevrimici}
+          otoGec={otoGec}
           oyunKilitli={oyunKilitli && zapootOyunu ? { ad: OYUNLAR[zapootOyunu].ad, emoji: OYUNLAR[zapootOyunu].emoji, ileri: aktifSira < adimlar.length - 1 ? ileri : undefined, geri: aktifSira > 0 ? geri : undefined } : undefined}
         />
       ) : aktif && (aktif.tur === 'fikir' || aktif.tur === 'oylama' || aktif.tur === 'video') ? (
@@ -1107,12 +1129,17 @@ function SoruSahnesi({
   araclar,
   kod,
   oyunKilitli,
+  cevrimici = 0,
+  otoGec = false,
 }: {
   oturumId: string
   adimId: string
   soruDurum: 'acik' | 'sonuc' | null
   araclar: React.ReactNode
   kod: string | null
+  /** Derse bağlı telefon sayısı (presence); herkes cevap verdiyse soru kendiliğinden kapanır */
+  cevrimici?: number
+  otoGec?: boolean
   /** Zapoot'ta perde oyunu seçiliyse: soru ekranı yerine yalnızca kontrol çubuğu çizilir (sorular telefonlardadır) */
   oyunKilitli?: { ad: string; emoji: string; ileri?: () => void; geri?: () => void }
 }) {
@@ -1195,6 +1222,15 @@ function SoruSahnesi({
   useEffect(() => {
     if (soruDurum === 'acik' && kalan === 0 && kapatildi.current !== adimId) sonucuGoster()
   }, [soruDurum, kalan, adimId, sonucuGoster])
+
+  // Çevrimiçi herkes cevap verdiyse süre dolmasını bekleme: 1,5 saniye sonra sonuç açılır
+  useEffect(() => {
+    if (!otoGec || soruDurum !== 'acik' || cevrimici < 1 || cevap < cevrimici) return
+    const t = setTimeout(() => {
+      if (kapatildi.current !== adimId) sonucuGoster()
+    }, 1500)
+    return () => clearTimeout(t)
+  }, [otoGec, soruDurum, cevrimici, cevap, adimId, sonucuGoster])
 
   const secenekler = durum?.secenekler ?? []
   const toplamCevap = sonuc && durum?.dagilim ? durum.dagilim.reduce((a, b) => a + b, 0) : cevap

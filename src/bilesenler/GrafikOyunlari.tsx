@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { OYUN_OLAYI, type OyunAnahtari } from '../lib/oyun'
 import { roketHesapla, type RoketDurumu } from '../lib/roket'
-import { arenaHesapla, ARENA_CANI, type ArenaDurumu } from '../lib/arena'
+import { arenaHesapla, type ArenaDurumu } from '../lib/arena'
 import { kuleHesapla, type KuleDurumu, type KuleTakimi } from '../lib/kule'
 import { kaleHesapla, type KaleDurumu } from '../lib/kale'
 import Gorsel, { adIndeksi, arkaPlan, gorselAdresi } from './Gorsel'
@@ -550,10 +550,10 @@ export function ArenaSahnesi({ d, kucult }: { d: ArenaDurumu; kucult: () => void
   const adBoy = n > 40 ? 'text-[10px] max-w-16' : 'text-sm max-w-24'
   const ayaktakiler = d.oyuncular.filter((o) => o.elendi === null)
   const dusenler = d.oyuncular.filter((o) => o.elendi !== null)
-  const kazananlar = d.bitti ? d.siralama.filter((o) => o.elendi === null).slice(0, 3) : []
+  const kazananlar = d.bitti ? d.kazananlar.slice(0, 3) : []
   return (
     <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
-      {d.bitti && <Konfeti />}
+      {d.bitti && !d.kimseKalmadi && kazananlar.length > 0 && <Konfeti />}
       <div className="flex items-center gap-4 flex-wrap">
         <h2 className="text-2xl sm:text-3xl font-display font-extrabold arena-baslik">⚔️ Son Kalan Arenası</h2>
         <span className="text-sm text-slate-300">
@@ -562,7 +562,7 @@ export function ArenaSahnesi({ d, kucult }: { d: ArenaDurumu; kucult: () => void
         <span className="text-sm">
           Ayakta <b className="text-emerald-300 tabular-nums">{d.ayakta}</b> / {n}
         </span>
-        <span className="text-xs text-slate-400">{ARENA_CANI} can: yanlış ya da cevapsız bir can götürür, canı biten arenadan düşer.</span>
+        <span className="text-xs text-slate-400">{d.can} can: yanlış ya da cevapsız bir can götürür, canı biten arenadan düşer.</span>
         <button className="ikincil-buton ml-auto !py-1.5 kucult-dugmesi" onClick={kucult}>
           Küçült
         </button>
@@ -581,7 +581,7 @@ export function ArenaSahnesi({ d, kucult }: { d: ArenaDurumu; kucult: () => void
               >
                 <div className={boy}><Gorsel ad={`kahraman-${adIndeksi(o.ad, 8)}.webp`} emoji={karakter(o.ad, ARENA_KARAKTERLERI)} className={n > 80 ? 'w-8 h-8' : n > 40 ? 'w-10 h-10' : n > 20 ? 'w-16 h-16' : 'w-20 h-20'} emojiClass={boy} /></div>
                 <div className={`${adBoy} font-bold truncate mx-auto`}>{o.ad}</div>
-                <div className="text-xs">{'❤️'.repeat(Math.max(0, o.kalan)) + '🖤'.repeat(ARENA_CANI - Math.max(0, o.kalan))}</div>
+                <div className="text-xs">{'❤️'.repeat(Math.max(0, o.kalan)) + '🖤'.repeat(d.can - Math.max(0, o.kalan))}</div>
               </li>
             ))}
           </ul>
@@ -597,14 +597,16 @@ export function ArenaSahnesi({ d, kucult }: { d: ArenaDurumu; kucult: () => void
         {d.bitti && (
           <div className="absolute inset-0 flex items-center justify-center bg-slate-950/60 backdrop-blur-[2px]">
             <div className="cam-panel rounded-[2rem] p-8 text-center space-y-2 girdi">
-              <p className="text-7xl">👑</p>
-              <p className="text-4xl font-display font-extrabold">Arenanın son kalanları</p>
+              <p className="text-7xl">{d.kimseKalmadi ? '💀' : kazananlar.length > 0 ? '👑' : '🏟️'}</p>
+              <p className="text-4xl font-display font-extrabold">{d.kimseKalmadi ? 'Arenada kimse kalamadı' : kazananlar.length > 0 ? 'Arenanın son kalanları' : 'Arena bitti: kazanan yok'}</p>
+              {d.kimseKalmadi && d.sonDusen && <p className="text-xl text-slate-200">Son düşen: {d.sonDusen.ad} ({d.sonDusen.dogru} doğru)</p>}
+              {!d.kimseKalmadi && kazananlar.length === 0 && <p className="text-slate-300 text-sm">Ayakta kalanlar soruların yarısını bilemedi.</p>}
               {kazananlar.map((o, i) => (
                 <p key={`${o.ad}-${i}`} className="text-2xl">
                   {['🥇', '🥈', '🥉'][i]} {o.ad} <span className="text-slate-400 text-base">({o.dogru} doğru)</span>
                 </p>
               ))}
-              {d.ayakta > 3 && <p className="text-slate-300 text-sm">… ve {d.ayakta - 3} kişi daha ayakta</p>}
+              {d.kazananlar.length > 3 && <p className="text-slate-300 text-sm">… ve {d.kazananlar.length - 3} kişi daha ayakta</p>}
             </div>
           </div>
         )}

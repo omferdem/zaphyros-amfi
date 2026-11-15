@@ -8,16 +8,40 @@ function sonuc(toplam: number, acilan: number, deger: (i: number) => 1 | 0 | -1)
   return Array.from({ length: toplam }, (_, i) => (i < acilan ? deger(i) : null))
 }
 
+/** Doğruları soru boyunca eşit yayılmış, verilen başarı oranında oyuncu. */
+function oranli(toplam: number, oran: number) {
+  return sonuc(toplam, toplam, (i) => (Math.floor((i + 1) * oran + 1e-9) > Math.floor(i * oran + 1e-9) ? 1 : 0))
+}
+const durumu = (toplam: number, oran: number) => zombiHesapla(sorular(toplam, toplam), [{ ad: 'X', sonuc: oranli(toplam, oran) }])!.oyuncular[0].durum
+
+describe('zombi sayısal hedefleri', () => {
+  it('15-30 soruda %40 bilen yakalanır, %60 bilen kurtulur, %80 bilen zirveye çıkar', () => {
+    for (const n of [15, 20, 30]) {
+      expect(durumu(n, 0.4)).toBe('yakalandi')
+      expect(durumu(n, 0.6)).toBe('canli')
+      expect(durumu(n, 0.8)).toBe('zirve')
+    }
+  })
+  it('üst üste 3 yanlış bir kat aşağı kaydırır', () => {
+    const d = zombiHesapla(sorular(20, 6), [{ ad: 'A', sonuc: [1, 1, 1, 1, 0, 0, ...Array(14).fill(null)] }])!
+    // 4 doğru = 2 kat; 2 yanlış kaydırmaz
+    expect(d.oyuncular[0].seviye).toBe(2)
+    const e = zombiHesapla(sorular(20, 7), [{ ad: 'A', sonuc: [1, 1, 1, 1, 0, 0, 0, ...Array(13).fill(null)] }])!
+    expect(e.oyuncular[0].seviye).toBe(1)
+  })
+})
+
 describe('zombi kaçışı', () => {
-  it('zirve soru sayısına göre 5-12 arasında', () => {
-    expect(zirveSeviyesi(20)).toBe(10)
-    expect(zirveSeviyesi(4)).toBe(5)
+  it('zirve soru sayısının yüzde kırkı, 3-12 arasında', () => {
+    expect(zirveSeviyesi(20)).toBe(8)
+    expect(zirveSeviyesi(10)).toBe(4)
+    expect(zirveSeviyesi(4)).toBe(3)
     expect(zirveSeviyesi(40)).toBe(12)
   })
   it('zombi sürüsü yavaş yavaş yükselir ve zirveye ulaşmaz', () => {
-    expect(zombiSeviyesi(0, 20, 10)).toBe(0)
-    expect(zombiSeviyesi(10, 20, 10)).toBe(3)
-    expect(zombiSeviyesi(20, 20, 10)).toBeLessThan(10)
+    expect(zombiSeviyesi(0, 20)).toBe(-2)
+    expect(zombiSeviyesi(6, 20)).toBe(0)
+    expect(zombiSeviyesi(20, 20)).toBeLessThan(zirveSeviyesi(20))
   })
   it('hep doğru bilen zirveye çıkar, hiç bilmeyen yakalanır', () => {
     const d = zombiHesapla(sorular(20, 20), [
@@ -43,7 +67,7 @@ describe('zombi kaçışı', () => {
     const d = zombiHesapla(sorular(20, 5), [{ ad: 'A', sonuc: sonuc(20, 5, () => 1) }])!
     expect(d.oynanan).toBe(5)
     expect(d.bitti).toBe(false)
-    expect(d.oyuncular[0].seviye).toBe(5)
+    expect(d.oyuncular[0].seviye).toBe(2)
     expect(d.kazandi).toBe(false)
   })
   it('soru yoksa durum yoktur; cevapsız öğrenci zombiye yakalanır', () => {

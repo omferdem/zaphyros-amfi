@@ -66,30 +66,46 @@ describe('ejderha savaşı', () => {
   })
 })
 
-import { arenaHesapla, ARENA_CANI } from './arena'
+import { arenaCani, arenaHesapla, ARENA_CANI } from './arena'
 import { kuleHedefi, kuleHesapla } from './kule'
 
 describe('son kalan arenası', () => {
-  it('iki yanlışta oyuncu düşer, hep doğru bilen ayakta kalır', () => {
+  it('can soru sayısına bağlıdır: 10 soruda 4 yanlışla elenilir', () => {
+    expect(arenaCani(10)).toBe(4)
+    expect(arenaCani(3)).toBe(ARENA_CANI)
     const d = arenaHesapla(sorular(10, 10), [
       { ad: 'Güçlü', sonuc: sonuc(10, 10, () => 1) },
       { ad: 'Zayıf', sonuc: sonuc(10, 10, () => 0) },
       { ad: 'Orta', sonuc: sonuc(10, 10, (i) => (i % 2 === 0 ? 1 : 0)) },
     ])!
-    expect(d.oyuncular[1].elendi).toBe(ARENA_CANI)
-    expect(d.oyuncular[2].elendi).toBe(4)
+    expect(d.oyuncular[1].elendi).toBe(4)
+    expect(d.oyuncular[2].elendi).toBe(8)
     expect(d.ayakta).toBe(1)
     expect(d.siralama[0].ad).toBe('Güçlü')
+    expect(d.kazananlar.map((k) => k.ad)).toEqual(['Güçlü'])
     expect(d.bitti).toBe(true)
   })
-  it('herkes aynı soruda elenirse kimse eksilmez; oyuncu ya da soru yoksa durum yok', () => {
+  it('herkes aynı soruda elenirse kimse diriltilmez, kazanan ilan edilmez, son düşen ilk sıraya yazılır', () => {
     const d = arenaHesapla(sorular(10, 10), [
-      { ad: 'A', sonuc: sonuc(10, 10, () => 0) },
-      { ad: 'B', sonuc: sonuc(10, 10, () => 0) },
+      { ad: 'A', sonuc: sonuc(10, 10, (i) => (i < 3 ? 1 : 0)) },
+      { ad: 'B', sonuc: sonuc(10, 10, (i) => (i >= 3 && i < 6 ? 1 : 0)) },
     ])!
-    expect(d.ayakta).toBe(2)
+    expect(d.ayakta).toBe(0)
+    expect(d.kimseKalmadi).toBe(true)
+    expect(d.kazananlar).toEqual([])
+    expect(d.sonDusen).not.toBeNull()
+    expect(d.siralama[0]).toBe(d.sonDusen)
     expect(d.bitti).toBe(true)
     expect(arenaHesapla([], [])).toBeNull()
+  })
+  it('doğru oranı yüzde elliden düşükse ayakta kalsa da kazanan sayılmaz', () => {
+    const d = arenaHesapla(sorular(10, 10), [{ ad: 'Tek', sonuc: sonuc(10, 10, (i) => (i < 4 ? 1 : 0)) }])!
+    expect(d.oyuncular[0].elendi).not.toBeNull()
+    const e = arenaHesapla(sorular(20, 20), [
+      { ad: 'Yaşayan', sonuc: sonuc(20, 20, (i) => (i % 5 === 0 ? 0 : i % 2 === 0 ? 1 : 0)) },
+      { ad: 'Öteki', sonuc: sonuc(20, 20, () => 0) },
+    ])!
+    expect(e.kazananlar.every((k) => k.dogru / e.oynanan >= 0.5)).toBe(true)
   })
 })
 

@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.54.0 (15 Kasım 2026)
+Faz 4 (kısmi): oyun kuralları ve sayısal hedefler. Veritabanı değişikliği yok.
+- **Zombi kaçışı:** zirve = soru × %40 (3-12); öğrenci her 2 doğruda 1 kat çıkar, üst üste 3 yanlışta 1 kat kayar; zombiler zeminin 2 kat altından başlar, her 3 soruda 1 kat çıkar. Testle doğrulandı: 15, 20 ve 30 soruda %40 bilen yakalanır, %60 bilen kurtulur, %80 bilen zirveye çıkar. Not: istekteki "yarıdan sonra 2 soruda 1 kat" bu hedefleri bozuyordu (20 soruda %60 bilen de yakalanıyordu), bu yüzden hız sabit 3 soruda 1 kat tutuldu.
+- **Son kalan arenası:** can soru sayısına bağlı (soru × %40, en az 2; 10 soruda 4 yanlışla elenilir). Herkes aynı soruda elenirse kimse diriltilmez, "Arenada kimse kalamadı" ve "Son düşen" yazar, kazanan ilan edilmez. Doğru oranı %50'nin altındaki oyuncu ayakta kalsa da kazanan sayılmaz.
+- **Orman'dan eve dönüş:** kural kütüphanesi ve testleri (patika = soru × %0,6, 3 kalp, 3'lü seride fener, kurt, kararan gökyüzü). Sahne ve oyun listesine eklenmesi henüz yok.
+- Yapılmayanlar: halat çekme yeni formülü, kule blok kuralı, kale hücre haritası, roket bitiş ve final, hocayla yarış animasyonları, merdiven kartının kendi soru seti ve jokerleri. Bunların çoğu takım başına soru bazında sayım gerektiriyor (yeni bir RPC).
+
 ## v0.53.0 (15 Kasım 2026)
 Faz 3: ortak oyun motoru (kısmi). Veritabanı değişikliği yok.
 - **`oyunMotoru.ts`:** enerji kuralları (başlangıç 50; doğru +15, yanlış −15, cevapsız −10, her 3'lü doğru seride +10; 0-100), kalabalık ayarı (karakter ölçeği küçülür, adlar ilk ada iner, 40'ın üstünde yalnızca lider ve son durumdakilerde ad görünür), prova oyuncu üretici. Birim testli.

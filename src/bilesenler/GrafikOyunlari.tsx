@@ -3,7 +3,8 @@ import { supabase } from '../lib/supabase'
 import { OYUN_OLAYI, type OyunAnahtari } from '../lib/oyun'
 import { roketHesapla, type RoketDurumu } from '../lib/roket'
 import { arenaHesapla, type ArenaDurumu } from '../lib/arena'
-import { kuleHesapla, type KuleDurumu, type KuleTakimi } from '../lib/kule'
+import { type KuleDurumu, type KuleTakimi } from '../lib/kule'
+import { kuleTurHesapla, type TakimOzeti } from '../lib/takimOyunlari'
 import { kaleHesapla, type KaleDurumu } from '../lib/kale'
 import Gorsel, { adIndeksi, arkaPlan, gorselAdresi } from './Gorsel'
 import { SILAHLAR, useRaund } from './Hareket'
@@ -634,16 +635,22 @@ async function kuleVerisi(oturum: string, anahtar: string | null): Promise<KuleV
   return { takimlar: takimlar.map((x) => ({ takim: x.takim, uye: x.uye, dogru: x.dogru })), oynanan: sorular.filter((s) => s.acildi).length, toplam: sorular.length }
 }
 
+async function kuleOzeti(oturum: string, anahtar: string | null): Promise<TakimOzeti | null> {
+  const { data } = await supabase.rpc('takim_soru_ozeti', { p_session: oturum, p_anahtar: anahtar })
+  const v = data as (TakimOzeti & { hata?: string }) | null
+  return v && !v.hata && v.takimlar ? v : null
+}
+
 export function KulePaneli({ oturum, anahtar, mod }: { oturum: string; anahtar: string | null; mod: 'perde' | 'kumanda' }) {
   return (
-    <OyunKabugu<KuleDurumu, KuleVeri>
+    <OyunKabugu<KuleDurumu, TakimOzeti>
       oyun="kule"
       baslik="🏗️ Kule yarışı"
       oturum={oturum}
       anahtar={anahtar}
       mod={mod}
-      getir={kuleVerisi}
-      hesapla={(v) => kuleHesapla(v.takimlar, v.oynanan, v.toplam)}
+      getir={kuleOzeti}
+      hesapla={(v) => kuleTurHesapla(v)}
       konum="bottom-28"
       ozet={(d) => {
         const en = [...d.satirlar].sort((a, b) => a.sira - b.sira)[0]

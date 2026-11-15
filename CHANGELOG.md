@@ -1,5 +1,15 @@
 # Sürüm Geçmişi
 
+## v0.54.1 (15 Kasım 2026)
+Faz 4'ün takım ve yarış kuralları.
+- **0039_takim_soru_ozeti.sql (SQL ile uygulandı):** perdedeki turun her sorusu için takım başına doğru ve yanlış sayısı (halat ve kule için).
+- **Halat:** konum P (−100..+100), her soruda ΔP = 35 × (G₂ − G₁), G = (doğru − 0,5 yanlış − 0,25 cevapsız) / üye; |P| ≥ 100 kazanır, sorular bitince halatı tutan kazanır. %80'e karşı %50 bilen 6-7 soruda kazanır (testli).
+- **Kule:** her soruda doğru oranına göre 0-3 blok (%0-24: 0, %25-49: 1, %50-74: 2, %75+: 3), takımın yarısından fazlası bilmezse rüzgâr üst bloğu düşürür, hedef soru × 1,5 blok.
+- **Roket:** bitiş soru × 0,7 doğru; yanlıştan sonraki ilk soruda motor arızası (ilerlemez, geri gitmez).
+- **Hocayla yarış:** hoca cevap vermediği soruyu kaybeder; sınıf puanı için doğru oranı en az %60.
+- Oyun açıklama metinleri yeni kurallara uyduruldu.
+- Yapılmayanlar: kale hücre haritası, orman sahnesi ve oyun listesine eklenmesi, roket finali ve hızlı doğru itkisi, hocayla yarış animasyonları, merdiven kartının kendi soru seti ve jokerleri.
+
 ## v0.54.0 (15 Kasım 2026)
 Faz 4 (kısmi): oyun kuralları ve sayısal hedefler. Veritabanı değişikliği yok.
 - **Zombi kaçışı:** zirve = soru × %40 (3-12); öğrenci her 2 doğruda 1 kat çıkar, üst üste 3 yanlışta 1 kat kayar; zombiler zeminin 2 kat altından başlar, her 3 soruda 1 kat çıkar. Testle doğrulandı: 15, 20 ve 30 soruda %40 bilen yakalanır, %60 bilen kurtulur, %80 bilen zirveye çıkar. Not: istekteki "yarıdan sonra 2 soruda 1 kat" bu hedefleri bozuyordu (20 soruda %60 bilen de yakalanıyordu), bu yüzden hız sabit 3 soruda 1 kat tutuldu.

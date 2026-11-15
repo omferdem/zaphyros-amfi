@@ -2,7 +2,8 @@ import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { OYUN_OLAYI } from '../lib/oyun'
 import Gorsel, { arkaPlan } from './Gorsel'
-import { TAKIM_SAYILARI, halatHesapla, takimBilgisi, type HalatTarafi, type TakimDurumu } from '../lib/takim'
+import { TAKIM_SAYILARI, takimBilgisi, type HalatDurumu, type TakimDurumu } from '../lib/takim'
+import { halatTurHesapla, type TakimOzeti } from '../lib/takimOyunlari'
 
 /** Takım yarışması: hoca takım sayısını seçer, takımların üye başına ortalama puanı canlı görünür. */
 export default function TakimPaneli({ oturum, anahtar, mod, dugme = true }: { oturum: string; anahtar: string | null; mod: 'perde' | 'kumanda'; dugme?: boolean }) {
@@ -11,7 +12,7 @@ export default function TakimPaneli({ oturum, anahtar, mod, dugme = true }: { ot
   const [hata, setHata] = useState<string | null>(null)
   // Halat çekme (yalnızca 2 takımla): halat, soru açıkken kıpırdamasın diye son "kapalı" andaki değerlerle çizilir
   const [halat, setHalat] = useState(false)
-  const [snap, setSnap] = useState<{ bir: HalatTarafi; iki: HalatTarafi } | null>(null)
+  const [snap, setSnap] = useState<HalatDurumu | null>(null)
 
   const yenile = useCallback(async () => {
     const [{ data }, { data: durum }] = await Promise.all([
@@ -22,9 +23,13 @@ export default function TakimPaneli({ oturum, anahtar, mod, dugme = true }: { ot
       const g = data as TakimDurumu
       setD(g)
       const soruAcik = (durum as { adim?: { tur?: string; soru_durum?: string | null } | null } | null)?.adim?.soru_durum === 'acik'
-      const bir = g.takimlar.find((x) => x.takim === 1)
-      const iki = g.takimlar.find((x) => x.takim === 2)
-      if (!soruAcik && g.sayi === 2 && bir && iki) setSnap({ bir: { dogru: bir.dogru, uye: bir.uye }, iki: { dogru: iki.dogru, uye: iki.uye } })
+      if (!soruAcik && g.sayi === 2) {
+        const { data: oz } = await supabase.rpc('takim_soru_ozeti', { p_session: oturum, p_anahtar: anahtar })
+        if (oz && !(oz as { hata?: string }).hata) {
+          const h = halatTurHesapla(oz as TakimOzeti)
+          if (h) setSnap({ konum: h.konum, kazanan: h.kazanan })
+        }
+      }
     }
   }, [oturum, anahtar])
 
@@ -73,7 +78,7 @@ export default function TakimPaneli({ oturum, anahtar, mod, dugme = true }: { ot
     </div>
   )
 
-  const halatGorunumu = halat && acik && d.sayi === 2 && snap && <Halat bir={snap.bir} iki={snap.iki} kucuk={!perde} />
+  const halatGorunumu = halat && acik && d.sayi === 2 && snap && <Halat h={snap} kucuk={!perde} />
 
   const puanTablosu = acik && (
     <ul className="cam-panel rounded-2xl p-3 space-y-1.5 min-w-52">
@@ -115,8 +120,7 @@ export default function TakimPaneli({ oturum, anahtar, mod, dugme = true }: { ot
 }
 
 /** İki takımın halat çekme görünümü: doğru cevaplar halatı kendi tarafına çeker; fark eşiği aşınca takım kazanır. */
-function Halat({ bir, iki, kucuk }: { bir: HalatTarafi; iki: HalatTarafi; kucuk: boolean }) {
-  const h = halatHesapla(bir, iki)
+function Halat({ h, kucuk }: { h: HalatDurumu; kucuk: boolean }) {
   const a = takimBilgisi(1)
   const b = takimBilgisi(2)
   // Düğüm: konum -1 (sol uç) ile +1 (sağ uç) arasında; kenarlara taşmasın diye %6 ile %94 arasına yerleşir

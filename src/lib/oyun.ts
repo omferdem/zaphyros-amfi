@@ -21,25 +21,25 @@ export const OYUNLAR: Record<OyunAnahtari, OyunBilgisi> = {
   halat: {
     ad: 'Halat çekme',
     emoji: '🪢',
-    nasil: 'Sınıf iki takıma ayrılır. Bir takımın doğru cevapları halatı kendi tarafına çeker; fark üç doğruya ulaşınca takım halatı çeker.',
+    nasil: 'Sınıf iki takıma ayrılır. Her soruda daha çok bilen takım halatı kendi tarafına çeker; halat ucuna ulaşan takım kazanır, sorular biterse halatı kendi tarafında tutan.',
     baslat: '2 takımlı takım modunu ve halat görünümünü açar.',
   },
   hoca: {
     ad: 'Hocayla yarış',
     emoji: '🥊',
-    nasil: 'Sınıf hocaya karşı oynar. Hoca her soruda cevabını gizlice verir; doğru bilen taraf puan alır. Skor perdede durur.',
+    nasil: 'Sınıf hocaya karşı oynar. Hoca her soruda cevabını gizlice verir; hoca doğru bilirse hoca, sınıfın en az %60\'ı doğru bilirse sınıf puan alır. Hoca cevap vermezse o soruyu kaybeder.',
     baslat: 'Hocayla yarış skorunu açar.',
   },
   arena: {
     ad: 'Son kalan arenası',
     emoji: '⚔️',
-    nasil: 'Bireysel eleme oyunu. Her öğrencinin 2 canı var; yanlış ya da cevapsız bir can götürür, canı bitenler arenadan düşer. Sonunda ayakta kalanlar kazanır.',
+    nasil: 'Bireysel eleme oyunu. Her öğrencinin canı soru sayısına bağlıdır (soruların %40\'ı kadar yanlış hakkı); canı bitenler arenadan düşer. Ayakta kalıp soruların yarısını bilenler kazanır.',
     baslat: 'Son kalan arenası sahnesini perdede açar.',
   },
   kule: {
     ad: 'Kule yarışı',
     emoji: '🏗️',
-    nasil: 'Sınıf 3 takıma ayrılır. Her doğru cevap takımın kulesine bir kat ekler; sıralama kişi başına doğruya göredir. Önce hedef yüksekliğe çıkan takım kazanır.',
+    nasil: 'Sınıf 3 takıma ayrılır. Her soruda takım, doğru oranına göre 0-3 blok ekler; takımın yarısından fazlası bilmezse rüzgâr üst bloğu düşürür. Önce hedef yüksekliğe çıkan takım kazanır.',
     baslat: '3 takımlı takım modunu ve kule sahnesini açar.',
   },
   kale: {
@@ -51,7 +51,7 @@ export const OYUNLAR: Record<OyunAnahtari, OyunBilgisi> = {
   roket: {
     ad: 'Roket yarışı',
     emoji: '🚀',
-    nasil: 'Her öğrenci perdede ilk adıyla bir roket olur. Doğru cevap roketi ileri iter; bitiş çizgisine ilk varanlar podyuma çıkar. Bireysel hız ve bilgi yarışıdır.',
+    nasil: 'Her öğrenci perdede ilk adıyla bir roket olur. Doğru cevap roketi ileri iter; yanlıştan sonra motor arızası yapar. Bitiş çizgisine ilk varanlar podyuma çıkar. Bireysel hız ve bilgi yarışıdır.',
     baslat: 'Roket yarışı sahnesini perdede açar.',
   },
   ejderha: {

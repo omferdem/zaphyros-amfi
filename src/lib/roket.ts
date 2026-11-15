@@ -10,6 +10,8 @@ export interface RoketOyuncusu {
   bitirdi: number | null
   /** Son oynanan sorudaki sonucu (1 doğru, 0 yanlış, -1 cevapsız); animasyonlar için */
   son: 1 | 0 | -1 | null
+  /** Motor arızası: önceki soruda yanlış yaptı, bu soruda ilerleyemez (duman çıkarır) */
+  ariza: boolean
 }
 
 export interface RoketDurumu {
@@ -25,7 +27,7 @@ export interface RoketDurumu {
 }
 
 export function roketHedefi(toplamSoru: number): number {
-  return Math.max(5, Math.min(15, Math.round(toplamSoru * 0.6)))
+  return Math.max(3, Math.round(toplamSoru * 0.7))
 }
 
 export function roketHesapla(sorular: ZombiSorusu[], oyuncular: ZombiOyuncusu[]): RoketDurumu | null {
@@ -36,13 +38,18 @@ export function roketHesapla(sorular: ZombiSorusu[], oyuncular: ZombiOyuncusu[])
   const liste: RoketOyuncusu[] = oyuncular.map((o) => {
     let ilerleme = 0
     let bitirdi: number | null = null
+    let ariza = false
     acik.forEach((idx, k) => {
       if (bitirdi !== null) return
-      if (o.sonuc[idx] === 1) ilerleme++
+      if (o.sonuc[idx] === 1) {
+        // Motor arızası: yanlıştan sonraki ilk soruda doğru bile ilerletmez, ama geri de gitmez
+        if (ariza) ariza = false
+        else ilerleme++
+      } else ariza = true
       if (ilerleme >= hedef) bitirdi = k + 1
     })
     const sonIdx = acik[acik.length - 1]
-    return { ad: o.ad, ilerleme, bitirdi, son: sonIdx === undefined ? null : (o.sonuc[sonIdx] ?? null) }
+    return { ad: o.ad, ilerleme, bitirdi, ariza, son: sonIdx === undefined ? null : (o.sonuc[sonIdx] ?? null) }
   })
   const siralama = [...liste].sort((a, b) => {
     if (a.bitirdi !== null || b.bitirdi !== null) {

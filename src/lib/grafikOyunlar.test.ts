@@ -11,10 +11,18 @@ function sonuc(toplam: number, acilan: number, deger: (i: number) => 1 | 0 | -1)
 }
 
 describe('roket yarışı', () => {
-  it('hedef soru sayısına göre 5-15 arası', () => {
-    expect(roketHedefi(20)).toBe(12)
-    expect(roketHedefi(4)).toBe(5)
-    expect(roketHedefi(60)).toBe(15)
+  it('bitiş soru sayısının yüzde yetmişi (en az 3)', () => {
+    expect(roketHedefi(20)).toBe(14)
+    expect(roketHedefi(10)).toBe(7)
+    expect(roketHedefi(2)).toBe(3)
+  })
+  it('yanlıştan sonraki ilk soruda roket motor arızası yapar: ilerlemez ama geri de gitmez', () => {
+    const d = roketHesapla(sorular(10, 4), [{ ad: 'A', sonuc: sonuc(10, 4, (i) => (i === 1 ? 0 : 1)) }])!
+    // doğru, yanlış, (arıza) doğru, doğru => 1 + 0 + 0 + 1 = 2 adım
+    expect(d.oyuncular[0].ilerleme).toBe(2)
+    expect(d.oyuncular[0].ariza).toBe(false)
+    const e = roketHesapla(sorular(10, 2), [{ ad: 'B', sonuc: sonuc(10, 2, (i) => (i === 1 ? 0 : 1)) }])!
+    expect(e.oyuncular[0].ariza).toBe(true)
   })
   it('ilk bitiren birinci olur, bitirmeyenler ilerlemeye göre sıralanır', () => {
     const d = roketHesapla(sorular(20, 20), [
@@ -23,7 +31,7 @@ describe('roket yarışı', () => {
       { ad: 'Orta', sonuc: sonuc(20, 20, (i) => (i < 14 ? 1 : 0)) },
     ])!
     expect(d.siralama.map((o) => o.ad)).toEqual(['Hızlı', 'Orta', 'Yavaş'])
-    expect(d.oyuncular[1].bitirdi).toBe(12)
+    expect(d.oyuncular[1].bitirdi).toBe(14)
     expect(d.bitirenler).toBe(2)
     expect(d.bitti).toBe(true)
   })

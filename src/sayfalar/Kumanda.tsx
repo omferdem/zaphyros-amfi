@@ -1,3 +1,4 @@
+import LazerYuzeyi from '../bilesenler/LazerYuzeyi'
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { DERSI_BITIR_SORUSU } from '../lib/veri'
@@ -214,6 +215,7 @@ export default function Kumanda() {
       {hata && <p className="text-sm text-rose-200 bg-rose-500/10 rounded-xl p-3">{hata}</p>}
 
       <BaglantiUyarisi />
+      {sekme === 'ders' && <LazerYuzeyi oturum={oturum} />}
       {sekme === 'ders' && <SinifPaneli d={sinif.d} komut={sinif.komut} hata={sinif.hata} mod="kumanda" />}
       {sekme === 'oyun' && (
         <>

@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.56.0 (15 Kasım 2026)
+Faz 6: tahta, lazer ve kalem. Veritabanı değişikliği yok.
+- **🖍️ Tahta:** perdede boş kara ya da beyaz tahta; kalem renkleri (beyaz, sarı, kırmızı, mavi, yeşil), 3 kalınlık, silgi, geri al, temizle. Fare, dokunmatik ve kalem (pointer events). Tarayıcıda çizim denendi.
+- **🔴 Lazer** (düğme ya da `L` tuşu): slaytın üstünde kırmızı parlayan nokta; basılı tutunca seçili kalemle çizer. Çizimler slayta bağlıdır (slayt değişip geri gelince görünür), ders bitince silinir; veritabanına yazılmaz, bellekte ve sekmenin sessionStorage'ında durur.
+- **Kumanda:** telefon kumandasının Ders sekmesinde dokunmatik yüzey; parmak hareketi perdedeki lazeri oynatır, basılı tutunca çizer (Broadcast, HTTP ile, saniyede en çok 20 mesaj). Kullanılınca perdede lazer kendiliğinden açılır.
+- Bilinen sınır: lazer kanalı oturum numarasıyla adlandırılır, kumanda anahtarı denetlenmez (kanalı bilen biri lazer oynatabilir; veri sızmaz). Çizim tüm ekrana normalleştirilir, perde farklı boyuta gelirse konumlar orantılı kalır.
+
 ## v0.55.0 (15 Kasım 2026)
 Faz 5: emoji tepkileri. Veritabanı değişikliği yok.
 - Öğrenci telefonunda ders sırasında 👍 😂 😮 🤔 👏 ❤️ şeridi (soru açıkken görünmez). 3 saniyede en çok 1 emoji (telefonda ve perdede ayrı ayrı uygulanır).

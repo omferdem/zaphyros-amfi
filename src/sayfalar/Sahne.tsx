@@ -16,6 +16,7 @@ import { OyunSihirbazi, type TurIstegi } from '../bilesenler/OyunSihirbazi'
 import { Final, Lobi, takimliMi } from '../bilesenler/LobiFinal'
 import { EnerjiSeridi, useOyuncuSonuclari } from '../bilesenler/EnerjiSeridi'
 import TepkiKatmani from '../bilesenler/TepkiKatmani'
+import Cizim, { type CizimModu } from '../bilesenler/Cizim'
 import { oyunuAc } from '../lib/oyunAc'
 import OyunProvasi from '../bilesenler/OyunProvasi'
 import Rehber from '../bilesenler/Rehber'
@@ -117,6 +118,7 @@ export default function Sahne() {
   const [oyunSecimi, setOyunSecimi] = useState(false)
   const [lobi, setLobi] = useState<{ ad: string; mod: OyunAnahtari | null; sayi: number; sureDk: number | null; ilk: string | null } | null>(null)
   const [finalAcik, setFinalAcik] = useState(false)
+  const [cizimModu, setCizimModu] = useState<CizimModu>('kapali')
   const [tepkiAcik, setTepkiDurum] = useState(() => {
     try {
       return localStorage.getItem('amfi_tepki') !== '0'
@@ -353,6 +355,8 @@ export default function Sahne() {
         setKodGoster((g) => !g)
       } else if (e.key === 'f' || e.key === 'F') {
         tamEkran()
+      } else if (e.key === 'l' || e.key === 'L') {
+        setCizimModu((m) => (m === 'lazer' ? 'kapali' : 'lazer'))
       }
     }
     window.addEventListener('keydown', tus)
@@ -622,6 +626,12 @@ export default function Sahne() {
           </button>
         </>
       )}
+      <button className="ikincil-buton" onClick={() => setCizimModu((m) => (m === 'tahta' ? 'kapali' : 'tahta'))} title="Boş tahta aç (beyaz ya da kara)">
+        🖍️ Tahta
+      </button>
+      <button className="ikincil-buton" onClick={() => setCizimModu((m) => (m === 'lazer' ? 'kapali' : 'lazer'))} title="Lazer: slaytta işaret et, basılı tutup çiz (L tuşu)">
+        🔴 Lazer
+      </button>
       {adimlar.length > 0 && (
         <>
           <button className="ikincil-buton" onClick={geri} disabled={aktifSira <= 0} aria-label="Önceki adım">
@@ -769,6 +779,7 @@ export default function Sahne() {
           <EnerjiSeridi oyuncular={seritSonuclari} />
         </div>
       )}
+      <Cizim oturum={oturum.id} anahtar={oturum.aktif_adim ?? 'yok'} mod={cizimModu} kapat={() => setCizimModu('kapali')} bitti={!!oturum.bitti} ac={() => setCizimModu('lazer')} />
       <TepkiKatmani oturum={oturum.id} etkin={tepkiAcik && !quizAcik && !lobi && !finalAcik} />
       {lobi && (
         <Lobi

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
  * Yeni bir soru oynandığında (sonucu açıldığında) "raund" sayacı artar ve birkaç saniye "aktif" kalır; sahneler bu sürede
  * hareket ve efekt çalar. Sahne ilk açıldığında (eski sorular) hareket başlatılmaz.
  */
-export function useRaund(oynanan: number): { raund: number; aktif: boolean } {
+export function useRaund(oynanan: number, sure = 3600): { raund: number; aktif: boolean } {
   const onceki = useRef(oynanan)
   const [raund, setRaund] = useState(0)
   const [aktif, setAktif] = useState(false)
@@ -13,7 +13,7 @@ export function useRaund(oynanan: number): { raund: number; aktif: boolean } {
       onceki.current = oynanan
       setRaund((r) => r + 1)
       setAktif(true)
-      const t = setTimeout(() => setAktif(false), 3600)
+      const t = setTimeout(() => setAktif(false), sure)
       return () => clearTimeout(t)
     }
     onceki.current = oynanan

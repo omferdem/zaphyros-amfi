@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { OYUN_OLAYI } from '../lib/oyun'
 import { KURTULMA_ORANI, zombiHesapla, type ZombiDurumu, type ZombiOyuncuDurumu, type ZombiOyuncusu, type ZombiSorusu } from '../lib/zombi'
@@ -6,6 +6,8 @@ import Konfeti from './Konfeti'
 import { useOyunSesi } from '../lib/ses'
 import Gorsel, { adIndeksi, arkaPlan } from './Gorsel'
 import { useRaund } from './Hareket'
+import { Sinema, merkez, rastgele } from './Sinema'
+import { sesCal } from '../lib/ses'
 
 const ANAHTAR = (oturum: string) => `amfi_zombi_${oturum}`
 const KARAKTERLER = ['🧑‍🎓', '👩‍🎓', '🧙', '🦸', '🥷', '🧑‍🚀', '👨‍🔬', '👩‍🎨', '🧝', '🕵️', '👩‍🚀', '🧑‍🍳', '🦹', '🤠', '👩‍🏫', '🧑‍🎤']
@@ -124,7 +126,41 @@ function Ozet({ d, kapat }: { d: ZombiDurumu; kapat: () => void }) {
 /** Tam ekran sahne: piramit, karakterler ve zombi sürüsü. */
 export function ZombiSahnesi({ d, kapat }: { d: ZombiDurumu; kapat: () => void }) {
   useOyunSesi(d.oynanan, d.bitti, d.kazandi)
-  const { aktif } = useRaund(d.oynanan)
+  const { aktif, raund } = useRaund(d.oynanan, 5000)
+  const sisRef = useRef<HTMLDivElement>(null)
+  const karakterRef = useRef<Map<number, HTMLDivElement>>(new Map())
+  // Yeni soruda: sürüden zombiler koşup yakalanan oyuncuların üstüne atlar; piramidi çıkanlar yıldızla kutlanır
+  useEffect(() => {
+    if (raund === 0) return
+    const s = new Sinema()
+    void (async () => {
+      await s.bekle(1100) // karakterler yeni katlarına yürüsün
+      if (s.durdu) return
+      const sis = merkez(sisRef.current)
+      const yakalananlar = d.oyuncular.map((o, i) => ({ o, i })).filter((x) => x.o.durum === 'yakalandi' && x.o.bittigiSoru === d.oynanan).slice(0, 12)
+      yakalananlar.forEach(({ i }, k) => {
+        const p = merkez(karakterRef.current.get(i))
+        if (!p) return
+        const gecik = k * 160
+        void s.ucur({ from: { x: (sis?.x ?? p.x) + rastgele(-180, 180), y: sis?.y ?? p.y + 60 }, to: p, resim: `zombi-${(k % 3) + 1}.webp`, emoji: '🧟', boyut: 64, sure: 700, gecik, yay: 50, olcek: 1.2 }).then(() => {
+          if (s.durdu) return
+          void s.patlama(p, { resim: 'efekt-yakalandi.webp', emoji: '💥', boyut: 90 })
+          s.sars(karakterRef.current.get(i), { siddet: 10, sure: 600 })
+          if (k === 0) sesCal('yanlis')
+        })
+      })
+      d.oyuncular
+        .map((o, i) => ({ o, i }))
+        .filter((x) => x.o.durum === 'zirve' && x.o.bittigiSoru === d.oynanan)
+        .slice(0, 10)
+        .forEach(({ i }, k) => {
+          const p = merkez(karakterRef.current.get(i))
+          if (p) void s.patlama({ x: p.x, y: p.y - 30 }, { resim: 'efekt-kurtuldu.webp', emoji: '✨', boyut: 96, gecik: k * 120 })
+        })
+    })()
+    return () => s.durdur()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [raund])
   const kat = d.zirve
   const birim = 100 / (kat + 2) // yüzde cinsinden bir katın yüksekliği (zemin ve bayrak payı dahil)
   // Katlardaki oyuncuları yan yana diz: aynı seviyedekiler eşit aralıkla dağılır
@@ -182,6 +218,7 @@ export function ZombiSahnesi({ d, kapat }: { d: ZombiDurumu; kapat: () => void }
         </div>
         {/* Zombi sürüsü: seviyeye kadar yeşil sis, kenarında zombiler */}
         <div
+          ref={sisRef}
           className="absolute inset-x-0 bottom-0 zombi-sis transition-[height] duration-1000 ease-out"
           style={{ height: `${Math.min(kat, d.zombiSeviyesi + 1) * birim}%` }}
         >
@@ -203,6 +240,11 @@ export function ZombiSahnesi({ d, kapat }: { d: ZombiDurumu; kapat: () => void }
             return (
               <div
                 key={`${o.ad}-${i}`}
+                ref={(el) => {
+                  const gi = d.oyuncular.indexOf(o)
+                  if (el) karakterRef.current.set(gi, el)
+                  else karakterRef.current.delete(gi)
+                }}
                 className={`absolute -translate-x-1/2 text-center leading-none transition-all duration-1000 ease-out ${zombi ? 'zombi-yakalanan' : o.durum === 'zirve' ? 'zombi-zirvede' : 'zombi-yuruyen'} ${aktif && !zombi && o.son === 1 ? 'zombi-zipla' : ''}`}
                 style={{ left: `${Math.max(4, Math.min(96, sol))}%`, bottom: `${altta}%` }}
                 title={o.ad}

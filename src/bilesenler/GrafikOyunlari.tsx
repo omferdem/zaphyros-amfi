@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { OYUN_OLAYI, type OyunAnahtari } from '../lib/oyun'
 import { roketHesapla, type RoketDurumu } from '../lib/roket'
@@ -7,11 +7,12 @@ import { kuleHesapla, type KuleDurumu, type KuleTakimi } from '../lib/kule'
 import { kaleHesapla, type KaleDurumu } from '../lib/kale'
 import Gorsel, { adIndeksi, arkaPlan, gorselAdresi } from './Gorsel'
 import { SILAHLAR, useRaund } from './Hareket'
+import { Sinema, merkez, rastgele } from './Sinema'
 import { takimBilgisi } from '../lib/takim'
 import { EJDERHA_ORANI, KAHRAMAN_CANI, ejderhaHesapla, type EjderhaDurumu } from '../lib/ejderha'
 import type { ZombiOyuncusu, ZombiSorusu } from '../lib/zombi'
 import Konfeti from './Konfeti'
-import { useOyunSesi } from '../lib/ses'
+import { sesCal, useOyunSesi } from '../lib/ses'
 
 type Veri = { sorular: ZombiSorusu[]; oyuncular: ZombiOyuncusu[] }
 
@@ -172,7 +173,38 @@ export function RoketSahnesi({ d, kucult }: { d: RoketDurumu; kucult: () => void
   const seritSayisi = Math.max(4, Math.min(14, n))
   const boy = n > 60 ? 'text-xl' : n > 30 ? 'text-2xl' : 'text-3xl'
   const podyum = d.siralama.slice(0, 3)
-  const { aktif: aktifRaund } = useRaund(d.oynanan)
+  const { aktif: aktifRaund, raund } = useRaund(d.oynanan, 4500)
+  const roketRef = useRef<Map<number, HTMLElement>>(new Map())
+  // Yeni soruda: doğru bilenler turbo ile fırlar; yanlış bilenlere gökten meteor çarpar, roket sarsılıp döner
+  useEffect(() => {
+    if (raund === 0) return
+    const s = new Sinema()
+    void (async () => {
+      const dogrular = d.oyuncular.map((o, i) => ({ o, i })).filter((x) => x.o.son === 1 && x.o.bitirdi === null).slice(0, 16)
+      dogrular.forEach(({ i }, k) => {
+        const p = merkez(roketRef.current.get(i))
+        if (p) void s.patlama(p, { resim: 'efekt-turbo.webp', emoji: '💨', boyut: 90, sure: 700, gecik: k * 40 })
+      })
+      if (dogrular.length > 0) sesCal('whoosh')
+      await s.bekle(900)
+      if (s.durdu) return
+      const yanlislar = d.oyuncular.map((o, i) => ({ o, i })).filter((x) => x.o.son !== null && x.o.son !== 1 && x.o.bitirdi === null).slice(0, 14)
+      yanlislar.forEach(({ i }, k) => {
+        const el = roketRef.current.get(i)
+        const p = merkez(el)
+        if (!p) return
+        const gecik = k * 140
+        void s.ucur({ from: { x: p.x + rastgele(160, 320), y: -60 }, to: p, emoji: '☄️', boyut: 64, sure: 750, gecik, yay: -30, don: 40, iz: '🔥', olcek: 1.1 }).then(() => {
+          if (s.durdu) return
+          void s.patlama(p, { resim: 'efekt-darbe.webp', emoji: '💥', boyut: 80 })
+          s.sars(el, { siddet: 16, sure: 700 })
+          if (k === 0) sesCal('yanlis')
+        })
+      })
+    })()
+    return () => s.durdur()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [raund])
   return (
     <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
       {d.bitti && <Konfeti />}
@@ -200,12 +232,15 @@ export function RoketSahnesi({ d, kucult }: { d: RoketDurumu; kucult: () => void
           return (
             <div
               key={`${o.ad}-${i}`}
-              className={`absolute -translate-y-1/2 transition-all duration-1000 ease-out flex items-center ${aktifRaund && o.son === 1 ? 'roket-hizlan' : aktifRaund && o.son !== null && o.son !== 1 && !bitti ? 'roket-sarsil' : ''}`}
+              ref={(el) => {
+                if (el) roketRef.current.set(i, el)
+                else roketRef.current.delete(i)
+              }}
+              className={`absolute -translate-y-1/2 transition-all duration-1000 ease-out flex items-center ${aktifRaund && o.son === 1 ? 'roket-hizlan' : ''}`}
               style={{ left: `${4 + oran * 84}%`, top: `${8 + (serit / seritSayisi) * 84 + 4}%` }}
               title={`${o.ad}: ${o.ilerleme} doğru`}
             >
               <span className="roket-iz" style={{ width: `${Math.max(1, oran * 14)}vw` }} aria-hidden />
-              {aktifRaund && o.son === 1 && <Gorsel ad="efekt-turbo.webp" emoji="" className="roket-turbo absolute -left-10 top-1/2 -translate-y-1/2 w-20 h-20 pointer-events-none" />}
               <span className={`inline-block ${bitti ? 'roket-varti' : 'roket-ucus'}`}>
                 <span className="inline-block" style={{ transform: 'rotate(90deg)' }}>
                   <Gorsel ad={`roket-${adIndeksi(o.ad, 6)}.webp`} emoji={karakter(o.ad, ROKETLER)} className={n > 60 ? 'w-8 h-8' : n > 30 ? 'w-11 h-11' : 'w-14 h-14'} emojiClass={`${boy} inline-block`} />
@@ -281,47 +316,97 @@ export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => 
   const adBoy = n > 40 ? 'text-[10px] max-w-16' : 'text-sm max-w-24'
   const sonHasar = d.hasarlar[d.hasarlar.length - 1] ?? 0
   const oran = d.can / d.enCok
-  const { raund, aktif } = useRaund(d.oynanan)
+  const { raund } = useRaund(d.oynanan, 9000)
   const ejderhaRef = useRef<HTMLDivElement>(null)
   const kahramanRef = useRef<Map<number, HTMLLIElement>>(new Map())
-  const [ucanlar, setUcanlar] = useState<{ i: number; x: number; y: number; dx: number; dy: number; gecik: number }[]>([])
-  const kaybedenVar = d.kahramanlar.some((h) => h.dustu === null && h.son !== null && h.son !== 1) || d.kahramanlar.some((h) => h.dustu === d.oynanan)
-  // Yeni raundda doğru bilen kahramanlar ejderhaya doğru koşar: her birinin ejderhaya uzaklığı ölçülüp animasyona verilir
-  useLayoutEffect(() => {
-    if (raund === 0 || !ejderhaRef.current) return
-    const e = ejderhaRef.current.getBoundingClientRect()
-    const ex = e.left + e.width / 2
-    const ey = e.top + e.height * 0.62
-    const liste: { i: number; x: number; y: number; dx: number; dy: number; gecik: number }[] = []
-    d.kahramanlar.forEach((h, i) => {
-      const li = kahramanRef.current.get(i)
-      if (!li || h.son !== 1 || h.dustu !== null || liste.length >= 40) return
-      const r = li.getBoundingClientRect()
-      if (r.bottom < 0 || r.top > window.innerHeight) return
-      const x = r.left + r.width / 2
-      const y = r.top + r.height / 2
-      liste.push({ i, x, y, dx: Math.round(ex - x + (Math.random() - 0.5) * 120), dy: Math.round(ey - y + (Math.random() - 0.5) * 60), gecik: Math.round(Math.random() * 800) })
-    })
-    setUcanlar(liste)
+
+  // Her yeni soruda bir sahne oynar: doğru bilenler silahlarıyla ejderhaya koşup vurur, ejderha kükrer ve ağzından ateş
+  // topları fırlatır; yanlış bilenler vurulup devrilir. Sıra: saldırı, hasar, kükreme, ateş, devrilme.
+  useEffect(() => {
+    if (raund === 0) return
+    const s = new Sinema()
+    const soluk: HTMLElement[] = []
+    void (async () => {
+      const e = ejderhaRef.current
+      if (!e) return
+      const r = e.getBoundingClientRect()
+      const govde = { x: r.left + r.width * 0.52, y: r.top + r.height * 0.55 }
+      const agiz = { x: r.left + r.width * 0.13, y: r.top + r.height * 0.43 }
+      const gorunen = (i: number) => {
+        const li = kahramanRef.current.get(i)
+        const p = merkez(li)
+        return li && p && p.y > 0 && p.y < window.innerHeight ? { li, p } : null
+      }
+      const saldirganlar = d.kahramanlar
+        .map((h, i) => ({ h, i, g: gorunen(i) }))
+        .filter((x) => x.h.son === 1 && x.h.dustu === null && x.g)
+        .slice(0, 36)
+      const kayiplar = d.kahramanlar
+        .map((h, i) => ({ h, i, g: gorunen(i) }))
+        .filter((x) => x.h.son !== null && x.h.son !== 1 && (x.h.dustu === null || x.h.dustu === d.oynanan) && x.g)
+        .slice(0, 24)
+
+      // 1) Saldırı: doğru bilen kahraman koşup ejderhaya vurur, sonra yerine döner
+      saldirganlar.forEach(({ h, g }, k) => {
+        const li = g!.li
+        li.style.opacity = '0.15'
+        soluk.push(li)
+        const hedef = { x: govde.x + rastgele(-60, 60), y: govde.y + rastgele(-40, 50) }
+        const gecik = k * 60 + rastgele(0, 300)
+        const resim = `kahraman-${adIndeksi(h.ad, 8)}.webp`
+        void s
+          .ucur({ from: g!.p, to: hedef, resim, emoji: karakter(h.ad, KAHRAMANLAR), boyut: 62, sure: 1000, gecik, yay: 110, don: 16, iz: '✨' })
+          .then(async () => {
+            if (s.durdu) return
+            void s.patlama(hedef, { resim: 'efekt-darbe.webp', emoji: '💥', boyut: 84, sure: 420 })
+            s.sars(e, { siddet: 6, sure: 300 })
+            if (k % 4 === 0) sesCal('tik')
+            await s.ucur({ from: hedef, to: g!.p, resim, emoji: karakter(h.ad, KAHRAMANLAR), boyut: 62, sure: 700, yay: 50, don: -10 })
+            li.style.opacity = ''
+          })
+      })
+      await s.bekle(1000 + saldirganlar.length * 60 + 450)
+      if (s.durdu) return
+
+      // 2) Hasar
+      if (sonHasar > 0) {
+        void s.yazi({ x: govde.x, y: r.top + r.height * 0.22 }, `−${sonHasar}`, { boyut: 76, sure: 1700 })
+        sesCal('dogru')
+      }
+      await s.bekle(900)
+      if (s.durdu || d.kazandi) return
+
+      // 3) Kükreme ve ateş: ejderha ağzından ateş topları fırlatır, yanlış bilenleri vurur
+      if (kayiplar.length > 0) {
+        s.nabiz(e, { olcek: 1.16, aci: -4, sure: 900 })
+        sesCal('whoosh')
+        await s.bekle(650)
+        if (s.durdu) return
+        kayiplar.forEach(({ h, g }, k) => {
+          const gecik = k * 130
+          void s.patlama(agiz, { resim: 'efekt-ates.webp', emoji: '🔥', boyut: 70, sure: 380, gecik })
+          void s
+            .ucur({ from: agiz, to: g!.p, resim: 'efekt-ates.webp', emoji: '🔥', boyut: 74, sure: 720, gecik, yay: 30, iz: '🔥', olcek: 1.3 })
+            .then(() => {
+              if (s.durdu) return
+              void s.patlama(g!.p, { resim: 'efekt-darbe.webp', emoji: '💥', boyut: 86 })
+              s.devril(g!.li, { kalk: h.dustu === null })
+              void s.yazi({ x: g!.p.x, y: g!.p.y - 24 }, '−1 ❤', { boyut: 26, renk: '#fda4af', sure: 1300 })
+              if (k === 0) sesCal('yanlis')
+            })
+        })
+      }
+    })()
+    return () => {
+      s.durdur()
+      for (const li of soluk) li.style.opacity = ''
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [raund])
+
   return (
     <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
       {d.bitti && d.kazandi && <Konfeti />}
-      {aktif &&
-        ucanlar.map((u) => {
-          const h = d.kahramanlar[u.i]
-          return (
-            <div
-              key={`u-${raund}-${u.i}`}
-              className="ej-ucus fixed z-50 pointer-events-none"
-              style={{ left: u.x - 32, top: u.y - 32, width: 64, height: 64, ['--dx' as string]: `${u.dx}px`, ['--dy' as string]: `${u.dy}px`, animationDelay: `${u.gecik}ms` }}
-            >
-              <Gorsel ad={`kahraman-${adIndeksi(h.ad, 8)}.webp`} emoji={karakter(h.ad, KAHRAMANLAR)} className="w-16 h-16" emojiClass="text-5xl" />
-              <span className="absolute -right-2 -top-1 text-2xl">{SILAHLAR[adIndeksi(h.ad, SILAHLAR.length) - 1]}</span>
-            </div>
-          )
-        })}
       <div className="flex items-center gap-4 flex-wrap">
         <h2 className="text-2xl sm:text-3xl font-display font-extrabold ejderha-baslik">🐉 Ejderha Savaşı</h2>
         <span className="text-sm text-slate-300">
@@ -337,13 +422,7 @@ export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => 
       </div>
       <div className="relative flex-1 min-h-0 rounded-3xl overflow-hidden ejderha-magara border border-white/10 flex flex-col" style={arkaPlan('arka-ejderha.webp')}>
         <div className="relative flex flex-col items-center pt-4 pb-2 gap-2">
-          <div ref={ejderhaRef} className={`relative leading-none ${d.kazandi ? 'ejderha-oldu' : 'ejderha-nefes'} ${aktif && sonHasar > 0 ? 'ej-vuruldu' : ''}`} key={`ej-${raund}`}>
-            {aktif && sonHasar > 0 && (
-              <span className="ej-sayi absolute left-1/2 top-[20%] -translate-x-1/2 text-5xl sm:text-7xl font-display font-extrabold text-rose-200 pointer-events-none z-10" style={{ textShadow: '0 0 18px #ef4444, 0 3px 0 #7f1d1d' }}>
-                −{sonHasar}
-              </span>
-            )}
-            {aktif && sonHasar > 0 && <Gorsel ad="efekt-darbe.webp" emoji="💥" className="ej-patla absolute left-1/2 top-[25%] -translate-x-1/2 w-40 h-40 pointer-events-none z-10" emojiClass="ej-patla absolute left-1/2 top-[25%] -translate-x-1/2 text-8xl pointer-events-none z-10" />}
+          <div ref={ejderhaRef} className={`relative leading-none ${d.kazandi ? 'ejderha-oldu' : 'ejderha-nefes'}`}>
             <Gorsel
               ad={d.kazandi ? 'ejderha-oldu.webp' : oran < 0.4 ? 'ejderha-yaralandi.webp' : 'ejderha.webp'}
               emoji={d.kazandi ? '💀' : '🐉'}
@@ -351,8 +430,6 @@ export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => 
               emojiClass="text-[11rem] leading-none"
             />
           </div>
-          {aktif && kaybedenVar && !d.kazandi && <Gorsel ad="efekt-ates.webp" emoji="🔥" className="ej-ates-yolu absolute left-1/2 top-[55%] -translate-x-1/2 w-32 h-32 pointer-events-none z-10" emojiClass="ej-ates-yolu absolute left-1/2 top-[55%] -translate-x-1/2 text-8xl pointer-events-none z-10" />}
-          {!d.kazandi && d.oynanan > 0 && <Gorsel ad="efekt-ates.webp" emoji="🔥" className="absolute left-[18%] top-[30%] w-24 h-24 ejderha-ates" emojiClass="absolute right-[26%] top-16 text-7xl ejderha-ates" />}
           <div className="w-[min(40rem,86%)] space-y-1">
             <div className="h-6 rounded-full bg-black/50 border border-white/15 overflow-hidden">
               <div className="h-full bg-linear-to-r from-rose-600 via-orange-500 to-amber-300 transition-[width] duration-1000 ease-out" style={{ width: `${Math.max(0, oran) * 100}%` }} />
@@ -373,10 +450,9 @@ export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => 
                     if (el) kahramanRef.current.set(i, el)
                     else kahramanRef.current.delete(i)
                   }}
-                  className={`relative text-center leading-none transition-opacity duration-700 ${dustu ? 'opacity-40 grayscale' : aktif && h.son === 1 ? 'ej-gitti' : aktif && h.son !== null && h.son !== 1 ? 'ej-yedi' : 'ejderha-kahraman'}`}
+                  className={`relative text-center leading-none transition-opacity duration-700 ${dustu ? 'opacity-40 grayscale' : 'ejderha-kahraman'}`}
                 >
                   {!dustu && <span className="absolute -right-1 top-0 text-base sm:text-xl pointer-events-none" aria-hidden>{SILAHLAR[adIndeksi(h.ad, SILAHLAR.length) - 1]}</span>}
-                  {aktif && !dustu && h.son !== null && h.son !== 1 && <span className="ej-yedi-patla absolute inset-0 flex items-center justify-center text-3xl pointer-events-none" aria-hidden>🔥</span>}
                   <div className={boy}>{dustu ? '💤' : <Gorsel ad={`kahraman-${adIndeksi(h.ad, 8)}.webp`} emoji={karakter(h.ad, KAHRAMANLAR)} className={n > 80 ? 'w-8 h-8' : n > 40 ? 'w-12 h-12' : n > 20 ? 'w-16 h-16' : 'w-20 h-20'} emojiClass={boy} />}</div>
                   <div className={`${adBoy} font-bold truncate mx-auto`}>{h.ad}</div>
                   <div className={n > 40 ? "text-[9px] tracking-tighter" : "text-xs tracking-tighter"}>{'❤️'.repeat(Math.max(0, h.kalan)) + '🖤'.repeat(KAHRAMAN_CANI - Math.max(0, h.kalan))}</div>
@@ -425,7 +501,50 @@ export function ArenaPaneli({ oturum, anahtar, mod }: { oturum: string; anahtar:
 
 export function ArenaSahnesi({ d, kucult }: { d: ArenaDurumu; kucult: () => void }) {
   useOyunSesi(d.oynanan, d.bitti, true)
-  const { aktif } = useRaund(d.oynanan)
+  const { raund } = useRaund(d.oynanan, 6000)
+  const savasciRef = useRef<Map<number, HTMLLIElement>>(new Map())
+  // Yeni soruda: doğru bilenler zıplayıp zafer pozu verir; yanlış bilenlerin üstüne dev çekiç düşer, canı bitenler arenadan fırlar
+  useEffect(() => {
+    if (raund === 0) return
+    const s = new Sinema()
+    void (async () => {
+      const gor = (i: number) => {
+        const li = savasciRef.current.get(i)
+        const p = merkez(li)
+        return li && p && p.y > 0 && p.y < window.innerHeight ? { li, p } : null
+      }
+      d.oyuncular
+        .map((o, i) => ({ o, i, g: gor(i) }))
+        .filter((x) => x.o.son === 1 && x.o.elendi === null && x.g)
+        .slice(0, 18)
+        .forEach(({ g }, k) => s.nabiz(g!.li, { olcek: 1.3, aci: 8, sure: 700, gecik: k * 30 }))
+      const kayiplar = d.oyuncular
+        .map((o, i) => ({ o, i, g: gor(i) }))
+        .filter((x) => x.o.son !== null && x.o.son !== 1 && (x.o.elendi === null || x.o.elendi === d.oynanan) && x.g)
+        .slice(0, 16)
+      kayiplar.forEach(({ o, g }, k) => {
+        const gecik = k * 130
+        void s.ucur({ from: { x: g!.p.x, y: -90 }, to: g!.p, emoji: '🔨', boyut: 78, sure: 650, gecik, yay: 0, don: 25, olcek: 1.2 }).then(async () => {
+          if (s.durdu) return
+          void s.patlama(g!.p, { resim: 'efekt-darbe.webp', emoji: '💥', boyut: 90 })
+          s.sars(g!.li, { siddet: 12, sure: 600 })
+          if (k === 0) sesCal('yanlis')
+          if (o.elendi === d.oynanan) {
+            // Canı bitti: arenadan lava doğru fırlar
+            await s.bekle(350)
+            if (s.durdu) return
+            g!.li.style.visibility = 'hidden'
+            await s.ucur({ from: g!.p, to: { x: g!.p.x + rastgele(-120, 120), y: window.innerHeight + 40 }, resim: `kahraman-${adIndeksi(o.ad, 8)}.webp`, emoji: karakter(o.ad, ARENA_KARAKTERLERI), boyut: 60, sure: 1100, yay: 180, don: 540 })
+            void s.patlama({ x: g!.p.x, y: window.innerHeight - 40 }, { emoji: '🔥', boyut: 70 })
+          } else {
+            s.devril(g!.li, { kalk: true })
+          }
+        })
+      })
+    })()
+    return () => s.durdur()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [raund])
   const n = d.oyuncular.length
   const boy = n > 80 ? 'text-2xl' : n > 40 ? 'text-3xl' : n > 20 ? 'text-5xl' : 'text-6xl'
   const adBoy = n > 40 ? 'text-[10px] max-w-16' : 'text-sm max-w-24'
@@ -452,8 +571,14 @@ export function ArenaSahnesi({ d, kucult }: { d: ArenaDurumu; kucult: () => void
         <div className="flex-1 min-h-0 overflow-y-auto p-4">
           <ul className="flex flex-wrap justify-center gap-x-5 gap-y-4 arena-platform rounded-[2rem] p-5 mx-auto max-w-6xl">
             {ayaktakiler.map((o, i) => (
-              <li key={`${o.ad}-${i}`} className={`relative text-center leading-none ${aktif && o.son === 1 ? 'arena-vur' : aktif && o.son !== null && o.son !== 1 ? 'arena-darbe' : 'arena-savasci'}`}>
-                {aktif && o.son !== null && o.son !== 1 && <Gorsel ad="efekt-darbe.webp" emoji="💥" className="ej-patla absolute inset-0 m-auto w-16 h-16 pointer-events-none z-10" emojiClass="ej-patla absolute inset-0 flex items-center justify-center text-4xl pointer-events-none z-10" />}
+              <li
+                key={`${o.ad}-${i}`}
+                ref={(el) => {
+                  if (el) savasciRef.current.set(i, el)
+                  else savasciRef.current.delete(i)
+                }}
+                className="relative text-center leading-none arena-savasci"
+              >
                 <div className={boy}><Gorsel ad={`kahraman-${adIndeksi(o.ad, 8)}.webp`} emoji={karakter(o.ad, ARENA_KARAKTERLERI)} className={n > 80 ? 'w-8 h-8' : n > 40 ? 'w-10 h-10' : n > 20 ? 'w-16 h-16' : 'w-20 h-20'} emojiClass={boy} /></div>
                 <div className={`${adBoy} font-bold truncate mx-auto`}>{o.ad}</div>
                 <div className="text-xs">{'❤️'.repeat(Math.max(0, o.kalan)) + '🖤'.repeat(ARENA_CANI - Math.max(0, o.kalan))}</div>
@@ -622,6 +747,40 @@ function kaleKonumu(sira: number, toplam: number): { x: number; y: number } {
 
 export function KaleSahnesi({ d, kucult }: { d: KaleDurumu; kucult: () => void }) {
   useOyunSesi(d.oynanan, d.bitti, true)
+  const { raund } = useRaund(d.oynanan, 5000)
+  const kaleRef = useRef<Map<number, HTMLElement>>(new Map())
+  const onceki = useRef<Map<number, number>>(new Map())
+  // İlerleyen her takım karşı kaleye mancınık taşları fırlatır; taş düşünce hedef kale sarsılır ve yanar
+  useEffect(() => {
+    const yeni = new Map(d.satirlar.map((x) => [x.takim, x.ilerleme]))
+    const eski = onceki.current
+    onceki.current = yeni
+    if (raund === 0) return
+    const s = new Sinema()
+    void (async () => {
+      let sira = 0
+      for (const x of d.satirlar) {
+        const fark = x.ilerleme - (eski.get(x.takim) ?? 0)
+        if (fark < 0.4) continue
+        const a = merkez(kaleRef.current.get(x.takim))
+        const b = merkez(kaleRef.current.get(x.hedefTakim))
+        if (!a || !b) continue
+        const atis = Math.min(3, Math.ceil(fark))
+        for (let k = 0; k < atis; k++) {
+          const gecik = sira * 220 + k * 260
+          void s.ucur({ from: a, to: { x: b.x + rastgele(-14, 14), y: b.y + rastgele(-10, 10) }, emoji: '🪨', boyut: 46, sure: 1000, gecik, yay: 150, don: 360, iz: '💨', olcek: 1.2 }).then(() => {
+            if (s.durdu) return
+            void s.patlama(b, { resim: 'efekt-darbe.webp', emoji: '💥', boyut: 84 })
+            s.sars(kaleRef.current.get(x.hedefTakim), { siddet: 8, sure: 500 })
+            if (k === 0 && sira < 2) sesCal('tik')
+          })
+        }
+        sira++
+      }
+    })()
+    return () => s.durdur()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [raund])
   const satirlar = [...d.satirlar].sort((a, b) => a.takim - b.takim)
   const konum = new Map(satirlar.map((s, i) => [s.takim, kaleKonumu(i, satirlar.length)]))
   const KALE_YARICAPI = 7
@@ -698,7 +857,15 @@ export function KaleSahnesi({ d, kucult }: { d: KaleDurumu; kucult: () => void }
           const dustu = d.dusen.includes(s.takim)
           const lider = s.sira === 1 && s.blok > 0
           return (
-            <div key={`kale-${s.takim}`} className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center" style={{ left: `${p.x}%`, top: `${p.y}%` }}>
+            <div
+              key={`kale-${s.takim}`}
+              ref={(el) => {
+                if (el) kaleRef.current.set(s.takim, el)
+                else kaleRef.current.delete(s.takim)
+              }}
+              className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center"
+              style={{ left: `${p.x}%`, top: `${p.y}%` }}
+            >
               {lider && !d.bitti && <div className="text-2xl kule-tac -mb-1" aria-hidden>👑</div>}
               <div className={`relative ${dustu ? 'grayscale opacity-70' : ''}`}>
                 <Gorsel ad={`takim-kalkan-${s.takim}.webp`} emoji={b.emoji} className="w-16 h-16 sm:w-20 sm:h-20" alt={b.ad} />

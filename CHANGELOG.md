@@ -1,5 +1,14 @@
 # Sürüm Geçmişi
 
+## v0.49.0 (15 Kasım 2026)
+Oyunlarda akan sahneler (sinema motoru). Veritabanı değişikliği yok.
+- **Yeni sinema motoru** (`Sinema.ts`): ekranın üstünde yay çizerek uçan nesneler (iz bırakır), patlamalar, yüzen sayılar, sarsılma, devrilme. Her yeni soruda bir sahne baştan sona oynar.
+- **Ejderha savaşı:** doğru bilen kahramanlar silahlarıyla ejderhaya koşup vurur (patlama, sarsılma), "−7" hasar yazısı çıkar, kahramanlar yerine döner; ejderha kükrer ve **ağzından ateş topları fırlatır**; ateş topları yanlış bilen kahramanın üstüne yay çizerek gider, patlar, kahraman geriye devrilir ve kalkar ("−1 ❤"); canı bitenler yerde kalır.
+- **Roket yarışı:** doğru bilenler turbo patlamasıyla fırlar; yanlış bilenlerin üstüne gökten ateş izli meteor düşer, roket sarsılır.
+- **Son kalan arenası:** doğru bilenler zıplar; yanlış bilenin üstüne dev çekiç düşer, devrilir; canı biten arenadan lavın içine fırlatılır.
+- **Zombi kaçışı:** yakalanan oyuncunun üstüne sürüden zombiler atlar (yakalama patlaması); zirveye çıkanlar parıltıyla kutlanır.
+- **Kale kuşatması:** ilerleyen her takım karşı kaleye mancınık taşları atar; taş düşünce hedef kale sarsılır ve patlama çıkar.
+
 ## v0.48.0 (15 Kasım 2026)
 Hoca paneli yeni tasarım (zapedu2). Veritabanı değişikliği yok.
 - **Derslerim:** şubeler artık ders kartının içinde ayrı kutular (şube adı ve öğrenci sayısı üstte, altında tam genişlik "▶ Devam" ya da "▶ Başlat" düğmesi). Devam parlak, başlat turkuaz çerçeveli.

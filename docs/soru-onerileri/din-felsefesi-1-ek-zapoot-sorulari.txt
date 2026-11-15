@@ -1,0 +1,859 @@
+#QUESTION:"Din felsefesi" terimi felsefe literatürüne hangi düşünürün 1832 tarihli eseriyle girmiştir?
+#CORRECT:Hegel
+#WRONG:Kant
+#WRONG:Descartes
+#WRONG:Aquino'lu Thomas
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din felsefesinin tarihsel gelişimi
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Din felsefesinin var olabilmesi için hangi iki alanın belli bir seviyeye ulaşmış olması gerekir?
+#CORRECT:Hem dinî düşüncenin hem de felsefî çabaların
+#WRONG:Yalnızca deneysel bilimlerin
+#WRONG:Siyaset kuramı ile hukukun
+#WRONG:Sanat tarihi ile mimarinin
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din felsefesinin tarihsel gelişimi
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Vahiy dinlerinin ortaya çıkışı felsefe açısından ne gibi bir sonuç doğurmuştur?
+#CORRECT:Ciddi felsefî problemler ortaya çıkmıştır
+#WRONG:Felsefî düşünce tamamen sona ermiştir
+#WRONG:Felsefe yalnızca Yunanca yazılır hale gelmiştir
+#WRONG:Din ile felsefe aynı disiplin sayılmaya başlanmıştır
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din felsefesinin tarihsel gelişimi
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Aşağıdakilerden hangisi din-felsefe ilişkisini derinlemesine ele alan düşünürler arasında sayılmıştır?
+#CORRECT:İbn Rüşd
+#WRONG:Protagoras
+#WRONG:Demokritos
+#WRONG:Epikuros
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din felsefesinin tarihsel gelişimi
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Dinin hakikatini değerlendirmeyi kendine görev edinmeyip yalnızca tasvir ve açıklamayla yetinmesi gereken alanlar hangileridir?
+#CORRECT:Din bilimleri
+#WRONG:Kelâm ile din felsefesi
+#WRONG:Ahlâk felsefesi
+#WRONG:Metafizik
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din felsefesi ve din bilimleri
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Din felsefesini inceleyen bir filozof için ontolojik delil bakımından asıl önemli olan nedir?
+#CORRECT:Delilin iddiasının doğruluğu
+#WRONG:Delilin hangi düşünür tarafından ileri sürüldüğü
+#WRONG:Delilin kaç yüzyıl önce ortaya çıktığı
+#WRONG:Delili destekleyen kişi sayısı
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din felsefesi ve din bilimleri
+#ZORLUK:zor
+#BLOOM:Uygulama
+
+#QUESTION:Felsefî bakış tarzının özelliklerinden hangisi, dinin lehinde ya da aleyhinde peşinen karar vermemeyi anlatır?
+#CORRECT:Objektiflik
+#WRONG:Rasyonellik
+#WRONG:Şümullülük
+#WRONG:Tutarlılık
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefî bakış tarzı
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Görüşler arasındaki çelişkileri tespit edip gidermeye çalışmak felsefî bakışın hangi özelliğidir?
+#CORRECT:Tutarlılık
+#WRONG:Şümullülük
+#WRONG:Objektiflik
+#WRONG:Rasyonellik
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefî bakış tarzı
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Bir konuya kaç açıdan bakmak mümkünse hepsini dikkate alma çabası, felsefî bakışın hangi özelliğiyle anılır?
+#CORRECT:Şümullülük
+#WRONG:Rasyonellik
+#WRONG:Tutarlılık
+#WRONG:Objektiflik
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefî bakış tarzı
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Dinin ibadetle, ritüellerle ve dinî pratiklerle ilgili yanına ne ad verilir?
+#CORRECT:İbadî boyut
+#WRONG:Bilgisel boyut
+#WRONG:Ahlâkî boyut
+#WRONG:Estetik boyut
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Dinin mahiyeti ve boyutları
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Gazâlî'nin vurguladığı biçimde, dinin özü nedir?
+#CORRECT:Ruhânî bir zevk hali, yaşanan bir tecrübe
+#WRONG:Yalnızca akıl yürütme ve sonuç çıkarma
+#WRONG:Kavramların sistemli biçimde sınıflandırılması
+#WRONG:Toplumsal kurumların hukukî düzeni
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din ve felsefe arasındaki fark
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Bilimsel verilerden hareketle Tanrı'nın varlığını ispatlamaya çalışmak, derste anlatılan hangi yaklaşıma örnektir?
+#CORRECT:Dinî olmayan verilerden hareketle dinî hükümleri kanıtlama
+#WRONG:Din tecrübesinin kendisini analiz etme
+#WRONG:Kutsal metinleri satır satır tefsir etme
+#WRONG:Dinî sembolizmin anlamını belirleme
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din ve felsefe arasındaki fark
+#ZORLUK:zor
+#BLOOM:Uygulama
+
+#QUESTION:Aşağıdakilerden hangisi din felsefesinin beş ana problem kategorisinden biri değildir?
+#CORRECT:Matematiksel Problemler
+#WRONG:Epistemolojik Problemler
+#WRONG:Dil ve Mantık Analizi
+#WRONG:Sembolizm
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din felsefesinin ana problemleri
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:İnanma, bilme, şüphe, zan ve yakîn kavramlarının tahlili hangi problem kategorisine girer?
+#CORRECT:Epistemolojik problemler
+#WRONG:Metafizik ve kozmolojik problemler
+#WRONG:İlişkisel problemler
+#WRONG:Sembolizm
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din felsefesinin ana problemleri
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Descartes, Leibniz ve Spinoza hangi felsefî yaklaşımın temsilcileri olarak anılmıştır?
+#CORRECT:Akılcı filozoflar
+#WRONG:Varoluşçular
+#WRONG:Analitik filozoflar
+#WRONG:Tecrübeci filozoflar
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefî yaklaşımlar ve öncelikleri
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Din dilinin mantıkî statüsünü tahlil etmeyi gözde konu edinenler hangileridir?
+#CORRECT:Mantıkçı pozitivistler ve linguistik tahlilciler
+#WRONG:Akılcı filozoflar
+#WRONG:Dinler tarihçileri
+#WRONG:Din sosyologları
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefî yaklaşımlar ve öncelikleri
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Kelâmcı ile din felsefecisi arasındaki temel fark aşağıdakilerden hangisidir?
+#CORRECT:Kelâmcı "tasdik" ile yola çıkar, din felsefecisi dinle uzaktan ve eleştirel biçimde meşgul olur
+#WRONG:Kelâmcı hiçbir akıl yürütme yapmaz, din felsefecisi yalnızca akıl yürütür
+#WRONG:Kelâmcı dinleri tarihsel açıdan, din felsefecisi yalnızca ibadet açısından inceler
+#WRONG:Kelâmcı yalnızca ahlâkı, din felsefecisi yalnızca sanatı konu edinir
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din felsefesi ve kelâm
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Hume, Freud, Jung, W. James ve Allport hangi din bilimi alanıyla anılan düşünürlerdir?
+#CORRECT:Din psikolojisi
+#WRONG:Din sosyolojisi
+#WRONG:Dinler tarihi
+#WRONG:Din antropolojisi
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din felsefesi ve din bilimleri
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Din ile felsefe konularını karşılaştırırken, felsefe tarihinde ilkçağın ağırlık noktası nedir?
+#CORRECT:Âlem
+#WRONG:Allah
+#WRONG:İnsan
+#WRONG:Devlet
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din ve felsefenin konuları
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Sokrates sonrası dönemde felsefenin ağırlık noktası hangi konuya kaymıştır?
+#CORRECT:İnsan
+#WRONG:Âlem
+#WRONG:Allah
+#WRONG:Madde
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din ve felsefenin konuları
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Filozoflar felsefenin konusunu hangi üç ana kavramda toplar?
+#CORRECT:Varlık, bilgi ve değer
+#WRONG:Akıl, duygu ve irade
+#WRONG:Madde, hareket ve zaman
+#WRONG:Din, sanat ve ahlâk
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din ve felsefenin konuları
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Din ile felsefenin ortak görünen konularda ayrıldıkları nokta nedir?
+#CORRECT:Kullandıkları metotlar ve bakış açıları
+#WRONG:İnceledikleri konuların tamamen farklı oluşu
+#WRONG:Birinin yalnızca madde, diğerinin yalnızca ruh ile ilgilenmesi
+#WRONG:Birinin tarihe, diğerinin matematiğe dayanması
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din ve felsefenin konuları
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Ortaçağda felsefenin ağırlık noktası hangi konuydu ve neden?
+#CORRECT:Allah; teolojik meseleler ve Tanrı-evren ilişkisi ön plana çıktığı için
+#WRONG:Âlem; doğa bilimleri hızla geliştiği için
+#WRONG:İnsan; etik ve erdem tartışmaları öne çıktığı için
+#WRONG:Madde; atomculuk yeniden canlandığı için
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din ve felsefenin konuları
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Birçok filozofun Tanrı'yı "O olmazsa hiçbir şey olmaz" ilkesi olarak kabul ettiği düşünürler arasında hangisi sayılmaz?
+#CORRECT:Protagoras
+#WRONG:Aristo
+#WRONG:Spinoza
+#WRONG:Hegel
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Varlık meselesi ve Allah
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Filozoflar Allah'ı antropomorfizmden korumak için genellikle hangi tür sıfatları tercih ederler?
+#CORRECT:Selbî (olumsuz, tenzih) sıfatları
+#WRONG:Subutî (olumlu) sıfatları
+#WRONG:Fiilî sıfatları
+#WRONG:Cismanî sıfatları
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:"Vacibu'l-vücut" sıfatı hangi anlama gelir?
+#CORRECT:Zorunlu varlık
+#WRONG:Sonradan olmuş varlık
+#WRONG:Mümkün varlık
+#WRONG:Parçalara ayrılan varlık
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:İslâm filozofları subutî sıfatları genellikle neden budamışlardır?
+#CORRECT:Kadîmlerin çoğalması ve antropomorfizm tehlikesi nedeniyle
+#WRONG:Kur'an'da bu sıfatlar geçmediği için
+#WRONG:Sıfatların akılla hiçbir ilgisi olmadığı için
+#WRONG:Bu sıfatlar yalnızca insanlara ait olduğu için
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Derste anlatılan uzlaşma noktasına göre Allah'ın görmesi, işitmesi ve bilmesi insanınkinden nasıl farklıdır?
+#CORRECT:Mahiyet yönünden tamamen farklı; vasıtasız, salt ve mutlaktır
+#WRONG:Yalnızca derece bakımından farklıdır
+#WRONG:Hiç fark yoktur, aynı mahiyettedir
+#WRONG:Yalnızca vahiyde geçtiği için vardır
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Aşağıdakilerden hangisi Batı düşüncesindeki Allah'ın varlığı delillerinden biridir?
+#CORRECT:Ontolojik delil
+#WRONG:Hudûs delili
+#WRONG:Kabûl-i âmme delili
+#WRONG:İlm-i evvel delili
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Allah'ın varlığının delilleri
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Kur'ân'a göre Allah duyu organlarıyla algılanamadığına göre O'nu araştırmanın yolu nedir?
+#CORRECT:Akıl yolu (nazar)
+#WRONG:Yalnızca duyu ve deney
+#WRONG:Taklit
+#WRONG:Şüpheyi bütünüyle bırakmak
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Aklın rolü ve fıtrat
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:"Tanrı olmamalıdır" fikrini temellendirmeye çalışan düşünürler hangi gruba girer?
+#CORRECT:Ateistler (ör. Russell, Freud, Nietzsche, Sartre)
+#WRONG:Fideistler (ör. Augustinus, Kierkegaard)
+#WRONG:Mistikler (ör. Mevlana)
+#WRONG:Kısmî tenkit edenler (ör. Kant)
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İsbât-ı vacip delillerine tenkitler
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Eski Yunan'da ilk filozofların âlemin ana maddesi (arkhé) olarak gösterdiği şeyler hangi türdendi?
+#CORRECT:Su, hava, toprak ve ateş gibi maddî unsurlar
+#WRONG:Sayılar ve idealar gibi tamamen manevî ilkeler
+#WRONG:Yalnızca Tanrı'nın iradesi
+#WRONG:Yalnızca insan zihni
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İlkçağ felsefesinde âlem anlayışı
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Arkhé olarak "suyu" öne süren filozof hangisidir?
+#CORRECT:Thales
+#WRONG:Anaksimenes
+#WRONG:Herakleitos
+#WRONG:Pythagoras
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İlkçağ felsefesinde âlem anlayışı
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Platon'da yaratma neyi ifade eder?
+#CORRECT:Yok iken var etme değil, var olan maddeye idealara göre düzen vermeyi
+#WRONG:Hiçlikten âlemi var etmeyi
+#WRONG:Âlemin bir rüya olduğunu ilan etmeyi
+#WRONG:Maddenin yok sayılmasını
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Platon'da âlemin yaratılışı
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Aristoteles'te niteliksiz ve şekilsiz "ilk madde"ye ne ad verilir?
+#CORRECT:Heyûla (Hyle)
+#WRONG:Salt Form
+#WRONG:Südûr
+#WRONG:Logos
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Aristoteles: heyûla ve form
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Plotinos'un varlık hiyerarşisinde "BİR"den aşağıya doğru varlık zincirinin oluşmasına ne denir?
+#CORRECT:Südûr (taşma)
+#WRONG:Heyûla
+#WRONG:Entelekheia
+#WRONG:Tenasüh
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Plotinos'ta südûr
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Platon ile Aristoteles'in âlem anlayışı karşılaştırıldığında hangi ortak nokta vardır?
+#CORRECT:İkisinde de Tanrı, önceden var olan bir ilkeye düzen ve şekil verir
+#WRONG:İkisinde de âlem hiçlikten yaratılır
+#WRONG:İkisi de maddeyi tamamen inkâr eder
+#WRONG:İkisi de âlemi Tanrı'nın kendisi sayar
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İlkçağ felsefesinde âlem anlayışı
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Descartes'ın üç cevher teorisinde yaratılmış cevherler hangileridir?
+#CORRECT:Ruh ve madde
+#WRONG:Tanrı ve ruh
+#WRONG:Tanrı ve madde
+#WRONG:Akıl ve duyu
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ortaçağ ve Yeniçağ'da yaratma anlayışı
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Ortaçağda Kutsal Kitapların etkisiyle benimsenen "yok iken var etme" anlayışı hangi Latince terimle anılır?
+#CORRECT:Creatio ex nihilo
+#WRONG:Esse est percipi
+#WRONG:Res cogitans
+#WRONG:Cogito ergo sum
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ortaçağ ve Yeniçağ'da yaratma anlayışı
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:"Varolmak algılanmış olmaktır" (Esse est percipi) görüşü kime aittir?
+#CORRECT:George Berkeley
+#WRONG:David Hume
+#WRONG:John Locke
+#WRONG:Hegel
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:XVIII. yüzyılda maddenin inkârı
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Kant'a göre deneyden önce zihinde bulunan, deneye düzen kazandıran kavramlara ne denir?
+#CORRECT:A priori (önsel) kavramlar
+#WRONG:Duyu verileri
+#WRONG:Salt ben
+#WRONG:Mutlak ide
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kant ve Alman idealizmi
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Hume'a göre dış dünyanın varlığı nasıl bir şeydir?
+#CORRECT:Akılla ispat edilemeyen, yalnızca inanca konu olan bir vehim
+#WRONG:Akılla kesin olarak ispatlanmış bir gerçek
+#WRONG:Tanrı'nın doğrudan gösterdiği bir hakikat
+#WRONG:Yalnızca atomların hareketinden ibaret
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:XVIII. yüzyılda maddenin inkârı
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Materyalist anlayışa göre ruh nedir?
+#CORRECT:Maddî yapılı bir bileşim
+#WRONG:Bedenden bağımsız ezelî bir cevher
+#WRONG:Tanrı'nın südûr yoluyla gönderdiği bir ışık
+#WRONG:Yalnızca bir algı yanılsaması olup gerçeklikle ilgisi yoktur
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Materyalist anlayışlar
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Din ve felsefenin ruh meselesinde sorduğu temel sorulardan hangisi aşağıdakilerden biridir?
+#CORRECT:Ruh bâkî (ebedî) midir?
+#WRONG:Ruh kaç gramdır?
+#WRONG:Ruh hangi dilde konuşur?
+#WRONG:Ruh hangi mevsimde doğar?
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ruh hakkında temel sorular
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Platon, ruhun üç yönünü anlatmak için hangi benzetmeyi kullanır?
+#CORRECT:İki at ve bir sürücü
+#WRONG:Üç basamaklı bir merdiven
+#WRONG:Bir gemi ve üç yelken
+#WRONG:Bir ağaç ve üç dal
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Platon'un ruh anlayışı
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Platon'da ruhun üç yönünden "sürücü" hangisini temsil eder?
+#CORRECT:Akıl
+#WRONG:İradî yan
+#WRONG:İştahalar yanı
+#WRONG:Beden
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Platon'un ruh anlayışı
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Aristoteles'e göre ruh ile beden arasındaki ilişki neye benzer?
+#CORRECT:Şekil ile madde arasındaki ilişkiye
+#WRONG:Mahkûm ile hapishane arasındaki ilişkiye
+#WRONG:Sürücü ile yük arasındaki ilişkiye
+#WRONG:Güneş ile gölge arasındaki ilişkiye
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Aristoteles'te ruh
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Aristoteles'in ruh sınıflandırmasında düşünme ve idrak etme özelliği hangi ruh türüne aittir?
+#CORRECT:İnsanî ruh
+#WRONG:Nebatî ruh
+#WRONG:Hayvanî ruh
+#WRONG:Yalnızca bitkisel ve hayvanî ruha
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Aristoteles'te ruh
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Descartes'a göre ruhun özü nedir?
+#CORRECT:Düşünme
+#WRONG:Yer kaplama
+#WRONG:Hareket etme
+#WRONG:Büyüme
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Descartes'ta ruh
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Platon'un ruhun tekrar tekrar dünyaya dönüşünü kabul etmesi, hangi inanca yakınlığını gösterir?
+#CORRECT:Tenasüh (reankarnasyon)
+#WRONG:Creatio ex nihilo
+#WRONG:Südûr
+#WRONG:Mekanizm
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Platon'un ruh anlayışı
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Hz. Muhammed'in "Din, iyi ahlâktır" sözü dinin hangi boyutunun önemini vurgular?
+#CORRECT:Ahlâkî boyut
+#WRONG:İbadî boyut
+#WRONG:Bilgisel boyut
+#WRONG:Estetik boyut
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ahlâk felsefesi ve din
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Değerler felsefesini teorik felsefeden ayıran temel özellik nedir?
+#CORRECT:Pratik bir felsefe olup insan eylemlerini ele alması
+#WRONG:Yalnızca varlığın yapısını incelemesi
+#WRONG:Yalnızca bilginin kaynağıyla ilgilenmesi
+#WRONG:Hiçbir sorunu cevaplamaması
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Değerler felsefesinin temel soruları
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Ahlâk felsefesinin temel problemlerinden biri aşağıdakilerden hangisidir?
+#CORRECT:Doğru hareketin ölçüsü nedir?
+#WRONG:Evrenin yaşı kaçtır?
+#WRONG:Hangi dil daha eskidir?
+#WRONG:Madde kaç unsurdan oluşur?
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ahlâk felsefesinin temel problemleri
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:İnsanın ahlâkî davranışlarında hür olmadığını savunan görüşe ne ad verilir?
+#CORRECT:Determinizm
+#WRONG:Rasyonalizm
+#WRONG:İdealizm
+#WRONG:Septisizm
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Hürriyet ve sorumluluk
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:İslâm ahlâkında insanın hürriyeti nasıl bir hürriyettir?
+#CORRECT:Seçme özgürlüğü (ihtiyar) vardır; ancak mutlak değil, kısmî ve sınırlıdır
+#WRONG:Mutlak ve hiçbir sınırı olmayan bir hürriyettir
+#WRONG:Hiç yoktur, insan tamamen zorunludur
+#WRONG:Yalnızca toplumsal bir yanılsamadır
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Hürriyet ve sorumluluk
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Etikte çözüme ulaşan sonuçların hayata aktarılmasına ne ad verilir?
+#CORRECT:Pratik ahlâk
+#WRONG:Teorik metafizik
+#WRONG:Dil analizi
+#WRONG:Estetik yargı
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Pratik ahlâk
+#ZORLUK:zor
+#BLOOM:Uygulama
+
+#QUESTION:"Estetik" kelimesi hangi Grekçe kelimeden türetilmiştir ve ne anlama gelir?
+#CORRECT:Aisthesis; algılama, hissetme
+#WRONG:Ethos; alışkanlık
+#WRONG:Logos; söz, akıl
+#WRONG:Nous; akıl
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Estetik
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Estetiği bir felsefe disiplini olarak kuran düşünür kimdir?
+#CORRECT:Alexander Gottlieb Baumgarten
+#WRONG:Immanuel Kant
+#WRONG:Benedetto Croce
+#WRONG:Walter Benjamin
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Estetik
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Platon'a göre sanat nedir?
+#CORRECT:İdelerin taklidi (mimesis)
+#WRONG:Katharsis aracı
+#WRONG:Başarılı ifade
+#WRONG:Mutlak Ruh'un görünüşü
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Güzellik anlayışının tarihi gelişimi
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Aristoteles'e göre sanatın gayesi olan katharsis ne demektir?
+#CORRECT:Ruhun arınması ve ferahlatılması
+#WRONG:Eşyanın olduğu gibi çizilmesi
+#WRONG:Sanatçının çıkar sağlaması
+#WRONG:Eserin seri üretimi
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Güzellik anlayışının tarihi gelişimi
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Plotinos'a göre âlem nasıl bir şeydir?
+#CORRECT:İlâhî bir şiir, sanat eseri
+#WRONG:Taklidin taklidi
+#WRONG:Salt bir makine
+#WRONG:Yalnızca kavramların toplamı
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Güzellik anlayışının tarihi gelişimi
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Walter Benjamin'e göre yeniden yapım ve seri üretim sanat eserinde neyi yok etmektedir?
+#CORRECT:Özgünlüğü
+#WRONG:Güzelliği tamamen
+#WRONG:Estetik süjeyi
+#WRONG:Sanatçının adını
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Çağdaş estetik sorunları
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Dil, düşüncenin vazgeçilmez vasıtası olduğuna göre Kur'ân'a göre isimleri ilk insana öğreten kimdir?
+#CORRECT:Allah
+#WRONG:Melekler
+#WRONG:Hz. Cebrail
+#WRONG:Filozoflar
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kavramlar: bilginin vazgeçilmez vasıtası
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Dersin anlattığı biçimiyle, peygamberin kavramlar açısından rolü nedir?
+#CORRECT:Yeni bir kavram çerçevesi getirerek toplumların kavram örgüsünü yeniler
+#WRONG:Yalnızca mevcut kavramları aynen tekrar eder
+#WRONG:Kavramlarla hiçbir ilgisi yoktur
+#WRONG:Sadece ölçü birimlerini belirler
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Peygamber ve filozof: kavram üreticileri
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Sokrates hangi kavramlara içerik kazandırmıştır?
+#CORRECT:Doğruluk, adalet, iyilik, güzellik ve fazilet
+#WRONG:Salt form ve heyûla
+#WRONG:Cevher ve düşünen töz
+#WRONG:Süje ve obje
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefe ve din: kavram üretme sanatı
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Kur'an anlaşılması zor kavramları (ör. Kadir Gecesi, Hutame) nasıl öğretir?
+#CORRECT:Soru-cevap yöntemiyle ve betimlemelerle
+#WRONG:Yalnızca sayısal tablolarla
+#WRONG:Kavramları hiç açıklamadan
+#WRONG:Felsefî tanımlarla, örnek vermeden
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kur'an'da kavram öğretme yöntemi
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Bilgiyi hem felsefeciler hem de din bilginleri hangi ilişki olarak tarif etmişlerdir?
+#CORRECT:Süje-obje ilişkisi
+#WRONG:Sebep-sonuç ilişkisi
+#WRONG:Madde-form ilişkisi
+#WRONG:Ruh-beden ilişkisi
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilginin kaynağı: temel problem
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Kavram üretme bakımından din ile felsefe arasında nasıl bir ilişki vardır?
+#CORRECT:Büyük bir benzerlik vardır; hatta din bu konuda bir önceliğe sahiptir
+#WRONG:Hiçbir benzerlik yoktur
+#WRONG:Yalnızca felsefe kavram üretir, din üretmez
+#WRONG:Din kavramları yalnızca felsefeden ödünç alır
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefe ve din: kavram üretme sanatı
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Bilginin kaynağını akıl olarak gören felsefe akımı hangisidir?
+#CORRECT:Akılcılık (rasyonalizm)
+#WRONG:Duyumculuk (sansualizm)
+#WRONG:Deneycilik (ampirizm)
+#WRONG:Sezgicilik
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilginin kaynakları
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Bilginin hakikatinin imkânsız olduğunu savunan görüş hangisidir?
+#CORRECT:Septisizm (şüphecilik)
+#WRONG:İdealizm
+#WRONG:Realizm
+#WRONG:Monizm
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilgi ve varlığa dair teoriler
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Objeyi bağımsız ve "kendi başına var olan" kabul eden bilgi teorisi hangisidir?
+#CORRECT:Realizm
+#WRONG:İdealizm
+#WRONG:Monizm
+#WRONG:Septisizm
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilgi ve varlığa dair teoriler
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Süje ile objeyi tek bir dünyanın nitelikleri sayan görüş hangisidir?
+#CORRECT:Monizm
+#WRONG:Realizm
+#WRONG:İdealizm
+#WRONG:Septisizm
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilgi ve varlığa dair teoriler
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Dinin bilgi kaynakları hiyerarşisinde en üstte hangi kaynak yer alır?
+#CORRECT:Vahiy
+#WRONG:Akıl
+#WRONG:Duyu
+#WRONG:Deney
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Dinin bilgi kaynakları hiyerarşisi
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Sezgiye benzeyen ama tam olarak sezgi olmayan, peygamberlerin kalbine doğan bilgi kaynağı hangisidir?
+#CORRECT:Vahiy
+#WRONG:Deney
+#WRONG:Duyum
+#WRONG:Akıl yürütme
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilginin kaynakları
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Din ile felsefenin gayeleri yönünden ortak noktası nedir?
+#CORRECT:Hak ve hakikati tanımak ve tanıtmak
+#WRONG:Yalnızca servet biriktirmek
+#WRONG:Siyasî iktidarı ele geçirmek
+#WRONG:Bilimsel deneyleri yürütmek
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din ile felsefenin gayeleri
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:"Nereden geldik, nereye gideceğiz, niçin yaratıldık?" soruları dersin hangi başlığı altında ele alınır?
+#CORRECT:Ortak sorular, ortak arayışlar
+#WRONG:Din ile felsefenin ayrıldığı yönler
+#WRONG:Karşı çıkanlar
+#WRONG:Sert reddiyeler
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ortak sorular, ortak arayışlar
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Din ile felsefenin ayrıldığı yönler arasında aşağıdakilerden hangisi sayılmıştır?
+#CORRECT:Kaynaklar ve metotlar
+#WRONG:İnsana hizmet etmeyi amaçlamaları
+#WRONG:Hakikati araştırmaları
+#WRONG:Varoluşsal sorulara cevap aramaları
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din ile felsefenin ayrıldığı yönler
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:"Hakikat hakikati yalanlamaz" ilkesi hangi mesele bağlamında dile getirilir?
+#CORRECT:Din-felsefe münasebetinin meşruiyeti
+#WRONG:Âlemin yaratılışı
+#WRONG:Ruhun ölümsüzlüğü
+#WRONG:Estetik yargının öznelliği
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din-felsefe münasebetinin meşruiyeti
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Farabî'ye göre peygamber ve filozof aynı kaynakla ilgi kurarken hangi güçlerle farklılaşır?
+#CORRECT:Peygamber muhayyile gücü ve vahiyle, filozof araştırma ve inceleme ile
+#WRONG:Peygamber araştırma ile, filozof vahiyle
+#WRONG:İkisi de yalnızca duyularla
+#WRONG:İkisi de hiçbir kaynakla ilgi kurmaz
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Hakikatin birliği: Kindi ve Farabi
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Hikmeti ve şeriatı "süt kardeşi" olarak niteleyen düşünür kimdir?
+#CORRECT:İbn Rüşd
+#WRONG:Gazali
+#WRONG:Protagoras
+#WRONG:İmam Şafii
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İbn Rüşd: en açık tavır
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:"İnsan her şeyin ölçüsüdür" sözüyle anılan ve din-felsefe münasebetine karşı çıkanlar arasında gösterilen düşünür kimdir?
+#CORRECT:Protagoras
+#WRONG:İbn Rüşd
+#WRONG:Farabî
+#WRONG:Kindî
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Karşı çıkanlar: Antikçağdan modern döneme
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:İslâm dünyasında akılcı yaklaşımıyla kelâm disiplininin öncüleri sayılan ekol hangisidir?
+#CORRECT:Mutezile
+#WRONG:Hadisçiler
+#WRONG:Mistikler
+#WRONG:Fideistler
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İslam dünyasında tepkiler
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Mutezile'nin akılcı yaklaşımına karşı çıkan fıkıh bilginleri neyi reddetmeye yönelmiştir?
+#CORRECT:Dinî konularda aklın hakemliğini
+#WRONG:Kutsal kitabın kendisini
+#WRONG:Peygamberlerin varlığını
+#WRONG:Ahlâkın önemini
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İslam dünyasında tepkiler
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Mantıkla uğraşmayı bile haram kılan hadisçiler kimlerdir?
+#CORRECT:İbn Salah ve en-Nevevî
+#WRONG:Kindî ve Farabî
+#WRONG:İbn Rüşd ve İbn Sina
+#WRONG:Pascal ve Descartes
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Sert reddiyeler ve temel soru
+#ZORLUK:zor
+#BLOOM:Hatırlama
+
+#QUESTION:Gazali, "Tehafütü'l-Felâsife"de filozofları hangi üç meselede kâfir olarak nitelendirmiştir?
+#CORRECT:Âlemin kıdemi, cüz'i bilgi ve bedensel haşir
+#WRONG:Tevhid, nübüvvet ve ibadet
+#WRONG:Ruhun varlığı, estetik ve ahlâk
+#WRONG:Kıyas, istihsan ve icma
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Sert reddiyeler ve temel soru
+#ZORLUK:zor
+#BLOOM:Hatırlama
+
+#QUESTION:Din-felsefe münasebetine karşı çıkış tarihte hangi şekilde ortaya çıkmıştır?
+#CORRECT:Antikçağdan modern döneme, hem Batı'da hem İslam dünyasında tepkiler olarak
+#WRONG:Yalnızca XX. yüzyılda ve yalnızca Batı'da
+#WRONG:Hiçbir dönemde ortaya çıkmamıştır
+#WRONG:Yalnızca Eski Yunan'da ve sonra tamamen bitmiştir
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Karşı çıkanlar: Antikçağdan modern döneme
+#ZORLUK:orta
+#BLOOM:Analiz

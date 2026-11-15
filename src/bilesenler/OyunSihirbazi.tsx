@@ -110,6 +110,7 @@ export function OyunSihirbazi({
   const [sureli, setSureli] = useState(false)
   const [sureDk, setSureDk] = useState(10)
   const [mesgul, setMesgul] = useState(false)
+  const [kolaydanZora, setKolaydanZora] = useState(false)
 
   useEffect(() => {
     sorulariGetir(icerikId)
@@ -141,6 +142,10 @@ export function OyunSihirbazi({
         (s) => s.id,
         sonSorulanlar(oturumId),
       )
+      if (kolaydanZora) {
+        const sira = (s: Soru) => ({ kolay: 0, orta: 1, zor: 2 })[String(s.ek?.zorluk ?? '').toLowerCase() as 'kolay'] ?? 1
+        secilen.sort((a, b) => sira(a) - sira(b))
+      }
       turuKaydet(
         oturumId,
         secilen.map((s) => s.id),
@@ -287,6 +292,14 @@ export function OyunSihirbazi({
               ))}
           </div>
           {tur === 'oyun' && sureli && <p className="text-xs text-slate-400">Süre dolunca o anki soru bitince oyun sona erer.</p>}
+          <div className="flex flex-wrap gap-2 pt-1" aria-label="Soru sırası">
+            <button onClick={() => setKolaydanZora(false)} className={dugme(!kolaydanZora)}>
+              🔀 Karışık
+            </button>
+            <button onClick={() => setKolaydanZora(true)} className={dugme(kolaydanZora)} title="Sorular zorluk etiketine göre kolaydan zora sıralanır; etiketsizler ortada yer alır">
+              📈 Kolaydan zora
+            </button>
+          </div>
         </div>
 
         <button disabled={mesgul || seciliPaketler.length === 0} onClick={baslat} className="parlak-buton w-full rounded-2xl py-3 font-display font-extrabold">

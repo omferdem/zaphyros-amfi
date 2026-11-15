@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.58.0 (15 Kasım 2026)
+Faz 8 (kısmi): soru deposu hazırlığı. Veritabanına soru EKLENMEDİ.
+- **Soru dosyası hazırlandı, onay bekliyor:** `docs/soru-onerileri/din-felsefesi-1-ek-zapoot-sorulari.txt` (ZOMR biçimi). Din Felsefesi I içindeki 14 haftanın her Zapoot paketi için 6-7 yeni soru (toplam 86), kaynak olarak yalnızca o haftanın slayt metinleri; her soruda `#KONU`, `#ZORLUK` (kolay/orta/zor), `#BLOOM` ve `#PAKET` etiketi var. Paket adları mevcut paketlerle aynı olduğundan içe aktarılınca onlara eklenir (adlardaki "20 kısa soru" ifadesi bu durumda eski sayıyı gösterir).
+- **Soru seçim ekranı:** Zapoot ve Oyunlar sihirbazında "Karışık / Kolaydan zora" seçeneği (zorluk etiketine göre; etiketsiz sorular ortada kalır).
+
 ## v0.57.0 (15 Kasım 2026)
 Faz 7: öğrenci ekran görüntüsü ve perde notu. Veritabanı değişikliği yok.
 - **📸 Ekran görüntüsü (telefon):** slayt ekranında düğme; kart tamamen telefonda bir canvas üzerinde çizilir (ders adı, hafta, slayt numarası, slaytın bütün metni, telefon modunda zaten inmiş görsel), metin uzadıkça kart aşağı uzar, hiçbir satır kesilmez. Sunucuya hiçbir istek gitmez. Paylaşım menüsü (Web Share) destekleniyorsa o açılır, yoksa PNG iner; dosya adı `DersAdi_Hafta3_Slayt12.png`. Satır bölme birim testli.

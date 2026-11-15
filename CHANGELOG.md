@@ -1,5 +1,8 @@
 # Sürüm Geçmişi
 
+## v0.61.1 (15 Kasım 2026)
+- **Kumandadan Orman:** telefon kumandasındaki oyun listesinde "Orman'dan eve dönüş" seçilip başlatılabilir (0043_kumanda_orman.sql, SQL ile uygulandı; yalnızca kumanda isteğinin mod listesi genişledi).
+
 ## v0.61.0 (15 Kasım 2026)
 - **Bilgi merdiveni jokerleri (0042_soru_jokerleri.sql, SQL ile uygulandı):** hoca açık soruda, perdeden ya da kumandadan, turda birer kez kullanır: **✂ Yarı yarıya** (telefonlarda 2 yanlış şık silinir, doğru şık asla), **👥 Seyirci** (ilk 10 saniyedeki cevapların şık dağılımı perdede çubuk grafik), **⏱ +15 sn** (soru başlangıcı 15 saniye ileri alınır; telefon, perde ve cevap kabulü aynı süreyi kullanır). `ozel.durum` telefonlara `elenen` alanını verir.
 - Not: mevcut "kurtarma" jokeri (yanlışta basamağı koruma) olduğu gibi duruyor.

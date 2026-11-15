@@ -1,6 +1,7 @@
 # Sürüm Geçmişi
 
 ## v0.44.0 (14 Kasım 2026)
+(15 Kasım 2026: veritabanındaki 14 paket adı ve 4 gizli akış adı "Kahoot" yerine "Zapoot" olarak güncellendi; SQL Editor'den, şema değişikliği değil veri güncellemesi.)
 Zapoot oyun akışı sadeleşti, metin kartı eklendi. Veritabanı değişikliği yok.
 - **Perdede yalnızca seçilen oyun:** Zapoot'ta oyun seçilince perde o oyunda kalır (roket, zombi, ejderha, arena, kule); "Küçült" ile soru ekranına dönülmez. Sorular öğrencilerin telefonlarındadır. Alt ortada küçük bir kontrol çubuğu vardır (soru sırası, kalan süre, cevap sayısı, Cevabı göster, +10 sn, Önceki/Sonraki soru, 👁 Soru: soruyu ve şıkları istenirse perdede gösterir). Araç çubuğu oyunun üstünde kalır.
 - **Karışıklık giderildi:** yeni bir oyun seçilince öteki oyunların panelleri, takım ve hocayla yarış kapanır; "Hocayla yarış / Takım modu / Bilgi merdiveni" köşe düğmeleri hiç çıkmaz. Zapoot'tan "Derse dön" deyince oyun panelleri de kapanır.

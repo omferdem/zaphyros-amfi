@@ -342,15 +342,12 @@ function DersKarti({
         </button>
       </div>
 
-      <ul className="flex flex-wrap gap-2">
+      <ul className="grid gap-2.5 sm:grid-cols-2">
         {subeler.map((s) => (
-          <li key={s.id} className="flex items-center gap-2">
-            <Link
-              to={`/panel/ders/${s.id}`}
-              className="block rounded-full bg-white/8 hover:bg-indigo-500/25 border border-white/15 px-4 py-2 transition-all hover:-translate-y-0.5"
-            >
-              <span className="font-semibold">{subeEtiketi(s.sube, subeler.length)}</span>
-              <span className="text-xs text-slate-400"> · {s.students[0]?.count ?? 0} öğrenci</span>
+          <li key={s.id} className="rounded-xl bg-zemin/80 border border-white/10 p-3 space-y-2">
+            <Link to={`/panel/ders/${s.id}`} className="flex justify-between items-baseline text-sm hover:text-turkuaz transition-colors">
+              <strong>{subeEtiketi(s.sube, subeler.length)}</strong>
+              <span className="font-mono text-xs text-slate-400">{s.students[0]?.count ?? 0} öğrenci</span>
             </Link>
             <SubeBaslat dersId={s.id} sayi={s.yoklama_sayisi ?? 15} birim={s.yoklama_birimi ?? 'hafta'} />
           </li>

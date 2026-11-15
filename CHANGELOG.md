@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.48.0 (15 Kasım 2026)
+Hoca paneli yeni tasarım (zapedu2). Veritabanı değişikliği yok.
+- **Derslerim:** şubeler artık ders kartının içinde ayrı kutular (şube adı ve öğrenci sayısı üstte, altında tam genişlik "▶ Devam" ya da "▶ Başlat" düğmesi). Devam parlak, başlat turkuaz çerçeveli.
+- **Ders sayfası:** sekmeler gradyan etkin pill biçimine geçti.
+- **Dönem özeti:** üç basamaklı şampiyonlar podyumu (1. ortada ve yüksek); 4. ile 10. aşağıda listelenir.
+- **Akış düzenleme:** kart türleri renklendi (SLAYT turkuaz, SORU pembe, KELİME BULUTU ve BEYİN FIRTINASI lime, AÇIK UÇLU sarı, OYLAMA ve OYUN mor, METİN ve FOTOĞRAF turkuaz); toplu seçim çubuğu mor.
+
 ## v0.47.0 (15 Kasım 2026)
 Yeni arayüz tasarımı (zapedu2): öğrenci, perde, kumanda. Veritabanı değişikliği yok.
 - **Kumanda üç sekmeli:** "🎬 Ders" (adım kartı, hoca notu, sınıf paneli, puanlar), "🎮 Zapoot ve Quiz" (oyun seçimi, paket, Derse dön, Quizi bitir) ve "⚙️ Ayarlar" (yoklama, telefon modu, ana sayfa/dersi bitir, bütün adımlar). Önceki/Sonraki düğmeleri her sekmede üstte durur. Başlıkta ders ve oturum adı, dokununca kopyalanan ders kodu. Uzun tek sayfa dağınıklığı bitti.

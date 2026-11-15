@@ -63,7 +63,7 @@ export default function SubeBaslat({ dersId, sayi, birim }: { dersId: string; sa
   return (
     <>
       <button
-        className="rounded-full bg-emerald-500/20 hover:bg-emerald-500/35 border border-emerald-300/40 px-3 py-2 text-sm font-bold text-emerald-100 disabled:opacity-50"
+        className={durum.acikOturum ? 'parlak-buton w-full rounded-xl py-2 text-xs font-bold disabled:opacity-50' : 'w-full rounded-xl py-2 text-xs font-bold border border-turkuaz/40 bg-white/[0.06] text-turkuaz hover:bg-white/10 transition-colors disabled:opacity-50'}
         onClick={basla}
         disabled={mesgul}
         title={durum.acikOturum ? 'Açık dersin sahnesine dön' : 'Sıradaki yoklamayı aç ve sahneye geç'}

@@ -145,7 +145,7 @@ export default function DersDetay() {
 
       {hata && <p className="text-sm text-rose-300 bg-rose-500/10 rounded-xl p-3">{hata}</p>}
 
-      <nav className="flex gap-1 border-b border-white/10">
+      <nav className="flex flex-wrap gap-1 bg-white/5 p-1 rounded-xl border border-white/10 w-fit max-w-full">
         {(
           [
             ['oturumlar', `Oturumlar (${oturumlar.length})`],
@@ -160,9 +160,10 @@ export default function DersDetay() {
           <button
             key={k}
             onClick={() => setSekme(k)}
-            className={`px-4 py-2 text-sm font-semibold border-b-2 -mb-px ${
-              sekme === k ? 'border-indigo-400 text-white' : 'border-transparent text-slate-400 hover:text-slate-200'
+            className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-colors ${
+              sekme === k ? 'text-white shadow-[0_4px_14px_rgba(124,92,255,0.35)]' : 'text-slate-300 hover:bg-white/10'
             }`}
+            style={sekme === k ? { background: 'linear-gradient(135deg, #ff4d9d 0%, #7c5cff 52%, #22e3d2 100%)' } : undefined}
           >
             {ad}
           </button>

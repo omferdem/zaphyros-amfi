@@ -23,6 +23,16 @@ function ilkSatir(metin: string | undefined): string {
   return (metin ?? '').split('\n')[0]?.slice(0, 120) ?? ''
 }
 
+/** Akış kartının türü: etiket ve vurgu rengi (zapedu2 tasarımı). */
+function kartTuru(a: Adim): { ad: string; renk: string } {
+  if (a.tur === 'soru') return { ad: 'SORU', renk: '#ff4d9d' }
+  if (a.tur === 'fikir') return a.ayar.mod === 'acik' ? { ad: 'AÇIK UÇLU', renk: '#ffd23f' } : a.ayar.mod === 'firtina' ? { ad: 'BEYİN FIRTINASI', renk: '#b8ff4a' } : { ad: 'KELİME BULUTU', renk: '#b8ff4a' }
+  if (a.tur === 'oylama') return { ad: 'OYLAMA', renk: '#7c5cff' }
+  if (a.tur === 'oyun') return { ad: 'OYUN', renk: '#7c5cff' }
+  if (a.tur === 'video') return !a.ayar.url ? { ad: 'METİN', renk: '#22e3d2' } : gorselMi(a.ayar.url) ? { ad: 'FOTOĞRAF', renk: '#22e3d2' } : { ad: 'VİDEO', renk: '#ffd23f' }
+  return { ad: 'YOKLAMA', renk: '#34d399' }
+}
+
 /** Bir ders akışını düzenler: sunum yükleme, adım ekleme, sıralama ve silme. */
 export default function AkisDuzenle() {
   const { akisId = '' } = useParams()
@@ -648,7 +658,7 @@ export default function AkisDuzenle() {
           <span>Kutuyu işaretleyip Shift basılı başka bir kutuya tıklarsan aradaki kartlar da seçilir.</span>
         </div>
         {secim.size > 0 && (
-          <div className="sticky top-16 z-20 cam-panel rounded-2xl p-3 flex flex-wrap items-center gap-2 border border-indigo-400/40">
+          <div className="sticky top-16 z-20 rounded-2xl p-3 flex flex-wrap items-center gap-2 border border-mor bg-mor/25 backdrop-blur-xl">
             <span className="text-sm font-bold">{secim.size} kart seçili</span>
             <select className="giris-kutusu !w-auto !py-1.5 text-sm" value={hedefAkis} onChange={(e) => setHedefAkis(e.target.value)} aria-label="Hedef akış">
               <option value="">Hangi haftanın akışına?</option>
@@ -706,23 +716,16 @@ export default function AkisDuzenle() {
                     />
                     {a.ayar.not && <span className="absolute -top-1 -right-1 text-xs" title="Notu var">📝</span>}
                   </button>
-                ) : a.tur === 'soru' ? (
-                  <div className="w-28 h-16 shrink-0 rounded bg-fuchsia-500/10 flex items-center justify-center text-fuchsia-300 text-xs font-bold">
-                    SORU
-                  </div>
-                ) : a.tur === 'fikir' || a.tur === 'oylama' || a.tur === 'video' ? (
-                  <div className="w-28 h-16 shrink-0 rounded bg-amber-500/10 flex items-center justify-center text-amber-300 text-xs font-bold text-center leading-tight">
-                    {a.tur === 'fikir' ? (a.ayar.mod === 'acik' ? 'AÇIK UÇLU' : a.ayar.mod === 'firtina' ? 'BEYİN FIRTINASI' : 'KELİME BULUTU') : a.tur === 'oylama' ? 'OYLAMA' : !a.ayar.url ? 'METİN' : gorselMi(a.ayar.url) ? 'FOTOĞRAF' : 'VİDEO'}
-                  </div>
-                ) : a.tur === 'oyun' ? (
-                  <div className="w-28 h-16 shrink-0 rounded bg-indigo-500/15 flex flex-col items-center justify-center text-indigo-200 text-xs font-bold text-center leading-tight">
-                    <span className="text-xl">{OYUNLAR[(a.ayar.oyun ?? 'takim') as OyunAnahtari]?.emoji ?? '🎮'}</span>
-                    OYUN
-                  </div>
                 ) : (
-                  <div className="w-28 h-16 shrink-0 rounded bg-emerald-500/10 flex items-center justify-center text-emerald-300 text-xs font-bold">
-                    YOKLAMA
-                  </div>
+                  (() => {
+                    const t = kartTuru(a)
+                    return (
+                      <div className="w-28 h-16 shrink-0 rounded-lg flex flex-col items-center justify-center text-xs font-bold text-center leading-tight" style={{ background: `${t.renk}1f`, color: t.renk, border: `1px solid ${t.renk}55` }}>
+                        {a.tur === 'oyun' && <span className="text-xl">{OYUNLAR[(a.ayar.oyun ?? 'takim') as OyunAnahtari]?.emoji ?? '🎮'}</span>}
+                        {t.ad}
+                      </div>
+                    )
+                  })()
                 )}
                 <div className="min-w-0 flex-1">
                   {a.tur === 'slayt' ? (

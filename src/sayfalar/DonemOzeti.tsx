@@ -152,16 +152,37 @@ export default function DonemOzeti({ ders, ogrenciler, oturumlar, yoklamalar }: 
 
       {sampiyonlar.siralama.length > 0 && (
         <section className="cam-panel rounded-2xl p-4 space-y-3">
-          <h2 className="font-bold">🏆 Dönemin şampiyonları</h2>
+          <div className="flex justify-between items-center">
+            <h2 className="font-bold text-sari">🏆 Şampiyonlar podyumu</h2>
+            <span className="font-mono text-[10px] text-slate-400">Toplam puan</span>
+          </div>
+          <div className="grid grid-cols-3 gap-2 items-end pt-2 text-center max-w-xl mx-auto">
+            {[1, 0, 2].map((i) => {
+              const p = sampiyonlar.siralama[i]
+              if (!p) return <div key={i} />
+              const renk = i === 0 ? '#ffd23f' : i === 1 ? '#22e3d2' : '#ff4d9d'
+              return (
+                <div key={i} className={`rounded-xl p-2 flex flex-col justify-between ${i === 0 ? 'h-32 border-2' : i === 1 ? 'h-24 border' : 'h-20 border'}`} style={{ background: `${renk}22`, borderColor: `${renk}${i === 0 ? '' : '66'}` }}>
+                  <span className={`font-bold text-white truncate ${i === 0 ? 'text-sm' : 'text-xs'}`}>{p.ogrenci.ad_soyad}</span>
+                  <span className="font-mono font-extrabold" style={{ color: renk, fontSize: i === 0 ? '1.25rem' : '1rem' }}>
+                    #{i + 1} <span className="text-[10px] text-slate-300 font-semibold">{p.puan}</span>
+                  </span>
+                </div>
+              )
+            })}
+          </div>
           <ol className="space-y-1 text-sm">
-            {sampiyonlar.siralama.slice(0, 10).map((s, i) => (
+            {sampiyonlar.siralama.slice(3, 10).map((s, i0) => {
+              const i = i0 + 3
+              return (
               <li key={s.ogrenci.id} className="flex items-center gap-3">
-                <span className="w-8 text-center">{i < 3 ? ['🥇', '🥈', '🥉'][i] : i + 1}</span>
+                <span className="w-8 text-center">{i + 1}</span>
                 <span className="flex-1 truncate">{s.ogrenci.ad_soyad}</span>
                 <span className="text-xs text-slate-400">{s.ders} derste yarıştı · {s.dogru} doğru</span>
                 <b className="w-20 text-right tabular-nums">{s.puan}</b>
               </li>
-            ))}
+              )
+            })}
           </ol>
           {sampiyonlar.haftalar.length > 0 && (
             <div className="space-y-1">

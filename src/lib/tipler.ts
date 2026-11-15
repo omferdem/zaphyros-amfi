@@ -172,6 +172,8 @@ export interface PuanSatiri {
   ad: string
   puan: number
   dogru: number
+  /** En uzun doğru serisi */
+  seri?: number
   sira: number
 }
 

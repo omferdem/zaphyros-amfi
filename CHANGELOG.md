@@ -1,5 +1,14 @@
 # Sürüm Geçmişi
 
+## v0.52.0 (15 Kasım 2026)
+Faz 2: Zapoot, Oyunlar ve Quiz ayrıldı; lobi; puanlama; final töreni.
+- **Araç çubuğu:** 🎮 Zapoot, 🕹️ Oyunlar, 📝 Quiz ayrı düğmeler. Zapoot sihirbazı: bireysel/takım (2-6 takım), paket(ler), soru sayısı. Oyunlar sihirbazı: oyun kartları (kısa kural, bireysel/takım etiketi), paket(ler), soru sayısı ya da süre (süre dolunca o anki soru bitince final açılır).
+- **Soru seçimi:** birden çok paket işaretlenebilir; istenen sayı paketlere orantılı dağıtılır, karışık çekilir, aynı turda tekrar olmaz, son iki turda sorulmamış sorular önce gelir (`soruSec.ts`, birim testli).
+- **Lobi:** başlatınca perdede lobi; takım modunda sütun sütun canlı adlar, "Takımları dengele" ve "Rastgele dağıt", ardından 3-2-1 ve oyunun kısa kuralı; ilk soru ancak "Başlat"tan sonra açılır.
+- **Puanlama (0038_puan_turu_lobi.sql, SQL ile uygulandı):** puan tablosu ve öğrencinin sırası perdedeki oyun turuna göre hesaplanır; 3'lü doğru seride +100, 5'li seride toplam +300 bonus. Doğru cevap 500-1000 (hıza bağlı) zaten böyleydi.
+- **Final:** 🏁 Bitir ile 3. sonra 2. sonra 1. podyuma çıkar (ses, konfeti), takım modunda önce kazanan takım, "Tümünü göster" tam sıralama.
+- Bilinen eksikler: takım üst sınırı 6 (veritabanı kısıtı), her sorudan sonra "ilk 5" ara tablosu ve öğrenci telefonunda final ekranı sonraki sürüme kaldı.
+
 ## v0.51.0 (15 Kasım 2026)
 Faz 1: hatalar ve hızlı düzeltmeler (tamamlandı).
 - Oyun turu (0036, v0.50.2) ile takım, zombi, hocayla yarış ve merdiven sayımları yalnızca perdedeki turu sayar; tekrar oynanan paket temiz başlar.

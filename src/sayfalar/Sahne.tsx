@@ -11,7 +11,9 @@ import { paketleriGrupla } from '../lib/paket'
 import { quizOlustur } from '../lib/quiz'
 import { adaGoreHafta, kahootAkisAdi, kahootAkisiMi } from '../lib/gecis'
 import { kalinanAdim, sonAkisBilgisi } from '../lib/veri'
-import { KahootSecici, QuizPaneli } from '../bilesenler/PaketGecisi'
+import { QuizPaneli } from '../bilesenler/PaketGecisi'
+import { OyunSihirbazi, type TurIstegi } from '../bilesenler/OyunSihirbazi'
+import { Final, Lobi, takimliMi } from '../bilesenler/LobiFinal'
 import { oyunuAc } from '../lib/oyunAc'
 import OyunProvasi from '../bilesenler/OyunProvasi'
 import Rehber from '../bilesenler/Rehber'
@@ -110,6 +112,11 @@ export default function Sahne() {
   const [kumandaAcik, setKumandaAcik] = useState(false)
   const [puanAcik, setPuanAcik] = useState(false)
   const [kahootSecimi, setZapootSecimi] = useState(false)
+  const [oyunSecimi, setOyunSecimi] = useState(false)
+  const [lobi, setLobi] = useState<{ ad: string; mod: OyunAnahtari | null; sayi: number; sureDk: number | null; ilk: string | null } | null>(null)
+  const [finalAcik, setFinalAcik] = useState(false)
+  const [turModu, setTurModu] = useState<OyunAnahtari | null>(null)
+  const [turBitis, setTurBitis] = useState<number | null>(null)
   const [provaAcik, setProvaAcik] = useState(false)
   const [rehberAcik, setRehberAcik] = useState(false)
   const [sesAcik, sesAyarla] = useSesAyari()
@@ -151,8 +158,9 @@ export default function Sahne() {
   const istekIsleyici = useRef<(i: KumandaIstegi) => void>(() => {})
   const sonIstek = useRef(0)
   /** Ekranda aynı anda tek panel açık kalır: biri açılırken öbürleri kapanır. */
-  function tekAc(hangisi: 'kahoot' | 'quiz' | 'puan' | 'kumanda' | 'prova' | 'rehber' | null) {
+  function tekAc(hangisi: 'kahoot' | 'oyun' | 'quiz' | 'puan' | 'kumanda' | 'prova' | 'rehber' | null) {
     setZapootSecimi(hangisi === 'kahoot')
+    setOyunSecimi(hangisi === 'oyun')
     setQuizAcik(hangisi === 'quiz')
     setPuanAcik(hangisi === 'puan')
     setKumandaAcik(hangisi === 'kumanda')
@@ -172,6 +180,17 @@ export default function Sahne() {
     }
   })
   const oyunKilitli = !!kahootAkisi && zapootOyunu !== null
+  // Süreli oyun: süre dolunca o anki soru bitince (sonuç açılınca) final açılır
+  useEffect(() => {
+    if (!turBitis) return
+    const t = setInterval(() => {
+      if (Date.now() >= turBitis && oturum?.soru_durum === 'sonuc') {
+        setTurBitis(null)
+        setFinalAcik(true)
+      }
+    }, 1500)
+    return () => clearInterval(t)
+  }, [turBitis, oturum?.soru_durum])
   useEffect(() => {
     document.body.classList.toggle('oyun-kilitli', oyunKilitli)
     return () => document.body.classList.remove('oyun-kilitli')
@@ -352,7 +371,7 @@ export default function Sahne() {
   const haftaNo = adaGoreHafta(akislar.find((a) => a.id === oturum?.lesson_id)?.ad ?? donusKaydi()?.ad) ?? oturum?.hafta_no ?? null
 
   /** Seçilen soru paketini canlı Zapoot olarak açar: gizli bir akış (⚡ paket adı) paketin sorularıyla kurulur, dönüş noktası saklanır. */
-  async function kahootaGit(paketAdi: string, sorular: { id: string }[], mod: OyunAnahtari | null, grup: number | null = null) {
+  async function kahootaGit(paketAdi: string, sorular: { id: string }[], mod: OyunAnahtari | null, grup: number | null = null, lobiyle: TurIstegi | null = null) {
     if (!icerikId || sorular.length === 0) throw new Error('bos')
     const ad = kahootAkisAdi(paketAdi)
     let id: string
@@ -382,9 +401,9 @@ export default function Sahne() {
         /* saklanamazsa dönüşte yoklama ekranı açılır */
       }
     }
-    const { error } = await supabase.from('sessions').update({ lesson_id: id, aktif_adim: idler[0] ?? null, aktif_tur: turId }).eq('id', oturumId)
+    const { error } = await supabase.from('sessions').update({ lesson_id: id, aktif_adim: lobiyle ? null : (idler[0] ?? null), aktif_tur: turId }).eq('id', oturumId)
     if (error) throw error
-    setOturum((o) => (o ? { ...o, lesson_id: id, aktif_adim: idler[0] ?? null, aktif_tur: turId } : o))
+    setOturum((o) => (o ? { ...o, lesson_id: id, aktif_adim: lobiyle ? null : (idler[0] ?? null), aktif_tur: turId } : o))
     await oyunuAc(oturumId, mod, grup)
     const grafik = mod !== null && GRAFIK_OYUNLAR.includes(mod) ? mod : null
     setZapootOyunu(grafik)
@@ -395,6 +414,20 @@ export default function Sahne() {
       /* önemsiz */
     }
     setZapootSecimi(false)
+    setOyunSecimi(false)
+    setTurModu(mod)
+    if (lobiyle) setLobi({ ad: paketAdi, mod, sayi: sorular.length, sureDk: lobiyle.sureDk, ilk: idler[0] ?? null })
+  }
+
+  async function lobidenBasla() {
+    if (!lobi) return
+    const { ilk, sureDk } = lobi
+    setLobi(null)
+    if (ilk) {
+      await supabase.from('sessions').update({ aktif_adim: ilk }).eq('id', oturumId)
+      setOturum((o) => (o ? { ...o, aktif_adim: ilk } : o))
+    }
+    setTurBitis(sureDk ? Date.now() + sureDk * 60000 : null)
   }
 
   /** Zapoot bitince: kaldığın akışa ve slayta döner. */
@@ -546,6 +579,10 @@ export default function Sahne() {
         </span>
       )}
       {kahootAkisi ? (
+        <>
+        <button className="ikincil-buton" onClick={() => setFinalAcik(true)} title="Oyunu bitir ve final podyumunu göster">
+          🏁 Bitir
+        </button>
         <button
           className={`parlak-buton rounded-xl px-4 py-1.5 text-sm font-bold ${aktifSira === adimlar.length - 1 ? 'nabiz' : ''}`}
           onClick={dersedon}
@@ -553,10 +590,14 @@ export default function Sahne() {
         >
           ↩ Derse dön
         </button>
+        </>
       ) : (
         <>
-          <button className="ikincil-buton" onClick={() => tekAc('kahoot')} title="Hazır bir Zapoot paketini perdede oynat">
+          <button className="ikincil-buton" onClick={() => tekAc('kahoot')} title="Zapoot: bireysel ya da takım, hızlı bilgi yarışması">
             🎮 Zapoot
+          </button>
+          <button className="ikincil-buton" onClick={() => tekAc('oyun')} title="Oyunlar: zombi, roket, halat, kale ve daha fazlası">
+            🕹️ Oyunlar
           </button>
           <button className="ikincil-buton" onClick={() => tekAc('quiz')} title="Ciddi quizi başlat; bitince sonuçlar açıklanır">
             📝 Quiz
@@ -689,7 +730,32 @@ export default function Sahne() {
       <BaglantiUyarisi />
       {provaAcik && <OyunProvasi kapat={() => setProvaAcik(false)} />}
       {rehberAcik && <Rehber kapat={() => setRehberAcik(false)} />}
-      {kahootSecimi && icerikId && <KahootSecici icerikId={icerikId} hafta={haftaNo} sec={kahootaGit} kapat={() => setZapootSecimi(false)} />}
+      {(kahootSecimi || oyunSecimi) && icerikId && (
+        <OyunSihirbazi
+          tur={oyunSecimi ? 'oyun' : 'zapoot'}
+          oturumId={oturum.id}
+          icerikId={icerikId}
+          hafta={haftaNo}
+          basla={(i) => kahootaGit(i.ad, i.sorular, i.mod, i.grup, i)}
+          kapat={() => {
+            setZapootSecimi(false)
+            setOyunSecimi(false)
+          }}
+        />
+      )}
+      {lobi && (
+        <Lobi
+          oturumId={oturum.id}
+          mod={lobi.mod}
+          paketAdi={lobi.ad}
+          soruSayisi={lobi.sayi}
+          sureDk={lobi.sureDk}
+          cevrimici={cevrimici}
+          basla={lobidenBasla}
+          iptal={() => void dersedon().then(() => setLobi(null))}
+        />
+      )}
+      {finalAcik && <Final oturumId={oturum.id} takimli={takimliMi(turModu)} kapat={() => setFinalAcik(false)} />}
       {quizAcik && icerikId && <QuizPaneli dersId={oturum.course_id} icerikId={icerikId} hafta={haftaNo} katilan={gelenler.length} bitirSinyali={quizBitirSinyali} kapat={() => setQuizAcik(false)} />}
       {puanAcik && <PuanTablosu oturumId={oturum.id} kapat={() => setPuanAcik(false)} />}
       <SinifPaneli d={sinif.d} komut={sinif.komut} hata={sinif.hata} mod="perde" />

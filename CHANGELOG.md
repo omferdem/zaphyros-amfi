@@ -1,5 +1,13 @@
 # Sürüm Geçmişi
 
+## v0.55.0 (15 Kasım 2026)
+Faz 5: emoji tepkileri. Veritabanı değişikliği yok.
+- Öğrenci telefonunda ders sırasında 👍 😂 😮 🤔 👏 ❤️ şeridi (soru açıkken görünmez). 3 saniyede en çok 1 emoji (telefonda ve perdede ayrı ayrı uygulanır).
+- Emojiler Realtime Broadcast ile HTTP üzerinden gönderilir (öğrenci kanala abone olmaz, mesaj öğrencilere yayılmaz); kanalı yalnızca perde dinler, veritabanına bir şey yazılmaz. Canlı projede HTTP gönderimi denendi (202).
+- Perdede emojiler alttan yukarı kıvrımlı yolda yükselip solar; aynı anda en çok 25 uçar, fazlası "×N" olarak birleşir. ❤️ sağ alttaki hoca karakterine uçar; hoca gülümser, 4 saniyede 3 kalp gelirse zıplar.
+- Perde "⋯" menüsünde "Emoji tepkilerini kapat/aç" anahtarı; quiz paneli açıkken, lobide ve finalde kendiliğinden kapalı.
+- Yapılmayan: kumandadan (telefondan) kapatma anahtarı; telefon şeridi tepkilerin kapalı olduğunu bilmez, kapalıyken gönderilenler perdede yok sayılır.
+
 ## v0.54.1 (15 Kasım 2026)
 Faz 4'ün takım ve yarış kuralları.
 - **0039_takim_soru_ozeti.sql (SQL ile uygulandı):** perdedeki turun her sorusu için takım başına doğru ve yanlış sayısı (halat ve kule için).

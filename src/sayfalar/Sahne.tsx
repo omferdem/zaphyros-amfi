@@ -15,6 +15,7 @@ import { QuizPaneli } from '../bilesenler/PaketGecisi'
 import { OyunSihirbazi, type TurIstegi } from '../bilesenler/OyunSihirbazi'
 import { Final, Lobi, takimliMi } from '../bilesenler/LobiFinal'
 import { EnerjiSeridi, useOyuncuSonuclari } from '../bilesenler/EnerjiSeridi'
+import TepkiKatmani from '../bilesenler/TepkiKatmani'
 import { oyunuAc } from '../lib/oyunAc'
 import OyunProvasi from '../bilesenler/OyunProvasi'
 import Rehber from '../bilesenler/Rehber'
@@ -116,6 +117,21 @@ export default function Sahne() {
   const [oyunSecimi, setOyunSecimi] = useState(false)
   const [lobi, setLobi] = useState<{ ad: string; mod: OyunAnahtari | null; sayi: number; sureDk: number | null; ilk: string | null } | null>(null)
   const [finalAcik, setFinalAcik] = useState(false)
+  const [tepkiAcik, setTepkiDurum] = useState(() => {
+    try {
+      return localStorage.getItem('amfi_tepki') !== '0'
+    } catch {
+      return true
+    }
+  })
+  function tepkiAyarla(a: boolean) {
+    setTepkiDurum(a)
+    try {
+      localStorage.setItem('amfi_tepki', a ? '1' : '0')
+    } catch {
+      /* önemsiz */
+    }
+  }
   const [turModu, setTurModu] = useState<OyunAnahtari | null>(null)
   const [turBitis, setTurBitis] = useState<number | null>(null)
   const [provaAcik, setProvaAcik] = useState(false)
@@ -650,6 +666,9 @@ export default function Sahne() {
           <button className="ikincil-buton text-left" onClick={() => otoGecAyarla(!otoGec)} title="Soruda çevrimiçi herkes cevap verince süre dolmasını bekleme">
             {otoGec ? '⏭ Herkes cevaplayınca geç: açık' : '⏭ Herkes cevaplayınca geç: kapalı'}
           </button>
+          <button className="ikincil-buton text-left" onClick={() => tepkiAyarla(!tepkiAcik)} title="Öğrencilerin emoji tepkileri perdede uçar; quiz sırasında kendiliğinden kapalıdır">
+            {tepkiAcik ? '😀 Emoji tepkilerini kapat' : '😶 Emoji tepkilerini aç'}
+          </button>
           <button className="ikincil-buton text-left" onClick={() => muzikAyarla(!muzikAcik)}>
             {muzikAcik ? '🎵 Yarışma müziğini kapat' : '🎵 Yarışma müziğini aç'}
           </button>
@@ -750,6 +769,7 @@ export default function Sahne() {
           <EnerjiSeridi oyuncular={seritSonuclari} />
         </div>
       )}
+      <TepkiKatmani oturum={oturum.id} etkin={tepkiAcik && !quizAcik && !lobi && !finalAcik} />
       {lobi && (
         <Lobi
           oturumId={oturum.id}

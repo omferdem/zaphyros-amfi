@@ -506,3 +506,37 @@ body::after {
 @media (prefers-reduced-motion: reduce) {
   .animate-pop, .animate-breathe, .animate-confetti { animation: none; opacity: 1; }
 }
+
+/* ------------------------------------------------------------------ emoji tepkileri */
+.tepki-yol {
+  position: absolute;
+  bottom: -3rem;
+  font-size: 2.6rem;
+  animation: tepki-yuksel linear forwards;
+}
+.tepki-kalp {
+  position: absolute;
+  bottom: -3rem;
+  font-size: 2.6rem;
+  animation: tepki-kalp-uc ease-in forwards;
+}
+@keyframes tepki-yuksel {
+  0% { transform: translate(0, 0) scale(0.7); opacity: 0; }
+  10% { opacity: 1; }
+  35% { transform: translate(var(--s1), -35vh) scale(1); }
+  70% { transform: translate(var(--s2), -70vh) scale(1.05); opacity: 1; }
+  100% { transform: translate(0, -100vh) scale(0.9); opacity: 0; }
+}
+/* Kalp, sağ alttaki hoca karakterine doğru kıvrılarak uçar */
+@keyframes tepki-kalp-uc {
+  0% { transform: translate(0, 0) scale(0.8); opacity: 0; }
+  12% { opacity: 1; }
+  45% { transform: translate(calc((100vw - var(--x0)) * 0.35 + var(--s1)), -45vh) scale(1.1); }
+  100% { transform: translate(calc(100vw - var(--x0) - 6rem), 0) scale(0.5); opacity: 0.2; }
+}
+.tepki-hoca-zipla { animation: tepki-zipla 0.5s ease-in-out 3; }
+@keyframes tepki-zipla { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.5rem); } }
+@media (prefers-reduced-motion: reduce) {
+  .tepki-yol, .tepki-kalp { animation-duration: 1.5s !important; }
+  .tepki-hoca-zipla { animation: none; }
+}

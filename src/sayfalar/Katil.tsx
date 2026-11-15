@@ -1,3 +1,4 @@
+import TepkiSeridi from '../bilesenler/TepkiSeridi'
 import Gorsel from '../bilesenler/Gorsel'
 import { varlikBildir } from '../lib/varlik'
 import { useEffect, useRef, useState } from 'react'
@@ -467,7 +468,7 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
   const satirlar = (adim?.tur === 'slayt' ? adim.metin ?? '' : '').split('\n').filter(Boolean)
 
   return (
-    <main className="min-h-screen p-4 flex flex-col gap-4 max-w-lg mx-auto">
+    <main className="min-h-screen p-4 pb-28 flex flex-col gap-4 max-w-lg mx-auto">
       <header className="flex items-center justify-between gap-2 border-b border-white/10 pb-2.5">
         <div className="min-w-0 flex-1">
           <p className="text-[11px] font-mono font-semibold text-slate-300 truncate">{durum?.ders ?? ders}</p>
@@ -657,6 +658,7 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
       </section>
 
       {durum && !durum.bitti && <SinifDugmeleri oturum={oturum} />}
+      {durum && !durum.bitti && !(adim?.tur === 'soru' && adim.soru_durum === 'acik') && <TepkiSeridi oturum={oturum} />}
       {oturumKodu && !durum?.bitti && (
         <span className="fixed right-3 bottom-3 z-20 rounded-lg bg-ze-bg/80 border border-white/10 px-2 py-1 font-mono text-[11px] text-slate-400 backdrop-blur" title="Ders kodu (sayfa yenilenirse kod sorulmaz)">
           Kod {oturumKodu.slice(0, 3)} {oturumKodu.slice(3)}

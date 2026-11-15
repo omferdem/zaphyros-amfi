@@ -62,6 +62,12 @@ export function dengeliSec<T>(
   return karistir(secilen, rastgele)
 }
 
+/** Seçilen soruları havuzdaki özgün sıraya dizer: her turda farklı sorular gelir ama oynanma sırası paketin sırasıdır. */
+export function havuzSirasinaDiz<T>(secilen: T[], havuz: T[]): T[] {
+  const sira = new Map(havuz.map((s, i) => [s, i]))
+  return [...secilen].sort((a, b) => (sira.get(a) ?? 0) - (sira.get(b) ?? 0))
+}
+
 const GECMIS_SAYISI = 2
 
 /** Son iki turda sorulmuş soru kimlikleri (oturum başına tarayıcıda tutulur). */

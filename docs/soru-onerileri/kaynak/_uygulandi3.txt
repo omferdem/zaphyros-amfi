@@ -1,0 +1,86 @@
+h01-03:2|Yalnızca deneysel bilimlerin ve laboratuvar sonuçlarının|Yalnızca devlet kurumlarının ve hukuk düzeninin|Yalnızca sanat eserlerinin ve estetik anlayışın
+h01-03:16|Dinin ritüelleri ve ibadet şekilleriyle|Dinin güzellik ve sanat anlayışıyla|Dinin devlet yönetimi ve hukukuyla
+h01-03:17|Değerler sistemi ve yaşam tarzıyla|İnanç esasları ve doktrinlerle|Tarihsel gelişim ve kökenle
+h01-03:19|Yalnızca bireysel bir hobi ve kişisel tercih|Sadece bilimsel bir yöntem ve deney süreci|Yalnızca mitolojik anlatılar ve efsaneler bütünü
+h01-03:28|Yalnızca din dilinin mantıkî tahliline ve çözümlemesine|Yalnızca dinî sembollerin anlamını belirlemeye|Yalnızca dinî tecrübenin varoluşsal boyutuna
+h01-03:30|Allah'ın sıfatlarını tek tek sıralamayı ve açıklamayı|Ruhun ölümsüzlüğünü kanıtlamaya çalışmayı|Vahyin tarihî gelişimini belgelemeyi
+h01-03:33|İçeriden, tasdik ederek ve inançlı biçimde|Yalnızca ibadet ederek ve ritüelleri yaşayarak|Hiç meşgul olmayarak ve dışarıda kalarak
+h01-03:41|Sembolizm ve dinî sembollerin incelenmesi|Dil analizi ve mantıkî çözümleme|Estetik ve sanat felsefesinin konuları
+h01-03:48|Yalnızca bir madde parçası ve cismanî bir yapı|Bir felsefî sistem ve düşünce kuramı|Bir takvim ve zamanı ölçme yöntemi
+h01-03:57|Filozoflardan Farabî ve Kindî gibi isimler|Sofistlerden Protagoras ve onun öğrencileri|Mutezile kelâmcıları ve onların takipçileri
+h04-05:5|Evet, yalnızca madde ile sınırlıdır|Evet, yalnızca ruh ve onun kuvvetleriyle|Evet, yalnızca Tanrı ve sıfatlarıyla
+h04-05:11|Tüm konular terk edilmiş ve felsefe sona ermiştir|Hiçbir değişiklik olmamış, aynı kalmıştır|Sadece tek bir konu kalmış, diğerleri düşmüştür
+h04-05:16|Yalnızca süs unsuru olarak bir yer tutması|Gereksiz bir fikir olarak sistemden çıkarılması|Ayrı bir bilim dalı olarak ele alınması
+h04-05:21|Zamana bağlı, sonradan olmuş bir varlık olarak|Mekânda sınırlı ve yer kaplayan bir varlık olarak|Başlangıcı ve sonu bulunan bir varlık olarak
+h04-05:22|Mantıksal çelişkiden ve tutarsızlıktan|Politik baskıdan ve yönetim engellerinden|Ekonomik krizden ve kaynak yetersizliğinden
+h04-05:25|Bir, ilk, eşsiz gibi olumsuz sıfatlar|Yalnızca zamana ilişkin sıfatlar|Yalnızca mekâna ilişkin sıfatlar
+h04-05:28|Tamamen ayrı kampta yer alırlar ve hiçbir ortak görüşleri yoktur|Aynı görüşü paylaşırlar ve aralarında hiçbir fark bulunmaz|Birbirini tanımazlar ve hiçbir konuda tartışmazlar
+h04-05:39|Yalnızca yazılı metinleri okuyup ezberlemek|Kâinatı görmezden gelip yalnızca kitaba bakmak|Yalnızca astronomi yaparak gök cisimlerini saymak
+h04-05:40|Hiçbir zaman Yaratan'ını tanımaz|Yalnızca eğitim yoluyla Yaratan'ını tanır|Tesadüfen Yaratan'ını tanır
+h06-08:7|Hiçlikten, yok iken var etmeyi|Maddenin yok edilmesini ve ortadan kalkmasını|Âlemin kendiliğinden oluşmasını ve tesadüfü
+h06-08:8|Allah'ın iradesi ve onun yaratıcı gücü|Ruhun bedeni ve beden üzerindeki etkisi|İnsanın aklı ve düşünme gücü
+h06-08:9|Maddî dünyayı ve duyularla bilinen nesneleri|İnsan duygularını ve onların değişimini|Yalnızca sayıları ve onların ilişkilerini
+h06-08:12|Şekillenmiş varlığı ve tam hâlini almış nesneyi|Tanrı'nın kendisini ve onun hareket gücünü|Ruhu ve onun yönetici gücünü
+h06-08:14|Aşağıdan yukarıya doğru bir yükselişi ve çıkışı|Maddenin yok olmasını ve ortadan kalkmasını|Âlemin sona ermesini ve çökmesini
+h06-08:17|Âlemin ne kadar büyük olduğunu ve genişliğini|Âlemin kaç yaşında olduğunu ve ne zaman başladığını|Âlemin kime ait olduğunu ve kimin mülkü olduğunu
+h06-08:19|İdealara karşı çıkar ve onları geçersiz sayar|Maddeyi yok eder ve onun yerine yenisini koyar|Hiçbir şey yapmaz ve sürece karışmaz
+h06-08:25|Canlı bir organizma gibi kendi kendine gelişen bir yapı|Bir rüya gibi hayalî ve gerçek olmayan bir yapı|Tanrı'nın kendisi olarak, onunla özdeş bir yapı
+h06-08:35|Tanrı'nın iradesine göre, ruhun yönlendirmesiyle|Tesadüfen ve hiçbir kurala bağlı olmadan|Ruhun etkisiyle ve manevî bir güçle
+h06-08:38|Her sûrede açıkça ve sıklıkla geçer|Hiç söz edilmez ve konuya hiç değinilmez|Yalnızca hadiste açıkça yer alır
+h06-08:45|Bedenin bir parçasıdır ve bedenle bütünleşmiştir|Bedenle tamamen aynıdır ve ondan ayırt edilemez|Bedenden etkilenmeyen bir hayalden ibarettir
+h06-08:46|Ruhun yok olması ve hiçbir yerde bulunmaması|Ruhun cennete gitmesi ve orada kalması|Ruhun bedenle birleşmesi ve onunla bütünleşmesi
+h06-08:51|Evet, yer kaplar ve bölünebilir|Bazen yer kaplar ve bazen kaplamaz|Yalnızca bedende yer kaplar ve orada bölünür
+h06-08:52|Salt madde olarak, hiçbir ruhî yönü bulunmayan bir şey|Algı yanılsaması olarak, gerçek bir karşılığı olmayan bir şey|Değişmeyen cevher olarak, hiçbir hareketi bulunmayan bir şey
+h06-08:53|Yalnızca ruhanî cevher ve manevî unsurlar|Yalnızca düşünce ve onun faaliyetleri|Yalnızca beden ve onun organlarından oluşan yapı
+h06-08:54|Cismanî bir yapı, yani bedenin bir parçası olan şey|Salt hayal, yani zihnin ürettiği bir tasarım|Madde yığını, yani cisimlerin rastgele birleşimi
+h09-12:12|İnsanın aklı olmadığı için hürriyeti bulunmaz|Hürriyet kavramı bilinmediği için ondan söz edilmez|Allah insanı özgür bırakmadığı için hürriyeti yoktur
+h09-12:15|Yalnızca teorik tartışmanın sürdürülmesini|Estetik yargının ve güzel anlayışının belirlenmesini|Mantık analizinin ve çıkarım kurallarının sıralanmasını
+h09-12:24|Sanat eserinin kendisi ve onun maddî yapısı|Sanatın yapıldığı mekân ve çevresi|Sanatın yapıldığı zaman ve dönemi
+h09-12:31|Fayda sağlayan ve işe yarayan şey|Mantıksal bir sonuca varılan şey|Mutlak Ruh'un tezahür ettiği şey
+h09-12:33|Fayda ile ilişkilendirilen, işe yarayan bir yargıyla|Ahlâk ilkeleriyle ilişkilendirilen, doğru olan bir yargıyla|Hukuk kurallarıyla ilişkilendirilen, zorunlu bir yargıyla
+h09-12:41|Yalnızca ahlâk ve değerler konularını|Yalnızca sanat ve güzellik konularını|Yalnızca hukuk ve devlet konularını
+h09-12:46|Yalnızca ibadet eder ve başka bir şey yapmaz|Yalnızca ticaret yapar ve kâr peşinde koşar|Hiçbir şey yapmaz ve kenarda durur
+h09-12:47|Yalnızca eğlence ve vakit geçirme etkinliği|Yalnızca din ve ibadet faaliyeti|Yalnızca matematik ve hesaplama işlemi
+h09-12:56|Yalnızca düşünen varlık ve onun yetenekleri|Yalnızca insan ve onun yakın çevresi|Yalnızca Tanrı ve ona ait sıfatlar
+h09-12:57|Hiçbir katkısı yoktur ve alanı tamamen dışındadır|Yalnızca felsefeden alır ve kendi üretimi yoktur|Yalnızca taklit eder ve yeni bir şey katmaz
+h09-12:58|Hepsi çok kolaydır ve ilk bakışta anlaşılır|Hiç anlaşılmaz ve hiçbir yolla öğrenilemez|Yalnızca çocuklar anlar ve yetişkinler kavrayamaz
+h09-12:59|Yalnızca tesadüften ve rastgele ilişkiden|Yalnızca zorlamadan ve baskı altında olmaktan|Yalnızca hayalden ve zihnin ürettiği tasarımdan
+h09-12:60|Bir bahçe ve içindeki ağaçlar, yani cennet|Bir dağ ve üstündeki kar, yani yüce yer|Bir nehir ve akıntısı, yani hayat kaynağı
+h09-12:72|Doğrulama, yani üst kaynağın alt kaynaklarca onaylanması|Yok sayma, yani üst kaynağın alt kaynakları geçersiz kılması|Düşmanlık, yani kaynakların birbirine karşı çıkması
+h09-12:73|Yalnızca duyuya dayanmasına ve deneyi esas almasına|Yalnızca sezgiye dayanmasına ve duyuyu reddetmesine|Yalnızca vahye dayanmasına ve aklı dışlamasına
+h09-12:74|Aklın bilgi kaynağı olarak tek ölçü olmasını|Duyunun bilginin tek dayanağı sayılmasını|Deneyin bilgiyi belirleyen tek kaynak olmasını
+h09-12:78|Aklî tutarlılığı ve mantıksal doğruluğu|Doğuştan olması ve zihinde hazır bulunması|Vahiyle gelmesi ve peygamberce bildirilmesi
+h09-12:80|Yalnızca zan ve tahminden ibaret, kesin olmayan bilgi|Yalnızca kuruntu ve hayalden ibaret bilgi|Yalnızca hayal ürünü ve aslı olmayan bilgi
+h13-14:1|Siyasî güç kazanmak ve iktidar elde etmek|Servet toplamak ve zenginleşmek|Eğlence üretmek ve vakit geçirmek
+h13-14:2|Yalnızca zenginleştirmek ve maddî refaha ulaştırmak|Yalnızca eğlendirmek ve zaman geçirtmek|Yalnızca şöhret kazandırmak ve ün sağlamak
+h13-14:3|Takvimi öğrenmek ve zamanı ölçmek|Servet toplamak ve mal biriktirmek|Eğlenmek ve vakit geçirmek
+h13-14:4|Haritalar çizmek ve yolları göstermek|Ticaret yollarını açmak ve mal taşımak|Orduları yönlendirmek ve savaşa hazırlamak
+h13-14:5|Binaları onarmak ve yıpranan yerleri yenilemek|Yolları onarmak ve ulaşımı kolaylaştırmak|Silahları geliştirmek ve ordu donatmak
+h13-14:7|Yalnızca yerel olayları ve günlük işleri|Yalnızca ekonomiyi ve ticaretin kurallarını|Yalnızca hukuku ve yasaların uygulanmasını
+h13-14:8|Reddeder ve böyle bir yasanın bulunmadığını söyler|Yalnızca din kabul eder ve felsefe bunu reddeder|Yalnızca felsefe kabul eder ve din bunu reddeder
+h13-14:12|Kaynaklarını ve bilginin dayanağını|Metotlarını ve bilgiye ulaşma yollarını|Hükümlerini ve verdikleri sonuçları
+h13-14:13|Hava durumuna ve mevsim değişikliklerine|Takvime ve zamanın bölünmesine|Para birimine ve değerinin belirlenmesine
+h13-14:14|İkisi birbirini yalanlar ve çelişir|İkisi yalnızca zıttır ve birleşemez|İkisi önemsizdir ve ilgilenilmez
+h13-14:15|Eşyayı hayal etmesi ve zihninde tasarlaması|Eşyayı yok saymasi ve görmezden gelmesi|Eşyayı değiştirmesi ve yeniden biçimlendirmesi
+h13-14:17|Çok, birbirinden ayrı ve ilişkisiz hakikatler|Yok, hakikat bulunmaz ve tamamen göreli|Bilinemez, hakikate hiçbir yoldan ulaşılamaz
+h13-14:24|Dine tam destek verirler ve onu över|Felsefeyi dine bağlarlar ve ona tabi kılarlar|Din ile felsefeyi birleştirirler ve tek sayarlar
+h13-14:25|Dinî inanışlarla ittifak ve işbirliği|Tamamen tesadüf ve rastlantı|Hiçbir sebep yok, kendiliğinden oluşmuş
+h13-14:27|Sanat-din ilişkisi şeklinde, estetik düzlemde|Hukuk-din ilişkisi şeklinde, hukukî düzlemde|Ticaret-din ilişkisi şeklinde, ekonomik düzlemde
+h13-14:30|Matematik konusunda ve hesap meselelerinde|Tıp konusunda ve sağlık meselelerinde|Mimarî konusunda ve yapı meselelerinde
+h13-14:31|Bir filozofu ve onun öğrencilerini|Bir tüccarı ve onun ortaklarını|Bir askeri ve onun komutanlarını
+h13-14:32|Ödüllendirilmelerini ve yönetici yapılmalarını|Yönetici yapılmalarını ve görevlendirilmelerini|Serbest bırakılmalarını ve korunmalarını
+h13-14:39|Takvimin ve zaman hesabının|Para sisteminin ve ticaretin|Mimarinin ve yapı sanatının
+h13-14:40|Sofistlere ve din karşıtı düşünürlere|Mutezilîlere ve akılcı kelâmcılara|Hadisçilere ve nakli esas alan âlimlere
+hq01-04:45|Bilimleri birbirinden ayırmak ve her biri için ayrı alanlar tanımlamak|Dinî bilgiyi tümüyle yok saymak ve yalnızca sosyal bilimlere dayanmak|Yalnızca tek bir bilime odaklanmak ve diğer alanları göz ardı etmek
+hq01-04:54|Her ikisi de dili hiç incelemez ve yalnızca ibadete dayanan hükümler verir|Her ikisi de yalnızca tarihî açıdan inceler ve mantıkî çözümleme yapmaz|Kelâmcı mantığı reddeder, din felsefecisi yalnızca ibadet ederek konuyu işler
+hq01-04:61|Filozoflar Tanrı konusunu hiç ele almamış, sistemlerinde ona hiç yer vermemiştir|Yalnızca dinî düşünürler Tanrı'yı ele almış, filozoflar bu konuya girmemiştir|Filozoflar Tanrı'yı bilinçli olarak sistemlerinden çıkarmış ve onu dışlamıştır
+hq01-04:75|Din için hiç önem taşımayan, yalnızca felsefenin konusu olan bir meseledir|Felsefe için hiç önem taşımayan, yalnızca dinin konusu olan bir meseledir|İki alan için de tamamen aynı olan ve ayrım gerektirmeyen bir meseledir
+hq01-04:78|Sorular bir kez çözüldüğünde diyalog sona erer ve artık konuşulacak bir şey kalmaz|Felsefe bir gün dinin yerini alacağı için diyalog gereksiz hâle gelir|Din bir gün felsefenin yerini alacağı için diyalog gereksiz hâle gelir
+hq05-09:56|Her sûrede açıkça ve defalarca geçer, inanç ilkesi olarak yer alır|Hiçbir şekilde söz konusu edilmez ve konuya hiç değinilmez|Yalnızca hadislerde açıkça yer alır, ayetlerde hiç geçmez
+hq10-14:50|Hepsini tümüyle doğru bulması ve bu görüşlerde bir eksiklik görmemesidir|Yalnızca realizmi eleştirmesi ve diğer görüşleri desteklemesidir|Yalnızca monizmi desteklemesi ve diğerlerini bütünüyle reddetmesidir
+hq10-14:52|Akıl en önemli kaynak kabul edilir, bütün bilginin temeli sayılır|Akıl vahiyle aynı sayılır, ikisi birbirinden ayrılmaz|Akıl tümüyle yüceltilir, imandan da üstün görülür
+hq10-14:56|İkisi de şüpheyi amaç edinir ve bilgiyi hiçbir zaman kabul etmez|İkisi de bilgiyi reddeder ve hakikate ulaşılamayacağını savunur|İkisi de vahyi reddeder ve yalnızca şüpheye dayanarak ilerler
+hq10-14:81|En az açıklama yapmış, konuyu kısaca geçiştirmiş olması|Meşruiyeti reddetmiş, felsefeyi dinden dışlamış olması|Felsefeden uzak durmuş, onunla hiç ilgilenmemiş olması
+hq10-14:83|Doğrudur, yalnızca dindarlar karşı çıkmıştır ve başka grup bu tartışmaya girmemiştir|Yalnızca ateistler karşı çıkmıştır, dindarlar bu tartışmada hiç yer almamıştır|Hiç kimse karşı çıkmamıştır, bu münasebet her zaman tam kabul görmüştür
+hq10-14:84|Hepsinin gerekçesi birbirinin aynıdır ve aralarında ayrım gözetilmesine gerek yoktur|Hepsi aynı kişilerdir ve aynı dönemin ürünüdür, ayrı gerekçeleri yoktur|Hiçbirinin açıklanabilir bir gerekçesi yoktur, tamamen keyfî biçimde davranmışlardır
+hq10-14:99|Hiç önemli değildir, çünkü karşı çıkışların bağlamla ilgisi bulunmaz ve açıklaması gerekmez|Yalnızca takvim bilgisi sağlar ve olayların tarihlerini doğru ezberletmeye yarar|Yalnızca sanat bilgisi sağlar ve eserlerin hangi dönemde yapıldığını gösterir

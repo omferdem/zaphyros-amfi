@@ -1,0 +1,200 @@
+#QUESTION:Bir öğrenci "Descartes'a göre ruh ve madde uzlaşan iki yaratılmış cevherdir" diyor. Bu ifade nasıl düzeltilir?
+#CORRECT:Ruh ile madde arasında uzlaşma yoktur
+#WRONG:Doğrudur, Descartes ikisini birbirine tamamen indirger ve aynı sayar
+#WRONG:Descartes ruhu tümüyle inkâr eder ve yalnızca maddeyi kabul eder
+#WRONG:Descartes maddeyi tümüyle inkâr eder ve yalnızca ruhu kabul eder
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:Descartes
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Berkeley'in "varolmak algılanmış olmaktır" görüşü ile materyalist görüş karşılaştırıldığında ne söylenebilir?
+#CORRECT:Berkeley maddeyi algıya indirger
+#WRONG:İkisi de aynı görüştedir ve maddeye aynı değeri verir
+#WRONG:İkisi de ruhu inkâr eder ve yalnızca duyuları kabul eder
+#WRONG:İkisi de Tanrı'yı reddeder ve ateizmi savunur
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:Karşılaştırma
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Kant'a göre "zihin etkindir" ifadesi neyi anlatır?
+#CORRECT:Zihin duyu verilerini a priori kavramlarla biçimlendirip deneye düzen kazandırır
+#WRONG:Zihin duyu verilerini olduğu gibi kopyalar ve herhangi bir düzen kazandırmaz
+#WRONG:Zihin tamamen etkisizdir ve dış dünyayı hiçbir biçimde yansıtamaz
+#WRONG:Zihin yalnızca geçmiş olayları hatırlar ve yeni bir şey üretmez
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:Kant
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Hume ile Berkeley'in dış dünya anlayışlarının ortak noktası hangisidir?
+#CORRECT:Maddenin bağımsız gerçekliğini şüpheli ya da gereksiz görüp algıya ağırlık vermeleri
+#WRONG:İkisinin de maddeyi tek gerçek sayması ve ruhun varlığını tümüyle inkâr etmesi
+#WRONG:İkisinin de Tanrı'yı inkâr etmesi ve materyalizme yaklaşması
+#WRONG:İkisinin de algıyı reddedip yalnızca akıl yürütmeye güvenmesi
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:XVIII. yüzyıl
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:XVIII. yüzyıl Aydınlanma felsefesinde maddenin konumu derste nasıl özetlenir?
+#CORRECT:Madde neredeyse inkâr edilmeye çalışılmış, varlığın temeli zihin ve algıya dayandırılmıştır
+#WRONG:Madde her zaman varlığın tek ve değişmez temeli sayılmış, zihne hiç yer verilmemiştir
+#WRONG:Madde hiç tartışılmamış ve felsefenin gündemine hiç girmemiştir
+#WRONG:Madde yalnızca teolojik bir kavram olarak kullanılmış, felsefede yer almamıştır
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:XVIII. yüzyıl
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:İbni Arabi'ye göre yaratmanın gerçekleşmesi için gerekli üç unsur hangileridir?
+#CORRECT:Emir veren Zât, irade sahibi ve "ol" emrini veren varlık
+#WRONG:Yalnızca madde, ruh ve zaman olmak üzere üç temel unsur
+#WRONG:Atom, boşluk ve hareket olmak üzere üç temel unsur
+#WRONG:Duyu, deney ve akıl olmak üzere üç temel unsur
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:İbni Arabi
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:İbni Arabi, Allah ile âlem arasındaki ilişkiyi nasıl kurar?
+#CORRECT:Allah ile âlemi aynılaştırmaz
+#WRONG:Allah ile âlem aynı şeydir ve aralarında bir ayrım bulunmaz
+#WRONG:Allah âlemin içinde tamamen kaybolmuş ve yok olmuştur
+#WRONG:Allah âlemi yok saymış ve onunla ilgisini kesmiştir
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:İbni Arabi
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:İbni Arabi'ye göre âlem hangi aşamadan hangi aşamaya geçerek varlığa gelir?
+#CORRECT:Bilkuvve varlıktan bilfiil varlığa
+#WRONG:Bilfiil varlıktan bilkuvve varlığa
+#WRONG:Yokluktan yine yokluğa
+#WRONG:Maddeden ruha ve sonra tekrar maddeye
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:İbni Arabi
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Farabî'de varlık zincirinin ilk halkası hangisidir?
+#CORRECT:İlk Akıl
+#WRONG:Faal Akıl
+#WRONG:Madde
+#WRONG:Ay altı âlem
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:Farabî
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Farabî'ye göre Faal Akıl hangi âlemi yönetir?
+#CORRECT:Ay küresi altı âlemi
+#WRONG:Ulvî âlemi
+#WRONG:Yalnızca felekleri
+#WRONG:Hiçbir âlemi yönetmez
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:Farabî
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:İbni Sina'ya göre mümkün-zarurî varlıklar hangileridir?
+#CORRECT:Zâtı yönünden mümkün, dışındaki sebebe göre zarurî olan akıllar ve felekler
+#WRONG:Yalnızca Allah, çünkü yalnızca O zorunlu varlık olarak sayılmıştır
+#WRONG:Yalnızca madde âlemindeki cisimler ve onların parçaları sayılmıştır
+#WRONG:Yalnızca insan ruhları ve bunların kuvvetleri sayılmıştır
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:İbni Sina
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:İbni Sina'ya göre ay altı âlem hem zaman hem zât bakımından neden ezelî olamaz?
+#CORRECT:Zaman içinde ve bir şeyden yaratılmışlardır
+#WRONG:Hiç yaratılmamışlardır ve kendiliğinden vardır
+#WRONG:Yalnızca zâtı bakımından ezelî olurlar ve zamanla ilişkileri yoktur
+#WRONG:Yalnızca ibda' edilmiş oldukları için ezelî sayılırlar
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:İbni Sina
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:İslâm düşüncesinde âlemin yaratılışına dair farklı yaklaşımları sıralayan ifade hangisidir?
+#CORRECT:Kelâmcıların yoktan yaratması, sufîlerin tecelli ve aşk temelli yaklaşımı, filozofların südûr teorisi
+#WRONG:Bütün yaklaşımlar aynı görüşte birleşmiş ve aralarında hiçbir ayrılık ortaya çıkmamıştır
+#WRONG:Yalnızca südûr teorisi bulunmuş, başka hiçbir yaklaşım gelişmemiştir
+#WRONG:Yalnızca yoktan yaratma bulunmuş, başka hiçbir yaklaşım gelişmemiştir
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:Sonuç
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Kelâmcılar ile filozofların "yokluk" kavramına yaklaşımları arasındaki fark nedir?
+#CORRECT:Kelâmcılar yoktan yaratma tezini yokluk kavramına dayandırır
+#WRONG:İkisi de yokluğu bir varlık sayar ve aynı sonuca varır
+#WRONG:İkisi de yokluğu tümüyle inkâr eder ve tartışmaz
+#WRONG:Aralarında bu konuda hiçbir fark bulunmaz
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:Filozoflar ve sufîler
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:İbni Arabi'ye göre her şey neden canlıdır?
+#CORRECT:Çünkü her şey Allah'ı zikretmektedir
+#WRONG:Çünkü her şey suyla tamamen dolmuştur
+#WRONG:Çünkü hiçbir şey asla ölmez ve yok olmaz
+#WRONG:Çünkü Allah hiçbir şeyi yaratmamıştır
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:İbni Arabi
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Berkeley'e göre maddî varlıklarda hangi nitelikler bulunur?
+#CORRECT:Yalnızca algıya konu olan ikinci nitelikler
+#WRONG:Hem birinci hem ikinci nitelikler birlikte
+#WRONG:Hiçbir nitelik bulunmaz
+#WRONG:Yalnızca birinci nitelikler
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:XVIII. yüzyıl
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Kur'an ve hadiste "yok iken var etme" ifadesinin yeri hakkında hangisi doğrudur?
+#CORRECT:Açıkça yer almaz, Allah'a yüklenen hâlık, mübdî gibi fiillerin lügat anlamlarından çıkarılmıştır
+#WRONG:Her sûrede açıkça ve defalarca geçer, inanç ilkesi olarak yer alır
+#WRONG:Hiçbir şekilde söz konusu edilmez ve konuya hiç değinilmez
+#WRONG:Yalnızca hadislerde açıkça yer alır, ayetlerde hiç geçmez
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:Yoktan yaratma
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Kelâmcılar yoktan yaratma tezini hangi kavramlardan yola çıkarak temellendirmeye çalışmışlardır?
+#CORRECT:Atom, yer kaplama ve boşluk kavramlarından
+#WRONG:Ruh, beden ve akıl kavramlarından hareketle
+#WRONG:Süje, obje ve algı kavramlarından hareketle
+#WRONG:Hava, su ve ateş kavramlarından hareketle
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:Yoktan yaratma
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Hegel'e göre âlem nedir?
+#CORRECT:Mutlak İde'nin kendini açması ve belli bir gâyeye doğru gelişmesi
+#WRONG:Atomların rastgele birleşimi ve hiçbir gâye taşımayan bir yığın
+#WRONG:Tesadüfen oluşmuş ve zorunlu kanunlara göre işleyen bir makine
+#WRONG:Yalnızca madde ve kuvvetten ibaret bir yapı ve hiçbir akıl içermeyen bir bütün
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:Alman idealizmi
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Bir öğrenci, İbni Sina'nın âlemin yaratılışında "ibda'" kavramını kullandığını söylüyor. Bu kavramın derste anlatılan anlamı hangisidir?
+#CORRECT:Allah dışındaki her şeyin varlığını başka bir şeyden alması ve bunların Allah tarafından yaratılması
+#WRONG:Madde âleminin kendiliğinden ve Allah'tan bağımsız olarak oluşması
+#WRONG:Allah'ın âlemi var ettikten sonra onunla ilişkisini tamamen kesmesi
+#WRONG:Akılların ve felekler âleminin yaratılmayıp öncesiz olduğunun kabul edilmesi
+#PAKET:7. hafta: Ciddi Quiz (15 soru)
+#KONU:İbni Sina
+#ZORLUK:orta
+#BLOOM:Anlama
+

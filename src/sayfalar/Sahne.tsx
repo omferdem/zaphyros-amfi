@@ -117,6 +117,7 @@ export default function Sahne() {
   const [puanAcik, setPuanAcik] = useState(false)
   const [kahootSecimi, setZapootSecimi] = useState(false)
   const [oyunSecimi, setOyunSecimi] = useState(false)
+  const [kartOyunu, setKartOyunu] = useState<OyunAnahtari | null>(null)
   const [lobi, setLobi] = useState<{ ad: string; mod: OyunAnahtari | null; sayi: number; sureDk: number | null; ilk: string | null } | null>(null)
   const [finalAcik, setFinalAcik] = useState(false)
   const [cizimModu, setCizimModu] = useState<CizimModu>('kapali')
@@ -439,6 +440,7 @@ export default function Sahne() {
     }
     setZapootSecimi(false)
     setOyunSecimi(false)
+    setKartOyunu(null)
     setTurModu(mod)
     if (lobiyle) setLobi({ ad: paketAdi, mod, sayi: sorular.length, sureDk: lobiyle.sureDk, ilk: idler[0] ?? null })
   }
@@ -735,7 +737,7 @@ export default function Sahne() {
           kod={kodGoster ? kod : null}
         />
       ) : aktif?.tur === 'oyun' ? (
-        <OyunSahnesi key={aktif.id} oturumId={oturum.id} adim={aktif} araclar={araclar} />
+        <OyunSahnesi key={aktif.id} adim={aktif} araclar={araclar} ac={setKartOyunu} />
       ) : slaytGorunumu && aktif ? (
         <SlaytSahnesi
           belge={aktif.presentation_id ? belgeler.get(aktif.presentation_id) : undefined}
@@ -766,9 +768,10 @@ export default function Sahne() {
       <BaglantiUyarisi />
       {provaAcik && <OyunProvasi kapat={() => setProvaAcik(false)} />}
       {rehberAcik && <Rehber kapat={() => setRehberAcik(false)} />}
-      {(kahootSecimi || oyunSecimi) && icerikId && (
+      {(kahootSecimi || oyunSecimi || kartOyunu) && icerikId && (
         <OyunSihirbazi
-          tur={oyunSecimi ? 'oyun' : 'zapoot'}
+          baslangicOyun={kartOyunu ?? undefined}
+          tur={oyunSecimi || kartOyunu ? 'oyun' : 'zapoot'}
           oturumId={oturum.id}
           icerikId={icerikId}
           hafta={haftaNo}
@@ -776,6 +779,7 @@ export default function Sahne() {
           kapat={() => {
             setZapootSecimi(false)
             setOyunSecimi(false)
+            setKartOyunu(null)
           }}
         />
       )}

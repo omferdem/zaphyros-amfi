@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.58.1 (15 Kasım 2026)
+Geri bildirim düzeltmeleri ve soru deposu.
+- **Soru sayısı sorulur:** Zapoot, Oyunlar ve Quiz başlarken kaç soru oynanacağı seçilir (varsayılan 20; 10/20/30/40/hepsi). Seçilen paketlerden karışık çekilir, ama oynanma sırası paketin özgün sırasıdır; her turda havuzdan farklı sorular gelir, son iki turda sorulanlar sona kalır. Quizde de soru sayısı seçilir; süre soru başına 1 dakika olarak önerilir (değiştirilebilir).
+- **Akıştaki oyun kartı (merdiven, halat vb.):** "Oyunu başlat" artık paket ve soru sayısı seçtirip lobiyi açar, sorular oyunla birlikte gelir (eskiden yalnızca modu açıyor, sorulara geçmiyordu).
+- **Hoca karakteri** adres çubuğunun üstünü kapatmıyor: sağ altta yukarı alındı, kalpler oraya uçuyor.
+- **Soru deposu:** Din Felsefesi I'in 14 haftalık her Zapoot ve Quiz paketine 20'şer yeni soru (toplam 560) hazırlandı: `supabase/data/din-felsefesi-1-ek-sorular.sql` (aynı soru metni varsa atlar). Her soruda konu, zorluk (yaklaşık %40 kolay, %40 orta, %20 zor; Bloom düzeyi ve metin uzunluğuna göre atanmıştır) ve Bloom etiketi var. Zapoot soruları 20, quiz soruları 60 saniye. ZOMR dosyaları `docs/soru-onerileri/zomr/`, kaynak taslaklar `docs/soru-onerileri/kaynak/`, denetim `scripts/soru-kontrol.py`.
+
 ## v0.58.0 (15 Kasım 2026)
 Faz 8 (kısmi): soru deposu hazırlığı. Veritabanına soru EKLENMEDİ.
 - **Soru dosyası hazırlandı, onay bekliyor:** `docs/soru-onerileri/din-felsefesi-1-ek-zapoot-sorulari.txt` (ZOMR biçimi). Din Felsefesi I içindeki 14 haftanın her Zapoot paketi için 6-7 yeni soru (toplam 86), kaynak olarak yalnızca o haftanın slayt metinleri; her soruda `#KONU`, `#ZORLUK` (kolay/orta/zor), `#BLOOM` ve `#PAKET` etiketi var. Paket adları mevcut paketlerle aynı olduğundan içe aktarılınca onlara eklenir (adlardaki "20 kısa soru" ifadesi bu durumda eski sayıyı gösterir).

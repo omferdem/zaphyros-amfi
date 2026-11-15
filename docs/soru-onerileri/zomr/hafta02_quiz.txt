@@ -1,0 +1,200 @@
+#QUESTION:Bir öğrenci din dilinin anlamlı olup olmadığını mantık açısından sorguluyor. Bu çalışma din felsefesinin hangi problem kategorisine girer?
+#CORRECT:Dil ve mantık analizi, yani dinî hükümlerin dil ve mantık açısından tenkit ve tahlili
+#WRONG:Metafizik problemler, yani yalnızca Tanrı'nın varlığı ve âlemin yaratılışı üzerine yapılan inceleme
+#WRONG:Sembolizm, yani yalnızca dinî sembollerin anlamını ve önemini belirleme çalışması
+#WRONG:İlişkisel problemler, yani yalnızca dinin sanat ve ahlâkla ilişkisini inceleme çabası
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Ana problemler
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:Bir filozof Tanrı'nın varlığına dair aklî deliller geliştiriyor ve ontolojik delile büyük önem veriyor. Hangi gruba en yakındır?
+#CORRECT:Descartes, Leibniz ve Spinoza gibi akılcı filozoflara
+#WRONG:Mantıkçı pozitivistlere ve linguistik tahlilcilere
+#WRONG:Varoluşçu ve fenomenolojik düşünürlere
+#WRONG:Dinî tecrübeyi merkeze alan psikologlara
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Felsefî yaklaşımlar
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:Bir düşünür dinî tecrübenin bilgi değerini incelemekte ve âlemden Tanrı'ya gitmeyi hedefleyen akıl yürütmeleri ön plana almaktadır. Hangi yaklaşımı temsil eder?
+#CORRECT:Tecrübeci filozofları
+#WRONG:Akılcı filozofları
+#WRONG:Mantıkçı pozitivistleri
+#WRONG:Varoluşçu düşünürleri
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Felsefî yaklaşımlar
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:Bir kelâmcı dinî hükmün şüphenin ötesinde olduğunu söylerken, bir din felsefecisi aynı hükmü sorgulamaya açık tutuyor. Fark neye dayanır?
+#CORRECT:Kelâmcı tasdikle yola çıkar, din felsefecisi hiçbir şeyi inceleme dışında tutmaz
+#WRONG:Kelâmcı yalnızca vahiy, din felsefecisi yalnızca deney kullanır ve ikisi bir araya gelmez
+#WRONG:İkisi de aynı yöntemi kullanır, aralarındaki fark yalnızca kullandıkları adlardan ibarettir
+#WRONG:Din felsefecisi inançlı bir duruşla, kelâmcı ise inançsız bir duruşla yola çıkar
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Din felsefesi ve kelâm
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Bir araştırmacı dinin toplumsal fonksiyonlarını ve inancın toplum hayatını nasıl etkilediğini inceliyor. Hangi din bilimine ait bir çalışmadır?
+#CORRECT:Din sosyolojisine
+#WRONG:Din psikolojisine
+#WRONG:Din antropolojisine
+#WRONG:Dinler tarihine
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Din bilimleri
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:Din felsefecisi ile din bilimleri arasındaki iş bölümünü derse göre en iyi hangisi açıklar?
+#CORRECT:Din bilimleri tasvir ve açıklama yapar, filozof onların yöntem, teori ve açıklamalarını tahlil ve tenkit eder
+#WRONG:Din bilimleri dinin hakikatini yargılar, filozof ise yalnızca tasvir eder ve kayda geçirir
+#WRONG:Filozof ile din bilimcisi tamamen aynı işi yapar ve aralarında bir ayrım bulunmaz
+#WRONG:Din bilimleri felsefenin yerini alır ve filozof bu alanda kenarda kalır
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Din bilimleri
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:"Din felsefesinin kapısı her türlü bilgi ve veriyi içine alacak biçimde açık olmalıdır." Bu sonuç hangi anlayışı yansıtır?
+#CORRECT:Disiplinler arası diyalog ve bütünlüklü bir anlayışı
+#WRONG:Yalnızca dinî bilgilerin kabulünü ve diğer bilgilerin bütünüyle dışlanmasını gerektiren bir anlayışı
+#WRONG:Bilimsel verilerin dışlanmasını ve yalnızca felsefenin geçerli sayılmasını isteyen anlayışı
+#WRONG:Felsefenin tek başına yeterli olduğu, diğer alanlara ihtiyaç duyulmadığı anlayışını
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Din bilimleri
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Birisi "din felsefesi kelâmın aynısıdır" diyor. Ders içeriğine göre bu görüş neden yanlıştır?
+#CORRECT:Kelâm inançlı duruşla dinî hükümleri savunup sistemleştirir, din felsefesi tarafsız ve eleştirel mesafeyle çalışır
+#WRONG:Kelâm hiçbir delil kullanmadığı için din felsefesinden ayrılır ve onunla ilişkisi yoktur
+#WRONG:Din felsefesi yalnızca ibadeti incelediği için kelâmla aynı alanlarda çalışmaz
+#WRONG:İkisi aynı yöntem ve amaçla çalıştığından aralarında hiçbir fark bulunmamaktadır
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Din felsefesi ve kelâm
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Hume, Freud, Jung, William James ve Allport'un çalışmaları dinî hayatın hangi yönünü ele alır?
+#CORRECT:Psikolojik yönünü
+#WRONG:Hukukî yönünü
+#WRONG:Matematiksel yönünü
+#WRONG:Mimarî yönünü
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Din bilimleri
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Bir din felsefecisi ontolojik delilin doğruluğunu değerlendirirken delili kimin ileri sürdüğünü ikincil görüyor. Bu tavır neyi gösterir?
+#CORRECT:Filozof için asıl önemli olan delilin iddiasının doğruluğudur
+#WRONG:Filozof tarihe dair hiçbir bilgi toplamaz ve delilin kökeniyle tümüyle ilgilenir
+#WRONG:Filozof yalnızca ünlü isimlerin görüşlerine güvenir ve delili onlara dayandırır
+#WRONG:Delilin doğruluğu filozof için önemsizdir, yalnızca sahibi önemlidir
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Din bilimleri
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:Âlemin yaratılışı, insanın âlemdeki yeri ve ölümden sonra hayat gibi konular din felsefesinin hangi kategorisinde yer alır?
+#CORRECT:Metafizik ve kozmolojik problemler
+#WRONG:Dil ve mantık analizi; dinî hükümlerin dil ve mantık açısından tenkit edilmesi çalışmaları
+#WRONG:Sembolizm; dinî sembollerin anlamının ve önemin belirlenmesine dair çalışmalar
+#WRONG:İlişkisel problemler; dinin ahlâk, sanat ve ilimle ilişkisinin incelenmesi çalışmaları
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Ana problemler
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:Bir araştırmacı inanma, bilme, şüphe, zan ve yakîn kavramlarını çözümlüyor. Hangi problem alanında çalışıyor?
+#CORRECT:Epistemolojik problemler
+#WRONG:Sembolizm
+#WRONG:Kozmolojik problemler
+#WRONG:İlişkisel problemler
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Ana problemler
+#ZORLUK:kolay
+#BLOOM:Uygulama
+
+#QUESTION:Din bilimlerinin "objektiflik ilkesi" ne gerektirir?
+#CORRECT:Tasvir ve açıklama ile yetinmeyi, dinin hakikatini ve değerlendirmesini kendine görev saymamayı
+#WRONG:Dinin hakikatini mutlaka yargılamayı ve her durumda bir hüküm vermeyi gerektirir
+#WRONG:Dini bütünüyle reddetmeyi ve dışlamayı gerektirir
+#WRONG:Yalnızca dindarların görüşlerini kayda geçirmeyi ve bunlarla yetinmeyi gerektirir
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Din bilimleri
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Filozof ile din bilimcisi arasındaki "felsefî ayrım" aşağıdakilerden hangisidir?
+#CORRECT:Filozof değer ve hakikat problemini dinî inanç ve uygulamaların menşeinden ve toplumsal fonksiyonlarından ayrı düşünür
+#WRONG:Filozof yalnızca dinin kökenini araştırır ve toplumsal fonksiyonlarla hiç ilgilenmez
+#WRONG:Filozof toplumsal fonksiyonlar dışında hiçbir şeyi incelemez ve hakikat sorusunu bırakır
+#WRONG:Filozof dinî inancın doğruluğuyla hiçbir şekilde ilgilenmez ve yalnızca kökenle uğraşır
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Din bilimleri
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Din felsefesinin bazı çevrelerce "Lâik Kelâm" diye anılması neyi ifade eder?
+#CORRECT:Din felsefesinin kelâma benzer sorunları inançsal bir bağlılık olmadan ele aldığını
+#WRONG:Kelâmın dinî bir disiplin olmadığını ve felsefeden bütünüyle ayrıldığını
+#WRONG:Din felsefesinin kelâmın yerini aldığını ve onu geçersiz kıldığını
+#WRONG:Kelâmın felsefeyi yasakladığını ve bu yüzden din felsefesinin doğduğunu
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Din felsefesi ve kelâm
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Dinler tarihinin din felsefesi için önemi derste nasıl dile getirilir?
+#CORRECT:Tarihçinin sunduğu malzeme olmadan filozof düşünüp tartışamaz
+#WRONG:Dinler tarihi din felsefesine hiçbir katkı yapmaz
+#WRONG:Dinler tarihi yalnızca ibadet takvimlerinden oluşur
+#WRONG:Din felsefesi dinler tarihini bütünüyle yok sayar
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Din bilimleri
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:İbn Sina, Anselm ve Descartes aynı delili ileri sürmüşse, filozof açısından asıl soru hangisidir?
+#CORRECT:Delilin iddiasının doğru olup olmadığı
+#WRONG:Delilin hangi yüzyılda ileri sürüldüğü
+#WRONG:Delili öne süren kişinin ne kadar ünlü olduğu
+#WRONG:Delilin kaç kişi tarafından tekrarlandığı
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Din bilimleri
+#ZORLUK:kolay
+#BLOOM:Uygulama
+
+#QUESTION:Din psikolojisi, sosyolojisi ve dinler tarihinin bulgularını bir araya getirip bilgide bütünlük sağlamaya çalışan kişi hangi rolü üstlenir?
+#CORRECT:Filozof; farklı alanların sonuçlarını tahlil edip bütünleştirir
+#WRONG:Hiçbir rolü yoktur ve bu çalışmalardan tamamen uzak durur, yalnızca izler
+#WRONG:Yalnızca bir ibadet yöneticisi olarak görev yapar ve ayinleri düzenler
+#WRONG:Yalnızca bir istatistikçi olarak veri toplar ve sonuçları kayda geçirir
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Din bilimleri
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Bir öğrenci "ilişkisel problemler" başlığının ne anlama geldiğini soruyor. Doğru cevap hangisidir?
+#CORRECT:Dinin ahlâk, sanat ve ilimle münasebeti ve beşerî tecrübelerin bütünleştirilmesi
+#WRONG:Allah'ın sıfatlarının sayılması ve her birinin ayrı ayrı açıklanması çalışması
+#WRONG:Âlemin yaratılışının incelenmesi ve ilk maddenin araştırılması çalışması
+#WRONG:Dinî dilin mantıkî olarak çözümlenmesi ve anlamlı olup olmadığının sorgulanması
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Ana problemler
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Bir din felsefecisi için "her filozof kendi felsefî tutumuna göre bazı problemlere ağırlık verir" ifadesi ne anlama gelir?
+#CORRECT:Bir düşünürün din felsefesi yapması için bütün problemlerle uğraşması gerekmez
+#WRONG:Her düşünür beş problemin hepsini ele almak zorundadır, aksi hâlde din felsefesi yapmış olmaz
+#WRONG:Problemlerden yalnızca biri geçerlidir ve diğerleri din felsefesine dâhil edilmez
+#WRONG:Filozoflar bu problemlerin hiçbirine ağırlık vermez ve yalnızca tarih yazar
+#PAKET:2. hafta: Ciddi Quiz (15 soru)
+#KONU:Ana problemler
+#ZORLUK:kolay
+#BLOOM:Anlama
+

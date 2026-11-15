@@ -1,0 +1,200 @@
+#QUESTION:"Din felsefesi" terimi felsefe literatürüne hangi eserle girmiştir?
+#CORRECT:Hegel'in 1832 tarihli eseriyle
+#WRONG:Kant'ın 1781 tarihli eseriyle
+#WRONG:Descartes'ın 1637 tarihli eseriyle
+#WRONG:Platon'un Devlet diyaloğuyla
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Terimin kökeni
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Allah'ın varlığı, ruhun ölümsüzlüğü, vahyin imkânı gibi konularda aklî delillere başvurmak neyin örneğidir?
+#CORRECT:Rasyonelliğin
+#WRONG:Objektifliğin
+#WRONG:Tutarlılığın
+#WRONG:Şümullülüğün
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefî bakış tarzı
+#ZORLUK:zor
+#BLOOM:Uygulama
+
+#QUESTION:Verileri ve düşünmeyi inançları haklı çıkaracak biçimde zorlamamak hangi özelliğin gereğidir?
+#CORRECT:Objektiflik
+#WRONG:Rasyonellik
+#WRONG:Şümullülük
+#WRONG:İbadî boyut
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefî bakış tarzı
+#ZORLUK:zor
+#BLOOM:Uygulama
+
+#QUESTION:Felsefenin özü nedir?
+#CORRECT:Düşünmek
+#WRONG:Ruhânî bir zevk yaşamak
+#WRONG:İbadet etmek
+#WRONG:Taklit etmek
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din ve felsefe farkı
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Dinin özü, derste hangi ifadeyle anlatılmıştır?
+#CORRECT:Ruhânî bir zevk hali
+#WRONG:Salt akıl yürütme faaliyeti
+#WRONG:Sadece toplumsal bir kurum
+#WRONG:Sadece sanat faaliyeti
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din ve felsefe farkı
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Gazâlî'nin vurguladığı biçimde din ne tür bir şeydir?
+#CORRECT:Yaşanan bir tecrübe
+#WRONG:Soyut bir kavram listesi
+#WRONG:Bir mantık sistemi
+#WRONG:Bir istatistik tablosu
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din ve felsefe farkı
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:"Kur'ân hikmetlerle dolu bir kitaptır ama o bir felsefe kitabı değildir" ifadesi neyi vurgular?
+#CORRECT:Din ile felsefenin ayrı şeyler olduğunu
+#WRONG:Felsefenin dinden üstün olduğunu
+#WRONG:Kur'an'ın hikmet içermediğini
+#WRONG:Felsefenin din olduğunu
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din ve felsefe farkı
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Dinin bilgisel boyutu neyle ilgilidir?
+#CORRECT:İnanç, temel öğreti ve doktrin
+#WRONG:Dinin ritüelleri ve ibadet şekilleriyle
+#WRONG:Dinin güzellik ve sanat anlayışıyla
+#WRONG:Dinin devlet yönetimi ve hukukuyla
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Dinin mahiyeti
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Dinin ibadî boyutu neyle ilgilidir?
+#CORRECT:İbadet, ritüel ve dinî pratikler
+#WRONG:Değerler sistemi ve yaşam tarzıyla
+#WRONG:İnanç esasları ve doktrinlerle
+#WRONG:Tarihsel gelişim ve kökenle
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Dinin mahiyeti
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Dinin ahlâkî boyutu neyi kapsar?
+#CORRECT:Değerler sistemi ve yaşam tarzını
+#WRONG:Yalnızca ibadet sayılarını
+#WRONG:Yalnızca inanç esaslarını
+#WRONG:Yalnızca kutsal mekânları
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Dinin mahiyeti
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Kitaplı dinler açısından din hangi özelliklerden biriyle tanımlanmıştır?
+#CORRECT:Müteâl ve kutsal bir Yaratıcıya bağlanma
+#WRONG:Yalnızca bireysel bir hobi ve kişisel tercih
+#WRONG:Sadece bilimsel bir yöntem ve deney süreci
+#WRONG:Yalnızca mitolojik anlatılar ve efsaneler bütünü
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Dinin mahiyeti
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Din felsefesinin var olması için neyin belli bir seviyeye ulaşmış olması gerekir?
+#CORRECT:Hem dinî düşüncenin hem felsefî çabaların
+#WRONG:Yalnızca deneysel bilimlerin ve laboratuvar sonuçlarının
+#WRONG:Yalnızca devlet kurumlarının ve hukuk düzeninin
+#WRONG:Yalnızca sanat eserlerinin ve estetik anlayışın
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Tarihsel bağlam
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Dinin evrensel bir tanımını vermek neden zordur?
+#CORRECT:Bir değil birçok din vardır
+#WRONG:Hiçbir dinin tanımı yoktur
+#WRONG:Dinler birbirinin aynısıdır
+#WRONG:Din yalnızca tek kişiye aittir
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Dinin mahiyeti
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Eski Yunan'da hangi alanda aynı ilerleme sağlanamamıştı?
+#CORRECT:Din konusunda
+#WRONG:Matematik konusunda
+#WRONG:Felsefî düşünce konusunda
+#WRONG:Şiir konusunda
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Tarihsel bağlam
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Vahiy dinlerinin ortaya çıkışı felsefeye ne getirmiştir?
+#CORRECT:Ciddi felsefî problemler
+#WRONG:Felsefenin sona ermesi
+#WRONG:Yeni bir alfabe
+#WRONG:Yalnızca yeni takvimler
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Tarihsel bağlam
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Din-felsefe ilişkisini derinlemesine ele alan düşünürlerden biri kimdir?
+#CORRECT:Aquino'lu Thomas
+#WRONG:Protagoras
+#WRONG:Demokritos
+#WRONG:Epikuros
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Tarihsel bağlam
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Akıl gücünün imkânlarıyla dinin ana iddialarını temellendirme çabası felsefî bakışın hangi özelliğidir?
+#CORRECT:Rasyonellik
+#WRONG:Objektiflik
+#WRONG:Şümullülük
+#WRONG:Tutarlılık
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefî bakış tarzı
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Bir konuya hangi açılardan bakmak mümkünse hepsini dikkate almak ne adı verilen özelliktir?
+#CORRECT:Şümullülük
+#WRONG:Rasyonellik
+#WRONG:Objektiflik
+#WRONG:Tutarlılık
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefî bakış tarzı
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Görüşler arasındaki çelişkileri tespit edip gidermeye çalışmak hangi özelliktir?
+#CORRECT:Tutarlılık
+#WRONG:Şümullülük
+#WRONG:Rasyonellik
+#WRONG:Objektiflik
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefî bakış tarzı
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Dinin lehinde ya da aleyhinde peşinen karar vermeden araştırma yapmak hangi özelliktir?
+#CORRECT:Objektiflik
+#WRONG:Tutarlılık
+#WRONG:Şümullülük
+#WRONG:Rasyonellik
+#PAKET:1. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefî bakış tarzı
+#ZORLUK:orta
+#BLOOM:Anlama
+

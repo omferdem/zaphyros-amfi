@@ -1,0 +1,40 @@
+4|Z|Din ve felsefenin ortak noktalarından biri hangisidir?|Deney-dışı konuları araştırma nesnesi yapmaları|Yalnızca laboratuvar deneyi yapmaları|Yalnızca matematik kullanmaları|Yalnızca tarihî olayları incelemeleri|Konuları açısından ilişki|o|A
+4|Z|Dinin metodunu oluşturan ilke nedir?|İman|Deney|Şüphe|İstatistik|Konuları açısından ilişki|k|H
+4|Z|Felsefenin merkezindeki unsurlar hangileridir?|Akıl ve tenkitçi düşünce|Gayba iman ve vahiy|Taklit ve itaat|Sezgi ve ilham|Konuları açısından ilişki|k|H
+4|Z|Din hangi ilkeyle başlar?|İman ilkesiyle|Şüphe ilkesiyle|Deney ilkesiyle|Çıkar ilkesiyle|Konuları açısından ilişki|k|H
+4|Z|Felsefe konusunu belirli bir varlık dünyasıyla sınırlayabilir mi?|Hayır, evrensel bir konu alanı vardır|Evet, yalnızca madde ile sınırlıdır|Evet, yalnızca ruh ve onun kuvvetleriyle|Evet, yalnızca Tanrı ve sıfatlarıyla|Felsefenin konusu|o|A
+4|Z|Felsefe problemleri hangi sebepler açısından araştırır?|En son ve en yüksek sebepler açısından|Yalnızca yakın sebepler açısından|Yalnızca tesadüf açısından|Yalnızca faydacılık açısından|Felsefenin konusu|z|A
+4|Z|Filozoflar felsefenin konusunu hangi üç kavramda toplar?|Varlık, bilgi ve değer|Akıl, irade ve duygu|Madde, form ve hareket|Din, ahlâk ve sanat|Felsefenin konusu|k|H
+4|Z|Felsefe tarihinde ilkçağın ağırlık noktası nedir?|Âlem|İnsan|Allah|Devlet|Felsefe tarihinde odak noktaları|k|H
+4|Z|Sokrates sonrası dönemde ağırlık noktası nedir?|İnsan|Âlem|Allah|Madde|Felsefe tarihinde odak noktaları|k|H
+4|Z|Ortaçağda felsefenin ağırlık noktası nedir?|Allah|Âlem|İnsan|Madde|Felsefe tarihinde odak noktaları|k|H
+4|Z|Sonraki dönemlerde ana konulara ne olmuştur?|Yan dallar eklenmiş, çeşitlilik artmıştır|Tüm konular terk edilmiş ve felsefe sona ermiştir|Hiçbir değişiklik olmamış, aynı kalmıştır|Sadece tek bir konu kalmış, diğerleri düşmüştür|Felsefe tarihinde odak noktaları|o|A
+4|Z|Dinin konusu felsefenin konusundan nasıl bir fark gösterir?|Büyük bir farklılık göstermez|Tamamen farklıdır|Hiç ortak yanı yoktur|Yalnızca ibadetle sınırlıdır|Dinin konusu|o|A
+4|Z|Dinin ayırt edici özelliklerinden biri hangisidir?|Gayba iman esası|Deneye dayalı bilgi|Sürekli şüphe|Tamamen bireysel oluşu|Dinin konusu|k|H
+4|Z|Din yalnızca neyden ibaret değildir?|İman kıvılcımının çakışından|Duygu ve düşünceden|Eylemden|Sorumluluktan|Dinin konusu|o|A
+4|Z|Felsefe ile dinin en temel ve vazgeçilmez meselesi nedir?|Varlık meselesi|Estetik|Hukuk|Ekonomi|Varlık meselesi|k|H
+4|Z|Birçok filozof Tanrı'yı sistemlerinin neyi olarak kabul etmek zorunda kalmıştır?|"O olmazsa hiçbir şey olmaz" ilkesi|Yalnızca süs unsuru olarak bir yer tutması|Gereksiz bir fikir olarak sistemden çıkarılması|Ayrı bir bilim dalı olarak ele alınması|Varlık meselesi|o|A
+4|Z|Tanrı'yı sistemlerinin ilkesi kabul eden filozoflar arasında hangisi vardır?|Aristo|Protagoras|Epikuros|Demokritos|Varlık meselesi|o|H
+4|Z|Felsefe ve din "nasıl bir Allah" sorusuyla hangi konuyu ele alır?|Sıfatlar konusunu|Takvim konusunu|Ticaret konusunu|Mimarî konusunu|Varlık meselesi|o|A
+4|Z|Esmâ-i hüsnâ kaç güzel isimden oluşur?|99|33|100|1001|Allah'ın sıfatları|k|H
+4|Z|Tevhid sıfatı Allah'ın neyi ifade eder?|Birliğini|Çokluğunu|Cisimliğini|Zamana bağlılığını|Allah'ın sıfatları|k|A
+5|Z|Selbî sıfatlar hangi tehlikeden korunmayı hedefler?|Antropomorfizmden (insanbiçimcilikten)|Mantıksal çelişkiden ve tutarsızlıktan|Politik baskıdan ve yönetim engellerinden|Ekonomik krizden ve kaynak yetersizliğinden|Allah'ın sıfatları|o|A
+5|Z|Hangi sıfat "zorunlu varlık" anlamına gelir?|Vacibu'l-vücut|Mümkün|Hâdis|Basit|Allah'ın sıfatları|o|H
+5|Z|Allah'ın "basit" olması ne anlama gelir?|Parçalara ayrılmaz|Küçük olması|Önemsiz olması|Kolay anlaşılması|Allah'ın sıfatları|o|A
+5|Z|Subutî sıfatlar hangileridir?|Görme, işitme, konuşma, bilme gibi olumlu sıfatlar|Bir, ilk, eşsiz gibi olumsuz sıfatlar|Yalnızca zamana ilişkin sıfatlar|Yalnızca mekâna ilişkin sıfatlar|Allah'ın sıfatları|o|H
+5|Z|İslâm filozoflarının subutî sıfatları budamalarının sebeplerinden biri nedir?|Kadîmlerin çoğalması tehlikesi|Sıfatların fazla az olması|Sıfatların Kur'an'da geçmemesi|Sıfatların bilinmemesi|Allah'ın sıfatları|z|A
+5|Z|"Sıfatlar zât üzerine zâit değildir" görüşü neyi söyler?|Sıfatlar Zâtın ta kendisidir|Sıfatlar Zâttan ayrı birer varlıktır|Sıfatların hiçbir anlamı yoktur|Sıfatlar yalnızca insanlar içindir|Allah'ın sıfatları|z|A
+5|Z|Kelâmcılar ile filozoflar sıfatlar konusunda nasıl bir ilişki içindedir?|Büyük uçurumlarla ayrılmazlar, birçok noktada benzer kanaatler paylaşırlar|Tamamen ayrı kampta yer alırlar ve hiçbir ortak görüşleri yoktur|Aynı görüşü paylaşırlar ve aralarında hiçbir fark bulunmaz|Birbirini tanımazlar ve hiçbir konuda tartışmazlar|Allah'ın sıfatları|o|A
+5|Z|İman, hangi ilişkiye dayanır?|Süje-obje ilişkisine|Sebep-sonuç ilişkisine|Madde-form ilişkisine|Beden-ruh ilişkisine|İman|o|A
+5|Z|İmanın taraflarından süje kimdir?|İnsan|Tanrı|Âlem|Melek|İman|k|A
+5|Z|İmanın objesi kimdir?|Tanrı|İnsan|Âlem|Kitap|İman|k|A
+5|Z|Tasdik doğrultusundaki ilişki neyi meydana getirir?|İmanı|İnkârı|Şüpheyi|Cehaleti|İman|o|A
+5|Z|Allah'ın birliğini bugünkü metinler içinde en net vurgulayan kutsal kitap hangisidir?|Kur'ân|Tevrat|İncil|Zebur|Kutsal kitaplar|o|H
+5|Z|"Yerde ve gökte Allah'tan başka tanrılar bulunsaydı ..." ayeti hangi sureden alınmıştır?|Enbiya|Bakara|Kasas|Maide|Kutsal kitaplar|z|H
+5|Z|İslâm filozoflarının Allah'ın varlığını ispat delillerinden biri hangisidir?|Hudûs|Ontolojik delil|Dinî tecrübe delili|Ahlâk delili|İsbât-ı vacip|o|H
+5|Z|Batı düşüncesindeki delillerden biri hangisidir?|Kozmolojik delil|Hüdûs delili|İlm-i evvel delili|Kabûl-i âmme delili|İsbât-ı vacip|o|H
+5|Z|Kelâmcıların deliller arasında hangisi vardır?|Kabûl-i âmme|Ontolojik delil|Ahlâk delili|Psikolojik delil|İsbât-ı vacip|z|H
+5|Z|Allah'ı duyu organlarıyla algılayamadığımıza göre araştırma yolu nedir?|Akıl yolu (nazar)|Yalnızca duyu|Yalnızca taklit|Yalnızca hayal|Aklın rolü|k|A
+5|Z|Kur'ân'ın "Kâinât Kitabı"nı okumaktan kastı nedir?|Çevremizdeki olaylara ve âlemin yapısına dikkatle bakıp düşünmek|Yalnızca yazılı metinleri okuyup ezberlemek|Kâinatı görmezden gelip yalnızca kitaba bakmak|Yalnızca astronomi yaparak gök cisimlerini saymak|Aklın rolü|o|A
+5|Z|"Fıtrat" ile ifade edilen insan doğası, Allah'ı nasıl karşılar?|Selim bir fıtrat normal olarak Yaratan'ını tanır|Hiçbir zaman Yaratan'ını tanımaz|Yalnızca eğitim yoluyla Yaratan'ını tanır|Tesadüfen Yaratan'ını tanır|Fıtrat|o|A
+5|Z|Ateistlere göre Tanrı hakkında hangi fikir temellendirilmek istenir?|"Tanrı olmamalıdır"|"Tanrı vardır"|"Tanrı birdir"|"Tanrı bilinebilir"|Ateizm|o|A

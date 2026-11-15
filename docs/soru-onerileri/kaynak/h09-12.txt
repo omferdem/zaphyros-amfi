@@ -1,0 +1,80 @@
+9|Z|Değerler felsefesi teorik felsefeden hangi yönüyle ayrılır?|Pratik bir felsefe olması|Yalnızca bilgiyle ilgilenmesi|Yalnızca varlığı incelemesi|Hiçbir soruya cevap vermemesi|Değerler felsefesi|o|A
+9|Z|Ahlâk felsefesinin Grekçe adı nedir?|Ethik|Aisthesis|Logos|Hyle|Ahlâk felsefesi|k|H
+9|Z|"Din, iyi ahlâktır" sözü kime aittir?|Hz. Muhammed (S.)|Platon|Kant|Aristoteles|Ahlâk ve din|k|H
+9|Z|Kur'an'da Hz. Muhammed için geçen "hulk" kelimesi müfessirlerce neyi ifade eder?|Din ve İslâm|Mücadele|Sanat|Ticaret|Ahlâk ve din|o|A
+9|Z|Ahlâk felsefesinin temel problemlerinden biri aşağıdakilerden hangisidir?|En yüksek iyi nedir?|Evrenin yaşı kaçtır?|Hangi dil daha eskidir?|Atom kaç parçadan oluşur?|Ahlâk felsefesinin problemleri|k|A
+9|Z|Doğru hareketin ölçüsü sorusu neyi sorar?|Bir davranışı ahlâkî yönden doğru yapan nedir?|Davranışın kaç kişi tarafından yapıldığını|Davranışın ne zaman yapıldığını|Davranışın nerede yapıldığını|Ahlâk felsefesinin problemleri|o|A
+9|Z|Hürriyet, ahlâkî davranışın neyi sayılır?|Ön şartı|Sonucu|Tesadüfü|Engeli|Hürriyet ve sorumluluk|o|A
+9|Z|İnsanın ahlâkî davranışlarında hür olmadığını savunanlar kimlerdir?|Deterministler|Rasyonalistler|Sosyolojik görüşte olanlar|Estetikçiler|Hürriyet ve sorumluluk|k|H
+9|Z|Tam bir hürriyet savunan görüş hangisidir?|Rasyonalistler|Deterministler|Sosyolojik görüş|Pragmatistler|Hürriyet ve sorumluluk|o|H
+9|Z|Sosyolojik görüşe göre insan davranışlarında nasıl bir hürriyete sahiptir?|Kısmen hür|Tamamen hür|Hiç hür değil|Yalnızca düşüncede hür|Hürriyet ve sorumluluk|o|A
+9|Z|İslâm ahlâkında seçme özgürlüğü hangi kavramla ifade edilir?|İhtiyar|İcad|İbda|Südûr|Hürriyet ve sorumluluk|o|H
+9|Z|İslâm ahlâkında insan hürriyeti neden sınırlıdır?|Bütün varlık Allah'ın mutlak iradesi sınırı içindedir|İnsanın aklı olmadığı için hürriyeti bulunmaz|Hürriyet kavramı bilinmediği için ondan söz edilmez|Allah insanı özgür bırakmadığı için hürriyeti yoktur|Hürriyet ve sorumluluk|o|A
+9|Z|Fert, aile, cemiyet ve devlet ahlâkı hangi başlık altında toplanır?|Pratik ahlâk|Teorik ahlâk|Estetik|Mantık|Pratik ahlâk|k|A
+9|Z|Devlet ahlâkı hangi adla da anılır?|Politika|Ekonomi|Estetik|Mantık|Pratik ahlâk|o|H
+9|Z|Pratik ahlâk neyi ifade eder?|Etikte çözüme ulaşan sonuçların hayata aktarılmasını|Yalnızca teorik tartışmanın sürdürülmesini|Estetik yargının ve güzel anlayışının belirlenmesini|Mantık analizinin ve çıkarım kurallarının sıralanmasını|Pratik ahlâk|o|A
+9|Z|Her alanın kendine has özellikleri olsa da neyden ayrılamaz?|Temel ahlâk ilkelerinden|Matematik ilkelerinden|Fizik kurallarından|Sanat ilkelerinden|Pratik ahlâk|o|A
+9|Z|İlâhî dinlerin en önemli vasıflarından biri nedir?|Ahlâkî oluşları|Yalnızca bilimsel oluşları|Yalnızca ticarî oluşları|Yalnızca siyasî oluşları|Ahlâk ve din|k|A
+9|Z|Ahlâk felsefesi klasik ikilem örnekleri arasında hangisi sayılmıştır?|Jean Valjean'ın vicdanı|Platon'un mağarası|Descartes'ın cogitosu|Kant'ın kategorileri|İkilemler|z|H
+9|Z|Değerler felsefesinin temel sorularından biri nedir?|İyi ve kötünün kaynağı nedir?|Atom kaç gramdır?|Güneş ne zaman doğar?|Hangi dil kolaydır?|Değerler felsefesi|k|A
+9|Z|Davranışları değerli kılan nedir sorusu hangi disiplinin konusudur?|Değerler felsefesi|Dilbilgisi|Coğrafya|Matematik|Değerler felsefesi|o|A
+10|Z|"Estetik" Grekçe hangi kelimeden gelir?|Aisthesis|Ethos|Logos|Hyle|Estetik|k|H
+10|Z|Estetiği felsefe disiplini hâline getiren düşünür kimdir?|Baumgarten|Kant|Hegel|Croce|Estetik|k|H
+10|Z|Baumgarten hangi yüzyılda yaşamıştır?|XVIII. yüzyıl|XII. yüzyıl|XX. yüzyıl|V. yüzyıl|Estetik|z|H
+10|Z|Estetik olayda süje kimdir?|Objesini algılayan ve haz duyan sanatçı|Sanat eserinin kendisi ve onun maddî yapısı|Sanatın yapıldığı mekân ve çevresi|Sanatın yapıldığı zaman ve dönemi|Estetik|o|A
+10|Z|Estetik objeyi geniş manada ne oluşturur?|Tabiat parçası|Yalnızca resim|Yalnızca müzik|Yalnızca roman|Estetik|o|A
+10|Z|Platon'a göre sanat nedir?|İdelerin taklidi (mimesis)|Katharsis|Başarılı ifade|Mutlak Ruh'un tezahürü|Güzellik anlayışının tarihi|o|H
+10|Z|Platon'da en yüksek ide nedir?|Bizatihi güzel|Yoklar|Madde|Zaman|Güzellik anlayışının tarihi|o|A
+10|Z|Aristoteles'e göre güzel neyin ifadesidir?|Orantı, düzen ve uyum|Mutlak ruh|Taklit|Fayda|Güzellik anlayışının tarihi|o|A
+10|Z|Aristoteles'te sanatın gayesi nedir?|Katharsis|Mimesis|İfade|Özgünlük|Güzellik anlayışının tarihi|o|H
+10|Z|Plotinos'a göre âlem nasıldır?|İlâhî bir şiir, sanat eseri|Taklidin taklidi|Salt madde|Bir makine|Güzellik anlayışının tarihi|o|A
+10|Z|Aquino'lu Thomas'a göre güzel nedir?|Kendisinden dolayı ve seyrinden hoşlanılan şey|Fayda sağlayan ve işe yarayan şey|Mantıksal bir sonuca varılan şey|Mutlak Ruh'un tezahür ettiği şey|Güzellik anlayışının tarihi|z|H
+10|Z|Kant'a göre estetik yargılar nasıl yargılardır?|Sübjektif|Nesnel|Mantıksal|Deneysel|Kant|o|A
+10|Z|Kant'a göre güzel neyle ilişkilidir?|Kavrama bağlı kalmaksızın hoşa gidenle|Fayda ile ilişkilendirilen, işe yarayan bir yargıyla|Ahlâk ilkeleriyle ilişkilendirilen, doğru olan bir yargıyla|Hukuk kurallarıyla ilişkilendirilen, zorunlu bir yargıyla|Kant|o|A
+10|Z|Hegel'e göre güzel nedir?|İdenin duyusal görünüşü|Taklit|Katharsis|Sezgi|Hegel|o|A
+10|Z|Croce'ye göre güzellik nedir?|Başarılı ifade|Taklit|Orantı|Fayda|Croce|o|H
+10|Z|Walter Benjamin'e göre seri üretim neyi yok eder?|Özgünlüğü|Güzelliği|Sanatı|Algıyı|Çağdaş estetik|o|A
+10|Z|Heidegger geleneksel estetiğe nasıl yaklaşır?|Kökten karşı çıkar|Tamamen destekler|Hiç ilgilenmez|Yalnızca yorumlar|Çağdaş estetik|z|H
+10|Z|İslâm sanatında hangi ilke önemlidir?|Tevhid ve tenzih|Taklit|Çoğulculuk|Natüralizm|İslâm sanatı|o|A
+10|Z|İslâm'da güzellik kime izafe edilir?|Allah'a|İnsana|Tabiata|Sanatçıya|İslâm sanatı|o|A
+10|Z|Kur'an'da güzellik anlamına gelen kelimelerden biri hangisidir?|Cemal|Hırs|Zulüm|Küfür|Din ve sanat|o|H
+11|Z|Din ve felsefenin bilgi problemi hangi ana başlıkları içerir?|Bilginin alanı, kaynağı, güvenilirliği ve kavramlar|Yalnızca ahlâk ve değerler konularını|Yalnızca sanat ve güzellik konularını|Yalnızca hukuk ve devlet konularını|Bilgi meselesi|o|A
+11|Z|Kur'an'a göre ilk insan ve peygamber kimdir?|Hz. Âdem|Hz. Nuh|Hz. İbrahim|Hz. Musa|Kavramlar|k|H
+11|Z|Allah Hz. Âdem'e neyi öğretmiştir?|Bütün isimleri|Yalnızca takvimi|Yalnızca yazıyı|Yalnızca sayıları|Kavramlar|o|H
+11|Z|Kavramların ve mahiyetlerinin bilgisinin kaynağı kimdir?|Allah|Filozoflar|Tarih|Tesadüf|Kavramlar|o|A
+11|Z|Peygamber kavram açısından nasıl biridir?|Yeni bir kavram çerçevesi meydana getiren|Hiçbir kavram üretmeyen|Yalnızca eski kavramları saklayan|Yalnızca tarihçi|Peygamber ve filozof|o|A
+11|Z|Filozof en geniş manada neyi yapar?|Yeni bir kavram çerçevesi oluşturur veya eskisini değiştirir|Yalnızca ibadet eder ve başka bir şey yapmaz|Yalnızca ticaret yapar ve kâr peşinde koşar|Hiçbir şey yapmaz ve kenarda durur|Peygamber ve filozof|o|A
+11|Z|Bazı filozoflara göre felsefe nedir?|Kavramlar oluşturma, keşfetme ve üretme sanatı|Yalnızca eğlence ve vakit geçirme etkinliği|Yalnızca din ve ibadet faaliyeti|Yalnızca matematik ve hesaplama işlemi|Kavram üretme|o|A
+11|Z|Platon hangi kavramı merkeze almıştır?|İdea|Heyûla|Cevher|Logos|Kavram üretme|o|H
+11|Z|Aristoteles hangi kavram üzerine sistemini kurmuştur?|Salt form|İdea|Cevher|Atom|Kavram üretme|o|H
+11|Z|Descartes hangi kavrama yeni bir anlam kazandırmıştır?|Cevher|İdea|Form|Logos|Kavram üretme|o|H
+11|Z|Dinin ürettiği kavramlardan biri hangisidir?|Peygamber|Atom|Arkhé|İdea|Kavram üretme|k|H
+11|Z|Kur'an kavramları nasıl öğretir?|Soru-cevap ve betimlemelerle|Yalnızca tablolarla|Yalnızca matematikle|Hiç öğretmez|Kur'an'da kavram öğretme|o|A
+11|Z|"Kapı çalan" kavramı Kur'an'da hangi sureyle öğretilir?|Kâria|Fatiha|Nas|İhlas|Kur'an'da kavram öğretme|z|H
+11|Z|Kadir Gecesi kaç aydan hayırlıdır?|Bin aydan|Yüz aydan|On aydan|Bir aydan|Kur'an'da kavram öğretme|o|H
+11|Z|Bilgi, süje-obje ilişkisinde süje nasıl bir varlıktır?|Akıllı, düşünen, irade sahibi|Cansız|Düşüncesiz|Yalnızca nesne|Bilginin kaynağı|o|A
+11|Z|Obje neyi ifade eder?|Şuurun konusu olan maddî ve manevî her şey|Yalnızca düşünen varlık ve onun yetenekleri|Yalnızca insan ve onun yakın çevresi|Yalnızca Tanrı ve ona ait sıfatlar|Bilginin kaynağı|o|A
+11|Z|Din kavram üretme konusunda felsefeye göre nerede durur?|Hatta bu konuda bir önceliğe sahiptir|Hiçbir katkısı yoktur ve alanı tamamen dışındadır|Yalnızca felsefeden alır ve kendi üretimi yoktur|Yalnızca taklit eder ve yeni bir şey katmaz|Kavram üretme|z|D
+11|Z|Dinin kavramları ilk bakışta nasıl anlaşılmaz?|Duyu ve akılla ilk bakışta kavranamayabilir|Bütün kavramlar çok kolaydır ve ilk bakışta anlaşılır|Hiç anlaşılmaz ve hiçbir yolla öğrenilemez|Yalnızca çocuklar anlar ve yetişkinler kavrayamaz|Kavram üretme|z|A
+11|Z|Bilgi, süje ile obje arasında neyden ibarettir?|Tanınmak, bilinmek ve kurulan dengeden|Yalnızca tesadüften ve rastgele ilişkiden|Yalnızca zorlamadan ve baskı altında olmaktan|Yalnızca hayalden ve zihnin ürettiği tasarımdan|Bilginin kaynağı|o|A
+11|Z|Hutame ne olarak tanımlanır?|Allah'ın tutuşturulmuş, kalplerin üstüne çıkan ateşi|Bir bahçe ve içindeki ağaçlar, yani cennet|Bir dağ ve üstündeki kar, yani yüce yer|Bir nehir ve akıntısı, yani hayat kaynağı|Kur'an'da kavram öğretme|z|H
+12|Z|Bilginin kaynağını akıl kabul eden akım hangisidir?|Rasyonalizm|Sansualizm|Ampirizm|Septisizm|Bilginin kaynakları|k|H
+12|Z|Bilginin kaynağını duyular sayan akım hangisidir?|Sansualizm|Rasyonalizm|Sezgicilik|Realizm|Bilginin kaynakları|k|H
+12|Z|Bilginin kaynağını duyu ve deney sayan akım hangisidir?|Ampirizm|Rasyonalizm|Sezgicilik|Monizm|Bilginin kaynakları|k|H
+12|Z|Bilginin kaynağını sezgi (hads) kabul eden akım hangisidir?|Sezgicilik|Ampirizm|Rasyonalizm|İdealizm|Bilginin kaynakları|o|H
+12|Z|Dine özgü bilgi kaynağı hangisidir?|Vahiy|Deney|Duyu|Akıl|Bilginin kaynakları|k|H
+12|Z|Bilginin imkânsızlığını savunan görüş hangisidir?|Septisizm|İdealizm|Realizm|Monizm|Bilgi teorileri|k|H
+12|Z|Süjeyi "kendi başına bir varlık" kabul eden görüş hangisidir?|İdealizm|Realizm|Monizm|Septisizm|Bilgi teorileri|o|H
+12|Z|Objeyi bağımsız kabul eden görüş hangisidir?|Realizm|İdealizm|Monizm|Septisizm|Bilgi teorileri|o|H
+12|Z|Süje ve objeyi tek bir dünyanın nitelikleri sayan görüş hangisidir?|Monizm|Realizm|Septisizm|İdealizm|Bilgi teorileri|o|H
+12|Z|Dinin bilgi kaynakları hiyerarşisinde en altta ne bulunur?|Duyu|Vahiy|Akıl|Sezgi|Bilgi hiyerarşisi|o|H
+12|Z|Hiyerarşide duyunun hemen üstünde ne vardır?|Deney|Vahiy|Akıl|Sezgi|Bilgi hiyerarşisi|o|H
+12|Z|Üst kaynakların alt kaynaklarca desteklenmesi nasıl bir ilişkidir?|Doğrulama değil, çelişmeme ve birbirini yalanlamama|Doğrulama, yani üst kaynağın alt kaynaklarca onaylanması|Yok sayma, yani üst kaynağın alt kaynakları geçersiz kılması|Düşmanlık, yani kaynakların birbirine karşı çıkması|Bilgi hiyerarşisi|z|A
+12|Z|Doğmatik rasyonalistler bilgiyi neye bağlar?|Doğuştan ve aklın ürünü olmasına|Yalnızca duyuya dayanmasına ve deneyi esas almasına|Yalnızca sezgiye dayanmasına ve duyuyu reddetmesine|Yalnızca vahye dayanmasına ve aklı dışlamasına|Bilginin değeri|o|A
+12|Z|Tertullian'ın "saçma olduğu için inanıyorum" anlayışı neyi öne çıkarır?|İmanın bilgi ve akıldan üstünlüğünü|Aklın bilgi kaynağı olarak tek ölçü olmasını|Duyunun bilginin tek dayanağı sayılmasını|Deneyin bilgiyi belirleyen tek kaynak olmasını|Bilginin değeri|o|H
+12|Z|Kur'an'ın bilgi kaynakları arasında en çok önem verdiği hangisidir?|Akıl|Duyu|Sezgi|Deney|Bilginin değeri|o|H
+12|Z|Septiklerin metodu nasıl özetlenir?|Şüphe için şüphe etmek|Hakikate ulaşmak için şüphe|Deneye başvurmak|Aklı kullanmak|Bilginin değerine yaklaşımlar|o|A
+12|Z|Descartes'ın metodik şüphesi neyi hedefler?|Kesin bilgiye ulaşmayı|Şüpheyi bir amaç yapmayı|Bilgiyi reddetmeyi|Dini reddetmeyi|Metodik şüphe|o|A
+12|Z|Pragmatistlere göre bilgiyi bilgi yapan nedir?|İşe yaraması ve sağladığı fayda|Aklî tutarlılığı ve mantıksal doğruluğu|Doğuştan olması ve zihinde hazır bulunması|Vahiyle gelmesi ve peygamberce bildirilmesi|Bilginin değerine yaklaşımlar|o|A
+12|Z|Pozitivistlere göre deneye konu olmayan her şey nedir?|Metafizik ve anlamsız|Kesin|Aklî|Kutsal|Bilginin değerine yaklaşımlar|o|A
+12|Z|Kur'an'da "ilim (burhan)" neyi ifade eder?|Güvenilir kaynaktan elde edilen doğru ve kesin bilgi|Yalnızca zan ve tahminden ibaret, kesin olmayan bilgi|Yalnızca kuruntu ve hayalden ibaret bilgi|Yalnızca hayal ürünü ve aslı olmayan bilgi|Kur'an'da bilgi tasnifi|o|A

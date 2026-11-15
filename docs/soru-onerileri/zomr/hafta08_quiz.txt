@@ -1,0 +1,200 @@
+#QUESTION:Platon'un ruhun üç yönü benzetmesine göre, kötü at bir öğrenciyi iştahaya çekerken sürücü ne yapmalıdır?
+#CORRECT:Aklıyla yönlendirmeli, çünkü akıl ruhun en yüksek yanıdır ve hikmete ulaştırır
+#WRONG:Kötü ata uymalı, çünkü iştaha ruhun asıl yönetici yanıdır
+#WRONG:Sürüşü bütünüyle bırakmalı ve atları kendi hâllerine terk etmeli
+#WRONG:İradî yanı bastırıp yalnızca iştahalara kulak vermeli
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:Platon
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:Aristoteles'e göre ruh ile beden arasındaki ilişki şekil ile madde arasındaki ilişkiye benzetilir. Bu benzetme ruh hakkında ne söyler?
+#CORRECT:Ruh maddî değildir, bedene biçim veren ve onu harekete getiren etkin kuvvettir
+#WRONG:Ruh bedenin sıradan bir parçasıdır ve onunla birlikte oluşup onunla birlikte yok olur
+#WRONG:Ruh bedenden bağımsız bir hayalettir ve onunla hiçbir ilişkisi bulunmaz
+#WRONG:Ruh bedenin yok oluşuyla birlikte tamamen yok olan bir üründür ve ayrı bir varlığı yoktur
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:Aristoteles
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Platon ve Aristoteles'in ruh anlayışlarını karşılaştıran hangi ifade doğrudur?
+#CORRECT:Platon ruhu bedenden müstakil bir cevher sayar
+#WRONG:İkisi de ruhu bedenden tamamen ayırır ve aynı sonuca varır
+#WRONG:İkisi de ruhu bedenle birebir aynı sayar ve ayrım yapmaz
+#WRONG:İkisi de ruhun varlığını reddeder ve yalnızca maddeyi kabul eder
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:Karşılaştırma
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Descartes'ın ruh görüşü hangi sonuca götürür?
+#CORRECT:Ruh düşünen bir cevherdir, özü gereği yok olmaz ve bedensiz de var olabilir
+#WRONG:Ruh maddî bir cevherdir ve beden gibi yer kaplar, onunla birlikte yok olur
+#WRONG:Ruh yer kaplar ve bölünebilir, bu yüzden ölümle dağılıp gider
+#WRONG:Ruh bedenin bir niteliğidir ve bedenden ayrı düşünülemez
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:Descartes
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Materyalist anlayışa göre hayat ve ölüm nasıl açıklanır?
+#CORRECT:Hayat unsurların birleşimi, ölüm ise dağılışıdır
+#WRONG:Hayat ruhun bedene girişi, ölüm ruhun başka bedene geçişidir
+#WRONG:Ölüm ruhun bedenden ayrılıp ebedî âleme geçmesidir
+#WRONG:Hayat ve ölüm gibi kavramlar tamamen yoktur
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:Materyalist anlayış
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Çağdaş felsefede ruh anlayışı nasıl değişmiştir?
+#CORRECT:Müstakil bir cevher olmaktan çok dinamik bir ilke, kudret ve faaliyet olarak düşünülmeye başlanmıştır
+#WRONG:Ruh her zaman kesin bir cevher olarak kabul edilmeye devam etmiş, anlayış değişmemiştir
+#WRONG:Ruh tamamen reddedilmiş ve felsefeden bütünüyle çıkarılmıştır
+#WRONG:Ruh anlayışı hiçbir değişikliğe uğramamış ve eski hâliyle sürmüştür
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:Çağdaş felsefe
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Farabî'ye göre insanî ruhun ölümden sonraki varlığı nasıldır?
+#CORRECT:Ruhlar âleminde toplu ve birlik hâlinde, ferdî olmayan bir devamdır
+#WRONG:Ferdî ve bedenli olarak, aynı kişilik ve aynı bedenle aynen sürüp gider
+#WRONG:Ruh ölümle tamamen yok olur ve hiçbir varlık biçimi kalmaz
+#WRONG:Ruh başka bir bedene geçerek yeniden doğar ve yeni bir hayata başlar
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:Farabî
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Farabî ruh göçünü (tenasüh) nasıl değerlendirir?
+#CORRECT:Kesin olarak reddeder
+#WRONG:Kabul eder ve savunur
+#WRONG:Yalnızca bazı ruhlar için kabul eder
+#WRONG:Hiç değerlendirmez
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:Farabî
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:İbni Sina'ya göre ruhun bedenle ilişkisi nasıldır?
+#CORRECT:Ruh kendi zâtını mükemmelleştirmek için bedene ihtiyaç duyar
+#WRONG:Ruh bedene tamamen bağımlıdır ve onsuz hiç var olamaz
+#WRONG:Ruh ile beden aynı şeydir ve ayrı düşünülemez
+#WRONG:Ruh bedenden önce yok olur ve beden kalır
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:İbni Sina
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:İbni Sina'ya göre ruhun gelişiminde ilk aşama hangisidir?
+#CORRECT:Duyumların kazanılması
+#WRONG:Bağımsız faaliyet
+#WRONG:Kendine dönüş
+#WRONG:Bedenin engel olması
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:İbni Sina
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Gazalî, İbni Sina'yı hangi konuda eleştirmiştir?
+#CORRECT:Bedenî haşri inkâr etmekle suçlamıştır
+#WRONG:Ruhun varlığını kabul etmesiyle
+#WRONG:Tasavvufla ilgilenmesiyle
+#WRONG:Mantığı kullanmasıyla
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:İbni Sina
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:İbni Sina ruhun şahsî bekası konusunda ne düşünür?
+#CORRECT:Kabul eder ve ferdî ruhlar fikri üzerinde ısrar eder
+#WRONG:Reddeder ve ruhu yalnızca bir kuvvet sayar
+#WRONG:Yalnızca bedensiz ruhlar için kabul eder
+#WRONG:Bu konuyu hiç ele almaz
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:İbni Sina
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Gazalî'ye göre ruhun bilgi edinme sırası nasıldır?
+#CORRECT:Önce duyular, sonra zekâ, ardından kalp gözünün açılması
+#WRONG:Önce kalp gözü, sonra duyular ve en son zekâ
+#WRONG:Doğuştan tam bilgiyle gelir ve sonradan öğrenmez
+#WRONG:Yalnızca akıl yoluyla ve başka bir şeye gerek duymadan
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:Gazalî
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Gazalî'ye göre meâd (tekrar dönüş) nasıl bilinir?
+#CORRECT:Vahiy yoluyla; tekrar dönüş ancak ruhun bekâsı ile mümkündür
+#WRONG:Yalnızca akılla ve mantıkî çıkarımla; vahye hiç ihtiyaç duyulmadan bilinir
+#WRONG:Yalnızca duyuyla ve deneyle; bunların dışında bir yol bulunmaz
+#WRONG:Hiçbir şekilde bilinemez; konu insan bilgisinin tamamen dışındadır
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:Gazalî
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:İsmail Hakkı İzmirli'ye göre ruhun mahiyeti hakkında nasıl inanılırsa inanılsın ne olmaz?
+#CORRECT:Tevhide ters bir inanç meydana gelmez
+#WRONG:Hiçbir inanç oluşmaz ve ruh yok sayılır
+#WRONG:Şirk meydana gelir
+#WRONG:Ruh yok olur
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:Sonuç
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:İslâm'da ruhun mahiyeti hakkında insan aklı neden tam bilgiye ulaşamaz?
+#CORRECT:Ruh duyu ve deneye dayanmadığı ve Rabbin emrinden olduğu için ancak az bilgi verilmiştir
+#WRONG:Ruh yok olduğu için hakkında bilgi edinilemez ve bu konuda araştırma yapılamaz
+#WRONG:Akıl hiç çalışmadığı için ruhla ilgili hiçbir bilgiye ulaşılamaz ve konu kapalıdır
+#WRONG:Ruh çok basit olduğu için ona dair söylenecek bir şey kalmaz ve bilgi gerekmez
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:İslâm'da ruh
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:İslâm bilginlerinin ruhun ontolojik özellikleri olarak saydıkları hangisidir?
+#CORRECT:Soyuttur, cismanî değildir ve mekânda yer işgal etmez
+#WRONG:Maddîdir ve mekânda yer kaplar, ayrıca bedenle birlikte bozulur
+#WRONG:Bölünebilir ve parçalanabilir, bu yüzden değişkendir
+#WRONG:Değişkendir ve zamanla beden gibi bozulup yok olur
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:İslâm'da ruh
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Ruhun üç kuvvetinin itidal noktasında bir araya gelmesiyle ortaya çıkan fazilet hangisidir?
+#CORRECT:Adalet
+#WRONG:Hikmet
+#WRONG:Şecaat
+#WRONG:İffet
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:İslâm'da ruh
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Felsefede ruh nazariyelerinin ortaya çıkış sebebi nedir?
+#CORRECT:Kâinatın birliğine, cisim ile tasavvurun birliğine ve ruh-beden birliğine çözüm bulmak
+#WRONG:Yalnızca din öğretmek ve insanlara dinî telkinlerde bulunmak amacıyla
+#WRONG:Yalnızca ahlâkı korumak ve kuralları sıralamak amacıyla
+#WRONG:Yalnızca sanat üretmek ve güzelliği anlatmak amacıyla
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:Sonuç
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Bir öğrenci "ruh meselesi yalnızca dini ilgilendirir" diyor. Derse göre bu görüş nasıl değerlendirilir?
+#CORRECT:Ruh hem din hem felsefenin en önemli ve en eski problemlerinden biridir
+#WRONG:Doğrudur, felsefe ruhla hiç ilgilenmez ve onu dinlere bırakır
+#WRONG:Ruh yalnızca psikolojinin konusudur ve felsefeyle ilgisizdir
+#WRONG:Ruh yalnızca tıbbın konusudur ve ilahiyatla ilgisizdir
+#PAKET:8. hafta: Ciddi Quiz (15 soru)
+#KONU:Ruh meselesi
+#ZORLUK:zor
+#BLOOM:Analiz
+

@@ -1,0 +1,200 @@
+#QUESTION:Platon ruhun üç yönünü hangi benzetmeyle anlatır?
+#CORRECT:İki yağız at ve sürücü
+#WRONG:Üç basamaklı merdiven
+#WRONG:Gemi ve yelken
+#WRONG:Ağaç ve dal
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Platon
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Platon'da ruhun en yüksek ve ölmez yanı hangisidir?
+#CORRECT:Akıl
+#WRONG:İştaha
+#WRONG:İrade
+#WRONG:Beden
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Platon
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Platon'da "kötü at" ruhun hangi yanını temsil eder?
+#CORRECT:İştahalar yanını
+#WRONG:Akıl yanını
+#WRONG:İradî yanını
+#WRONG:Hiçbirini
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Platon
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Platon ruh anlayışını hangi diyaloglarında temellendirmiştir?
+#CORRECT:Phaidon, Phaidros ve Devlet
+#WRONG:Yalnızca Devlet
+#WRONG:Yalnızca Timaios
+#WRONG:Yalnızca Sofist
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Platon
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Platon'a göre ruh bedende nasıl bir durumdadır?
+#CORRECT:Bedene mahkûm, ancak bedenden farklı ve müstakil bir cevherdir
+#WRONG:Bedenin bir parçasıdır ve bedenle bütünleşmiştir
+#WRONG:Bedenle tamamen aynıdır ve ondan ayırt edilemez
+#WRONG:Bedenden etkilenmeyen bir hayalden ibarettir
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Platon
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Platon'da tenasüh ne demektir?
+#CORRECT:Ruhun tekrar tekrar dünyaya dönmesi
+#WRONG:Ruhun yok olması ve hiçbir yerde bulunmaması
+#WRONG:Ruhun cennete gitmesi ve orada kalması
+#WRONG:Ruhun bedenle birleşmesi ve onunla bütünleşmesi
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Platon
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Aristoteles'e göre ruh bedenin neyidir?
+#CORRECT:Entelekheiasıdır
+#WRONG:Hapishanesidir
+#WRONG:Gölgesidir
+#WRONG:Aynasıdır
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Aristoteles
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Aristoteles'te ruhun en yüksek kısmı hangisidir?
+#CORRECT:İnsanî ruh
+#WRONG:Nebatî ruh
+#WRONG:Hayvanî ruh
+#WRONG:Yalnızca bitkisel ve hayvanî ruha
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Aristoteles
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Nebatî ruh hangi özelliklere sahiptir?
+#CORRECT:Besleyici ve büyütücü
+#WRONG:Düşünücü
+#WRONG:Konuşucu
+#WRONG:Hareket ettirici
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Aristoteles
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Descartes'a göre ruhun özü nedir?
+#CORRECT:Düşünme
+#WRONG:Yer kaplama
+#WRONG:Büyüme
+#WRONG:Hareket
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Descartes
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Descartes'ın ruh anlayışında ruh yer kaplar mı?
+#CORRECT:Hayır, yer kaplamaz ve bölünmez
+#WRONG:Evet, yer kaplar ve bölünebilir
+#WRONG:Bazen yer kaplar ve bazen kaplamaz
+#WRONG:Yalnızca bedende yer kaplar ve orada bölünür
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Descartes
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Bergson'a göre ruh nedir?
+#CORRECT:Sezgiyle anlaşılan, dinamik bir atılım
+#WRONG:Salt madde olarak, hiçbir ruhî yönü bulunmayan bir şey
+#WRONG:Algı yanılsaması olarak, gerçek bir karşılığı olmayan bir şey
+#WRONG:Değişmeyen cevher olarak, hiçbir hareketi bulunmayan bir şey
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Çağdaş felsefe
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Epikuros'a göre ruh nelerden oluşur?
+#CORRECT:Ateş, soluk, hava ve dördüncü bir unsur
+#WRONG:Yalnızca ruhanî cevher ve manevî unsurlar
+#WRONG:Yalnızca düşünce ve onun faaliyetleri
+#WRONG:Yalnızca beden ve onun organlarından oluşan yapı
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Materyalist anlayış
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Kınalızâde ruhu nasıl tanımlar?
+#CORRECT:Cisim ve cisme ait olmayan basit bir cevher
+#WRONG:Cismanî bir yapı, yani bedenin bir parçası olan şey
+#WRONG:Salt hayal, yani zihnin ürettiği bir tasarım
+#WRONG:Madde yığını, yani cisimlerin rastgele birleşimi
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Dinde ruh
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Kuvve-i Fikriyye'nin merkezi neresidir?
+#CORRECT:Beyin
+#WRONG:Kalp
+#WRONG:Ciğer
+#WRONG:Karaciğer
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İslâm'da ruh
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Kuvve-i Gazabiyye'nin merkezi neresidir?
+#CORRECT:Kalp
+#WRONG:Beyin
+#WRONG:Ciğer
+#WRONG:Mide
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İslâm'da ruh
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Kuvve-i Şeheviyye'nin merkezi neresidir?
+#CORRECT:Ciğer
+#WRONG:Beyin
+#WRONG:Kalp
+#WRONG:Böbrek
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İslâm'da ruh
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Kuvve-i Fikriyye'nin ilgili fazileti hangisidir?
+#CORRECT:Hikmet
+#WRONG:Şecaat
+#WRONG:İffet
+#WRONG:Adalet
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İslâm'da ruh
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Gazalî ruhun iki boyutunu nasıl adlandırır?
+#CORRECT:Beden ve kalp
+#WRONG:Akıl ve duygu
+#WRONG:Madde ve form
+#WRONG:Cevher ve araz
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Gazalî
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Descartes'a göre ruh, madde ve Tanrı için hangi ifade doğrudur?
+#CORRECT:Üç ayrı cevher olarak ele alınırlar
+#WRONG:Üçü de tek bir madde olarak ele alınır
+#WRONG:Yalnızca Tanrı bir cevherdir
+#WRONG:Ruh ve madde aynı cevherdir
+#PAKET:8. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Descartes
+#ZORLUK:zor
+#BLOOM:Anlama
+

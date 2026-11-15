@@ -1,0 +1,40 @@
+13|Z|Din ve felsefenin gayeleri açısından ortak amacı hangisidir?|Hak ve hakikati tanımak ve tanıtmak|Siyasî güç kazanmak ve iktidar elde etmek|Servet toplamak ve zenginleşmek|Eğlence üretmek ve vakit geçirmek|Gayeleri yönünden|k|A
+13|Z|Din ve felsefe insana ne açıdan hizmet etmeyi amaçlar?|Aklı ve kalbi ıslah ederek dünyevî ve uhrevî mutluluğa ulaştırmak|Yalnızca zenginleştirmek ve maddî refaha ulaştırmak|Yalnızca eğlendirmek ve zaman geçirtmek|Yalnızca şöhret kazandırmak ve ün sağlamak|Gayeleri yönünden|o|A
+13|Z|"Hakikati tanımak" gayesi neyi ifade eder?|Varlığın özünü ve anlamını keşfetmek|Takvimi öğrenmek ve zamanı ölçmek|Servet toplamak ve mal biriktirmek|Eğlenmek ve vakit geçirmek|Gayeleri yönünden|o|A
+13|Z|"Yol göstermek" gayesi neyi ifade eder?|Güvenilir bilgi yollarını sağlamak|Haritalar çizmek ve yolları göstermek|Ticaret yollarını açmak ve mal taşımak|Orduları yönlendirmek ve savaşa hazırlamak|Gayeleri yönünden|o|A
+13|Z|"Islah etmek" gayesi neyi kapsar?|Aklı, düşünceyi ve kalbi temizlemek|Binaları onarmak ve yıpranan yerleri yenilemek|Yolları onarmak ve ulaşımı kolaylaştırmak|Silahları geliştirmek ve ordu donatmak|Gayeleri yönünden|o|A
+13|Z|"Nereden geldik, nereye gideceğiz" soruları nasıl sorulardır?|Varoluşun temel soruları|Ekonomik sorular|Coğrafî sorular|Teknik sorular|Ortak sorular|k|A
+13|Z|Din ve felsefe, realitelere yönelişte hangi alanı araştırır?|Varlık ve değer açısından en genel ve temel alanı|Yalnızca yerel olayları ve günlük işleri|Yalnızca ekonomiyi ve ticaretin kurallarını|Yalnızca hukuku ve yasaların uygulanmasını|Realitelere yöneliş|o|A
+13|Z|Her iki disiplin evrensel bir yasanın mevcut olduğunu nasıl değerlendirir?|Kabul eder ve yasaların birbiriyle örtüştüğünü belirtir|Reddeder ve böyle bir yasanın bulunmadığını söyler|Yalnızca din kabul eder ve felsefe bunu reddeder|Yalnızca felsefe kabul eder ve din bunu reddeder|Realitelere yöneliş|z|A
+13|Z|Din ile felsefenin ayrıldığı yönlerden biri hangisidir?|Kaynaklar|Gayeler|Ortak sorular|İnsana hizmet|Ayrıldığı yönler|k|H
+13|Z|Din ile felsefenin ayrıldığı yönlerden biri "metotlar"dır. Bu neyi ifade eder?|Bilgiye ulaşma yollarını|Sonuçları|Bakış açılarını|Sosyal etkiyi|Ayrıldığı yönler|o|A
+13|Z|Din ile felsefenin ayrıldığı yönlerden "hükümler" neyi ifade eder?|Verdikleri sonuçları|Kaynaklarını|Metotlarını|Sosyal etkilerini|Ayrıldığı yönler|o|A
+13|Z|Din ile felsefenin ayrıldığı yönlerden "sosyal etki" neyi ifade eder?|Ferdî ve toplumsal hayata tesirlerini|Kaynaklarını ve bilginin dayanağını|Metotlarını ve bilgiye ulaşma yollarını|Hükümlerini ve verdikleri sonuçları|Ayrıldığı yönler|o|A
+13|Z|Din-felsefe münasebetinin meşruiyeti neye bağlıdır?|İnsanların bu iki disiplini nasıl algıladıklarına|Hava durumuna ve mevsim değişikliklerine|Takvime ve zamanın bölünmesine|Para birimine ve değerinin belirlenmesine|Meşruiyet|o|A
+13|Z|"Hakikat hakikati yalanlamaz" ilkesi meşruiyette neyi gösterir?|Din ve felsefe hakikate hizmet ettiği için çelişmez|İkisi birbirini yalanlar ve çelişir|İkisi yalnızca zıttır ve birleşemez|İkisi önemsizdir ve ilgilenilmez|Meşruiyet|o|A
+13|Z|Kindî'ye göre felsefe nedir?|İnsanın takati ölçüsünde eşyayı hakikatleriyle bilmesi|Eşyayı hayal etmesi ve zihninde tasarlaması|Eşyayı yok saymasi ve görmezden gelmesi|Eşyayı değiştirmesi ve yeniden biçimlendirmesi|Kindî|o|H
+13|Z|Kindî'ye göre en değerli felsefe hangisidir?|İlk felsefe (hakkın ilmi)|Matematik|Tıp|Mantık|Kindî|o|H
+13|Z|Farabî'ye göre hakikat nasıldır?|Tek, felsefe bir yanını, din öbür yanını temsil eder|Çok, birbirinden ayrı ve ilişkisiz hakikatler|Yok, hakikat bulunmaz ve tamamen göreli|Bilinemez, hakikate hiçbir yoldan ulaşılamaz|Farabî|o|A
+13|Z|Farabî'ye göre faziletli şehrin başkanı olmaya layık iki kişi kimdir?|Peygamber ve filozof|Asker ve tüccar|Doktor ve mühendis|Hâkim ve kâtip|Farabî|o|A
+13|Z|İbn Rüşd'e göre hikmetin şeriatla ilişkisi nasıl ifade edilir?|Süt kardeşi, iki dost|Düşman|Hiç ilgisiz|Biri diğerinin köpeği|İbn Rüşd|k|H
+13|Z|İbn Rüşd'e göre şeriat varolanlara akılla nasıl bakmayı ister?|Vacip kılar|Yasaklar|Hiç önemsemez|Mubah sayar|İbn Rüşd|o|A
+14|Z|Din-felsefe münasebetine ilk karşı çıkışlar hangi dönemden gelir?|Antikçağ|Yeniçağ|XX. yüzyıl|Orta Çağ sonrası|Karşı çıkanlar|o|H
+14|Z|Protagoras'ın "İnsan her şeyin ölçüsüdür" sözü neyi ifade eder?|İnsanı merkeze alan bir tutumu|Tanrı merkezli bir tutumu|Maddeyi merkeze alan bir tutumu|Hayvanları merkeze alan bir tutumu|Karşı çıkanlar|o|A
+14|Z|Protagoras Tanrılar hakkında ne söyler?|Var mı yok mu bilemeyiz|Çok sayıda tanrı vardır|Hiçbir tanrı yoktur|Tek bir tanrı vardır|Karşı çıkanlar|o|H
+14|Z|Materyalist ve ateist düşünürler din-felsefe münasebetine nasıl yaklaşır?|Dini bile üzerinde durulmaya değer bir alan saymazlar|Dine tam destek verirler ve onu över|Felsefeyi dine bağlarlar ve ona tabi kılarlar|Din ile felsefeyi birleştirirler ve tek sayarlar|Karşı çıkanlar|o|A
+14|Z|Batı'da bilim ve felsefedeki başarıların önemli sebeplerinden biri nedir?|Dinî inanışlarla yapılan mücadele|Dinî inanışlarla ittifak ve işbirliği|Tamamen tesadüf ve rastlantı|Hiçbir sebep yok, kendiliğinden oluşmuş|Karşı çıkanlar|o|A
+14|Z|Batı'da din-bilim çatışması ortamında yetişen teist düşünürlerden biri kimdir?|Descartes|Protagoras|Demokritos|Epikuros|Karşı çıkanlar|o|H
+14|Z|İslâm dünyasında meselenin ilk hâli nasıl ele alınmıştır?|Akıl-din ve akıl-vahiy münasebeti şeklinde|Sanat-din ilişkisi şeklinde, estetik düzlemde|Hukuk-din ilişkisi şeklinde, hukukî düzlemde|Ticaret-din ilişkisi şeklinde, ekonomik düzlemde|İslâm dünyasında tepkiler|o|A
+14|Z|Akılcı metodu ilke edinen ekol hangisidir?|Mutezile|Hadisçiler|Fıkıhçılar|Sufîler|İslâm dünyasında tepkiler|k|H
+14|Z|Mutezile'ye karşı çıkan grup hangisidir?|Fıkıh bilginleri|Filozoflar|Sufîler|Sofistler|İslâm dünyasında tepkiler|o|H
+14|Z|Fıkıh bilginleri aklı hangi konuda reddetmeye yönelmiştir?|Dinî konularda hakemlik konusunda|Matematik konusunda ve hesap meselelerinde|Tıp konusunda ve sağlık meselelerinde|Mimarî konusunda ve yapı meselelerinde|İslâm dünyasında tepkiler|o|A
+14|Z|İmam Malik, Mutezilî kelâmcı Amr b. Ubeyd'in taraftarı olarak kimi nitelendirmiştir?|Kelâmla ilgili sorular soran birini|Bir filozofu ve onun öğrencilerini|Bir tüccarı ve onun ortaklarını|Bir askeri ve onun komutanlarını|İslâm dünyasında tepkiler|z|H
+14|Z|İmam Şafiî Mutezilî kelâmcılar için ne istemiştir?|Kırbaçlanmalarını ve zındık olduklarına hüküm verilmesini|Ödüllendirilmelerini ve yönetici yapılmalarını|Yönetici yapılmalarını ve görevlendirilmelerini|Serbest bırakılmalarını ve korunmalarını|İslâm dünyasında tepkiler|z|H
+14|Z|Mutezilî kelâma yöneltilen tepkiler diğer hangi ilimlere de yayılmıştır?|Diğer aklî ilimlere|Tıp ve mimariye|Yalnızca hadise|Yalnızca fıkha|Sert reddiyeler|o|A
+14|Z|Mantıkla uğraşmayı bile haram kılanlar kimlerdir?|İbn Salah ve en-Nevevî|Kindî ve Farabî|İbn Rüşd ve İbn Sina|Platon ve Aristoteles|Sert reddiyeler|z|H
+14|Z|Gazalî hangi eserinde filozofları eleştirmiştir?|Tehâfütü'l-Felâsife|Kitabü'ş-Şifa|Fasl el-Makâl|Risâletü't-Tayr|Sert reddiyeler|k|H
+14|Z|Gazalî filozofları kaç meselede bid'atçı saymıştır?|On yedi|Üç|Beş|Yüz|Sert reddiyeler|z|H
+14|Z|Gazalî'nin filozofları kâfir saydığı meselelerden biri hangisidir?|Cüz'i bilgi|Mantık|Ahlâk|Estetik|Sert reddiyeler|z|H
+14|Z|"Kim mantıkla uğraşırsa zındık olur" ifadesi hangi tavrı gösterir?|Aklî ilimlere karşı sert bir tavrı|Aklî ilimlere destek tavrını|Tarafsız bir tavrı|Sanatı övme tavrını|Sert reddiyeler|o|A
+14|Z|Karşı çıkanların niçin karşı çıktığı sorusu neyin anlaşılması için önemlidir?|Tarihî ve entelektüel bağlamların|Takvimin ve zaman hesabının|Para sisteminin ve ticaretin|Mimarinin ve yapı sanatının|Sert reddiyeler|o|A
+14|Z|Descartes, Campanella ve Pascal derste hangi gruba örnek olarak gösterilir?|Din-bilim çatışması ortamındaki teist düşünürlere|Sofistlere ve din karşıtı düşünürlere|Mutezilîlere ve akılcı kelâmcılara|Hadisçilere ve nakli esas alan âlimlere|Karşı çıkanlar|o|A

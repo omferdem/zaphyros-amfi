@@ -1,0 +1,200 @@
+#QUESTION:Âlem meselesinde "arkhé" neyi ifade eder?
+#CORRECT:Âlemin ana maddesi, ilkesi
+#WRONG:Âlemin sonu
+#WRONG:Âlemin büyüklüğü
+#WRONG:Âlemin rengi
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İlkçağ âlem anlayışı
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Aristoteles'te "ilk madde"ye ne ad verilir?
+#CORRECT:Heyûla (Hyle)
+#WRONG:Salt Form
+#WRONG:Südûr
+#WRONG:Logos
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Aristoteles
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Aristoteles'te heyûlayı şekillendiren nedir?
+#CORRECT:Salt Form (Tanrı)
+#WRONG:Duyular
+#WRONG:Deney
+#WRONG:Atom
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Aristoteles
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Heyûla neyi ifade eder?
+#CORRECT:Niteliksiz ve şekilsiz bir imkân
+#WRONG:Şekillenmiş varlığı ve tam hâlini almış nesneyi
+#WRONG:Tanrı'nın kendisini ve onun hareket gücünü
+#WRONG:Ruhu ve onun yönetici gücünü
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Aristoteles
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Plotinos'un "BİR"i neyi ifade eder?
+#CORRECT:Mutlak ve aşkın Tanrı
+#WRONG:Maddenin kendisi
+#WRONG:Ruhun bedeni
+#WRONG:Zihinsel bir kavram
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Plotinos
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Plotinos'ta "südûr" neyi anlatır?
+#CORRECT:Yukarıdan aşağıya varlık zincirinin oluşmasını
+#WRONG:Aşağıdan yukarıya doğru bir yükselişi ve çıkışı
+#WRONG:Maddenin yok olmasını ve ortadan kalkmasını
+#WRONG:Âlemin sona ermesini ve çökmesini
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Plotinos
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Plotinos'a göre varlığın en son mertebesi nedir?
+#CORRECT:Madde
+#WRONG:BİR
+#WRONG:Akıl
+#WRONG:Ruh
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Plotinos
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Plotinos'un sistemi hangi felsefeyi derinden etkilemiştir?
+#CORRECT:İslam felsefesini
+#WRONG:Çin felsefesini
+#WRONG:Mısır felsefesini
+#WRONG:Hint felsefesini
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Plotinos
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Âlem meselesinde "düzen" sorusu neyi sorar?
+#CORRECT:Âleme hâkim olan düzenin nasıl meydana geldiğini
+#WRONG:Âlemin ne kadar büyük olduğunu ve genişliğini
+#WRONG:Âlemin kaç yaşında olduğunu ve ne zaman başladığını
+#WRONG:Âlemin kime ait olduğunu ve kimin mülkü olduğunu
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Âlem meselesi
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Âlem meselesinde "akıbet" sorusu neyi sorar?
+#CORRECT:Âlemin sonunun ne olacağını
+#WRONG:Âlemin başlangıcını
+#WRONG:Âlemin boyutunu
+#WRONG:Âlemin rengini
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Âlem meselesi
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Platon'da Tanrı idealar dünyasındaki modellere göre ne yapar?
+#CORRECT:Âlemi ve varlıkları meydana getirir
+#WRONG:İdealara karşı çıkar ve onları geçersiz sayar
+#WRONG:Maddeyi yok eder ve onun yerine yenisini koyar
+#WRONG:Hiçbir şey yapmaz ve sürece karışmaz
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Platon
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Arkhé olarak havayı gösteren filozof hangisidir?
+#CORRECT:Anaksimenes
+#WRONG:Thales
+#WRONG:Pythagoras
+#WRONG:Platon
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İlkçağ âlem anlayışı
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Aristoteles'in Tanrı'sı hangi iki özellikle anılır?
+#CORRECT:Salt Form ve hareket gücü
+#WRONG:Madde ve zaman
+#WRONG:İdea ve ruh
+#WRONG:Süje ve obje
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Aristoteles
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Arkhé olarak ateşi gösteren filozof kimdir?
+#CORRECT:Herakleitos
+#WRONG:Thales
+#WRONG:Anaksagoras
+#WRONG:Aristoteles
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İlkçağ âlem anlayışı
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Arkhé olarak sayıyı gösteren filozof kimdir?
+#CORRECT:Pythagoras
+#WRONG:Thales
+#WRONG:Herakleitos
+#WRONG:Anaksimenes
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İlkçağ âlem anlayışı
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Nous (akıl) ilkesini öne süren filozof kimdir?
+#CORRECT:Anaksagoras
+#WRONG:Pythagoras
+#WRONG:Thales
+#WRONG:Epikuros
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İlkçağ âlem anlayışı
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:İlk filozoflar ana ilke olarak başlangıçta ne tür varlıkları seçmiştir?
+#CORRECT:Maddî karakterli varlıkları
+#WRONG:Yalnızca sayıları
+#WRONG:Yalnızca ruhları
+#WRONG:Yalnızca idealar
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İlkçağ âlem anlayışı
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Platon'da yaratma neyi ifade eder?
+#CORRECT:Var olan maddeye idealara göre düzen vermeyi
+#WRONG:Hiçlikten, yok iken var etmeyi
+#WRONG:Maddenin yok edilmesini ve ortadan kalkmasını
+#WRONG:Âlemin kendiliğinden oluşmasını ve tesadüfü
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Platon
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Platon'da kadîm ilke nedir?
+#CORRECT:Öncesiz, belli belirsiz bir ilk madde
+#WRONG:Allah'ın iradesi ve onun yaratıcı gücü
+#WRONG:Ruhun bedeni ve beden üzerindeki etkisi
+#WRONG:İnsanın aklı ve düşünme gücü
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Platon
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Platon'da "idealar dünyası" neyi ifade eder?
+#CORRECT:Zaman ve mekân ötesindeki orijinal modelleri
+#WRONG:Maddî dünyayı ve duyularla bilinen nesneleri
+#WRONG:İnsan duygularını ve onların değişimini
+#WRONG:Yalnızca sayıları ve onların ilişkilerini
+#PAKET:6. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Platon
+#ZORLUK:zor
+#BLOOM:Anlama
+

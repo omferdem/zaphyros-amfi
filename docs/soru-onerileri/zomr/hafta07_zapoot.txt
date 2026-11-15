@@ -1,0 +1,200 @@
+#QUESTION:"Creatio ex nihilo" ne anlama gelir?
+#CORRECT:Yoktan yaratma
+#WRONG:Maddeden yaratma
+#WRONG:Südûr yoluyla oluş
+#WRONG:Kendiliğinden oluş
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ortaçağ
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Descartes'ın üç cevher teorisinde yaratıcı cevher hangisidir?
+#CORRECT:Tanrı
+#WRONG:Ruh
+#WRONG:Madde
+#WRONG:Akıl
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Descartes
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Descartes'a göre ruhun temel niteliği nedir?
+#CORRECT:Düşünme (res cogitans)
+#WRONG:Yer kaplama
+#WRONG:Hareket
+#WRONG:Büyüme
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Descartes
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Descartes'a göre maddenin temel niteliği nedir?
+#CORRECT:Yer kaplama (res extensa)
+#WRONG:Düşünme
+#WRONG:Hissetme
+#WRONG:Büyüme
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Descartes
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Descartes'ta âlem nasıl bir yapı olarak görülür?
+#CORRECT:Hareket kanunlarına göre işleyen bir makine
+#WRONG:Canlı bir organizma gibi kendi kendine gelişen bir yapı
+#WRONG:Bir rüya gibi hayalî ve gerçek olmayan bir yapı
+#WRONG:Tanrı'nın kendisi olarak, onunla özdeş bir yapı
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Descartes
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:"Varolmak algılanmış olmaktır" diyen filozof kimdir?
+#CORRECT:Berkeley
+#WRONG:Hume
+#WRONG:Locke
+#WRONG:Descartes
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:XVIII. yüzyıl
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Hume'a göre dış dünyanın varlığı nedir?
+#CORRECT:Akılla ispat edilemeyen, inanca konu olan bir vehim
+#WRONG:Aklî olarak ispatlanmış bir gerçek
+#WRONG:Allah'ın doğrudan bildirdiği bir hakikat
+#WRONG:Atomların hareketi
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:XVIII. yüzyıl
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Berkeley'e göre asıl gerçeklik nerededir?
+#CORRECT:Ruhî cevherde
+#WRONG:Maddede
+#WRONG:Dış dünyada
+#WRONG:Kuvvette
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:XVIII. yüzyıl
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Locke'a göre insan neyi kesin olarak bilebilir?
+#CORRECT:Şuurunda olup bitenleri
+#WRONG:Dış dünyanın yapısını
+#WRONG:Tanrı'nın zâtını
+#WRONG:Geleceği
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:XVIII. yüzyıl
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Kant'a göre zihin nesnelere ne yapar?
+#CORRECT:Kanun dikte eder
+#WRONG:Hiç dokunmaz
+#WRONG:Yok sayar
+#WRONG:Sadece taklit eder
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kant
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Kant'taki "a priori" kavramlar nasıl kavramlardır?
+#CORRECT:Deneyden önce gelen, önsel kavramlar
+#WRONG:Deneyden sonra gelen kavramlar
+#WRONG:Hiç kullanılmayan kavramlar
+#WRONG:Yalnızca duyulardan gelen kavramlar
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kant
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:"Ben'den başka mevcut yoktur" ifadesi hangi filozofa aittir?
+#CORRECT:Fichte
+#WRONG:Kant
+#WRONG:Hegel
+#WRONG:Berkeley
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Alman idealizmi
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Hegel'e göre âlem nedir?
+#CORRECT:Mutlak İde'nin kendini açması
+#WRONG:Atomların birleşimi
+#WRONG:Tesadüfi bir yığın
+#WRONG:Salt madde
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Alman idealizmi
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Materyalistlere göre ruh nedir?
+#CORRECT:Maddî yapılı bir bileşim
+#WRONG:Bağımsız cevher
+#WRONG:İlâhî bir ışık
+#WRONG:Algı yanılsaması
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Materyalizm
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Materyalistlere göre âlem nasıl işler?
+#CORRECT:Zorunlu kanunlara göre bir makine gibi
+#WRONG:Tanrı'nın iradesine göre, ruhun yönlendirmesiyle
+#WRONG:Tesadüfen ve hiçbir kurala bağlı olmadan
+#WRONG:Ruhun etkisiyle ve manevî bir güçle
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Materyalizm
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Materyalizmde birbirinden ayrılmayan iki kadîm varlık hangisidir?
+#CORRECT:Madde ve kuvvet
+#WRONG:Ruh ve beden
+#WRONG:Akıl ve duygu
+#WRONG:Süje ve obje
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Materyalizm
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Dinin âlem anlayışında âlem nasıl meydana gelmiştir?
+#CORRECT:Allah'ın yaratmasıyla
+#WRONG:Kadîm bir ilk maddeden
+#WRONG:Kendiliğinden
+#WRONG:Südûr zorunluluğuyla
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Dinin âlem anlayışı
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Kur'an ve hadiste yoktan yaratma ifadesi nasıl yer alır?
+#CORRECT:Açıkça yer almaz; Allah'a yüklenen fiillerin lügat anlamlarından çıkarılmıştır
+#WRONG:Her sûrede açıkça ve sıklıkla geçer
+#WRONG:Hiç söz edilmez ve konuya hiç değinilmez
+#WRONG:Yalnızca hadiste açıkça yer alır
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Yoktan yaratma
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Yoktan yaratma tezini Ehli Sünnet kelâmcıları hangi kavramlardan yola çıkarak temellendirmeye çalışmıştır?
+#CORRECT:Atom, yer kaplama ve boşluk
+#WRONG:Ruh, beden ve akıl
+#WRONG:Süje, obje ve algı
+#WRONG:Hava, su ve ateş
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Yoktan yaratma
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:"Yokluktan varlık meydana gelmez" ilkesi Latince nasıl ifade edilir?
+#CORRECT:Ex nihilo nihil
+#WRONG:Cogito ergo sum
+#WRONG:Esse est percipi
+#WRONG:Creatio ex nihilo
+#PAKET:7. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Filozoflar ve sufîler
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+

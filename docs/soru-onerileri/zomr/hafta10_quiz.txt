@@ -1,0 +1,200 @@
+#QUESTION:Platon'a göre sanat idelerin taklididir. Buna göre gerçek bir sanatçı neyi örnek almalıdır?
+#CORRECT:İdelere bakıp onları örnek almalıdır; çünkü gerçek sanat idelerin taklididir
+#WRONG:Yalnızca maddî dünyayı gözlemleyip birebir kopyalamalıdır, ideleri aramadan
+#WRONG:Yalnızca kendi hayal gücüne güvenmeli ve hiçbir modele bakmamalıdır
+#WRONG:Yalnızca başka sanatçıların eserlerini taklit etmeli ve onlardan çıkmamalıdır
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:Güzellik anlayışının tarihi
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:İslâm sanatındaki "soyuta yönelim" hangi özellikleri öne çıkarır?
+#CORRECT:Geometrik unsurlar, soyut ifadeler ve aşkın çizgiler
+#WRONG:Natüralist portre ve gerçekçi figürler
+#WRONG:Gerçekçi heykel ve anıtsal betimler
+#WRONG:Taklit odaklı manzara resimleri ve kopyalar
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:İslâm sanatı
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:İslâm estetiğinde sanatın amacı hangi değerlerin birleşimi olarak tanımlanır?
+#CORRECT:İyi ile güzel değerlerinin birleşimi
+#WRONG:Fayda ile kâr değerlerinin birleşimi
+#WRONG:Taklit ile gerçek değerlerinin birleşimi
+#WRONG:Zaman ile mekân değerlerinin birleşimi
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:İslâm estetiği
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Baumgarten'in estetiği bir disiplin olarak kurmaktaki hedefi neydi?
+#CORRECT:Duyum bilgisi bilimi, yani güzel üzerine düşünmeyi sistemleştirmek
+#WRONG:Matematiksel bir sistem kurmak ve sayılar üzerine yeni bir bilim geliştirmek
+#WRONG:Hukuk kuralları geliştirmek ve toplumsal düzeni yazılı hâle getirmek
+#WRONG:Bir mantık sistemi inşa etmek ve çıkarım kurallarını sıralamak
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:Estetik
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Estetik süjenin "çıkar gözetmemesi" ne anlama gelir?
+#CORRECT:Objesine sırf haz duymak için yönelir, ondan çıkar beklemez
+#WRONG:Objesinden para kazanmak ister ve eseri satmayı amaçlayarak ona yönelir
+#WRONG:Objeyi satmak ister ve bundan kazanç sağlamayı hedefler
+#WRONG:Objeyi yok etmek ister ve onun yerine yenisini koymayı amaçlar
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:Estetik
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Plotinos'a göre mutlak güzellik nasıl bir niteliktedir?
+#CORRECT:Sureti olmayan bir ide, yani maddeye hükmeden en yüksek güzelliktir
+#WRONG:Tamamen maddî bir suret, yani gözle görülen bir şeydir
+#WRONG:Yalnızca duyusal bir görüntüdür ve değişir
+#WRONG:Yalnızca geometrik bir şekildir ve ölçülebilir
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:Güzellik anlayışının tarihi
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Çağdaş estetikte sanatın "parçalanmış durumu" hangi sonucu doğurmuştur?
+#CORRECT:Psikoloji, dil çözümlemesi ve sosyoloji gibi farklı yaklaşımların ortaya çıkmasını
+#WRONG:Estetiğin tümüyle sona ermesini ve sanatın tartışma dışında kalmasını
+#WRONG:Estetiğin tek bir kurala indirgenmesini ve çeşitliliğin ortadan kalkmasını
+#WRONG:Sanatın yasaklanmasını ve eserlerin toplanıp ortadan kaldırılmasını
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:Çağdaş estetik
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Adorno'ya göre sanatla ilgili ne yapılmalıdır?
+#CORRECT:Sanatın içeriği çözümlenmeli ve özerkliği sorgulanmalıdır
+#WRONG:Sanat yasaklanmalıdır ve eserlerin üretimi bütünüyle durdurulmalıdır
+#WRONG:Sanat yalnızca taklit edilmelidir ve özgün hiçbir şey üretilmemelidir
+#WRONG:Sanat dinden ayrılmalıdır ve dinî değerlerle bir ilişkisi bulunmamalıdır
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:Çağdaş estetik
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:"Allah güzeldir, güzeli sever" hadisi İslâm'ın hangi tutumunu gösterir?
+#CORRECT:Estetik değerlere verdiği önemi
+#WRONG:Estetiğe karşı olduğunu
+#WRONG:Sanatı yasakladığını
+#WRONG:Güzelliğin önemsiz olduğunu
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:Din ve sanat
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Platon'un sanat anlayışı ile İslâm'ın güzellik anlayışı arasında hangi ilişki kurulabilir?
+#CORRECT:Aralarında büyük paralellikler bulunur
+#WRONG:Aralarında hiçbir benzerlik bulunmaz
+#WRONG:Birbirlerine tamamen zıttırlar
+#WRONG:Biri diğerini tümüyle reddeder
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:Din ve sanat
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Estetik olayın üç unsuru derste hangisidir?
+#CORRECT:Süje, obje ve objenin özelliği
+#WRONG:Zaman, mekân ve hareket olmak üzere üç temel unsur
+#WRONG:Akıl, duygu ve irade olmak üzere üç temel unsur
+#WRONG:Din, ahlâk ve hukuk olmak üzere üç temel unsur
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:Estetik
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Aristoteles'in sanat anlayışı Platon'dan nasıl ayrılır?
+#CORRECT:Aristoteles sanatı eşyayı olduğu gibi ya da olması gerektiği gibi göstermek ve katharsis amacı olarak görür
+#WRONG:Aristoteles de sanatı idelerin taklidi sayar ve Platon'la aynı sonuca ulaşır, fark yoktur
+#WRONG:Aristoteles sanatı bütünüyle reddeder ve onu gereksiz bir uğraş olarak değerlendirir
+#WRONG:Aristoteles sanatı yalnızca fayda aracı olarak görür ve başka bir amaç tanımaz
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:Karşılaştırma
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Kur'an'da güzellik anlamına gelen kelimelere örnek hangisidir?
+#CORRECT:Cemal, zinet ve husün
+#WRONG:Hırs, zulüm ve küfür
+#WRONG:Gazap, kibir ve gaflet
+#WRONG:Cehalet, inat ve şüphe
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:Din ve sanat
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Kant'ın estetik yargılar hakkındaki görüşü hangisidir?
+#CORRECT:Duyarlılıktan kaynaklanan, sübjektif ve kendi dışında amacı olmayan yargılardır
+#WRONG:Mantıksal sonuçlardır ve bütün insanlar için aynı biçimde nesneldir
+#WRONG:Yalnızca ahlâkî ölçütlere dayanır ve bu ölçütlerden çıkarılır
+#WRONG:Kavrama bağlıdır ve her zaman kesin tanımlarla belirlenir
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:Kant
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Walter Benjamin'in seri üretim eleştirisi sanatın hangi özelliğine işaret eder?
+#CORRECT:Sanatın biricik ölçütü olan özgünlüğün yok olmasına
+#WRONG:Sanatın daha ucuz hâle gelmesine
+#WRONG:Sanatın daha çok kişi tarafından izlenmesine
+#WRONG:Sanatın daha güzel hâle gelmesine
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:Çağdaş estetik
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Croce'ye göre sanat nedir?
+#CORRECT:Sezgici bir etkinliktir; içten gelenlerin ifadeye dökülmesidir
+#WRONG:Doğanın birebir kopyasıdır ve onu aynen yansıtır
+#WRONG:İdelerin taklididir ve ona sadık kalmak zorundadır
+#WRONG:Mutlak Ruh'un duyusal görünüşüdür ve ondan ayrı düşünülemez
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:Croce
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Hegel'in güzellik anlayışı hangi sistemle bağlantılıdır?
+#CORRECT:Mutlak Ruh'un nesnelerde tezahürünü esas alan idealist sistemle
+#WRONG:Madde ve kuvveti esas alan materyalist bir sistemle ilişkilidir ve onu savunur
+#WRONG:Her şeyden şüphe eden septik bir sistemle ilişkilidir ve onu savunur
+#WRONG:Yalnızca deneyi esas alan pozitivist bir sistemle ilişkilidir ve onu savunur
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:Hegel
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:İslâm inancına göre güzellikler hakkında hangisi söylenir?
+#CORRECT:Güzellikler yaratılmaz, yalnızca keşfedilir
+#WRONG:Güzellikleri tamamen insan icat eder ve Allah'la ilişkisi yoktur
+#WRONG:Güzellikler tamamen rastlantıdır ve bir kaynağa dayanmaz
+#WRONG:Güzellik diye bir şey yoktur ve bütün yargılar boştur
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:İslâm estetiği
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Dindar sanatçı güzelliği eserine nasıl yansıtır?
+#CORRECT:Allah'ın yarattığı güzelliği taklit ederken kendi iç dünyasını da yansıtır
+#WRONG:Yalnızca kendi iç dünyasını yansıtır ve dış dünyaya bakmaz
+#WRONG:Yalnızca başka sanatçıların eserlerini taklit eder ve kendinden bir şey katmaz
+#WRONG:Hiçbir şey yansıtmaz ve eserini boş bırakır
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:İslâm estetiği
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:İslâm sanatında tasvir yasağı hangi sonuca yol açmıştır?
+#CORRECT:Resim ve heykelin gelişmemesine
+#WRONG:Bütün sanatların bütünüyle yok olmasına
+#WRONG:Yalnızca heykelin ayrıcalıklı olarak gelişmesine
+#WRONG:Sanatın dinden tamamen ayrılmasına
+#PAKET:10. hafta: Ciddi Quiz (15 soru)
+#KONU:İslâm sanatı
+#ZORLUK:orta
+#BLOOM:Analiz
+

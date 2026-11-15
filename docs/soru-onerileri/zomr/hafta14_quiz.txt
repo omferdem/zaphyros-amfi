@@ -1,0 +1,200 @@
+#QUESTION:Bir öğrenci "din-felsefe münasebetine yalnızca dindarlar karşı çıkmıştır" diyor. Derse göre bu görüş nasıl değerlendirilir?
+#CORRECT:Yanlıştır; Antikçağ'daki Sofist ve materyalistler de İslâm dünyasındaki fıkıh bilginleri ve hadisçiler de farklı gerekçelerle karşı çıkmıştır
+#WRONG:Doğrudur, yalnızca dindarlar karşı çıkmıştır ve başka grup bu tartışmaya girmemiştir
+#WRONG:Yalnızca ateistler karşı çıkmıştır, dindarlar bu tartışmada hiç yer almamıştır
+#WRONG:Hiç kimse karşı çıkmamıştır, bu münasebet her zaman tam kabul görmüştür
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:Karşı çıkanlar
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Protagoras, materyalistler ve fıkıh bilginlerinin karşı çıkış gerekçeleri karşılaştırıldığında ne söylenebilir?
+#CORRECT:Gerekçeleri farklıdır: insanı merkeze alma, dini bile üzerinde durulmaya değer görmeme ve aklın hakemliğini reddetme
+#WRONG:Hepsinin gerekçesi birbirinin aynıdır ve aralarında ayrım gözetilmesine gerek yoktur
+#WRONG:Tümü aynı kişilerdir ve aynı dönemin ürünüdür, ayrı gerekçeleri yoktur
+#WRONG:Hiçbirinin açıklanabilir bir gerekçesi yoktur, tamamen keyfî biçimde davranmışlardır
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:Karşı çıkanlar
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Mutezile'nin akılcı yaklaşımı kelâm disiplini için hangi rolü üstlenmiştir?
+#CORRECT:Kelâmcılığın öncüleri sayılmış, aklî sistemciliğin temsilcisi olmuştur
+#WRONG:Kelâmı yasaklamış ve bu disiplinin gelişmesine engel olmuştur
+#WRONG:Kelâmı reddetmiş ve ona karşı sert bir tutum benimsemiştir
+#WRONG:Kelâmdan uzak durmuş ve bu alanda hiçbir çalışma yapmamıştır
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:İslâm dünyasında tepkiler
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Fıkıh bilginlerinin Mutezile'ye tepkisinin sonucu nedir?
+#CORRECT:Aklî ilimler de aynı saldırılara maruz kalmıştır
+#WRONG:Aklî ilimler korunmuş ve bu saldırılardan zarar görmemiştir
+#WRONG:Mutezile kazanmış ve fıkıh bilginleri geri çekilmiştir
+#WRONG:Hiçbir sonuç doğmamış ve bu tartışma bir etki bırakmamıştır
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:Sert reddiyeler
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:İbn Salah ve en-Nevevî'nin mantıkla ilgili hükmü neyi gösterir?
+#CORRECT:Felsefeyle değil, alet ilmi olan mantıkla uğraşmanın bile haram sayıldığını
+#WRONG:Mantığın zorunlu olduğunu ve herkesin öğrenmesi gerektiğini
+#WRONG:Felsefenin serbest olduğunu ve hiçbir sınırlamaya tabi olmadığını
+#WRONG:Mantığın övüldüğünü ve dinî ilimlerin temeli sayıldığını
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:Sert reddiyeler
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Gazalî'nin eleştirisi hangi sonucu içerir?
+#CORRECT:Filozofları on yedi meselede bid'atçı, üç meselede kâfir saymayı
+#WRONG:Filozofları tamamen aklamayı ve görüşlerinin hepsini doğru bulmayı
+#WRONG:Mantığı övmeyi ve onu zorunlu bir ilim olarak kabul etmeyi
+#WRONG:Felsefeyi öğretmeyi ve herkesin okumasını teşvik etmeyi
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:Sert reddiyeler
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Gazalî'nin "âlemin kıdemi, cüz'i bilgi ve bedensel haşir" meseleleri hangi bağlamda anılır?
+#CORRECT:Filozofları kâfir saydığı üç mesele olarak
+#WRONG:Filozofları övdüğü meseleler olarak
+#WRONG:Mantık meseleleri olarak
+#WRONG:Sanat meseleleri olarak
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:Sert reddiyeler
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:İmam Malik ve İmam Şafiî'nin tepkileri hangi eğilimi gösterir?
+#CORRECT:Aklın hakemliğini reddeden ve aklı esas alan yaklaşımlara karşı çıkan eğilimi
+#WRONG:Aklı yücelten ve her konuda onu tek ölçü sayan eğilimi
+#WRONG:Felsefeyi destekleyen ve onun öğretilmesini isteyen eğilimi
+#WRONG:Kelâmı öven ve onu en yüksek ilim sayan eğilimi
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:İslâm dünyasında tepkiler
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Antikçağ materyalistleri ile modern ateistlerin din-felsefe münasebetine tavrı arasında hangi ortaklık vardır?
+#CORRECT:Dini, üzerinde durulmaya değer bir varlık alanı olarak görmeme eğilimi
+#WRONG:Dini yüceltme eğilimini ve onu her şeyin üstünde sayan tutumu
+#WRONG:Felsefeyi reddetme eğilimini ve onu hiç dinlememeyi öngören tutumu
+#WRONG:Sanatı yasaklama eğilimini ve bunu zorunlu görme tutumunu
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:Karşı çıkanlar
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Sofistlerin din karşısındaki tavrı hangi ifadede açıkça görülür?
+#CORRECT:"Tanrılar var mı yok mu bilemeyiz" ifadesinde
+#WRONG:"Tanrılar vardır" ifadesinde ve bununla onların varlığını kesin biçimde ilan eder
+#WRONG:"Tanrılar yoktur" ifadesinde ve bununla onların yokluğunu kesin biçimde ilan eder
+#WRONG:"Tek tanrı vardır" ifadesinde ve bununla birliğini kesin biçimde ilan eder
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:Karşı çıkanlar
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Batı'da ilim ve felsefedeki başarıların dinle mücadele içinde kazanıldığı iddiası ne tür bir tarih algısını yansıtır?
+#CORRECT:Din-bilim çatışması tarih anlayışını
+#WRONG:Din-bilim işbirliği anlayışını
+#WRONG:Dine tam uyum anlayışını
+#WRONG:Felsefeden kopuş anlayışını
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:Karşı çıkanlar
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Din-felsefe münasebetine karşı çıkışın hem Batı'da hem İslâm dünyasında görülmesinden ne sonuç çıkar?
+#CORRECT:Karşı çıkış tek bir din ya da kültüre ait olmayan, farklı bağlamlarda ortaya çıkan bir tartışmadır
+#WRONG:Karşı çıkış yalnızca Batı'ya özgüdür ve İslâm dünyasında benzer bir tartışma yaşanmamıştır
+#WRONG:Karşı çıkış yalnızca İslâm'a özgüdür ve Batı'da böyle bir tartışma görülmemiştir
+#WRONG:Karşı çıkış hiç yoktur ve din ile felsefe her dönemde tam bir uyum içinde olmuştur
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:Karşı çıkanlar
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:"Mantık bile haram" yaklaşımı ile İbn Rüşd'ün "şeriat akılla bakmayı vacip kılar" yaklaşımı nasıl bir zıtlık oluşturur?
+#CORRECT:Biri aklî ilimleri yasaklayıcı, diğeri akla bakışı dinî görev sayan iki zıt tavrı gösterir
+#WRONG:İkisi de aynı tavrı savunur ve aklın dinî konulardaki yerini aynı biçimde yorumlar
+#WRONG:İkisi de aklı tümüyle yasaklar ve hiçbir aklî ilme izin vermez
+#WRONG:İkisi de aklı tümüyle zorunlu kılar ve onu dinin tek ölçüsü sayar
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:Karşı çıkanlar
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Mutezile-fıkıh bilginleri tartışmasında temel soru neydi?
+#CORRECT:Dinî konularda aklın hakemliği ve yeri
+#WRONG:Hangi yemeğin yenileceği ve sofra adabının nasıl olacağı
+#WRONG:Hangi şehirde yaşanacağı ve oraya nasıl gidileceği
+#WRONG:Hangi dilde konuşulacağı ve yazının nasıl yazılacağı
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:İslâm dünyasında tepkiler
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Gazalî'nin eleştirisinin hedefi olan "cüz'i bilgi" meselesi neyle ilgilidir?
+#CORRECT:Allah'ın tek tek olayları bilip bilmediğiyle
+#WRONG:Ruhun bedenle ilişkisiyle ve bu ilişkinin ölümle nasıl sona erdiğiyle
+#WRONG:Âlemin kaç yaşında olduğuyla ve ne zaman başladığıyla
+#WRONG:Mantığın kurallarıyla ve çıkarım biçimlerinin nasıl işlediğiyle
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:Sert reddiyeler
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:"Kim mantıkla uğraşırsa zındık olur" sözünün altında yatan kaygı hangisidir?
+#CORRECT:Aklî ilimlerin dinî inançları tehdit edebileceği kaygısı
+#WRONG:Mantığın çok zor olduğu ve herkesin öğrenemeyeceği kaygısı
+#WRONG:Mantığın para kazandırmadığı ve geçim sağlamadığı kaygısı
+#WRONG:Mantığın çok kolay olduğu ve herkesin bildiğini sanması kaygısı
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:Sert reddiyeler
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Din-felsefe münasebetine karşı çıkanların bağlamını anlamak neden önemlidir?
+#CORRECT:Tepkilerin tarihî ve entelektüel arka planını çözümlemek, bu tartışmayı doğru değerlendirmeye yardım eder
+#WRONG:Hiç önemli değildir, çünkü karşı çıkışların bağlamla ilgisi bulunmaz ve açıklaması gerekmez
+#WRONG:Yalnızca takvim bilgisi sağlar ve olayların tarihlerini doğru ezberletmeye yarar
+#WRONG:Yalnızca sanat bilgisi sağlar ve eserlerin hangi dönemde yapıldığını gösterir
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:Karşı çıkanlar
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Din ile felsefe ilişkisinin meşruluğunu savunanlar ile karşı çıkanlar arasındaki gerilim nasıl okunabilir?
+#CORRECT:Aklın dinî konulardaki yeri hakkında temel bir görüş ayrılığı olarak
+#WRONG:Tamamen kişisel bir kavga olarak, kişiler arasındaki husumete dayanan bir durum
+#WRONG:Tamamen ekonomik bir mesele olarak, gelir ve kazanç çatışmasına bağlı bir durum
+#WRONG:Tamamen coğrafî bir mesele olarak, iklim ve konumdan kaynaklanan bir durum
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:Karşı çıkanlar
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Antikçağ'da din-felsefe münasebetine ilk tepkiler hangi düşünceden gelmiştir?
+#CORRECT:Yunan düşüncesinden
+#WRONG:Hint düşüncesinden
+#WRONG:Çin düşüncesinden
+#WRONG:Mısır düşüncesinden
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:Karşı çıkanlar
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Descartes, Campanella ve Pascal derste hangi gruba örnek olarak gösterilir?
+#CORRECT:Din-bilim çatışması ortamındaki teist düşünürlere
+#WRONG:Sofistlere ve bunların din karşıtı görüşlerini savunanlara
+#WRONG:Mutezilîlere ve aklı esas alan kelâm anlayışını benimseyenlere
+#WRONG:Hadisçilere ve nakli esas alıp aklı sınırlayan yaklaşımı savunanlara
+#PAKET:14. hafta: Ciddi Quiz (13 soru)
+#KONU:Karşı çıkanlar
+#ZORLUK:kolay
+#BLOOM:Anlama
+

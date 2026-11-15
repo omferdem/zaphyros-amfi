@@ -1,0 +1,200 @@
+#QUESTION:Bir öğrenci "Platon'a göre Tanrı âlemi yoktan yaratır" diyor. Ders içeriğine göre bu ifade nasıl düzeltilmelidir?
+#CORRECT:Platon'da yaratma, var olan bir ilkeye idealar modeline göre düzen vermedir, yok iken var etme değildir
+#WRONG:Doğrudur, Platon hiçlikten yaratmayı açıkça savunmuş ve bunu sisteminin temeli saymıştır
+#WRONG:Platon yaratma kavramını bütünüyle reddeder ve âlemi öncesiz ve ezelî olarak kabul eder
+#WRONG:Platon âlemi Tanrı'nın bizzat kendisi olarak görür ve iki kavramı birbirinden ayırmaz
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:Platon
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Aristoteles'te heyûla ile Salt Form arasındaki ilişkiyi en iyi hangisi anlatır?
+#CORRECT:Heyûla imkân ve potansiyeldir
+#WRONG:Heyûla Tanrı'dır, Salt Form ise maddenin başka bir adıdır
+#WRONG:Heyûla ile Salt Form aynı şeyin iki ayrı adıdır ve fark taşımaz
+#WRONG:Heyûla Salt Form'u yaratmış ve ona şekil vermiştir
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:Aristoteles
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Plotinos geleneksel Yunan düşüncesinden hangi noktada ayrılır?
+#CORRECT:Kadîm bir ilk madde yerine mutlak ve aşkın "BİR"i, yani Tanrı'yı koymasıyla
+#WRONG:Âlemi tümüyle maddeden ibaret saymasıyla ve Tanrı'yı reddetmesiyle
+#WRONG:Idealar dünyasına hiç inanmayıp yalnızca duyuya güvenmesiyle
+#WRONG:Sayıları âlemin tek ilkesi sayarak ve Pythagoras'a dönmesiyle
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:Plotinos
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:İlkçağ filozofları âlemde nizam ve gâye bulunduğunu söylerler. Bu nizam hangi ilkelerle sağlanır?
+#CORRECT:Akıl, ruh veya Tanrı gibi ilkelerle
+#WRONG:Yalnızca tesadüfle ve kör güçlerin çarpışmasıyla
+#WRONG:Yalnızca insan iradesiyle ve toplumsal kurallarla
+#WRONG:Yalnızca zamanın akışıyla ve kendiliğinden
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:İlkçağ âlem anlayışı
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Aşağıdakilerden hangisi "manevî ilkeler" dönemine örnektir?
+#CORRECT:Sayı (Pythagoras) ve nous (Anaksagoras)
+#WRONG:Su (Thales) ve toprak gibi maddî unsurlar
+#WRONG:Hava (Anaksimenes) ve su gibi maddî unsurlar
+#WRONG:Ateş (Herakleitos) ve hava gibi maddî unsurlar
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:İlkçağ âlem anlayışı
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:Platon ile Aristoteles'in âlem anlayışlarındaki ortak yön hangisidir?
+#CORRECT:İkisinde de Tanrı, önceden var olan bir ilke ya da maddeye düzen ve şekil verir
+#WRONG:İkisinde de âlem hiçlikten yaratılmış kabul edilir ve bu temel alınır
+#WRONG:İkisi de maddeyi tümüyle inkâr edip yalnızca ruhu kabul eder
+#WRONG:İkisi de Tanrı'yı reddedip âlemi kendiliğinden var sayar
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:Karşılaştırma
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Plotinos'un varlık hiyerarşisi için hangisi doğrudur?
+#CORRECT:BİR'den başlayıp aşağı mertebelere ve en sonunda maddeye uzanan bir südûr zinciri vardır
+#WRONG:Hiyerarşi maddeden başlayıp yukarı doğru BİR'e kadar yükselen bir zincirdir
+#WRONG:Hiyerarşi yoktur, her şey aynı mertebede ve eşit değerdedir
+#WRONG:BİR ile madde aynı şeydir ve aralarında bir fark bulunmaz
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:Plotinos
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:"Âlemin ana maddesi nedir?" sorusu âlem meselesindeki hangi soru grubuna girer?
+#CORRECT:Ana madde sorusu
+#WRONG:Yaratılış sorusu
+#WRONG:Düzen sorusu
+#WRONG:Akıbet sorusu
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:Âlem meselesi
+#ZORLUK:kolay
+#BLOOM:Uygulama
+
+#QUESTION:Bir filozof âlemin sonunun ne olacağını merak ediyor. Bu soru hangi âlem sorusuna aittir?
+#CORRECT:Akıbet sorusuna
+#WRONG:Ana madde sorusuna
+#WRONG:Yaratılış sorusuna
+#WRONG:Düzen sorusuna
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:Âlem meselesi
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:Aristoteles ile Plotinos arasındaki temel fark hangisidir?
+#CORRECT:Aristoteles ilk maddeye şekil veren Salt Form'u koyar, Plotinos mutlak ve aşkın BİR'den südûrla varlık zinciri kurar
+#WRONG:İkisi de aynı sistemi savunur ve aralarındaki fark yalnızca terimlerden kaynaklanmaktadır
+#WRONG:Aristoteles Tanrı'yı tümüyle reddeder, Plotinos ise onu varlığın tek kaynağı olarak kabul eder
+#WRONG:Plotinos maddeyi öne çıkarır, Aristoteles ise yalnızca ruhun varlığını kabul etmektedir
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:Karşılaştırma
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Aristoteles'te Tanrı'nın heyûlayı şekillendirmesi yaratma kavramı bakımından neyi ifade eder?
+#CORRECT:Yok iken var etmeyi değil, şekil kazandırmayı ve harekete geçirmeyi
+#WRONG:Hiçlikten bir şeyi var etmeyi ve zamanın kendisini başlatmayı ifade eder
+#WRONG:Maddeyi tamamen yok etmeyi ve onu yeniden kurmayı ifade eder
+#WRONG:Tanrı'nın maddeye dönüşmesini ve onunla birleşmesini ifade eder
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:Aristoteles
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Platon'da "idealar dünyası" hakkında hangi tanım doğrudur?
+#CORRECT:Meydana gelmemiş ve yok olmayacak, zaman ve mekân ötesindeki orijinal modeller
+#WRONG:Her an değişen ve yok olup giden maddî nesneler topluluğu olarak tanımlanır
+#WRONG:Yalnızca duyularla bilinen, ölçülebilen ve zamanla sınırlı cisimler olarak tanımlanır
+#WRONG:İnsan zihninin sonradan ürettiği ve zamanla değiştirdiği tasarımlar olarak tanımlanır
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:Platon
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:İdealist anlayışların maddeyi manevîleştirerek yok saymasının karşısında hangi anlayış maddeyi vurgular?
+#CORRECT:Maddeyi olabildiğince açık vurgulayıp ilâhlaştırmak isteyen materyalist anlayış
+#WRONG:Ruhu her şeyin üstünde gören ve maddeyi küçümseyen manevî bir anlayış
+#WRONG:Her şeyden şüphe eden ve hiçbir hakikati kabul etmeyen septik bir anlayış
+#WRONG:Salt sezgiye dayanan ve akıl yürütmeyi reddeden mistik bir anlayış
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:Materyalizm
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Platon'daki "kadîm ilke" fikri hangi sonuca yol açar?
+#CORRECT:Âlemin ilk maddesinin öncesiz olduğu fikrine
+#WRONG:Âlemin hiçlikten yaratıldığı fikrine
+#WRONG:Maddenin tamamen yok sayıldığı fikrine
+#WRONG:Allah'ın hiç yaratıcı olmadığı fikrine
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:Platon
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Südûr teorisinin temel fikri hangisidir?
+#CORRECT:Varlığın bir kaynaktan zorunlu bir taşmayla mertebe mertebe meydana gelmesi
+#WRONG:Varlığın tamamen tesadüfen ve nedensiz oluşması
+#WRONG:Varlığın yalnızca maddeden ibaret olduğu ve ruhun bulunmadığı
+#WRONG:Varlığın yoktan, bir anda ve sonradan yaratılması
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:Plotinos
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Bir öğrenci Thales ile Pythagoras'ı karşılaştırıyor. Hangi ifade doğrudur?
+#CORRECT:Thales maddî bir ilke olan suyu, Pythagoras manevî bir ilke olan sayıyı arkhé sayar
+#WRONG:Thales de Pythagoras da arkhé olarak aynı maddî unsuru, yani suyu kabul eder
+#WRONG:İkisi de yalnızca ruhu âlemin kaynağı sayar ve maddeyi reddeder
+#WRONG:İkisi de âlemin bir ilkesi bulunduğunu reddeder ve tesadüfü savunur
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:İlkçağ âlem anlayışı
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Herakleitos'un ateşi, Anaksimenes'in havayı ilke sayması hangi dönemin özelliğidir?
+#CORRECT:Maddî ilkeler dönemi, yani âlemin ana maddesinin maddî bir unsurda aranması
+#WRONG:Manevî ilkeler dönemi, yani ilkenin sayı ve akıl gibi unsurlarda aranması
+#WRONG:Ortaçağ teolojisi, yani ilkenin yalnızca Tanrı'da aranması
+#WRONG:Aydınlanma dönemi, yani ilkenin yalnızca zihinde aranması
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:İlkçağ âlem anlayışı
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Platon'a göre idealar dünyasındaki modellerle âlem arasındaki ilişki nasıldır?
+#CORRECT:Tanrı, idealar dünyasındaki modellere göre âlemi ve varlıkları meydana getirir
+#WRONG:Idealar dünyası âlemin bir kopyasıdır ve ondan sonra ortaya çıkar
+#WRONG:İkisi arasında hiçbir ilişki yoktur ve birbirinden bağımsızdır
+#WRONG:Âlem idealar dünyasını yok eder ve onun yerini alır
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:Platon
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Bir öğrenci, Platon'a göre idealar dünyasının âlemden ayrı ve onun modeli olduğunu söylüyor. Bu ifade derse göre nasıl değerlendirilir?
+#CORRECT:Doğrudur; idealar dünyası zaman ve mekân ötesindeki orijinal modellerdir ve Tanrı âlemi bunlara göre oluşturur
+#WRONG:Yanlıştır; idealar dünyası maddî nesnelerin duyularla algılanan kopyalarından ibarettir
+#WRONG:Yanlıştır; idealar dünyası yalnızca insanın zihninde sonradan ürettiği tasarımlardan oluşur
+#WRONG:Doğrudur; ancak idealar dünyası âlemle birlikte oluşmuş ve zamanla yok olan bir yapıdır
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:Platon
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Anaksagoras'ın "nous" ilkesi ile Thales'in "su" ilkesi arasındaki fark derste hangi dönem ayrımına göre açıklanır?
+#CORRECT:Thales maddî ilkeler dönemine, Anaksagoras ilkelerin manevîleştiği döneme aittir
+#WRONG:İkisi de maddî ilkeler dönemine ve aynı yaklaşıma aittir
+#WRONG:Thales manevî ilkeler dönemine, Anaksagoras maddî ilkeler dönemine aittir
+#WRONG:İkisi de ilkeleri tümüyle reddeden bir dönemin temsilcileridir
+#PAKET:6. hafta: Ciddi Quiz (15 soru)
+#KONU:İlkçağ âlem anlayışı
+#ZORLUK:zor
+#BLOOM:Analiz
+

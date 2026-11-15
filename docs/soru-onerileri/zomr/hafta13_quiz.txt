@@ -1,0 +1,200 @@
+#QUESTION:Din ile felsefenin gayelerindeki ortaklığı "her ikisi de insana hizmet eder" ifadesi nasıl açıklar?
+#CORRECT:İkisi de insanın varoluşsal sorularına cevap arar ve onu ıslah etmeyi hedefler
+#WRONG:İkisi de insana hiç hizmet etmez ve onu ıslah etmeyi amaçlamaz
+#WRONG:Yalnızca din insana hizmet eder, felsefe bunu hedeflemez
+#WRONG:Yalnızca felsefe insana hizmet eder, din bunu hedeflemez
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:Gayeleri yönünden
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Din ve felsefenin "evrensel bir yasanın varlığını kabul etmesi ve bunların örtüştüğünü belirtmesi" iki disiplin arasında hangi ilişkiyi kurar?
+#CORRECT:Hakikatin farklı yüzlerini aydınlatan ortak bir zemin ilişkisini
+#WRONG:Rekabet ilişkisini, yani ikisinin birbirini ortadan kaldırmaya çalıştığı bir durumu
+#WRONG:Hiçbir ilişkinin bulunmadığını, ikisinin tamamen bağımsız olduğunu
+#WRONG:Düşmanlık ilişkisini, yani ikisinin sürekli çatıştığı bir durumu
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:Realitelere yöneliş
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Din ve felsefenin metotları ayrı olsa da gayelerinin ortak olması meşruiyet tartışmasında nasıl bir rol oynar?
+#CORRECT:Gayelerdeki ortaklık münasebeti meşru kılan temel gerekçelerden biri olur
+#WRONG:Hiçbir rol oynamaz ve gayeler meşruiyet tartışmasıyla ilgisizdir
+#WRONG:Meşruiyeti ortadan kaldırır ve münasebeti geçersiz kılar
+#WRONG:Yalnızca din lehine olur ve felsefe aleyhine sonuç doğurur
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:Meşruiyet
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Kindî'nin "sebebin bilgisi sebeplinin bilgisinden daha değerlidir" ilkesi hangi sonuca götürür?
+#CORRECT:İlk felsefe (hakkın ilmi) felsefelerin en değerlisidir
+#WRONG:Fizik en değerli felsefedir ve diğerlerinden üstün sayılır
+#WRONG:Tıp en değerli felsefedir ve insanın sağlığıyla ilgili olduğu için önde gelir
+#WRONG:Matematik en değerli felsefedir ve kesinliği nedeniyle üstün tutulur
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:Kindî
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Farabî'ye göre peygamber ve filozofun ortak yanı nedir?
+#CORRECT:İkisi de Faal Akıl ile ilgi kurup toplumun nizamını koruyacak kanunları elde eder
+#WRONG:İkisi de hiçbir akılla ilgi kurmaz ve bilgiyi yalnızca duyudan alır
+#WRONG:İkisi de yalnızca deneye dayanır ve toplumun düzenini ona göre kurar
+#WRONG:İkisi de aynı yöntemi kullanır ve aralarında hiçbir ayrım bulunmaz
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:Farabî
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Farabî'ye göre peygamber ile filozof arasındaki fark nedir?
+#CORRECT:Peygamber muhayyile gücüyle vahyi alır, filozof araştırma ve incelemeyle hakikate ulaşır
+#WRONG:Peygamber araştırır, filozof vahiy alır; yöntemleri birbirine ters düşer
+#WRONG:İkisi arasında hiçbir fark yoktur ve ikisi aynı yolla bilgi edinir
+#WRONG:İkisi de yalnızca deney yapar ve bu yolla hakikate yönelir
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:Farabî
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Sicistanî'nin "duvakların çok, gelinin tek oluşu" benzetmesi hakikatin hangi yönünü vurgular?
+#CORRECT:Yolların çok, hakikatin tek olduğunu
+#WRONG:Hakikatin çok, yolların tek olduğunu
+#WRONG:Hakikatin hiç olmadığını
+#WRONG:Bütün yolların yanlış olduğunu
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:Farabî ve Sicistanî
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:İbn Rüşd'ün "hikmet ve şeriat süt kardeşidir" sözü hangi sonuca götürür?
+#CORRECT:Din ile felsefe doğal olarak uyumludur, aralarında çelişki yoktur
+#WRONG:Din felsefeye düşmandır ve aralarında kökten bir çelişki bulunur
+#WRONG:Felsefe dinin yerine geçmelidir ve din artık gereksiz hâle gelmiştir
+#WRONG:Din felsefenin yerine geçmelidir ve felsefe ortadan kalkmalıdır
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:İbn Rüşd
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:İbn Rüşd'e göre akıl yoluyla hakikate ulaşmak nasıl bir şeydir?
+#CORRECT:Dinî bir görev ve sorumluluğun parçasıdır
+#WRONG:Dine aykırı bir davranıştır
+#WRONG:Önemsiz bir uğraştır
+#WRONG:Yalnızca filozoflara ait bir ayrıcalıktır
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:İbn Rüşd
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Din ile felsefenin kaynakları açısından ayrılığı hangi ifade özetler?
+#CORRECT:Dinin kaynağı vahiy ve iman, felsefenin kaynağı akıl ve tenkittir
+#WRONG:İkisinin de kaynağı aynıdır ve aralarında kaynak bakımından fark yoktur
+#WRONG:İkisinin de kaynağı yalnızca deneydir ve vahiy hiçbirinde yer almaz
+#WRONG:İkisinin de kaynağı yalnızca tarihtir ve başka bir dayanakları bulunmaz
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:Ayrıldığı yönler
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Din ile felsefenin ayrıldığı yönlerin bir problem doğurması ne anlama gelir?
+#CORRECT:Farklı kaynak, metot ve hükümler din-felsefe münasebetinin çeşitli problemlerini doğurur
+#WRONG:Ayrılıklar hiçbir problem çıkarmaz ve iki disiplin sorunsuzca yan yana durur
+#WRONG:Ayrılıklar iki disiplinin de ortadan kalkmasına yol açar ve aralarında bir bağ bırakmaz
+#WRONG:Din felsefeyi yutar ve ayrılıklar bu yolla tamamen ortadan kalkar
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:Ayrıldığı yönler
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:"Din ve felsefe ortak soruları farklı cevaplarla yanıtlar" ifadesi nasıl yorumlanır?
+#CORRECT:Ortak soruların varlığı ile farklı cevapların varlığı birbirini dışlamaz
+#WRONG:Ortak soru bulunmaz ve her disiplin kendi sorularıyla yalnız kalır
+#WRONG:Cevaplar her zaman aynıdır ve ortak sorulara farklı bir yanıt verilmez
+#WRONG:Sorular önemsizdir ve cevaplanmalarına gerek yoktur
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:Ortak sorular
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Din-felsefe ilişkisini meşru gören el-Kindî, Farabî ve İbn Rüşd'ün ortak noktası nedir?
+#CORRECT:Meşruluk meselesine açık çözümler getirme çabası içinde olmaları
+#WRONG:Felsefeyi yasaklamaları ve bu konuda sert tedbirler almaları
+#WRONG:Dini reddetmeleri ve ona karşı tavır almaları
+#WRONG:Yalnızca mantıkla uğraşmaları ve başka alanlara girmemeleri
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:Meşruiyet
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:İlk zamanlarda din-felsefe münasebeti tartışmaları hangi düzlemde gerçekleşmiştir?
+#CORRECT:Din-ilim ve akıl-iman düzleminde
+#WRONG:Yalnızca sanat düzleminde
+#WRONG:Yalnızca ekonomi düzleminde
+#WRONG:Yalnızca askerî düzlemde
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:İbn Rüşd
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Kindî'ye göre peygamberlerin Allah'tan getirdiği bilgiler hangi bilgi türünden sayılır?
+#CORRECT:Eşyanın hakikatinin bilgisi kapsamında
+#WRONG:Yalnızca hayal ürünü bilgilerden
+#WRONG:Yalnızca bilimsel verilerden
+#WRONG:Yalnızca tarihî verilerden
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:Kindî
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Kindî'ye göre filozofun iki amacı hangisidir?
+#CORRECT:Nazarî olarak hakikati bulmak ve pratik olarak yaşamak
+#WRONG:Yalnızca konuşmak ve yazmak yoluyla bilgi yaymak
+#WRONG:Yalnızca ticaret yapmak ve siyasete girerek etki kazanmak
+#WRONG:Yalnızca öğretmek ve ceza vererek düzeni sağlamak
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:Kindî
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Farabî'nin "hakikat tektir" ilkesi din ve felsefenin ilişkisi için ne ifade eder?
+#CORRECT:Din ve felsefe tek hakikatin iki ayrı yüzünü temsil eder
+#WRONG:Din ve felsefe iki farklı hakikati temsil eder
+#WRONG:Hakikat yoktur
+#WRONG:Yalnızca felsefe hakikattir
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:Farabî
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:"Din ve felsefe tamamen zıt amaçlar taşır" iddiası, derste hangi ifadeyle çelişir?
+#CORRECT:"İkisi de hakikati arar ve insana hizmet eder" ifadesiyle
+#WRONG:"İkisi de ayrı kaynaklara dayanır" ifadesiyle ve bu ifade ayrılıkları anlatır
+#WRONG:"İkisi de ayrı metotlar kullanır" ifadesiyle ve bu ifade yöntem farkını anlatır
+#WRONG:"İkisi de farklı sonuçlara varır" ifadesiyle ve bu ifade hükümlerin farkını anlatır
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:Gayeleri yönünden
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:İbn Rüşd'ün tavrı için "en açık tavır" denmesinin sebebi nedir?
+#CORRECT:Din-felsefe münasebetinin meşruiyeti hususunda en açık ve kesin ifadeleri kullanmış olması
+#WRONG:En az açıklama yapmış, konuyu kısaca geçiştirmiş olması
+#WRONG:Meşruiyeti reddetmiş, felsefeyi dinden dışlamış olması
+#WRONG:Felsefeden uzak durmuş, onunla hiç ilgilenmemiş olması
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:İbn Rüşd
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Ortak sorular başlığında "Niçin yaratıldık?" sorusu hangi alanla bağlantılıdır?
+#CORRECT:Varoluşun anlamı ve gayesiyle ilgili sorular alanıyla
+#WRONG:Hava durumuyla ve mevsim değişikliklerine dair tahminlerle
+#WRONG:Ticaretle ve mal alışverişinin kurallarıyla
+#WRONG:Takvimle ve zamanın bölümlere ayrılmasıyla
+#PAKET:13. hafta: Ciddi Quiz (15 soru)
+#KONU:Ortak sorular
+#ZORLUK:kolay
+#BLOOM:Anlama
+

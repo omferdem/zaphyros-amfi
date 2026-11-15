@@ -1,0 +1,200 @@
+#QUESTION:Din ve felsefenin gayeleri açısından ortak amacı hangisidir?
+#CORRECT:Hak ve hakikati tanımak ve tanıtmak
+#WRONG:Siyasî güç kazanmak ve iktidar elde etmek
+#WRONG:Servet toplamak ve zenginleşmek
+#WRONG:Eğlence üretmek ve vakit geçirmek
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Gayeleri yönünden
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Din ile felsefenin ayrıldığı yönlerden biri "metotlar"dır. Bu neyi ifade eder?
+#CORRECT:Bilgiye ulaşma yollarını
+#WRONG:Sonuçları
+#WRONG:Bakış açılarını
+#WRONG:Sosyal etkiyi
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ayrıldığı yönler
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Din ile felsefenin ayrıldığı yönlerden "hükümler" neyi ifade eder?
+#CORRECT:Verdikleri sonuçları
+#WRONG:Kaynaklarını
+#WRONG:Metotlarını
+#WRONG:Sosyal etkilerini
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ayrıldığı yönler
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Din ile felsefenin ayrıldığı yönlerden "sosyal etki" neyi ifade eder?
+#CORRECT:Ferdî ve toplumsal hayata tesirlerini
+#WRONG:Kaynaklarını ve bilginin dayanağını
+#WRONG:Metotlarını ve bilgiye ulaşma yollarını
+#WRONG:Hükümlerini ve verdikleri sonuçları
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ayrıldığı yönler
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Din-felsefe münasebetinin meşruiyeti neye bağlıdır?
+#CORRECT:İnsanların bu iki disiplini nasıl algıladıklarına
+#WRONG:Hava durumuna ve mevsim değişikliklerine
+#WRONG:Takvime ve zamanın bölünmesine
+#WRONG:Para birimine ve değerinin belirlenmesine
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Meşruiyet
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:"Hakikat hakikati yalanlamaz" ilkesi meşruiyette neyi gösterir?
+#CORRECT:Din ve felsefe hakikate hizmet ettiği için çelişmez
+#WRONG:İkisi birbirini yalanlar ve çelişir
+#WRONG:İkisi yalnızca zıttır ve birleşemez
+#WRONG:İkisi önemsizdir ve ilgilenilmez
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Meşruiyet
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Kindî'ye göre felsefe nedir?
+#CORRECT:İnsanın takati ölçüsünde eşyayı hakikatleriyle bilmesi
+#WRONG:Eşyayı hayal etmesi ve zihninde tasarlaması
+#WRONG:Eşyayı yok saymasi ve görmezden gelmesi
+#WRONG:Eşyayı değiştirmesi ve yeniden biçimlendirmesi
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kindî
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Kindî'ye göre en değerli felsefe hangisidir?
+#CORRECT:İlk felsefe (hakkın ilmi)
+#WRONG:Matematik
+#WRONG:Tıp
+#WRONG:Mantık
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kindî
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Farabî'ye göre hakikat nasıldır?
+#CORRECT:Tek, felsefe bir yanını, din öbür yanını temsil eder
+#WRONG:Çok, birbirinden ayrı ve ilişkisiz hakikatler
+#WRONG:Yok, hakikat bulunmaz ve tamamen göreli
+#WRONG:Bilinemez, hakikate hiçbir yoldan ulaşılamaz
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Farabî
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Farabî'ye göre faziletli şehrin başkanı olmaya layık iki kişi kimdir?
+#CORRECT:Peygamber ve filozof
+#WRONG:Asker ve tüccar
+#WRONG:Doktor ve mühendis
+#WRONG:Hâkim ve kâtip
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Farabî
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:İbn Rüşd'e göre hikmetin şeriatla ilişkisi nasıl ifade edilir?
+#CORRECT:Süt kardeşi, iki dost
+#WRONG:Düşman
+#WRONG:Hiç ilgisiz
+#WRONG:Biri diğerinin köpeği
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İbn Rüşd
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Din ve felsefe insana ne açıdan hizmet etmeyi amaçlar?
+#CORRECT:Aklı ve kalbi ıslah ederek dünyevî ve uhrevî mutluluğa ulaştırmak
+#WRONG:Yalnızca zenginleştirmek ve maddî refaha ulaştırmak
+#WRONG:Yalnızca eğlendirmek ve zaman geçirtmek
+#WRONG:Yalnızca şöhret kazandırmak ve ün sağlamak
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Gayeleri yönünden
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:İbn Rüşd'e göre şeriat varolanlara akılla nasıl bakmayı ister?
+#CORRECT:Vacip kılar
+#WRONG:Yasaklar
+#WRONG:Hiç önemsemez
+#WRONG:Mubah sayar
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İbn Rüşd
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:"Hakikati tanımak" gayesi neyi ifade eder?
+#CORRECT:Varlığın özünü ve anlamını keşfetmek
+#WRONG:Takvimi öğrenmek ve zamanı ölçmek
+#WRONG:Servet toplamak ve mal biriktirmek
+#WRONG:Eğlenmek ve vakit geçirmek
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Gayeleri yönünden
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:"Yol göstermek" gayesi neyi ifade eder?
+#CORRECT:Güvenilir bilgi yollarını sağlamak
+#WRONG:Haritalar çizmek ve yolları göstermek
+#WRONG:Ticaret yollarını açmak ve mal taşımak
+#WRONG:Orduları yönlendirmek ve savaşa hazırlamak
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Gayeleri yönünden
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:"Islah etmek" gayesi neyi kapsar?
+#CORRECT:Aklı, düşünceyi ve kalbi temizlemek
+#WRONG:Binaları onarmak ve yıpranan yerleri yenilemek
+#WRONG:Yolları onarmak ve ulaşımı kolaylaştırmak
+#WRONG:Silahları geliştirmek ve ordu donatmak
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Gayeleri yönünden
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:"Nereden geldik, nereye gideceğiz" soruları nasıl sorulardır?
+#CORRECT:Varoluşun temel soruları
+#WRONG:Ekonomik sorular
+#WRONG:Coğrafî sorular
+#WRONG:Teknik sorular
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ortak sorular
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Din ve felsefe, realitelere yönelişte hangi alanı araştırır?
+#CORRECT:Varlık ve değer açısından en genel ve temel alanı
+#WRONG:Yalnızca yerel olayları ve günlük işleri
+#WRONG:Yalnızca ekonomiyi ve ticaretin kurallarını
+#WRONG:Yalnızca hukuku ve yasaların uygulanmasını
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Realitelere yöneliş
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Her iki disiplin evrensel bir yasanın mevcut olduğunu nasıl değerlendirir?
+#CORRECT:Kabul eder ve yasaların birbiriyle örtüştüğünü belirtir
+#WRONG:Reddeder ve böyle bir yasanın bulunmadığını söyler
+#WRONG:Yalnızca din kabul eder ve felsefe bunu reddeder
+#WRONG:Yalnızca felsefe kabul eder ve din bunu reddeder
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Realitelere yöneliş
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Din ile felsefenin ayrıldığı yönlerden biri hangisidir?
+#CORRECT:Kaynaklar
+#WRONG:Gayeler
+#WRONG:Ortak sorular
+#WRONG:İnsana hizmet
+#PAKET:13. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ayrıldığı yönler
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+

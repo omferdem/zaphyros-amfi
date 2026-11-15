@@ -1,0 +1,200 @@
+#QUESTION:Selbî sıfatlar hangi tehlikeden korunmayı hedefler?
+#CORRECT:Antropomorfizmden (insanbiçimcilikten)
+#WRONG:Mantıksal çelişkiden ve tutarsızlıktan
+#WRONG:Politik baskıdan ve yönetim engellerinden
+#WRONG:Ekonomik krizden ve kaynak yetersizliğinden
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Hangi sıfat "zorunlu varlık" anlamına gelir?
+#CORRECT:Vacibu'l-vücut
+#WRONG:Mümkün
+#WRONG:Hâdis
+#WRONG:Basit
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Allah'ın "basit" olması ne anlama gelir?
+#CORRECT:Parçalara ayrılmaz
+#WRONG:Küçük olması
+#WRONG:Önemsiz olması
+#WRONG:Kolay anlaşılması
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Subutî sıfatlar hangileridir?
+#CORRECT:Görme, işitme, konuşma, bilme gibi olumlu sıfatlar
+#WRONG:Bir, ilk, eşsiz gibi olumsuz sıfatlar
+#WRONG:Yalnızca zamana ilişkin sıfatlar
+#WRONG:Yalnızca mekâna ilişkin sıfatlar
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:İslâm filozoflarının subutî sıfatları budamalarının sebeplerinden biri nedir?
+#CORRECT:Kadîmlerin çoğalması tehlikesi
+#WRONG:Sıfatların fazla az olması
+#WRONG:Sıfatların Kur'an'da geçmemesi
+#WRONG:Sıfatların bilinmemesi
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:"Sıfatlar zât üzerine zâit değildir" görüşü neyi söyler?
+#CORRECT:Sıfatlar Zâtın ta kendisidir
+#WRONG:Sıfatlar Zâttan ayrı birer varlıktır
+#WRONG:Sıfatların hiçbir anlamı yoktur
+#WRONG:Sıfatlar yalnızca insanlar içindir
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Kelâmcılar ile filozoflar sıfatlar konusunda nasıl bir ilişki içindedir?
+#CORRECT:Büyük uçurumlarla ayrılmazlar, birçok noktada benzer kanaatler paylaşırlar
+#WRONG:Tamamen ayrı kampta yer alırlar ve hiçbir ortak görüşleri yoktur
+#WRONG:Aynı görüşü paylaşırlar ve aralarında hiçbir fark bulunmaz
+#WRONG:Birbirini tanımazlar ve hiçbir konuda tartışmazlar
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:İman, hangi ilişkiye dayanır?
+#CORRECT:Süje-obje ilişkisine
+#WRONG:Sebep-sonuç ilişkisine
+#WRONG:Madde-form ilişkisine
+#WRONG:Beden-ruh ilişkisine
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İman
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:İmanın taraflarından süje kimdir?
+#CORRECT:İnsan
+#WRONG:Tanrı
+#WRONG:Âlem
+#WRONG:Melek
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İman
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:İmanın objesi kimdir?
+#CORRECT:Tanrı
+#WRONG:İnsan
+#WRONG:Âlem
+#WRONG:Kitap
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İman
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Tasdik doğrultusundaki ilişki neyi meydana getirir?
+#CORRECT:İmanı
+#WRONG:İnkârı
+#WRONG:Şüpheyi
+#WRONG:Cehaleti
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İman
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Allah'ın birliğini bugünkü metinler içinde en net vurgulayan kutsal kitap hangisidir?
+#CORRECT:Kur'ân
+#WRONG:Tevrat
+#WRONG:İncil
+#WRONG:Zebur
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kutsal kitaplar
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:"Yerde ve gökte Allah'tan başka tanrılar bulunsaydı ..." ayeti hangi sureden alınmıştır?
+#CORRECT:Enbiya
+#WRONG:Bakara
+#WRONG:Kasas
+#WRONG:Maide
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kutsal kitaplar
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:İslâm filozoflarının Allah'ın varlığını ispat delillerinden biri hangisidir?
+#CORRECT:Hudûs
+#WRONG:Ontolojik delil
+#WRONG:Dinî tecrübe delili
+#WRONG:Ahlâk delili
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İsbât-ı vacip
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Batı düşüncesindeki delillerden biri hangisidir?
+#CORRECT:Kozmolojik delil
+#WRONG:Hüdûs delili
+#WRONG:İlm-i evvel delili
+#WRONG:Kabûl-i âmme delili
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İsbât-ı vacip
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Kelâmcıların deliller arasında hangisi vardır?
+#CORRECT:Kabûl-i âmme
+#WRONG:Ontolojik delil
+#WRONG:Ahlâk delili
+#WRONG:Psikolojik delil
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İsbât-ı vacip
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Allah'ı duyu organlarıyla algılayamadığımıza göre araştırma yolu nedir?
+#CORRECT:Akıl yolu (nazar)
+#WRONG:Yalnızca duyu
+#WRONG:Yalnızca taklit
+#WRONG:Yalnızca hayal
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Aklın rolü
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Kur'ân'ın "Kâinât Kitabı"nı okumaktan kastı nedir?
+#CORRECT:Çevremizdeki olaylara ve âlemin yapısına dikkatle bakıp düşünmek
+#WRONG:Yalnızca yazılı metinleri okuyup ezberlemek
+#WRONG:Kâinatı görmezden gelip yalnızca kitaba bakmak
+#WRONG:Yalnızca astronomi yaparak gök cisimlerini saymak
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Aklın rolü
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:"Fıtrat" ile ifade edilen insan doğası, Allah'ı nasıl karşılar?
+#CORRECT:Selim bir fıtrat normal olarak Yaratan'ını tanır
+#WRONG:Hiçbir zaman Yaratan'ını tanımaz
+#WRONG:Yalnızca eğitim yoluyla Yaratan'ını tanır
+#WRONG:Tesadüfen Yaratan'ını tanır
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Fıtrat
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Ateistlere göre Tanrı hakkında hangi fikir temellendirilmek istenir?
+#CORRECT:"Tanrı olmamalıdır"
+#WRONG:"Tanrı vardır"
+#WRONG:"Tanrı birdir"
+#WRONG:"Tanrı bilinebilir"
+#PAKET:5. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ateizm
+#ZORLUK:orta
+#BLOOM:Anlama
+

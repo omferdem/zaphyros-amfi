@@ -1,0 +1,59 @@
+6|Z|Âlem meselesinde "arkhé" neyi ifade eder?|Âlemin ana maddesi, ilkesi|Âlemin sonu|Âlemin büyüklüğü|Âlemin rengi|İlkçağ âlem anlayışı|k|H
+6|Z|Arkhé olarak havayı gösteren filozof hangisidir?|Anaksimenes|Thales|Pythagoras|Platon|İlkçağ âlem anlayışı|o|H
+6|Z|Arkhé olarak ateşi gösteren filozof kimdir?|Herakleitos|Thales|Anaksagoras|Aristoteles|İlkçağ âlem anlayışı|o|H
+6|Z|Arkhé olarak sayıyı gösteren filozof kimdir?|Pythagoras|Thales|Herakleitos|Anaksimenes|İlkçağ âlem anlayışı|o|H
+6|Z|Nous (akıl) ilkesini öne süren filozof kimdir?|Anaksagoras|Pythagoras|Thales|Epikuros|İlkçağ âlem anlayışı|z|H
+6|Z|İlk filozoflar ana ilke olarak başlangıçta ne tür varlıkları seçmiştir?|Maddî karakterli varlıkları|Yalnızca sayıları|Yalnızca ruhları|Yalnızca idealar|İlkçağ âlem anlayışı|o|A
+6|Z|Platon'da yaratma neyi ifade eder?|Var olan maddeye idealara göre düzen vermeyi|Hiçlikten, yok iken var etmeyi|Maddenin yok edilmesini ve ortadan kalkmasını|Âlemin kendiliğinden oluşmasını ve tesadüfü|Platon|o|A
+6|Z|Platon'da kadîm ilke nedir?|Öncesiz, belli belirsiz bir ilk madde|Allah'ın iradesi ve onun yaratıcı gücü|Ruhun bedeni ve beden üzerindeki etkisi|İnsanın aklı ve düşünme gücü|Platon|o|A
+6|Z|Platon'da "idealar dünyası" neyi ifade eder?|Zaman ve mekân ötesindeki orijinal modelleri|Maddî dünyayı ve duyularla bilinen nesneleri|İnsan duygularını ve onların değişimini|Yalnızca sayıları ve onların ilişkilerini|Platon|o|A
+6|Z|Aristoteles'te "ilk madde"ye ne ad verilir?|Heyûla (Hyle)|Salt Form|Südûr|Logos|Aristoteles|k|H
+6|Z|Aristoteles'te heyûlayı şekillendiren nedir?|Salt Form (Tanrı)|Duyular|Deney|Atom|Aristoteles|o|A
+6|Z|Heyûla neyi ifade eder?|Niteliksiz ve şekilsiz bir imkân|Şekillenmiş varlığı ve tam hâlini almış nesneyi|Tanrı'nın kendisini ve onun hareket gücünü|Ruhu ve onun yönetici gücünü|Aristoteles|o|A
+6|Z|Plotinos'un "BİR"i neyi ifade eder?|Mutlak ve aşkın Tanrı|Maddenin kendisi|Ruhun bedeni|Zihinsel bir kavram|Plotinos|o|A
+6|Z|Plotinos'ta "südûr" neyi anlatır?|Yukarıdan aşağıya varlık zincirinin oluşmasını|Aşağıdan yukarıya doğru bir yükselişi ve çıkışı|Maddenin yok olmasını ve ortadan kalkmasını|Âlemin sona ermesini ve çökmesini|Plotinos|o|A
+6|Z|Plotinos'a göre varlığın en son mertebesi nedir?|Madde|BİR|Akıl|Ruh|Plotinos|o|A
+6|Z|Plotinos'un sistemi hangi felsefeyi derinden etkilemiştir?|İslam felsefesini|Çin felsefesini|Mısır felsefesini|Hint felsefesini|Plotinos|o|H
+6|Z|Âlem meselesinde "düzen" sorusu neyi sorar?|Âleme hâkim olan düzenin nasıl meydana geldiğini|Âlemin ne kadar büyük olduğunu ve genişliğini|Âlemin kaç yaşında olduğunu ve ne zaman başladığını|Âlemin kime ait olduğunu ve kimin mülkü olduğunu|Âlem meselesi|o|A
+6|Z|Âlem meselesinde "akıbet" sorusu neyi sorar?|Âlemin sonunun ne olacağını|Âlemin başlangıcını|Âlemin boyutunu|Âlemin rengini|Âlem meselesi|k|A
+6|Z|Platon'da Tanrı idealar dünyasındaki modellere göre ne yapar?|Âlemi ve varlıkları meydana getirir|İdealara karşı çıkar ve onları geçersiz sayar|Maddeyi yok eder ve onun yerine yenisini koyar|Hiçbir şey yapmaz ve sürece karışmaz|Platon|o|A
+6|Z|Aristoteles'in Tanrı'sı hangi iki özellikle anılır?|Salt Form ve hareket gücü|Madde ve zaman|İdea ve ruh|Süje ve obje|Aristoteles|z|A
+7|Z|"Creatio ex nihilo" ne anlama gelir?|Yoktan yaratma|Maddeden yaratma|Südûr yoluyla oluş|Kendiliğinden oluş|Ortaçağ|o|H
+7|Z|Descartes'ın üç cevher teorisinde yaratıcı cevher hangisidir?|Tanrı|Ruh|Madde|Akıl|Descartes|o|H
+7|Z|Descartes'a göre ruhun temel niteliği nedir?|Düşünme (res cogitans)|Yer kaplama|Hareket|Büyüme|Descartes|o|H
+7|Z|Descartes'a göre maddenin temel niteliği nedir?|Yer kaplama (res extensa)|Düşünme|Hissetme|Büyüme|Descartes|o|H
+7|Z|Descartes'ta âlem nasıl bir yapı olarak görülür?|Hareket kanunlarına göre işleyen bir makine|Canlı bir organizma gibi kendi kendine gelişen bir yapı|Bir rüya gibi hayalî ve gerçek olmayan bir yapı|Tanrı'nın kendisi olarak, onunla özdeş bir yapı|Descartes|o|A
+7|Z|"Varolmak algılanmış olmaktır" diyen filozof kimdir?|Berkeley|Hume|Locke|Descartes|XVIII. yüzyıl|k|H
+7|Z|Hume'a göre dış dünyanın varlığı nedir?|Akılla ispat edilemeyen, inanca konu olan bir vehim|Aklî olarak ispatlanmış bir gerçek|Allah'ın doğrudan bildirdiği bir hakikat|Atomların hareketi|XVIII. yüzyıl|o|A
+7|Z|Berkeley'e göre asıl gerçeklik nerededir?|Ruhî cevherde|Maddede|Dış dünyada|Kuvvette|XVIII. yüzyıl|o|A
+7|Z|Locke'a göre insan neyi kesin olarak bilebilir?|Şuurunda olup bitenleri|Dış dünyanın yapısını|Tanrı'nın zâtını|Geleceği|XVIII. yüzyıl|o|A
+7|Z|Kant'a göre zihin nesnelere ne yapar?|Kanun dikte eder|Hiç dokunmaz|Yok sayar|Sadece taklit eder|Kant|o|A
+7|Z|Kant'taki "a priori" kavramlar nasıl kavramlardır?|Deneyden önce gelen, önsel kavramlar|Deneyden sonra gelen kavramlar|Hiç kullanılmayan kavramlar|Yalnızca duyulardan gelen kavramlar|Kant|o|A
+7|Z|"Ben'den başka mevcut yoktur" ifadesi hangi filozofa aittir?|Fichte|Kant|Hegel|Berkeley|Alman idealizmi|z|H
+7|Z|Hegel'e göre âlem nedir?|Mutlak İde'nin kendini açması|Atomların birleşimi|Tesadüfi bir yığın|Salt madde|Alman idealizmi|o|A
+7|Z|Materyalistlere göre ruh nedir?|Maddî yapılı bir bileşim|Bağımsız cevher|İlâhî bir ışık|Algı yanılsaması|Materyalizm|o|A
+7|Z|Materyalistlere göre âlem nasıl işler?|Zorunlu kanunlara göre bir makine gibi|Tanrı'nın iradesine göre, ruhun yönlendirmesiyle|Tesadüfen ve hiçbir kurala bağlı olmadan|Ruhun etkisiyle ve manevî bir güçle|Materyalizm|o|A
+7|Z|Materyalizmde birbirinden ayrılmayan iki kadîm varlık hangisidir?|Madde ve kuvvet|Ruh ve beden|Akıl ve duygu|Süje ve obje|Materyalizm|o|A
+7|Z|Dinin âlem anlayışında âlem nasıl meydana gelmiştir?|Allah'ın yaratmasıyla|Kadîm bir ilk maddeden|Kendiliğinden|Südûr zorunluluğuyla|Dinin âlem anlayışı|o|A
+7|Z|Kur'an ve hadiste yoktan yaratma ifadesi nasıl yer alır?|Açıkça yer almaz; Allah'a yüklenen fiillerin lügat anlamlarından çıkarılmıştır|Her sûrede açıkça ve sıklıkla geçer|Hiç söz edilmez ve konuya hiç değinilmez|Yalnızca hadiste açıkça yer alır|Yoktan yaratma|z|A
+7|Z|Yoktan yaratma tezini Ehli Sünnet kelâmcıları hangi kavramlardan yola çıkarak temellendirmeye çalışmıştır?|Atom, yer kaplama ve boşluk|Ruh, beden ve akıl|Süje, obje ve algı|Hava, su ve ateş|Yoktan yaratma|z|A
+7|Z|"Yokluktan varlık meydana gelmez" ilkesi Latince nasıl ifade edilir?|Ex nihilo nihil|Cogito ergo sum|Esse est percipi|Creatio ex nihilo|Filozoflar ve sufîler|z|H
+8|Z|Platon ruhun üç yönünü hangi benzetmeyle anlatır?|İki yağız at ve sürücü|Üç basamaklı merdiven|Gemi ve yelken|Ağaç ve dal|Platon|o|H
+8|Z|Platon'da ruhun en yüksek ve ölmez yanı hangisidir?|Akıl|İştaha|İrade|Beden|Platon|o|A
+8|Z|Platon'da "kötü at" ruhun hangi yanını temsil eder?|İştahalar yanını|Akıl yanını|İradî yanını|Hiçbirini|Platon|o|A
+8|Z|Platon ruh anlayışını hangi diyaloglarında temellendirmiştir?|Phaidon, Phaidros ve Devlet|Yalnızca Devlet|Yalnızca Timaios|Yalnızca Sofist|Platon|z|H
+8|Z|Platon'a göre ruh bedende nasıl bir durumdadır?|Bedene mahkûm, ancak bedenden farklı ve müstakil bir cevherdir|Bedenin bir parçasıdır ve bedenle bütünleşmiştir|Bedenle tamamen aynıdır ve ondan ayırt edilemez|Bedenden etkilenmeyen bir hayalden ibarettir|Platon|o|A
+8|Z|Platon'da tenasüh ne demektir?|Ruhun tekrar tekrar dünyaya dönmesi|Ruhun yok olması ve hiçbir yerde bulunmaması|Ruhun cennete gitmesi ve orada kalması|Ruhun bedenle birleşmesi ve onunla bütünleşmesi|Platon|o|A
+8|Z|Aristoteles'e göre ruh bedenin neyidir?|Entelekheiasıdır|Hapishanesidir|Gölgesidir|Aynasıdır|Aristoteles|o|H
+8|Z|Aristoteles'te ruhun en yüksek kısmı hangisidir?|İnsanî ruh|Nebatî ruh|Hayvanî ruh|Yalnızca bitkisel ve hayvanî ruha|Aristoteles|o|A
+8|Z|Nebatî ruh hangi özelliklere sahiptir?|Besleyici ve büyütücü|Düşünücü|Konuşucu|Hareket ettirici|Aristoteles|o|A
+8|Z|Descartes'a göre ruhun özü nedir?|Düşünme|Yer kaplama|Büyüme|Hareket|Descartes|o|H
+8|Z|Descartes'ın ruh anlayışında ruh yer kaplar mı?|Hayır, yer kaplamaz ve bölünmez|Evet, yer kaplar ve bölünebilir|Bazen yer kaplar ve bazen kaplamaz|Yalnızca bedende yer kaplar ve orada bölünür|Descartes|o|A
+8|Z|Bergson'a göre ruh nedir?|Sezgiyle anlaşılan, dinamik bir atılım|Salt madde olarak, hiçbir ruhî yönü bulunmayan bir şey|Algı yanılsaması olarak, gerçek bir karşılığı olmayan bir şey|Değişmeyen cevher olarak, hiçbir hareketi bulunmayan bir şey|Çağdaş felsefe|z|A
+8|Z|Epikuros'a göre ruh nelerden oluşur?|Ateş, soluk, hava ve dördüncü bir unsur|Yalnızca ruhanî cevher ve manevî unsurlar|Yalnızca düşünce ve onun faaliyetleri|Yalnızca beden ve onun organlarından oluşan yapı|Materyalist anlayış|z|H
+8|Z|Kınalızâde ruhu nasıl tanımlar?|Cisim ve cisme ait olmayan basit bir cevher|Cismanî bir yapı, yani bedenin bir parçası olan şey|Salt hayal, yani zihnin ürettiği bir tasarım|Madde yığını, yani cisimlerin rastgele birleşimi|Dinde ruh|z|H
+8|Z|Kuvve-i Fikriyye'nin merkezi neresidir?|Beyin|Kalp|Ciğer|Karaciğer|İslâm'da ruh|o|H
+8|Z|Kuvve-i Gazabiyye'nin merkezi neresidir?|Kalp|Beyin|Ciğer|Mide|İslâm'da ruh|o|H
+8|Z|Kuvve-i Şeheviyye'nin merkezi neresidir?|Ciğer|Beyin|Kalp|Böbrek|İslâm'da ruh|o|H
+8|Z|Kuvve-i Fikriyye'nin ilgili fazileti hangisidir?|Hikmet|Şecaat|İffet|Adalet|İslâm'da ruh|z|H
+8|Z|Gazalî ruhun iki boyutunu nasıl adlandırır?|Beden ve kalp|Akıl ve duygu|Madde ve form|Cevher ve araz|Gazalî|o|H

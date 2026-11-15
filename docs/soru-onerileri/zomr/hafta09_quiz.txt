@@ -1,0 +1,200 @@
+#QUESTION:Bir öğrenci "ahlâk dinin dışında kalan bir alandır" diyor. Ders içeriğine göre bu ifadeye nasıl cevap verilir?
+#CORRECT:Ahlâk din ve felsefenin can damarıdır
+#WRONG:Doğrudur, ahlâk dinle ilgisizdir ve yalnızca bireysel tercihtir
+#WRONG:Ahlâk yalnızca hukukun konusudur ve dinle ilişkisi bulunmaz
+#WRONG:Ahlâk yalnızca sanatın konusudur ve dinle ilişkisi bulunmaz
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:Ahlâk ve din
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Bir filozof insanın hiçbir davranışında seçme imkânı bulunmadığını ve her şeyin zorunlu olduğunu savunuyor. Bu görüş hangisidir?
+#CORRECT:Determinizm
+#WRONG:Rasyonalizm
+#WRONG:Sosyolojik görüş
+#WRONG:Pragmatizm
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:Hürriyet ve sorumluluk
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:İslâm ahlâkında "ihtiyar" kavramı ile insan hürriyeti arasındaki ilişki nasıl kurulur?
+#CORRECT:İnsana seçme ve karar verme özgürlüğü tanınır
+#WRONG:İnsana tam, sınırsız ve mutlak bir özgürlük tanınır
+#WRONG:İnsana hiçbir özgürlük tanınmaz ve her şey zorunludur
+#WRONG:İnsan yalnızca bir araçtır ve özgürlük kavramı anlamsızdır
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:Hürriyet ve sorumluluk
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Fert, aile, cemiyet ve devlet ahlâkı birbirine nasıl bağlıdır?
+#CORRECT:Her alan kendine has özellikler taşıyabilir ama temel ahlâk ilkelerinden ayrılamaz
+#WRONG:Bu dört alan birbirinden tamamen bağımsız ilkelere sahiptir ve ortak bir temele dayanmaz
+#WRONG:Hiçbir biri ahlâk ilkesi taşımaz ve yalnızca kurallara dayanır
+#WRONG:Yalnızca devlet ahlâkı gerçektir ve diğerleri bu ilkeden doğmuş değildir
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:Pratik ahlâk
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:"Bir davranışı ahlâkî yönden doğru yapan nedir?" sorusu hangi ahlâk felsefesi problemiyle ilişkilidir?
+#CORRECT:Doğru hareketin ölçüsü
+#WRONG:En yüksek iyi
+#WRONG:İnsan iradesi ve hürriyet
+#WRONG:Estetik yargı
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:Ahlâk felsefesinin problemleri
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:En yüksek iyi problemi insan hayatının hangi yönüyle ilgilidir?
+#CORRECT:Mana ve değerinin en yüksek amaca ulaşma çabasıyla ortaya çıkmasıyla
+#WRONG:Zaman ve mekân içindeki yeriyle ve ona ilişkin ölçülerle
+#WRONG:Yalnızca ticarî faaliyetleriyle ve elde ettiği kazançla
+#WRONG:Yalnızca eğlence ve dinlenme alışkanlıklarıyla ve bunların sıklığıyla
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:Ahlâk felsefesinin problemleri
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Din ve felsefe ahlâkî meselelere hangi yollarla cevap arar?
+#CORRECT:Din vahiy yoluyla, felsefe sistematik tahlil ve tenkitle
+#WRONG:Din tenkitle, felsefe vahiyle; ikisi birbirinden farklı biçimde işler
+#WRONG:İkisi de yalnızca vahiyle ve ibadetle cevap arar
+#WRONG:İkisi de yalnızca deneyle ve gözlemle cevap arar
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:Ahlâk ve din
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Hürriyet ahlâkî davranışın ön şartıdır. Bu ifade sorumlulukla nasıl bir ilişki kurar?
+#CORRECT:Hür olmayan varlığın davranışından sorumlu tutulması zorlaşır
+#WRONG:Hürriyet ile sorumluluk arasında hiçbir ilişki yoktur ve ayrıdır
+#WRONG:Sorumluluk hürriyetten önce gelir ve onu doğurur
+#WRONG:Hürriyet sorumluluğu tamamen ortadan kaldırır ve geçersiz kılar
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:Hürriyet ve sorumluluk
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Yoksul bir adamın ailesini doyurmak için ekmek çalması örneği hangi felsefî problemi örnekler?
+#CORRECT:Ahlâk felsefesinin klasik ikilemini
+#WRONG:Estetik yargının öznelliği problemini
+#WRONG:Bilginin kaynağı problemini
+#WRONG:Varlık meselesini
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:İkilemler
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:"Din ve felsefe insan davranışlarını farklı açılardan inceler" ifadesi neyi gösterir?
+#CORRECT:İki disiplinin de değer kavramı etrafında ortaklaştığını
+#WRONG:İki disiplinin insan davranışıyla hiç ilgilenmediğini
+#WRONG:Yalnızca dinin davranışı incelediğini
+#WRONG:Yalnızca felsefenin davranışı incelediğini
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:Değerler felsefesi
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Pratik ahlâk ile teorik ahlâk arasındaki ilişki nedir?
+#CORRECT:Pratik ahlâk, teoride çözüme ulaşan sonuçların hayata aktarılmasıdır
+#WRONG:Pratik ahlâk teoriyi yok eder ve onun yerini alır, teori gereksiz kalır
+#WRONG:Teorik ahlâk pratikten tamamen bağımsız çalışmalıdır ve onunla ilişkilenmemelidir
+#WRONG:İkisi tamamen aynı şeydir ve aralarında ayrım yapılamaz
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:Pratik ahlâk
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Rasyonalistler ile deterministlerin hürriyet konusundaki zıtlığı nedir?
+#CORRECT:Rasyonalistler tam hürriyeti, deterministler hürriyetin bulunmadığını savunur
+#WRONG:İkisi de tam hürriyeti savunur ve aynı sonuca ulaşır, aralarında fark yoktur
+#WRONG:İkisi de hürriyeti tümüyle reddeder ve aynı kanıya varır
+#WRONG:İkisi de kısmî hürriyeti savunur ve bu konuda hemfikirdir
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:Hürriyet ve sorumluluk
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:"Muhakkak ki sen yüce bir ahlâk sahibisin" ayeti dinin hangi yönünü vurgular?
+#CORRECT:Dinin ahlâkî boyutunu
+#WRONG:Dinin yalnızca ibadet boyutunu
+#WRONG:Dinin hukukî boyutunu
+#WRONG:Dinin ticarî boyutunu
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:Ahlâk ve din
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Devlet ahlâkı (politika) hangi konuları kapsar?
+#CORRECT:Yönetim biçimleri, devlet-halk ilişkileri ve yöneticilerin sorumlulukları
+#WRONG:Yalnızca bireylerin kişisel davranışlarını ve günlük alışkanlıklarını
+#WRONG:Yalnızca aile içindeki ilişkileri ve ev düzenini
+#WRONG:Yalnızca sanat eserlerinin değerini ve estetik niteliklerini
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:Pratik ahlâk
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:"Sizin dinen iyi olanınız ahlâken de iyi olanınızdır" sözü nasıl yorumlanır?
+#CORRECT:Dindarlıkla ahlâkî olgunluk birbirinden ayrılmaz
+#WRONG:Dindarlık ahlâktan tamamen bağımsızdır ve aralarında bağ yoktur
+#WRONG:Ahlâk dinin üstünde bir kavramdır ve dinden önce gelir
+#WRONG:Ahlâk dine zıt bir alandır ve birbirlerini dışlarlar
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:Ahlâk ve din
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:İnsanın davranışlarında "kısmen hür" olduğunu söyleyen görüş hangisidir?
+#CORRECT:Sosyolojik görüş
+#WRONG:Determinizm
+#WRONG:Rasyonalizm
+#WRONG:Septisizm
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:Hürriyet ve sorumluluk
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Hürriyet meselesinde İslâm düşüncesi ile determinizm arasındaki fark nedir?
+#CORRECT:İslâm düşüncesi seçme özgürlüğünü kısmî olarak tanır
+#WRONG:İkisi de hürriyeti tamamen reddeder ve aynı kanıdadır
+#WRONG:İkisi de tam ve sınırsız hürriyeti savunur
+#WRONG:Aralarında bu konuda hiçbir fark yoktur
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:Hürriyet ve sorumluluk
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Değerler felsefesindeki "iyi ve kötünün, güzel ve çirkinin kaynağı" sorusu neyi sorgular?
+#CORRECT:Değer yargılarımızın nereden geldiğini
+#WRONG:Atomların yapısının ve maddenin parçalarının nasıl oluştuğunu
+#WRONG:Bilginin sınırlarının ve nasıl elde edildiğini
+#WRONG:Zamanın yönünün ve nasıl ilerlediğini
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:Değerler felsefesi
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Etik ile pratik ahlâk arasındaki ilişki "çözüme ulaşan sonuçların hayata aktarılması" olarak tanımlanır. Bu ifade neyi gösterir?
+#CORRECT:Etiğin teoriyi, pratik ahlâkın uygulamayı temsil ettiğini
+#WRONG:Etiğin pratik ahlâkın kendisi olduğunu ve ayrıca bir alan bulunmadığını
+#WRONG:İkisinin birbirinden tamamen ilgisiz alanlar olduğunu
+#WRONG:Pratik ahlâkın teoriyi yok saydığını ve onu geçersiz kıldığını
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:Pratik ahlâk
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Jean Valjean'ın vicdanı örneği derste hangi amaçla anılır?
+#CORRECT:Ahlâk felsefesinin klasik ikilemlerini tartışmak için
+#WRONG:Estetik yargının öznelliğini göstermek için
+#WRONG:Bilginin kaynaklarını sınıflandırmak için
+#WRONG:Varlık meselesini açıklamak için
+#PAKET:9. hafta: Ciddi Quiz (15 soru)
+#KONU:İkilemler
+#ZORLUK:orta
+#BLOOM:Uygulama
+

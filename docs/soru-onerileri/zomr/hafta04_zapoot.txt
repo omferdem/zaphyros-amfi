@@ -1,0 +1,200 @@
+#QUESTION:Din ve felsefenin ortak noktalarından biri hangisidir?
+#CORRECT:Deney-dışı konuları araştırma nesnesi yapmaları
+#WRONG:Yalnızca laboratuvar deneyi yapmaları
+#WRONG:Yalnızca matematik kullanmaları
+#WRONG:Yalnızca tarihî olayları incelemeleri
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Konuları açısından ilişki
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Ortaçağda felsefenin ağırlık noktası nedir?
+#CORRECT:Allah
+#WRONG:Âlem
+#WRONG:İnsan
+#WRONG:Madde
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefe tarihinde odak noktaları
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Sonraki dönemlerde ana konulara ne olmuştur?
+#CORRECT:Yan dallar eklenmiş, çeşitlilik artmıştır
+#WRONG:Tüm konular terk edilmiş ve felsefe sona ermiştir
+#WRONG:Hiçbir değişiklik olmamış, aynı kalmıştır
+#WRONG:Sadece tek bir konu kalmış, diğerleri düşmüştür
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefe tarihinde odak noktaları
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Dinin konusu felsefenin konusundan nasıl bir fark gösterir?
+#CORRECT:Büyük bir farklılık göstermez
+#WRONG:Tamamen farklıdır
+#WRONG:Hiç ortak yanı yoktur
+#WRONG:Yalnızca ibadetle sınırlıdır
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Dinin konusu
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Dinin ayırt edici özelliklerinden biri hangisidir?
+#CORRECT:Gayba iman esası
+#WRONG:Deneye dayalı bilgi
+#WRONG:Sürekli şüphe
+#WRONG:Tamamen bireysel oluşu
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Dinin konusu
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Din yalnızca neyden ibaret değildir?
+#CORRECT:İman kıvılcımının çakışından
+#WRONG:Duygu ve düşünceden
+#WRONG:Eylemden
+#WRONG:Sorumluluktan
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Dinin konusu
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Felsefe ile dinin en temel ve vazgeçilmez meselesi nedir?
+#CORRECT:Varlık meselesi
+#WRONG:Estetik
+#WRONG:Hukuk
+#WRONG:Ekonomi
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Varlık meselesi
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Birçok filozof Tanrı'yı sistemlerinin neyi olarak kabul etmek zorunda kalmıştır?
+#CORRECT:"O olmazsa hiçbir şey olmaz" ilkesi
+#WRONG:Yalnızca süs unsuru olarak bir yer tutması
+#WRONG:Gereksiz bir fikir olarak sistemden çıkarılması
+#WRONG:Ayrı bir bilim dalı olarak ele alınması
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Varlık meselesi
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Tanrı'yı sistemlerinin ilkesi kabul eden filozoflar arasında hangisi vardır?
+#CORRECT:Aristo
+#WRONG:Protagoras
+#WRONG:Epikuros
+#WRONG:Demokritos
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Varlık meselesi
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Felsefe ve din "nasıl bir Allah" sorusuyla hangi konuyu ele alır?
+#CORRECT:Sıfatlar konusunu
+#WRONG:Takvim konusunu
+#WRONG:Ticaret konusunu
+#WRONG:Mimarî konusunu
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Varlık meselesi
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Esmâ-i hüsnâ kaç güzel isimden oluşur?
+#CORRECT:99
+#WRONG:33
+#WRONG:100
+#WRONG:1001
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Dinin metodunu oluşturan ilke nedir?
+#CORRECT:İman
+#WRONG:Deney
+#WRONG:Şüphe
+#WRONG:İstatistik
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Konuları açısından ilişki
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Tevhid sıfatı Allah'ın neyi ifade eder?
+#CORRECT:Birliğini
+#WRONG:Çokluğunu
+#WRONG:Cisimliğini
+#WRONG:Zamana bağlılığını
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Felsefenin merkezindeki unsurlar hangileridir?
+#CORRECT:Akıl ve tenkitçi düşünce
+#WRONG:Gayba iman ve vahiy
+#WRONG:Taklit ve itaat
+#WRONG:Sezgi ve ilham
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Konuları açısından ilişki
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Din hangi ilkeyle başlar?
+#CORRECT:İman ilkesiyle
+#WRONG:Şüphe ilkesiyle
+#WRONG:Deney ilkesiyle
+#WRONG:Çıkar ilkesiyle
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Konuları açısından ilişki
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Felsefe konusunu belirli bir varlık dünyasıyla sınırlayabilir mi?
+#CORRECT:Hayır, evrensel bir konu alanı vardır
+#WRONG:Evet, yalnızca madde ile sınırlıdır
+#WRONG:Evet, yalnızca ruh ve onun kuvvetleriyle
+#WRONG:Evet, yalnızca Tanrı ve sıfatlarıyla
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefenin konusu
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Felsefe problemleri hangi sebepler açısından araştırır?
+#CORRECT:En son ve en yüksek sebepler açısından
+#WRONG:Yalnızca yakın sebepler açısından
+#WRONG:Yalnızca tesadüf açısından
+#WRONG:Yalnızca faydacılık açısından
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefenin konusu
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Filozoflar felsefenin konusunu hangi üç kavramda toplar?
+#CORRECT:Varlık, bilgi ve değer
+#WRONG:Akıl, irade ve duygu
+#WRONG:Madde, form ve hareket
+#WRONG:Din, ahlâk ve sanat
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefenin konusu
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Felsefe tarihinde ilkçağın ağırlık noktası nedir?
+#CORRECT:Âlem
+#WRONG:İnsan
+#WRONG:Allah
+#WRONG:Devlet
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefe tarihinde odak noktaları
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Sokrates sonrası dönemde ağırlık noktası nedir?
+#CORRECT:İnsan
+#WRONG:Âlem
+#WRONG:Allah
+#WRONG:Madde
+#PAKET:4. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefe tarihinde odak noktaları
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+

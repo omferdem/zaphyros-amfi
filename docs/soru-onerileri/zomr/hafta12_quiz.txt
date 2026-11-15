@@ -1,0 +1,200 @@
+#QUESTION:Bir öğrenci "bilgi yalnızca deneyle elde edilir" diyor. Bu görüş hangi akımla örtüşür ve derste hangi akımın karşısında yer alır?
+#CORRECT:Ampirizm ile örtüşür; aklı bilginin kaynağı sayan rasyonalizmin karşısındadır
+#WRONG:Rasyonalizm ile örtüşür; deneyi reddeden sezgiciliğin karşısındadır
+#WRONG:Septisizm ile örtüşür; bilgiyi inkâr eden idealizmin karşısındadır
+#WRONG:Monizm ile örtüşür; süje ile objeyi ayıran realizmin karşısındadır
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:Bilginin kaynakları
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:Dinin bilgi kaynakları hiyerarşisinde üst kaynaklar alt kaynaklarla nasıl bir ilişki kurar?
+#CORRECT:Üst kaynaklar alt kaynakların keşfedemediği bilgileri sağlar ve onlara zıt düşmez
+#WRONG:Üst kaynaklar alt kaynakları geçersiz kılar ve onların yerine geçerek bilgiyi belirler
+#WRONG:Alt kaynaklar üst kaynakları geçersiz kılar ve bilginin ölçüsü olur
+#WRONG:Aralarında hiçbir ilişki yoktur ve her kaynak kendi başına ayrı işler
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:Bilgi hiyerarşisi
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Kur'an'a göre insan bilgi bakımından hangi durumda dünyaya gelir?
+#CORRECT:Ne tabula rasa ne de doğuştan kavramlarla
+#WRONG:Doğuştan bütün bilgilerle dolu olarak
+#WRONG:Hiçbir yeteneği bulunmayan boş bir levha olarak
+#WRONG:Yalnızca akılla ve diğer yetenekler olmadan
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:Kur'an'a göre bilgi edinimi
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Bir filozof her şeyden şüphe etmek gerektiğini ve şüphenin bir amaç olduğunu savunuyor. Bu tavır hangi grubu yansıtır?
+#CORRECT:Septikleri, yani şüphe için şüphe edenleri
+#WRONG:Descartes'ın metodik şüphesini, yani kesin bilgiye ulaşmak için şüpheyi vasıta edinenleri
+#WRONG:Pragmatistleri, yani bilgiyi faydasıyla ölçenleri
+#WRONG:Realistleri, yani objeyi bağımsız kabul edenleri
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:Bilginin değerine yaklaşımlar
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:Metodik şüphe ile septik şüphe arasındaki fark nedir?
+#CORRECT:Metodik şüphe hakikate ulaşmak için bir vasıtadır, septik şüphe ise şüphe için şüphedir
+#WRONG:İkisi de tamamen aynıdır ve aralarındaki fark yalnızca adlandırmadadır
+#WRONG:Metodik şüphe bilgiyi tümüyle reddeder, septik şüphe ise bilgiye ulaştırır
+#WRONG:Septik şüphe hakikate götüren yöntemdir, metodik şüphe ise gereksiz bir tutumdur
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:Metodik şüphe
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Pragmatistlere göre ezelî ve ebedî hakikatler var mıdır?
+#CORRECT:Hayır, hakikatler hayatta işimize yarayan, faydalı olan şeylerdir
+#WRONG:Evet, bunlar mutlaktır ve zamana göre değişmeyen, herkes için geçerli ilkelerdir
+#WRONG:Yalnızca vahiyde bulunur ve başka hiçbir kaynakta yer almaz
+#WRONG:Yalnızca akılla bulunur ve başka hiçbir yoldan edinilemez
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:Bilginin değerine yaklaşımlar
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:İslâm'da vahiy bilgisi ile insan bilgisi arasındaki ilişki nasıldır?
+#CORRECT:Vahyin bilgisi mutlak doğrudur
+#WRONG:Vahiy akla tamamen aykırıdır ve onu geçersiz kılar
+#WRONG:İnsan bilgisi vahyi geçersiz kılar ve onun yerine geçer
+#WRONG:Aralarında hiçbir ilişki yoktur ve birbirini etkilemezler
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:Vahiy ve insan bilgisi
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:"Her ilim sahibinin üstünde daha iyi bilen birisi vardır" ayeti neyi gösterir?
+#CORRECT:İnsanın bilgisinin rölatif, Allah'ın bilgisinin mutlak olduğunu
+#WRONG:İnsanın bilgisinin mutlak, Allah'ın bilgisinin ise göreli olduğunu
+#WRONG:İnsanın bilgisinin tamamen değersiz olduğunu ve bunun bir önemi bulunmadığını
+#WRONG:Bilginin imkânsız olduğunu ve hiçbir şeyin bilinemeyeceğini
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:İslâm'da bilgi kaynakları
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Realizm ile idealizm arasındaki temel fark nedir?
+#CORRECT:Realizm objeyi bağımsız, idealizm süjeyi öncelikli kabul eder
+#WRONG:Aralarında hiçbir fark yoktur
+#WRONG:Realizm süjeyi, idealizm objeyi bağımsız kabul eder
+#WRONG:İkisi de objeyi bütünüyle reddeder
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:Bilgi teorileri
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:T. Mengüşoğlu'nun "izm"lere yönelttiği eleştiri nedir?
+#CORRECT:Fenomen temelini bırakıp ön yargılardan hareket ettikleri, somut insanı ve dünyayı gözetmedikleri
+#WRONG:Hepsini tümüyle doğru bulması ve bu görüşlerde bir eksiklik görmemesidir
+#WRONG:Yalnızca realizmi eleştirmesi ve diğer görüşleri desteklemesidir
+#WRONG:Yalnızca monizmi desteklemesi ve diğerlerini bütünüyle reddetmesidir
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:Bilgi teorileri
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Tertullian ve Pascal'ın akla yaklaşımı Kur'an'ın akıl anlayışından nasıl ayrılır?
+#CORRECT:Tertullian ve Pascal akla az ya da hiç değer vermez
+#WRONG:İkisi de aklı Kur'an gibi yüceltir ve bilginin temel kaynağı sayar
+#WRONG:Kur'an aklı hiç anmaz ve onun yerine yalnızca duyuyu koyar
+#WRONG:Tertullian aklı Kur'an'dan fazla över ve ona daha çok yer verir
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:Bilginin değeri
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Yahudilik ve Hıristiyanlığın bugünkü hâliyle akla yaklaşımı nasıl özetlenir?
+#CORRECT:Akıl ve akılla üretilen bilgilere pek değer verilmez, akıl nefsin ve aşağı dünyanın vasıtası görülür
+#WRONG:Akıl en önemli kaynak kabul edilir, bütün bilginin temeli sayılır
+#WRONG:Akıl vahiyle aynı sayılır, ikisi birbirinden ayrılmaz
+#WRONG:Akıl tümüyle yüceltilir, imandan da üstün görülür
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:Bilginin değeri
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Rölativistler bilgi hakkında ne söyler?
+#CORRECT:Bilgimizin izafî olduğunu, gerçeği ancak kısmen yansıtabileceğini
+#WRONG:Bilgimizin mutlak olduğunu ve gerçeği tam olarak yansıttığını
+#WRONG:Bilginin imkânsız olduğunu ve hiçbir şeyin bilinemeyeceğini
+#WRONG:Bilginin yalnızca vahiyden geldiğini ve başka kaynağı bulunmadığını
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:Bilginin değerine yaklaşımlar
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Bilginin değeri meselesindeki "hakikate ulaşma" sorusu neyi sorar?
+#CORRECT:İnsanın elindeki imkânlarla varlığın gerçek bilgisine ulaşıp ulaşamayacağını
+#WRONG:İnsanın kaç yaşında öleceğini ve ömrünün ne kadar süreceğini
+#WRONG:İnsanın ne yiyeceğini ve hangi besinlerle yaşayacağını
+#WRONG:İnsanın nerede yaşayacağını ve hangi şehri seçeceğini
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:Bilginin değeri
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Hata ve yanılgı sorusu neyi sorar?
+#CORRECT:Bilgi yetilerimiz tam bilgiye ulaştıracak yetenekteyse hata ve yanlış nereden gelir sorusunu
+#WRONG:Hatanın hiç olmadığını ve bilginin her zaman tam olduğunu
+#WRONG:Hatanın yalnızca çocuklarda görüldüğünü ve yetişkinlerde bulunmadığını
+#WRONG:Hatanın yalnızca ibadetle ilgili olduğunu ve başka alanlara girmediğini
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:Bilginin değeri
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:İbni Heysem ve Gazalî'nin şüpheciliği Descartes'ınkine neden benzetilir?
+#CORRECT:İkisi de kesin bilgiye nasıl ulaşılır sorusuna cevap aramak için şüpheyi vasıta olarak kullanır
+#WRONG:İkisi de şüpheyi amaç edinir ve bilgiyi hiçbir zaman kabul etmez
+#WRONG:İkisi de bilgiyi reddeder ve hakikate ulaşılamayacağını savunur
+#WRONG:İkisi de vahyi reddeder ve yalnızca şüpheye dayanarak ilerler
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:Metodik şüphe
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Doğmatik rasyonalistlerin bilgi güveni hangi görüşe dayanır?
+#CORRECT:Yalnızca akıl yoluyla elde edilen bilgilere güvenilebileceği görüşüne
+#WRONG:Duyuya güvenilmesi gerektiği ve aklın bu konuda ikincil kaldığı görüşüne
+#WRONG:Vahye güvenilmesi gerektiği ve diğer kaynakların geçersiz olduğu görüşüne
+#WRONG:Hiçbir bilgiye güvenilmemesi gerektiği ve bilginin imkânsız olduğu görüşüne
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:Bilginin değeri
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Dinin bilgi kaynakları hiyerarşisinde "desteklemenin anlamı" neyi ifade eder?
+#CORRECT:Üst kaynakların alt kaynaklarca doğrulanması değil, çelişmemesi ve birbirini yalanlamamasıdır
+#WRONG:Üst kaynakların alt kaynakları geçersiz kılmasıdır ve onların yerine geçmesidir
+#WRONG:Alt kaynakların üst kaynakları doğrulamasıdır ve onlara kanıt sağlamasıdır
+#WRONG:Kaynakların birbirine düşman olmasıdır ve çatışmasıdır
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:Bilgi hiyerarşisi
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Kur'an'ın bilgi kaynakları arasında en çok önem verdiği hangisidir?
+#CORRECT:Akıl
+#WRONG:Duyu
+#WRONG:Sezgi
+#WRONG:Deney
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:Bilginin değeri
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Vahyin bilgisi derste nasıl nitelendirilir?
+#CORRECT:Mutlak doğru, konusuyla tam uygunluk içinde ve objektif geçerliliğe sahip
+#WRONG:Yalnızca göreli ve kişiye bağlı, objektif bir geçerliliği bulunmayan
+#WRONG:Yalnızca zan ve tahminden ibaret, kesin sayılamayan
+#WRONG:Yalnızca duyu bilgisine dayanan, aklî bir temeli olmayan
+#PAKET:12. hafta: Ciddi Quiz (15 soru)
+#KONU:Vahiy ve insan bilgisi
+#ZORLUK:kolay
+#BLOOM:Anlama
+

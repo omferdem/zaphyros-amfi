@@ -1,0 +1,200 @@
+#QUESTION:Din felsefesinin beş ana problem kategorisi içinde "sembolizm" neyle ilgilenir?
+#CORRECT:Dinî sembolizmin anlam ve önemini belirlemekle
+#WRONG:Allah'ın sıfatlarını sıralamakla ve her birinin ne anlama geldiğini açıklamakla
+#WRONG:Âlemin yaratılışını incelemekle ve ilk maddenin ne olduğunu araştırmakla
+#WRONG:Ruhun bedenle ilişkisini çözmekle ve ölümden sonrasını betimlemekle
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Ana problemler
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Tanrı'nın varlığı lehindeki ve aleyhindeki aklî delilleri inceleyen bir din felsefecisi hangi problem alanında çalışır?
+#CORRECT:Metafizik ve kozmolojik problemler
+#WRONG:Dil ve mantık analizi; dinî dilin mantıkî statüsünün belirlenmesi
+#WRONG:Sembolizm; dinî sembollerin anlamının ve öneminin belirlenmesi
+#WRONG:İlişkisel problemler; dinin ahlâk, sanat ve ilimle münasebetinin belirlenmesi
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Ana problemler
+#ZORLUK:kolay
+#BLOOM:Uygulama
+
+#QUESTION:Kelâmcı için "dinî hükümleri sorguya çekme yoktur" ifadesi neyi gösterir?
+#CORRECT:Kelâmcının dinî hükümlere inançlı bir bağlılıkla yaklaştığını
+#WRONG:Kelâmcının hiç düşünmediğini ve aklını hiçbir şekilde kullanmadığını
+#WRONG:Kelâmcının delil kullanmadığını ve yalnızca taklitle yetindiğini
+#WRONG:Kelâmın felsefeyle aynı olduğunu ve ondan ayrılmadığını
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Din felsefesi ve kelâm
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Din bilimlerinin "bütünleştirici rolü" ne demektir?
+#CORRECT:İlahiyatla sosyal bilimler arasında irtibat noktaları kurup bilgide bütünlüğü sağlamaya çalışmak
+#WRONG:Bilimleri birbirinden ayırmak ve her biri için ayrı alanlar tanımlamak
+#WRONG:Dinî bilgiyi tümüyle yok saymak ve yalnızca sosyal bilimlere dayanmak
+#WRONG:Yalnızca tek bir bilime odaklanmak ve diğer alanları göz ardı etmek
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Din bilimleri
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Dinin ürettiği temel kavramlar arasında hangisi sayılmıştır?
+#CORRECT:Âhiret, kitap, peygamber, vahiy
+#WRONG:Atom, boşluk, hareket ve yer kaplama gibi felsefe ve fizik kavramları
+#WRONG:Cevher, töz, madde ve form gibi varlık felsefesinin kavramları
+#WRONG:Kozmos, arkhé, logos ve nous gibi ilkçağ felsefesinin kavramları
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Din ve kavram
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Bir öğrenci felsefe ve dinin "ortak sorular" etrafında buluştuğunu söylüyor. Aşağıdakilerden hangisi bu soruya örnektir?
+#CORRECT:Nereden geldik, nereye gideceğiz, niçin yaratıldık
+#WRONG:Hangi yemeğin daha lezzetli olduğu ve hangi mevsimin daha güzel olduğu soruları
+#WRONG:Hangi şehrin daha kalabalık olduğu ve hangi yolun daha kısa olduğu soruları
+#WRONG:Hangi dilin daha eski olduğu ve hangi takvimin daha doğru olduğu soruları
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Ortak sorular
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:Din ile felsefenin gayelerindeki ortaklığı en iyi hangisi anlatır?
+#CORRECT:Hakikati tanımak, güvenilir bilgi yolları sunmak, aklı ve kalbi ıslah ederek mutluluğa yöneltmek
+#WRONG:Servet biriktirmek ve siyasî güç kazanmak yoluyla toplumda üstünlük sağlamak
+#WRONG:Yalnızca sanat eseri üretmek ve güzellik anlayışını yaygınlaştırmak
+#WRONG:Yalnızca laboratuvar deneyleri yürütmek ve doğa olaylarını ölçmek
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Din ve felsefenin gayeleri
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:İbn Rüşd'ün "hikmet şeriatın süt kardeşidir" sözü din-felsefe ilişkisi açısından ne anlama gelir?
+#CORRECT:Din ve felsefe doğal olarak uyumludur, birbirini yalanlamaz
+#WRONG:Din felsefeye düşmandır ve ikisi birbirini ortadan kaldırmayı hedefler
+#WRONG:Felsefe dinin yerine geçmelidir ve din artık gereksiz kalmıştır
+#WRONG:Din ile felsefe arasında hiçbir ilişki yoktur ve ikisi birbirinden bağımsızdır
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Din ve felsefenin ilişkisi
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Farabî'ye göre peygamber ve filozof arasındaki ilişkiyi hangisi özetler?
+#CORRECT:İkisi de aynı kaynakla ilgi kurar
+#WRONG:İkisi tamamen farklı kaynaklara dayanır ve hiçbir ortak yanı yoktur
+#WRONG:Filozof her zaman peygamberden üstündür
+#WRONG:Peygamberin bilgisi araştırmaya, filozofunki vahye dayanır
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Din ve felsefenin ilişkisi
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Gazali'nin felsefeye sert tavrı ile İbn Rüşd'ün tavrı arasında hangi fark vardır?
+#CORRECT:Gazali bazı felsefî görüşleri sert eleştirir, İbn Rüşd din-felsefe münasebetinin meşruluğunu açıkça savunur
+#WRONG:İkisi de felsefeyi aynı biçimde savunur ve aralarında hiçbir tavır farkı bulunmaz
+#WRONG:İkisi de felsefeyi bütünüyle yasaklar ve hiçbir biçimde kabul etmez
+#WRONG:Gazali filozofları över, İbn Rüşd ise onları sert biçimde eleştirir
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Din ve felsefenin ilişkisi
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Mutezile'nin akılcı yaklaşımına karşı çıkan fıkıh bilginlerinin ortak tavrı hangisidir?
+#CORRECT:Dinî konularda aklın hakemliğini reddetmişler ve aklı esas alan yaklaşımlara karşı çıkmışlardır
+#WRONG:Aklı her konuda tek ölçüt kabul etmişler ve vahiyle bağdaşmayan her şeyi reddetmişlerdir
+#WRONG:Kelâmı desteklemişler ve Mutezile'yle birlikte aklın hakemliğini savunmuşlardır
+#WRONG:Felsefeyi öğretmeyi zorunlu tutmuşlar ve mantığı herkese öğretmeyi istemişlerdir
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Din ve felsefenin ilişkisi
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Platon'un sanat anlayışı ile İslâm'ın güzellik anlayışı arasında derste nasıl bir ilişki kurulur?
+#CORRECT:Aralarında büyük paralellikler bulunduğu belirtilir
+#WRONG:Aralarında hiçbir benzerlik bulunmadığı belirtilir
+#WRONG:Platon'un görüşünün İslâm'a tamamen zıt olduğu belirtilir
+#WRONG:İslâm'ın estetiği tümüyle reddettiği belirtilir
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Din ve sanat
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Bir kelâmcı ile din felsefecisinin "din dilini incelemesi" arasındaki fark hangisidir?
+#CORRECT:Kelâmcı dinî hükümleri tasdik ederek açıklar, din felsefecisi dil ve mantık açısından tahlil ve tenkit eder
+#WRONG:Her ikisi de dili hiç incelemez ve yalnızca ibadete dayanan hükümler verir
+#WRONG:Her ikisi de yalnızca tarihî açıdan inceler ve mantıkî çözümleme yapmaz
+#WRONG:Kelâmcı mantığı reddeder, din felsefecisi yalnızca ibadet ederek konuyu işler
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Din felsefesi ve kelâm
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:"Din ve felsefe hakikatin farklı yüzlerini aydınlatmak için ortak bir zeminde yükselir." Buradan hangi sonuç çıkarılabilir?
+#CORRECT:İki disiplin farklı yöntemlerle de olsa hakikat arayışında ortaklaşır
+#WRONG:İki disiplin tamamen birbirine zıttır ve hiçbir ortak noktaları bulunmaz
+#WRONG:Dinin hakikatle bir ilgisi yoktur ve felsefe tek hakikat kaynağıdır
+#WRONG:Felsefenin dinle bir ilgisi yoktur ve din yalnızca duygulara dayanır
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Din ve felsefenin gayeleri
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Din bilimlerinin objektiflik ilkesinin din felsefesiyle ilişkisi nasıldır?
+#CORRECT:Din bilimleri tasvir ve açıklama yapar, din felsefesi hakikat ve değer sorusunu ayrıca düşünür
+#WRONG:Din bilimleri dinin hakikatini yargılar, din felsefesi ise hiçbir şeyi yargılamaz ve susar
+#WRONG:İkisi de aynı işi yapar, aralarında bir iş bölümü bulunmaz
+#WRONG:Din felsefesi din bilimlerini yok sayar ve onların verilerini kullanmaz
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Din bilimleri
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:"Din felsefesi hiçbir şeyi inceleme dışında tutmaz" ifadesi neyi gösterir?
+#CORRECT:Din felsefesinin hürriyet havası içinde, objektif ve eleştirel araştırma yaptığını
+#WRONG:Din felsefesinin yalnızca ibadetle ilgilendiğini ve başka alanlara girmediğini
+#WRONG:Din felsefesinin dini baştan reddettiğini ve kendini buna adadığını
+#WRONG:Din felsefesinin yalnızca tarihî olayları incelediğini ve yorum yapmadığını
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Din felsefesi ve kelâm
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:İmam Şafiî'nin Mutezilî kelâmcılara tepkisi hangisidir?
+#CORRECT:Kırbaçlanmalarını ve zındık olduklarına hükmedilmesini istemiştir
+#WRONG:Onları ödüllendirmiş ve yönetici makamlarına getirilmelerini istemiştir
+#WRONG:Onlarla birlikte çalışmış ve görüşlerini aynen benimsemiştir
+#WRONG:Onlara hiçbir tepki göstermemiş ve konuyu tamamen yok saymıştır
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Din ve felsefenin ilişkisi
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Din-felsefe münasebetine karşı çıkanların niçin karşı çıktığı sorusu hangi amaçla önemlidir?
+#CORRECT:Tarihî ve entelektüel bağlamları anlamak için
+#WRONG:Takvim hesabı yapmak ve tarihî olayların sırasını belirlemek için
+#WRONG:Hat sanatını öğrenmek ve yazı örnekleri hazırlamak için
+#WRONG:Sanat tarihi çıkarmak ve eserleri sınıflandırmak için
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Din ve felsefenin ilişkisi
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Din felsefesi derslerinde "din bilimleri" kavramı geçmektedir. Bir öğrenci din sosyolojisi ile din psikolojisi arasındaki farkı soruyor. Hangi cevap doğrudur?
+#CORRECT:Din sosyolojisi dini toplumsal bir kurum olarak, din psikolojisi dinî hayatın psikolojik yönünü inceler
+#WRONG:Din sosyolojisi dinî hayatın psikolojik yönünü, din psikolojisi toplumsal kurumları inceler
+#WRONG:İkisi de yalnızca dinin kökenini tarihî belgelerle araştıran alanlardır
+#WRONG:İkisi de yalnızca dinî sembollerin mantıkî çözümlemesini yapan alanlardır
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Din bilimleri
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Bir din felsefecisi, dinler tarihinin sunduğu bulguları kullanarak dinin hakikat iddiasını değerlendirmeye çalışıyor. Bu çalışma derse göre nasıl tanımlanır?
+#CORRECT:Filozof, din bilimlerinin malzemesinden yararlanıp onların sonuçlarını tahlil ve tenkit eder
+#WRONG:Filozof, dinler tarihçisinin yerine geçerek yalnızca tasvir ve betimleme yapar
+#WRONG:Filozof, dinler tarihinin verilerini kullanmayıp yalnızca kendi yorumuna dayanır
+#WRONG:Filozof, dinî inancın doğruluğundan tamamen bağımsız biçimde yalnızca kayıt tutar
+#PAKET:3. hafta: Ciddi Quiz (15 soru)
+#KONU:Din bilimleri
+#ZORLUK:orta
+#BLOOM:Analiz
+

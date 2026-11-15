@@ -1,0 +1,200 @@
+#QUESTION:Bir öğrenci "kavramlar yalnızca felsefenin ürünüdür" diyor. Ders içeriğine göre bu görüşe nasıl itiraz edilir?
+#CORRECT:Din de âhiret, vahiy, peygamber gibi temel kavramlar üretir ve bu konuda öncelik taşıyabilir
+#WRONG:Doğrudur, din hiçbir kavram üretmez ve yalnızca felsefeden ödünç alarak kullanır
+#WRONG:Din yalnızca felsefeden kavram ödünç alır ve kendi kavramı bulunmaz
+#WRONG:Din kavramların hepsini reddeder ve yalnızca duyguya dayanarak anlatır
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Kavram üretme
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Kur'an'ın "Kapı çalanın ne olduğunu bilir misin?" gibi ifadeleri hangi öğretim yöntemini gösterir?
+#CORRECT:Soru-cevap ve betimleme yoluyla kavram öğretmeyi
+#WRONG:Yalnızca ezber yoluyla bilgi aktarmayı ve tekrar ettirmeyi
+#WRONG:Yalnızca sınav yoluyla ölçmeyi ve puanlamayı
+#WRONG:Yalnızca tanım vererek öğretmeyi ve örnek kullanmamayı
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Kur'an'da kavram öğretme
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:Peygamber ile filozofun kavramla ilişkisi karşılaştırıldığında hangisi doğrudur?
+#CORRECT:İkisi de kavram çerçevesi üretir
+#WRONG:İkisi de kavram üretmez ve ikisi mevcut kavramları aynen tekrarlar
+#WRONG:Yalnızca filozof kavram üretir, peygamber yalnızca tekrar eder
+#WRONG:Yalnızca peygamber kavram üretir, filozof yalnızca taklit eder
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Peygamber ve filozof
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Sokrates'in doğruluk, adalet, iyilik, güzellik ve fazilet kavramlarına içerik kazandırması neyi gösterir?
+#CORRECT:Felsefenin kavram üretme sanatı olduğunu
+#WRONG:Felsefenin gereksiz olduğunu ve hiçbir işe yaramadığını
+#WRONG:Dinin yetersiz kaldığını ve yerine felsefenin geçmesi gerektiğini
+#WRONG:Mantığın önemsiz olduğunu ve kullanılmaması gerektiğini
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Kavram üretme
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Meleklerin "Senin bize öğrettiklerinden başka bilgimiz yoktur" sözü neyi vurgular?
+#CORRECT:Kavramların bilgisinin kaynağının Allah olduğunu
+#WRONG:Meleklerin bilgiyi inkâr ettiğini ve kavramlara değer vermediğini
+#WRONG:Bilginin tesadüfî olduğunu ve belli bir kaynağa dayanmadığını
+#WRONG:Bilginin gereksiz olduğunu ve hiçbir işe yaramadığını
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Kavramlar
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Allah'ın kurdurmaya çalıştığı kavram-mahiyet ilişkisi nasıl bir ilişki olmalıdır?
+#CORRECT:Kavramla mahiyet arasında tam bir münasebet bulunmalıdır
+#WRONG:Rastgele ve nedensiz bir ilişki bulunmalı, kavramla mahiyet bağlanmamalıdır
+#WRONG:Eksik ve kısmî bir ilişki bulunmalı, kavram mahiyeti tam yansıtmamalıdır
+#WRONG:Gereksiz ve anlamsız bir ilişki bulunmalı, kavramın bir değeri olmamalıdır
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Kavramlar
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Bilgi probleminde ele alınan sorular hangileridir?
+#CORRECT:Bilginin imkânı, tabiatı ve "bilgi nedir?" sorusu
+#WRONG:Bilginin fiyatı ve satış koşulları ile bunların nasıl belirlendiği
+#WRONG:Bilginin hacmi ve saklanma biçimi ile bunların nasıl ölçüldüğü
+#WRONG:Bilginin rengi ve görünüşü ile bunların nasıl algılandığı
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Bilgi meselesi
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Bilgi süje-obje ilişkisi olarak tanımlandığında bu ilişkinin eksik olması neye yol açar?
+#CORRECT:Süje ya da objeden biri eksik olursa bilgi meydana gelmez
+#WRONG:Bilgi tesadüfen yine oluşur ve süje ile obje arasında bir ilişki aranmaz
+#WRONG:Bilgi yalnızca süjeye bağlı kalır ve obje hiçbir rol oynamaz
+#WRONG:Bilgi yalnızca objeye bağlı kalır ve süje hiçbir rol oynamaz
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Bilginin kaynağı
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:Dinin kavramları duyu ve akılla ilk bakışta kavranamıyorsa nasıl öğretilir?
+#CORRECT:Akıl erdirme, vurgulama ve sorgulama yoluyla belletilir
+#WRONG:Hiç öğretilmez ve bütünüyle kendi hâline bırakılır
+#WRONG:Zorla öğretilir ve ezberletilerek benimsetilir
+#WRONG:Hile ile ve aldatarak öğretilir, gerçek amaç gizlenir
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Kavram üretme
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Felsefe tarihinde kavram üretme örneği olarak hangisi gösterilebilir?
+#CORRECT:Platon'un "idea" kavramını merkeze alması
+#WRONG:Atomların laboratuvarda keşfi
+#WRONG:Tıp bilgisinin yazıya geçirilmesi
+#WRONG:Haritaların çizilmesi ve yayılması
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Kavram üretme
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:"Manalı olan her söz felsefe tarafından incelenebilir" ifadesi neyi gösterir?
+#CORRECT:Felsefenin konusunun sınırsız olduğunu
+#WRONG:Felsefenin hiçbir konusu olmadığını
+#WRONG:Felsefenin yalnızca dili incelediğini
+#WRONG:Felsefenin yalnızca bilimi incelediğini
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Peygamber ve filozof
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Kur'an'da "ilim" ile "zan" arasındaki ayrım nedir?
+#CORRECT:İlim güvenilir kaynaktan elde edilen doğru bilgidir
+#WRONG:İkisi tamamen aynı şeydir ve fark yoktur
+#WRONG:Zan ilimden daha üstündür
+#WRONG:İlim ve zan aynı kaynaktan gelir ve aynı değerdedir
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Kur'an'da bilgi tasnifi
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Kur'an'da "kuruntu" (safsata) nasıl tanımlanır?
+#CORRECT:Yalan ve kuruntulardan ibaret, hiçbir değeri olmayan bilgi
+#WRONG:Güvenilir ve kesin bilgi, hakikate tam olarak uyan doğru kaynaklı bilgi
+#WRONG:Vahiy yoluyla gelen bilgi, doğrudan peygamberlere ulaşan hakikat
+#WRONG:Deney yoluyla elde edilen bilgi, gözleme ve denemeye dayanan hakikat
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Kur'an'da bilgi tasnifi
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Yeni bir kavram çerçevesinin toplumdaki etkisi nasıl olur?
+#CORRECT:Toplumların kavram örgüsü değişir ve yenilenir
+#WRONG:Hiçbir etkisi olmaz ve toplum kavram örgüsünü olduğu gibi korur
+#WRONG:Yalnızca bozucu etki yapar ve toplumun düşünüşünü zayıflatır
+#WRONG:Yalnızca koruyucu etki yapar ve toplumu eski hâlinde tutar
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Peygamber ve filozof
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Bilgi probleminde "kavramlar ve türetilişi" başlığı neyi inceler?
+#CORRECT:Bilginin ifade edildiği kavramsal çerçeveyi ve kavramların kaynağını
+#WRONG:Bilginin fiyatını ve değerini, ayrıca kimin satın aldığını
+#WRONG:Bilginin kime ait olduğunu ve kimin tarafından saklandığını
+#WRONG:Bilginin ne zaman unutulduğunu ve nasıl yeniden öğrenildiğini
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Bilgi meselesi
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Dinde kavram öğretiminin özelliği nedir?
+#CORRECT:Duyu ve akılla ilk bakışta kavranamayan kavramları da anlatmaya çalışmasıdır
+#WRONG:Yalnızca basit kavramları anlatmaya çalışması ve zor olanlardan kaçınmasıdır
+#WRONG:Hiç kavram anlatmamasıdır ve yalnızca emirlerle yetinmesidir
+#WRONG:Yalnızca tarihî kavramları anlatmasıdır ve güncel olanlara girmemesidir
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Kavram üretme
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Din ile felsefenin kavram üretme yönünden ortaklığı hangisidir?
+#CORRECT:İkisi de kavram çerçevesi oluşturur ve gerçekliğe kavramlarla yaklaşır
+#WRONG:İkisi de kavram üretmez ve yalnızca mevcut kavramları aynen tekrarlar
+#WRONG:İkisi de yalnızca eski kavramları kullanır ve yenisini üretmez
+#WRONG:İkisi de bütün kavramları yok eder ve yerine bir şey koymaz
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Kavram üretme
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Bilginin genel tanımında "süje" hangi özelliklerle tarif edilir?
+#CORRECT:Akıllı, düşünen, şuurlu, irade sahibi, algılayan ve bilmek isteyen bir varlık olarak
+#WRONG:Cansız, düşünmeyen ve iradesi olmayan, yalnızca algılanan bir nesne olarak
+#WRONG:Yalnızca maddî ve değişmeyen, şuur taşımayan bir yapı olarak
+#WRONG:Yalnızca bir hayal ve tasavvur olan, gerçekliği bulunmayan bir şey olarak
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Bilginin kaynağı
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Hutame kavramı Kur'an'da nasıl anlatılır?
+#CORRECT:Allah'ın tutuşturulmuş, tırmanıp kalplerin üstüne çıkan ateşi olarak
+#WRONG:Bir bahçe ve içindeki ağaçlar, yani cennetin bir bölümü olarak
+#WRONG:Bir dağ ve üstündeki kar, yani yüce bir yer olarak
+#WRONG:Bir nehir ve akıntısı, yani hayat veren bir kaynak olarak
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Kur'an'da kavram öğretme
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Bir din felsefesi öğrencisi, peygamberin ve filozofun kavramlarla ilişkisini karşılaştırıyor. Derse göre hangi ortak nokta vardır?
+#CORRECT:İkisi de yeni bir kavram çerçevesi kurabilir ya da mevcut çerçeveyi değiştirebilir
+#WRONG:İkisi de yalnızca mevcut kavramları aynen tekrarlayarak toplumu yönlendirir
+#WRONG:İkisi de kavramlarla ilgilenmez, yalnızca eylemlere ve uygulamalara odaklanır
+#WRONG:İkisi de kavramları ancak doğuştan gelen bilgilerle ve ilhamla üretebilir
+#PAKET:11. hafta: Ciddi Quiz (15 soru)
+#KONU:Peygamber ve filozof
+#ZORLUK:zor
+#BLOOM:Analiz
+

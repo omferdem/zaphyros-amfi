@@ -1,0 +1,200 @@
+#QUESTION:Bilginin kaynağını akıl kabul eden akım hangisidir?
+#CORRECT:Rasyonalizm
+#WRONG:Sansualizm
+#WRONG:Ampirizm
+#WRONG:Septisizm
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilginin kaynakları
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Bilginin kaynağını duyular sayan akım hangisidir?
+#CORRECT:Sansualizm
+#WRONG:Rasyonalizm
+#WRONG:Sezgicilik
+#WRONG:Realizm
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilginin kaynakları
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Bilginin kaynağını duyu ve deney sayan akım hangisidir?
+#CORRECT:Ampirizm
+#WRONG:Rasyonalizm
+#WRONG:Sezgicilik
+#WRONG:Monizm
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilginin kaynakları
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Bilginin kaynağını sezgi (hads) kabul eden akım hangisidir?
+#CORRECT:Sezgicilik
+#WRONG:Ampirizm
+#WRONG:Rasyonalizm
+#WRONG:İdealizm
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilginin kaynakları
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Dine özgü bilgi kaynağı hangisidir?
+#CORRECT:Vahiy
+#WRONG:Deney
+#WRONG:Duyu
+#WRONG:Akıl
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilginin kaynakları
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Bilginin imkânsızlığını savunan görüş hangisidir?
+#CORRECT:Septisizm
+#WRONG:İdealizm
+#WRONG:Realizm
+#WRONG:Monizm
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilgi teorileri
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Süjeyi "kendi başına bir varlık" kabul eden görüş hangisidir?
+#CORRECT:İdealizm
+#WRONG:Realizm
+#WRONG:Monizm
+#WRONG:Septisizm
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilgi teorileri
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Objeyi bağımsız kabul eden görüş hangisidir?
+#CORRECT:Realizm
+#WRONG:İdealizm
+#WRONG:Monizm
+#WRONG:Septisizm
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilgi teorileri
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Süje ve objeyi tek bir dünyanın nitelikleri sayan görüş hangisidir?
+#CORRECT:Monizm
+#WRONG:Realizm
+#WRONG:Septisizm
+#WRONG:İdealizm
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilgi teorileri
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Dinin bilgi kaynakları hiyerarşisinde en altta ne bulunur?
+#CORRECT:Duyu
+#WRONG:Vahiy
+#WRONG:Akıl
+#WRONG:Sezgi
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilgi hiyerarşisi
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Hiyerarşide duyunun hemen üstünde ne vardır?
+#CORRECT:Deney
+#WRONG:Vahiy
+#WRONG:Akıl
+#WRONG:Sezgi
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilgi hiyerarşisi
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Üst kaynakların alt kaynaklarca desteklenmesi nasıl bir ilişkidir?
+#CORRECT:Doğrulama değil, çelişmeme ve birbirini yalanlamama
+#WRONG:Doğrulama, yani üst kaynağın alt kaynaklarca onaylanması
+#WRONG:Yok sayma, yani üst kaynağın alt kaynakları geçersiz kılması
+#WRONG:Düşmanlık, yani kaynakların birbirine karşı çıkması
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilgi hiyerarşisi
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Doğmatik rasyonalistler bilgiyi neye bağlar?
+#CORRECT:Doğuştan ve aklın ürünü olmasına
+#WRONG:Yalnızca duyuya dayanmasına ve deneyi esas almasına
+#WRONG:Yalnızca sezgiye dayanmasına ve duyuyu reddetmesine
+#WRONG:Yalnızca vahye dayanmasına ve aklı dışlamasına
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilginin değeri
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Tertullian'ın "saçma olduğu için inanıyorum" anlayışı neyi öne çıkarır?
+#CORRECT:İmanın bilgi ve akıldan üstünlüğünü
+#WRONG:Aklın bilgi kaynağı olarak tek ölçü olmasını
+#WRONG:Duyunun bilginin tek dayanağı sayılmasını
+#WRONG:Deneyin bilgiyi belirleyen tek kaynak olmasını
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilginin değeri
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Kur'an'ın bilgi kaynakları arasında en çok önem verdiği hangisidir?
+#CORRECT:Akıl
+#WRONG:Duyu
+#WRONG:Sezgi
+#WRONG:Deney
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilginin değeri
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Septiklerin metodu nasıl özetlenir?
+#CORRECT:Şüphe için şüphe etmek
+#WRONG:Hakikate ulaşmak için şüphe
+#WRONG:Deneye başvurmak
+#WRONG:Aklı kullanmak
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilginin değerine yaklaşımlar
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Descartes'ın metodik şüphesi neyi hedefler?
+#CORRECT:Kesin bilgiye ulaşmayı
+#WRONG:Şüpheyi bir amaç yapmayı
+#WRONG:Bilgiyi reddetmeyi
+#WRONG:Dini reddetmeyi
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Metodik şüphe
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Pragmatistlere göre bilgiyi bilgi yapan nedir?
+#CORRECT:İşe yaraması ve sağladığı fayda
+#WRONG:Aklî tutarlılığı ve mantıksal doğruluğu
+#WRONG:Doğuştan olması ve zihinde hazır bulunması
+#WRONG:Vahiyle gelmesi ve peygamberce bildirilmesi
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilginin değerine yaklaşımlar
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Pozitivistlere göre deneye konu olmayan her şey nedir?
+#CORRECT:Metafizik ve anlamsız
+#WRONG:Kesin
+#WRONG:Aklî
+#WRONG:Kutsal
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilginin değerine yaklaşımlar
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Kur'an'da "ilim (burhan)" neyi ifade eder?
+#CORRECT:Güvenilir kaynaktan elde edilen doğru ve kesin bilgi
+#WRONG:Yalnızca zan ve tahminden ibaret, kesin olmayan bilgi
+#WRONG:Yalnızca kuruntu ve hayalden ibaret bilgi
+#WRONG:Yalnızca hayal ürünü ve aslı olmayan bilgi
+#PAKET:12. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kur'an'da bilgi tasnifi
+#ZORLUK:zor
+#BLOOM:Anlama
+

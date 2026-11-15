@@ -1,0 +1,200 @@
+#QUESTION:Din ve felsefenin bilgi problemi hangi ana başlıkları içerir?
+#CORRECT:Bilginin alanı, kaynağı, güvenilirliği ve kavramlar
+#WRONG:Yalnızca ahlâk ve değerler konularını
+#WRONG:Yalnızca sanat ve güzellik konularını
+#WRONG:Yalnızca hukuk ve devlet konularını
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilgi meselesi
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Kur'an'a göre ilk insan ve peygamber kimdir?
+#CORRECT:Hz. Âdem
+#WRONG:Hz. Nuh
+#WRONG:Hz. İbrahim
+#WRONG:Hz. Musa
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kavramlar
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Allah Hz. Âdem'e neyi öğretmiştir?
+#CORRECT:Bütün isimleri
+#WRONG:Yalnızca takvimi
+#WRONG:Yalnızca yazıyı
+#WRONG:Yalnızca sayıları
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kavramlar
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Kavramların ve mahiyetlerinin bilgisinin kaynağı kimdir?
+#CORRECT:Allah
+#WRONG:Filozoflar
+#WRONG:Tarih
+#WRONG:Tesadüf
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kavramlar
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Peygamber kavram açısından nasıl biridir?
+#CORRECT:Yeni bir kavram çerçevesi meydana getiren
+#WRONG:Hiçbir kavram üretmeyen
+#WRONG:Yalnızca eski kavramları saklayan
+#WRONG:Yalnızca tarihçi
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Peygamber ve filozof
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Filozof en geniş manada neyi yapar?
+#CORRECT:Yeni bir kavram çerçevesi oluşturur veya eskisini değiştirir
+#WRONG:Yalnızca ibadet eder ve başka bir şey yapmaz
+#WRONG:Yalnızca ticaret yapar ve kâr peşinde koşar
+#WRONG:Hiçbir şey yapmaz ve kenarda durur
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Peygamber ve filozof
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Bazı filozoflara göre felsefe nedir?
+#CORRECT:Kavramlar oluşturma, keşfetme ve üretme sanatı
+#WRONG:Yalnızca eğlence ve vakit geçirme etkinliği
+#WRONG:Yalnızca din ve ibadet faaliyeti
+#WRONG:Yalnızca matematik ve hesaplama işlemi
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kavram üretme
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Platon hangi kavramı merkeze almıştır?
+#CORRECT:İdea
+#WRONG:Heyûla
+#WRONG:Cevher
+#WRONG:Logos
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kavram üretme
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Aristoteles hangi kavram üzerine sistemini kurmuştur?
+#CORRECT:Salt form
+#WRONG:İdea
+#WRONG:Cevher
+#WRONG:Atom
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kavram üretme
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Descartes hangi kavrama yeni bir anlam kazandırmıştır?
+#CORRECT:Cevher
+#WRONG:İdea
+#WRONG:Form
+#WRONG:Logos
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kavram üretme
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Dinin ürettiği kavramlardan biri hangisidir?
+#CORRECT:Peygamber
+#WRONG:Atom
+#WRONG:Arkhé
+#WRONG:İdea
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kavram üretme
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Kur'an kavramları nasıl öğretir?
+#CORRECT:Soru-cevap ve betimlemelerle
+#WRONG:Yalnızca tablolarla
+#WRONG:Yalnızca matematikle
+#WRONG:Hiç öğretmez
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kur'an'da kavram öğretme
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:"Kapı çalan" kavramı Kur'an'da hangi sureyle öğretilir?
+#CORRECT:Kâria
+#WRONG:Fatiha
+#WRONG:Nas
+#WRONG:İhlas
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kur'an'da kavram öğretme
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Kadir Gecesi kaç aydan hayırlıdır?
+#CORRECT:Bin aydan
+#WRONG:Yüz aydan
+#WRONG:On aydan
+#WRONG:Bir aydan
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kur'an'da kavram öğretme
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Bilgi, süje-obje ilişkisinde süje nasıl bir varlıktır?
+#CORRECT:Akıllı, düşünen, irade sahibi
+#WRONG:Cansız
+#WRONG:Düşüncesiz
+#WRONG:Yalnızca nesne
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilginin kaynağı
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Obje neyi ifade eder?
+#CORRECT:Şuurun konusu olan maddî ve manevî her şey
+#WRONG:Yalnızca düşünen varlık ve onun yetenekleri
+#WRONG:Yalnızca insan ve onun yakın çevresi
+#WRONG:Yalnızca Tanrı ve ona ait sıfatlar
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilginin kaynağı
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Din kavram üretme konusunda felsefeye göre nerede durur?
+#CORRECT:Hatta bu konuda bir önceliğe sahiptir
+#WRONG:Hiçbir katkısı yoktur ve alanı tamamen dışındadır
+#WRONG:Yalnızca felsefeden alır ve kendi üretimi yoktur
+#WRONG:Yalnızca taklit eder ve yeni bir şey katmaz
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kavram üretme
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Dinin kavramları ilk bakışta nasıl anlaşılmaz?
+#CORRECT:Duyu ve akılla ilk bakışta kavranamayabilir
+#WRONG:Bütün kavramlar çok kolaydır ve ilk bakışta anlaşılır
+#WRONG:Hiç anlaşılmaz ve hiçbir yolla öğrenilemez
+#WRONG:Yalnızca çocuklar anlar ve yetişkinler kavrayamaz
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kavram üretme
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Bilgi, süje ile obje arasında neyden ibarettir?
+#CORRECT:Tanınmak, bilinmek ve kurulan dengeden
+#WRONG:Yalnızca tesadüften ve rastgele ilişkiden
+#WRONG:Yalnızca zorlamadan ve baskı altında olmaktan
+#WRONG:Yalnızca hayalden ve zihnin ürettiği tasarımdan
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilginin kaynağı
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Hutame ne olarak tanımlanır?
+#CORRECT:Allah'ın tutuşturulmuş, kalplerin üstüne çıkan ateşi
+#WRONG:Bir bahçe ve içindeki ağaçlar, yani cennet
+#WRONG:Bir dağ ve üstündeki kar, yani yüce yer
+#WRONG:Bir nehir ve akıntısı, yani hayat kaynağı
+#PAKET:11. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kur'an'da kavram öğretme
+#ZORLUK:orta
+#BLOOM:Hatırlama
+

@@ -4,7 +4,7 @@ import { paketleriSirala } from '../lib/gecis'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import { GRUPLU_OYUNLAR } from '../lib/oyunAc'
 import { paketleriGrupla } from '../lib/paket'
-import { dengeliSec, sonSorulanlar, turuKaydet } from '../lib/soruSec'
+import { dengeliSec, havuzSirasinaDiz, sonSorulanlar, turuKaydet } from '../lib/soruSec'
 import type { Soru } from '../lib/tipler'
 
 export interface TurIstegi {
@@ -70,7 +70,7 @@ const ETIKET_METNI: Record<Etiket, string> = {
   takim: 'takım',
   ikisi: 'bireysel / takım',
 }
-const SORU_SAYILARI = [5, 10, 15, 20]
+const SORU_SAYILARI = [10, 20, 30, 40]
 const SURELER = [5, 10, 15]
 
 const RENKLER = {
@@ -91,6 +91,7 @@ export function OyunSihirbazi({
   hafta,
   basla,
   kapat,
+  baslangicOyun,
 }: {
   tur: 'zapoot' | 'oyun'
   oturumId: string
@@ -98,15 +99,16 @@ export function OyunSihirbazi({
   hafta: number | null
   basla: (i: TurIstegi) => Promise<void>
   kapat: () => void
+  baslangicOyun?: OyunAnahtari
 }) {
   const [sorular, setSorular] = useState<Soru[] | null>(null)
   const [hata, setHata] = useState(false)
   const [takimli, setTakimli] = useState(false)
   const [grup, setGrup] = useState(3)
-  const [oyun, setOyun] = useState<OyunAnahtari>('zombi')
+  const [oyun, setOyun] = useState<OyunAnahtari>(baslangicOyun ?? 'zombi')
   const [oyunTakimi, setOyunTakimi] = useState(false)
   const [secili, setSecili] = useState<string[]>([])
-  const [adet, setAdet] = useState(10)
+  const [adet, setAdet] = useState(20)
   const [sureli, setSureli] = useState(false)
   const [sureDk, setSureDk] = useState(10)
   const [mesgul, setMesgul] = useState(false)
@@ -142,6 +144,8 @@ export function OyunSihirbazi({
         (s) => s.id,
         sonSorulanlar(oturumId),
       )
+      // Her turda havuzdan farklı sorular gelir; oynanma sırası paketin özgün sırasıdır (zorluk sırası seçilmediyse)
+      if (!kolaydanZora) secilen.splice(0, secilen.length, ...havuzSirasinaDiz(secilen, seciliPaketler.flatMap((p) => p.sorular)))
       if (kolaydanZora) {
         const sira = (s: Soru) => ({ kolay: 0, orta: 1, zor: 2 })[String(s.ek?.zorluk ?? '').toLowerCase() as 'kolay'] ?? 1
         secilen.sort((a, b) => sira(a) - sira(b))

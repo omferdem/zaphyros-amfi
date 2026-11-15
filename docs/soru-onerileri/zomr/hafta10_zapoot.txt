@@ -1,0 +1,200 @@
+#QUESTION:"Estetik" Grekçe hangi kelimeden gelir?
+#CORRECT:Aisthesis
+#WRONG:Ethos
+#WRONG:Logos
+#WRONG:Hyle
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Estetik
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Estetiği felsefe disiplini hâline getiren düşünür kimdir?
+#CORRECT:Baumgarten
+#WRONG:Kant
+#WRONG:Hegel
+#WRONG:Croce
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Estetik
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Baumgarten hangi yüzyılda yaşamıştır?
+#CORRECT:XVIII. yüzyıl
+#WRONG:XII. yüzyıl
+#WRONG:XX. yüzyıl
+#WRONG:V. yüzyıl
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Estetik
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Estetik olayda süje kimdir?
+#CORRECT:Objesini algılayan ve haz duyan sanatçı
+#WRONG:Sanat eserinin kendisi ve onun maddî yapısı
+#WRONG:Sanatın yapıldığı mekân ve çevresi
+#WRONG:Sanatın yapıldığı zaman ve dönemi
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Estetik
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Estetik objeyi geniş manada ne oluşturur?
+#CORRECT:Tabiat parçası
+#WRONG:Yalnızca resim
+#WRONG:Yalnızca müzik
+#WRONG:Yalnızca roman
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Estetik
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Platon'a göre sanat nedir?
+#CORRECT:İdelerin taklidi (mimesis)
+#WRONG:Katharsis
+#WRONG:Başarılı ifade
+#WRONG:Mutlak Ruh'un tezahürü
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Güzellik anlayışının tarihi
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Platon'da en yüksek ide nedir?
+#CORRECT:Bizatihi güzel
+#WRONG:Yoklar
+#WRONG:Madde
+#WRONG:Zaman
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Güzellik anlayışının tarihi
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Aristoteles'e göre güzel neyin ifadesidir?
+#CORRECT:Orantı, düzen ve uyum
+#WRONG:Mutlak ruh
+#WRONG:Taklit
+#WRONG:Fayda
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Güzellik anlayışının tarihi
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Aristoteles'te sanatın gayesi nedir?
+#CORRECT:Katharsis
+#WRONG:Mimesis
+#WRONG:İfade
+#WRONG:Özgünlük
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Güzellik anlayışının tarihi
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Plotinos'a göre âlem nasıldır?
+#CORRECT:İlâhî bir şiir, sanat eseri
+#WRONG:Taklidin taklidi
+#WRONG:Salt madde
+#WRONG:Bir makine
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Güzellik anlayışının tarihi
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Aquino'lu Thomas'a göre güzel nedir?
+#CORRECT:Kendisinden dolayı ve seyrinden hoşlanılan şey
+#WRONG:Fayda sağlayan ve işe yarayan şey
+#WRONG:Mantıksal bir sonuca varılan şey
+#WRONG:Mutlak Ruh'un tezahür ettiği şey
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Güzellik anlayışının tarihi
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Kant'a göre estetik yargılar nasıl yargılardır?
+#CORRECT:Sübjektif
+#WRONG:Nesnel
+#WRONG:Mantıksal
+#WRONG:Deneysel
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kant
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Kant'a göre güzel neyle ilişkilidir?
+#CORRECT:Kavrama bağlı kalmaksızın hoşa gidenle
+#WRONG:Fayda ile ilişkilendirilen, işe yarayan bir yargıyla
+#WRONG:Ahlâk ilkeleriyle ilişkilendirilen, doğru olan bir yargıyla
+#WRONG:Hukuk kurallarıyla ilişkilendirilen, zorunlu bir yargıyla
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Kant
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Hegel'e göre güzel nedir?
+#CORRECT:İdenin duyusal görünüşü
+#WRONG:Taklit
+#WRONG:Katharsis
+#WRONG:Sezgi
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Hegel
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Croce'ye göre güzellik nedir?
+#CORRECT:Başarılı ifade
+#WRONG:Taklit
+#WRONG:Orantı
+#WRONG:Fayda
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Croce
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Walter Benjamin'e göre seri üretim neyi yok eder?
+#CORRECT:Özgünlüğü
+#WRONG:Güzelliği
+#WRONG:Sanatı
+#WRONG:Algıyı
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Çağdaş estetik
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Heidegger geleneksel estetiğe nasıl yaklaşır?
+#CORRECT:Kökten karşı çıkar
+#WRONG:Tamamen destekler
+#WRONG:Hiç ilgilenmez
+#WRONG:Yalnızca yorumlar
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Çağdaş estetik
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:İslâm sanatında hangi ilke önemlidir?
+#CORRECT:Tevhid ve tenzih
+#WRONG:Taklit
+#WRONG:Çoğulculuk
+#WRONG:Natüralizm
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İslâm sanatı
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:İslâm'da güzellik kime izafe edilir?
+#CORRECT:Allah'a
+#WRONG:İnsana
+#WRONG:Tabiata
+#WRONG:Sanatçıya
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İslâm sanatı
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Kur'an'da güzellik anlamına gelen kelimelerden biri hangisidir?
+#CORRECT:Cemal
+#WRONG:Hırs
+#WRONG:Zulüm
+#WRONG:Küfür
+#PAKET:10. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din ve sanat
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+

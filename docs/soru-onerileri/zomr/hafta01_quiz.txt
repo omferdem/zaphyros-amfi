@@ -1,0 +1,200 @@
+#QUESTION:Bir öğrenci "din felsefesi tarihte hep aynı adla yapıldı" diyor. Ders içeriğine göre en doğru düzeltme hangisidir?
+#CORRECT:Konu eskidir ancak terim Hegel'in 1832 tarihli eseriyle literatüre girmiştir
+#WRONG:Terim Eski Yunan'da doğmuş ve Orta Çağ'da hiç kullanılmamıştır
+#WRONG:Terim ilk kez Kant tarafından 1781'de bir sözlüğe yazılmıştır
+#WRONG:Terim yalnızca XX. yüzyılda mantıkçı pozitivistlerce üretilmiştir
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Tarihsel gelişim
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Bir din felsefecisi Kur'an ile Tevrat'taki Tanrı tasavvurlarını aynı ölçütlerle karşılaştırıyor ve hiçbirini peşinen doğru ya da yanlış saymıyor. Bu tavır en çok neyi örnekler?
+#CORRECT:Objektif ve şümullü bir araştırma tavrını
+#WRONG:Kelâmcı bir savunma tavrını
+#WRONG:Salt şüpheci bir tavrı
+#WRONG:Yalnızca ibadete dayalı bir tavrı
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Felsefî bakış tarzı
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:Allah'ın varlığı, ruhun ölümsüzlüğü ve vahyin imkânı gibi konularda aklî delillere başvurmak felsefî bakışın hangi özelliğine örnektir?
+#CORRECT:Rasyonelliğe; aklın imkânlarıyla dinin ana iddialarını temellendirme çabasına
+#WRONG:Objektifliğe; yalnızca tarafsız kalma çabasına ve peşin hüküm vermemeye
+#WRONG:Şümullülüğe; bir konuya yalnızca tek bir açıdan bakma çabasına
+#WRONG:Tutarlılığa; çelişkileri tespit edip görmezden gelme çabasına
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Felsefî bakış tarzı
+#ZORLUK:kolay
+#BLOOM:Uygulama
+
+#QUESTION:Gazâlî'nin dini "yaşanan bir tecrübe" olarak vurgulaması din ile felsefe arasındaki ilişki hakkında ne düşündürür?
+#CORRECT:İki alan farklı doğadadır ancak birbirinin konularıyla ilgilenebilir
+#WRONG:Din ile felsefe tamamen aynı şeylerdir ve ayrım yapmak yanlıştır
+#WRONG:Din felsefeyi, felsefe de dini tamamen ortadan kaldırır
+#WRONG:Yaşanan tecrübenin felsefede hiçbir yeri yoktur ve ona kapalıdır
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Din ve felsefe farkı
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Felsefî bakış tarzında "şümullülük" ilkesine uygun davranan bir araştırmacı ne yapar?
+#CORRECT:Konuyla ilgili tarihî, ilmî ve mantıkî bütün verileri dikkate alır
+#WRONG:Yalnızca kendi görüşüne uygun tek bir veriye dayanır
+#WRONG:Verileri çelişirse hepsini bir kenara bırakıp konuyu kapatır
+#WRONG:Yalnızca inancına uygun olanları seçip diğerlerini yok sayar
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Felsefî bakış tarzı
+#ZORLUK:kolay
+#BLOOM:Uygulama
+
+#QUESTION:"Kur'ân hikmetlerle dolu bir kitaptır ama o bir felsefe kitabı değildir." Bu ifade din ile felsefenin ilişkisi hakkında neyi vurgular?
+#CORRECT:Din hikmet içerse de felsefe ile aynı şey değildir, ikisi ayrı nitelikte alanlardır
+#WRONG:Din hikmet içerse de felsefe ile aynı şeydir, ikisi tek bir alan olarak ele alınmalıdır
+#WRONG:Felsefe Kur'an'dan üstündür ve dinin hikmetini belirleyen asıl ölçüttür
+#WRONG:Kur'an hikmetten yoksundur, bu yüzden felsefeye ihtiyaç duyulmaktadır
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Din ve felsefe farkı
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Kitaplı dinler açısından din "ferdî ve içtimaî yanı bulunan bir kurum" olarak tanımlanır. Bu tanım dinin hangi niteliğini gösterir?
+#CORRECT:Hem bireysel hem toplumsal bir yönü bulunduğunu
+#WRONG:Yalnızca bireysel bir tercih olduğunu
+#WRONG:Yalnızca devlete ait bir kurum olduğunu
+#WRONG:Toplumsal hayatla hiçbir ilgisi bulunmadığını
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Dinin mahiyeti
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Din felsefesi hangi iki alanın kesişiminde durur ve neden ayrı bir disiplin sayılır?
+#CORRECT:Din ve felsefenin; dinî iddiaları felsefî yöntemle tarafsız ve eleştirel biçimde ele aldığı için
+#WRONG:Matematik ve fiziğin; laboratuvarda deney yürüterek varlığı ölçtüğü ve sonuç çıkardığı için
+#WRONG:Sanat ve edebiyatın; şiir ve roman yazarak güzellik üzerine düşündüğü için
+#WRONG:Hukuk ve siyasetin; yasa koyup uygulayarak toplumu yönettiği için
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Din felsefesinin tanımı
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Bir sınıf tartışmasında "din felsefesi dini savunur" deniyor. Derse göre doğru değerlendirme hangisidir?
+#CORRECT:Din felsefesi dinin temel iddialarını rasyonel, objektif ve tutarlı biçimde ele alır, savunmayı amaç edinmez
+#WRONG:Din felsefesi dini baştan reddetmeyi ve ortadan kaldırmayı amaç edinen bir disiplindir
+#WRONG:Din felsefesi yalnızca ibadet usullerini ve ritüelleri inceleyen bir uğraştır
+#WRONG:Din felsefesi kelâmın başka bir adıdır ve dini savunmak için çalışır
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Din felsefesinin tanımı
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Din felsefesinin ortaya çıkması için "dinî düşüncenin ve felsefî çabaların belli bir seviyeye ulaşması" şartı, İslâm ve Hıristiyanlık sonrası dönemde nasıl gerçekleşmiştir?
+#CORRECT:Vahiy dinlerinin getirdiği problemler felsefeyle ele alınmış, Farabî, İbn Sînâ, İbn Rüşd ve Thomas bunu derinleştirmiştir
+#WRONG:Bu dönemde felsefe yasaklanmış, yalnızca dinî metinler okunmuş ve tartışma kapanmıştır
+#WRONG:Bu dönemde yalnızca bilimsel deneyler yapılmış, din konusunda hiç tartışma yürütülmemiştir
+#WRONG:Bu dönemde din ve felsefe aynı sayılmış, ikisi için ayrı problem tanımlanmamıştır
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Tarihsel gelişim
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:"Din felsefesi evrensel bir disiplindir" iddiasına derste hangi gözlem uygundur?
+#CORRECT:Felsefî bakış rasyonel, şümullü, tutarlı ve objektif olmayı gerektirir
+#WRONG:Din felsefesi yalnızca tek bir dine ait bir disiplindir
+#WRONG:Din felsefesi yalnızca felsefe tarihçilerine ait bir uğraştır
+#WRONG:Din felsefesi yalnızca tarihî olayları kayda geçirir
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Felsefî bakış tarzı
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Din felsefesinin var olması için hem dinî düşüncenin hem felsefî çabaların belli bir seviyeye ulaşması gerekir. Bu koşul Eski Yunan'da neden eksik kalmıştır?
+#CORRECT:Felsefî düşünce gelişmişti ancak din konusunda aynı ilerleme sağlanamamıştı
+#WRONG:Din gelişmişti fakat felsefe henüz hiç ortaya çıkmamıştı
+#WRONG:İki alan da gelişmişti fakat aralarında hiçbir ortak konu yoktu
+#WRONG:Yunan düşüncesi yalnızca matematikle ilgilenip insanı konu etmemişti
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Tarihsel gelişim
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Bir öğrenci dinin yalnızca "bilgisel boyut" olduğunu, ibadetin ve ahlâkın ayrı alanlar olduğunu savunuyor. Derse göre bu görüş nasıl değerlendirilir?
+#CORRECT:Din bilgisel, ibadî ve ahlâkî boyutlarıyla bir bütündür
+#WRONG:Doğrudur, ibadet ve ahlâk dinin dışında kalır
+#WRONG:Din yalnızca ahlâktır, diğer boyutlar sonradan eklenmiştir
+#WRONG:Din yalnızca ibadettir, diğer boyutlar önemsizdir
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Dinin mahiyeti
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Bir araştırmacı Tanrı'nın varlığı konusunu incelerken verileri önceden benimsediği sonuca uyacak biçimde seçmiştir. Hangi felsefî bakış özelliği zedelenmiştir?
+#CORRECT:Objektiflik, çünkü veriler inançları haklı çıkaracak biçimde zorlanmıştır
+#WRONG:Şümullülük, çünkü araştırmacı fazla sayıda kaynağa başvurmuştur
+#WRONG:Rasyonellik, çünkü araştırmacı akıl yürütmeyi fazlasıyla kullanmıştır
+#WRONG:İbadî boyut, çünkü araştırmacı ritüelleri ihmal etmiş görünmektedir
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Felsefî bakış tarzı
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:Bir filozof iki düşünürün çelişen iddialarını ortaya koyup bu çelişkiyi gidermeye çalışıyor. Bu çaba felsefî bakışın hangi özelliğine denk gelir?
+#CORRECT:Tutarlılık, yani görüşler arasındaki çelişkileri tespit edip giderme
+#WRONG:Objektiflik, yani yalnızca tarafsız kalmayı yeterli sayma
+#WRONG:Şümullülük, yani yalnızca tek bir veriye odaklanma
+#WRONG:Rasyonellik, yani akıl yürütmeyi tümüyle bir kenara bırakma
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Felsefî bakış tarzı
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:Din ve felsefe arasındaki fark "felsefenin özü düşünmek, dinin özü ruhânî bir zevk halidir" biçiminde anlatılır. Bu ayrımdan hangi sonuç çıkar?
+#CORRECT:Felsefe düşünerek bir fikre varırken din yaşayarak anlama ve duymayı da içerir
+#WRONG:Din yalnızca düşünceden, felsefe yalnızca yaşantıdan oluşur
+#WRONG:İkisi de aynı biçimde yalnızca duygusal tecrübeden oluşur
+#WRONG:İkisi de yalnızca mantıksal çıkarımlardan ibarettir ve fark yoktur
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Din ve felsefe farkı
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Bilimsel verilerden yola çıkıp Tanrı'nın varlığını ispatlamaya çalışan bir kişiyle dinî tecrübenin kendisini çözümleyen bir kişi arasındaki fark nedir?
+#CORRECT:Birincisi dinî olmayan verilerden dinî hükümlere gider, ikincisi doğrudan din fenomeninden yola çıkar
+#WRONG:Birincisi yalnızca ibadet pratiğine dayanır, ikincisi hiçbir kaynağa başvurmadan akıl yürütür
+#WRONG:Birincisi dinî hükümleri reddeder, ikincisi aynı hükümleri tarihî belgelere dayandırarak savunur
+#WRONG:Her ikisi de dinî olmayan verilerden yola çıkar ve aynı sonuçlara aynı yolla ulaşır
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Din ve felsefe farkı
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Din, bilgisel, ibadî ve ahlâkî boyutlarıyla bir bütündür. Yalnızca doktrine bakıp ibadet ve ahlâkı hesaba katmayan bir tanımın eksiği nedir?
+#CORRECT:Dinin ibadî ve ahlâkî boyutları dışarıda kalmış, tanım tek yönlü olmuştur
+#WRONG:Eksik yoktur, çünkü din yalnızca doktrinden ibarettir
+#WRONG:Din yalnızca ibadetten oluştuğu için doktrin gereksizdir
+#WRONG:Din yalnızca ahlâktan oluştuğu için ibadet bütünüyle fazladır
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Dinin mahiyeti
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Dinin evrensel bir tanımını vermenin güçlüğü derste hangi gerekçeye bağlanır?
+#CORRECT:Bir değil birçok din bulunması ve ortak bir tanım üzerinde uzlaşmanın zorluğuna
+#WRONG:Dinin tanımı hakkında hiçbir kaynağın bulunmaması ve bilgi toplamanın tümüyle imkânsız olması
+#WRONG:Dinin yalnızca tek bir boyutu bulunması ve bu boyutun herkesçe aynı biçimde bilinmesi
+#WRONG:Dinin felsefeden çok daha yeni bir alan sayılması ve bu yüzden tanımının yapılamaması
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Dinin mahiyeti
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Eski Yunan'dan sonra vahiy dinlerinin ortaya çıkışı din felsefesi açısından ne gibi bir değişim yaratmıştır?
+#CORRECT:Ciddi felsefî problemler doğmuş, Farabî, İbn Sînâ, İbn Rüşd ve Thomas gibi düşünürler bunları ele almıştır
+#WRONG:Felsefî düşünce tamamen terk edilmiş, yalnızca ibadet ve dinî metinler öne çıkarılmıştır
+#WRONG:Din ve felsefe aynı disiplin sayılmış ve aralarındaki bütün ayrımlar kaldırılmıştır
+#WRONG:Yalnızca deneysel bilimler gelişmiş, din ve felsefe tartışma dışında bırakılmıştır
+#PAKET:1. hafta: Ciddi Quiz (15 soru)
+#KONU:Tarihsel gelişim
+#ZORLUK:kolay
+#BLOOM:Anlama
+

@@ -1,0 +1,200 @@
+#QUESTION:Din-felsefe münasebetine ilk karşı çıkışlar hangi dönemden gelir?
+#CORRECT:Antikçağ
+#WRONG:Yeniçağ
+#WRONG:XX. yüzyıl
+#WRONG:Orta Çağ sonrası
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Karşı çıkanlar
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Protagoras'ın "İnsan her şeyin ölçüsüdür" sözü neyi ifade eder?
+#CORRECT:İnsanı merkeze alan bir tutumu
+#WRONG:Tanrı merkezli bir tutumu
+#WRONG:Maddeyi merkeze alan bir tutumu
+#WRONG:Hayvanları merkeze alan bir tutumu
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Karşı çıkanlar
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Protagoras Tanrılar hakkında ne söyler?
+#CORRECT:Var mı yok mu bilemeyiz
+#WRONG:Çok sayıda tanrı vardır
+#WRONG:Hiçbir tanrı yoktur
+#WRONG:Tek bir tanrı vardır
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Karşı çıkanlar
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Materyalist ve ateist düşünürler din-felsefe münasebetine nasıl yaklaşır?
+#CORRECT:Dini bile üzerinde durulmaya değer bir alan saymazlar
+#WRONG:Dine tam destek verirler ve onu över
+#WRONG:Felsefeyi dine bağlarlar ve ona tabi kılarlar
+#WRONG:Din ile felsefeyi birleştirirler ve tek sayarlar
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Karşı çıkanlar
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Batı'da bilim ve felsefedeki başarıların önemli sebeplerinden biri nedir?
+#CORRECT:Dinî inanışlarla yapılan mücadele
+#WRONG:Dinî inanışlarla ittifak ve işbirliği
+#WRONG:Tamamen tesadüf ve rastlantı
+#WRONG:Hiçbir sebep yok, kendiliğinden oluşmuş
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Karşı çıkanlar
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Batı'da din-bilim çatışması ortamında yetişen teist düşünürlerden biri kimdir?
+#CORRECT:Descartes
+#WRONG:Protagoras
+#WRONG:Demokritos
+#WRONG:Epikuros
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Karşı çıkanlar
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:İslâm dünyasında meselenin ilk hâli nasıl ele alınmıştır?
+#CORRECT:Akıl-din ve akıl-vahiy münasebeti şeklinde
+#WRONG:Sanat-din ilişkisi şeklinde, estetik düzlemde
+#WRONG:Hukuk-din ilişkisi şeklinde, hukukî düzlemde
+#WRONG:Ticaret-din ilişkisi şeklinde, ekonomik düzlemde
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İslâm dünyasında tepkiler
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Akılcı metodu ilke edinen ekol hangisidir?
+#CORRECT:Mutezile
+#WRONG:Hadisçiler
+#WRONG:Fıkıhçılar
+#WRONG:Sufîler
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İslâm dünyasında tepkiler
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Mutezile'ye karşı çıkan grup hangisidir?
+#CORRECT:Fıkıh bilginleri
+#WRONG:Filozoflar
+#WRONG:Sufîler
+#WRONG:Sofistler
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İslâm dünyasında tepkiler
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Fıkıh bilginleri aklı hangi konuda reddetmeye yönelmiştir?
+#CORRECT:Dinî konularda hakemlik konusunda
+#WRONG:Matematik konusunda ve hesap meselelerinde
+#WRONG:Tıp konusunda ve sağlık meselelerinde
+#WRONG:Mimarî konusunda ve yapı meselelerinde
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İslâm dünyasında tepkiler
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:İmam Malik, Mutezilî kelâmcı Amr b. Ubeyd'in taraftarı olarak kimi nitelendirmiştir?
+#CORRECT:Kelâmla ilgili sorular soran birini
+#WRONG:Bir filozofu ve onun öğrencilerini
+#WRONG:Bir tüccarı ve onun ortaklarını
+#WRONG:Bir askeri ve onun komutanlarını
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İslâm dünyasında tepkiler
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:İmam Şafiî Mutezilî kelâmcılar için ne istemiştir?
+#CORRECT:Kırbaçlanmalarını ve zındık olduklarına hüküm verilmesini
+#WRONG:Ödüllendirilmelerini ve yönetici yapılmalarını
+#WRONG:Yönetici yapılmalarını ve görevlendirilmelerini
+#WRONG:Serbest bırakılmalarını ve korunmalarını
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İslâm dünyasında tepkiler
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:Mutezilî kelâma yöneltilen tepkiler diğer hangi ilimlere de yayılmıştır?
+#CORRECT:Diğer aklî ilimlere
+#WRONG:Tıp ve mimariye
+#WRONG:Yalnızca hadise
+#WRONG:Yalnızca fıkha
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Sert reddiyeler
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Mantıkla uğraşmayı bile haram kılanlar kimlerdir?
+#CORRECT:İbn Salah ve en-Nevevî
+#WRONG:Kindî ve Farabî
+#WRONG:İbn Rüşd ve İbn Sina
+#WRONG:Platon ve Aristoteles
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Sert reddiyeler
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Gazalî hangi eserinde filozofları eleştirmiştir?
+#CORRECT:Tehâfütü'l-Felâsife
+#WRONG:Kitabü'ş-Şifa
+#WRONG:Fasl el-Makâl
+#WRONG:Risâletü't-Tayr
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Sert reddiyeler
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Gazalî filozofları kaç meselede bid'atçı saymıştır?
+#CORRECT:On yedi
+#WRONG:Üç
+#WRONG:Beş
+#WRONG:Yüz
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Sert reddiyeler
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Gazalî'nin filozofları kâfir saydığı meselelerden biri hangisidir?
+#CORRECT:Cüz'i bilgi
+#WRONG:Mantık
+#WRONG:Ahlâk
+#WRONG:Estetik
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Sert reddiyeler
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:"Kim mantıkla uğraşırsa zındık olur" ifadesi hangi tavrı gösterir?
+#CORRECT:Aklî ilimlere karşı sert bir tavrı
+#WRONG:Aklî ilimlere destek tavrını
+#WRONG:Tarafsız bir tavrı
+#WRONG:Sanatı övme tavrını
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Sert reddiyeler
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Karşı çıkanların niçin karşı çıktığı sorusu neyin anlaşılması için önemlidir?
+#CORRECT:Tarihî ve entelektüel bağlamların
+#WRONG:Takvimin ve zaman hesabının
+#WRONG:Para sisteminin ve ticaretin
+#WRONG:Mimarinin ve yapı sanatının
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Sert reddiyeler
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Descartes, Campanella ve Pascal derste hangi gruba örnek olarak gösterilir?
+#CORRECT:Din-bilim çatışması ortamındaki teist düşünürlere
+#WRONG:Sofistlere ve din karşıtı düşünürlere
+#WRONG:Mutezilîlere ve akılcı kelâmcılara
+#WRONG:Hadisçilere ve nakli esas alan âlimlere
+#PAKET:14. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Karşı çıkanlar
+#ZORLUK:zor
+#BLOOM:Anlama
+

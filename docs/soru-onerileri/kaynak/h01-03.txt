@@ -1,0 +1,60 @@
+1|Z|"Din felsefesi" terimi felsefe literatürüne hangi eserle girmiştir?|Hegel'in 1832 tarihli eseriyle|Kant'ın 1781 tarihli eseriyle|Descartes'ın 1637 tarihli eseriyle|Platon'un Devlet diyaloğuyla|Terimin kökeni|k|H
+1|Z|Din felsefesinin var olması için neyin belli bir seviyeye ulaşmış olması gerekir?|Hem dinî düşüncenin hem felsefî çabaların|Yalnızca deneysel bilimlerin ve laboratuvar sonuçlarının|Yalnızca devlet kurumlarının ve hukuk düzeninin|Yalnızca sanat eserlerinin ve estetik anlayışın|Tarihsel bağlam|o|A
+1|Z|Eski Yunan'da hangi alanda aynı ilerleme sağlanamamıştı?|Din konusunda|Matematik konusunda|Felsefî düşünce konusunda|Şiir konusunda|Tarihsel bağlam|k|H
+1|Z|Vahiy dinlerinin ortaya çıkışı felsefeye ne getirmiştir?|Ciddi felsefî problemler|Felsefenin sona ermesi|Yeni bir alfabe|Yalnızca yeni takvimler|Tarihsel bağlam|k|A
+1|Z|Din-felsefe ilişkisini derinlemesine ele alan düşünürlerden biri kimdir?|Aquino'lu Thomas|Protagoras|Demokritos|Epikuros|Tarihsel bağlam|k|H
+1|Z|Akıl gücünün imkânlarıyla dinin ana iddialarını temellendirme çabası felsefî bakışın hangi özelliğidir?|Rasyonellik|Objektiflik|Şümullülük|Tutarlılık|Felsefî bakış tarzı|k|H
+1|Z|Bir konuya hangi açılardan bakmak mümkünse hepsini dikkate almak ne adı verilen özelliktir?|Şümullülük|Rasyonellik|Objektiflik|Tutarlılık|Felsefî bakış tarzı|o|A
+1|Z|Görüşler arasındaki çelişkileri tespit edip gidermeye çalışmak hangi özelliktir?|Tutarlılık|Şümullülük|Rasyonellik|Objektiflik|Felsefî bakış tarzı|k|A
+1|Z|Dinin lehinde ya da aleyhinde peşinen karar vermeden araştırma yapmak hangi özelliktir?|Objektiflik|Tutarlılık|Şümullülük|Rasyonellik|Felsefî bakış tarzı|k|A
+1|Z|Allah'ın varlığı, ruhun ölümsüzlüğü, vahyin imkânı gibi konularda aklî delillere başvurmak neyin örneğidir?|Rasyonelliğin|Objektifliğin|Tutarlılığın|Şümullülüğün|Felsefî bakış tarzı|o|U
+1|Z|Verileri ve düşünmeyi inançları haklı çıkaracak biçimde zorlamamak hangi özelliğin gereğidir?|Objektiflik|Rasyonellik|Şümullülük|İbadî boyut|Felsefî bakış tarzı|o|U
+1|Z|Felsefenin özü nedir?|Düşünmek|Ruhânî bir zevk yaşamak|İbadet etmek|Taklit etmek|Din ve felsefe farkı|k|H
+1|Z|Dinin özü, derste hangi ifadeyle anlatılmıştır?|Ruhânî bir zevk hali|Salt akıl yürütme faaliyeti|Sadece toplumsal bir kurum|Sadece sanat faaliyeti|Din ve felsefe farkı|o|A
+1|Z|Gazâlî'nin vurguladığı biçimde din ne tür bir şeydir?|Yaşanan bir tecrübe|Soyut bir kavram listesi|Bir mantık sistemi|Bir istatistik tablosu|Din ve felsefe farkı|o|A
+1|Z|"Kur'ân hikmetlerle dolu bir kitaptır ama o bir felsefe kitabı değildir" ifadesi neyi vurgular?|Din ile felsefenin ayrı şeyler olduğunu|Felsefenin dinden üstün olduğunu|Kur'an'ın hikmet içermediğini|Felsefenin din olduğunu|Din ve felsefe farkı|o|A
+1|Z|Dinin bilgisel boyutu neyle ilgilidir?|İnanç, temel öğreti ve doktrin|Dinin ritüelleri ve ibadet şekilleriyle|Dinin güzellik ve sanat anlayışıyla|Dinin devlet yönetimi ve hukukuyla|Dinin mahiyeti|k|H
+1|Z|Dinin ibadî boyutu neyle ilgilidir?|İbadet, ritüel ve dinî pratikler|Değerler sistemi ve yaşam tarzıyla|İnanç esasları ve doktrinlerle|Tarihsel gelişim ve kökenle|Dinin mahiyeti|k|H
+1|Z|Dinin ahlâkî boyutu neyi kapsar?|Değerler sistemi ve yaşam tarzını|Yalnızca ibadet sayılarını|Yalnızca inanç esaslarını|Yalnızca kutsal mekânları|Dinin mahiyeti|k|H
+1|Z|Kitaplı dinler açısından din hangi özelliklerden biriyle tanımlanmıştır?|Müteâl ve kutsal bir Yaratıcıya bağlanma|Yalnızca bireysel bir hobi ve kişisel tercih|Sadece bilimsel bir yöntem ve deney süreci|Yalnızca mitolojik anlatılar ve efsaneler bütünü|Dinin mahiyeti|o|A
+1|Z|Dinin evrensel bir tanımını vermek neden zordur?|Bir değil birçok din vardır|Hiçbir dinin tanımı yoktur|Dinler birbirinin aynısıdır|Din yalnızca tek kişiye aittir|Dinin mahiyeti|z|N
+2|Z|Din felsefesinin ana problemleri kaç kategoride toplanabilir?|Beş|Üç|İki|Sekiz|Ana problemler|k|H
+2|Z|Allah'ın varlığı ve ölümden sonra hayat hangi problem kategorisindedir?|Metafizik ve kozmolojik|Dil ve mantık analizi|Sembolizm|İlişkisel|Ana problemler|k|H
+2|Z|Din dilinin mantıkî statüsünün belirlenmesi hangi kategoriye girer?|Dil ve mantık analizi|Epistemolojik problemler|Sembolizm|Metafizik|Ana problemler|o|H
+2|Z|Dinin ahlâk, sanat ve ilimle münasebeti hangi problem kategorisidir?|İlişkisel problemler|Epistemolojik problemler|Dil ve mantık analizi|Sembolizm|Ana problemler|o|H
+2|Z|Dinî sembolizmin anlam ve önemini belirlemek hangi kategoriye girer?|Sembolizm|Metafizik problemler|İlişkisel problemler|Epistemolojik problemler|Ana problemler|k|H
+2|Z|Vahyin ve dinî tecrübenin bilgi kaynağı olarak değeri hangi tür problemdir?|Epistemolojik|Kozmolojik|Sembolik|Estetik|Ana problemler|o|A
+2|Z|Bir düşünürün din felsefesi yapması için bütün problemlerle uğraşması gerekir mi?|Hayır, kendi tutumuna göre bazılarına ağırlık verir|Evet, hepsini ele almak zorundadır|Evet, ama yalnızca ibadetle ilgili olanları|Hayır, hiçbirini ele almaz|Ana problemler|k|A
+2|Z|Descartes, Leibniz ve Spinoza din felsefesinde hangi konuya ağırlık vermiştir?|Tanrı'nın varlığının aklî delillerle kanıtlanmasına|Yalnızca din dilinin mantıkî tahliline ve çözümlemesine|Yalnızca dinî sembollerin anlamını belirlemeye|Yalnızca dinî tecrübenin varoluşsal boyutuna|Felsefî yaklaşımlar|o|A
+2|Z|Tecrübeci filozoflar hangi konuya daha çok ağırlık vermiştir?|Dinî tecrübe konusuna|Ontolojik delile|Din dilinin tahliline|Dinî sembolizme|Felsefî yaklaşımlar|o|A
+2|Z|Mantıkçı pozitivistler ve linguistik tahlilciler neyi gözde konu edinmiştir?|Din dilinin mantık ve dil açısından tahlili|Allah'ın sıfatlarını tek tek sıralamayı ve açıklamayı|Ruhun ölümsüzlüğünü kanıtlamaya çalışmayı|Vahyin tarihî gelişimini belgelemeyi|Felsefî yaklaşımlar|o|A
+2|Z|Varoluşçu ve fenomenolojik tahliller hangi konuyu öne çıkarmıştır?|Dinî tecrübenin varoluşsal boyutunu|Ontolojik deliller zincirini|Dilin mantıkî yapısını|Din sosyolojisini|Felsefî yaklaşımlar|z|A
+2|Z|Kelâm, dinî hükümlere nasıl yaklaşır?|Tasdik ile, inançlı bir duruşla|Şüphe ile, inançsız bir duruşla|Tamamen tarafsız bir gözle|Yalnızca tarihî açıdan|Din felsefesi ve kelâm|o|A
+2|Z|Din felsefesi dinle nasıl meşgul olur?|Uzaktan ve dışarıdan, objektif ve eleştirel biçimde|İçeriden, tasdik ederek ve inançlı biçimde|Yalnızca ibadet ederek ve ritüelleri yaşayarak|Hiç meşgul olmayarak ve dışarıda kalarak|Din felsefesi ve kelâm|o|A
+2|Z|Kelâmcı için dinî hükümler neye benzer biçimde ele alınır?|Şüphenin ötesindedir|Her zaman sorgulanır|Yalnızca tarihî belgedir|Yalnızca edebî metindir|Din felsefesi ve kelâm|o|A
+2|Z|Din felsefesini bazıları hangi adlarla anmıştır?|Felsefî kelâm veya lâik kelâm|Dinler tarihi|Din sosyolojisi|Tasavvuf|Din felsefesi ve kelâm|z|H
+2|Z|Din felsefesinin en çok yararlandığı alan hangisidir?|Dinler tarihi|Fizik|Kimya|Biyoloji|Din bilimleri|o|H
+2|Z|Din olayını tasvir eden ve açıklamaya çalışan alan hangisidir?|Dinler tarihi|Mantık|Kelâm|Ahlâk felsefesi|Din bilimleri|o|H
+2|Z|Dinî şuurun oluşmasına etki eden faktörleri araştıran alan hangisidir?|Din psikolojisi|Din sosyolojisi|Dinler tarihi|Din antropolojisi|Din bilimleri|o|A
+2|Z|Dini toplumsal bir kurum olarak ele alan alan hangisidir?|Din sosyolojisi|Din psikolojisi|Dinler tarihi|Mantık|Din bilimleri|k|A
+2|Z|Dinin kültürel boyutlarını ve farklı toplumlardaki tezahürlerini inceleyen alan hangisidir?|Din antropolojisi|Din sosyolojisi|Din psikolojisi|Dil felsefesi|Din bilimleri|o|A
+3|Z|Allah'ın sıfatlarını inceleyen din felsefesi başlığı hangi konunun alt dalıdır?|Metafizik ve kozmolojik problemler|Sembolizm ve dinî sembollerin incelenmesi|Dil analizi ve mantıkî çözümleme|Estetik ve sanat felsefesinin konuları|Ana problemler|z|A
+3|Z|Kelâmcı için üzerinde durduğu konu nasıl bir meseledir?|Hayatî bir mesele|Tamamen yabancı bir mesele|Sadece tarihî bir mesele|Önemsiz bir mesele|Din felsefesi ve kelâm|o|A
+3|Z|Din felsefesi sorgulamada hiçbir şeyi neyin dışında tutmaz?|İnceleme konusunun|Tarihin|Mantığın|Dilin|Din felsefesi ve kelâm|o|A
+3|Z|Din felsefesinde teknik düzeyde yapılan işin hangi boyutu yoktur?|İnanç boyutu|Mantık boyutu|Tarih boyutu|Dil boyutu|Din felsefesi ve kelâm|z|A
+3|Z|Kelâm hangi tür delillere başvurarak dinî hükümleri açıklar?|Aklî ve naklî delillere|Yalnızca deneysel delillere|Yalnızca estetik delillere|Hiçbir delile|Din felsefesi ve kelâm|o|H
+3|Z|Dinî hükümleri sistemleştiren ve savunan disiplin hangisidir?|Kelâm|Din psikolojisi|Estetik|Mantık|Din felsefesi ve kelâm|k|H
+3|Z|Felsefeyi "kavram üretme sanatı" olarak tanımlayanlar ne üretmeyi hedefler?|Kavramlar|Yalnızca resimler|Yalnızca takvimler|Yalnızca madeni paralar|Bilgi meselesi|o|A
+3|Z|Hıristiyan kaynaklarında Ruh nasıl tanımlanır?|Bir güvercin gibi gökten inen ilâhî bir mebde'|Yalnızca bir madde parçası ve cismanî bir yapı|Bir felsefî sistem ve düşünce kuramı|Bir takvim ve zamanı ölçme yöntemi|Dinde ruh|o|A
+3|Z|Din felsefesi "evrensel bilim" olarak nelerin üzerine düşünür?|Varlık, bilgi ve değer|Yalnızca hukuk|Yalnızca tarih|Yalnızca sanat|Din ve felsefe|o|A
+3|Z|Din ile felsefenin ortak amaçlarından biri aşağıdakilerden hangisidir?|Aklı ve kalbi ıslah etmek|Yalnızca eğlendirmek|Yalnızca kâr etmek|Yalnızca bilgiyi gizlemek|Din ve felsefenin gayeleri|o|A
+3|Z|İbn Rüşd'e göre hikmet ve şeriat arasındaki ilişki nasıldır?|İki dost, süt kardeşi gibi|İki düşman gibi|Birbirinden tamamen habersiz|Biri diğerinin yerine geçer|Din-felsefe ilişkisi|k|A
+3|Z|"Hakikat hakikate ters düşmez" ilkesi neyi savunur?|Din ile felsefenin çelişmeyeceğini|Dinin felsefeyi yok edeceğini|Felsefenin dini yok edeceğini|İkisinin de gereksiz olduğunu|Din-felsefe ilişkisi|o|A
+3|Z|Farabî'de peygamber vahyi hangi gücle alır?|Muhayyile gücüyle|Deney gücüyle|Matematik gücüyle|Hukuk gücüyle|Din-felsefe ilişkisi|z|H
+3|Z|Antikçağ'da din-felsefe münasebetine ilk tepkiler hangi düşünceden gelmiştir?|Yunan düşüncesinden|Hint düşüncesinden|Çin düşüncesinden|Mısır düşüncesinden|Din-felsefe ilişkisi|o|H
+3|Z|"İnsan her şeyin ölçüsüdür" diyen düşünür kimdir?|Protagoras|Platon|Aristoteles|Kindî|Din-felsefe ilişkisi|k|H
+3|Z|Mutezile ekolü hangi disiplinin öncülerinden sayılır?|Kelâm|Hukuk|Tıp|Mimari|Din-felsefe ilişkisi|o|H
+3|Z|Mantıkla uğraşmayı bile haram sayanlar hangi gruptandır?|Hadisçilerden İbn Salah ve en-Nevevî|Filozoflardan Farabî ve Kindî gibi isimler|Sofistlerden Protagoras ve onun öğrencileri|Mutezile kelâmcıları ve onların takipçileri|Din-felsefe ilişkisi|z|H
+3|Z|Gazali "Tehafütü'l-Felâsife"de filozofları kaç meselede bid'atçı saymıştır?|On yedi|Üç|Beş|Yüz|Din-felsefe ilişkisi|z|H
+3|Z|Gazali'nin filozofları kâfir saydığı meselelerden biri hangisidir?|Âlemin kıdemi|Mantığın kullanımı|Ruhun varlığı|Dil felsefesi|Din-felsefe ilişkisi|z|H
+3|Z|Sicistanî'nin "duvakların çok, gelinin tek oluşu" sözü neyi anlatır?|Farklı yollar, aynı hakikat|Çok sayıda doğru yol|Hakikatin olmadığı|Her yolun yanlışlığı|Din-felsefe ilişkisi|o|A

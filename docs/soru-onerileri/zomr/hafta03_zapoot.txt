@@ -1,0 +1,200 @@
+#QUESTION:Allah'ın sıfatlarını inceleyen din felsefesi başlığı hangi konunun alt dalıdır?
+#CORRECT:Metafizik ve kozmolojik problemler
+#WRONG:Sembolizm ve dinî sembollerin incelenmesi
+#WRONG:Dil analizi ve mantıkî çözümleme
+#WRONG:Estetik ve sanat felsefesinin konuları
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ana problemler
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Kelâmcı için üzerinde durduğu konu nasıl bir meseledir?
+#CORRECT:Hayatî bir mesele
+#WRONG:Tamamen yabancı bir mesele
+#WRONG:Sadece tarihî bir mesele
+#WRONG:Önemsiz bir mesele
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din felsefesi ve kelâm
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Din felsefesi sorgulamada hiçbir şeyi neyin dışında tutmaz?
+#CORRECT:İnceleme konusunun
+#WRONG:Tarihin
+#WRONG:Mantığın
+#WRONG:Dilin
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din felsefesi ve kelâm
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Din felsefesinde teknik düzeyde yapılan işin hangi boyutu yoktur?
+#CORRECT:İnanç boyutu
+#WRONG:Mantık boyutu
+#WRONG:Tarih boyutu
+#WRONG:Dil boyutu
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din felsefesi ve kelâm
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Kelâm hangi tür delillere başvurarak dinî hükümleri açıklar?
+#CORRECT:Aklî ve naklî delillere
+#WRONG:Yalnızca deneysel delillere
+#WRONG:Yalnızca estetik delillere
+#WRONG:Hiçbir delile
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din felsefesi ve kelâm
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Dinî hükümleri sistemleştiren ve savunan disiplin hangisidir?
+#CORRECT:Kelâm
+#WRONG:Din psikolojisi
+#WRONG:Estetik
+#WRONG:Mantık
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din felsefesi ve kelâm
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Felsefeyi "kavram üretme sanatı" olarak tanımlayanlar ne üretmeyi hedefler?
+#CORRECT:Kavramlar
+#WRONG:Yalnızca resimler
+#WRONG:Yalnızca takvimler
+#WRONG:Yalnızca madeni paralar
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Bilgi meselesi
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Hıristiyan kaynaklarında Ruh nasıl tanımlanır?
+#CORRECT:Bir güvercin gibi gökten inen ilâhî bir mebde'
+#WRONG:Yalnızca bir madde parçası ve cismanî bir yapı
+#WRONG:Bir felsefî sistem ve düşünce kuramı
+#WRONG:Bir takvim ve zamanı ölçme yöntemi
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Dinde ruh
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Din felsefesi "evrensel bilim" olarak nelerin üzerine düşünür?
+#CORRECT:Varlık, bilgi ve değer
+#WRONG:Yalnızca hukuk
+#WRONG:Yalnızca tarih
+#WRONG:Yalnızca sanat
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din ve felsefe
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Din ile felsefenin ortak amaçlarından biri aşağıdakilerden hangisidir?
+#CORRECT:Aklı ve kalbi ıslah etmek
+#WRONG:Yalnızca eğlendirmek
+#WRONG:Yalnızca kâr etmek
+#WRONG:Yalnızca bilgiyi gizlemek
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din ve felsefenin gayeleri
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:İbn Rüşd'e göre hikmet ve şeriat arasındaki ilişki nasıldır?
+#CORRECT:İki dost, süt kardeşi gibi
+#WRONG:İki düşman gibi
+#WRONG:Birbirinden tamamen habersiz
+#WRONG:Biri diğerinin yerine geçer
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din-felsefe ilişkisi
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:"Hakikat hakikate ters düşmez" ilkesi neyi savunur?
+#CORRECT:Din ile felsefenin çelişmeyeceğini
+#WRONG:Dinin felsefeyi yok edeceğini
+#WRONG:Felsefenin dini yok edeceğini
+#WRONG:İkisinin de gereksiz olduğunu
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din-felsefe ilişkisi
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Farabî'de peygamber vahyi hangi gücle alır?
+#CORRECT:Muhayyile gücüyle
+#WRONG:Deney gücüyle
+#WRONG:Matematik gücüyle
+#WRONG:Hukuk gücüyle
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din-felsefe ilişkisi
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Antikçağ'da din-felsefe münasebetine ilk tepkiler hangi düşünceden gelmiştir?
+#CORRECT:Yunan düşüncesinden
+#WRONG:Hint düşüncesinden
+#WRONG:Çin düşüncesinden
+#WRONG:Mısır düşüncesinden
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din-felsefe ilişkisi
+#ZORLUK:orta
+#BLOOM:Hatırlama
+
+#QUESTION:"İnsan her şeyin ölçüsüdür" diyen düşünür kimdir?
+#CORRECT:Protagoras
+#WRONG:Platon
+#WRONG:Aristoteles
+#WRONG:Kindî
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din-felsefe ilişkisi
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Mutezile ekolü hangi disiplinin öncülerinden sayılır?
+#CORRECT:Kelâm
+#WRONG:Hukuk
+#WRONG:Tıp
+#WRONG:Mimari
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din-felsefe ilişkisi
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Mantıkla uğraşmayı bile haram sayanlar hangi gruptandır?
+#CORRECT:Hadisçilerden İbn Salah ve en-Nevevî
+#WRONG:Filozoflardan Farabî ve Kindî gibi isimler
+#WRONG:Sofistlerden Protagoras ve onun öğrencileri
+#WRONG:Mutezile kelâmcıları ve onların takipçileri
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din-felsefe ilişkisi
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Gazali "Tehafütü'l-Felâsife"de filozofları kaç meselede bid'atçı saymıştır?
+#CORRECT:On yedi
+#WRONG:Üç
+#WRONG:Beş
+#WRONG:Yüz
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din-felsefe ilişkisi
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Gazali'nin filozofları kâfir saydığı meselelerden biri hangisidir?
+#CORRECT:Âlemin kıdemi
+#WRONG:Mantığın kullanımı
+#WRONG:Ruhun varlığı
+#WRONG:Dil felsefesi
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din-felsefe ilişkisi
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Sicistanî'nin "duvakların çok, gelinin tek oluşu" sözü neyi anlatır?
+#CORRECT:Farklı yollar, aynı hakikat
+#WRONG:Çok sayıda doğru yol
+#WRONG:Hakikatin olmadığı
+#WRONG:Her yolun yanlışlığı
+#PAKET:3. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din-felsefe ilişkisi
+#ZORLUK:zor
+#BLOOM:Anlama
+

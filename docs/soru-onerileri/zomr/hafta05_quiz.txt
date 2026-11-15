@@ -1,0 +1,200 @@
+#QUESTION:Bir öğrenci filozofların neden çoğunlukla olumsuz (selbî) sıfatları tercih ettiğini soruyor. Doğru açıklama hangisidir?
+#CORRECT:Allah'ı insana benzetme (antropomorfizm) tehlikesinden korumak için olumsuz sıfatlara yönelirler
+#WRONG:Kur'an olumsuz sıfatlar dışında hiçbir sıfattan söz etmediği için bu yolu seçerler
+#WRONG:Olumlu sıfatlar sayıca çok az olduğundan olumsuzlar daha kolay sıralanır
+#WRONG:Filozoflar Allah'ın sıfatlarının hiçbirini kabul etmediklerinden yalnızca yoklukları anarlar
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Zihin körlüğü argümanı hangi benzetmeye dayanır?
+#CORRECT:Renk körü birine çimenin yeşil olduğu ispatlanamadığı gibi, zihni körleşmiş birine maddenin ötesi kabul ettirilemez
+#WRONG:Gözün zaman zaman yanılması nedeniyle hiçbir şeyin kesin olarak görülemeyeceği, bu yüzden her görüşün eşit değer taşıdığı
+#WRONG:Işığın hızının sabit olması nedeniyle tüm renklerin aynı görülmesi gerektiği ve ayrım yapılamayacağı
+#WRONG:Rengin kişiden kişiye tamamen değişmesi nedeniyle hiçbir yargının geçerli olmayacağı ve tartışmanın boşa gideceği
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:Ateizm
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:"Tanrı varlığını masa gibi dıştan empoze etseydi tek seçenek inanmak olurdu." Bu ifade insan özgürlüğü bakımından ne anlama gelir?
+#CORRECT:İnsan özgürlüğünün sonu olurdu; "dinde zorlama yoktur" ayeti bunu ifade eder
+#WRONG:İman gereksiz olurdu ve kimse ibadet etmek zorunda kalmazdı
+#WRONG:Allah'ın varlığı kesin olarak ispatlanmış sayılırdı ve tartışma sona ererdi
+#WRONG:İnsanlar daha mutlu olur ve hiçbir şüphe kalmazdı
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:Ateizm
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Tanrı'nın yokluğunu ispat etmek varlığını ispat etmekten neden daha zor sayılır?
+#CORRECT:Yokluk iddiasında bulunan kişi, bunu olumsuzlayan her şeyi denemek zorunda kalır
+#WRONG:Yokluğun kanıtı zaten herkesçe bilinen ve açıkça görülen bir gerçektir
+#WRONG:Varlık her zaman deneyle gösterilebildiğinden tartışma gerektirmez
+#WRONG:Yokluk iddiaları kural olarak her zaman peşinen kabul edilir
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:Ateizm
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Aklî delillerin işlevlerinden biri aşağıdakilerden hangisidir?
+#CORRECT:İnancı makulleştirmek ve aklî temellere oturtmak
+#WRONG:İnancı bütünüyle ortadan kaldırmak ve yerine şüpheyi koymak
+#WRONG:Dinî metinleri yasaklamak ve ibadetleri sınırlamak
+#WRONG:İnançsızlığı yaymak ve ilgili görüşleri güçlendirmek
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:Aklî delillerin işlevi
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Taklitten tahkike geçişte aklî delillerin rolü nedir?
+#CORRECT:Allah inancına varmada bir basamak ve zihnin sıçramasına vesile olan bir kamçı işlevi görürler
+#WRONG:Hiçbir rolleri yoktur çünkü iman tamamen akıl dışı bir alandır ve delillerle hiçbir ilgisi bulunmaz
+#WRONG:İnancı engeller ve insanı sürekli tereddüt hâlinde bırakarak imandan uzaklaştırırlar
+#WRONG:İnançsızlığı güçlendirir ve ateist düşüncenin yaygınlaşmasına zemin hazırlarlar
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:Aklî delillerin işlevi
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Sonuç bölümüne göre imansızlığın nedeni nedir?
+#CORRECT:Allah'ın verdiği aklı yerli yerinde kullanamama, haddini aşma veya bilgileri amacı doğrultusunda kullanamama
+#WRONG:Allah'ın mutlak iradesinin zorunlu bir engellemesi sonucu iman edememe durumunun ortaya çıkması
+#WRONG:Doğuştan gelen ve hiçbir şekilde değiştirilemeyen bir kusurun insanda bulunması
+#WRONG:Tamamen tesadüfen ortaya çıkan ve hiçbir sebebe dayanmayan bir durumun yaşanması
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:İman
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Pascal'ın bahis teorisi ve James'in inanma iradesi derste hangi başlıkta anılır?
+#CORRECT:Tanrı'nın yokluğunu ispat zorluğu
+#WRONG:Zihin körlüğü argümanı
+#WRONG:Ontolojik delil tartışması
+#WRONG:Kozmolojik delil tartışması
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:Ateizm
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Augustinus, Tertullianus ve Kierkegaard hangi gruba örnek olarak gösterilir?
+#CORRECT:Fideistler
+#WRONG:Ateistler
+#WRONG:Materyalistler
+#WRONG:Pozitivistler
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:İsbât-ı vacip
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Allah'ın varlığı delillerinin insanı imana götürmesi için derste hangi iki unsurun birlikte gerekli olduğu vurgulanır?
+#CORRECT:Aklın iyi kullanılması ve Allah'ın izni ile inayeti
+#WRONG:Yalnızca aklın tek başına yeterli olması ve ek bir şarta gerek olmaması
+#WRONG:Yalnızca duygu ve taklidin yeterli olması ve aklın gereksizliği
+#WRONG:Yalnızca zamanın geçmesi ve çevrenin etkisi
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:Sonuç
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Kur'an insanı hangi yolla Allah'ın varlığını araştırmaya yöneltir?
+#CORRECT:Çevremizdeki olaylara ve âlemin yapısına nazar edip "kâinât kitabı"nı okumaya davet ederek
+#WRONG:Yalnızca duyularla kavranabilen nesneleri sayıp ölçerek, bunların dışındaki her şeyi yok sayarak
+#WRONG:Yalnızca atalardan gelen sözleri tekrar ederek ve ezberleyerek, düşünmeyi bütünüyle bırakarak
+#WRONG:Yalnızca hayal gücünü kullanıp rüyalara başvurarak, gerçek dünyayı hiç gözlemlemeyerek
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:Aklın rolü
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:İslâm filozoflarının subutî sıfatları budamasına karşı ileri sürülen dinî argüman hangisidir?
+#CORRECT:Allah kendisinin gördüğünü ve bildiğini söylüyorsa O'nu bu niteliklerinden soymaya kimsenin hakkı yoktur
+#WRONG:Subutî sıfatlar insan aklı tarafından kavranamadığı için dinî metinlerde hiç yer almamalıdır
+#WRONG:Sıfatlar felsefî bir buluş olduğundan dinin Allah tasavvurunda kullanılması doğru olmaz
+#WRONG:Allah'ın sıfatları olmadığı için bu konuda bildirilen her şey yalnızca mecaz olarak anlaşılmalıdır
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Allah'ın varlığına dair delillerin bir basamak olduğu söylenir. Bu ifadeden çıkan sonuç hangisidir?
+#CORRECT:Deliller imana açılan kapıya götüren yoldur, imanın kendisi ayrıca bir sıçrama ve Allah'ın inayetini gerektirir
+#WRONG:Deliller iman yerine geçer ve ayrıca bir sıçrama ya da Allah'ın inayeti için gerek bırakmazlar
+#WRONG:Deliller iman için gereksizdir, çünkü iman yalnızca duygulara dayanan bir alandır
+#WRONG:Deliller yalnızca ateistlerin kullandığı bir araçtır ve dinî düşünce bunlarla hiç ilgilenmez
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:Aklî delillerin işlevi
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Sıfatlar meselesinde derste önerilen uzlaşma noktası hangisidir?
+#CORRECT:Allah'ın görmesi, işitmesi ve bilmesi insanınkinden mahiyet yönünden farklı, vasıtasız ve mutlaktır
+#WRONG:Allah'ın görmesi ve işitmesi tamamen insanınki gibi organlar aracılığıyla gerçekleşir
+#WRONG:Allah'ın sıfatları yoktur ve bu ifadeler yalnızca halkı yönlendiren birer teşbihtir
+#WRONG:Sıfatlar yalnızca bazı dönemlerde geçerli olup başka dönemlerde hükmünü yitirir
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:"Allah zâtı gereği bilendir, sıfatlar zât üzerine zâit değildir." Bu görüş sıfatlar konusunda nasıl bir yaklaşımı temsil eder?
+#CORRECT:Sıfatları Zât'tan ayrı varlıklar saymayıp Zâtın ta kendisi sayan bir yaklaşımı
+#WRONG:Sıfatları tümüyle reddederek yalnızca Zât'ın varlığını kabul eden bir yaklaşımı
+#WRONG:Sıfatları insan niteliklerine benzeterek açıklayan bir yaklaşımı
+#WRONG:Sıfatları sonradan kazanılmış özellikler olarak gören bir yaklaşımı
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:İmanı süje-obje ilişkisi olarak ele alan bir yaklaşımda, iman edenle iman edilen arasındaki fark nasıl vurgulanır?
+#CORRECT:İman edilen, iman edeni yaratan ve tam bilen kudrettir; insan ise kendisini izhar ettiği ölçüde O'nu sezer
+#WRONG:İman eden ile iman edilen aynı nitelikte iki varlıktır ve birbirinin yerine geçebilir
+#WRONG:İman eden iman edilenden üstündür çünkü seçimi insan yapar ve onu bağlar
+#WRONG:İman edilen de bir yaratıktır ve iman edenle aynı düzlemde bulunur
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:İman
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Kur'an'daki "yerde ve gökte Allah'tan başka tanrılar bulunsaydı..." ayeti Allah'ın birliğini hangi yoldan temellendirir?
+#CORRECT:Birden fazla tanrı olsaydı yer ve göğün nizamının bozulacağı sonucuna dayanarak
+#WRONG:Yalnızca ibadet yoluyla ve tarihî belgelerle bu birliği kanıtlayarak
+#WRONG:Yalnızca gök cisimlerinin sayısını hesaplayarak ve gözlem yaparak
+#WRONG:Yalnızca peygamberlerin sayısını sayarak ve kayıtları karşılaştırarak
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:Kutsal kitaplar
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Allah'ın varlığını ispat deliller arasında hem İslâm filozoflarında, hem kelâmcılarda, hem Batı düşüncesinde geçen delil hangisidir?
+#CORRECT:Gâye ve nizam delili
+#WRONG:Hudûs delili
+#WRONG:Ontolojik delil
+#WRONG:Kabûl-i âmme delili
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:İsbât-ı vacip
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Kur'an'a göre Allah'ın varlığı bedihî bir hadisedir. Buna rağmen insanların Allah'ı tanımaması neye bağlanır?
+#CORRECT:Kibir, inat, gaflet ve cehalet gibi dışsal sebeplerin tesirine kapılmaya
+#WRONG:İnsanın doğuştan bu duygudan tamamen yoksun yaratılmış olmasına
+#WRONG:Allah'ın bazı insanlara kendini tanıtmayı bilerek reddetmesine
+#WRONG:İnsan zihninin bu konuyu kavrayabilecek bir yapıya hiç sahip olmamasına
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:Fıtrat
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:İsbât-ı vacip delilleri kısmen tenkit edilirken hangi sonuç ileri sürülmüştür?
+#CORRECT:Bu yolla ispat edilen Tanrı dinin Tanrı'sı değil, filozofların mantıkî zorunluluk olarak koyduğu Tanrı'dır
+#WRONG:Bu deliller tümüyle kesin olup hiçbir şekilde eleştirilemez ve her çağda aynen geçerlidir
+#WRONG:Bu delilleri yalnızca ateistler üretmiş olduğundan dinî düşünceyle ilgisi yoktur
+#WRONG:Bu deliller doğrudan Kur'an'a aykırı oldukları için hiçbir Müslüman düşünür kullanmamıştır
+#PAKET:5. hafta: Ciddi Quiz (15 soru)
+#KONU:İsbât-ı vacip
+#ZORLUK:orta
+#BLOOM:Analiz
+

@@ -1,0 +1,200 @@
+#QUESTION:Bir öğrenci din ile felsefenin "aynı konuları" ele aldığını söylüyor. Derse göre bu ifade nasıl tamamlanmalıdır?
+#CORRECT:Konular benzerdir fakat metot ve bakış açıları ayrılır
+#WRONG:Konuları da metotları da tamamen aynıdır ve ayrım yoktur
+#WRONG:Konuları tamamen farklıdır ve hiçbir ortak yanı yoktur
+#WRONG:Din yalnızca ibadet, felsefe yalnızca bilgi ile ilgilenir
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Konuları açısından ilişki
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:Bir filozof Allah'ın varlığını sisteminin temeli sayıyor ve onsuz sisteminin çökeceğini söylüyor. Bu durum derste hangi gözlemle örtüşür?
+#CORRECT:Aristo, Descartes, Spinoza, Hegel gibi filozoflar Tanrı'yı "O olmazsa hiçbir şey olmaz" ilkesi olarak kabul etmiştir
+#WRONG:Filozoflar Tanrı konusunu hiç ele almamış, sistemlerinde ona hiç yer vermemiştir
+#WRONG:Yalnızca dinî düşünürler Tanrı'yı ele almış, filozoflar bu konuya girmemiştir
+#WRONG:Filozoflar Tanrı'yı bilinçli olarak sistemlerinden çıkarmış ve onu dışlamıştır
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Varlık meselesi
+#ZORLUK:orta
+#BLOOM:Uygulama
+
+#QUESTION:İlkçağda ağırlık noktasının âlem, Ortaçağda Allah olması arasındaki ilişki nasıl yorumlanabilir?
+#CORRECT:Çağların soruları değişmiştir
+#WRONG:Hiçbir fark yoktur, aynı konular aynı biçimde işlenmiştir
+#WRONG:İlkçağda yalnızca Tanrı, Ortaçağda yalnızca doğa işlenmiştir
+#WRONG:Ağırlık noktaları tamamen rastgele belirlenmiştir
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Felsefe tarihinde odak noktaları
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Din açısından "gayba iman" ile felsefe açısından "sürekli sorgulama" arasındaki fark ne anlama gelir?
+#CORRECT:İkisi farklı başlangıç ilkelerine dayanır
+#WRONG:Din ve felsefe aynı başlangıç ilkesine sahiptir
+#WRONG:Din sorgulamayı yasaklar, felsefe imanı yasaklar
+#WRONG:İkisi de yalnızca şüpheyle başlar ve ilerler
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Konuları açısından ilişki
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:"Din sadece iman kıvılcımının çakışından ibaret değildir." Bu ifade dinin hangi yönünü vurgular?
+#CORRECT:İmana bağlı olarak birçok duygu, düşünce ve eylemin de gerçekleşmesi gerektiğini
+#WRONG:Dinin yalnızca iman olduğunu ve başka bir unsur içermediğini
+#WRONG:Dinin hiç iman içermediğini ve yalnızca eylemlerden oluştuğunu
+#WRONG:Dinin yalnızca ibadetten ibaret olduğunu ve iman gerektirmediğini
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Dinin konusu
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Felsefenin konusunu "varlık, bilgi ve değer" kavramlarında toplamak hangi meselelerin ortaya konmasını sağlar?
+#CORRECT:Allah, âlem ve insan meselelerinin
+#WRONG:Yalnızca madde meselesinin ve maddeye dair soruların
+#WRONG:Yalnızca devlet meselesinin ve yönetim biçimlerinin
+#WRONG:Yalnızca dil meselesinin ve anlamın incelenmesinin
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Felsefenin konusu
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Dinin "teorik ve pratik boyutun birliği" ilkesi hangi anlama gelir?
+#CORRECT:Dinin hem inanç hem eylem boyutunun bir arada bulunduğuna
+#WRONG:Dinin yalnızca teoriden oluştuğuna ve uygulamayı kapsamadığına
+#WRONG:Dinin yalnızca pratikten oluştuğuna ve inancı içermediğine
+#WRONG:Dinin ne teori ne pratik içerdiğine ve boş bir kavram olduğuna
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Dinin konusu
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:"Din de felsefe gibi varlık ve değer açısından en genel ve temel olana yaklaşır." Bu cümleden hangi sonuç çıkar?
+#CORRECT:İki disiplin benzer konulara yönelir ancak farklı yöntemler kullanır
+#WRONG:İki disiplin tamamen ayrı konulara yönelir ve hiçbir ortak noktaları bulunmaz
+#WRONG:Din yalnızca değerle, felsefe yalnızca varlıkla ilgilenir ve kesişmezler
+#WRONG:Din yalnızca ibadetle, felsefe yalnızca bilgiyle ilgilenir ve ayrışırlar
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Dinin konusu
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Felsefenin konu alanı hakkında hangi ifade doğrudur?
+#CORRECT:Çözülmüş, çözülecek ve hiç çözülemeyecek problemleri daima tenkit ve tahliliyle gündeminde tutar
+#WRONG:Yalnızca çözülmüş problemleri ele alır ve çözülmeyenleri bütünüyle dışarıda bırakır
+#WRONG:Yalnızca bilimsel nitelikli problemleri ele alır ve dinî olanlara girmez
+#WRONG:Yalnızca din dışı konuları ele alır ve dinî konularla hiç ilgilenmez
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Felsefenin konusu
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Allah'ın isimlerinin "isim" diye anılmasının nedeni nedir?
+#CORRECT:Bu sıfatların delâlet ettikleri Zât'a işaret etmesi
+#WRONG:Yalnızca insanlara ait olmaları ve başka varlıkları ilgilendirmemeleri
+#WRONG:Yalnızca zamana bağlı bulunmaları ve değişmeleri
+#WRONG:Yalnızca mekâna bağlı olmaları ve sınırlandırılabilmeleri
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Allah'ın "ilim ve kudret" sıfatları hangi Allah anlayışını yansıtır?
+#CORRECT:Her şeyi bilen, yaratan ve yöneten bir Allah anlayışını
+#WRONG:Hiçbir şeyi bilmeyen ve yaratıklarıyla ilgilenmeyen bir Allah anlayışını
+#WRONG:Yalnızca bazı şeyleri yaratan ve geri kalanını başkasına bırakan bir anlayışı
+#WRONG:Dünyayı terk etmiş ve onu kendi hâline bırakmış bir Allah anlayışını
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Tevhid sıfatının derste anlatılan tanımı hangisidir?
+#CORRECT:Allah birdir, eşi ve benzeri yoktur, hiçbir şeye muhtaç değildir
+#WRONG:Allah birden fazladır ve her birinin farklı bir görevi bulunur
+#WRONG:Allah bazı şeylere muhtaçtır ve bu yüzden yaratıklarına bağımlıdır
+#WRONG:Allah doğurmuş ve doğurulmuştur, bu yüzden bir soyu vardır
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Din açısından Allah ile felsefe açısından Tanrı arasındaki ortak vurgu nedir?
+#CORRECT:İkisi de "nasıl bir Allah/Tanrı" ve "hangi niteliklere sahip" sorularını
+#WRONG:İkisi de Allah'ın varlığını bütünüyle reddeder ve sıfatları incelemez
+#WRONG:İkisi de sıfatları hiç ele almaz ve yalnızca zamana odaklanır
+#WRONG:İkisi de yalnızca hukuk meseleleriyle ilgilenir ve sıfatlara girmez
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Varlık meselesi
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Felsefenin evrensel konu alanı hangisini kapsar?
+#CORRECT:Allah'tan âleme, hak, hakikat, bilgi, din, sanat ve ahlâka kadar her şeyi
+#WRONG:Yalnızca bilimi ve onun yöntemlerini kapsar, başka bir alana girmez
+#WRONG:Yalnızca dini ve ibadet konularını kapsar, başka bir alana girmez
+#WRONG:Yalnızca sanatı ve güzellik konularını kapsar, başka bir alana girmez
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Felsefenin konusu
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:"Din ve felsefe deney-dışı konuları araştırma nesnesi olarak ele alır." Bu cümle ne anlama gelir?
+#CORRECT:İkisi de duyularla ve deneyle ulaşılamayan konuları araştırır
+#WRONG:İkisi de yalnızca deneysel konuları araştırır ve deney dışına çıkmaz
+#WRONG:İkisi de yalnızca matematik yapar ve diğer alanlara girmez
+#WRONG:İkisi de yalnızca tarihî olayları inceler ve yorum yapmaz
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Konuları açısından ilişki
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Din açısından Allah ile felsefe açısından Tanrı kavramı arasındaki fark hangisidir?
+#CORRECT:Din için iman ilkesinin temelidir, felsefe için araştırma konularının başında gelen bir meseledir
+#WRONG:Din için hiç önem taşımayan, yalnızca felsefenin konusu olan bir meseledir
+#WRONG:Felsefe için hiç önem taşımayan, yalnızca dinin konusu olan bir meseledir
+#WRONG:İki alan için de tamamen aynı olan ve ayrım gerektirmeyen bir meseledir
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Varlık meselesi
+#ZORLUK:zor
+#BLOOM:Analiz
+
+#QUESTION:"Kur'an'da bildirilen 99 güzel isim" dinin Allah tasavvurunun neye dayandığını gösterir?
+#CORRECT:Vahiy yoluyla bildirilen sıfatlara
+#WRONG:Yalnızca akıl yürütmeye
+#WRONG:Yalnızca felsefeden alınan kavramlara
+#WRONG:Yalnızca tesadüfe
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:orta
+#BLOOM:Analiz
+
+#QUESTION:Felsefe tarihinde "ana konulara yan dallar eklendi" ifadesi son dönemler için neyi anlatır?
+#CORRECT:Felsefenin kapsamının genişleyip çeşitlendiğini
+#WRONG:Felsefenin ortadan kalktığını
+#WRONG:Felsefenin tek konuya indirgendiğini
+#WRONG:Felsefenin dinle birleştiğini
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Felsefe tarihinde odak noktaları
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:Din ve felsefenin "sürekli diyalog" içinde olacağı iddiası hangi gerekçeye dayanır?
+#CORRECT:Varolan varoldukça ve hayat devam ettikçe her dönemde yeni sorular ve çözüm denemeleri ortaya çıkar
+#WRONG:Sorular bir kez çözüldüğünde diyalog sona erer ve artık konuşulacak bir şey kalmaz
+#WRONG:Felsefe bir gün dinin yerini alacağı için diyalog gereksiz hâle gelir
+#WRONG:Din bir gün felsefenin yerini alacağı için diyalog gereksiz hâle gelir
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Konuları açısından ilişki
+#ZORLUK:zor
+#BLOOM:Değerlendirme
+
+#QUESTION:Bir öğrenci sıfatlar konusunda din ile felsefenin "tamamen ayrı" olduğunu söylüyor. Derse göre ne söylenebilir?
+#CORRECT:İkisi de nasıl bir Allah sorusunu ele alır
+#WRONG:İkisinin hiçbir ortak yanı yoktur
+#WRONG:Filozoflar sıfatları hiç incelememiştir
+#WRONG:Kelâmcılar sıfatları hiç incelememiştir
+#PAKET:4. hafta: Ciddi Quiz (15 soru)
+#KONU:Allah'ın sıfatları
+#ZORLUK:orta
+#BLOOM:Analiz
+

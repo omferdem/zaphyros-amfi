@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { dengeliSec, paketPaylari } from './soruSec'
+import { dengeliSec, havuzSirasinaDiz, paketPaylari } from './soruSec'
 
 const paket = (ad: string, n: number) => ({
   ad,
@@ -15,6 +15,12 @@ describe('paketPaylari', () => {
   })
   it('orantılı dağıtır', () => {
     expect(paketPaylari([30, 10], 8)).toEqual([6, 2])
+  })
+})
+
+describe('havuzSirasinaDiz', () => {
+  it('seçilenleri havuzdaki sıraya dizer', () => {
+    expect(havuzSirasinaDiz(['c', 'a', 'd'], ['a', 'b', 'c', 'd'])).toEqual(['a', 'c', 'd'])
   })
 })
 

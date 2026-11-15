@@ -1,0 +1,200 @@
+#QUESTION:Değerler felsefesi teorik felsefeden hangi yönüyle ayrılır?
+#CORRECT:Pratik bir felsefe olması
+#WRONG:Yalnızca bilgiyle ilgilenmesi
+#WRONG:Yalnızca varlığı incelemesi
+#WRONG:Hiçbir soruya cevap vermemesi
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Değerler felsefesi
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Sosyolojik görüşe göre insan davranışlarında nasıl bir hürriyete sahiptir?
+#CORRECT:Kısmen hür
+#WRONG:Tamamen hür
+#WRONG:Hiç hür değil
+#WRONG:Yalnızca düşüncede hür
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Hürriyet ve sorumluluk
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:İslâm ahlâkında seçme özgürlüğü hangi kavramla ifade edilir?
+#CORRECT:İhtiyar
+#WRONG:İcad
+#WRONG:İbda
+#WRONG:Südûr
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Hürriyet ve sorumluluk
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:İslâm ahlâkında insan hürriyeti neden sınırlıdır?
+#CORRECT:Bütün varlık Allah'ın mutlak iradesi sınırı içindedir
+#WRONG:İnsanın aklı olmadığı için hürriyeti bulunmaz
+#WRONG:Hürriyet kavramı bilinmediği için ondan söz edilmez
+#WRONG:Allah insanı özgür bırakmadığı için hürriyeti yoktur
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Hürriyet ve sorumluluk
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Fert, aile, cemiyet ve devlet ahlâkı hangi başlık altında toplanır?
+#CORRECT:Pratik ahlâk
+#WRONG:Teorik ahlâk
+#WRONG:Estetik
+#WRONG:Mantık
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Pratik ahlâk
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Devlet ahlâkı hangi adla da anılır?
+#CORRECT:Politika
+#WRONG:Ekonomi
+#WRONG:Estetik
+#WRONG:Mantık
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Pratik ahlâk
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Pratik ahlâk neyi ifade eder?
+#CORRECT:Etikte çözüme ulaşan sonuçların hayata aktarılmasını
+#WRONG:Yalnızca teorik tartışmanın sürdürülmesini
+#WRONG:Estetik yargının ve güzel anlayışının belirlenmesini
+#WRONG:Mantık analizinin ve çıkarım kurallarının sıralanmasını
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Pratik ahlâk
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Her alanın kendine has özellikleri olsa da neyden ayrılamaz?
+#CORRECT:Temel ahlâk ilkelerinden
+#WRONG:Matematik ilkelerinden
+#WRONG:Fizik kurallarından
+#WRONG:Sanat ilkelerinden
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Pratik ahlâk
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:İlâhî dinlerin en önemli vasıflarından biri nedir?
+#CORRECT:Ahlâkî oluşları
+#WRONG:Yalnızca bilimsel oluşları
+#WRONG:Yalnızca ticarî oluşları
+#WRONG:Yalnızca siyasî oluşları
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ahlâk ve din
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Ahlâk felsefesi klasik ikilem örnekleri arasında hangisi sayılmıştır?
+#CORRECT:Jean Valjean'ın vicdanı
+#WRONG:Platon'un mağarası
+#WRONG:Descartes'ın cogitosu
+#WRONG:Kant'ın kategorileri
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:İkilemler
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Değerler felsefesinin temel sorularından biri nedir?
+#CORRECT:İyi ve kötünün kaynağı nedir?
+#WRONG:Atom kaç gramdır?
+#WRONG:Güneş ne zaman doğar?
+#WRONG:Hangi dil kolaydır?
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Değerler felsefesi
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Ahlâk felsefesinin Grekçe adı nedir?
+#CORRECT:Ethik
+#WRONG:Aisthesis
+#WRONG:Logos
+#WRONG:Hyle
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ahlâk felsefesi
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Davranışları değerli kılan nedir sorusu hangi disiplinin konusudur?
+#CORRECT:Değerler felsefesi
+#WRONG:Dilbilgisi
+#WRONG:Coğrafya
+#WRONG:Matematik
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Değerler felsefesi
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:"Din, iyi ahlâktır" sözü kime aittir?
+#CORRECT:Hz. Muhammed (S.)
+#WRONG:Platon
+#WRONG:Kant
+#WRONG:Aristoteles
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ahlâk ve din
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Kur'an'da Hz. Muhammed için geçen "hulk" kelimesi müfessirlerce neyi ifade eder?
+#CORRECT:Din ve İslâm
+#WRONG:Mücadele
+#WRONG:Sanat
+#WRONG:Ticaret
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ahlâk ve din
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Ahlâk felsefesinin temel problemlerinden biri aşağıdakilerden hangisidir?
+#CORRECT:En yüksek iyi nedir?
+#WRONG:Evrenin yaşı kaçtır?
+#WRONG:Hangi dil daha eskidir?
+#WRONG:Atom kaç parçadan oluşur?
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ahlâk felsefesinin problemleri
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Doğru hareketin ölçüsü sorusu neyi sorar?
+#CORRECT:Bir davranışı ahlâkî yönden doğru yapan nedir?
+#WRONG:Davranışın kaç kişi tarafından yapıldığını
+#WRONG:Davranışın ne zaman yapıldığını
+#WRONG:Davranışın nerede yapıldığını
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ahlâk felsefesinin problemleri
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Hürriyet, ahlâkî davranışın neyi sayılır?
+#CORRECT:Ön şartı
+#WRONG:Sonucu
+#WRONG:Tesadüfü
+#WRONG:Engeli
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Hürriyet ve sorumluluk
+#ZORLUK:kolay
+#BLOOM:Anlama
+
+#QUESTION:İnsanın ahlâkî davranışlarında hür olmadığını savunanlar kimlerdir?
+#CORRECT:Deterministler
+#WRONG:Rasyonalistler
+#WRONG:Sosyolojik görüşte olanlar
+#WRONG:Estetikçiler
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Hürriyet ve sorumluluk
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Tam bir hürriyet savunan görüş hangisidir?
+#CORRECT:Rasyonalistler
+#WRONG:Deterministler
+#WRONG:Sosyolojik görüş
+#WRONG:Pragmatistler
+#PAKET:9. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Hürriyet ve sorumluluk
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+

@@ -1,0 +1,200 @@
+#QUESTION:Din felsefesinin ana problemleri kaç kategoride toplanabilir?
+#CORRECT:Beş
+#WRONG:Üç
+#WRONG:İki
+#WRONG:Sekiz
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ana problemler
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Allah'ın varlığı ve ölümden sonra hayat hangi problem kategorisindedir?
+#CORRECT:Metafizik ve kozmolojik
+#WRONG:Dil ve mantık analizi
+#WRONG:Sembolizm
+#WRONG:İlişkisel
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ana problemler
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Din dilinin mantıkî statüsünün belirlenmesi hangi kategoriye girer?
+#CORRECT:Dil ve mantık analizi
+#WRONG:Epistemolojik problemler
+#WRONG:Sembolizm
+#WRONG:Metafizik
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ana problemler
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Dinin ahlâk, sanat ve ilimle münasebeti hangi problem kategorisidir?
+#CORRECT:İlişkisel problemler
+#WRONG:Epistemolojik problemler
+#WRONG:Dil ve mantık analizi
+#WRONG:Sembolizm
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ana problemler
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Dinî sembolizmin anlam ve önemini belirlemek hangi kategoriye girer?
+#CORRECT:Sembolizm
+#WRONG:Metafizik problemler
+#WRONG:İlişkisel problemler
+#WRONG:Epistemolojik problemler
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ana problemler
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Vahyin ve dinî tecrübenin bilgi kaynağı olarak değeri hangi tür problemdir?
+#CORRECT:Epistemolojik
+#WRONG:Kozmolojik
+#WRONG:Sembolik
+#WRONG:Estetik
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ana problemler
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Bir düşünürün din felsefesi yapması için bütün problemlerle uğraşması gerekir mi?
+#CORRECT:Hayır, kendi tutumuna göre bazılarına ağırlık verir
+#WRONG:Evet, hepsini ele almak zorundadır
+#WRONG:Evet, ama yalnızca ibadetle ilgili olanları
+#WRONG:Hayır, hiçbirini ele almaz
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Ana problemler
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Descartes, Leibniz ve Spinoza din felsefesinde hangi konuya ağırlık vermiştir?
+#CORRECT:Tanrı'nın varlığının aklî delillerle kanıtlanmasına
+#WRONG:Yalnızca din dilinin mantıkî tahliline ve çözümlemesine
+#WRONG:Yalnızca dinî sembollerin anlamını belirlemeye
+#WRONG:Yalnızca dinî tecrübenin varoluşsal boyutuna
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefî yaklaşımlar
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Tecrübeci filozoflar hangi konuya daha çok ağırlık vermiştir?
+#CORRECT:Dinî tecrübe konusuna
+#WRONG:Ontolojik delile
+#WRONG:Din dilinin tahliline
+#WRONG:Dinî sembolizme
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefî yaklaşımlar
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Mantıkçı pozitivistler ve linguistik tahlilciler neyi gözde konu edinmiştir?
+#CORRECT:Din dilinin mantık ve dil açısından tahlili
+#WRONG:Allah'ın sıfatlarını tek tek sıralamayı ve açıklamayı
+#WRONG:Ruhun ölümsüzlüğünü kanıtlamaya çalışmayı
+#WRONG:Vahyin tarihî gelişimini belgelemeyi
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefî yaklaşımlar
+#ZORLUK:zor
+#BLOOM:Anlama
+
+#QUESTION:Varoluşçu ve fenomenolojik tahliller hangi konuyu öne çıkarmıştır?
+#CORRECT:Dinî tecrübenin varoluşsal boyutunu
+#WRONG:Ontolojik deliller zincirini
+#WRONG:Dilin mantıkî yapısını
+#WRONG:Din sosyolojisini
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Felsefî yaklaşımlar
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Kelâm, dinî hükümlere nasıl yaklaşır?
+#CORRECT:Tasdik ile, inançlı bir duruşla
+#WRONG:Şüphe ile, inançsız bir duruşla
+#WRONG:Tamamen tarafsız bir gözle
+#WRONG:Yalnızca tarihî açıdan
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din felsefesi ve kelâm
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Din felsefesi dinle nasıl meşgul olur?
+#CORRECT:Uzaktan ve dışarıdan, objektif ve eleştirel biçimde
+#WRONG:İçeriden, tasdik ederek ve inançlı biçimde
+#WRONG:Yalnızca ibadet ederek ve ritüelleri yaşayarak
+#WRONG:Hiç meşgul olmayarak ve dışarıda kalarak
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din felsefesi ve kelâm
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Kelâmcı için dinî hükümler neye benzer biçimde ele alınır?
+#CORRECT:Şüphenin ötesindedir
+#WRONG:Her zaman sorgulanır
+#WRONG:Yalnızca tarihî belgedir
+#WRONG:Yalnızca edebî metindir
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din felsefesi ve kelâm
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Din felsefesini bazıları hangi adlarla anmıştır?
+#CORRECT:Felsefî kelâm veya lâik kelâm
+#WRONG:Dinler tarihi
+#WRONG:Din sosyolojisi
+#WRONG:Tasavvuf
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din felsefesi ve kelâm
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Din felsefesinin en çok yararlandığı alan hangisidir?
+#CORRECT:Dinler tarihi
+#WRONG:Fizik
+#WRONG:Kimya
+#WRONG:Biyoloji
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din bilimleri
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Din olayını tasvir eden ve açıklamaya çalışan alan hangisidir?
+#CORRECT:Dinler tarihi
+#WRONG:Mantık
+#WRONG:Kelâm
+#WRONG:Ahlâk felsefesi
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din bilimleri
+#ZORLUK:kolay
+#BLOOM:Hatırlama
+
+#QUESTION:Dinî şuurun oluşmasına etki eden faktörleri araştıran alan hangisidir?
+#CORRECT:Din psikolojisi
+#WRONG:Din sosyolojisi
+#WRONG:Dinler tarihi
+#WRONG:Din antropolojisi
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din bilimleri
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Dini toplumsal bir kurum olarak ele alan alan hangisidir?
+#CORRECT:Din sosyolojisi
+#WRONG:Din psikolojisi
+#WRONG:Dinler tarihi
+#WRONG:Mantık
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din bilimleri
+#ZORLUK:orta
+#BLOOM:Anlama
+
+#QUESTION:Dinin kültürel boyutlarını ve farklı toplumlardaki tezahürlerini inceleyen alan hangisidir?
+#CORRECT:Din antropolojisi
+#WRONG:Din sosyolojisi
+#WRONG:Din psikolojisi
+#WRONG:Dil felsefesi
+#PAKET:2. hafta: Hızlı Zapoot (20 kısa soru)
+#KONU:Din bilimleri
+#ZORLUK:zor
+#BLOOM:Anlama
+

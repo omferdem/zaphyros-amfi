@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { sorulariGetir, sorulariGetirIdIle } from '../lib/akis'
 import { paketleriGrupla } from '../lib/paket'
-import { onerilenQuizSuresi, paketleriSirala } from '../lib/gecis'
+import { paketleriSirala } from '../lib/gecis'
+import { dengeliSec, havuzSirasinaDiz, sonSorulanlar, turuKaydet } from '../lib/soruSec'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import { GRUPLU_OYUNLAR, GRUP_SAYILARI } from '../lib/oyunAc'
 import type { Soru } from '../lib/tipler'
@@ -193,7 +194,8 @@ export function QuizPaneli({
   const [sonuc, setSonuc] = useState<{ quiz: Quiz; baslayan: number; bitiren: number; ortalama: number | null; maddeler: MaddeAnalizi[]; toplam: number } | null>(null)
   const [denemeler, setDenemeler] = useState<QuizDeneme[]>([])
   const [paket, setPaket] = useState<string>('')
-  const [sure, setSure] = useState(10)
+  const [sure, setSure] = useState(20)
+  const [adet, setAdet] = useState(20)
   const [mesgul, setMesgul] = useState(false)
   const [mesaj, setMesaj] = useState<string | null>(null)
   const [simdi, setSimdi] = useState(Date.now())
@@ -211,7 +213,8 @@ export function QuizPaneli({
   useEffect(() => {
     if (!paket && liste.length > 0) {
       setPaket(liste[0].ad)
-      setSure(onerilenQuizSuresi(liste[0].sorular.length))
+      // Quiz soruları uzun: soru başına 1 dakika
+      setSure(Math.min(20, liste[0].sorular.length))
     }
   }, [liste, paket])
 
@@ -240,7 +243,12 @@ export function QuizPaneli({
     setMesgul(true)
     setMesaj(null)
     try {
-      const { id } = await quizOlustur(dersId, secili.ad.slice(0, 200), Math.max(1, Math.min(240, Math.floor(sure) || 10)), secili.sorular.map((s) => s.id), false)
+      const secilen = havuzSirasinaDiz(
+        dengeliSec([{ ad: secili.ad, sorular: secili.sorular }], Math.min(adet, secili.sorular.length), (s) => s.id, sonSorulanlar(dersId)),
+        secili.sorular,
+      )
+      turuKaydet(dersId, secilen.map((s) => s.id))
+      const { id } = await quizOlustur(dersId, secili.ad.slice(0, 200), Math.max(1, Math.min(240, Math.floor(sure) || 20)), secilen.map((s) => s.id), false)
       const q = (await quizleriGetir(dersId)).find((x) => x.id === id) ?? null
       setQuiz(q)
     } catch {
@@ -378,7 +386,7 @@ export function QuizPaneli({
             <button
               onClick={() => {
                 setPaket(p.ad)
-                setSure(onerilenQuizSuresi(p.sorular.length))
+                setSure(Math.min(adet, p.sorular.length))
               }}
               className={`w-full text-left rounded-2xl border p-3 transition ${
                 paket === p.ad ? 'border-indigo-300/70 bg-indigo-500/15' : p.onerilen ? 'border-emerald-300/50 bg-emerald-500/10' : 'border-white/10 bg-white/5 hover:bg-white/10'
@@ -393,6 +401,35 @@ export function QuizPaneli({
         ))}
       </ul>
       {mesaj && <p className="text-rose-300 text-sm">{mesaj}</p>}
+      <div className="space-y-1.5">
+        <h3 className="text-xs font-bold text-slate-300">Kaç soru?</h3>
+        <div className="flex flex-wrap gap-2">
+          {[10, 20, 30, 40].map((n) => (
+            <button
+              key={n}
+              onClick={() => {
+                setAdet(n)
+                setSure(Math.min(n, secili?.sorular.length ?? n))
+              }}
+              className={`rounded-full border px-3 py-1.5 text-sm ${adet === n ? 'border-emerald-300 bg-emerald-500/25 font-bold' : 'border-white/10 bg-white/5 hover:bg-white/10'}`}
+            >
+              {n} soru
+            </button>
+          ))}
+          {secili && (
+            <button
+              onClick={() => {
+                setAdet(secili.sorular.length)
+                setSure(secili.sorular.length)
+              }}
+              className="rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-3 py-1.5 text-sm"
+            >
+              Hepsi ({secili.sorular.length})
+            </button>
+          )}
+        </div>
+        <p className="text-xs text-slate-400">Seçilen sayı kadar soru paketten karışık çekilir; süre soru başına 1 dakika olarak önerilir, istersen aşağıdan değiştir.</p>
+      </div>
       <div className="flex flex-wrap items-end gap-3">
         <label className="text-xs text-slate-300 space-y-1">
           <span className="block">Süre (dakika)</span>

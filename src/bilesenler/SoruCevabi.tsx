@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { cihazKimligi, oku, sakla } from '../lib/cihaz'
 import type { DersDurumu, PuanSatiri } from '../lib/tipler'
-import { SIKLAR, bitisAni } from '../lib/yarisma'
-import Halka from './Halka'
+import { ZE_SIKLAR, bitisAni } from '../lib/yarisma'
 import Konfeti from './Konfeti'
 
 type SoruAdimi = NonNullable<DersDurumu['adim']>
@@ -111,96 +110,162 @@ export default function SoruCevabi({ oturum, adim, yoklamali }: { oturum: string
       />
     )
 
+  const sonucta = adim.soru_durum === 'sonuc'
+  const dagilim = adim.dagilim ?? []
+  const toplamCevap = dagilim.reduce((a, b) => a + b, 0)
+  const dogruIndex = typeof adim.dogru_index === 'number' ? adim.dogru_index : -1
+  const yuzde = (i: number) => (toplamCevap > 0 ? Math.round(((dagilim[i] ?? 0) / toplamCevap) * 100) : 0)
+  // Geri sayım halkası (zapedu2): r=22 yarıçaplı SVG
+  const yaricap = 22
+  const cevre = 2 * Math.PI * yaricap
+  const sureOrani = kalan !== null ? Math.min(1, kalan / ((adim.sure_sn ?? 20) * 1000)) : 0
+  const secimli = secim !== null
+
   return (
-    <div className="space-y-4">
-      <div className="flex items-start gap-3">
-        <h1 className="flex-1 text-xl font-extrabold leading-snug whitespace-pre-line">{adim.soru}</h1>
+    <div className="space-y-3.5 animate-pop">
+      {/* Soru başlığı + geri sayım halkası */}
+      <div className="glass-panel p-4 flex items-center gap-3.5">
         {acik && kalan !== null && (
-          <Halka oran={kalan / ((adim.sure_sn ?? 20) * 1000)} etiket={Math.ceil(kalan / 1000)} boyut={68} />
+          <div className="relative w-14 h-14 flex items-center justify-center shrink-0">
+            <svg className="w-14 h-14 -rotate-90" viewBox="0 0 52 52" aria-hidden>
+              <circle cx="26" cy="26" r={yaricap} stroke="rgba(255,255,255,0.12)" strokeWidth="4" fill="none" />
+              <circle
+                cx="26"
+                cy="26"
+                r={yaricap}
+                stroke={Math.ceil(kalan / 1000) <= 5 ? '#ff4757' : '#22e3d2'}
+                strokeWidth="4"
+                fill="none"
+                strokeDasharray={cevre}
+                strokeDashoffset={cevre - sureOrani * cevre}
+                strokeLinecap="round"
+              />
+            </svg>
+            <span className="absolute font-mono font-bold text-sm">{Math.ceil(kalan / 1000)}s</span>
+          </div>
         )}
+        <div className="min-w-0">
+          <span className="font-mono text-[11px] text-ze-pink font-bold uppercase">
+            Soru {adim.sira} / {adim.toplam} · Hızlı yarışma
+          </span>
+          <h1 className="font-display font-bold text-base leading-snug whitespace-pre-line">{adim.soru}</h1>
+        </div>
       </div>
 
-      {acik && secim === null && (
-        <div className="grid gap-3">
+      {/* Sonuç: puan şeridi */}
+      {sonucta && sonucum && (
+        <div className={`glass-panel p-4 flex items-center justify-between ${!sonucum.cevapladi ? '' : sonucum.dogru ? 'bg-ze-lime/15 border-ze-lime/50' : 'bg-ze-danger/15 border-ze-danger/50'}`}>
+          <div>
+            <span className={`text-xs font-mono uppercase font-bold ${!sonucum.cevapladi ? 'text-slate-300' : sonucum.dogru ? 'text-ze-lime' : 'text-ze-danger'}`}>
+              {!sonucum.cevapladi ? 'Cevap vermedin' : sonucum.dogru ? 'Doğru cevap!' : `Yanlış seçim${dogruIndex >= 0 ? ` · Doğru: ${ZE_SIKLAR[dogruIndex % ZE_SIKLAR.length].harf}` : ''}`}
+            </span>
+            <p className="font-display font-extrabold text-2xl">{sonucum.dogru ? `+${sonucum.puan ?? 0} puan` : '+0 puan'}</p>
+          </div>
+          <div className="text-right font-mono">
+            <span className="text-[11px] text-slate-300 block">Toplam puanın</span>
+            <span className="text-lg font-bold text-ze-cyan">{sonucum.toplam}</span>
+          </div>
+        </div>
+      )}
+      {sonucta && sonucum === null && <p className="text-slate-400 text-sm text-center">Sonuç geliyor…</p>}
+      {sonucta && sonucum?.dogru && <Konfeti adet={36} />}
+
+      {/* Şıklar: açıkken dokunma kartları, sonuçta yüzdeli çubuklar */}
+      {!sonucta ? (
+        <div className="grid grid-cols-1 gap-2.5" role="radiogroup" aria-label="Yarışma şıkları">
           {secenekler.map((x, i) => {
-            const sik = SIKLAR[i % SIKLAR.length]
+            const z = ZE_SIKLAR[i % ZE_SIKLAR.length]
+            const secildi = secim === i
             return (
               <button
                 key={i}
                 onClick={() => cevapla(i)}
-                disabled={kalan === 0}
-                style={{ animationDelay: `${i * 60}ms` }}
-                className={`${sik.renk} pop rounded-3xl px-4 py-5 flex items-center gap-3 text-left text-lg font-bold active:scale-[0.97] transition-transform disabled:opacity-50`}
+                disabled={!acik || kalan === 0 || secimli}
+                role="radio"
+                aria-checked={secildi}
+                className={`pressable w-full min-h-[64px] p-3.5 rounded-2xl text-left flex items-center justify-between gap-3 border-2 transition-all ${
+                  secildi ? 'bg-white/15 border-white shadow-[0_0_25px_rgba(255,255,255,0.2)]' : 'bg-white/[0.05] border-white/10 hover:bg-white/10'
+                } ${secimli && !secildi ? 'opacity-45' : ''}`}
               >
-                <span className="w-9 h-9 rounded-lg bg-black/25 flex flex-col items-center justify-center shrink-0 leading-none"><span className="text-[10px] opacity-80">{sik.sekil}</span>{sik.harf}</span>
-                <span className="flex-1">{x}</span>
+                <div className="flex items-center gap-3">
+                  <span className="w-11 h-11 rounded-xl flex flex-col items-center justify-center font-display font-extrabold text-sm shrink-0 leading-none text-ze-bg" style={{ background: z.hex }}>
+                    <span>{z.harf}</span>
+                    <span className="text-[10px]">{z.sekil}</span>
+                  </span>
+                  <span className="font-bold text-sm leading-snug">{x}</span>
+                </div>
+                {secildi && <span className="text-ze-lime text-lg">✓</span>}
               </button>
+            )
+          })}
+        </div>
+      ) : (
+        <div className="space-y-2">
+          {secenekler.map((x, i) => {
+            const z = ZE_SIKLAR[i % ZE_SIKLAR.length]
+            const dogru = i === dogruIndex
+            const secildi = secim === i
+            const yanlisSecim = secildi && !dogru
+            return (
+              <div key={i} className={`p-3 rounded-2xl space-y-1.5 ${dogru ? 'border-2 border-ze-lime bg-ze-lime/15' : yanlisSecim ? 'border-2 border-ze-danger bg-ze-danger/20' : 'border border-white/10 bg-white/[0.04] opacity-65'}`}>
+                <div className="flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-2 font-bold">
+                    <span className="w-6 h-6 rounded-lg flex items-center justify-center font-mono text-ze-bg" style={{ background: z.hex }}>
+                      {z.harf}
+                    </span>
+                    <span>{x}</span>
+                  </div>
+                  <span className={`font-mono font-bold ${dogru ? 'text-ze-lime' : yanlisSecim ? 'text-ze-danger' : 'text-slate-300'}`}>%{yuzde(i)}</span>
+                </div>
+                <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
+                  <div className="h-full rounded-full" style={{ width: `${yuzde(i)}%`, background: dogru ? '#b8ff4a' : yanlisSecim ? '#ff4757' : z.hex }} />
+                </div>
+              </div>
             )
           })}
         </div>
       )}
 
-      {acik && secim !== null && (
-        <div className="text-center space-y-2 py-6">
-          <p className={`inline-flex items-center gap-2 rounded-2xl px-4 py-2 font-bold ${SIKLAR[secim % SIKLAR.length].renk}`}>
-            {SIKLAR[secim % SIKLAR.length].harf} · {secenekler[secim]}
-          </p>
-          <p className="text-slate-300">Cevabın alındı. Sonucu bekle.</p>
+      {/* Cevap alındı bandı */}
+      {acik && secimli && (
+        <div className="p-3.5 rounded-2xl bg-ze-purple/25 border border-ze-purple/50 flex items-center gap-2 text-xs font-bold animate-pop">
+          <span className="text-ze-cyan">🔒</span>
+          <span>
+            Cevabın alındı ({ZE_SIKLAR[(secim ?? 0) % ZE_SIKLAR.length].harf}) · Süre bitimi bekleniyor
+          </span>
         </div>
       )}
 
-      {adim.soru_durum === 'sonuc' && (
-        <div className="text-center space-y-3 py-4">
-          {sonucum === null ? (
-            <p className="text-slate-400">Sonuç geliyor…</p>
-          ) : !sonucum.cevapladi ? (
-            <p className="text-xl font-bold text-slate-300">Bu soruya cevap vermedin.</p>
-          ) : sonucum.dogru ? (
-            <>
-              <Konfeti adet={36} />
-              <p className="text-6xl pop" aria-hidden>
-                🎉
-              </p>
-              <p className="text-3xl font-display font-extrabold text-emerald-300">Doğru! +{sonucum.puan}</p>
-            </>
-          ) : (
-            <>
-              <p className="text-6xl pop" aria-hidden>
-                😅
-              </p>
-              <p className="text-2xl font-display font-extrabold text-rose-300">Olmadı, sıradaki senin!</p>
-            </>
-          )}
-          {typeof adim.dogru_index === 'number' && (
-            <p className="text-sm text-slate-300">
-              Doğru cevap: <b className="text-white">{secenekler[adim.dogru_index]}</b>
-            </p>
-          )}
-          {sonucum && sonucum.sira !== null && (
-            <p className="text-sm text-slate-400">
-              {sonucum.ad && <b className="text-slate-200">{sonucum.ad}</b>} · toplam <b className="text-white">{sonucum.toplam}</b> puan ·{' '}
-              {sonucum.oyuncu} kişi içinde <b className="text-white">{sonucum.sira}.</b>
-            </p>
-          )}
+      {/* İlk 5 sıralama */}
+      {sonucta && sonucum?.puanlar && sonucum.puanlar.length > 0 && (
+        <div className="glass-panel p-3.5 space-y-2">
+          <div className="flex items-center justify-between text-xs">
+            <span className="font-display font-bold text-ze-yellow">🏆 İlk 5 sıralama</span>
+            <span className="font-mono text-[11px] text-slate-400">{sonucum.oyuncu} katılımcı</span>
+          </div>
+          <div className="space-y-1">
+            {sonucum.puanlar.map((p, i) => {
+              const ben = !!sonucum.ad && p.ad === sonucum.ad
+              return (
+                <div key={`${p.ad}-${i}`} className={`flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs ${ben ? 'bg-ze-purple/30 border border-ze-pink/50 font-bold' : 'text-slate-300'}`}>
+                  <span>
+                    #{p.sira} {p.ad}
+                    {ben ? ' (Sen)' : ''}
+                  </span>
+                  <span className="font-mono text-ze-cyan">{p.puan}</span>
+                </div>
+              )
+            })}
+          </div>
         </div>
       )}
-
-      {adim.soru_durum === 'sonuc' && sonucum?.puanlar && sonucum.puanlar.length > 0 && (
-        <div className="rounded-2xl bg-white/5 p-3 space-y-1">
-          <p className="text-[11px] font-mono uppercase tracking-widest text-amber-300">İlk 5</p>
-          <ol className="text-sm">
-            {sonucum.puanlar.map((p, i) => (
-              <li key={`${p.ad}-${i}`} className="flex gap-2 py-0.5">
-                <span className="w-5 text-slate-500">{p.sira}</span>
-                <span className="flex-1 truncate">{p.ad}</span>
-                <span className="font-mono">{p.puan}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
+      {sonucta && sonucum && sonucum.sira !== null && (
+        <p className="text-center text-xs text-slate-400">
+          {sonucum.oyuncu} kişi içinde <b className="text-white">{sonucum.sira}.</b> sıradasın
+        </p>
       )}
 
-      {hata && <p className="text-sm text-rose-200 bg-rose-500/10 rounded-xl p-3">{hata}</p>}
+      {hata && <p className="text-sm text-ze-danger bg-ze-danger/15 border border-ze-danger/40 rounded-xl p-3">{hata}</p>}
     </div>
   )
 }

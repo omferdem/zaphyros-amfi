@@ -238,19 +238,31 @@ function FikirFormu({ oturum, adim, acik }: { oturum: string; adim: Adim; acik: 
     setMetin('')
   }
 
+  const etiket = mod === 'acik' ? 'Açık uçlu soru' : mod === 'firtina' ? 'Beyin fırtınası' : 'Kelime bulutu'
+  const etiketRenk = mod === 'acik' ? 'text-ze-lime' : mod === 'firtina' ? 'text-ze-pink' : 'text-ze-cyan'
   return (
-    <div className="space-y-4">
-      <h1 className="text-xl font-extrabold leading-snug whitespace-pre-line">{adim.soru}</h1>
-      {acik && adim.sure_sn != null && kalanSn !== null && (
-        <p className={`text-sm font-bold tabular-nums ${kalanSn <= 10 ? 'text-rose-300' : 'text-amber-200'}`}>⏱ {kalanSn} sn kaldı</p>
-      )}
+    <div className="glass-panel p-5 space-y-4 animate-pop">
+      <div className="flex items-center justify-between gap-2">
+        <span className={`font-mono text-[11px] uppercase font-bold ${etiketRenk}`}>{etiket}</span>
+        {mod !== 'acik' && mod !== 'bulut' && (
+          <span className="font-mono text-xs px-2.5 py-1 rounded-lg bg-white/10 text-ze-yellow font-bold">
+            Fikir hakkı: {yazilanlar.filter((y) => y !== '…').length} / {hak}
+          </span>
+        )}
+        {acik && adim.sure_sn != null && kalanSn !== null && (
+          <span className={`font-mono text-xs px-2.5 py-1 rounded-lg font-bold ${kalanSn <= 10 ? 'bg-ze-danger/20 text-ze-danger' : 'bg-ze-pink/20 text-ze-pink'}`}>
+            Kalan: {String(Math.floor(kalanSn / 60)).padStart(2, '0')}:{String(kalanSn % 60).padStart(2, '0')}
+          </span>
+        )}
+      </div>
+      <h1 className="font-display font-bold text-base leading-snug whitespace-pre-line">{adim.soru}</h1>
       {acik && !bitti && !sureDoldu && (
         <form onSubmit={gonder} className="space-y-3">
           {mod === 'bulut' ? (
             <input
               autoFocus
-              className="giris-kutusu text-lg"
-              placeholder="Bir kelime ya da kısa bir ifade"
+              className="ze-input min-h-[52px] px-4 font-display font-bold text-base"
+              placeholder="Tek kelime yaz (örn: Adalet)"
               maxLength={40}
               autoComplete="off"
               value={metin}
@@ -260,35 +272,38 @@ function FikirFormu({ oturum, adim, acik }: { oturum: string; adim: Adim; acik: 
             <div className="space-y-1">
               <textarea
                 autoFocus
-                className="giris-kutusu text-base"
-                rows={mod === 'acik' ? 5 : 3}
-                placeholder={mod === 'acik' ? 'Cevabını yaz' : 'Fikrini bir iki cümleyle yaz'}
+                className="ze-input p-3.5 text-sm"
+                rows={mod === 'acik' ? 4 : 2}
+                placeholder={mod === 'acik' ? 'Cevabını buraya detaylıca yazabilirsin…' : 'Kısa cümleni yaz…'}
                 maxLength={mod === 'acik' ? 300 : 120}
                 value={metin}
                 onChange={(e) => setMetin(e.target.value)}
               />
-              <p className="text-xs text-slate-500 text-right tabular-nums">
+              <p className="text-[11px] text-slate-500 text-right tabular-nums">
                 {metin.length} / {mod === 'acik' ? 300 : 120}
               </p>
             </div>
           )}
-          <button disabled={mesgul || metin.trim().length < 2} className="parlak-buton w-full rounded-xl py-3 font-bold disabled:opacity-50">
-            {mod === 'acik' ? 'Cevabı gönder' : `Gönder (${hak - yazilanlar.length} hakkın var)`}
+          {mod === 'acik' && <p className="text-[11px] text-slate-300 bg-white/5 px-3 py-2 rounded-xl border border-white/10">Not: Cevapların hoca yansıtınca perdede görünür.</p>}
+          <button disabled={mesgul || metin.trim().length < 2} className="btn-primary w-full py-3.5 rounded-2xl font-display font-bold text-sm">
+            {mod === 'acik' ? 'Cevabı gönder' : mod === 'bulut' ? 'Gönder' : `Fikir ekle (${hak - yazilanlar.length} hakkın kaldı)`}
           </button>
         </form>
       )}
-      {acik && bitti && <p className="text-emerald-300 font-bold">{mod === 'acik' ? 'Cevabın gönderildi. Perdeye bak.' : 'Üç fikrini de gönderdin. Perdeye bak.'}</p>}
-      {acik && sureDoldu && !bitti && <p className="text-slate-400">Süre doldu. Perdeye bak.</p>}
-      {!acik && <p className="text-slate-400">{mod === 'acik' ? 'Cevaplar toplandı. Hocan yansıtınca perdede görünecek.' : 'Fikir toplama kapandı. Perdeye bak.'}</p>}
-      {hata && <p className="text-sm text-rose-200 bg-rose-500/10 rounded-xl p-3">{hata}</p>}
-      {yazilanlar.length > 0 && (
-        <ul className="flex flex-wrap gap-2">
-          {yazilanlar.filter((y) => y !== '…').map((y) => (
-            <li key={y} className="rounded-full bg-white/10 px-3 py-1 text-sm">
-              {y}
-            </li>
+      {acik && bitti && <p className="text-center text-xs text-ze-lime font-semibold">{mod === 'acik' ? 'Cevabın gönderildi. Perdeye bak.' : mod === 'bulut' ? 'Kelimen perdeye gönderildi!' : 'Fikir hakkın doldu. Perdeye bak.'}</p>}
+      {acik && sureDoldu && !bitti && <p className="text-slate-400 text-sm text-center">Süre doldu. Perdeye bak.</p>}
+      {!acik && <p className="text-slate-400 text-sm text-center">{mod === 'acik' ? 'Cevaplar toplandı. Hocan yansıtınca perdede görünecek.' : 'Fikir toplama kapandı. Perdeye bak.'}</p>}
+      {hata && <p role="alert" className="text-xs text-ze-danger bg-ze-danger/15 border border-ze-danger/40 rounded-xl p-3">{hata}</p>}
+      {yazilanlar.filter((y) => y !== '…').length > 0 && (
+        <div className="space-y-1.5 pt-2 border-t border-white/10">
+          <span className="text-[11px] text-slate-400">Gönderdiğin fikirler:</span>
+          {yazilanlar.filter((y) => y !== '…').map((y, i) => (
+            <div key={y} className="p-2.5 rounded-xl bg-white/5 text-xs text-slate-200 flex items-start gap-2">
+              <span className="font-mono text-ze-cyan font-bold">#{i + 1}</span>
+              <span>{y}</span>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   )
@@ -330,8 +345,11 @@ function OyFormu({ oturum, adim, acik }: { oturum: string; adim: Adim; acik: boo
   }
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-xl font-extrabold leading-snug whitespace-pre-line">{adim.soru}</h1>
+    <div className="glass-panel p-5 space-y-4 animate-pop">
+      <div className="space-y-1">
+        <span className="font-mono text-[11px] uppercase text-ze-yellow font-bold">Şeytanın avukatı oylaması</span>
+        <h1 className="font-display font-bold text-base leading-snug whitespace-pre-line">{adim.soru}</h1>
+      </div>
       {!sonuc && (
         <>
           <div className="grid grid-cols-2 gap-3">
@@ -343,41 +361,47 @@ function OyFormu({ oturum, adim, acik }: { oturum: string; adim: Adim; acik: boo
                   setTaraf(i)
                   setGonderildi(false)
                 }}
-                className={`rounded-3xl px-3 py-6 font-display font-extrabold text-xl transition-all active:scale-95 ${
-                  i === 0
-                    ? 'bg-linear-to-br from-sky-400 to-blue-600 shadow-[0_8px_28px_rgba(56,189,248,0.4)]'
-                    : 'bg-linear-to-br from-pink-500 to-rose-600 shadow-[0_8px_28px_rgba(244,63,94,0.4)]'
-                } ${taraf === i ? 'ring-4 ring-white scale-[1.03]' : taraf !== null ? 'opacity-50' : ''} disabled:opacity-60`}
+                className={`pressable min-h-[76px] p-3 rounded-2xl font-display font-extrabold text-sm flex flex-col items-center justify-center gap-1.5 border-2 transition-all ${
+                  taraf === i
+                    ? i === 0
+                      ? 'bg-ze-lime/20 border-ze-lime shadow-[0_0_24px_rgba(184,255,74,0.25)]'
+                      : 'bg-ze-pink/20 border-ze-pink shadow-[0_0_24px_rgba(255,77,157,0.25)]'
+                    : 'bg-white/5 border-white/10 text-slate-300'
+                } disabled:opacity-60`}
               >
-                {e}
+                <span aria-hidden>{i === 0 ? '✓' : '✕'}</span>
+                <span>{e}</span>
               </button>
             ))}
           </div>
           {acik && taraf !== null && (
             <div className="space-y-3">
-              <textarea
-                className="giris-kutusu"
-                rows={3}
-                maxLength={200}
-                placeholder="Gerekçen (isteğe bağlı, perdede isimsiz görünür)"
-                value={metin}
-                onChange={(e) => {
-                  setMetin(e.target.value)
-                  setGonderildi(false)
-                }}
-              />
-              <button disabled={mesgul || gonderildi} onClick={gonder} className="parlak-buton w-full rounded-xl py-3 font-bold disabled:opacity-60">
-                {gonderildi ? 'Oyun alındı ✓' : kayit ? 'Oyumu güncelle' : 'Oyumu gönder'}
+              <div className="space-y-1.5">
+                <label className="text-xs text-slate-300 font-medium block">Gerekçen (isteğe bağlı)</label>
+                <textarea
+                  className="ze-input p-3 text-xs"
+                  rows={2}
+                  maxLength={200}
+                  placeholder="Neden bu tarafı seçtin? (kısa argümanın; perdede isimsiz görünür)"
+                  value={metin}
+                  onChange={(e) => {
+                    setMetin(e.target.value)
+                    setGonderildi(false)
+                  }}
+                />
+              </div>
+              <button disabled={mesgul || gonderildi} onClick={gonder} className="btn-primary w-full py-3 rounded-2xl font-display font-bold text-sm">
+                {gonderildi ? 'Oyun alındı ✓' : kayit ? 'Oyumu güncelle' : 'Tarafımı ve gerekçemi gönder'}
               </button>
               {gonderildi && <p className="text-xs text-slate-400 text-center">Sonuç açıklanana kadar fikrini değiştirebilirsin.</p>}
             </div>
           )}
           {acik && taraf === null && <p className="text-sm text-slate-400 text-center">Bir taraf seç.</p>}
-          {!acik && <p className="text-slate-400">Oylama kapandı. Perdeye bak.</p>}
+          {!acik && <p className="text-slate-400 text-sm text-center">Oylama kapandı. Perdeye bak.</p>}
         </>
       )}
       {sonuc && <OylamaSonucu adim={adim} />}
-      {hata && <p className="text-sm text-rose-200 bg-rose-500/10 rounded-xl p-3">{hata}</p>}
+      {hata && <p role="alert" className="text-xs text-ze-danger bg-ze-danger/15 border border-ze-danger/40 rounded-xl p-3">{hata}</p>}
     </div>
   )
 }

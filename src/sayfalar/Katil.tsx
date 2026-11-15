@@ -185,52 +185,78 @@ export default function Katil() {
   if (durum.tur === 'ders' && oturum) return <DersTakibi oturum={oturum} ad={durum.ad} ders={durum.ders} />
 
   return (
-    <main className="min-h-screen flex items-center justify-center p-4">
-      <section className="cam-panel rounded-3xl p-6 w-full max-w-sm space-y-5">
-        <p className="text-xs font-mono text-emerald-400 uppercase tracking-widest text-center">Derse katıl</p>
-
-        {durum.tur === 'yukleniyor' && <p className="text-center text-slate-300">Kod kontrol ediliyor…</p>}
-
-        {durum.tur === 'kod' && <KodFormu gonder={kodlaKatil} />}
-
-        {durum.tur === 'hata' && (
-          <>
-            <h1 className="text-xl font-extrabold text-center">Yoklamaya girilemedi</h1>
-            <p className="text-sm text-rose-200 bg-rose-500/10 rounded-xl p-4">{durum.metin}</p>
-            <p className="text-xs text-slate-400 text-center">Perdede 6 haneli bir ders kodu varsa onu da kullanabilirsin:</p>
-            <KodFormu gonder={kodlaKatil} kucuk />
-          </>
-        )}
-
-        {durum.tur === 'form' && (
-          <form onSubmit={gonder} className="space-y-4">
-            <div className="text-center">
-              <h1 className="text-xl font-extrabold">{durum.bilet.ders}</h1>
-              {durum.bilet.baslik && <p className="text-sm text-slate-400">{durum.bilet.baslik}</p>}
+    <main className="min-h-screen flex flex-col justify-center p-4 max-w-md mx-auto">
+      {durum.tur === 'yukleniyor' && (
+        <div className="glass-panel p-5 space-y-4 animate-pop" aria-busy="true">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl p-1 animate-spin" style={{ background: 'conic-gradient(from 0deg, #ff4d9d, #7c5cff, #22e3d2, #ff4d9d)' }}>
+              <div className="w-full h-full bg-ze-bg rounded-lg" />
             </div>
-            <label className="block space-y-2">
-              <span className="text-sm text-slate-300">Öğrenci numaran</span>
+            <div>
+              <p className="font-display font-bold text-sm">Kod kontrol ediliyor…</p>
+              <p className="font-mono text-[11px] text-slate-400">Senkronizasyon bekleniyor</p>
+            </div>
+          </div>
+          <div className="h-12 rounded-xl bg-white/10 animate-pulse" />
+        </div>
+      )}
+
+      {durum.tur === 'kod' && <KodFormu gonder={kodlaKatil} />}
+
+      {durum.tur === 'hata' && (
+        <div className="space-y-5 animate-pop">
+          <div role="alert" className="glass-panel p-5 text-center space-y-3 border-ze-danger/40">
+            <div className="w-12 h-12 rounded-2xl bg-ze-danger/20 text-ze-danger flex items-center justify-center mx-auto text-2xl" aria-hidden>
+              ⚠
+            </div>
+            <h1 className="font-display font-bold text-lg">Yoklamaya girilemedi</h1>
+            <p className="text-xs text-slate-300 leading-relaxed">{durum.metin}</p>
+          </div>
+          <p className="text-xs text-slate-400 text-center">Perdede 6 haneli bir ders kodu varsa onu da kullanabilirsin:</p>
+          <KodFormu gonder={kodlaKatil} kucuk />
+        </div>
+      )}
+
+      {durum.tur === 'form' && (
+        <form onSubmit={gonder} className="my-auto space-y-5 py-4 animate-pop">
+          <div className="glass-panel p-5 space-y-4">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <div className="min-w-0">
+                <span className="font-mono text-xs text-ze-cyan font-bold">Canlı yoklama</span>
+                <h1 className="font-display font-extrabold text-xl truncate">{durum.bilet.ders}</h1>
+                {durum.bilet.baslik && <p className="text-xs text-slate-400 truncate">{durum.bilet.baslik}</p>}
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="ogrenci-no" className="text-xs font-semibold text-slate-200 block">
+                Öğrenci numaranı gir
+              </label>
               <input
+                id="ogrenci-no"
                 required
                 autoFocus
                 inputMode="numeric"
                 autoComplete="off"
                 maxLength={24}
+                placeholder="Örn: 20241048"
                 value={numara}
                 onChange={(e) => setNumara(e.target.value)}
-                className="giris-kutusu text-2xl font-mono tracking-wider text-center"
+                className="ze-input min-h-[54px] px-4 border-white/20 font-mono font-bold text-lg"
               />
-            </label>
-            <button disabled={gonderiliyor || !numara.trim()} className="parlak-buton w-full rounded-2xl py-4 text-lg disabled:opacity-60">
-              {gonderiliyor ? 'Gönderiliyor…' : 'Yoklamaya katıl ✋'}
+            </div>
+            {formHata && (
+              <div role="alert" className="p-3 rounded-xl bg-ze-danger/20 border border-ze-danger/40 text-ze-danger text-xs font-bold animate-pop">
+                {formHata}
+              </div>
+            )}
+            <button disabled={gonderiliyor || !numara.trim()} className="btn-primary w-full py-3.5 rounded-2xl font-display font-bold text-base flex items-center justify-center gap-2">
+              <span>✓</span>
+              <span>{gonderiliyor ? 'Gönderiliyor…' : 'Yoklamamı ver'}</span>
             </button>
-            {formHata && <p className="text-sm text-rose-200 bg-rose-500/10 rounded-xl p-3">{formHata}</p>}
-            <p className="text-[11px] text-slate-500 text-center">
-              Yalnızca numaran kaydedilir. Konum, fotoğraf ya da cihaz bilgisi alınmaz.
-            </p>
-          </form>
-        )}
-      </section>
+          </div>
+          <p className="text-[11px] text-slate-500 text-center">Yalnızca numaran kaydedilir. Konum, fotoğraf ya da cihaz bilgisi alınmaz.</p>
+        </form>
+      )}
     </main>
   )
 }
@@ -253,38 +279,55 @@ function KodFormu({ gonder, kucuk = false }: { gonder: (kod: string) => Promise<
   }
 
   return (
-    <form onSubmit={gonderForm} className="space-y-4">
+    <form onSubmit={gonderForm} className={`space-y-6 ${kucuk ? '' : 'py-4'} animate-pop`}>
+      {!kucuk && (
+        <div className="text-center space-y-3">
+          <div className="w-16 h-16 rounded-2xl bg-ze-gradient p-[2px] mx-auto shadow-[0_0_32px_rgba(255,77,157,0.45)]">
+              <div className="w-full h-full bg-ze-bg rounded-[14px] flex items-center justify-center">
+                <span className="font-display font-extrabold text-2xl text-ze-gradient">ZE</span>
+              </div>
+            </div>
+          <h1 className="font-display font-extrabold text-3xl tracking-tight">Derse katıl</h1>
+        </div>
+      )}
+      <div className="glass-panel p-5 space-y-4">
+        <label htmlFor="ders-kodu" className="text-xs font-mono uppercase tracking-wider text-slate-300 block text-center">
+          6 haneli ders kodu
+        </label>
+        <input
+          id="ders-kodu"
+          inputMode="numeric"
+          pattern="[0-9]*"
+          autoComplete="off"
+          maxLength={7}
+          placeholder="123 456"
+          aria-label="6 haneli sayısal ders kodu"
+          value={kod}
+          onChange={(e) => {
+            setKod(e.target.value)
+            setHata(null)
+          }}
+          className={`ze-input min-h-[64px] text-center font-mono font-extrabold text-3xl tracking-[0.35em] border-2 px-3 ${hata ? 'border-ze-danger text-ze-danger' : 'border-white/20 text-ze-yellow'}`}
+        />
+        {hata && (
+          <div role="alert" className="p-3 rounded-xl bg-ze-danger/20 border border-ze-danger/40 text-ze-danger text-xs font-bold flex items-center justify-center gap-2 animate-pop">
+            <span aria-hidden>⚠</span>
+            <span>{hata}</span>
+          </div>
+        )}
+        <button disabled={mesgul || temiz.length !== 6} className="btn-primary w-full py-3.5 rounded-2xl font-display font-bold text-base">
+          {mesgul ? 'Kontrol ediliyor…' : 'Katıl'}
+        </button>
+      </div>
       {!kucuk && (
         <>
-          <p className="text-6xl text-center suzul" aria-hidden>
-            🎓
-          </p>
-          <h1 className="text-3xl font-extrabold text-center renkli-yazi pb-1">Hoş geldin!</h1>
-          <p className="text-sm text-slate-300 text-center">
-            Perdedeki QR kodu telefonunun kamerasıyla okut ya da perdede yazan 6 haneli ders kodunu gir.
+          <p className="text-center text-xs text-slate-400">Perdedeki kodu yaz ya da QR'ı okut.</p>
+          <p className="text-center">
+            <Link to="/panel" className="text-[11px] text-slate-500 hover:text-slate-300">
+              Hoca girişi
+            </Link>
           </p>
         </>
-      )}
-      <input
-        inputMode="numeric"
-        autoComplete="off"
-        maxLength={7}
-        placeholder="123 456"
-        aria-label="Ders kodu"
-        value={kod}
-        onChange={(e) => setKod(e.target.value)}
-        className="giris-kutusu !py-4 text-3xl font-mono tracking-[0.3em] text-center"
-      />
-      <button disabled={mesgul || temiz.length !== 6} className="parlak-buton w-full rounded-2xl py-4 text-lg disabled:opacity-50">
-        {mesgul ? 'Kontrol ediliyor…' : 'Derse katıl 🚀'}
-      </button>
-      {hata && <p className="text-sm text-rose-200 bg-rose-500/10 rounded-xl p-3">{hata}</p>}
-      {!kucuk && (
-        <p className="text-center">
-          <Link to="/panel" className="text-xs text-slate-500 hover:text-slate-300">
-            Hoca girişi
-          </Link>
-        </p>
       )}
     </form>
   )
@@ -313,15 +356,20 @@ function QuizBandi({ oturum }: { oturum: string }) {
   }, [oturum])
   if (!quiz || quiz.bitti || !quiz.kimlik) return null
   return (
-    <Link to={`/quiz?o=${oturum}`} className="rounded-2xl border border-amber-300/50 bg-amber-400/10 p-4 flex items-center gap-3 girdi">
-      <span className="text-3xl nabiz" aria-hidden>
-        📝
+    <Link
+      to={`/quiz?o=${oturum}`}
+      className="p-3 rounded-2xl bg-gradient-to-r from-ze-pink/25 via-ze-purple/25 to-ze-cyan/20 border border-ze-pink/50 flex items-center justify-between gap-2 animate-pop"
+    >
+      <span className="flex items-center gap-2 min-w-0">
+        <span className="w-8 h-8 rounded-xl bg-ze-pink/25 text-ze-pink flex items-center justify-center shrink-0" aria-hidden>
+          📝
+        </span>
+        <span className="min-w-0">
+          <span className="font-display font-bold text-xs block truncate">Quiz başladı: {quiz.baslik}</span>
+          <span className="font-mono text-[11px] text-ze-yellow">Süre: {quiz.sure_dk} dk</span>
+        </span>
       </span>
-      <span className="flex-1 min-w-0">
-        <b className="block truncate">Quiz başladı: {quiz.baslik}</b>
-        <span className="text-xs text-slate-300">{`${quiz.sure_dk} dakika. Dokun, hemen başla.`}</span>
-      </span>
-      <span className="parlak-buton rounded-xl px-4 py-2 text-sm font-bold">Başla</span>
+      <span className="btn-primary px-3.5 py-1.5 rounded-xl font-display font-bold text-xs flex items-center">Başla</span>
     </Link>
   )
 }
@@ -430,7 +478,7 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
         </div>
       )}
 
-      <section className="cam-panel rounded-3xl p-5 flex-1 flex flex-col">
+      <section className="glass-panel p-4 flex-1 flex flex-col">
         {!durum ? (
           <div className="my-auto space-y-4" aria-busy="true">
             <div className="flex items-center gap-3">
@@ -446,17 +494,50 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
             <div className="h-10 rounded-xl bg-white/10 animate-pulse" />
           </div>
         ) : durum.bitti ? (
-          <div className="m-auto text-center space-y-2 girdi">
-            <p className="text-6xl suzul" aria-hidden>
-              👋
-            </p>
-            <p className="text-2xl font-display font-extrabold">Ders bitti</p>
+          <div className="my-auto space-y-5 py-3 text-center relative overflow-hidden animate-pop">
+            <svg className="w-full h-16 mx-auto animate-confetti" viewBox="0 0 320 60" fill="none" aria-hidden>
+              <circle cx="40" cy="18" r="5" fill="#ff4d9d" />
+              <rect x="85" y="10" width="10" height="6" rx="2" transform="rotate(25 85 10)" fill="#22e3d2" />
+              <circle cx="145" cy="22" r="4" fill="#ffd23f" />
+              <polygon points="195,8 203,20 187,20" fill="#b8ff4a" />
+              <rect x="245" y="14" width="12" height="6" rx="2" transform="rotate(-20 245 14)" fill="#7c5cff" />
+              <circle cx="285" cy="26" r="5" fill="#ff4d9d" />
+            </svg>
+            <div className="space-y-2">
+              <div className="w-14 h-14 rounded-2xl bg-ze-gradient p-[1.5px] mx-auto shadow-lg">
+                <div className="w-full h-full bg-ze-bg rounded-[14px] flex items-center justify-center">
+                  <span className="font-display font-extrabold text-xl text-ze-gradient">ZE</span>
+                </div>
+              </div>
+              <h1 className="font-display font-extrabold text-2xl">Ders bitti, teşekkürler</h1>
+              <p className="text-xs text-slate-300">{durum.ders}</p>
+            </div>
             {karne && (
-              <p className="text-lg font-bold text-amber-200">
-                🏅 Bugünkü yarışmada {karne.oyuncu} kişi arasında {karne.sira}. oldun ({karne.toplam} puan)
-              </p>
+              <div className="glass-panel p-5 space-y-3 text-left border-ze-cyan/40">
+                <div className="flex items-center gap-2 text-ze-yellow font-display font-bold text-sm">
+                  <span aria-hidden>🏆</span>
+                  <span>Bugünkü ders karnen</span>
+                </div>
+                <p className="font-display font-bold text-base leading-snug">
+                  Bugünkü yarışmada {karne.oyuncu} kişi arasında <span className="text-ze-cyan">{karne.sira}. oldun</span>, <span className="font-mono text-ze-lime">{karne.toplam} puan</span>
+                </p>
+              </div>
             )}
-            <p className="text-slate-300">Teşekkürler. Bu sayfayı kapatabilirsin.</p>
+            {seri && seri.seri >= 2 && (
+              <div className="glass-panel p-4 flex items-center justify-between bg-ze-yellow/10 border-ze-yellow/35">
+                <div className="flex items-center gap-2.5 text-left">
+                  <span className="w-10 h-10 rounded-xl bg-ze-yellow/20 text-ze-yellow flex items-center justify-center text-lg" aria-hidden>
+                    🔥
+                  </span>
+                  <div>
+                    <p className="font-display font-bold text-sm">{seri.seri} ders üst üste katılım serisi!</p>
+                    <p className="text-[11px] text-slate-300">Haftaya da gelerek serini koru</p>
+                  </div>
+                </div>
+                <span className="font-mono font-extrabold text-lg text-ze-yellow">{seri.seri}x</span>
+              </div>
+            )}
+            <p className="text-xs text-slate-400">Bu sayfayı kapatabilirsin.</p>
           </div>
         ) : adim?.tur === 'slayt' ? (
           <div className="space-y-3">

@@ -12,3 +12,4 @@ veri/
 !docs/ornek/*.xlsx
 
 .claude/
+public/_mockup/

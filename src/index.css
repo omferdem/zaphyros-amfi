@@ -10,6 +10,14 @@
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Bricolage Grotesque", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  /* zapedu2 tasarımı renk adları */
+  --color-ze-bg: #070a1f;
+  --color-ze-pink: #ff4d9d;
+  --color-ze-purple: #7c5cff;
+  --color-ze-cyan: #22e3d2;
+  --color-ze-yellow: #ffd23f;
+  --color-ze-lime: #b8ff4a;
+  --color-ze-danger: #ff4757;
 }
 
 html, body, #root { min-height: 100%; }
@@ -409,3 +417,92 @@ body::after {
 .acil-halka { animation: acil 0.8s ease-in-out infinite; filter: hue-rotate(150deg) saturate(1.6) drop-shadow(0 0 14px rgba(255, 71, 87, 0.8)); }
 @keyframes acil { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
 @media (prefers-reduced-motion: reduce) { .acil-halka { animation: none; } }
+
+/* ---------------------------------------------------------------- zapedu2 bileşenleri */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 1.5rem;
+}
+.glass-panel-lg {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 2rem;
+}
+.glass-subtle {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.bg-ze-gradient { background: linear-gradient(135deg, #ff4d9d 0%, #7c5cff 52%, #22e3d2 100%); }
+.text-ze-gradient {
+  background: linear-gradient(135deg, #ff4d9d 0%, #7c5cff 50%, #22e3d2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #ff4d9d 0%, #7c5cff 100%);
+  box-shadow: 0 8px 26px -6px rgba(255, 77, 157, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.16) inset;
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), filter 220ms ease;
+  min-height: 44px;
+  color: #fff;
+}
+.btn-primary:hover:not(:disabled) { filter: brightness(1.08); }
+.btn-primary:active:not(:disabled) { transform: scale(0.96); }
+.btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(14px);
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), background-color 220ms ease, border-color 220ms ease;
+  min-height: 44px;
+  color: #fff;
+}
+.btn-secondary:hover:not(:disabled) { background: rgba(255, 255, 255, 0.11); border-color: rgba(255, 255, 255, 0.22); }
+.btn-secondary:active:not(:disabled) { transform: scale(0.96); }
+.btn-danger {
+  background: rgba(255, 71, 87, 0.16);
+  border: 1px solid rgba(255, 71, 87, 0.42);
+  color: #ff8a93;
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), background-color 220ms ease;
+  min-height: 44px;
+}
+.btn-danger:hover:not(:disabled) { background: rgba(255, 71, 87, 0.26); }
+.btn-danger:active:not(:disabled) { transform: scale(0.96); }
+.pressable { transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1); }
+.pressable:active:not(:disabled) { transform: scale(0.96); }
+@keyframes zePop {
+  0% { opacity: 0; transform: scale(0.93) translateY(8px); }
+  70% { transform: scale(1.02) translateY(-1px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.animate-pop { animation: zePop 260ms cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+@keyframes calmBreathe {
+  0%, 100% { transform: scale(0.96); opacity: 0.65; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+.animate-breathe { animation: calmBreathe 3.2s ease-in-out infinite; }
+@keyframes confettiFall {
+  0% { transform: translateY(-12px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(18px) rotate(25deg); opacity: 0.75; }
+}
+.animate-confetti { animation: confettiFall 2.4s ease-in-out infinite alternate; }
+.ze-input {
+  width: 100%;
+  background: rgba(7, 10, 31, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border-radius: 1rem;
+  outline: none;
+}
+.ze-input::placeholder { color: #64748b; }
+.ze-input:focus { border-color: #22e3d2; }
+@media (prefers-reduced-motion: reduce) {
+  .animate-pop, .animate-breathe, .animate-confetti { animation: none; opacity: 1; }
+}

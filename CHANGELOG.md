@@ -1,5 +1,13 @@
 # Sürüm Geçmişi
 
+## v0.50.0 (15 Kasım 2026)
+Öğrenci ekranları zapedu2 tasarımına birebir taşındı. Veritabanı değişikliği yok.
+- **Stil sistemi:** zapedu2'deki renk adları (`ze-pink`, `ze-cyan`...) ve bileşenler (`glass-panel`, `btn-primary`, `btn-secondary`, `btn-danger`, `pressable`, `animate-pop`, `animate-breathe`) `index.css` içine alındı.
+- **Derse katıl:** ZE logo, büyük "Derse katıl" başlığı, "6 haneli ders kodu" kartı (sarı geniş aralıklı kod), kırmızı "Bu kod tutmadı." bandı. **Yoklama formu:** "Canlı yoklama" kartı, "Öğrenci numaranı gir", "✓ Yoklamamı ver".
+- **Soru cevaplama:** başlıkta geri sayım halkası (son 5 sn kırmızı) ve "Soru 3 / 5" etiketi; şıklar renkli harf/şekil rozetli dokunma kartları; cevap alınınca "Cevabın alındı" mor bandı; sonuçta puan şeridi (yeşil/kırmızı), şık başına yüzde çubukları, "İlk 5 sıralama" ve "(Sen)" vurgusu.
+- **Etkinlikler:** kelime bulutu, beyin fırtınası, açık uçlu soru ve şeytanın avukatı formları aynı cam kart düzenine geçti (fikir hakkı sayacı, kalan süre, gönderdiğin fikirler listesi, yeşil/pembe taraf düğmeleri).
+- **Quiz bandı** gradyanlı, **ders bitti ekranı** konfeti, karne ve devam serisi kartlarıyla.
+
 ## v0.49.0 (15 Kasım 2026)
 Oyunlarda akan sahneler (sinema motoru). Veritabanı değişikliği yok.
 - **Yeni sinema motoru** (`Sinema.ts`): ekranın üstünde yay çizerek uçan nesneler (iz bırakır), patlamalar, yüzen sayılar, sarsılma, devrilme. Her yeni soruda bir sahne baştan sona oynar.

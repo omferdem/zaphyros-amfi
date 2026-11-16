@@ -10,7 +10,8 @@ export type DersSatiri = Ders & { students: { count: number }[] }
 export async function donemleriGetir(): Promise<Donem[]> {
   const { data, error } = await supabase.from('terms').select('id, ad, baslangic').order('baslangic', { ascending: false })
   if (error) throw error
-  return data as Donem[]
+  // Etkinlik alanının gizli dönemi (adı __ ile başlar) Derslerim'de görünmez
+  return (data as Donem[]).filter((d) => !d.ad.startsWith('__'))
 }
 
 export async function donemDersleri(donemId: string): Promise<DersSatiri[]> {

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { BOLUMLER, GIZLI_KOD_ONEKI, type EtkinlikBolumu } from '../lib/etkinlik'
 import { supabase } from '../lib/supabase'
 import type { Donem, Icerik } from '../lib/tipler'
 import { icerikSil } from '../lib/akis'
@@ -62,8 +63,12 @@ export default function Panel() {
       const kayitli = secilecek ?? oku(SECILI_DONEM)
       if (d.length) setSecili(d.some((x) => x.id === kayitli) ? (kayitli as string) : varsayilanDonem(d))
       else setSecili(null)
-      const { data } = await supabase.from('subjects').select('id, ad').order('ad')
-      setIcerikler((data ?? []) as Icerik[])
+      const [{ data }, { data: gizli }] = await Promise.all([
+        supabase.from('subjects').select('id, ad').order('ad'),
+        supabase.from('courses').select('subject_id').like('kod', `${GIZLI_KOD_ONEKI}%`),
+      ])
+      const gizliIdler = new Set(((gizli ?? []) as { subject_id: string }[]).map((r) => r.subject_id))
+      setIcerikler(((data ?? []) as Icerik[]).filter((i) => !gizliIdler.has(i.id)))
     } catch {
       setHata('Dönemler yüklenemedi.')
     }
@@ -123,6 +128,21 @@ export default function Panel() {
 
   return (
     <div className="space-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3" aria-label="Yoklamasız etkinlikler">
+        {(Object.keys(BOLUMLER) as EtkinlikBolumu[]).map((k) => (
+          <Link
+            key={k}
+            to={`/panel/etkinlik/${k}`}
+            className="rounded-3xl border border-white/10 bg-gradient-to-br from-violet-600/40 to-pink-500/30 p-4 hover:from-violet-500/50 hover:to-pink-400/40 transition"
+          >
+            <div className="text-2xl font-extrabold">
+              {BOLUMLER[k].emoji} {BOLUMLER[k].ad}
+            </div>
+            <p className="mt-1 text-xs text-slate-200">{BOLUMLER[k].aciklama}</p>
+            <p className="mt-1 text-[11px] text-slate-300/80">Yoklamasız, kodla giriş</p>
+          </Link>
+        ))}
+      </div>
       <div className="flex flex-wrap items-center gap-3">
         <h1 className="text-3xl font-extrabold">📚 Derslerim</h1>
         {donemler && donemler.length > 0 && (

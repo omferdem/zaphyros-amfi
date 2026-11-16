@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useSearchParams } from 'react-router-dom'
 import QRCode from 'qrcode'
 import { supabase } from '../lib/supabase'
 import type { Adim, Ders, DersDurumu, Oturum, PuanSatiri, Sunum } from '../lib/tipler'
@@ -21,6 +21,7 @@ import { dengeliSec, havuzSirasinaDiz, sonSorulanlar, turuKaydet } from '../lib/
 import PerdeNotu from '../bilesenler/PerdeNotu'
 import { oyunuAc, TAKIM_SECILEBILIR } from '../lib/oyunAc'
 import { zorlukBekleyenAl, zorlukBekleyenAyarla, zorlukYaz } from '../lib/zorluk'
+import { GIZLI_KOD_ONEKI } from '../lib/etkinlik'
 import YorumBandi, { yorumYayinla } from '../bilesenler/YorumBandi'
 import { sinifYorumlari } from '../lib/yorum'
 import OyunProvasi from '../bilesenler/OyunProvasi'
@@ -114,6 +115,9 @@ function useDersKodu(oturumId: string, etkin: boolean) {
 
 export default function Sahne() {
   const { oturumId = '' } = useParams()
+  const [aramaParametreleri, setAramaParametreleri] = useSearchParams()
+  const etkinlikKimligi = aramaParametreleri.get('etkinlik')
+  const etkinlikBasladi = useRef(false)
   const [oturum, setOturum] = useState<(Oturum & { courses: Ders }) | null | undefined>(undefined)
   const [mevcut, setMevcut] = useState(0)
   const [gelenler, setGelenler] = useState<Gelen[]>([])
@@ -579,6 +583,31 @@ export default function Sahne() {
       /* istek uygulanamadıysa perdede bir şey değişmez; hoca kumandadan yeniden dener */
     }
   }
+
+  // Etkinlik alanından gelindiyse (?etkinlik=): satırdaki paket, mod, soru sayısı ve zorlukla etkinlik kendiliğinden başlar.
+  useEffect(() => {
+    if (!etkinlikKimligi || !oturum || !icerikId || etkinlikBasladi.current) return
+    const zamanlayici = setTimeout(async () => {
+      if (etkinlikBasladi.current) return
+      etkinlikBasladi.current = true
+      const { data } = await supabase.from('etkinlikler').select('paket, mod, adet, zorluk, courses(kod)').eq('id', etkinlikKimligi).maybeSingle()
+      const e = data as unknown as { paket: string; mod: string; adet: number; zorluk: string; courses: { kod: string | null } | null } | null
+      if (e) {
+        const quizMi = e.courses?.kod === `${GIZLI_KOD_ONEKI}quiz`
+        istekIsleyici.current({
+          tur: quizMi ? 'quiz' : 'kahoot',
+          paket: e.paket,
+          mod: e.mod === 'bireysel' ? '' : e.mod,
+          adet: e.adet,
+          sure: quizMi ? Math.max(5, e.adet) : 0,
+          zorluk: e.zorluk,
+          t: Date.now(),
+        })
+      }
+      setAramaParametreleri({}, { replace: true })
+    }, 700)
+    return () => clearTimeout(zamanlayici)
+  }, [etkinlikKimligi, oturum, icerikId, setAramaParametreleri])
 
   async function yoklamaDurumu(ac: boolean) {
     if (ac) setYoklamaKatmani(true)

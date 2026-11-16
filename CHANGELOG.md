@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.65.22 (16 Kasım 2026)
+`0051_etkinlikler.sql` PGlite testinden geçti ve apply_migration ile canlıya uygulandı (yeni `etkinlikler` tablosu).
+- **Anasayfada Zapoot / Oyunlar / Quiz bölümleri:** hoca paneli ana sayfasının üstünde üç büyük buton. Her bölüm derse bağlı olmayan, yoklamasız, yalnızca kodla girilen bir etkinlik alanıdır (`/panel/etkinlik/zapoot|oyun|quiz`).
+- **Etkinlik satırları:** her bölümde hocanın adlandırdığı etkinlikler; satırda soru paketi, oyun modu, soru sayısı ve zorluk seçilir, "Başlat" yoklamasız oturumu açar ve perdede etkinlik kendiliğinden başlar (öğrenci perdedeki kodla takma adla girer). Her bölümün kendi soru bankası aynı sayfadadır (ZOMR içe aktarma dahil).
+- Bölümlerin soru bankası gizli bir derse (`__etkinlik_*`) bağlıdır; bu gizli ders ve dönemi Derslerim listelerinde görünmez, sonuçlar şube yoklamasına yazılmaz.
+
 ## v0.65.21 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Site artık https://zapedu.app/ adresinde:** Cloudflare DNS (4 A kaydı + www CNAME, yalnızca-DNS), GitHub Pages özel alan adı ve HTTPS kuruldu; eski github.io adresi 301 ile yeni adrese yönlenir. `SITE_ADRESI` değişkeni tanımlandı ve Supabase giriş adresi güncellendi. Perdedeki adres satırı ve karekod bağlantısı kendiliğinden yeni adresi gösterir. Hocalar yeni adreste bir kez yeniden giriş yapar.

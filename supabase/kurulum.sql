@@ -1,6 +1,6 @@
 -- ZAPEDU kurulum SQL'i (bu dosya otomatik üretilir, elle düzenleme; kaynağı supabase/migrations)
 -- Yeni bir Supabase projesinde SQL Editor'e bu dosyanın tamamını yapıştırıp bir kez çalıştır.
--- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql, 0019_oyun_adimi.sql, 0020_yoklama_haftalari.sql, 0021_pencere_6sn.sql, 0022_oturum_quizi.sql, 0023_acik_uclu_zombi.sql, 0024_kumanda_notu.sql, 0025_acik_uclu_sure.sql, 0026_devam_serisi.sql, 0027_hoca_davetleri.sql, 0028_etkinlik_fotograflari.sql, 0029_kod_yoklama_vermez.sql, 0030_sabit_ders_kodu.sql, 0031_kumanda_istegi.sql, 0032_slayt_gorseli_herkese.sql, 0033_slayt_gorseli_telefon_modu.sql, 0034_not_defteri.sql, 0035_kumanda_kale.sql, 0036_oyun_turlari.sql, 0037_katki_sil_hoca_yaris.sql, 0038_puan_turu_lobi.sql, 0039_takim_soru_ozeti.sql, 0040_kumanda_soru_sayisi.sql, 0041_takim_oyuncu_sonuclari.sql, 0042_soru_jokerleri.sql, 0043_kumanda_orman.sql, 0044_hizli_cevap.sql, 0045_ekran_goruntusu_kumanda_notu.sql, 0046_takim_on.sql, 0047_test_botu.sql, 0048_tur_sirasi.sql, 0049_final_turu.sql, 0050_kumanda_zorluk.sql
+-- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql, 0019_oyun_adimi.sql, 0020_yoklama_haftalari.sql, 0021_pencere_6sn.sql, 0022_oturum_quizi.sql, 0023_acik_uclu_zombi.sql, 0024_kumanda_notu.sql, 0025_acik_uclu_sure.sql, 0026_devam_serisi.sql, 0027_hoca_davetleri.sql, 0028_etkinlik_fotograflari.sql, 0029_kod_yoklama_vermez.sql, 0030_sabit_ders_kodu.sql, 0031_kumanda_istegi.sql, 0032_slayt_gorseli_herkese.sql, 0033_slayt_gorseli_telefon_modu.sql, 0034_not_defteri.sql, 0035_kumanda_kale.sql, 0036_oyun_turlari.sql, 0037_katki_sil_hoca_yaris.sql, 0038_puan_turu_lobi.sql, 0039_takim_soru_ozeti.sql, 0040_kumanda_soru_sayisi.sql, 0041_takim_oyuncu_sonuclari.sql, 0042_soru_jokerleri.sql, 0043_kumanda_orman.sql, 0044_hizli_cevap.sql, 0045_ekran_goruntusu_kumanda_notu.sql, 0046_takim_on.sql, 0047_test_botu.sql, 0048_tur_sirasi.sql, 0049_final_turu.sql, 0050_kumanda_zorluk.sql, 0051_etkinlikler.sql
 
 -- ===========================================================================
 -- 0001_saglik.sql
@@ -7128,3 +7128,35 @@ begin
   return jsonb_build_object('durum', 'tamam');
 end;
 $$;
+
+-- ===========================================================================
+-- 0051_etkinlikler.sql
+-- ===========================================================================
+
+-- 0051: Etkinlikler (derse bağlı olmayan, yoklamasız, kodla girilen Zapoot / Oyun / Quiz alanı)
+--
+-- Hoca anasayfadan Zapoot, Oyunlar ya da Quiz bölümüne girer; her bölümde kendi adlandırdığı etkinlik satırları vardır
+-- (ad + soru paketi + oyun modu + soru sayısı + zorluk). Satıra tıklayınca yoklamasız bir oturum açılır, öğrenciler kodla girer.
+-- * Her bölümün soru bankası gizli bir derse bağlıdır (ders adı "__etkinlik_zapoot" gibi; istemci ilk kullanımda açar).
+-- * Bu tablo yalnızca etkinlik satırlarını tutar; oturumlar ve sonuçlar mevcut tablolarda kalır, şube yoklamasına yazılmaz.
+
+create table public.etkinlikler (
+  id          uuid primary key default gen_random_uuid(),
+  course_id   uuid not null references public.courses (id) on delete cascade,
+  ad          text not null check (length(btrim(ad)) between 1 and 120),
+  paket       text not null default '' check (length(paket) <= 200),
+  mod         text not null default 'bireysel' check (length(mod) between 1 and 40),
+  adet        smallint not null default 20 check (adet between 1 and 100),
+  zorluk      text not null default 'orta' check (zorluk in ('kolay', 'orta', 'zor')),
+  sira        integer not null default 0,
+  olusturuldu timestamptz not null default now()
+);
+create index etkinlikler_ders_idx on public.etkinlikler (course_id, sira);
+alter table public.etkinlikler enable row level security;
+
+create policy "hoca kendi etkinliklerini yonetir" on public.etkinlikler
+  for all to authenticated
+  using (public.ders_benim(course_id))
+  with check (public.ders_benim(course_id));
+
+grant select, insert, update, delete on public.etkinlikler to authenticated;

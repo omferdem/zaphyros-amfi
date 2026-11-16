@@ -80,7 +80,8 @@ export default function HocaYarisiPaneli({ oturum, anahtar, mod, dugme = true }:
   const perde = mod === 'perde'
   const benim = secilen && soru && secilen.adim === soru.id ? secilen.metin : null
   const bitti = perde && y.acik && sinifVerisi.toplam > 0 && y.soru >= sinifVerisi.toplam
-  const sahneAcik = perde && y.acik && (buyuk || (bitti && !kapatildi))
+  // Büyük sahne oyun açılır açılmaz çizilir (eskiden yalnızca bitince ya da ⛶ ile açılıyordu); hoca kapatabilir
+  const sahneAcik = perde && y.acik && (buyuk || !kapatildi)
 
   if (!y.acik) {
     if (!dugme) return null
@@ -94,7 +95,7 @@ export default function HocaYarisiPaneli({ oturum, anahtar, mod, dugme = true }:
   }
 
   return (
-    <div className={perde ? 'fixed left-1/2 -translate-x-1/2 bottom-14 z-30 flex flex-col items-center gap-2 max-w-[22rem]' : 'cam-panel rounded-2xl p-4 space-y-3'}>
+    <div className={perde ? 'fixed left-1/2 -translate-x-1/2 bottom-20 z-30 flex flex-col items-center gap-2 max-w-[22rem]' : 'cam-panel rounded-2xl p-4 space-y-3'}>
       {sahneAcik && (
         <HocaYarisSahnesi
           hoca={y.hoca}
@@ -110,7 +111,7 @@ export default function HocaYarisiPaneli({ oturum, anahtar, mod, dugme = true }:
           }}
         />
       )}
-      <div className="cam-panel rounded-2xl px-4 py-2 flex items-center gap-3">
+      <div className="relative z-50 cam-panel rounded-2xl px-4 py-2 flex items-center gap-3">
         <Gorsel ad="hoca-yaris.webp" emoji="🥊" className="w-12 h-12" emojiClass="text-xl" />
         <span className="font-display font-extrabold tabular-nums text-lg relative">
           Hoca <span key={`h${y.hoca}`} className="skor-don inline-block">{y.hoca}</span> <span className="text-slate-500">–</span> <span key={`s${y.sinif}`} className="skor-don inline-block">{y.sinif}</span> Sınıf
@@ -132,7 +133,7 @@ export default function HocaYarisiPaneli({ oturum, anahtar, mod, dugme = true }:
       </div>
 
       {y.son && (
-        <div className="cam-panel rounded-2xl px-4 py-2 text-sm pop">
+        <div className="relative z-50 cam-panel rounded-2xl px-4 py-2 text-sm pop">
           Hoca: <b className={y.son.hoca_dogru ? 'text-emerald-300' : 'text-rose-300'}>{y.son.hoca_dogru ? '✔ doğru bildi' : '✘ yanıldı'}</b>
           {y.son.sinif_orani !== null && (
             <>
@@ -143,7 +144,7 @@ export default function HocaYarisiPaneli({ oturum, anahtar, mod, dugme = true }:
       )}
 
       {soru?.acik && !y.son && (
-        <div className="cam-panel rounded-2xl px-4 py-2 space-y-2">
+        <div className="relative z-50 cam-panel rounded-2xl px-4 py-2 space-y-2">
           {y.cevapladi && !acikPicker ? (
             <p className="text-sm text-emerald-300">
               ✓ Hoca cevabını verdi{benim && !perde ? `: ${benim}` : ''}{' '}

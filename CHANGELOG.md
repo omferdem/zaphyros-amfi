@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.65.8 (16 Kasım 2026)
+Veritabanı değişikliği yok. Botla canlı deneme: Kale (3 takım, hücre haritası), Takım yarışması, Hocayla yarış.
+- **Hocayla yarış büyük sahnesi oyun açılır açılmaz çizilir:** eskiden yalnızca yarış bitince ya da ⛶ ile açılıyor, o zamana kadar perdede küçük bir skor kutusu görünüyordu. Hoca kapatabilir.
+- **Hocanın gizli cevap düğmeleri büyük sahnenin altında kalmıyor:** skor, son sonuç ve cevap seçici z-50 katmanına alındı ve kontrol çubuğunun üstüne yerleşti.
+- **Doğrulandı (canlı, 30 bot):** Kale kuşatması (halka haritası, çadırlar ve takım durumu), Takım yarışması (soru ekranı, enerji şeridi, takım puanları).
+
 ## v0.65.7 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Bireysel / takım seçimi artık her "bireysel / takım" oyunda:** Ejderha savaşı, Bilgi merdiveni ve Hocayla yarışta sihirbaz "Sınıf birlikte oynar" yazıp seçim vermiyordu. Şimdi 🧑 Bireysel ya da 👥 Takım seçilir; takımda 2-10 takım sayısı sorulur, öğrenciler lobide takımını seçer, final takım sıralamasını da gösterir. Oyunun sahnesi aynı kalır (sınıf birlikte ejderhaya vurur); takım yalnızca öğrenci gruplaması ve final içindir. Halat 2, Kule ve Kale takım zorunlu, Roket/Arena/Zombi/Orman bireysel zorunlu.

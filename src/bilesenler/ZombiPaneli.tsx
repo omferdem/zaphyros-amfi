@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import { OYUN_OLAYI } from '../lib/oyun'
 import { KURTULMA_ORANI, zombiHesapla, type ZombiDurumu, type ZombiOyuncuDurumu, type ZombiOyuncusu, type ZombiSorusu } from '../lib/zombi'
 import Konfeti from './Konfeti'
+import { HavaiFisek, Helikopter } from './FinalEfekti'
 import { useOyunSesi } from '../lib/ses'
 import Gorsel, { adIndeksi, arkaPlan } from './Gorsel'
 import { useRaund } from './Hareket'
@@ -212,7 +213,13 @@ export function ZombiSahnesi({ d, kapat }: { d: ZombiDurumu; kapat: () => void }
 
   return (
     <div className="fixed inset-0 z-40 bg-slate-950/95 backdrop-blur-sm flex flex-col p-3 sm:p-5 gap-3">
-      {d.bitti && d.kazandi && <Konfeti />}
+      {d.bitti && d.kazandi && (
+        <>
+          <Konfeti />
+          <HavaiFisek />
+          <Helikopter />
+        </>
+      )}
       <div className="flex items-center gap-4 flex-wrap">
         <h2 className="text-2xl sm:text-3xl font-display font-extrabold zombi-baslik">🧟 Zombi Kaçışı</h2>
         <span className="text-slate-300 text-sm">

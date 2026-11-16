@@ -6,6 +6,7 @@ import { useAkiskanSayilar } from '../lib/akiskan'
 import Gorsel, { adIndeksi } from './Gorsel'
 import { KarakterEnerjisi } from './KarakterEnerjisi'
 import Konfeti from './Konfeti'
+import { EvIsigi, HavaiFisek } from './FinalEfekti'
 
 /** Patikanın dönemeçleri (100x60 birim); soldan altta başlar, sağ üstteki eve varır. */
 const PATIKA: [number, number][] = [
@@ -165,7 +166,13 @@ export function OrmanSahnesi({ d, kucult }: { d: OrmanSonucu; kucult: () => void
   return (
     <div className="fixed inset-0 z-40 bg-slate-950 flex flex-col p-3 sm:p-5 gap-3">
       <style>{STIL}</style>
-      {d.bitti && evde.length > 0 && <Konfeti />}
+      {d.bitti && evde.length > 0 && (
+        <>
+          <Konfeti />
+          <HavaiFisek patlama={5} />
+          <EvIsigi />
+        </>
+      )}
       <div className="flex items-center gap-4 flex-wrap">
         <h2 className="text-2xl font-display font-extrabold">🌲 Orman'dan eve dönüş</h2>
         <span className="text-sm text-slate-300 tabular-nums">

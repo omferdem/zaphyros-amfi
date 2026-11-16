@@ -3,6 +3,7 @@ import { useOyunSesi } from '../lib/ses'
 import { HALKA_SAYISI, HUCRE_SAYISI, evDilimi, kaleHaritasiHesapla, type KaleHaritasi, type KaleOyuncusu } from '../lib/kaleHarita'
 import { takimBilgisi } from '../lib/takim'
 import Konfeti from './Konfeti'
+import { BuyukVurgu, HavaiFisek } from './FinalEfekti'
 
 export interface KaleHaritaGirdisi {
   takimSayisi: number
@@ -116,7 +117,13 @@ export function KaleHaritaSahnesi({ h, takimSayisi, kucult }: { h: KaleHaritasi;
   return (
     <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-4 gap-2">
       <style>{KALE_STIL}</style>
-      {h.bitti && h.kazanan !== null && <Konfeti />}
+      {h.bitti && h.kazanan !== null && (
+        <>
+          <Konfeti />
+          <HavaiFisek />
+          <BuyukVurgu emoji="🚩" alt="Kale ele geçirildi!" konum="ust" />
+        </>
+      )}
       <div className="flex items-center gap-3 flex-wrap">
         <h2 className="text-2xl font-display font-extrabold">🏰 Kale kuşatması</h2>
         <span className="text-sm text-slate-300 tabular-nums">Soru {h.oynanan}</span>

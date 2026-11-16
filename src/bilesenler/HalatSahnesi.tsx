@@ -5,6 +5,7 @@ import { enerjiHesapla, gorunenAd, kalabalikAyari } from '../lib/oyunMotoru'
 import { takimBilgisi } from '../lib/takim'
 import Gorsel, { adIndeksi, arkaPlan } from './Gorsel'
 import Konfeti from './Konfeti'
+import { CamurSicrama, HavaiFisek } from './FinalEfekti'
 
 export interface HalatSahneDurumu {
   /** -1 (1. takım kazandı) ile +1 (2. takım kazandı) */
@@ -130,7 +131,13 @@ export function HalatSahnesi({ h, oyuncular, zorlaniyor, kucult }: { h: HalatSah
   return (
     <div className="fixed inset-0 z-40 overflow-hidden flex flex-col" style={arkaPlan('arka-halat.webp', 'linear-gradient(#1e3a8a, #0f172a)')}>
       <style>{STIL}</style>
-      {h.kazanan !== null && <Konfeti />}
+      {h.kazanan !== null && (
+        <>
+          <Konfeti />
+          <HavaiFisek patlama={4} />
+          <CamurSicrama taraf={h.kazanan === 1 ? 'sag' : 'sol'} />
+        </>
+      )}
       <div className="relative z-20 flex items-center gap-3 px-4 pt-3">
         <span className={`inline-block rounded-full px-4 py-1 font-display font-extrabold text-xl text-white bg-gradient-to-r ${a.renk}`}>
           {a.emoji} {a.ad}

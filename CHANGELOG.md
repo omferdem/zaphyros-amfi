@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.65.14 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Oyuna özel final efektleri (GSAP, `FinalEfekti.tsx`):** zombi kurtulunca havai fişek ve zirvedekileri alan helikopter; ejderha yenilince yere düşer (kazanırsa kükreyip büyür) ve havai fişek; arenada kupa ve havai fişek; kalede kazanan için bayrak ve havai fişek; halatta havai fişek ve kaybeden tarafa çamur sıçraması; ormanda havai fişek ve evin sıcak ışığı; kule ve zirve tırmanışında havai fişek. Roket finali (gezegenler) eskisi gibi. Efektlerden sonra ortak podyum açılır.
+- Tarayıcıda sahte oyuncularla zombi, halat ve ejderha finali görüldü; arena, kale ve orman gerçek derste görülmedi.
+
 ## v0.65.13 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Final yeni oyunun üstünde kalıyordu (botla canlıda görüldü):** oyun bitip final açıldıktan sonra yeni oyun başlayınca eski final ekranı açık kalıyordu; yeni oyun başlarken ve "Derse dön" denince final kapanır.

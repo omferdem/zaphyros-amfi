@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import Konfeti from './Konfeti'
+import { HavaiFisek } from './FinalEfekti'
 import Gorsel, { arkaPlan, gorselAdresi } from './Gorsel'
 import { takimBilgisi } from '../lib/takim'
 import { sesCal, useOyunSesi } from '../lib/ses'
@@ -121,7 +122,12 @@ export function KuleSantiyesi({ d, kucult }: { d: KuleDurumu; kucult: () => void
 
   return (
     <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 pb-24 gap-3">
-      {d.bitti && <Konfeti />}
+      {d.bitti && (
+        <>
+          <Konfeti />
+          <HavaiFisek />
+        </>
+      )}
       <div className="flex items-center gap-4 flex-wrap">
         <h2 className="text-2xl sm:text-3xl font-display font-extrabold kule-baslik">🏗️ Kule Yarışı</h2>
         <span className="text-sm text-slate-300">

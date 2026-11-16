@@ -18,11 +18,13 @@ import { takimBilgisi } from '../lib/takim'
 import { EJDERHA_ORANI, KAHRAMAN_CANI, ejderhaHesapla, type EjderhaDurumu } from '../lib/ejderha'
 import type { ZombiOyuncusu, ZombiSorusu } from '../lib/zombi'
 import Konfeti from './Konfeti'
+import { BuyukVurgu, HavaiFisek } from './FinalEfekti'
 import { type SeritOyuncusu } from './EnerjiSeridi'
 import { EnerjiSaglayici, KarakterEnerjisi } from './KarakterEnerjisi'
 import { sesCal, useOyunSesi } from '../lib/ses'
 import { yorumYayinla } from './YorumBandi'
 import { zorlukOku } from '../lib/zorluk'
+import gsap from 'gsap'
 import { oyuncuYorumlari } from '../lib/yorum'
 
 type Veri = { sorular: ZombiSorusu[]; oyuncular: ZombiOyuncusu[] }
@@ -493,9 +495,26 @@ export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [raund])
 
+  // Final: ejderha yenildiyse yere düşer; kazandıysa kükreyip büyür
+  useEffect(() => {
+    const el = ejderhaRef.current
+    if (!d.bitti || !el) return
+    const t = d.kazandi
+      ? gsap.to(el, { y: '34vh', rotation: 75, scale: 0.85, duration: 1.8, delay: 0.6, ease: 'power2.in' })
+      : gsap.to(el, { scale: 1.14, duration: 0.5, yoyo: true, repeat: 5, ease: 'sine.inOut' })
+    return () => {
+      t.kill()
+    }
+  }, [d.bitti, d.kazandi])
+
   return (
     <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
-      {d.bitti && d.kazandi && <Konfeti />}
+      {d.bitti && d.kazandi && (
+        <>
+          <Konfeti />
+          <HavaiFisek />
+        </>
+      )}
       <div className="flex items-center gap-4 flex-wrap">
         <h2 className="text-2xl sm:text-3xl font-display font-extrabold ejderha-baslik">🐉 Ejderha Savaşı</h2>
         <span className="text-sm text-slate-300">
@@ -663,7 +682,13 @@ export function ArenaSahnesi({ d, kucult }: { d: ArenaDurumu; kucult: () => void
   const kazananlar = d.bitti ? d.kazananlar.slice(0, 3) : []
   return (
     <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
-      {d.bitti && !d.kimseKalmadi && kazananlar.length > 0 && <Konfeti />}
+      {d.bitti && !d.kimseKalmadi && kazananlar.length > 0 && (
+        <>
+          <Konfeti />
+          <HavaiFisek patlama={5} />
+          <BuyukVurgu emoji="🏆" alt="Arenanın kazananı!" konum="ust" />
+        </>
+      )}
       <div className="flex items-center gap-4 flex-wrap">
         <h2 className="text-2xl sm:text-3xl font-display font-extrabold arena-baslik">⚔️ Son Kalan Arenası</h2>
         <span className="text-sm text-slate-300">

@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import gsap from 'gsap'
 import Gorsel from './Gorsel'
 import Konfeti from './Konfeti'
+import { HavaiFisek } from './FinalEfekti'
 import { GUVENLI_ARALIK, type MerdivenDurumu } from '../lib/merdiven'
 import { sesCal, useOyunSesi } from '../lib/ses'
 import type { SoruJokerleri } from './MerdivenPaneli'
@@ -182,7 +183,12 @@ export default function ZirveSahnesi({ d, sonSonuc, jokerler, sonOran }: { d: Me
       <div ref={bayrakRef} className="absolute -translate-x-1/2 -translate-y-full text-[4cqw] leading-none" style={{ left: '78.2%', top: '10%', opacity: d.kazandi ? 1 : 0.55 }}>
         🚩
       </div>
-      {d.kazandi && <Konfeti />}
+      {d.kazandi && (
+        <>
+          <Konfeti />
+          <HavaiFisek />
+        </>
+      )}
 
       {/* ekip */}
       <div ref={grupRef} className="absolute -translate-x-1/2 -translate-y-[85%] z-10" style={{ left: '9%', top: '95%' }}>

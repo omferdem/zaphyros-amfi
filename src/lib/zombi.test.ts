@@ -55,13 +55,20 @@ describe('zombi kaçışı', () => {
     expect(d.bitti).toBe(true)
     expect(d.kazandi).toBe(false)
   })
-  it('sınıfın %70\'i zirveye çıkınca kazanılır', () => {
-    const oy = Array.from({ length: 10 }, (_, i) => ({ ad: `Ö${i}`, sonuc: sonuc(20, 20, () => (i < 7 ? 1 : 0)) }))
+  it('oyun sonunda sınıfın %60\'ı yakalanmadan kalırsa kazanılır', () => {
+    // 10 kişi: 6'sı %80 bilir (zirve), 4'ü hiç bilmez (yakalanır) => kurtulan %60
+    const oy = Array.from({ length: 10 }, (_, i) => ({ ad: `Ö${i}`, sonuc: i < 6 ? oranli(20, 0.8) : sonuc(20, 20, () => 0) }))
     const d = zombiHesapla(sorular(20, 20), oy)!
-    expect(d.oran).toBeCloseTo(KURTULMA_ORANI)
+    expect(d.kurtulanOrani).toBeCloseTo(KURTULMA_ORANI)
     expect(d.kazandi).toBe(true)
-    const az = zombiHesapla(sorular(20, 20), oy.map((o, i) => ({ ...o, sonuc: sonuc(20, 20, () => (i < 6 ? 1 : 0)) })))!
+    const az = zombiHesapla(sorular(20, 20), oy.map((o, i) => ({ ...o, sonuc: i < 5 ? oranli(20, 0.8) : sonuc(20, 20, () => 0) })))!
+    expect(az.kurtulanOrani).toBeCloseTo(0.5)
     expect(az.kazandi).toBe(false)
+  })
+  it('oyun bitmeden, herkes zirveye çıkmadıkça kazanıldı denmez', () => {
+    const d = zombiHesapla(sorular(20, 10), [{ ad: 'A', sonuc: sonuc(20, 10, () => 1) }, { ad: 'B', sonuc: sonuc(20, 10, () => 1) }])!
+    expect(d.bitti).toBe(false)
+    expect(d.kazandi).toBe(false)
   })
   it('oyun bitmeden zirvedekiler yetmediği sürece kazanıldı denmez; oynanmamış sorular sayılmaz', () => {
     const d = zombiHesapla(sorular(20, 5), [{ ad: 'A', sonuc: sonuc(20, 5, () => 1) }])!

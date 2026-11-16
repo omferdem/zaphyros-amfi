@@ -1,6 +1,6 @@
 -- ZAPEDU kurulum SQL'i (bu dosya otomatik üretilir, elle düzenleme; kaynağı supabase/migrations)
 -- Yeni bir Supabase projesinde SQL Editor'e bu dosyanın tamamını yapıştırıp bir kez çalıştır.
--- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql, 0019_oyun_adimi.sql, 0020_yoklama_haftalari.sql, 0021_pencere_6sn.sql, 0022_oturum_quizi.sql, 0023_acik_uclu_zombi.sql, 0024_kumanda_notu.sql, 0025_acik_uclu_sure.sql, 0026_devam_serisi.sql, 0027_hoca_davetleri.sql, 0028_etkinlik_fotograflari.sql, 0029_kod_yoklama_vermez.sql, 0030_sabit_ders_kodu.sql, 0031_kumanda_istegi.sql, 0032_slayt_gorseli_herkese.sql, 0033_slayt_gorseli_telefon_modu.sql, 0034_not_defteri.sql, 0035_kumanda_kale.sql, 0036_oyun_turlari.sql, 0037_katki_sil_hoca_yaris.sql, 0038_puan_turu_lobi.sql, 0039_takim_soru_ozeti.sql, 0040_kumanda_soru_sayisi.sql, 0041_takim_oyuncu_sonuclari.sql, 0042_soru_jokerleri.sql, 0043_kumanda_orman.sql, 0044_hizli_cevap.sql, 0045_ekran_goruntusu_kumanda_notu.sql
+-- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql, 0019_oyun_adimi.sql, 0020_yoklama_haftalari.sql, 0021_pencere_6sn.sql, 0022_oturum_quizi.sql, 0023_acik_uclu_zombi.sql, 0024_kumanda_notu.sql, 0025_acik_uclu_sure.sql, 0026_devam_serisi.sql, 0027_hoca_davetleri.sql, 0028_etkinlik_fotograflari.sql, 0029_kod_yoklama_vermez.sql, 0030_sabit_ders_kodu.sql, 0031_kumanda_istegi.sql, 0032_slayt_gorseli_herkese.sql, 0033_slayt_gorseli_telefon_modu.sql, 0034_not_defteri.sql, 0035_kumanda_kale.sql, 0036_oyun_turlari.sql, 0037_katki_sil_hoca_yaris.sql, 0038_puan_turu_lobi.sql, 0039_takim_soru_ozeti.sql, 0040_kumanda_soru_sayisi.sql, 0041_takim_oyuncu_sonuclari.sql, 0042_soru_jokerleri.sql, 0043_kumanda_orman.sql, 0044_hizli_cevap.sql, 0045_ekran_goruntusu_kumanda_notu.sql, 0046_takim_on.sql
 
 -- ===========================================================================
 -- 0001_saglik.sql
@@ -6770,3 +6770,40 @@ $$;
 
 revoke all on function public.kumanda_not_ekle(uuid, text, text) from public;
 grant execute on function public.kumanda_not_ekle(uuid, text, text) to anon, authenticated;
+
+-- ===========================================================================
+-- 0046_takim_on.sql
+-- ===========================================================================
+
+-- 0046: Takım sayısı en çok 10
+--
+-- Takım yarışması ve takımlı oyunlar (halat hariç, o hep 2 takım) 2 ile 10 arası takımla oynanabilir.
+-- Kısıtlar ve takim_ayarla genişletildi; öğrenci tarafı (takim_sec) takım numarasını ayarlanan sayıya göre denetler.
+
+alter table public.takim_ayar drop constraint if exists takim_ayar_sayi_check;
+alter table public.takim_ayar add constraint takim_ayar_sayi_check check (sayi = 0 or sayi between 2 and 10);
+alter table public.takim_uyeleri drop constraint if exists takim_uyeleri_takim_check;
+alter table public.takim_uyeleri add constraint takim_uyeleri_takim_check check (takim between 1 and 10);
+alter table public.oyun_turlari drop constraint if exists oyun_turlari_grup_check;
+alter table public.oyun_turlari add constraint oyun_turlari_grup_check check (grup is null or grup between 2 and 10);
+
+create or replace function public.takim_ayarla(p_session uuid, p_anahtar text, p_sayi integer)
+returns jsonb
+language plpgsql
+volatile
+security definer
+set search_path = ''
+as $$
+begin
+  if not ozel.sinif_yetki(p_session, p_anahtar) then
+    return jsonb_build_object('hata', 'yetki_yok');
+  end if;
+  if p_sayi is null or not (p_sayi = 0 or p_sayi between 2 and 10) then
+    return jsonb_build_object('hata', 'sayi_gecersiz');
+  end if;
+  insert into public.takim_ayar (session_id, sayi) values (p_session, p_sayi)
+  on conflict (session_id) do update set sayi = excluded.sayi;
+  delete from public.takim_uyeleri where session_id = p_session and (p_sayi = 0 or takim > p_sayi);
+  return jsonb_build_object('durum', 'tamam');
+end;
+$$;

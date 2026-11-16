@@ -11,6 +11,7 @@ import type { DersDurumu } from '../lib/tipler'
 import SoruCevabi from '../bilesenler/SoruCevabi'
 import { EtkinlikCevabi } from '../bilesenler/Etkinlik'
 import { useSlaytGorseli } from '../lib/gorsel'
+import { slaytMetniniTemizle } from '../lib/slaytMetni'
 import SinifDugmeleri from '../bilesenler/SinifDugmeleri'
 
 interface Bilet {
@@ -468,7 +469,7 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
   const gorselGoster = !!adim?.gorsel && !!durum?.telefon_modu && !tasarruf
   const gorsel = useSlaytGorseli(adim?.tur === 'slayt' && gorselGoster ? adim.gorsel : null)
   const [kartMesgul, setKartMesgul] = useState(false)
-  const satirlar = (adim?.tur === 'slayt' ? adim.metin ?? '' : '').split('\n').filter(Boolean)
+  const satirlar = slaytMetniniTemizle(adim?.tur === 'slayt' ? adim.metin ?? '' : '').split('\n').filter(Boolean)
 
   return (
     <main className="min-h-screen p-4 pb-28 flex flex-col gap-4 max-w-lg mx-auto">

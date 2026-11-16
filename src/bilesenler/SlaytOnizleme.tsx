@@ -1,3 +1,4 @@
+import { slaytMetniniTemizle } from '../lib/slaytMetni'
 import { useEffect, useState } from 'react'
 import { SlaytCizimi } from './Slayt'
 import type { PdfBelgesi } from '../lib/pdf'
@@ -50,7 +51,7 @@ export default function SlaytOnizleme({
 
   if (!simdiki) return null
   const sunum = simdiki.presentation_id ? sunumlar.get(simdiki.presentation_id) : undefined
-  const metin = sunum?.metinler[(simdiki.sayfa_no ?? 1) - 1] ?? ''
+  const metin = slaytMetniniTemizle(sunum?.metinler[(simdiki.sayfa_no ?? 1) - 1])
 
   async function kaydet() {
     if (!simdiki) return

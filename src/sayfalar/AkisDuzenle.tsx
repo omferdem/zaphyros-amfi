@@ -10,6 +10,7 @@ import SunumSurukle from '../bilesenler/SunumSurukle'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
 import SlaytOnizleme from '../bilesenler/SlaytOnizleme'
+import { slaytMetniniTemizle } from '../lib/slaytMetni'
 import AdimDuzenle, { type SoruDegisikligi } from '../bilesenler/AdimDuzenle'
 import { fotoYukle, gorselMi } from '../lib/foto'
 
@@ -20,7 +21,7 @@ function dosyadanAd(ad: string): string {
 
 /** Slayt metninin ilk satırı, adım listesinde başlık olarak gösterilir. */
 function ilkSatir(metin: string | undefined): string {
-  return (metin ?? '').split('\n')[0]?.slice(0, 120) ?? ''
+  return slaytMetniniTemizle(metin).split('\n')[0]?.slice(0, 120) ?? ''
 }
 
 /** Akış kartının türü: etiket ve vurgu rengi (zapedu2 tasarımı). */

@@ -7,6 +7,7 @@ import { SIKLAR } from '../lib/yarisma'
 import { youtubeGomme } from '../lib/video'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
 import OyunProvasi from '../bilesenler/OyunProvasi'
+import { slaytMetniniTemizle } from '../lib/slaytMetni'
 import { SimKontrol, SimPerde, SimTelefon, etkilesimli, ilkSim, simSuresi, useSimSayaci, type Sim } from './OnizlemeSimulasyonu'
 
 type Gorunum = 'perde' | 'telefon' | 'ikisi'
@@ -108,7 +109,7 @@ export default function AkisOnizleme() {
 
   const soru = adim?.tur === 'soru' ? soruHaritasi.get(adim.question_id ?? '') : undefined
   const sunum = adim?.presentation_id ? sunumHaritasi.get(adim.presentation_id) : undefined
-  const slaytMetni = sunum?.metinler[(adim?.sayfa_no ?? 1) - 1] ?? ''
+  const slaytMetni = slaytMetniniTemizle(sunum?.metinler[(adim?.sayfa_no ?? 1) - 1])
 
   const simAktif = canli && !!adim && etkilesimli(adim)
   const sure = adim ? simSuresi(adim, soru) : null

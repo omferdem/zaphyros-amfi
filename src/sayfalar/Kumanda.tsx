@@ -14,6 +14,7 @@ import TakimPaneli from '../bilesenler/TakimPaneli'
 import HocaYarisiPaneli from '../bilesenler/HocaYarisiPaneli'
 import MerdivenPaneli from '../bilesenler/MerdivenPaneli'
 import KumandaBaslat from '../bilesenler/KumandaBaslat'
+import { slaytMetniniTemizle } from '../lib/slaytMetni'
 import ZombiPaneli from '../bilesenler/ZombiPaneli'
 import BaglantiUyarisi from '../bilesenler/BaglantiUyarisi'
 import { tepkiAyarGonder } from '../lib/tepki'
@@ -32,7 +33,7 @@ function anahtarYeri(oturum: string) {
 }
 
 function ilkSatir(metin: string | null | undefined): string {
-  return (metin ?? '').split('\n')[0] ?? ''
+  return slaytMetniniTemizle(metin).split('\n')[0] ?? ''
 }
 
 /**
@@ -260,7 +261,7 @@ export default function Kumanda() {
                     </div>
                   ))}
                 <p className="text-sm whitespace-pre-line text-slate-200 max-h-48 overflow-auto">
-                  {durum.adim.metin?.trim() || 'Bu slaytta metin yok.'}
+                  {slaytMetniniTemizle(durum.adim.metin).trim() || 'Bu slaytta metin yok.'}
                 </p>
               </div>
             ) : durum.adim.tur === 'soru' ? (

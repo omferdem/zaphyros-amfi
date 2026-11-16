@@ -22,6 +22,10 @@ export const TAKIMLAR = [
   { ad: 'Sarı', emoji: '🟡', renk: 'from-amber-400 to-yellow-500' },
   { ad: 'Mor', emoji: '🟣', renk: 'from-violet-500 to-purple-600' },
   { ad: 'Turuncu', emoji: '🟠', renk: 'from-orange-500 to-amber-600' },
+  { ad: 'Pembe', emoji: '💗', renk: 'from-pink-400 to-pink-600' },
+  { ad: 'Turkuaz', emoji: '🔷', renk: 'from-cyan-400 to-teal-600' },
+  { ad: 'Kahverengi', emoji: '🟤', renk: 'from-amber-700 to-stone-700' },
+  { ad: 'Gri', emoji: '⚪', renk: 'from-slate-400 to-slate-600' },
 ] as const
 
 /** 1'den başlayan takım numarasının adı ve simgesi */
@@ -30,7 +34,7 @@ export function takimBilgisi(no: number) {
 }
 
 /** Takım sayısını seçerken sunulan seçenekler (0: kapalı) */
-export const TAKIM_SAYILARI = [0, 2, 3, 4, 5, 6] as const
+export const TAKIM_SAYILARI = [0, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const
 
 /** Halat çekmede bir takımın üye başına doğru sayısı fark ederse halat o yöne kayar; bu fark kazanmak için yeter. */
 export const HALAT_ESIGI = 3

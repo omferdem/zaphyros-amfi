@@ -45,18 +45,21 @@ export async function sayfaCizmeyeBasla(
  * (pdf.js kelime aralarını kendisi boşluk parçası olarak verir; parçalar arasına boşluk
  * eklenirse bölünmüş kelimeler "Tanr ı" gibi ayrılır.)
  */
+import { slaytMetniniTemizle } from './slaytMetni'
+
 export function metniDuzenle(parcalar: { str: string; hasEOL?: boolean }[]): string {
   let metin = ''
   for (const p of parcalar) {
     metin += p.str
     if (p.hasEOL) metin += '\n'
   }
-  return metin
-    .split('\n')
-    .map((s) => s.replace(/\s+/g, ' ').trim())
-    .filter(Boolean)
-    .join('\n')
-    .slice(0, 4000)
+  return slaytMetniniTemizle(
+    metin
+      .split('\n')
+      .map((s) => s.replace(/\s+/g, ' ').trim())
+      .filter(Boolean)
+      .join('\n'),
+  ).slice(0, 4000)
 }
 
 export async function sayfaMetinleri(belge: PdfBelgesi): Promise<string[]> {

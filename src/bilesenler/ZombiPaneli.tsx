@@ -28,7 +28,7 @@ function oku(oturum: string): boolean {
 
 /**
  * Zombi Kaçışı: sınıf piramidin zirvesine çıkmaya çalışır. Doğru cevap bir kat yükseltir; zombiler her soruda biraz
- * yaklaşır ve altında kalanı yakalar. Oyun sonunda öğrencilerin %70'i zirvedeyse sınıf kurtulur. Her öğrenci ilk adıyla
+ * yaklaşır ve altında kalanı yakalar. Oyun sonunda sınıfın %60'ı yakalanmadan kalırsa sınıf kurtulur. Her öğrenci ilk adıyla
  * ayrı bir karakter olarak perdede görünür. Soru çözülürken kimsenin cevabı belli olmaz; sonuç açılınca karakterler yürür.
  */
 export default function ZombiPaneli({ oturum, anahtar, mod }: { oturum: string; anahtar: string | null; mod: 'perde' | 'kumanda' }) {
@@ -113,10 +113,10 @@ function Ozet({ d, kapat }: { d: ZombiDurumu; kapat: () => void }) {
         </button>
       </div>
       <p>
-        Zirvede <b className="text-emerald-300">{d.zirvede}</b> · yakalanan <b className="text-rose-300">{d.yakalanan}</b> · hedef %{Math.round(KURTULMA_ORANI * 100)}
+        Zirvede <b className="text-emerald-300">{d.zirvede}</b> · yakalanan <b className="text-rose-300">{d.yakalanan}</b> · kurtulan %{Math.round(d.kurtulanOrani * 100)} (hedef %{Math.round(KURTULMA_ORANI * 100)})
       </p>
       <div className="h-2 rounded-full bg-white/10 overflow-hidden">
-        <div className="h-full bg-linear-to-r from-emerald-400 to-teal-300 transition-[width] duration-700" style={{ width: `${Math.round(d.oran * 100)}%` }} />
+        <div className="h-full bg-linear-to-r from-emerald-400 to-teal-300 transition-[width] duration-700" style={{ width: `${Math.round(d.kurtulanOrani * 100)}%` }} />
       </div>
       {d.bitti && <p className={d.kazandi ? 'text-emerald-300 font-bold' : 'text-rose-300 font-bold'}>{d.kazandi ? '🏆 Sınıf kurtuldu!' : '☠ Zombiler kazandı'}</p>}
     </div>
@@ -191,7 +191,7 @@ export function ZombiSahnesi({ d, kapat }: { d: ZombiDurumu; kapat: () => void }
         <span className="text-sm">
           Yakalanan <b className="text-rose-300 text-lg tabular-nums">{d.yakalanan}</b>
         </span>
-        <span className="text-xs text-slate-400">Kurtulmak için sınıfın %{Math.round(KURTULMA_ORANI * 100)}'i zirveye çıkmalı</span>
+        <span className="text-xs text-slate-400">Kurtulmak için oyun sonunda sınıfın %{Math.round(KURTULMA_ORANI * 100)}'i yakalanmadan kalmalı ({d.kurtulan} kişi kurtuldu)</span>
         <button className="ikincil-buton ml-auto !py-1.5 kucult-dugmesi" onClick={kapat}>
           Küçült
         </button>

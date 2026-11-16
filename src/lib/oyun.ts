@@ -69,7 +69,7 @@ export const OYUNLAR: Record<OyunAnahtari, OyunBilgisi> = {
   zombi: {
     ad: 'Zombi kaçışı',
     emoji: '🧟',
-    nasil: 'Sınıf bir piramidin zirvesine çıkmaya çalışır; her öğrenci perdede ayrı bir karakterdir. Doğru cevap bir kat yükseltir, zombiler her soruda yaklaşır. Sınıfın %70\'i zirveye çıkarsa kurtulur.',
+    nasil: 'Sınıf bir piramidin zirvesine çıkmaya çalışır; her öğrenci perdede ayrı bir karakterdir. Doğru cevap bir kat yükseltir, zombiler her soruda yaklaşır. Oyun sonunda sınıfın %60\'ı yakalanmadan kalırsa kurtulur.',
     baslat: 'Zombi kaçışı piramidini perdede açar.',
   },
   merdiven: {

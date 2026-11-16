@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.64.0 (16 Kasım 2026)
+- **Slayt başlıkları (1a):** PDF'ten gelen "preencoded.png", "image.png", "Resim 3" gibi görsel adı satırları ayıklanır; başlık ilk anlamlı satırdır, yoksa "Slayt N". Akış düzenleyici, perde, telefon metni, ekran görüntüsü kartı ve önizlemeler aynı temizleyiciyi kullanır. Var olan sunumlar tek seferlik SQL ile düzeltildi (28 sunum, 333 sayfa).
+- **Zombi kaçışı kuralı (1b):** oyun sonunda sınıfın %60'ı yakalanmadan kalırsa sınıf kurtulur; perdedeki bütün yazılar ve ilerleme çubuğu bu kurala uydu.
+- **Takım sayısı 10'a çıktı (1c, 0046_takim_on.sql, SQL ile uygulandı):** 10 renk, sihirbaz ve takım ayarında 2-10 seçeneği, lobi ve kale haritası 10 takımla.
+- **Prova çubuğu (1d):** "▾ Küçült" ile tek tıkla küçük bir düğmeye iner, sahne tamamen görünür.
+
 ## v0.63.0 (16 Kasım 2026)
 - **Ekran görüntüsü düğmesi hocanın elinde (0045_ekran_goruntusu_kumanda_notu.sql, SQL ile uygulandı):** perdedeki "⋯" menüsünde "Ekran görüntüsü: açık/kapalı"; kapalıyken öğrenci telefonunda düğme görünmez (varsayılan açık).
 - **Kumandadan hızlı not:** telefon kumandasının Ders sekmesinde "Hızlı not" kutusu; not şubenin not defterine yeni kart olarak eklenir (kumanda anahtarıyla, hoca girişi gerekmeden; `kumanda_not_ekle`).

@@ -47,10 +47,14 @@ export interface ZombiDurumu {
   oran: number
   bitti: boolean
   kazandi: boolean
+  /** Yakalanmadan kalanlar (zirvede + hayatta) */
+  kurtulan: number
+  /** Kurtulanların oyuncu sayısına oranı (0-1); kazanma koşulu bununla ölçülür */
+  kurtulanOrani: number
 }
 
-/** Sınıfın kurtulması için zirveye çıkması gereken oran. */
-export const KURTULMA_ORANI = 0.7
+/** Oyun sonunda sınıfın kurtulması için yakalanmadan kalması (zirvede ya da hayatta) gereken oran. */
+export const KURTULMA_ORANI = 0.6
 /** Zombiler zemin seviyesinin bu kadar altından başlar (oyuncuya toleranslı başlangıç). */
 export const ZOMBI_BASLANGIC = -2
 /** Zombi sürüsü her bu kadar soruda bir kat çıkar. Hız oyuncuların %40'ı bilirse yakalanacak, %60'ı bilirse kurtulacak biçimde ayarlandı (zombi.test.ts). */
@@ -124,6 +128,9 @@ export function zombiHesapla(sorular: ZombiSorusu[], oyuncular: ZombiOyuncusu[])
     yakalanan,
     oran,
     bitti,
-    kazandi: sonuclar.length > 0 && oran >= KURTULMA_ORANI && (bitti || zirvede === sonuclar.length),
+    kurtulan: sonuclar.length - yakalanan,
+    kurtulanOrani: sonuclar.length > 0 ? (sonuclar.length - yakalanan) / sonuclar.length : 0,
+    // Oyun sonunda sınıfın %60'ı yakalanmadan kaldıysa sınıf kurtulur; herkes zirveye çıkarsa oyun beklemeden biter
+    kazandi: sonuclar.length > 0 && ((bitti && (sonuclar.length - yakalanan) / sonuclar.length >= KURTULMA_ORANI) || zirvede === sonuclar.length),
   }
 }

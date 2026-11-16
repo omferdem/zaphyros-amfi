@@ -50,6 +50,7 @@ export default function OyunProvasi({ kapat, baslangic = 'zombi' }: { kapat: () 
   const [oynuyor, setOynuyor] = useState(true)
   const [sayi, setSayi] = useState(20)
   const [basari, setBasari] = useState(0.6)
+  const [acik, setAcik] = useState(true)
   const oyuncular = useMemo(() => sahteOyuncular(sayi, basari, TOPLAM), [sayi, basari])
   const sorular: ZombiSorusu[] = useMemo(() => Array.from({ length: TOPLAM }, (_, i) => ({ adim: `p${i}`, sira: i + 1, acildi: i < k })), [k])
 
@@ -137,7 +138,16 @@ export default function OyunProvasi({ kapat, baslangic = 'zombi' }: { kapat: () 
   return (
     <>
       {sahne}
-      <div className="fixed left-1/2 -translate-x-1/2 bottom-3 z-[70] cam-panel rounded-2xl px-3 py-2 flex flex-wrap items-center gap-2 text-sm shadow-2xl">
+      {!acik && (
+        <button
+          className="fixed right-2 bottom-2 z-[70] rounded-full bg-fuchsia-600/90 hover:bg-fuchsia-500 text-white text-xs font-bold px-3 py-1.5 shadow-lg"
+          onClick={() => setAcik(true)}
+          title="Prova denetimlerini aç"
+        >
+          🧪 Prova · soru {k}/{TOPLAM}
+        </button>
+      )}
+      <div className={`fixed left-1/2 -translate-x-1/2 bottom-3 z-[70] cam-panel rounded-2xl px-3 py-2 ${acik ? "flex" : "hidden"} flex-wrap items-center gap-2 text-sm shadow-2xl`}>
         <span className="font-bold text-fuchsia-300">🧪 Oyun provası</span>
         <span className="text-xs text-slate-400 hidden sm:inline">sahte öğrencilerle, hiçbir şey kaydedilmez</span>
         <div className="flex flex-wrap gap-1">
@@ -187,6 +197,9 @@ export default function OyunProvasi({ kapat, baslangic = 'zombi' }: { kapat: () 
         <span className="text-xs tabular-nums text-slate-300">
           soru {k} / {TOPLAM}
         </span>
+        <button className="ikincil-buton !py-1 !px-2 text-xs" onClick={() => setAcik(false)} title="Çubuğu küçült, sahne tamamen görünsün">
+          ▾ Küçült
+        </button>
         <button className="tehlike-buton !py-1 !px-2 text-xs" onClick={kapat}>
           Kapat
         </button>

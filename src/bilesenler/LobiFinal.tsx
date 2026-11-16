@@ -8,7 +8,7 @@ import type { PuanSatiri } from '../lib/tipler'
 import Konfeti from './Konfeti'
 
 const takimliMi = (mod: OyunAnahtari | null) => mod === 'halat' || (mod !== null && GRUPLU_OYUNLAR.includes(mod))
-const TAKIM_RENKLERI = ['text-ze-pink', 'text-ze-cyan', 'text-ze-yellow', 'text-ze-lime', 'text-purple-300', 'text-orange-300']
+const TAKIM_RENKLERI = ['text-ze-pink', 'text-ze-cyan', 'text-ze-yellow', 'text-ze-lime', 'text-purple-300', 'text-orange-300', 'text-pink-300', 'text-cyan-300', 'text-amber-600', 'text-slate-300']
 
 /** Oyun başlamadan önceki bekleme ekranı: katılanlar, takımlar, dağıtma düğmeleri, 3-2-1 ve kural. */
 export function Lobi({
@@ -116,7 +116,7 @@ export function Lobi({
             >
               {takimSutunlari.map((t) => (
                 <div key={t.takim} className="glass-panel p-3 min-h-40">
-                  <p className={`font-display font-extrabold text-lg ${TAKIM_RENKLERI[(t.takim - 1) % 6]}`}>
+                  <p className={`font-display font-extrabold text-lg ${TAKIM_RENKLERI[(t.takim - 1) % TAKIM_RENKLERI.length]}`}>
                     Takım {t.takim} <span className="text-slate-400 text-sm">({t.adlar.length})</span>
                   </p>
                   <ul className="mt-2 space-y-1 text-sm max-h-48 overflow-hidden">

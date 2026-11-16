@@ -3,7 +3,7 @@ import { OYUN_OLAYI, type OyunAnahtari } from './oyun'
 
 /** Takımla oynanabilen oyunlar ve seçilebilir grup sayıları (halat çekme her zaman 2 takımdır). */
 export const GRUPLU_OYUNLAR: OyunAnahtari[] = ['takim', 'kule', 'kale']
-export const GRUP_SAYILARI = [2, 3, 4, 5, 6] as const
+export const GRUP_SAYILARI = [2, 3, 4, 5, 6, 7, 8, 9, 10] as const
 
 /**
  * Yarışma kipini açar (anahtar verilirse) ya da bireysele döner (null). Önce öteki oyunların panelleri, takım ve hocayla yarış
@@ -21,7 +21,7 @@ export async function oyunuAc(oturumId: string, anahtar: OyunAnahtari | null, gr
   }
   let hata = false
   if (takimli) {
-    const sayi = anahtar === 'halat' ? 2 : Math.min(6, Math.max(2, grup ?? 3))
+    const sayi = anahtar === 'halat' ? 2 : Math.min(10, Math.max(2, grup ?? 3))
     const { data, error } = await supabase.rpc('takim_ayarla', { p_session: oturumId, p_anahtar: null, p_sayi: sayi })
     hata = !!error || !!(data as { hata?: string })?.hata
   } else if (anahtar === 'hoca') {

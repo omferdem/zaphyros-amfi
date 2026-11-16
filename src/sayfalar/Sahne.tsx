@@ -524,7 +524,7 @@ export default function Sahne() {
         // Kumanda isteğinde grup sayısı `sure` alanında taşınır (2-6; başka değer varsayılan grup sayısı demektir)
         const secilen = havuzSirasinaDiz(dengeliSec([{ ad: grup.ad, sorular: grup.sorular }], Math.min(i.adet ?? 20, grup.sorular.length), (s) => s.id, sonSorulanlar(oturumId)), grup.sorular)
         turuKaydet(oturumId, secilen.map((s) => s.id))
-        await kahootaGit(grup.ad, secilen, mod, i.sure >= 2 && i.sure <= 6 ? i.sure : null)
+        await kahootaGit(grup.ad, secilen, mod, i.sure >= 2 && i.sure <= 10 ? i.sure : null)
       } else {
         const secilenQ = havuzSirasinaDiz(dengeliSec([{ ad: grup.ad, sorular: grup.sorular }], Math.min(i.adet ?? 20, grup.sorular.length), (s) => s.id, sonSorulanlar(oturum.course_id)), grup.sorular)
         turuKaydet(oturum.course_id, secilenQ.map((s) => s.id))

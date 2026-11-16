@@ -19,7 +19,7 @@ export async function kaleHaritaVerisi(oturum: string, anahtar: string | null): 
 
 export const kaleHaritaHesapla = (g: KaleHaritaGirdisi): KaleHaritasi | null => kaleHaritasiHesapla(g.oyuncular, g.takimSayisi, g.toplamSoru)
 
-const RENKLER = ['#f43f5e', '#38bdf8', '#4ade80', '#fbbf24', '#a78bfa', '#fb923c']
+const RENKLER = ['#f43f5e', '#38bdf8', '#4ade80', '#fbbf24', '#a78bfa', '#fb923c', '#f472b6', '#22d3ee', '#a16207', '#94a3b8']
 const R_DIS = 46
 const R_IC = 17
 

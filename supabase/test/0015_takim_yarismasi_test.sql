@@ -49,7 +49,7 @@ begin
 
   -- Yanlış anahtar ayarlayamaz
   assert takim_ayarla(sid, 'yanlis', 3) ->> 'hata' = 'yetki_yok', 'HATA: yanlis anahtarla ayar';
-  assert takim_ayarla(sid, k, 7) ->> 'hata' = 'sayi_gecersiz', 'HATA: 7 takim kabul edildi';
+  assert takim_ayarla(sid, k, 11) ->> 'hata' = 'sayi_gecersiz', 'HATA: 11 takim kabul edildi';
   assert takim_ayarla(sid, k, 1) ->> 'hata' = 'sayi_gecersiz', 'HATA: 1 takim kabul edildi';
   assert takim_ayarla(sid, k, 3) ->> 'durum' = 'tamam', 'HATA: takim modu acilamadi';
   assert (takim_durumum(sid, 'cihaz-takim-0001') ->> 'sayi')::int = 3, 'HATA: sayi 3 degil';

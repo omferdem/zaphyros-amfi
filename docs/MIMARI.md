@@ -92,7 +92,7 @@ RLS: Hoca yalnızca kendi `courses` kayıtlarını (ve bunlara bağlı sunum, ak
 
 1. Hoca oturumu başlatır. Veritabanı oturuma rastgele bir gizli anahtar üretir.
 2. Sahne ekranı `qr_token(oturum)` ile güncel kodu alır. Kod, anahtar ile 10 saniyelik zaman penceresinden türetilir (SHA-256). Her 10 saniyede veritabanına yazma yapılmaz.
-3. QR linki: `https://omferdem.github.io/zaphyros-amfi/#/katil?s=<oturum>&t=<kod>`.
+3. QR linki: `https://zapedu.app/#/katil?s=<oturum>&t=<kod>`.
 4. Öğrenci QR'ı okuttuğunda sayfa hemen `katilim_bileti(oturum, kod, cihaz_id)` çağırır. Kod son 3 pencereden biriyse (en fazla 30 sn) cihaza bağlı, 3 dakika geçerli bir bilet döner. Kod adres çubuğundan silinir.
 5. Öğrenci numarasını girer, `check_in(oturum, bilet, cihaz_id, numara)` çağrılır. Kontroller: yoklama açık mı, bilet bu cihaza ait ve süresi içinde mi, numara dersin listesinde mi, bu numara başka cihazdan girilmiş mi, bu cihazdan başka numara girilmiş mi.
 6. Başarılıysa öğrenciye adı kısaltılmış olarak ("Ali Y.") gösterilir; sahne ekranı Realtime ile kaydı alır.
@@ -103,7 +103,7 @@ Bilet aşaması sayesinde öğrenci numarasını yazarken acele etmek zorunda ka
 
 Supabase Auth, e-postaya gelen tek kullanımlık bağlantı (magic link), PKCE akışı. HashRouter ile çakışmasın diye bağlantı siteye `?code=...` ile döner, uygulama oturumu açınca bu parametreyi adresten siler. PKCE gereği bağlantı, istendiği tarayıcıda açılmalıdır.
 
-Supabase panelinde gereken ayar: Authentication > URL Configuration > Site URL `https://omferdem.github.io/zaphyros-amfi/`, Redirect URLs listesinde aynı adres ve yerel geliştirme için `http://localhost:5173/`.
+Supabase panelinde gereken ayar: Authentication > URL Configuration > Site URL `https://zapedu.app/` (github.io adresi de izinli listede), Redirect URLs listesinde aynı adres ve yerel geliştirme için `http://localhost:5173/`.
 
 ## Gerçek zaman stratejisi
 

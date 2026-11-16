@@ -36,3 +36,7 @@ Hoca girişi e-postadaki bağlantıyla yapılır; bağlantı sitenin adresine d�
 
 ## Geri dönüş
 Alan adı ayarı silinirse (GitHub'da Custom domain kutusunu boşalt) site `omferdem.github.io/zaphyros-amfi` adresinde eskisi gibi çalışır. Alan adının kendisi yıllık yenilenir; yenilemezsen kaybolur, başka bir şey etkilenmez.
+
+## Durum (16 Kasım 2026)
+- `zapedu.app` alındı (Cloudflare Registrar). DNS: 4 A kaydı ve `www` CNAME, hepsi yalnızca-DNS. GitHub Pages özel alan adı `zapedu.app`, HTTPS çalışıyor. `SITE_ADRESI=https://zapedu.app/` tanımlı, `auth-ayar` çalıştırıldı.
+- Tarayıcı oturumu adrese bağlıdır: hoca ilk kez `zapedu.app` açtığında yeniden giriş yapar (sınıf listeleri ve dersler sunucuda, kaybolmaz).

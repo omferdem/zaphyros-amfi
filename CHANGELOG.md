@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.65.21 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Site artık https://zapedu.app/ adresinde:** Cloudflare DNS (4 A kaydı + www CNAME, yalnızca-DNS), GitHub Pages özel alan adı ve HTTPS kuruldu; eski github.io adresi 301 ile yeni adrese yönlenir. `SITE_ADRESI` değişkeni tanımlandı ve Supabase giriş adresi güncellendi. Perdedeki adres satırı ve karekod bağlantısı kendiliğinden yeni adresi gösterir. Hocalar yeni adreste bir kez yeniden giriş yapar.
+- **Masaüstü uygulaması:** varsayılan adres https://zapedu.app/; uygulama simgesi yeni ZAPEDU rozeti (`public/gorseller/logo-zapedu.svg`, şeffaf altıgen rozet) oldu. Yeni kurulum dosyası için `npm run derle` gerekir (yerelde üretilir).
+
 ## v0.65.20 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Kısa alan adına hazırlık (zapedu.app):** kod zaten adresten bağımsız (göreli yol, perdedeki adres `window.location` ile yazılır), kodda değişiklik gerekmedi. `docs/ALAN-ADI.md`: satın alma, DNS kayıtları, GitHub Pages ve Supabase giriş adresi adımları. "Supabase işlemleri" iş akışı `SITE_ADRESI` deposu değişkenini okur: tanımlıysa giriş adresi o olur, github.io adresi izinli listede kalır (değişken yokken davranış aynıdır).

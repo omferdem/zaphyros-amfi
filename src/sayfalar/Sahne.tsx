@@ -68,7 +68,7 @@ function kokAdres(): string {
   return window.location.origin + window.location.pathname
 }
 
-/** Öğrencinin perdede okuyup yazacağı kısa adres, ör. omferdem.github.io/zaphyros-amfi */
+/** Öğrencinin perdede okuyup yazacağı kısa adres, ör. zapedu.app */
 function kisaAdres(): string {
   return (window.location.host + window.location.pathname).replace(/\/$/, '')
 }

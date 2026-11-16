@@ -23,7 +23,7 @@ E-posta bağlantısı uygulamayı değil varsayılan tarayıcıyı açar, bu yü
 Şifre belirlemek yalnızca bir kez gerekir; ev ve iş bilgisayarında aynı şifreyle girilir.
 
 ## Başka bir hocanın kopyası için
-Uygulama varsayılan olarak `https://omferdem.github.io/zaphyros-amfi/` adresini açar. Başka bir kurulum için menüden **ZAPEDU > Kurulum adresini değiştir…** ile kendi GitHub Pages adresi girilir (yalnızca `https://`). Adres uygulamanın ayarında saklanır.
+Uygulama varsayılan olarak `https://zapedu.app/` adresini açar. Başka bir kurulum için menüden **ZAPEDU > Kurulum adresini değiştir…** ile kendi GitHub Pages adresi girilir (yalnızca `https://`). Adres uygulamanın ayarında saklanır.
 
 ## Geliştirme ve derleme
 ```
@@ -31,7 +31,7 @@ cd masaustu
 npm install
 npm start          # uygulamayı aç
 npm run sinama     # pencere açmadan siteyi yükler, başlığı yazdırır; sorun yoksa çıkış kodu 0
-npm run ikon       # public/favicon.svg dosyasından build/icon.png üretir (simge değişince)
+npm run ikon       # public/gorseller/logo-zapedu.svg dosyasından build/icon.png üretir (simge değişince)
 npm run derle      # dist/ZAPEDU-Kurulum-<sürüm>.exe üretir
 ```
 `dist/` klasörü repoya girmez; kurulum dosyası yerelde üretilir ve elle dağıtılır.

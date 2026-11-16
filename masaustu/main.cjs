@@ -6,7 +6,7 @@ const { app, BrowserWindow, Menu, shell, session, ipcMain } = require('electron'
 const fs = require('node:fs')
 const path = require('node:path')
 
-const VARSAYILAN_ADRES = 'https://omferdem.github.io/zaphyros-amfi/'
+const VARSAYILAN_ADRES = 'https://zapedu.app/'
 const sinama = process.argv.includes('--sinama')
 
 // ------------------------------------------------------------------ ayarlar

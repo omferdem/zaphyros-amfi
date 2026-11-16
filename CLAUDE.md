@@ -26,7 +26,7 @@ Sahibi: Doç. Dr. Ömer Faruk Erdem (NEÜ İlahiyat, Din Felsefesi). İlk kullan
 | Ne | Değer |
 |---|---|
 | GitHub repo | `omferdem/zaphyros-amfi` (public) |
-| Canlı site | https://omferdem.github.io/zaphyros-amfi/ (main dalına push = otomatik yayın) |
+| Canlı site | **https://zapedu.app/** (16 Kasım 2026'dan beri özel alan adı; eski github.io adresi buraya yönlenir). main dalına push = otomatik yayın. Alan adı Cloudflare Registrar'da, DNS yalnızca-DNS modunda GitHub Pages'e bakar; ayrıntı `docs/ALAN-ADI.md`. Giriş (Auth) adresi için Actions değişkeni `SITE_ADRESI` tanımlı |
 | Supabase organizasyon / proje | `Zaphyros` / `zaphyros-amfi`, Free plan, Central EU (Frankfurt) |
 | Supabase URL | https://oiqatggmfktgnexxaspc.supabase.co |
 | Frontend ayarı | Supabase adresi ve publishable anahtar `public/ayarlar.json` içinde (herkese açık olması normal). Koda kurulum adresi, e-posta ya da kişiye özel hiçbir değer gömülmez |

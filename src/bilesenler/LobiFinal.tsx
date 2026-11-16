@@ -14,6 +14,7 @@ const TAKIM_RENKLERI = ['text-ze-pink', 'text-ze-cyan', 'text-ze-yellow', 'text-
 export function Lobi({
   oturumId,
   mod,
+  takimliAyar,
   paketAdi,
   soruSayisi,
   sureDk,
@@ -24,6 +25,8 @@ export function Lobi({
 }: {
   oturumId: string
   mod: OyunAnahtari | null
+  /** Verilirse mod'dan bağımsız takımlı olup olmadığını belirler (ejderha gibi her iki biçimde oynanan oyunlar) */
+  takimliAyar?: boolean
   paketAdi: string
   soruSayisi: number
   sureDk: number | null
@@ -33,7 +36,7 @@ export function Lobi({
   basla: () => Promise<void>
   iptal: () => void
 }) {
-  const takimli = takimliMi(mod)
+  const takimli = takimliAyar ?? takimliMi(mod)
   const [takimlar, setTakimlar] = useState<{ takim: number; adlar: string[] }[]>([])
   const [takimSayisi, setTakimSayisi] = useState(0)
   const [sayim, setSayim] = useState<number | null>(null)

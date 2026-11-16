@@ -19,7 +19,7 @@ import TepkiKatmani from '../bilesenler/TepkiKatmani'
 import Cizim, { type CizimModu } from '../bilesenler/Cizim'
 import { dengeliSec, havuzSirasinaDiz, sonSorulanlar, turuKaydet } from '../lib/soruSec'
 import PerdeNotu from '../bilesenler/PerdeNotu'
-import { oyunuAc } from '../lib/oyunAc'
+import { oyunuAc, TAKIM_SECILEBILIR } from '../lib/oyunAc'
 import OyunProvasi from '../bilesenler/OyunProvasi'
 import Rehber from '../bilesenler/Rehber'
 import BaglantiUyarisi from '../bilesenler/BaglantiUyarisi'
@@ -141,7 +141,8 @@ export default function Sahne() {
       /* önemsiz */
     }
   }
-  const [turModu, setTurModu] = useState<OyunAnahtari | null>(null)
+  const [, setTurModu] = useState<OyunAnahtari | null>(null)
+  const [turTakimli, setTurTakimli] = useState(false)
   const [turBitis, setTurBitis] = useState<number | null>(null)
   const [provaAcik, setProvaAcik] = useState(false)
   const [rehberAcik, setRehberAcik] = useState(false)
@@ -472,6 +473,7 @@ export default function Sahne() {
     setOyunSecimi(false)
     setKartOyunu(null)
     setTurModu(mod)
+    setTurTakimli(takimliMi(mod) || (mod !== null && TAKIM_SECILEBILIR.includes(mod) && grup !== null))
     if (lobiyle) setLobi({ ad: paketAdi, mod, sayi: sorular.length, sureDk: lobiyle.sureDk, ilk: idler[0] ?? null })
   }
 
@@ -844,6 +846,7 @@ export default function Sahne() {
         <Lobi
           oturumId={oturum.id}
           mod={lobi.mod}
+          takimliAyar={turTakimli}
           paketAdi={lobi.ad}
           soruSayisi={lobi.sayi}
           sureDk={lobi.sureDk}
@@ -853,7 +856,7 @@ export default function Sahne() {
           iptal={() => void dersedon().then(() => setLobi(null))}
         />
       )}
-      {finalAcik && <Final oturumId={oturum.id} takimli={takimliMi(turModu)} kapat={() => setFinalAcik(false)} />}
+      {finalAcik && <Final oturumId={oturum.id} takimli={turTakimli} kapat={() => setFinalAcik(false)} />}
       {quizAcik && icerikId && <QuizPaneli dersId={oturum.course_id} icerikId={icerikId} hafta={haftaNo} katilan={gelenler.length} bitirSinyali={quizBitirSinyali} kapat={() => setQuizAcik(false)} />}
       {puanAcik && <PuanTablosu oturumId={oturum.id} kapat={() => setPuanAcik(false)} />}
       <SinifPaneli d={sinif.d} komut={sinif.komut} hata={sinif.hata} mod="perde" />

@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.65.7 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Bireysel / takım seçimi artık her "bireysel / takım" oyunda:** Ejderha savaşı, Bilgi merdiveni ve Hocayla yarışta sihirbaz "Sınıf birlikte oynar" yazıp seçim vermiyordu. Şimdi 🧑 Bireysel ya da 👥 Takım seçilir; takımda 2-10 takım sayısı sorulur, öğrenciler lobide takımını seçer, final takım sıralamasını da gösterir. Oyunun sahnesi aynı kalır (sınıf birlikte ejderhaya vurur); takım yalnızca öğrenci gruplaması ve final içindir. Halat 2, Kule ve Kale takım zorunlu, Roket/Arena/Zombi/Orman bireysel zorunlu.
+- Akıştaki oyun kartı ve kumanda başlatma bu oyunlarda bireysel başlatır (takım için perdedeki sihirbazı kullan).
+
 ## v0.65.6 (16 Kasım 2026)
 Veritabanı değişikliği yok. Botla gerçek yoldan ikinci tur (Ejderha, Roket, Arena, Orman, Kule, Halat).
 - **Halat sahnesinde karakterler görünmüyordu (gerçek derste bulundu):** önizleme sahnesi (z-40), takım panelinin z-30 sarmalayıcısı içindeki gerçek halat sahnesinin üstünde kalıyor ve boş halatı çiziyordu. Önizleme kendi z-20 katmanına alındı; katılımcı yokken yalnızca "Öğrenciler derse katıldıkça…" notu çıkar.

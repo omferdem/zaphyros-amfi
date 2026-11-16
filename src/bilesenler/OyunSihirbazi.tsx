@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react'
 import { sorulariGetir } from '../lib/akis'
 import { paketleriSirala } from '../lib/gecis'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
-import { GRUPLU_OYUNLAR } from '../lib/oyunAc'
 import { paketleriGrupla } from '../lib/paket'
 import { dengeliSec, elleSecilenler, havuzSirasinaDiz, sonSorulanlar, turuKaydet } from '../lib/soruSec'
 import SoruSecici from './SoruSecici'
@@ -140,7 +139,7 @@ export function OyunSihirbazi({
   useEffect(() => setSecim(null), [secimAnahtari])
   const bilgi = OYUN_LISTESI.find((o) => o.anahtar === oyun)
   const oyunGruplu = tur === 'oyun' && bilgi?.etiket === 'takim'
-  const takimiGerekli = tur === 'zapoot' ? takimli : oyunGruplu || (bilgi?.etiket === 'ikisi' && oyunTakimi && GRUPLU_OYUNLAR.includes(oyun))
+  const takimiGerekli = tur === 'zapoot' ? takimli : oyunGruplu || (bilgi?.etiket === 'ikisi' && oyunTakimi)
   const mod: OyunAnahtari | null = tur === 'zapoot' ? (takimli ? 'takim' : null) : oyun
   const grupSayisi = takimiGerekli && mod !== 'halat' ? grup : null
 
@@ -233,9 +232,7 @@ export function OyunSihirbazi({
             <div className="space-y-1.5 pt-1">
               <p className="text-xs font-bold text-slate-300">Nasıl oynansın?</p>
               <div className="flex flex-wrap gap-2 items-center">
-                {bilgi?.etiket === 'ikisi' && !GRUPLU_OYUNLAR.includes(oyun) ? (
-                  <span className="text-sm text-slate-300">👥 Sınıf birlikte oynar (tek ekip)</span>
-                ) : (
+                {(
                   <>
                     <button
                       disabled={bilgi?.etiket === 'takim'}

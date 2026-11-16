@@ -3,6 +3,8 @@ import { OYUN_OLAYI, type OyunAnahtari } from './oyun'
 
 /** Takımla oynanabilen oyunlar ve seçilebilir grup sayıları (halat çekme her zaman 2 takımdır). */
 export const GRUPLU_OYUNLAR: OyunAnahtari[] = ['takim', 'kule', 'kale']
+/** Hem bireysel hem takımla oynanabilen oyunlar: takım seçilirse (grup sayısı verilirse) öğrenciler takımlara ayrılır, oyunun sahnesi aynı kalır, sıralama ve final takım bazında da gösterilir. */
+export const TAKIM_SECILEBILIR: OyunAnahtari[] = ['ejderha', 'merdiven', 'hoca']
 export const GRUP_SAYILARI = [2, 3, 4, 5, 6, 7, 8, 9, 10] as const
 
 /**
@@ -11,7 +13,7 @@ export const GRUP_SAYILARI = [2, 3, 4, 5, 6, 7, 8, 9, 10] as const
  * Hata varsa false döner.
  */
 export async function oyunuAc(oturumId: string, anahtar: OyunAnahtari | null, grup: number | null = null): Promise<boolean> {
-  const takimli = anahtar === 'takim' || anahtar === 'halat' || anahtar === 'kule' || anahtar === 'kale'
+  const takimli = anahtar === 'takim' || anahtar === 'halat' || anahtar === 'kule' || anahtar === 'kale' || (anahtar !== null && TAKIM_SECILEBILIR.includes(anahtar) && grup !== null)
   // Seçilmeyen kipler kapanır (hata önemsenmez, zaten kapalı olabilir)
   if (!takimli) await supabase.rpc('takim_ayarla', { p_session: oturumId, p_anahtar: null, p_sayi: 0 })
   if (anahtar !== 'hoca') await supabase.rpc('hoca_yaris_ayarla', { p_session: oturumId, p_anahtar: null, p_acik: false })
@@ -24,9 +26,10 @@ export async function oyunuAc(oturumId: string, anahtar: OyunAnahtari | null, gr
     const sayi = anahtar === 'halat' ? 2 : Math.min(10, Math.max(2, grup ?? 3))
     const { data, error } = await supabase.rpc('takim_ayarla', { p_session: oturumId, p_anahtar: null, p_sayi: sayi })
     hata = !!error || !!(data as { hata?: string })?.hata
-  } else if (anahtar === 'hoca') {
+  }
+  if (anahtar === 'hoca') {
     const { data, error } = await supabase.rpc('hoca_yaris_ayarla', { p_session: oturumId, p_anahtar: null, p_acik: true })
-    hata = !!error || !!(data as { hata?: string })?.hata
+    hata = hata || !!error || !!(data as { hata?: string })?.hata
   }
   if (hata) return false
   // Olay yalnızca seçilen oyunu açar; öteki paneller kendilerini kapatır

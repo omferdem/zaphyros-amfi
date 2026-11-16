@@ -1,7 +1,7 @@
 {
   "name": "zaphyros-amfi",
   "private": true,
-  "version": "0.64.22",
+  "version": "0.64.23",
   "type": "module",
   "scripts": {
     "dev": "vite",

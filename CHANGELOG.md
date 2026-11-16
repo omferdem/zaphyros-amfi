@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.23 (16 Kasım 2026)
+Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 8. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-08-yeni.sql`, SQL ile uygulandı).
+- **Bahar 8. hafta soruları:** "Kötülük Problemi ve İnsan Hürriyeti" sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-08.txt`.
+
 ## v0.64.22 (16 Kasım 2026)
 Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 7. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-07-yeni.sql`, SQL ile uygulandı).
 - **Bahar 7. hafta soruları:** "Konatif, Eskatolojik ve Analitik Tahliller" (din dili) sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-07.txt`.

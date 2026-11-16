@@ -95,7 +95,7 @@ export default function HocaYarisiPaneli({ oturum, anahtar, mod, dugme = true }:
   }
 
   return (
-    <div className={perde ? 'fixed left-1/2 -translate-x-1/2 bottom-20 z-30 flex flex-col items-center gap-2 max-w-[22rem]' : 'cam-panel rounded-2xl p-4 space-y-3'}>
+    <div className={perde ? `fixed left-1/2 -translate-x-1/2 ${sahneAcik ? 'top-3' : 'bottom-14'} z-30 flex flex-col items-center gap-2 max-w-[22rem]` : 'cam-panel rounded-2xl p-4 space-y-3'}>
       {sahneAcik && (
         <HocaYarisSahnesi
           hoca={y.hoca}

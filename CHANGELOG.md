@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.65.9 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Hocayla yarış (canlıda görüldü):** büyük sahne artık açılıyor; skor kutusu ve hocanın gizli cevap düğmeleri üst orta alana alındı (karakterlerin üstüne binmiyor).
+- **Önizleme:** katılımcı adı yokken "Öğrenciler derse katıldıkça…" notu çıkmaz; gerçek sahnenin arkasında sönük yazı kalıyordu.
+- **Doğrulandı (canlı, 30 bot):** Ejderha savaşı takım modunda (3 takım): oyun sırasında sahne aynı, final "Kazanan takım: Takım 3 · üye başı 1139 puan", ilk 3 oyuncu podyumu ve takım sıralaması.
+- Görülen küçük sorunlar (düzeltilmedi): final başlığı üstteki araç çubuğunun altında kalıyor; Takım yarışmasında sağ alttaki ders kodu ile takım tablosu birbirine yakın.
+
 ## v0.65.8 (16 Kasım 2026)
 Veritabanı değişikliği yok. Botla canlı deneme: Kale (3 takım, hücre haritası), Takım yarışması, Hocayla yarış.
 - **Hocayla yarış büyük sahnesi oyun açılır açılmaz çizilir:** eskiden yalnızca yarış bitince ya da ⛶ ile açılıyor, o zamana kadar perdede küçük bir skor kutusu görünüyordu. Hoca kapatabilir.

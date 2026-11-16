@@ -180,13 +180,8 @@ export default function OyunOnizleme({ oyun, adlar, demo, takimSayisi }: { oyun:
   )
   const enerji = useMemo(() => oyuncular.map((o) => ({ ad: o.ad, sonuc: o.sonuc.map((s, q) => (q < k ? s : null)) })), [oyuncular, k])
   // Önizleme, gerçek veriyle çizilen sahnelerin (z-30 ve z-40 sarmalayıcılar) altında kalsın: kendi katmanı z-20'dir
-  if (!sahne || (!demo && oyuncular.length === 0)) {
-    return (
-      <div className="fixed inset-0 z-[20] bg-slate-950/95 flex items-center justify-center p-6 text-center text-slate-400">
-        <p>Öğrenciler derse katıldıkça karakterleri burada belirir.</p>
-      </div>
-    )
-  }
+  // Katılımcı adı yokken (ör. yalnızca takma adla girenler) ve veri gelmeden hiçbir şey çizilmez; gerçek sahne veriyle kendisi açılır
+  if (!sahne || (!demo && oyuncular.length === 0)) return null
   return (
     <div className="fixed inset-0 z-[20]">
       <EnerjiSaglayici oyuncular={enerji as unknown as { ad: string; sonuc: (1 | 0 | -1 | null)[] }[]}>{sahne}</EnerjiSaglayici>

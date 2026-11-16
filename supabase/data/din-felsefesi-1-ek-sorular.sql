@@ -1,3 +1,6 @@
+-- UYARI: BU DOSYA UYGULANMAMALIDIR. Üniversite düzeyi için yetersiz bulundu (slayt cümlesinden boşluk doldurma, ele veren çeldiriciler,
+-- gerçek olmayan zorluk ataması). Veritabanındaki 539 soru 16 Kasım 2026'da silindi. 1. ve 2. hafta yeniden yazıldı:
+-- docs/soru-onerileri/yeni/h01-h02.txt. Kalan haftalar kullanıcı onayından sonra aynı ölçütle yazılacak (scripts/soru-kontrol.py --yeni).
 -- Din Felsefesi I: her hafta paketine 20 Zapoot ve 20 Quiz sorusu eklenir (aynı soru metni varsa atlanır).
 -- Zapoot soruları 20, quiz soruları 60 saniye süreyle eklenir. Kaynak: docs/soru-onerileri/kaynak, üreten: scripts/soru-kontrol.py.
 do $$

@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.24 (16 Kasım 2026)
+Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 9. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-09-yeni.sql`, SQL ile uygulandı).
+- **Bahar 9. hafta soruları:** "Tanrı Tasavvurları" (deizm, panteizm, pan-enteizm) sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-09.txt`.
+
 ## v0.64.23 (16 Kasım 2026)
 Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 8. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-08-yeni.sql`, SQL ile uygulandı).
 - **Bahar 8. hafta soruları:** "Kötülük Problemi ve İnsan Hürriyeti" sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-08.txt`.

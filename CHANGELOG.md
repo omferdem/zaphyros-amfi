@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.19 (16 Kasım 2026)
+Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 4. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-04-yeni.sql`, SQL ile uygulandı).
+- **Bahar 4. hafta soruları:** "Nizam ve Gaye Delili" sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-04.txt`.
+
 ## v0.64.18 (16 Kasım 2026)
 Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 3. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-03-yeni.sql`, SQL ile uygulandı).
 - **Bahar 3. hafta soruları:** "Tanrı'nın Varlığı ile İlgili Deliller" (ontolojik ve kozmolojik delil) sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-03.txt`.

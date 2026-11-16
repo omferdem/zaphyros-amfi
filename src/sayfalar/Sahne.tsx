@@ -431,6 +431,21 @@ export default function Sahne() {
   const haftaNo = adaGoreHafta(akislar.find((a) => a.id === oturum?.lesson_id)?.ad ?? donusKaydi()?.ad) ?? oturum?.hafta_no ?? null
 
   /** Seçilen soru paketini canlı Zapoot olarak açar: gizli bir akış (⚡ paket adı) paketin sorularıyla kurulur, dönüş noktası saklanır. */
+  // Oyun erken bittiyse (ejderha öldü, herkes zirvede) 9 saniye sonra ortak final açılır
+  useEffect(() => {
+    if (!zapootOyunu) return
+    let t: ReturnType<typeof setTimeout> | undefined
+    function bitti() {
+      clearTimeout(t)
+      t = setTimeout(() => setFinalAcik(true), 9000)
+    }
+    window.addEventListener('amfi-oyun-bitti', bitti)
+    return () => {
+      window.removeEventListener('amfi-oyun-bitti', bitti)
+      clearTimeout(t)
+    }
+  }, [zapootOyunu])
+
   async function kahootaGit(paketAdi: string, sorular: { id: string }[], mod: OyunAnahtari | null, grup: number | null = null, lobiyle: TurIstegi | null = null) {
     if (!icerikId || sorular.length === 0) throw new Error('bos')
     const ad = kahootAkisAdi(paketAdi)

@@ -64,6 +64,15 @@ export default function AkisDuzenle() {
   const [kartMetni, setKartMetni] = useState('')
   const [duzenlenen, setDuzenlenen] = useState<string | null>(null)
   const [secim, setSecim] = useState<Set<string>>(new Set())
+  // Esc: kart seçimini kaldırır
+  useEffect(() => {
+    if (secim.size === 0) return
+    const tus = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSecim(new Set())
+    }
+    window.addEventListener('keydown', tus)
+    return () => window.removeEventListener('keydown', tus)
+  }, [secim])
   const [digerAkislar, setDigerAkislar] = useState<Akis[]>([])
   const [hedefAkis, setHedefAkis] = useState('')
   const [sonSecilen, setSonSecilen] = useState<number | null>(null)
@@ -653,8 +662,11 @@ export default function AkisDuzenle() {
       ) : (
         <>
         <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400">
-          <button className="ikincil-buton !py-1 text-xs" onClick={() => setSecim(new Set(adimlar.map((a) => a.id)))}>
-            Hepsini seç
+          <button
+            className="ikincil-buton !py-1 text-xs"
+            onClick={() => setSecim(secim.size === adimlar.length ? new Set() : new Set(adimlar.map((a) => a.id)))}
+          >
+            {secim.size === adimlar.length ? 'Seçimi kaldır' : 'Hepsini seç'}
           </button>
           <span>Kutuyu işaretleyip Shift basılı başka bir kutuya tıklarsan aradaki kartlar da seçilir.</span>
         </div>
@@ -678,8 +690,8 @@ export default function AkisDuzenle() {
             <button className="tehlike-buton !py-1.5 text-sm" onClick={secilileriSil} title="Seçili kartları akıştan siler">
               🗑 Seçilenleri sil
             </button>
-            <button className="text-xs text-slate-400 hover:text-white ml-auto" onClick={() => setSecim(new Set())}>
-              Seçimi temizle
+            <button className="ikincil-buton !py-1.5 text-sm ml-auto" onClick={() => setSecim(new Set())} title="Seçimi kaldır (Esc)">
+              ✕ Vazgeç
             </button>
           </div>
         )}

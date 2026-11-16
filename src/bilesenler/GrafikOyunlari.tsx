@@ -137,6 +137,14 @@ function OyunKabugu<D, V = Veri>({
 
   const d = useMemo(() => (veri ? hesapla(veri) : null), [veri, hesapla])
 
+  // Oyun soru sayısı dolmadan bitebilir (ejderha öldü, herkes bitişe vardı): sahne bunu duyurur, ortak final açılır
+  const bittiBildirildi = useRef(false)
+  useEffect(() => {
+    const bitti = !!(d as { bitti?: boolean } | null)?.bitti
+    if (bitti && !bittiBildirildi.current) window.dispatchEvent(new Event('amfi-oyun-bitti'))
+    bittiBildirildi.current = bitti
+  }, [d])
+
   // Yorumcu bandı: her yeni sonuçta (oynanan soru sayısı artınca) doğru serisi lideri anılır
   const oncekiOynanan = useRef<number | null>(null)
   useEffect(() => {

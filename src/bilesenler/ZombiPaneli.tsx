@@ -69,6 +69,14 @@ export default function ZombiPaneli({ oturum, anahtar, mod }: { oturum: string; 
     }
   }, [yenile, acik, oturum])
 
+  // Oyun erken bitince (herkes zirvede) ortak final açılsın diye duyurulur
+  const bittiBildirildi = useRef(false)
+  useEffect(() => {
+    const bitti = !!veri && zombiHesapla(veri.sorular, veri.oyuncular, zorlukOku(oturum))?.bitti === true
+    if (bitti && !bittiBildirildi.current) window.dispatchEvent(new Event('amfi-oyun-bitti'))
+    bittiBildirildi.current = bitti
+  }, [veri, oturum])
+
   // Yorumcu bandı: her yeni sonuçta doğru serisi lideri anılır
   const oncekiOynanan = useRef<number | null>(null)
   useEffect(() => {

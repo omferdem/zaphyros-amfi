@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.65.16 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Akış düzenleyicide seçimden vazgeçilebiliyor:** "Hepsini seç" artık anahtar gibi çalışır (hepsi seçiliyse "Seçimi kaldır"); seçim çubuğundaki küçük "Seçimi temizle" yazısı belirgin "✕ Vazgeç" düğmesine döndü ve Esc tuşu da seçimi kaldırır.
+- **Oyun erken bitince final (ejderha kaydında görüldü):** ejderha 8. soruda ölünce oyun 10. soruya kadar sürüyor, "Ejderha yenildi!" kutusu sahnenin üstünde bekliyordu. Sahne oyun bittiğini duyurur (ejderha öldü, herkes zirvede), 9 saniye sonra ortak final açılır.
+- `docs/oyun-kayitlari/` git dışında tutuldu (kayıtlar büyük).
+
 ## v0.65.15 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Ses düzeyi:** perdedeki "⋯" menüsünde ses düzeyi kaydırıcısı (0-100, varsayılan 80; hem efektleri hem müziği etkiler). Telefon kumandasının Ayarlar sekmesinde "Ses (perde)": düzey kaydırıcısı, efektleri ve müziği ayrı ayrı aç/kapat; komutlar perdeye lazer kanalından gider.

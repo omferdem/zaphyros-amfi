@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.4 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Orman'dan eve dönüş yeniden çizildi (2b):** katmanlı gece ormanı (ay, yıldız, üç derinlikte çam, sis, dere ve köprü, toprak patika, pencereleri yanan ev); karakterler öteki oyunlardaki öğrenci çizimleri; aynı adımdaki oyuncular patikanın iki yanına yelpaze gibi açılır, 4'ten fazlası "+N" rozetinde toplanır; yakalanan öğrenci kurt atlayınca sarsılıp sağ alttaki "Kurdun yakaladıkları" alanına çekilir; eve varanlar evin önünde toplanır; her karakterin tepesinde enerji barı. 30 ve 80 oyuncuyla provada denendi.
+
 ## v0.64.3 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Enerji barı karakterin tepesinde (2a):** zombi, roket, ejderha ve arenada her karakterin üstünde ince enerji barı; sonuç açılınca +1/−1 ve seri 🔥'u karakterin üstünden çıkar. 40+ oyuncuda bar incelir ama kaybolmaz. Eski ayrı "⚡ Enerji" listesi kaldırıldı. (Halat v0.64.1'de, orman bir sonraki sürümde.)

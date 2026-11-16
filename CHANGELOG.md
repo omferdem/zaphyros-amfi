@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.21 (16 Kasım 2026)
+Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 6. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-06-yeni.sql`, SQL ile uygulandı).
+- **Bahar 6. hafta soruları:** "Doğrulamacı ve Yanlışlamacı Tahliller" (Tanrı'nın sıfatları, din dili) sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-06.txt`.
+
 ## v0.64.20 (16 Kasım 2026)
 Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 5. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-05-yeni.sql`, SQL ile uygulandı).
 - **Bahar 5. hafta soruları:** "Dinî Tecrübe ve Ahlak Delilleri" sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-05.txt`.

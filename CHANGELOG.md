@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.65.2 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Lazer ve tahta katmanı artık her şeyin üstünde:** oyun sahnelerinin ve kontrol çubuklarının altında kalıyordu; çizim ve lazer katmanı üste alındı.
+- **Kumandada çizim denetimi:** dokunmatik yüzeyin altında kalem renkleri, silgi, geri al, temizle, "Karekodu gizle / göster" ve "Lazeri kapat" düğmeleri. Komutlar perdeye lazer kanalından gider (veritabanına yazılmaz). Gerçek telefonla denenmedi.
+
 ## v0.65.1 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Zirveye Tırmanış (bilgi merdiveninin yeni hâli, GSAP ile):** karlı dağ, zirveye kıvrılan patika, patikada kamplar (5, 10, ... bayraklı güvenli çadır). Sınıf bir tırmanış ekibi: doğru bilince patika boyunca yürüyerek bir kamp çıkar, bilemeyince çığ düşer ve ekip son güvenli kampa kayar. Yükseldikçe hava kararır, kar artar; ekip boşta nefes alır. Her sonuçta "Sınıfın %72'si bildi" etiketi. Zirvede bayrak ve konfeti. İlk 10 saniye "Nasıl oynanır" ekranı.

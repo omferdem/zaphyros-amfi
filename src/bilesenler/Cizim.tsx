@@ -46,11 +46,16 @@ function yukle(oturum: string): Record<string, Vurus[]> {
  * Çizimler slayta (anahtar) bağlıdır; slayt değişip geri gelince görünür. Veritabanına yazılmaz: bellekte ve sekmenin sessionStorage'ında durur.
  * Telefon kumandasındaki dokunmatik yüzey, lazer kanalından (Broadcast) aynı lazeri oynatır.
  */
-export default function Cizim({ oturum, anahtar, mod, kapat, bitti, ac }: { oturum: string; anahtar: string; mod: CizimModu; kapat: () => void; bitti: boolean; ac: () => void }) {
+export default function Cizim({ oturum, anahtar, mod, kapat, bitti, ac, kodDegistir }: { oturum: string; anahtar: string; mod: CizimModu; kapat: () => void; bitti: boolean; ac: () => void; kodDegistir?: () => void }) {
   const modRef = useRef(mod)
   modRef.current = mod
   const acRef = useRef(ac)
   acRef.current = ac
+  const kapatRef = useRef(kapat)
+  kapatRef.current = kapat
+  const kodRef = useRef(kodDegistir)
+  kodRef.current = kodDegistir
+  const komutRef = useRef<(k: string, r?: number) => void>(() => {})
   const canvas = useRef<HTMLCanvasElement>(null)
   const depo = useRef<Record<string, Vurus[]>>(yukle(oturum))
   const [renk, setRenk] = useState<string>(KALEM_RENKLERI[1].renk)
@@ -168,6 +173,14 @@ export default function Cizim({ oturum, anahtar, mod, kapat, bitti, ac }: { otur
         bitir()
       }
     })
+    // Kumandadan komutlar: geri al, temizle, silgi, kalem rengi, karekodu gizle/göster, lazeri kapat
+    kanal.on('broadcast', { event: 'komut' }, ({ payload }) => {
+      const p = payload as { k?: string; r?: number } | null
+      if (!p?.k) return
+      if (p.k === 'kod') kodRef.current?.()
+      else if (p.k === 'kapat') kapatRef.current()
+      else komutRef.current(p.k, p.r)
+    })
     kanal.subscribe()
     return () => {
       void supabase.removeChannel(kanal)
@@ -187,6 +200,15 @@ export default function Cizim({ oturum, anahtar, mod, kapat, bitti, ac }: { otur
     ciz()
   }
 
+  komutRef.current = (k, r) => {
+    if (k === 'geri') geriAl()
+    else if (k === 'temizle') temizle()
+    else if (k === 'silgi') setSilgi((x) => !x)
+    else if (k === 'renk' && typeof r === 'number' && KALEM_RENKLERI[r]) {
+      setRenk(KALEM_RENKLERI[r].renk)
+      setSilgi(false)
+    }
+  }
   if (mod === 'kapali') return null
   const koordinat = (e: React.PointerEvent) => {
     const r = e.currentTarget.getBoundingClientRect()
@@ -194,7 +216,7 @@ export default function Cizim({ oturum, anahtar, mod, kapat, bitti, ac }: { otur
   }
   return (
     <>
-      <div className={`fixed inset-0 z-[35] ${mod === 'tahta' ? (kara ? 'bg-slate-900' : 'bg-white') : ''}`} style={{ cursor: mod === 'lazer' ? 'none' : 'crosshair' }}>
+      <div className={`fixed inset-0 z-[70] ${mod === 'tahta' ? (kara ? 'bg-slate-900' : 'bg-white') : ''}`} style={{ cursor: mod === 'lazer' ? 'none' : 'crosshair' }}>
         <canvas
           ref={canvas}
           className="w-full h-full touch-none"
@@ -220,7 +242,7 @@ export default function Cizim({ oturum, anahtar, mod, kapat, bitti, ac }: { otur
           />
         )}
       </div>
-      <div className="fixed top-2 left-1/2 -translate-x-1/2 z-[36] cam-panel rounded-2xl px-3 py-2 flex flex-wrap items-center gap-2 text-sm shadow-2xl">
+      <div className="fixed top-2 left-1/2 -translate-x-1/2 z-[71] cam-panel rounded-2xl px-3 py-2 flex flex-wrap items-center gap-2 text-sm shadow-2xl">
         <b>{mod === 'tahta' ? '🖍️ Tahta' : '🔴 Lazer'}</b>
         {KALEM_RENKLERI.map((r) => (
           <button

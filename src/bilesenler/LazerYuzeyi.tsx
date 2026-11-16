@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react'
 import { supabase } from '../lib/supabase'
-import { lazerKanali } from './Cizim'
+import { KALEM_RENKLERI, lazerKanali } from './Cizim'
 
 /** En sık gönderim aralığı: saniyede en çok 20 mesaj. */
 const ARALIK_MS = 50
@@ -24,6 +24,10 @@ export default function LazerYuzeyi({ oturum }: { oturum: string }) {
     void kanal.httpSend('lazer', { x: Math.round(x * 1000) / 1000, y: Math.round(y * 1000) / 1000, d }).catch(() => {})
   }
 
+  function komut(k: string, r?: number) {
+    void kanal.httpSend('komut', { k, r }).catch(() => {})
+  }
+
   return (
     <section className="cam-panel rounded-2xl p-4 space-y-2">
       <h3 className="text-xs font-bold text-slate-300">🔴 Lazer: parmağını kaydır, basılı tutunca perdede çizer</h3>
@@ -45,6 +49,26 @@ export default function LazerYuzeyi({ oturum }: { oturum: string }) {
         }}
       >
         Dokunmatik yüzey
+      </div>
+      <div className="flex flex-wrap items-center gap-1.5">
+        {KALEM_RENKLERI.map((r, i) => (
+          <button key={r.renk} aria-label={r.ad} onClick={() => komut('renk', i)} className="w-8 h-8 rounded-full border-2 border-white/40" style={{ background: r.renk }} />
+        ))}
+        <button className="ikincil-buton !py-1.5 !px-2.5 text-xs" onClick={() => komut('silgi')}>
+          🧽 Silgi
+        </button>
+        <button className="ikincil-buton !py-1.5 !px-2.5 text-xs" onClick={() => komut('geri')}>
+          ↶ Geri al
+        </button>
+        <button className="ikincil-buton !py-1.5 !px-2.5 text-xs" onClick={() => komut('temizle')}>
+          🗑 Temizle
+        </button>
+        <button className="ikincil-buton !py-1.5 !px-2.5 text-xs" onClick={() => komut('kod')}>
+          🔳 Karekodu gizle / göster
+        </button>
+        <button className="tehlike-buton !py-1.5 !px-2.5 text-xs" onClick={() => komut('kapat')}>
+          Lazeri kapat
+        </button>
       </div>
     </section>
   )

@@ -837,7 +837,7 @@ export default function Sahne() {
           <EnerjiSeridi oyuncular={seritSonuclari} />
         </div>
       )}
-      <Cizim oturum={oturum.id} anahtar={oturum.aktif_adim ?? 'yok'} mod={cizimModu} kapat={() => setCizimModu('kapali')} bitti={!!oturum.bitti} ac={() => setCizimModu('lazer')} />
+      <Cizim oturum={oturum.id} anahtar={oturum.aktif_adim ?? 'yok'} mod={cizimModu} kapat={() => setCizimModu('kapali')} bitti={!!oturum.bitti} ac={() => setCizimModu('lazer')} kodDegistir={() => setKodGoster((g) => !g)} />
       {notAcik && <PerdeNotu key={oturum.id} dersId={oturum.course_id} baglam={`${new Date().toLocaleString('tr-TR')} · ${oturum.courses.ad}${oturum.baslik ? ` · ${oturum.baslik}` : ''}`} kapat={() => setNotAcik(false)} />}
       <TepkiKatmani oturum={oturum.id} etkin={tepkiAcik && !quizAcik && !lobi && !finalAcik} ayar={tepkiAyarla} />
       {lobi && (

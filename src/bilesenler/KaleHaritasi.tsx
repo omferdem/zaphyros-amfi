@@ -181,13 +181,13 @@ export function KaleHaritaSahnesi({ h, takimSayisi, kucult }: { h: KaleHaritasi;
                     <g key={`hamle-${h.oynanan}-${c.halka}-${c.dilim}`}>
                       <text fontSize="3.4" textAnchor="middle" opacity="0">
                         🪖
-                        <animateMotion path={`M ${ev.x} ${ev.y} L ${hedef.x} ${hedef.y}`} dur="1.1s" begin={`${gecikme}s`} fill="freeze" />
-                        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="1.1s" begin={`${gecikme}s`} fill="freeze" />
+                        <animateMotion path={`M ${ev.x} ${ev.y} L ${hedef.x} ${hedef.y}`} dur="2.4s" begin={`${gecikme}s`} fill="freeze" />
+                        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="2.4s" begin={`${gecikme}s`} fill="freeze" />
                       </text>
                       {c.geriAlindi && (
                         <text x={hedef.x} y={hedef.y} fontSize="5" textAnchor="middle" opacity="0">
                           💥
-                          <animate attributeName="opacity" values="0;1;0" dur="0.8s" begin={`${gecikme + 1}s`} fill="freeze" />
+                          <animate attributeName="opacity" values="0;1;0" dur="0.8s" begin={`${gecikme + 2.2}s`} fill="freeze" />
                         </text>
                       )}
                     </g>

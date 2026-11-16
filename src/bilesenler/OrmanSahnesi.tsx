@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { ORMAN_KALBI, type OrmanOyuncusu, type OrmanSonucu } from '../lib/orman'
 import { gorunenAd, kalabalikAyari, tohumluRastgele } from '../lib/oyunMotoru'
 import { useOyunSesi } from '../lib/ses'
+import { useAkiskanSayilar } from '../lib/akiskan'
 import Gorsel, { adIndeksi } from './Gorsel'
 import { KarakterEnerjisi } from './KarakterEnerjisi'
 import Konfeti from './Konfeti'
@@ -106,6 +107,7 @@ const STIL = `
 @keyframes orman-ates { 0%,100% { opacity: .25 } 50% { opacity: 1 } }
 @keyframes orman-kac { 0% { opacity: 1; transform: translate(-50%, -88%) } 15% { transform: translate(calc(-50% - .6cqw), -88%) } 30% { transform: translate(calc(-50% + .6cqw), -88%) } 45% { opacity: 1; transform: translate(-50%, -88%) } 100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-88% + var(--dy))) scale(.5) } }
 @keyframes orman-atla { 0% { opacity: 0; transform: translate(-50%, -130%) scale(.5) } 25% { opacity: 1; transform: translate(-50%, -40%) scale(1.3) } 75% { opacity: 1 } 100% { opacity: 0; transform: translate(-50%, -10%) scale(1) } }
+@keyframes orman-yuru { 0%,100% { transform: translateY(0) rotate(-2deg) } 25% { transform: translateY(-5%) rotate(0deg) } 50% { transform: translateY(0) rotate(2deg) } 75% { transform: translateY(-5%) rotate(0deg) } }
 @keyframes orman-gel { 0%, 70% { opacity: 0; transform: scale(.4) } 100% { opacity: 1; transform: scale(1) } }
 `
 
@@ -140,22 +142,22 @@ export function OrmanSahnesi({ d, kucult }: { d: OrmanSonucu; kucult: () => void
       if (o.durum !== 'yolda') continue
       gruplar.set(o.adim, [...(gruplar.get(o.adim) ?? []), o])
     }
-    const cikti: { o: OrmanOyuncusu; x: number; y: number }[] = []
+    const cikti: { o: OrmanOyuncusu; yuva: number; tek: boolean }[] = []
     const rozetler: { x: number; y: number; n: number; anahtar: number }[] = []
     for (const [adim, liste] of gruplar) {
-      const oran = adim / d.patika
-      const p = patikaNoktasi(oran)
-      const { nx, ny } = dikYon(oran)
       const sirali = [...liste].sort((a, b) => b.kalp - a.kalp || a.ad.localeCompare(b.ad, 'tr'))
-      sirali.slice(0, GOSTER).forEach((o, k) => {
-        const yon = k % 2 === 0 ? 1 : -1
-        const mesafe = (Math.floor(k / 2) + 0.55) * boy * 0.95 * (liste.length === 1 ? 0 : 1)
-        cikti.push({ o, x: p.x + (nx * mesafe * yon), y: p.y + (ny * mesafe * yon) / DIKEY })
-      })
-      if (liste.length > GOSTER) rozetler.push({ x: p.x, y: p.y, n: liste.length - GOSTER, anahtar: adim })
+      sirali.slice(0, GOSTER).forEach((o, k) => cikti.push({ o, yuva: k, tek: liste.length === 1 }))
+      if (liste.length > GOSTER) {
+        const p = patikaNoktasi(adim / d.patika)
+        rozetler.push({ x: p.x, y: p.y, n: liste.length - GOSTER, anahtar: adim })
+      }
     }
     return { cikti, rozetler }
-  }, [d.oyuncular, d.patika, boy])
+  }, [d.oyuncular, d.patika])
+
+  // Karakterler patikada adım adım sıçramaz; iki soru arasında eğrileri izleyerek akıcı yürür
+  const hedefAdim = useMemo(() => new Map(d.oyuncular.map((o) => [o.ad, o.adim] as [string, number])), [d.oyuncular])
+  const { deger: animAdim, akiyor } = useAkiskanSayilar(hedefAdim, 3000)
 
   const eveVaran = evde.slice(0, 10)
   const kapanisKurt = d.oyuncular.some((o) => o.durum === 'kapildi' && o.bittigiSoru === d.oynanan)
@@ -261,17 +263,27 @@ export function OrmanSahnesi({ d, kucult }: { d: OrmanSonucu; kucult: () => void
           <div className="absolute inset-0 bg-slate-950 pointer-events-none transition-opacity duration-1000" style={{ opacity: 0.05 + d.karanlik * 0.45 }} aria-hidden />
 
           {/* Patikadaki öğrenciler */}
-          {yoldakiler.cikti.map(({ o, x, y }, i) => {
+          {yoldakiler.cikti.map(({ o, yuva, tek }, i) => {
             const ad = gorunenAd(o.ad, ayar, ozel.has(o.ad))
+            const oran = (animAdim.get(o.ad) ?? o.adim) / d.patika
+            const p = patikaNoktasi(oran)
+            const { nx, ny } = dikYon(oran)
+            const yon = yuva % 2 === 0 ? 1 : -1
+            const mesafe = tek ? 0 : (Math.floor(yuva / 2) + 0.55) * boy * 0.95
+            const x = p.x + nx * mesafe * yon
+            const y = p.y + (ny * mesafe * yon) / DIKEY
+            const yuruyor = akiyor && Math.abs((animAdim.get(o.ad) ?? o.adim) - o.adim) > 0.02
             return (
               <div
                 key={`${o.ad}-${i}`}
-                className="absolute flex flex-col items-center leading-none transition-[left,top] duration-1000 ease-out"
+                className="absolute flex flex-col items-center leading-none"
                 style={{ left: `${x}%`, top: `${y / DIKEY}%`, width: `${boy}%`, transform: 'translate(-50%, -88%)', zIndex: Math.round(y) }}
                 title={`${o.ad}: ${o.adim} adım, ${o.kalp} kalp`}
               >
                 <KarakterEnerjisi ad={o.ad} className="relative w-[80%] mb-[3%]" />
-                <Gorsel ad={`ogrenci-${adIndeksi(o.ad, 8)}.webp`} emoji="🧒" className="w-full aspect-square drop-shadow-[0_2px_2px_rgba(0,0,0,0.6)]" emojiClass="text-2xl" />
+                <div className="w-full" style={yuruyor ? { animation: `orman-yuru ${0.55 + (i % 5) * 0.04}s ease-in-out infinite`, transformOrigin: '50% 100%' } : undefined}>
+                  <Gorsel ad={`ogrenci-${adIndeksi(o.ad, 8)}.webp`} emoji="🧒" className="w-full aspect-square drop-shadow-[0_2px_2px_rgba(0,0,0,0.6)]" emojiClass="text-2xl" />
+                </div>
                 {o.fener > 0 && (
                   <span className="absolute right-0 top-1/3" style={{ fontSize: `${boy * 0.4}cqw` }} aria-label="fener">
                     🏮

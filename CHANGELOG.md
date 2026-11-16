@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.11 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Akışkan hareket:** oyunlarda adımlar "tak tak" sıçramak yerine iki soru arasını dolduracak biçimde akar. Orman'da karakterler patikanın eğrilerini izleyerek kare kare yürür (yürüme sallanmasıyla); zombi, roket, kule ve kale geçişleri 1 sn yerine yaklaşık 3 sn ve yumuşak başlayıp biten eğriyle sürer; halat kayması ve kale askerlerinin yürüyüşü uzatıldı. Ortak yardımcı: `src/lib/akiskan.ts`.
+
 ## v0.64.10 (16 Kasım 2026)
 Şema değişikliği yok. 6 ve 7. hafta yeni soruları eklendi (SQL ile uygulandı: `supabase/data/din-felsefesi-1-hafta-6-7-yeni.sql`).
 - **6-7. hafta soruları:** "Âlem ve Felsefe" sunumundan Zapoot 20+20, Quiz 15+15; `soru-kontrol.py --yeni` denetiminden 0 hata ile geçti.

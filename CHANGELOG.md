@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.65.10 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Yorumcu bandı:** oyunlarda her sonuç açılınca perdenin üstünde tek satırlık yorum çıkar (6 saniye). Sınıf yorumu doğru oranından ("Sınıfın %82'si bildi, bu soru kolay geldi 👏", "Sınıf ikiye bölündü: %48 bildi", "Bir soru kaldı, herkes yerinde! 🏁", üç soru üst üste %60 üstünde ise 🔥); zombi, roket, ejderha, arena ve orman oyunlarında ayrıca doğru serisi lideri adıyla anılır ("Mehmet 3 sorudur durdurulamıyor! 🔥"). Yalnızca gerçek veriye dayanır, aynı tür yorum üst üste gelmez, kimseyle alay etmez. Kural ve testler `src/lib/yorum.ts`.
+- **Telefon titreşimi:** sonuç açılınca doğru cevapta kısa çift, yanlışta tek uzun titreşim (destekleyen telefonlarda). Gerçek telefonla denenmedi.
+- Yapılmayanlar: oyun başına ayrı müzik ve ses düzeyi ayarı, ekran sarsıntısı ve ağır çekim, "Final turu ×2", takım oyunlarında oyuncu bazlı yorum ve "en hızlı" rozeti (veri gerekir).
+
 ## v0.65.9 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Hocayla yarış (canlıda görüldü):** büyük sahne artık açılıyor; skor kutusu ve hocanın gizli cevap düğmeleri üst orta alana alındı (karakterlerin üstüne binmiyor).

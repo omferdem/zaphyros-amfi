@@ -20,6 +20,8 @@ import Cizim, { type CizimModu } from '../bilesenler/Cizim'
 import { dengeliSec, havuzSirasinaDiz, sonSorulanlar, turuKaydet } from '../lib/soruSec'
 import PerdeNotu from '../bilesenler/PerdeNotu'
 import { oyunuAc, TAKIM_SECILEBILIR } from '../lib/oyunAc'
+import YorumBandi, { yorumYayinla } from '../bilesenler/YorumBandi'
+import { sinifYorumlari } from '../lib/yorum'
 import OyunProvasi from '../bilesenler/OyunProvasi'
 import Rehber from '../bilesenler/Rehber'
 import BaglantiUyarisi from '../bilesenler/BaglantiUyarisi'
@@ -1426,6 +1428,18 @@ function SoruSahnesi({
     return () => clearInterval(t)
   }, [otoIleri, sonuc, otoDurdu, otoSure, !!durum])
 
+  // Yorumcu bandı: oyunlarda sonuç açılınca sınıfın doğru oranına göre tek satırlık yorum
+  const sinifOranlari = useRef<number[]>([])
+  useEffect(() => {
+    if (!oyunKilitli || !sonuc || !durum?.dagilim || durum.dogru_index === undefined || durum.dogru_index === null) return
+    const toplam = durum.dagilim.reduce((a, b) => a + b, 0)
+    if (toplam === 0) return
+    const oran = (100 * (durum.dagilim[durum.dogru_index] ?? 0)) / toplam
+    sinifOranlari.current = [...sinifOranlari.current, oran]
+    yorumYayinla(sinifYorumlari(oran, durum.sira, durum.toplam, sinifOranlari.current))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sonuc, durum?.dagilim])
+
   const secenekler = durum?.secenekler ?? []
   const toplamCevap = sonuc && durum?.dagilim ? durum.dagilim.reduce((a, b) => a + b, 0) : cevap
 
@@ -1437,6 +1451,7 @@ function SoruSahnesi({
     return (
       <>
         <OyunOnizleme oyun={oyunKilitli.oyun} adlar={oyunKilitli.adlar} demo={false} />
+        <YorumBandi />
         <div className="fixed top-2 right-2 z-[60] max-w-[96vw] cam-panel rounded-2xl p-2 opacity-70 hover:opacity-100 transition-opacity">{araclar}</div>
         {soruGoster && (
           <div className="fixed left-3 bottom-24 z-[60] cam-panel rounded-2xl p-4 max-w-[min(42rem,92vw)] space-y-2">

@@ -72,6 +72,16 @@ export default function SoruCevabi({ oturum, adim, yoklamali }: { oturum: string
     })
   }, [oturum, adim.id, adim.soru_durum])
 
+  // Telefon titreşimi: doğruda kısa çift, yanlışta tek uzun (cevap vermeyene titreşim yok); destek yoksa sessizce geçilir
+  useEffect(() => {
+    if (adim.soru_durum !== 'sonuc' || !sonucum?.cevapladi) return
+    try {
+      navigator.vibrate?.(sonucum.dogru ? [70, 50, 70] : 260)
+    } catch {
+      /* titreşim desteklenmiyor */
+    }
+  }, [adim.id, adim.soru_durum, sonucum?.cevapladi, sonucum?.dogru])
+
   async function cevapla(i: number) {
     setHata(null)
     setSecim(i)

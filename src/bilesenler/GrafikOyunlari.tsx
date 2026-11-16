@@ -21,6 +21,8 @@ import Konfeti from './Konfeti'
 import { type SeritOyuncusu } from './EnerjiSeridi'
 import { EnerjiSaglayici, KarakterEnerjisi } from './KarakterEnerjisi'
 import { sesCal, useOyunSesi } from '../lib/ses'
+import { yorumYayinla } from './YorumBandi'
+import { oyuncuYorumlari } from '../lib/yorum'
 
 type Veri = { sorular: ZombiSorusu[]; oyuncular: ZombiOyuncusu[] }
 
@@ -131,6 +133,18 @@ function OyunKabugu<D, V = Veri>({
   }, [oturum])
 
   const d = useMemo(() => (veri ? hesapla(veri) : null), [veri, hesapla])
+
+  // Yorumcu bandı: her yeni sonuçta (oynanan soru sayısı artınca) doğru serisi lideri anılır
+  const oncekiOynanan = useRef<number | null>(null)
+  useEffect(() => {
+    const v = veri as unknown as { sorular?: { acildi?: boolean }[]; oyuncular?: { ad: string; sonuc: (1 | 0 | -1 | null)[] }[] } | null
+    if (getir || !v?.sorular || !v.oyuncular) return
+    const oynanan = v.sorular.filter((s) => s.acildi).length
+    const onceki = oncekiOynanan.current
+    oncekiOynanan.current = oynanan
+    if (onceki === null || oynanan <= onceki) return
+    yorumYayinla(oyuncuYorumlari(v.oyuncular, oynanan))
+  }, [veri, getir])
   const perde = mod === 'perde'
 
   // Bu oyun seçili değilse ve henüz açılmadıysa hiçbir şey göstermeyiz (düğmeler yalnızca oyun seçilince çıkar)

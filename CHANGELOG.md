@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.12 (16 Kasım 2026)
+Şema değişikliği yok. 8. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-1-hafta-8-yeni.sql`, SQL ile uygulandı).
+- **8. hafta soruları:** "Ruhun Varlığı Meselesi" sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti.
+
 ## v0.64.11 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Akışkan hareket:** oyunlarda adımlar "tak tak" sıçramak yerine iki soru arasını dolduracak biçimde akar. Orman'da karakterler patikanın eğrilerini izleyerek kare kare yürür (yürüme sallanmasıyla); zombi, roket, kule ve kale geçişleri 1 sn yerine yaklaşık 3 sn ve yumuşak başlayıp biten eğriyle sürer; halat kayması ve kale askerlerinin yürüyüşü uzatıldı. Ortak yardımcı: `src/lib/akiskan.ts`.

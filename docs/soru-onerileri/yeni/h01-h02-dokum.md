@@ -479,7 +479,7 @@ Her paketin altında soru numarası, şıklar, doğru şık, konu, zorluk (yazar
 **18.** Farklı toplumlardaki dinî pratiklerin kültürel boyutlarını karşılaştıran çalışma hangi alana girer?
 
 - A) Din psikolojisi
-- B) Dinler tarihi bilimi
+- B) Din sosyolojisi
 - C) Din antropolojisi  ✔
 - D) Dinler tarihi
 

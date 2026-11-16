@@ -1,8 +1,8 @@
 # Sürüm Geçmişi
 
 ## v0.64.7 (16 Kasım 2026)
-Veritabanı değişikliği yok (soru eklenmedi).
-- **Soru deposu (3):** eski 560 soruluk dosya uygulanmadı, uyarı notu eklendi. 1. ve 2. hafta Zapoot (20+20) ve Quiz (15+15) soruları yeniden yazıldı: `docs/soru-onerileri/yeni/h01-h02.txt`, okunaklı döküm `docs/soru-onerileri/yeni/h01-h02-dokum.md`. Onay beklenir, veritabanına eklenmedi.
+Şema değişikliği yok. 1. ve 2. hafta yeni soruları kullanıcı onayıyla `supabase/data/din-felsefesi-1-hafta-1-2-yeni.sql` ile eklendi (SQL ile uygulandı).
+- **Soru deposu (3):** eski 560 soruluk dosya uygulanmadı, uyarı notu eklendi. 1. ve 2. hafta Zapoot (20+20) ve Quiz (15+15) soruları yeniden yazıldı: `docs/soru-onerileri/yeni/h01-h02.txt`, okunaklı döküm `docs/soru-onerileri/yeni/h01-h02-dokum.md`. Ayrı paketler olarak eklendi ("N. hafta: Zapoot (yeni, 20 soru)" ve "N. hafta: Quiz (yeni, 15 soru)"); eski paketlere dokunulmadı, istenirse eskileri Soru bankasından silinebilir.
 - `scripts/soru-kontrol.py --yeni`: soru sayısı, doğru şık konumu dengesi, doğru şıkkın en uzun/en kısa oranı, mutlak ya da ele veren çeldirici, boşluk doldurma kalıbı, slayt cümlesini kopyalama (`--slayt`) ve tekrar denetimi; `--yaz` okunaklı döküm üretir.
 
 ## v0.64.6 (16 Kasım 2026)

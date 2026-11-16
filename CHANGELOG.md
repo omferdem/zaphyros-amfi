@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.65.15 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Ses düzeyi:** perdedeki "⋯" menüsünde ses düzeyi kaydırıcısı (0-100, varsayılan 80; hem efektleri hem müziği etkiler). Telefon kumandasının Ayarlar sekmesinde "Ses (perde)": düzey kaydırıcısı, efektleri ve müziği ayrı ayrı aç/kapat; komutlar perdeye lazer kanalından gider.
+- **Oyun başına müzik:** altı tarz (zombi gergin ve yavaş, ejderha ağır tomlu macera, roket ve halat hızlı, orman davulsuz ve gizemli, arena/kale/kule marş davulu, merdiven orman tarzı); oyun değişince müzik tarzı da değişir.
+- **Yeni olay sesleri:** vuruş (ejderhaya hasar), ejderha kükremesi, kurt uluması (orman: kalp 1'e düşünce ve her yakalanışta), roket fırlatma, düşüş (arena elenme, zombi yakalanma, zirve çığı). Hepsi Web Audio ile üretilir.
+- Tarayıcıda 15 efektin tamamı hatasız çalıştı, düzey saklandı; kulakla dinlenmedi ve gerçek derste denenmedi.
+
 ## v0.65.14 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Oyuna özel final efektleri (GSAP, `FinalEfekti.tsx`):** zombi kurtulunca havai fişek ve zirvedekileri alan helikopter; ejderha yenilince yere düşer (kazanırsa kükreyip büyür) ve havai fişek; arenada kupa ve havai fişek; kalede kazanan için bayrak ve havai fişek; halatta havai fişek ve kaybeden tarafa çamur sıçraması; ormanda havai fişek ve evin sıcak ışığı; kule ve zirve tırmanışında havai fişek. Roket finali (gezegenler) eskisi gibi. Efektlerden sonra ortak podyum açılır.

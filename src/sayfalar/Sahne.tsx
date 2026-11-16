@@ -26,7 +26,7 @@ import { sinifYorumlari } from '../lib/yorum'
 import OyunProvasi from '../bilesenler/OyunProvasi'
 import Rehber from '../bilesenler/Rehber'
 import BaglantiUyarisi from '../bilesenler/BaglantiUyarisi'
-import { useMuzikAyari, useSesAyari, useSoruSesi } from '../lib/ses'
+import { useMuzikAyari, useSesAyari, useSesDuzeyi, useSoruSesi } from '../lib/ses'
 import { useVarlikSayisi } from '../lib/varlik'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import { dersEtiketi, kisaAd, oturumAdi } from '../lib/bicim'
@@ -151,6 +151,7 @@ export default function Sahne() {
   const [rehberAcik, setRehberAcik] = useState(false)
   const [sesAcik, sesAyarla] = useSesAyari()
   const [muzikAcik, muzikAyarla] = useMuzikAyari()
+  const [sesDuzeyi, sesDuzeyiAyarla] = useSesDuzeyi()
   const cevrimici = useVarlikSayisi(oturumId, true)
   const [otoGec, setOtoGecDurum] = useState(() => {
     try {
@@ -742,6 +743,11 @@ export default function Sahne() {
           <button className="ikincil-buton text-left" onClick={() => tepkiAyarla(!tepkiAcik)} title="Öğrencilerin emoji tepkileri perdede uçar; quiz sırasında kendiliğinden kapalıdır">
             {tepkiAcik ? '😀 Emoji tepkilerini kapat' : '😶 Emoji tepkilerini aç'}
           </button>
+          <label className="flex items-center gap-2 text-sm px-1" title="Efektlerin ve müziğin ses düzeyi (kumandadan da ayarlanır)">
+            <span aria-hidden>🔈</span>
+            <input type="range" min={0} max={100} step={5} value={sesDuzeyi} onChange={(e) => sesDuzeyiAyarla(Number(e.target.value))} className="flex-1 accent-fuchsia-500" aria-label="Ses düzeyi" />
+            <span className="w-9 text-right tabular-nums">{sesDuzeyi}</span>
+          </label>
           <button className="ikincil-buton text-left" onClick={() => muzikAyarla(!muzikAcik)}>
             {muzikAcik ? '🎵 Yarışma müziğini kapat' : '🎵 Yarışma müziğini aç'}
           </button>

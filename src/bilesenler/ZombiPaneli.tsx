@@ -159,7 +159,12 @@ function Ozet({ d, kapat }: { d: ZombiDurumu; kapat: () => void }) {
 
 /** Tam ekran sahne: piramit, karakterler ve zombi sürüsü. */
 export function ZombiSahnesi({ d, kapat }: { d: ZombiDurumu; kapat: () => void }) {
-  useOyunSesi(d.oynanan, d.bitti, d.kazandi)
+  useOyunSesi(d.oynanan, d.bitti, d.kazandi, 'zombi')
+  const oncekiYakalanan = useRef(d.yakalanan)
+  useEffect(() => {
+    if (d.yakalanan > oncekiYakalanan.current) sesCal('dusus')
+    oncekiYakalanan.current = d.yakalanan
+  }, [d.yakalanan])
   const { aktif, raund } = useRaund(d.oynanan, 5000)
   const sisRef = useRef<HTMLDivElement>(null)
   const karakterRef = useRef<Map<number, HTMLDivElement>>(new Map())

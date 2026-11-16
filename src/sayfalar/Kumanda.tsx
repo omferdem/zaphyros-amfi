@@ -1,4 +1,5 @@
 import LazerYuzeyi from '../bilesenler/LazerYuzeyi'
+import KumandaSes from '../bilesenler/KumandaSes'
 import KumandaNotu from '../bilesenler/KumandaNotu'
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
@@ -371,6 +372,7 @@ export default function Kumanda() {
 
       {sekme === 'ayar' && (
         <>
+      <KumandaSes oturum={oturum} />
       <section className="cam-panel rounded-2xl p-4 space-y-2">
         <h3 className="text-xs font-bold text-slate-300">😀 Emoji tepkileri (perde)</h3>
         <div className="grid grid-cols-2 gap-2">

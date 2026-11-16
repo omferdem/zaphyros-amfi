@@ -110,7 +110,7 @@ const KALE_STIL = `@keyframes kale-bayrak { 0%,100% { transform: skewY(0deg) sca
 
 /** Kale kuşatması hücre haritası: ortada hedef kale, takımların kampları halkalar hâlinde toprağı paylaşır. */
 export function KaleHaritaSahnesi({ h, takimSayisi, kucult }: { h: KaleHaritasi; takimSayisi: number; kucult: () => void }) {
-  useOyunSesi(h.oynanan, h.bitti, true)
+  useOyunSesi(h.oynanan, h.bitti, true, 'kale')
   const sirali = [...h.takimlar].sort((a, b) => b.ic - a.ic || b.toplam - a.toplam)
   const kalabalik = h.hucreler.filter((c) => c.takim !== null).length > 24
   const kalinlik = (R_DIS - R_IC) / HALKA_SAYISI

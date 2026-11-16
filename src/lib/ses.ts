@@ -1,12 +1,15 @@
 // Oyunlar ve yarışmalar için ses efektleri ve müzik. Dosya gerekmez: hepsi Web Audio ile üretilir (telif sorunu yoktur).
 // Hoca "Diğer" menüsünden sesi ve müziği ayrı ayrı kapatabilir.
 import { useEffect, useRef, useState } from 'react'
+import type { OyunAnahtari } from './oyun'
 
-export type Ses = 'tik' | 'dogru' | 'yanlis' | 'zafer' | 'yenilgi' | 'geri' | 'sure_bitti' | 'whoosh' | 'alkis' | 'baslat'
+export type Ses = 'tik' | 'dogru' | 'yanlis' | 'zafer' | 'yenilgi' | 'geri' | 'sure_bitti' | 'whoosh' | 'alkis' | 'baslat' | 'vurus' | 'kukreme' | 'kurt' | 'roket' | 'dusus'
 
 const SES_ANAHTARI = 'amfi_ses'
 const MUZIK_ANAHTARI = 'amfi_muzik'
+const DUZEY_ANAHTARI = 'amfi_ses_duzeyi'
 let baglam: AudioContext | null = null
+let master: GainNode | null = null
 let cikis: DynamicsCompressorNode | null = null
 let gurultuTamponu: AudioBuffer | null = null
 
@@ -32,6 +35,26 @@ export const sesAyarla = (acik: boolean) => yaz(SES_ANAHTARI, acik)
 export const muzikAcikMi = () => oku(MUZIK_ANAHTARI)
 export const muzikAyarla = (acik: boolean) => yaz(MUZIK_ANAHTARI, acik)
 
+/** Ses düzeyi 0-100 (varsayılan 80); hem efektleri hem müziği etkiler. */
+export function sesDuzeyi(): number {
+  try {
+    const v = Number(localStorage.getItem(DUZEY_ANAHTARI))
+    return Number.isFinite(v) && localStorage.getItem(DUZEY_ANAHTARI) !== null ? Math.max(0, Math.min(100, v)) : 80
+  } catch {
+    return 80
+  }
+}
+export function sesDuzeyiAyarla(v: number): void {
+  const d = Math.max(0, Math.min(100, Math.round(v)))
+  try {
+    localStorage.setItem(DUZEY_ANAHTARI, String(d))
+  } catch {
+    /* saklanamazsa bu açılışta geçerli olur */
+  }
+  if (master && baglam) master.gain.setTargetAtTime(d / 100, baglam.currentTime, 0.03)
+  window.dispatchEvent(new Event('amfi-ses-ayari'))
+}
+
 /** Ses bağlamını kurar (ilk çağrıda); çıkışa sert tepeleri yumuşatan bir sıkıştırıcı konur. */
 function hazirla(): AudioContext {
   baglam ??= new AudioContext()
@@ -40,7 +63,9 @@ function hazirla(): AudioContext {
     cikis = baglam.createDynamicsCompressor()
     cikis.threshold.value = -14
     cikis.ratio.value = 6
-    cikis.connect(baglam.destination)
+    master = baglam.createGain()
+    master.gain.value = sesDuzeyi() / 100
+    cikis.connect(master).connect(baglam.destination)
   }
   if (!gurultuTamponu) {
     gurultuTamponu = baglam.createBuffer(1, baglam.sampleRate, baglam.sampleRate)
@@ -176,6 +201,35 @@ const EFEKTLER: Record<Ses, () => void> = {
   alkis: () => {
     for (let i = 0; i < 30; i++) gurultu(i * 0.05 + Math.random() * 0.03, 0.12, 0.05, 'bandpass', 1500 + Math.random() * 2500)
   },
+  // Vuruş: kısa gürültü patlaması ve alçak darbe
+  vurus: () => {
+    gurultu(0, 0.12, 0.18, 'lowpass', 1800, 300)
+    nota(140, 0, 0.18, { tur: 'sine', seviye: 0.3, son: 50 })
+    nota(900, 0, 0.06, { tur: 'square', seviye: 0.05, suzgec: 2500 })
+  },
+  // Ejderha kükremesi: titreşimli alçak testere ve hırıltı
+  kukreme: () => {
+    nota(95, 0, 1.0, { tur: 'sawtooth', seviye: 0.16, son: 55, suzgec: 700, atak: 0.08 })
+    nota(190, 0, 0.9, { tur: 'square', seviye: 0.05, son: 100, suzgec: 600, atak: 0.1 })
+    gurultu(0, 1.0, 0.09, 'bandpass', 500, 180)
+  },
+  // Kurt uluması: yükselip alçalan uzun ses
+  kurt: () => {
+    nota(280, 0, 1.6, { tur: 'sine', seviye: 0.12, son: 520, atak: 0.5, suzgec: 1500 })
+    nota(520, 0.8, 1.3, { tur: 'sine', seviye: 0.09, son: 330, atak: 0.1, suzgec: 1500 })
+    nota(560, 0.4, 1.8, { tur: 'triangle', seviye: 0.03, son: 340, atak: 0.6 })
+  },
+  // Roket fırlatma: yükselen gürültü ve alçak gümbürtü
+  roket: () => {
+    gurultu(0, 1.2, 0.14, 'bandpass', 200, 2600)
+    nota(70, 0, 1.0, { tur: 'sawtooth', seviye: 0.12, son: 140, suzgec: 400, atak: 0.2 })
+  },
+  // Düşüş: aşağı kayan ses ve yere çarpma
+  dusus: () => {
+    nota(620, 0, 0.55, { tur: 'sine', seviye: 0.12, son: 90 })
+    nota(80, 0.5, 0.25, { tur: 'sine', seviye: 0.3, son: 35 })
+    gurultu(0.5, 0.2, 0.1, 'lowpass', 900, 200)
+  },
   // Yarışma başlıyor: yükselen süpürme ve vuruş
   baslat: () => {
     gurultu(0, 0.6, 0.1, 'bandpass', 250, 4500)
@@ -198,28 +252,65 @@ export function sesCal(ad: Ses): void {
 // ---------------------------------------------------------------------------
 // Müzik: dört akorluk (Am, F, C, G) tempolu bir döngü. Bas, arpej, davul; hepsi her çalışta üretilir.
 
-const BPM = 126
-const ADIM_SN = 60 / BPM / 4
-const BAS = [110, 87.31, 130.81, 98]
-const AKORLAR = [
-  [220, 261.63, 329.63],
-  [174.61, 220, 261.63],
-  [261.63, 329.63, 392],
-  [196, 246.94, 293.66],
-]
+/** Oyun başına müzik tarzı: tempo, bas ve akorlar, arpej sesi ve davul deseni. */
+interface MuzikTarzi {
+  bpm: number
+  bas: number[]
+  akorlar: number[][]
+  arpTur: OscillatorType
+  arpSeviye: number
+  basTur: OscillatorType
+  /** 'dort': klasik vuruş; 'tom': ağır tomlar; 'marsch': küçük davul yürüyüşü; 'yok': davulsuz */
+  davul: 'dort' | 'tom' | 'marsch' | 'yok'
+}
+
 const ARPEJ = [0, 1, 2, 1, 0, 1, 2, 3, 0, 1, 2, 1, 2, 1, 0, 1]
 
+const TARZ_VARSAYILAN: MuzikTarzi = {
+  bpm: 126,
+  bas: [110, 87.31, 130.81, 98],
+  akorlar: [
+    [220, 261.63, 329.63],
+    [174.61, 220, 261.63],
+    [261.63, 329.63, 392],
+    [196, 246.94, 293.66],
+  ],
+  arpTur: 'square',
+  arpSeviye: 0.028,
+  basTur: 'sawtooth',
+  davul: 'dort',
+}
+const TARZ_GERILIM: MuzikTarzi = { ...TARZ_VARSAYILAN, bpm: 100, bas: [82.41, 82.41, 73.42, 77.78], akorlar: [[164.81, 196, 246.94], [164.81, 207.65, 246.94], [146.83, 174.61, 220], [155.56, 185, 233.08]], arpTur: 'sawtooth', arpSeviye: 0.02, davul: 'tom' }
+const TARZ_MACERA: MuzikTarzi = { ...TARZ_VARSAYILAN, bpm: 112, bas: [98, 98, 87.31, 110], akorlar: [[196, 233.08, 293.66], [196, 246.94, 293.66], [174.61, 220, 261.63], [220, 261.63, 329.63]], davul: 'tom' }
+const TARZ_YARIS: MuzikTarzi = { ...TARZ_VARSAYILAN, bpm: 140, bas: [130.81, 98, 110, 87.31], akorlar: [[261.63, 329.63, 392], [196, 246.94, 293.66], [220, 261.63, 329.63], [174.61, 220, 261.63]], arpSeviye: 0.032 }
+const TARZ_ORMAN: MuzikTarzi = { ...TARZ_VARSAYILAN, bpm: 92, bas: [73.42, 65.41, 82.41, 73.42], akorlar: [[146.83, 174.61, 220], [130.81, 164.81, 196], [164.81, 196, 246.94], [146.83, 185, 220]], arpTur: 'triangle', arpSeviye: 0.04, basTur: 'triangle', davul: 'yok' }
+const TARZ_SAVAS: MuzikTarzi = { ...TARZ_VARSAYILAN, bpm: 120, bas: [110, 110, 98, 82.41], akorlar: [[220, 261.63, 329.63], [220, 261.63, 311.13], [196, 246.94, 293.66], [164.81, 207.65, 246.94]], arpTur: 'sawtooth', davul: 'marsch' }
+
+const OYUN_TARZLARI: Partial<Record<OyunAnahtari, MuzikTarzi>> = {
+  zombi: TARZ_GERILIM,
+  ejderha: TARZ_MACERA,
+  roket: TARZ_YARIS,
+  halat: TARZ_YARIS,
+  orman: TARZ_ORMAN,
+  arena: TARZ_SAVAS,
+  kale: TARZ_SAVAS,
+  kule: TARZ_SAVAS,
+  merdiven: TARZ_ORMAN,
+}
+
 let muzikIstegi = 0
-let calan: { ana: GainNode; sayac: ReturnType<typeof setInterval> } | null = null
+let istenenTarz: MuzikTarzi = TARZ_VARSAYILAN
+let calan: { ana: GainNode; sayac: ReturnType<typeof setInterval>; tarz: MuzikTarzi } | null = null
 let sonrakiZaman = 0
 let adimNo = 0
 let durdurmaBekleme: ReturnType<typeof setTimeout> | null = null
 
-function muzikAdimi(t: number, adim: number, hedef: AudioNode): void {
+function muzikAdimi(t: number, adim: number, hedef: AudioNode, tarz: MuzikTarzi): void {
   if (!baglam) return
   const olcu = Math.floor(adim / 16) % 4
   const a = adim % 16
-  const akor = AKORLAR[olcu]
+  const akor = tarz.akorlar[olcu]
+  const adimSn = 60 / tarz.bpm / 4
   const at = (f: number, baslangic: number, sure: number, tur: OscillatorType, seviye: number, suzgec: number) => {
     const o = baglam!.createOscillator()
     const g = baglam!.createGain()
@@ -236,24 +327,32 @@ function muzikAdimi(t: number, adim: number, hedef: AudioNode): void {
     o.stop(baslangic + sure + 0.03)
   }
   // Bas: sekizlikler, ölçü sonunda oktav sıçraması
-  if (a % 2 === 0) at(a === 14 || a === 6 ? BAS[olcu] * 2 : BAS[olcu], t, ADIM_SN * 1.8, 'sawtooth', 0.1, 520)
+  if (a % 2 === 0) at(a === 14 || a === 6 ? tarz.bas[olcu] * 2 : tarz.bas[olcu], t, adimSn * 1.8, tarz.basTur, 0.1, 520)
   // Arpej: akor sesleri, üst oktavda parlak
-  at(akor[ARPEJ[a] % 3] * (ARPEJ[a] === 3 ? 4 : 2), t, ADIM_SN * 0.9, 'square', 0.028, 2600)
-  // Davul: vuruş, tef ve ritim şapkası
-  if (a % 4 === 0) {
-    const o = baglam.createOscillator()
-    const g = baglam.createGain()
-    o.frequency.setValueAtTime(150, t)
-    o.frequency.exponentialRampToValueAtTime(42, t + 0.12)
-    g.gain.setValueAtTime(0.0001, t)
-    g.gain.exponentialRampToValueAtTime(0.32, t + 0.005)
-    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.18)
-    o.connect(g).connect(hedef)
-    o.start(t)
-    o.stop(t + 0.2)
+  at(akor[ARPEJ[a] % 3] * (ARPEJ[a] === 3 ? 4 : 2), t, adimSn * 0.9, tarz.arpTur, tarz.arpSeviye, 2600)
+  // Davul: tarza göre vuruş, tom ya da küçük davul yürüyüşü
+  if (tarz.davul !== 'yok') {
+    const vur = (f0: number, f1: number, sure: number, seviye: number) => {
+      const o = baglam!.createOscillator()
+      const g = baglam!.createGain()
+      o.frequency.setValueAtTime(f0, t)
+      o.frequency.exponentialRampToValueAtTime(f1, t + sure * 0.7)
+      g.gain.setValueAtTime(0.0001, t)
+      g.gain.exponentialRampToValueAtTime(seviye, t + 0.005)
+      g.gain.exponentialRampToValueAtTime(0.0001, t + sure)
+      o.connect(g).connect(hedef)
+      o.start(t)
+      o.stop(t + sure + 0.02)
+    }
+    if (tarz.davul === 'dort' && a % 4 === 0) vur(150, 42, 0.18, 0.32)
+    if (tarz.davul === 'tom' && (a === 0 || a === 6 || a === 10)) vur(a === 0 ? 110 : 85, 40, 0.3, 0.34)
+    if (tarz.davul === 'marsch') {
+      if (a % 8 === 0) vur(130, 45, 0.2, 0.3)
+      if (a % 4 === 2) muzikGurultusu(t, 0.07, 0.07, 2200, hedef)
+    }
+    if (tarz.davul === 'dort' && (a === 4 || a === 12)) muzikGurultusu(t, 0.12, 0.09, 1600, hedef)
+    if (tarz.davul === 'dort' && a % 2 === 1) muzikGurultusu(t, 0.035, a % 4 === 3 ? 0.035 : 0.02, 7500, hedef)
   }
-  if (a === 4 || a === 12) muzikGurultusu(t, 0.12, 0.09, 1600, hedef)
-  if (a % 2 === 1) muzikGurultusu(t, 0.035, a % 4 === 3 ? 0.035 : 0.02, 7500, hedef)
 }
 
 function muzikGurultusu(t: number, sure: number, seviye: number, frekans: number, hedef: AudioNode): void {
@@ -281,15 +380,17 @@ function muzikBaslat(): void {
     ana.connect(cikis!)
     sonrakiZaman = b.currentTime + 0.1
     adimNo = 0
+    const tarz = istenenTarz
+    const adimSn = 60 / tarz.bpm / 4
     const sayac = setInterval(() => {
       if (!baglam || !calan) return
       while (sonrakiZaman < baglam.currentTime + 0.25) {
-        muzikAdimi(sonrakiZaman, adimNo, calan.ana)
-        sonrakiZaman += ADIM_SN
+        muzikAdimi(sonrakiZaman, adimNo, calan.ana, tarz)
+        sonrakiZaman += adimSn
         adimNo++
       }
     }, 60)
-    calan = { ana, sayac }
+    calan = { ana, sayac, tarz }
   } catch {
     calan = null
   }
@@ -307,27 +408,31 @@ function muzikDurdur(): void {
 }
 
 function muzikDurumunuGuncelle(): void {
-  if (muzikIstegi > 0 && muzikAcikMi()) muzikBaslat()
-  else muzikDurdur()
+  if (muzikIstegi > 0 && muzikAcikMi()) {
+    // Başka oyunun tarzı istendiyse müzik değişir
+    if (calan && calan.tarz !== istenenTarz) muzikDurdur()
+    muzikBaslat()
+  } else muzikDurdur()
 }
 
 if (typeof window !== 'undefined') window.addEventListener('amfi-ses-ayari', muzikDurumunuGuncelle)
 
 /** Müzik isteği ekler (+1) ya da kaldırır (-1). Soru geçişlerinde müzik kesilmesin diye durdurma kısa bir süre geciktirilir. */
-function muzikIste(delta: 1 | -1): void {
+function muzikIste(delta: 1 | -1, tarz?: MuzikTarzi): void {
   muzikIstegi = Math.max(0, muzikIstegi + delta)
+  if (delta === 1) istenenTarz = tarz ?? TARZ_VARSAYILAN
   if (durdurmaBekleme) clearTimeout(durdurmaBekleme)
   if (muzikIstegi > 0) muzikDurumunuGuncelle()
   else durdurmaBekleme = setTimeout(muzikDurumunuGuncelle, 900)
 }
 
 /** Etkin olduğu sürece yarışma müziği çalar (ses ayarı "müzik" kapalıysa çalmaz). */
-export function useMuzik(etkin: boolean): void {
+export function useMuzik(etkin: boolean, oyun?: OyunAnahtari): void {
   useEffect(() => {
     if (!etkin) return
-    muzikIste(1)
+    muzikIste(1, oyun ? OYUN_TARZLARI[oyun] : undefined)
     return () => muzikIste(-1)
-  }, [etkin])
+  }, [etkin, oyun])
 }
 
 /** Ses ve müzik ayarlarını izleyen kanca (menüdeki düğmeler için). */
@@ -341,6 +446,16 @@ export function useSesAyari(): [boolean, (a: boolean) => void] {
   return [acik, sesAyarla]
 }
 
+export function useSesDuzeyi(): [number, (v: number) => void] {
+  const [d, setD] = useState(sesDuzeyi)
+  useEffect(() => {
+    const g = () => setD(sesDuzeyi())
+    window.addEventListener('amfi-ses-ayari', g)
+    return () => window.removeEventListener('amfi-ses-ayari', g)
+  }, [])
+  return [d, sesDuzeyiAyarla]
+}
+
 export function useMuzikAyari(): [boolean, (a: boolean) => void] {
   const [acik, setAcik] = useState(muzikAcikMi)
   useEffect(() => {
@@ -352,8 +467,8 @@ export function useMuzikAyari(): [boolean, (a: boolean) => void] {
 }
 
 /** Oyun sahnesinde: oyun sürerken müzik; yeni soru oynanınca tık, oyun bitince zafer ya da yenilgi sesi. */
-export function useOyunSesi(oynanan: number, bitti: boolean, kazandi: boolean): void {
-  useMuzik(!bitti)
+export function useOyunSesi(oynanan: number, bitti: boolean, kazandi: boolean, oyun?: OyunAnahtari): void {
+  useMuzik(!bitti, oyun)
   const onceki = useRef({ oynanan, bitti })
   useEffect(() => {
     const o = onceki.current

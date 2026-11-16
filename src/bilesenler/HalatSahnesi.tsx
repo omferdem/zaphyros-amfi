@@ -54,7 +54,7 @@ function takimDizilimi(n: number): { sutun: number; satir: number } {
 
 /** Halat çekme tam ekran sahnesi: perdede yalnızca halat ve iki takım; her öğrenci adı ve enerji barıyla halatın üstünde durur. */
 export function HalatSahnesi({ h, oyuncular, zorlaniyor, kucult }: { h: HalatSahneDurumu; oyuncular: KaleOyuncusu[]; zorlaniyor: boolean; kucult: () => void }) {
-  useOyunSesi(h.oynanan, h.kazanan !== null, true)
+  useOyunSesi(h.oynanan, h.kazanan !== null, true, 'halat')
   const kisiler = useMemo(() => {
     const hepsi: Kisi[] = oyuncular
       .filter((o) => o.takim === 1 || o.takim === 2)

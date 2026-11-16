@@ -32,7 +32,7 @@ interface Nokta {
 
 export default function ZirveSahnesi({ d, sonSonuc, jokerler, sonOran }: { d: MerdivenDurumu; sonSonuc: 'cikti' | 'dustu' | 'joker' | null; jokerler?: SoruJokerleri; sonOran: number | null }) {
   const n = Math.max(1, d.toplam)
-  useOyunSesi(d.gecmis.length, d.kazandi, true)
+  useOyunSesi(d.gecmis.length, d.kazandi, true, 'merdiven')
   const yolRef = useRef<SVGPathElement>(null)
   const grupRef = useRef<HTMLDivElement>(null)
   const bobRef = useRef<HTMLDivElement>(null)
@@ -77,7 +77,7 @@ export default function ZirveSahnesi({ d, sonSonuc, jokerler, sonOran }: { d: Me
       return
     }
     const dustu = hedef < konum.current.b
-    sesCal(dustu ? 'yanlis' : 'dogru')
+    sesCal(dustu ? 'dusus' : 'dogru')
     const tl = gsap.timeline()
     if (dustu) {
       tl.fromTo(cigRef.current, { opacity: 0, xPercent: 70, yPercent: -70, scale: 0.6 }, { opacity: 1, xPercent: -10, yPercent: 15, scale: 1.6, duration: 0.9, ease: 'power2.in' }, 0)

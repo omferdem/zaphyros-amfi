@@ -16,7 +16,7 @@ const ZEMIN = 13
  * kamera yukarı kayar (bloklar küçülmez). Yeni bloklar gökten iner, toz kalkar; rüzgâr kuralı işleyince üst blok sallanıp düşer.
  */
 export function KuleSantiyesi({ d, kucult }: { d: KuleDurumu; kucult: () => void }) {
-  useOyunSesi(d.oynanan, d.bitti, true)
+  useOyunSesi(d.oynanan, d.bitti, true, 'kule')
   const satirlar = [...d.satirlar].sort((a, b) => a.takim - b.takim)
   const sahneRef = useRef<HTMLDivElement>(null)
   const dunyaRef = useRef<HTMLDivElement>(null)

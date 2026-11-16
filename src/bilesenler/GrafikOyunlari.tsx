@@ -203,7 +203,7 @@ export function RoketPaneli({ oturum, anahtar, mod }: { oturum: string; anahtar:
 }
 
 export function RoketSahnesi({ d, kucult }: { d: RoketDurumu; kucult: () => void }) {
-  useOyunSesi(d.oynanan, d.bitti, true)
+  useOyunSesi(d.oynanan, d.bitti, true, 'roket')
   const n = d.oyuncular.length
   const seritSayisi = Math.max(4, Math.min(14, n))
   const boy = n > 60 ? 'text-xl' : n > 30 ? 'text-2xl' : 'text-3xl'
@@ -220,7 +220,7 @@ export function RoketSahnesi({ d, kucult }: { d: RoketDurumu; kucult: () => void
         const p = merkez(roketRef.current.get(i))
         if (p) void s.patlama(p, { resim: 'efekt-turbo.webp', emoji: '💨', boyut: 90, sure: 700, gecik: k * 40 })
       })
-      if (dogrular.length > 0) sesCal('whoosh')
+      if (dogrular.length > 0) sesCal('roket')
       await s.bekle(900)
       if (s.durdu) return
       const yanlislar = d.oyuncular.map((o, i) => ({ o, i })).filter((x) => x.o.son !== null && x.o.son !== 1 && x.o.bitirdi === null).slice(0, 14)
@@ -401,7 +401,7 @@ export function EjderhaPaneli({ oturum, anahtar, mod }: { oturum: string; anahta
 }
 
 export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => void }) {
-  useOyunSesi(d.oynanan, d.bitti, d.kazandi)
+  useOyunSesi(d.oynanan, d.bitti, d.kazandi, 'ejderha')
   const n = d.kahramanlar.length
   const boy = n > 80 ? 'text-2xl' : n > 40 ? 'text-4xl' : n > 20 ? 'text-5xl' : 'text-6xl'
   const adBoy = n > 40 ? 'text-[10px] max-w-16' : 'text-sm max-w-24'
@@ -462,13 +462,14 @@ export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => 
       // 2) Hasar
       if (sonHasar > 0) {
         void s.yazi({ x: govde.x, y: r.top + r.height * 0.22 }, `−${sonHasar}`, { boyut: 76, sure: 1700 })
-        sesCal('dogru')
+        sesCal('vurus')
       }
       await s.bekle(900)
       if (s.durdu || d.kazandi) return
 
       // 3) Kükreme ve ateş: ejderha ağzından ateş topları fırlatır, yanlış bilenleri vurur
       if (kayiplar.length > 0) {
+        sesCal('kukreme')
         s.nabiz(e, { olcek: 1.16, aci: -4, sure: 900 })
         sesCal('whoosh')
         await s.bekle(650)
@@ -629,7 +630,12 @@ export function ArenaPaneli({ oturum, anahtar, mod }: { oturum: string; anahtar:
 }
 
 export function ArenaSahnesi({ d, kucult }: { d: ArenaDurumu; kucult: () => void }) {
-  useOyunSesi(d.oynanan, d.bitti, true)
+  useOyunSesi(d.oynanan, d.bitti, true, 'arena')
+  const oncekiAyakta = useRef(d.ayakta)
+  useEffect(() => {
+    if (d.ayakta < oncekiAyakta.current) sesCal('dusus')
+    oncekiAyakta.current = d.ayakta
+  }, [d.ayakta])
   const { raund } = useRaund(d.oynanan, 6000)
   const savasciRef = useRef<Map<number, HTMLLIElement>>(new Map())
   // Yeni soruda: doğru bilenler zıplayıp zafer pozu verir; yanlış bilenlerin üstüne dev çekiç düşer, canı bitenler arenadan fırlar
@@ -822,7 +828,7 @@ function kaleKonumu(sira: number, toplam: number): { x: number; y: number } {
 }
 
 export function KaleSahnesi({ d, kucult }: { d: KaleDurumu; kucult: () => void }) {
-  useOyunSesi(d.oynanan, d.bitti, true)
+  useOyunSesi(d.oynanan, d.bitti, true, 'kale')
   const { raund } = useRaund(d.oynanan, 5000)
   const kaleRef = useRef<Map<number, HTMLElement>>(new Map())
   const onceki = useRef<Map<number, number>>(new Map())

@@ -1,7 +1,7 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { ORMAN_KALBI, type OrmanOyuncusu, type OrmanSonucu } from '../lib/orman'
 import { gorunenAd, kalabalikAyari, tohumluRastgele } from '../lib/oyunMotoru'
-import { useOyunSesi } from '../lib/ses'
+import { sesCal, useOyunSesi } from '../lib/ses'
 import { useAkiskanSayilar } from '../lib/akiskan'
 import Gorsel, { adIndeksi } from './Gorsel'
 import { KarakterEnerjisi } from './KarakterEnerjisi'
@@ -125,7 +125,15 @@ function Agac({ a }: { a: Agac }) {
 
 /** Orman'dan eve dönüş: katmanlı gece ormanı, patikada ilerleyen öğrenciler, kurt ve ev. */
 export function OrmanSahnesi({ d, kucult }: { d: OrmanSonucu; kucult: () => void }) {
-  useOyunSesi(d.oynanan, d.bitti, d.oyuncular.some((o) => o.durum === 'evde'))
+  useOyunSesi(d.oynanan, d.bitti, d.oyuncular.some((o) => o.durum === 'evde'), 'orman')
+  // Kurt uluması: ilk kalp 1'e düşünce ve her yeni yakalanışta
+  const oncekiKurt = useRef({ gozu: d.kurtGozu, yakalanan: d.oyuncular.filter((o) => o.durum === 'kapildi').length })
+  useEffect(() => {
+    const yakalanan = d.oyuncular.filter((o) => o.durum === 'kapildi').length
+    const o = oncekiKurt.current
+    if ((d.kurtGozu && !o.gozu) || yakalanan > o.yakalanan) sesCal('kurt')
+    oncekiKurt.current = { gozu: d.kurtGozu, yakalanan }
+  }, [d.kurtGozu, d.oyuncular])
   const n = d.oyuncular.length
   const ayar = kalabalikAyari(n)
   const ozel = useMemo(() => new Set([...d.siralama.slice(0, 3), ...d.siralama.slice(-3)].map((o) => o.ad)), [d.siralama])

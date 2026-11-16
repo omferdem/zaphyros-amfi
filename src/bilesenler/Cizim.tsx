@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { supabase } from '../lib/supabase'
+import { muzikAyarla, sesAyarla, sesDuzeyiAyarla } from '../lib/ses'
 
 export type CizimModu = 'kapali' | 'lazer' | 'tahta'
 
@@ -177,7 +178,10 @@ export default function Cizim({ oturum, anahtar, mod, kapat, bitti, ac, kodDegis
     kanal.on('broadcast', { event: 'komut' }, ({ payload }) => {
       const p = payload as { k?: string; r?: number } | null
       if (!p?.k) return
-      if (p.k === 'kod') kodRef.current?.()
+      if (p.k === 'ses') sesAyarla(!!p.r)
+      else if (p.k === 'muzik') muzikAyarla(!!p.r)
+      else if (p.k === 'ses_duzey' && typeof p.r === 'number') sesDuzeyiAyarla(p.r)
+      else if (p.k === 'kod') kodRef.current?.()
       else if (p.k === 'kapat') kapatRef.current()
       else komutRef.current(p.k, p.r)
     })

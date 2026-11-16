@@ -151,7 +151,7 @@ export function HalatSahnesi({ h, oyuncular, zorlaniyor, kucult }: { h: HalatSah
         {/* Sabit orta çizgi: halat bu çizgiden kaymış gibi okunur */}
         <div className="absolute left-1/2 top-[8%] bottom-[6%] w-1 -translate-x-1/2 border-l-4 border-dashed border-white/40" aria-hidden />
 
-        <div className="absolute inset-0 flex items-center transition-transform duration-[3000ms]" style={{ transform: `translateX(${kayma}vw)`, transitionTimingFunction: 'cubic-bezier(.3,1.25,.5,1)', paddingInline: '2%' }}>
+        <div className="absolute inset-0 flex items-center transition-transform duration-[4500ms]" style={{ transform: `translateX(${kayma}vw)`, transitionTimingFunction: 'cubic-bezier(.3,1.25,.5,1)', paddingInline: '2%' }}>
           {takimAlani(1)}
           <div className="flex-1" />
           {takimAlani(2)}

@@ -94,8 +94,8 @@ export default function MerdivenPaneli({ oturum, anahtar, mod, dugme = true }: {
   const sonSonuc = d.gecmis[d.gecmis.length - 1]
 
   return (
-    <div className={perde ? 'fixed inset-x-4 bottom-28 z-30 flex justify-center' : ''}>
-      <Merdiven d={d} jokerler={{ kullanilan: jokerDurumu.kullanilan, seyirci: jokerDurumu.seyirci, kullan: jokerKullan, hata: jokerHata }} sonSonuc={sonSonuc?.sonuc ?? null} kucuk={!perde} joker={() => d.jokerlenebilir && kaydet({ ...kayit, jokerler: [...kayit.jokerler, d.jokerlenebilir] })} kapat={() => kaydet({ ...kayit, acik: false })} />
+    <div className={perde ? 'fixed inset-0 z-40 bg-slate-950/95 flex items-start justify-center p-3 pb-28 pt-14 overflow-y-auto' : ''}>
+      <Merdiven tamEkran={perde} d={d} jokerler={{ kullanilan: jokerDurumu.kullanilan, seyirci: jokerDurumu.seyirci, kullan: jokerKullan, hata: jokerHata }} sonSonuc={sonSonuc?.sonuc ?? null} kucuk={!perde} joker={() => d.jokerlenebilir && kaydet({ ...kayit, jokerler: [...kayit.jokerler, d.jokerlenebilir] })} kapat={() => kaydet({ ...kayit, acik: false })} />
     </div>
   )
 }
@@ -110,10 +110,10 @@ export interface SoruJokerleri {
 
 const SIK_HARFLERI = ['A', 'B', 'C', 'D', 'E', 'F']
 
-export function Merdiven({ d, sonSonuc, kucuk, joker, kapat, jokerler }: { d: MerdivenDurumu; sonSonuc: 'cikti' | 'dustu' | 'joker' | null; kucuk: boolean; joker: () => void; kapat: () => void; jokerler?: SoruJokerleri }) {
+export function Merdiven({ d, sonSonuc, kucuk, joker, kapat, jokerler, tamEkran = false }: { d: MerdivenDurumu; sonSonuc: 'cikti' | 'dustu' | 'joker' | null; kucuk: boolean; joker: () => void; kapat: () => void; jokerler?: SoruJokerleri; tamEkran?: boolean }) {
   const basamaklar = Array.from({ length: d.toplam }, (_, i) => i + 1)
   return (
-    <div className={`cam-panel rounded-3xl p-4 space-y-3 ${kucuk ? 'w-full' : 'w-[min(60rem,94vw)]'}`}>
+    <div className={`cam-panel rounded-3xl p-4 space-y-3 ${kucuk ? 'w-full' : tamEkran ? 'w-[min(64rem,96vw)] max-h-[96vh] overflow-y-auto' : 'w-[min(60rem,94vw)]'}`}>
       <div className="flex items-center gap-3 text-sm">
         <span className="font-bold">🪜 Bilgi merdiveni</span>
         <span className="font-display font-extrabold tabular-nums">
@@ -124,25 +124,29 @@ export function Merdiven({ d, sonSonuc, kucuk, joker, kapat, jokerler }: { d: Me
           ✕
         </button>
       </div>
-      <ol className="flex flex-wrap gap-1.5">
-        {basamaklar.map((n) => {
-          const cikildi = n <= d.basamak
-          const simdi = n === d.basamak
-          const guvenli = n % GUVENLI_ARALIK === 0
-          return (
-            <li
-              key={n}
-              className={`min-w-9 rounded-lg px-2 py-1.5 text-center text-sm font-bold tabular-nums transition-all duration-500 ${
-                cikildi ? 'bg-gradient-to-br from-emerald-400 to-teal-500 text-slate-950' : 'bg-white/5 text-slate-400'
-              } ${simdi ? 'ring-2 ring-white scale-110' : ''} ${guvenli && !cikildi ? 'border border-amber-300/60' : ''}`}
-              title={guvenli ? 'Güvenli basamak' : undefined}
-            >
-              {guvenli ? '🛡' : ''}
-              {n}
-            </li>
-          )
-        })}
-      </ol>
+      {kucuk ? (
+        <ol className="flex flex-wrap gap-1.5">
+          {basamaklar.map((n) => {
+            const cikildi = n <= d.basamak
+            const simdi = n === d.basamak
+            const guvenli = n % GUVENLI_ARALIK === 0
+            return (
+              <li
+                key={n}
+                className={`min-w-9 rounded-lg px-2 py-1.5 text-center text-sm font-bold tabular-nums transition-all duration-500 ${
+                  cikildi ? 'bg-gradient-to-br from-emerald-400 to-teal-500 text-slate-950' : 'bg-white/5 text-slate-400'
+                } ${simdi ? 'ring-2 ring-white scale-110' : ''} ${guvenli && !cikildi ? 'border border-amber-300/60' : ''}`}
+                title={guvenli ? 'Güvenli basamak' : undefined}
+              >
+                {guvenli ? '🛡' : ''}
+                {n}
+              </li>
+            )
+          })}
+        </ol>
+      ) : (
+        <MerdivenSahnesi d={d} sonSonuc={sonSonuc} />
+      )}
       <div className="flex flex-wrap items-center gap-3 text-sm">
         {d.kazandi ? (
           <p className="text-xl font-display font-extrabold pop">
@@ -202,6 +206,66 @@ export function Merdiven({ d, sonSonuc, kucuk, joker, kapat, jokerler }: { d: Me
           )}
         </div>
       )}
+    </div>
+  )
+}
+
+/**
+ * Perdede merdiven: iki yan direk, basamaklar alttan üste dizilir, güvenli basamaklar altın renkte ve kalkanlıdır.
+ * Sınıf tırmanıcısı basamaklar arasında yumuşakça kayar; yanlışta güvenli basamağa süzülür.
+ */
+function MerdivenSahnesi({ d, sonSonuc }: { d: MerdivenDurumu; sonSonuc: 'cikti' | 'dustu' | 'joker' | null }) {
+  const n = Math.max(1, d.toplam)
+  // 0. konum zemin; n. konum en tepe
+  const yuzde = (b: number) => 4 + (b / n) * 82
+  const basamaklar = Array.from({ length: n }, (_, i) => i + 1)
+  const hic = d.gecmis.length === 0
+  return (
+    <div className="grid gap-4 md:grid-cols-[1fr_16rem] items-stretch">
+      <div className="relative h-[min(58vh,34rem)] rounded-3xl overflow-hidden border border-white/10 bg-gradient-to-t from-emerald-950 via-slate-900 to-indigo-950">
+        {/* yıldızlar */}
+        <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_20%_15%,white_0_1px,transparent_2px),radial-gradient(circle_at_70%_30%,white_0_1px,transparent_2px),radial-gradient(circle_at_45%_8%,white_0_1px,transparent_2px),radial-gradient(circle_at_85%_12%,white_0_1px,transparent_2px)]" aria-hidden />
+        {/* direkler */}
+        <div className="absolute left-[28%] right-[28%] top-3 bottom-3">
+          <span className="absolute left-0 top-0 bottom-0 w-2 rounded-full bg-gradient-to-b from-amber-200 to-amber-700 shadow-lg" />
+          <span className="absolute right-0 top-0 bottom-0 w-2 rounded-full bg-gradient-to-b from-amber-200 to-amber-700 shadow-lg" />
+          {basamaklar.map((b) => {
+            const cikildi = b <= d.basamak
+            const guvenli = b % GUVENLI_ARALIK === 0
+            return (
+              <div key={b} className="absolute left-0 right-0 flex items-center justify-center" style={{ bottom: `${((b / n) * 100 * 0.82 + 4) * 0.94}%` }}>
+                <span
+                  className={`h-3 w-full rounded-full transition-colors duration-700 ${
+                    cikildi ? 'bg-gradient-to-r from-emerald-300 to-teal-400' : guvenli ? 'bg-gradient-to-r from-amber-200 to-amber-400' : 'bg-white/20'
+                  }`}
+                />
+                <span className={`absolute -left-14 text-sm font-bold tabular-nums ${cikildi ? 'text-emerald-300' : guvenli ? 'text-amber-300' : 'text-slate-500'}`}>{b}</span>
+                {guvenli && <span className="absolute -right-12 text-lg" title="Güvenli basamak">🛡</span>}
+              </div>
+            )
+          })}
+          {/* tırmanıcı: yumuşak kayar */}
+          <div
+            className="absolute left-1/2 -translate-x-1/2 text-6xl select-none transition-[bottom] duration-[4500ms] ease-[cubic-bezier(.45,.05,.25,1)]"
+            style={{ bottom: `${yuzde(d.basamak) * 0.94 - 2}%` }}
+            aria-label={`Sınıf ${d.basamak}. basamakta`}
+          >
+            <span className={`inline-block ${sonSonuc === 'dustu' ? 'merdiven-dus' : 'merdiven-sallan'}`}>{d.kazandi ? '🏆' : sonSonuc === 'dustu' ? '😵' : '🧗'}</span>
+            <span className="absolute -top-2 left-full ml-1 whitespace-nowrap rounded-full bg-black/60 border border-white/15 px-2 py-0.5 text-xs font-bold">Sınıf</span>
+          </div>
+        </div>
+        <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-emerald-900 to-transparent" aria-hidden />
+      </div>
+      <div className="rounded-3xl border border-white/10 bg-white/5 p-4 text-sm space-y-2 self-stretch">
+        <p className="font-display font-extrabold text-base">Nasıl oynanır?</p>
+        <ul className="space-y-1.5 text-slate-300 list-disc pl-4">
+          <li>Sınıf tek yarışmacıdır; her soruda cevap verenlerin en az yarısı bilirse bir basamak çıkar.</li>
+          <li>{d.toplam} basamak var. Altın renkli 🛡 basamaklar güvenlidir.</li>
+          <li>Bilemezse en son güvenli basamağa iner.</li>
+          <li>2 joker hakkı vardır; yanlış cevabı kurtarır.</li>
+        </ul>
+        {hic && <p className="text-xs text-slate-400">İlk sorunun sonucu açılınca tırmanıcı kımıldar.</p>}
+      </div>
     </div>
   )
 }

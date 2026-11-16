@@ -1,44 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
-import { zombiHesapla, type ZombiSorusu } from '../lib/zombi'
-import { roketHesapla } from '../lib/roket'
-import { ormanHesapla } from '../lib/orman'
-import { OrmanSahnesi } from './OrmanSahnesi'
-import { ejderhaHesapla } from '../lib/ejderha'
-import { arenaHesapla } from '../lib/arena'
-import { kaleHaritasiHesapla } from '../lib/kaleHarita'
-import { merdivenHesapla, type MerdivenSorusu } from '../lib/merdiven'
-import { halatTurHesapla, kuleTurHesapla, type TakimOzeti } from '../lib/takimOyunlari'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
-import { sahteOyuncular, tohumluRastgele } from '../lib/oyunMotoru'
-import { ZombiSahnesi } from './ZombiPaneli'
-import { ArenaSahnesi, EjderhaSahnesi, KuleSahnesi, RoketSahnesi } from './GrafikOyunlari'
-import { KaleHaritaSahnesi } from './KaleHaritasi'
-import { Merdiven } from './MerdivenPaneli'
-import { HalatSahnesi } from './HalatSahnesi'
-import { HocaYarisSahnesi } from './HocaYarisSahnesi'
+import { sahteOyuncular } from '../lib/oyunMotoru'
+import { oyunSahnesiUret } from './OyunOnizleme'
 import { EnerjiSaglayici } from './KarakterEnerjisi'
 
 const TOPLAM = 20
 const OYUNLAR_LISTESI: OyunAnahtari[] = ['orman', 'zombi', 'roket', 'ejderha', 'arena', 'kule', 'kale', 'halat', 'merdiven', 'hoca']
 
-/** Prova oyuncularını takımlara böler ve takım_soru_ozeti çıktısının aynısını üretir. */
-function takimOzeti(oyuncular: { sonuc: (1 | 0 | -1)[] }[], takimSayisi: number, k: number): TakimOzeti {
-  return {
-    sayi: takimSayisi,
-    sorular: Array.from({ length: TOPLAM }, (_, i) => ({ adim: `p${i}`, sira: i + 1, acildi: i < k })),
-    takimlar: Array.from({ length: takimSayisi }, (_, t) => {
-      const uyeler = oyuncular.filter((_, i) => i % takimSayisi === t)
-      return {
-        takim: t + 1,
-        uye: uyeler.length,
-        sorular: Array.from({ length: TOPLAM }, (_, i) => ({
-          dogru: uyeler.filter((o) => o.sonuc[i] === 1).length,
-          yanlis: uyeler.filter((o) => o.sonuc[i] === 0).length,
-        })),
-      }
-    }),
-  }
-}
 const OYUNCU_SAYILARI = [5, 30, 80]
 const BASARILAR = [0.3, 0.6, 0.9]
 
@@ -57,7 +25,6 @@ export default function OyunProvasi({ kapat, baslangic = 'zombi' }: { kapat: () 
   // Her yeni soruda ilk 1,6 sn cevap bekleniyormuş gibi karakterler zorlanır
   const [cevapBekle, setCevapBekle] = useState(false)
   const oyuncular = useMemo(() => sahteOyuncular(sayi, basari, TOPLAM), [sayi, basari])
-  const sorular: ZombiSorusu[] = useMemo(() => Array.from({ length: TOPLAM }, (_, i) => ({ adim: `p${i}`, sira: i + 1, acildi: i < k })), [k])
 
   useEffect(() => {
     if (!oynuyor || k >= TOPLAM) return
@@ -71,69 +38,10 @@ export default function OyunProvasi({ kapat, baslangic = 'zombi' }: { kapat: () 
     return () => clearTimeout(t)
   }, [k, oyun])
 
-  const sahne = useMemo(() => {
-    if (oyun === 'zombi') {
-      const d = zombiHesapla(sorular, oyuncular)
-      return d ? <ZombiSahnesi d={d} kapat={kapat} /> : null
-    }
-    if (oyun === 'orman') {
-      const d = ormanHesapla(sorular, oyuncular)
-      return d ? <OrmanSahnesi d={d} kucult={kapat} /> : null
-    }
-    if (oyun === 'roket') {
-      const d = roketHesapla(sorular, oyuncular)
-      return d ? <RoketSahnesi d={d} kucult={kapat} /> : null
-    }
-    if (oyun === 'ejderha') {
-      const d = ejderhaHesapla(sorular, oyuncular)
-      return d ? <EjderhaSahnesi d={d} kucult={kapat} /> : null
-    }
-    if (oyun === 'arena') {
-      const d = arenaHesapla(sorular, oyuncular)
-      return d ? <ArenaSahnesi d={d} kucult={kapat} /> : null
-    }
-    if (oyun === 'kule') {
-      const d = kuleTurHesapla(takimOzeti(oyuncular, 3, k))
-      return d ? <KuleSahnesi d={d} kucult={kapat} /> : null
-    }
-    if (oyun === 'kale') {
-      const kale = oyuncular.map((o, i) => ({ ad: o.ad, takim: (i % 3) + 1, sonuc: o.sonuc.map((s, q) => (q < k ? s : null)) }))
-      const d = kaleHaritasiHesapla(kale, 3, TOPLAM)
-      return d ? <KaleHaritaSahnesi h={d} takimSayisi={3} kucult={kapat} /> : null
-    }
-    if (oyun === 'halat') {
-      const h = halatTurHesapla(takimOzeti(oyuncular, 2, k))
-      const halatOyuncular = oyuncular.map((o, i) => ({ ad: o.ad, takim: (i % 2) + 1, sonuc: o.sonuc.map((s, q) => (q < k ? s : null)) }))
-      return h ? <HalatSahnesi h={{ konum: h.konum, kazanan: h.kazanan, oynanan: h.oynanan }} oyuncular={halatOyuncular} zorlaniyor={cevapBekle && !h.kazanan} kucult={kapat} /> : null
-    }
-    if (oyun === 'merdiven') {
-      const ms: MerdivenSorusu[] = sorular.map((s, i) => {
-        const cevap = oyuncular.filter((o) => o.sonuc[i] !== null).length
-        const dogru = oyuncular.filter((o) => o.sonuc[i] === 1).length
-        return { adim: s.adim, sira: s.sira, cevap, oran: s.acildi && cevap > 0 ? Math.round((100 * dogru) / cevap) : null, acildi: s.acildi }
-      })
-      const d = merdivenHesapla(ms, new Set())
-      return (
-        <div className="fixed inset-0 z-40 bg-slate-950/95 flex items-center justify-center p-6">
-          <Merdiven d={d} sonSonuc={d.gecmis[d.gecmis.length - 1]?.sonuc ?? null} kucuk={false} joker={() => {}} kapat={kapat} />
-        </div>
-      )
-    }
-    // Hocayla yarış: hoca her soruda aynı başarı oranıyla bilir; sınıf puanı için doğru oranı en az %60 olmalı
-    const hocaR = tohumluRastgele(7)
-    let hoca = 0
-    let sinif = 0
-    let son: { hoca_dogru: boolean; sinif_orani: number | null } | null = null
-    for (let i = 0; i < k; i++) {
-      const hocaDogru = hocaR() < basari
-      if (hocaDogru) hoca++
-      const oran = oyuncular.filter((o) => o.sonuc[i] === 1).length / Math.max(1, oyuncular.length)
-      if (oran >= 0.6) sinif++
-      son = { hoca_dogru: hocaDogru, sinif_orani: Math.round(oran * 100) }
-    }
-    const hocaVeri = oyuncular.map((o) => ({ ad: o.ad, sonuc: o.sonuc.map((s, q) => (q < k ? s : null)) }))
-    return <HocaYarisSahnesi hoca={hoca} sinif={sinif} son={son} oynanan={k} toplam={TOPLAM} oyuncular={hocaVeri} bitti={k >= TOPLAM} kapat={kapat} />
-  }, [oyun, sorular, oyuncular, k, kapat, basari, cevapBekle])
+  const sahne = useMemo(
+    () => oyunSahnesiUret({ oyun, oyuncular, k, toplam: TOPLAM, kapat, basari, cevapBekle }),
+    [oyun, oyuncular, k, kapat, basari, cevapBekle],
+  )
 
   const enerjiVerisi = useMemo(() => oyuncular.map((o) => ({ ad: o.ad, sonuc: o.sonuc.map((s, q) => (q < k ? s : null)) })), [oyuncular, k])
 

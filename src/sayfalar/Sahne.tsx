@@ -39,6 +39,7 @@ import ZombiPaneli from '../bilesenler/ZombiPaneli'
 import { ArenaPaneli, EjderhaPaneli, KalePaneli, KulePaneli, OrmanPaneli, RoketPaneli } from '../bilesenler/GrafikOyunlari'
 import DersSayaci from '../bilesenler/DersSayaci'
 import OyunSahnesi from '../bilesenler/OyunSahnesi'
+import OyunOnizleme from '../bilesenler/OyunOnizleme'
 
 /** Telefon kumandasının bıraktığı istek (veritabanında sessions.kumanda_istek). */
 interface KumandaIstegi {
@@ -194,7 +195,7 @@ export default function Sahne() {
   }
   const [kahootAkisi, setZapootAkisi] = useState<{ id: string; ad: string } | null>(null)
   // Zapoot'ta seçilen perde oyunu (zombi, roket...). Seçiliyken sahne o oyunda kilitli kalır; sorular telefonlarda, perdede oyun görünür.
-  const GRAFIK_OYUNLAR = ['zombi', 'roket', 'ejderha', 'arena', 'kule', 'kale', 'orman']
+  const GRAFIK_OYUNLAR = ['zombi', 'roket', 'ejderha', 'arena', 'kule', 'kale', 'orman', 'halat', 'merdiven', 'hoca']
   const oyunKaydi = `amfi_zapoot_oyun_${oturumId}`
   const [zapootOyunu, setZapootOyunu] = useState<OyunAnahtari | null>(() => {
     try {
@@ -753,7 +754,7 @@ export default function Sahne() {
           kod={kodGoster ? kod : null}
           cevrimici={cevrimici}
           otoGec={otoGec}
-          oyunKilitli={oyunKilitli && zapootOyunu ? { ad: OYUNLAR[zapootOyunu].ad, emoji: OYUNLAR[zapootOyunu].emoji, ileri: aktifSira < adimlar.length - 1 ? ileri : undefined, geri: aktifSira > 0 ? geri : undefined } : undefined}
+          oyunKilitli={oyunKilitli && zapootOyunu ? { ad: OYUNLAR[zapootOyunu].ad, emoji: OYUNLAR[zapootOyunu].emoji, oyun: zapootOyunu, adlar: gelenler.map((g) => g.ad).filter(Boolean), ileri: aktifSira < adimlar.length - 1 ? ileri : undefined, geri: aktifSira > 0 ? geri : undefined } : undefined}
         />
       ) : aktif && (aktif.tur === 'fikir' || aktif.tur === 'oylama' || aktif.tur === 'video') ? (
         <EtkinlikSahnesi
@@ -765,7 +766,7 @@ export default function Sahne() {
           kod={kodGoster ? kod : null}
         />
       ) : aktif?.tur === 'oyun' ? (
-        <OyunSahnesi key={aktif.id} adim={aktif} araclar={araclar} ac={setKartOyunu} />
+        <OyunSahnesi key={aktif.id} adim={aktif} araclar={araclar} ac={setKartOyunu} adlar={gelenler.map((g) => g.ad).filter(Boolean)} />
       ) : slaytGorunumu && aktif ? (
         <SlaytSahnesi
           belge={aktif.presentation_id ? belgeler.get(aktif.presentation_id) : undefined}
@@ -1284,7 +1285,7 @@ function SoruSahnesi({
   cevrimici?: number
   otoGec?: boolean
   /** Zapoot'ta perde oyunu seçiliyse: soru ekranı yerine yalnızca kontrol çubuğu çizilir (sorular telefonlardadır) */
-  oyunKilitli?: { ad: string; emoji: string; ileri?: () => void; geri?: () => void }
+  oyunKilitli?: { ad: string; emoji: string; oyun: OyunAnahtari; adlar: string[]; ileri?: () => void; geri?: () => void }
 }) {
   const [soruGoster, setSoruGoster] = useState(false)
   const [durum, setDurum] = useState<DersDurumu['adim']>(null)
@@ -1385,15 +1386,7 @@ function SoruSahnesi({
   if (oyunKilitli) {
     return (
       <>
-        <main className="min-h-screen flex items-center justify-center p-6 text-center">
-          <div className="space-y-2">
-            <p className="text-6xl" aria-hidden>
-              {oyunKilitli.emoji}
-            </p>
-            <p className="text-3xl font-display font-extrabold">{oyunKilitli.ad}</p>
-            <p className="text-slate-400">İlk sorunun cevabı açılınca oyun perdede başlar. Sorular öğrencilerin telefonlarında.</p>
-          </div>
-        </main>
+        <OyunOnizleme oyun={oyunKilitli.oyun} adlar={oyunKilitli.adlar} demo={false} />
         <div className="fixed top-2 right-2 z-[60] max-w-[96vw] cam-panel rounded-2xl p-2 opacity-70 hover:opacity-100 transition-opacity">{araclar}</div>
         {soruGoster && (
           <div className="fixed left-3 bottom-24 z-[60] cam-panel rounded-2xl p-4 max-w-[min(42rem,92vw)] space-y-2">

@@ -230,21 +230,43 @@ export function OyunSihirbazi({
                 </button>
               ))}
             </div>
-            {bilgi?.etiket === 'ikisi' && GRUPLU_OYUNLAR.includes(oyun) && (
-              <label className="flex items-center gap-2 text-sm">
-                <input type="checkbox" checked={oyunTakimi} onChange={(e) => setOyunTakimi(e.target.checked)} /> Takımlı oyna
-              </label>
-            )}
-            {takimiGerekli && mod !== 'halat' && (
-              <div className="flex flex-wrap gap-2 pt-1">
-                {[2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
-                  <button key={n} onClick={() => setGrup(n)} className={dugme(grup === n, 'emerald')}>
-                    {n} takım
-                  </button>
-                ))}
+            <div className="space-y-1.5 pt-1">
+              <p className="text-xs font-bold text-slate-300">Nasıl oynansın?</p>
+              <div className="flex flex-wrap gap-2 items-center">
+                {bilgi?.etiket === 'ikisi' && !GRUPLU_OYUNLAR.includes(oyun) ? (
+                  <span className="text-sm text-slate-300">👥 Sınıf birlikte oynar (tek ekip)</span>
+                ) : (
+                  <>
+                    <button
+                      disabled={bilgi?.etiket === 'takim'}
+                      onClick={() => setOyunTakimi(false)}
+                      className={`${dugme(!takimiGerekli)} disabled:opacity-30`}
+                      title={bilgi?.etiket === 'takim' ? 'Bu oyun yalnızca takımla oynanır' : undefined}
+                    >
+                      🧑 Bireysel
+                    </button>
+                    <button
+                      disabled={bilgi?.etiket === 'bireysel'}
+                      onClick={() => setOyunTakimi(true)}
+                      className={`${dugme(takimiGerekli)} disabled:opacity-30`}
+                      title={bilgi?.etiket === 'bireysel' ? 'Bu oyun yalnızca bireysel oynanır' : undefined}
+                    >
+                      👥 Takım
+                    </button>
+                    {takimiGerekli &&
+                      (mod === 'halat' ? (
+                        <span className="text-sm text-slate-300">Halat çekme her zaman 2 takımdır.</span>
+                      ) : (
+                        [2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
+                          <button key={n} onClick={() => setGrup(n)} className={dugme(grup === n, 'emerald')}>
+                            {n} takım
+                          </button>
+                        ))
+                      ))}
+                  </>
+                )}
               </div>
-            )}
-            {mod === 'halat' && <p className="text-xs text-slate-400">Halat çekme her zaman 2 takımdır.</p>}
+            </div>
           </div>
         )}
 

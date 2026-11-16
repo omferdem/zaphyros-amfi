@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.64.29 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Oyuna girince gerçek sahne:** akıştaki oyun kartı ve oyun başladıktan sonra ilk soru açılana kadar perdede artık oyunun kendi sahnesi görünür (ejderha, oyuncular, halat, orman vb.). Kartta örnek oyuncularla (derse katılanların adlarıyla) kendi kendine oynar; başladıktan sonra gerçek katılımcılar başlangıç konumunda durur. Eskiden tek bir emoji görünüyordu. Halat, merdiven ve hocayla yarış da artık oyun sırasında kilitli sahnede.
+- **Bilgi merdiveni:** rakam dizisi yerine dikey merdiven: direkler, basamaklar, altın renkli güvenli basamaklar (🛡), sınıfın tırmanıcısı ve "Nasıl oynanır?" kutusu.
+- **Oyunlar sihirbazı:** her oyunda aynı "Nasıl oynansın?" satırı (Bireysel / Takım; oyunun desteklemediği seçenek soluk, takımsa takım sayısı, halat 2 takım, ejderha/merdiven/hocayla yarış "sınıf birlikte").
+- **Hareket:** zombi, roket, kule, kale, halat, orman ve merdiven konum geçişleri 4,5 saniyeye ve daha yumuşak bir eğriye çıkarıldı; adım adım zıplama azaldı. Tarayıcıda gerçek derste ayarlanacak.
+
 ## v0.64.28 (16 Kasım 2026)
 Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 13. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-13-yeni.sql`, SQL ile uygulandı). Bahar dönemi 1-13. haftaların yeni soruları tamamlandı.
 - **Bahar 13. hafta soruları:** "Dinî Çoğulculuk, Kapsayıcılık ve Dışlayıcılık" sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-13.txt`.

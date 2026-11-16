@@ -243,7 +243,7 @@ export function RoketSahnesi({ d, kucult }: { d: RoketDurumu; kucult: () => void
                 if (el) roketRef.current.set(i, el)
                 else roketRef.current.delete(i)
               }}
-              className={`absolute -translate-y-1/2 transition-all duration-[3000ms] ease-in-out flex items-center ${aktifRaund && o.son === 1 ? 'roket-hizlan' : ''}`}
+              className={`absolute -translate-y-1/2 transition-all duration-[4500ms] ease-[cubic-bezier(.45,.05,.25,1)] flex items-center ${aktifRaund && o.son === 1 ? 'roket-hizlan' : ''}`}
               style={{ left: `${4 + oran * 84}%`, top: `${8 + (serit / seritSayisi) * 84 + 4}%` }}
               title={`${o.ad}: ${o.ilerleme} doğru`}
             >
@@ -760,7 +760,7 @@ export function KuleSahnesi({ d, kucult }: { d: KuleDurumu; kucult: () => void }
           return (
             <div key={s.takim} className="relative flex flex-col items-center justify-end h-full w-[18%] min-w-24">
               {lider && <div className="text-4xl kule-tac mb-1" aria-hidden>👑</div>}
-              <div className="w-full flex flex-col-reverse justify-start overflow-hidden transition-all duration-[2800ms] ease-in-out" style={{ height: `${yukseklik * 84}%` }}>
+              <div className="w-full flex flex-col-reverse justify-start overflow-hidden transition-all duration-[4500ms] ease-[cubic-bezier(.45,.05,.25,1)]" style={{ height: `${yukseklik * 84}%` }}>
                 {Array.from({ length: Math.max(0, s.katlar) }, (_, k) => (
                   <div key={k} className={`flex-1 min-h-3 mt-0.5 rounded-md bg-linear-to-br ${b.renk} kule-blok border border-white/20`} style={{ animationDelay: `${k * 60}ms`, backgroundImage: `url("${gorselAdresi(`blok-${s.takim}.webp`)}")`, backgroundSize: '100% 100%' }} />
                 ))}
@@ -901,7 +901,7 @@ export function KaleSahnesi({ d, kucult }: { d: KaleDurumu; kucult: () => void }
           return (
             <div key={`ordu-${s.takim}`}>
               {s.asama === 'yuruyor' && (
-                <div className="absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-[2800ms] ease-in-out text-3xl" style={{ left: `${x}%`, top: `${y}%`, filter: `drop-shadow(0 0 8px ${renk})` }} title={`${takimBilgisi(s.takim).ad} ordusu yürüyor`}>
+                <div className="absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-[4500ms] ease-[cubic-bezier(.45,.05,.25,1)] text-3xl" style={{ left: `${x}%`, top: `${y}%`, filter: `drop-shadow(0 0 8px ${renk})` }} title={`${takimBilgisi(s.takim).ad} ordusu yürüyor`}>
                   ⚔️
                 </div>
               )}

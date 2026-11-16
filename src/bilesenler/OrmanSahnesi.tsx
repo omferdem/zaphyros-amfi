@@ -157,7 +157,7 @@ export function OrmanSahnesi({ d, kucult }: { d: OrmanSonucu; kucult: () => void
 
   // Karakterler patikada adım adım sıçramaz; iki soru arasında eğrileri izleyerek akıcı yürür
   const hedefAdim = useMemo(() => new Map(d.oyuncular.map((o) => [o.ad, o.adim] as [string, number])), [d.oyuncular])
-  const { deger: animAdim, akiyor } = useAkiskanSayilar(hedefAdim, 3000)
+  const { deger: animAdim, akiyor } = useAkiskanSayilar(hedefAdim, 4500)
 
   const eveVaran = evde.slice(0, 10)
   const kapanisKurt = d.oyuncular.some((o) => o.durum === 'kapildi' && o.bittigiSoru === d.oynanan)

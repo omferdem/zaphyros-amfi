@@ -551,3 +551,10 @@ body::after {
   .tepki-yol, .tepki-kalp { animation-duration: 1.5s !important; }
   .tepki-hoca-zipla { animation: none; }
 }
+
+/* Bilgi merdiveni tırmanıcısı */
+@keyframes merdiven-sallan { 0%, 100% { transform: rotate(-4deg) translateY(0); } 50% { transform: rotate(4deg) translateY(-6px); } }
+@keyframes merdiven-dus { 0% { transform: translateY(0) rotate(0); } 40% { transform: translateY(-14px) rotate(-14deg); } 100% { transform: translateY(0) rotate(0); } }
+.merdiven-sallan { animation: merdiven-sallan 1.6s ease-in-out infinite; }
+.merdiven-dus { animation: merdiven-dus 1.1s ease-in-out 1; }
+@media (prefers-reduced-motion: reduce) { .merdiven-sallan, .merdiven-dus { animation: none; } }

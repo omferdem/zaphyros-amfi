@@ -1,35 +1,34 @@
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import type { Adim } from '../lib/tipler'
+import OyunOnizleme from './OyunOnizleme'
 
 /**
- * Akıştaki "oyun" adımının perde görünümü: oyunun adı, nasıl oynandığı ve "Oyunu başlat" düğmesi. Düğme ilgili
- * modu açar; oyun, sonraki soru adımlarında kendiliğinden işler.
+ * Akıştaki "oyun" adımının perde görünümü: oyunun gerçek sahnesi, örnek oyuncularla kendi kendine oynar
+ * (derse katılan öğrencilerin adları varsa onlarla). Altta oyunun nasıl oynandığı ve "Oyunu başlat" düğmesi vardır.
  */
-export default function OyunSahnesi({ adim, araclar, ac }: { adim: Adim; araclar: React.ReactNode; ac: (oyun: OyunAnahtari) => void }) {
+export default function OyunSahnesi({ adim, araclar, ac, adlar }: { adim: Adim; araclar: React.ReactNode; ac: (oyun: OyunAnahtari) => void; adlar: string[] }) {
   const anahtar = (adim.ayar.oyun ?? 'takim') as OyunAnahtari
   const o = OYUNLAR[anahtar] ?? OYUNLAR.takim
 
   return (
-    <main className="min-h-screen p-6 flex flex-col gap-4">
-      <div className="flex justify-end">
-        <div className="cam-panel rounded-2xl p-2">{araclar}</div>
-      </div>
-      <section className="flex-1 flex items-center justify-center">
-        <div className="cam-panel rounded-[2rem] p-8 sm:p-12 max-w-3xl w-full text-center space-y-6 girdi">
-          <p className="text-sm font-mono uppercase tracking-widest text-fuchsia-300">🎮 Bugünün oyunu</p>
-          <p className="text-8xl suzul" aria-hidden>
-            {o.emoji}
+    <>
+      <OyunOnizleme oyun={anahtar} adlar={adlar} demo />
+      <div className="fixed top-2 right-2 z-[60] max-w-[96vw] cam-panel rounded-2xl p-2 opacity-70 hover:opacity-100 transition-opacity">{araclar}</div>
+      <div className="fixed bottom-3 left-1/2 -translate-x-1/2 z-[60] cam-panel rounded-2xl px-5 py-3 flex flex-wrap items-center justify-center gap-4 max-w-[96vw] w-[min(60rem,96vw)]">
+        <div className="min-w-0 flex-1 basis-72">
+          <p className="text-xs font-mono uppercase tracking-widest text-fuchsia-300">🎮 Bugünün oyunu · örnek oynuyor</p>
+          <p className="text-xl font-display font-extrabold truncate">
+            {o.emoji} {adim.ayar.baslik || o.ad}
           </p>
-          <h1 className="text-4xl sm:text-5xl font-display font-extrabold renkli-yazi pb-1">{adim.ayar.baslik || o.ad}</h1>
-          <p className="text-lg text-slate-200 leading-relaxed">{adim.ayar.aciklama || o.nasil}</p>
-          <div className="flex flex-col items-center gap-2">
-            <button className="parlak-buton rounded-2xl px-8 py-4 text-xl font-bold" onClick={() => ac(anahtar)}>
-              🚀 Oyunu başlat
-            </button>
-            <p className="text-xs text-slate-500">Paket ve soru sayısını seçersin; sorular oyunla birlikte kendiliğinden gelir.</p>
-          </div>
+          <p className="text-sm text-slate-300 leading-snug">{adim.ayar.aciklama || o.nasil}</p>
         </div>
-      </section>
-    </main>
+        <div className="flex flex-col items-center gap-1">
+          <button className="parlak-buton rounded-2xl px-7 py-3 text-lg font-bold" onClick={() => ac(anahtar)}>
+            🚀 Oyunu başlat
+          </button>
+          <p className="text-[11px] text-slate-500">Paket, biçim ve soru sayısını seçersin.</p>
+        </div>
+      </div>
+    </>
   )
 }

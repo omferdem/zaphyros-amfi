@@ -1,6 +1,7 @@
 // Son Kalan Arenası: bireysel eleme oyunu. Her oyuncunun 2 canı var; yanlış ya da cevapsız bir can götürür, canı biten arenadan düşer.
 // Saf kurallar (ekran ve veritabanı bilmez); zombi_goster (0023) sonuçlarından hesaplanır.
 import type { ZombiOyuncusu, ZombiSorusu } from './zombi'
+import { ZORLUK, type Zorluk } from './zorluk'
 
 /** En az can (yanlış hakkı). Gerçek sayı soru sayısına bağlıdır: arenaCani. */
 export const ARENA_CANI = 2
@@ -8,8 +9,8 @@ export const ARENA_CANI = 2
 export const KAZANMA_ORANI = 0.5
 
 /** Yanlış hakkı: soru sayısının %40'ı (en az 2). 10 soruda 4 yanlışla elenilir, yani 7 doğru gerekir. */
-export function arenaCani(toplamSoru: number): number {
-  return Math.max(ARENA_CANI, Math.floor(toplamSoru * 0.4))
+export function arenaCani(toplamSoru: number, zorluk: Zorluk = 'orta'): number {
+  return Math.max(ARENA_CANI, Math.floor(toplamSoru * ZORLUK.arenaOrani[zorluk]))
 }
 
 export interface ArenaOyuncusu {
@@ -40,12 +41,12 @@ export interface ArenaDurumu {
   can: number
 }
 
-export function arenaHesapla(sorular: ZombiSorusu[], oyuncular: ZombiOyuncusu[]): ArenaDurumu | null {
+export function arenaHesapla(sorular: ZombiSorusu[], oyuncular: ZombiOyuncusu[], zorluk: Zorluk = 'orta'): ArenaDurumu | null {
   const toplamSoru = sorular.length
   if (toplamSoru === 0 || oyuncular.length === 0) return null
   const acik = sorular.map((s, i) => (s.acildi ? i : -1)).filter((i) => i >= 0)
   const sonIdx = acik[acik.length - 1]
-  const can = arenaCani(toplamSoru)
+  const can = arenaCani(toplamSoru, zorluk)
   const liste: ArenaOyuncusu[] = oyuncular.map((o) => ({ ad: o.ad, kalan: can, elendi: null, dogru: 0, son: sonIdx === undefined ? null : (o.sonuc[sonIdx] ?? null) }))
   let bittigi = false
   let kimseKalmadi = false

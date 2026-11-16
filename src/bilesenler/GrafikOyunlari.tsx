@@ -22,6 +22,7 @@ import { type SeritOyuncusu } from './EnerjiSeridi'
 import { EnerjiSaglayici, KarakterEnerjisi } from './KarakterEnerjisi'
 import { sesCal, useOyunSesi } from '../lib/ses'
 import { yorumYayinla } from './YorumBandi'
+import { zorlukOku } from '../lib/zorluk'
 import { oyuncuYorumlari } from '../lib/yorum'
 
 type Veri = { sorular: ZombiSorusu[]; oyuncular: ZombiOyuncusu[] }
@@ -187,7 +188,7 @@ export function RoketPaneli({ oturum, anahtar, mod }: { oturum: string; anahtar:
       oturum={oturum}
       anahtar={anahtar}
       mod={mod}
-      hesapla={(v) => roketHesapla(v.sorular, v.oyuncular)}
+      hesapla={(v) => roketHesapla(v.sorular, v.oyuncular, zorlukOku(oturum))}
       konum="bottom-28"
       ozet={(d) => (
         <p className="text-sm">
@@ -379,7 +380,7 @@ export function EjderhaPaneli({ oturum, anahtar, mod }: { oturum: string; anahta
       oturum={oturum}
       anahtar={anahtar}
       mod={mod}
-      hesapla={(v) => ejderhaHesapla(v.sorular, v.oyuncular)}
+      hesapla={(v) => ejderhaHesapla(v.sorular, v.oyuncular, zorlukOku(oturum))}
       konum="bottom-28"
       ozet={(d) => (
         <div className="space-y-1.5 text-sm">
@@ -576,7 +577,7 @@ export function OrmanPaneli({ oturum, anahtar, mod }: { oturum: string; anahtar:
       oturum={oturum}
       anahtar={anahtar}
       mod={mod}
-      hesapla={(v) => ormanHesapla(v.sorular, v.oyuncular)}
+      hesapla={(v) => ormanHesapla(v.sorular, v.oyuncular, zorlukOku(oturum))}
       konum="bottom-28"
       ozet={(d) => (
         <p className="text-sm">
@@ -596,7 +597,7 @@ export function ArenaPaneli({ oturum, anahtar, mod }: { oturum: string; anahtar:
       oturum={oturum}
       anahtar={anahtar}
       mod={mod}
-      hesapla={(v) => arenaHesapla(v.sorular, v.oyuncular)}
+      hesapla={(v) => arenaHesapla(v.sorular, v.oyuncular, zorlukOku(oturum))}
       konum="bottom-28"
       ozet={(d) => (
         <p className="text-sm">

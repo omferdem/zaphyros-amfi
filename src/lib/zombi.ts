@@ -1,6 +1,7 @@
 // Zombi Kaçışı: sınıf bir piramidin zirvesine çıkmaya çalışır, zombiler her soruda biraz yaklaşır.
 // Saf kurallar (ekran ve veritabanı bilmez); zombi_goster (0023) sonuçlarından durum hesaplanır.
 
+import { ZORLUK, type Zorluk } from './zorluk'
 export interface ZombiSorusu {
   adim: string
   sira: number
@@ -70,12 +71,12 @@ export function zirveSeviyesi(toplamSoru: number): number {
 }
 
 /** k soru oynandığında zombi sürüsünün ham seviyesi (zeminin altında başlar, negatif olabilir). */
-export function zombiSeviyesi(oynanan: number, toplamSoru: number, _zirve?: number): number {
+export function zombiSeviyesi(oynanan: number, toplamSoru: number, _zirve?: number, zorluk: Zorluk = 'orta'): number {
   if (toplamSoru <= 0) return ZOMBI_BASLANGIC
-  return ZOMBI_BASLANGIC + Math.floor(oynanan / ZOMBI_ADIMI)
+  return ZOMBI_BASLANGIC + Math.floor(oynanan / ZORLUK.zombiAdimi[zorluk])
 }
 
-export function zombiHesapla(sorular: ZombiSorusu[], oyuncular: ZombiOyuncusu[]): ZombiDurumu | null {
+export function zombiHesapla(sorular: ZombiSorusu[], oyuncular: ZombiOyuncusu[], zorluk: Zorluk = 'orta'): ZombiDurumu | null {
   const toplamSoru = sorular.length
   if (toplamSoru === 0) return null
   const zirve = zirveSeviyesi(toplamSoru)
@@ -105,7 +106,7 @@ export function zombiHesapla(sorular: ZombiSorusu[], oyuncular: ZombiOyuncusu[])
         return
       }
       // Zombi sürüsü oyuncunun katına geldiyse oyuncu yakalanır
-      if (zombiSeviyesi(k + 1, toplamSoru, zirve) >= seviye) {
+      if (zombiSeviyesi(k + 1, toplamSoru, zirve, zorluk) >= seviye) {
         durum = 'yakalandi'
         yakalandigi = seviye
         bittigiSoru = k + 1
@@ -122,7 +123,7 @@ export function zombiHesapla(sorular: ZombiSorusu[], oyuncular: ZombiOyuncusu[])
     zirve,
     toplamSoru,
     oynanan,
-    zombiSeviyesi: Math.max(0, zombiSeviyesi(oynanan, toplamSoru, zirve)),
+    zombiSeviyesi: Math.max(0, zombiSeviyesi(oynanan, toplamSoru, zirve, zorluk)),
     oyuncular: sonuclar,
     zirvede,
     yakalanan,

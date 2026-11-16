@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useOyunSesi } from '../lib/ses'
 import Gorsel, { adIndeksi, arkaPlan } from './Gorsel'
 import Konfeti from './Konfeti'
 import type { SeritOyuncusu } from './EnerjiSeridi'
@@ -42,6 +43,7 @@ export function HocaYarisSahnesi({
   bitti: boolean
   kapat: () => void
 }) {
+  useOyunSesi(oynanan, bitti, sinif >= hoca)
   const katki = useMemo(() => enCokKatkiVerenler(oyuncular), [oyuncular])
   const sonuc = sinif > hoca ? 'sinif' : sinif < hoca ? 'hoca' : 'berabere'
   const solVurdu = son && son.hoca_dogru

@@ -5,6 +5,7 @@ import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import { paketleriGrupla } from '../lib/paket'
 import { dengeliSec, elleSecilenler, havuzSirasinaDiz, sonSorulanlar, turuKaydet } from '../lib/soruSec'
 import SoruSecici from './SoruSecici'
+import { ZORLUKLAR, ZORLUK_ACIKLAMASI, ZORLUK_OYUNLARI, type Zorluk } from '../lib/zorluk'
 import type { Soru } from '../lib/tipler'
 
 export interface TurIstegi {
@@ -14,6 +15,8 @@ export interface TurIstegi {
   grup: number | null
   /** Süreyle bitecek oyunlarda dakika; soru sayısıyla bitenlerde boş */
   sureDk: number | null
+  /** Oyun zorluğu (rakibi olan oyunlarda); verilmezse orta */
+  zorluk?: Zorluk
 }
 
 type Etiket = 'bireysel' | 'takim' | 'ikisi'
@@ -112,6 +115,7 @@ export function OyunSihirbazi({
   const [grup, setGrup] = useState(3)
   const [oyun, setOyun] = useState<OyunAnahtari>(baslangicOyun ?? 'zombi')
   const [oyunTakimi, setOyunTakimi] = useState(false)
+  const [zorluk, setZorluk] = useState<Zorluk>('orta')
   const [secili, setSecili] = useState<string[]>([])
   const [adet, setAdet] = useState(20)
   const [sureli, setSureli] = useState(false)
@@ -173,6 +177,7 @@ export function OyunSihirbazi({
         mod,
         grup: grupSayisi,
         sureDk: tur === 'oyun' && sureli ? sureDk : null,
+        zorluk: tur === 'oyun' && ZORLUK_OYUNLARI.includes(oyun) ? zorluk : 'orta',
       })
     } catch {
       window.alert('Açılamadı. Bağlantını kontrol edip tekrar dene.')
@@ -229,6 +234,19 @@ export function OyunSihirbazi({
                 </button>
               ))}
             </div>
+            {ZORLUK_OYUNLARI.includes(oyun) && (
+              <div className="space-y-1.5 pt-1">
+                <p className="text-xs font-bold text-slate-300">Zorluk</p>
+                <div className="flex flex-wrap gap-2 items-center">
+                  {ZORLUKLAR.map((z) => (
+                    <button key={z.anahtar} onClick={() => setZorluk(z.anahtar)} className={dugme(zorluk === z.anahtar, 'emerald')}>
+                      {z.ad}
+                    </button>
+                  ))}
+                  <span className="text-xs text-slate-400">{ZORLUK_ACIKLAMASI[oyun]?.[zorluk]}</span>
+                </div>
+              </div>
+            )}
             <div className="space-y-1.5 pt-1">
               <p className="text-xs font-bold text-slate-300">Nasıl oynansın?</p>
               <div className="flex flex-wrap gap-2 items-center">

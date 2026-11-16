@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import ZirveSahnesi from './ZirveSahnesi'
-import { GECME_ORANI, GUVENLI_ARALIK, merdivenHesapla, type MerdivenDurumu, type MerdivenSorusu } from '../lib/merdiven'
+import { GUVENLI_ARALIK, merdivenHesapla, type MerdivenDurumu, type MerdivenSorusu } from '../lib/merdiven'
 import { OYUN_OLAYI } from '../lib/oyun'
+import { zorlukOku } from '../lib/zorluk'
 
 const ANAHTAR = (oturum: string) => `amfi_merdiven_${oturum}`
 
@@ -91,7 +92,7 @@ export default function MerdivenPaneli({ oturum, anahtar, mod, dugme = true }: {
     )
   }
 
-  const d = merdivenHesapla(sorular, new Set(kayit.jokerler))
+  const d = merdivenHesapla(sorular, new Set(kayit.jokerler), zorlukOku(oturum))
   const sonSonuc = d.gecmis[d.gecmis.length - 1]
 
   return (
@@ -220,7 +221,7 @@ function MerdivenSahnesi({ d, sonSonuc, jokerler }: { d: MerdivenDurumu; sonSonu
         <p className="font-display font-extrabold text-base">⛰ Zirveye Tırmanış</p>
         <ul className="space-y-1.5 text-slate-300 list-disc pl-4">
           <li>Sınıf bir tırmanış ekibi; zirveye {d.toplam} kamp var.</li>
-          <li>Sınıfın en az %{GECME_ORANI}'i bilirse bir kamp çıkılır, bilemezse çığ düşer ve son güvenli kampa (⛺ bayraklı) kayılır.</li>
+          <li>Sınıfın en az %{d.esik}'i bilirse bir kamp çıkılır, bilemezse çığ düşer ve son güvenli kampa (⛺ bayraklı) kayılır.</li>
           <li>Üç eşya, turda birer kez: ✂ Kestirme yol, 📻 Telsizle şerpaya sor, 🫁 Oksijen tüpü. Ayrıca bir yanlış soruyu kurtaran kurtarma hakkı var.</li>
         </ul>
       </div>

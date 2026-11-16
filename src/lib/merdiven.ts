@@ -1,5 +1,7 @@
 // Bilgi merdiveni: sınıf tek yarışmacı gibi basamak çıkar. Saf kurallar (ekran ve veritabanı bilmez).
 
+import { ZORLUK, type Zorluk } from './zorluk'
+
 export interface MerdivenSorusu {
   adim: string
   sira: number
@@ -24,6 +26,8 @@ export interface MerdivenDurumu {
   jokerlenebilir: string | null
   jokerKalan: number
   kazandi: boolean
+  /** Bu turdaki geçme yüzdesi (zorluğa göre) */
+  esik: number
   /** Son oynanan sorunun doğru yüzdesi (yoksa null) */
   sonOran: number | null
 }
@@ -34,7 +38,8 @@ export const JOKER_HAKKI = 2
 /** Cevap verenlerin en az bu yüzdesi doğru bilirse sınıf soruyu bildi sayılır. */
 export const GECME_ORANI = 60
 
-export function merdivenHesapla(sorular: MerdivenSorusu[], jokerler: ReadonlySet<string>): MerdivenDurumu {
+export function merdivenHesapla(sorular: MerdivenSorusu[], jokerler: ReadonlySet<string>, zorluk: Zorluk = 'orta'): MerdivenDurumu {
+  const esik = ZORLUK.merdivenEsigi[zorluk]
   const toplam = sorular.length
   let basamak = 0
   const gecmis: MerdivenGecmisi[] = []
@@ -44,7 +49,7 @@ export function merdivenHesapla(sorular: MerdivenSorusu[], jokerler: ReadonlySet
   for (const s of sorular) {
     if (!s.acildi || s.cevap === 0 || s.oran === null) continue
     sonOran = s.oran
-    if (s.oran >= GECME_ORANI) {
+    if (s.oran >= esik) {
       basamak = Math.min(toplam, basamak + 1)
       gecmis.push({ adim: s.adim, sonuc: 'cikti' })
       sonYanlis = null
@@ -59,5 +64,5 @@ export function merdivenHesapla(sorular: MerdivenSorusu[], jokerler: ReadonlySet
     }
   }
   const jokerKalan = Math.max(0, JOKER_HAKKI - kullanilan)
-  return { basamak, toplam, gecmis, jokerlenebilir: jokerKalan > 0 ? sonYanlis : null, jokerKalan, kazandi: toplam > 0 && basamak >= toplam, sonOran }
+  return { basamak, toplam, gecmis, jokerlenebilir: jokerKalan > 0 ? sonYanlis : null, jokerKalan, kazandi: toplam > 0 && basamak >= toplam, sonOran, esik }
 }

@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.65.12 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Oyun zorluğu (hoca seçer):** Oyunlar sihirbazında 🌱 Kolay / ⚖ Orta / 🔥 Zor satırı (zombi, roket, arena, ejderha, orman, bilgi merdiveni). Zorlaştıkça sınıf zayıflar: ejderhanın canı (%35 / %45 / %60), zombiler her 4 / 3 / 2 soruda bir kat çıkar, roket bitişi soruların %55 / %70 / %85'i, arena yanlış hakkı %50 / %40 / %30, orman patikası %50 / %60 / %75, merdiven kamp eşiği %50 / %60 / %70. Orta eski değerlerin aynısıdır. Seçim oturumda saklanır, veritabanına yazılmaz; akıştaki oyun kartı ve kumanda orta başlatır. Kurallar testli (`zorluk.test.ts`).
+- **Her oyunda aynı final:** oyunun son sorusunun sonucu 9 saniye göründükten sonra ortak final (3., 2., 1. podyum, takım oyunlarında kazanan takım, "Tümünü göster" ile tam sıralama) kendiliğinden açılır. Eskiden yalnızca bazı oyunlarda ya da elle açılıyordu.
+- **Ses her oyunda:** halat, kale, hocayla yarış ve zirve tırmanışına müzik, yeni soru, zafer ve alkış sesleri eklendi; zirve tırmanışında kamp çıkınca doğru, çığda yanlış sesi. Ses kapatma ayarı eskisi gibi. Kulakla denenmedi.
+
 ## v0.65.11 (16 Kasım 2026)
 Veritabanı değişikliği yok. Yorumcu bandı botla canlıda denendi (Zombi kaçışı, 30 bot).
 - **Bulgu 1:** sınıf yorumu çalıştı ("Sınıfın %63'i bildi...") ama aynı aralıkta aynı cümle tekrarlandı; her aralığa iki söyleyiş eklendi, soru sırasına göre dönüşümlü kullanılır.

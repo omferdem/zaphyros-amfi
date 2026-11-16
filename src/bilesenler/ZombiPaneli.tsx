@@ -10,6 +10,7 @@ import { useRaund } from './Hareket'
 import { Sinema, merkez, rastgele } from './Sinema'
 import { sesCal } from '../lib/ses'
 import { yorumYayinla } from './YorumBandi'
+import { zorlukOku } from '../lib/zorluk'
 import { oyuncuYorumlari } from '../lib/yorum'
 
 const ANAHTAR = (oturum: string) => `amfi_zombi_${oturum}`
@@ -103,7 +104,7 @@ export default function ZombiPaneli({ oturum, anahtar, mod }: { oturum: string; 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [oturum])
 
-  const d = useMemo(() => (veri ? zombiHesapla(veri.sorular, veri.oyuncular) : null), [veri])
+  const d = useMemo(() => (veri ? zombiHesapla(veri.sorular, veri.oyuncular, zorlukOku(oturum)) : null), [veri, oturum])
   const perde = mod === 'perde'
   if (!d) return null
 

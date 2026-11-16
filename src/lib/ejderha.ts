@@ -1,6 +1,7 @@
 // Ejderha Savaşı: bütün sınıf birlikte bir ejderhaya karşı savaşır. Doğru cevap ejderhaya vurur; yanlış ya da cevapsız
 // kalan kahraman bir can kaybeder, canı bitenler savaş dışı kalır. Saf kurallar (ekran ve veritabanı bilmez).
 import type { ZombiOyuncusu, ZombiSorusu } from './zombi'
+import { ZORLUK, type Zorluk } from './zorluk'
 
 export const KAHRAMAN_CANI = 3
 /** Ejderhanın canı: oyuncu sayısı × soru sayısı × bu oran. Yani sınıf ortalamada yarıdan azını bilse bile kazanabilir. */
@@ -29,10 +30,10 @@ export interface EjderhaDurumu {
   kazandi: boolean
 }
 
-export function ejderhaHesapla(sorular: ZombiSorusu[], oyuncular: ZombiOyuncusu[]): EjderhaDurumu | null {
+export function ejderhaHesapla(sorular: ZombiSorusu[], oyuncular: ZombiOyuncusu[], zorluk: Zorluk = 'orta'): EjderhaDurumu | null {
   const toplamSoru = sorular.length
   if (toplamSoru === 0 || oyuncular.length === 0) return null
-  const enCok = Math.max(1, Math.ceil(oyuncular.length * toplamSoru * EJDERHA_ORANI))
+  const enCok = Math.max(1, Math.ceil(oyuncular.length * toplamSoru * ZORLUK.ejderhaOrani[zorluk]))
   const acik = sorular.map((s, i) => (s.acildi ? i : -1)).filter((i) => i >= 0)
   const kahramanlar: Kahraman[] = oyuncular.map((o) => ({ ad: o.ad, kalan: KAHRAMAN_CANI, dustu: null, vurus: 0, son: null }))
   const hasarlar: number[] = []

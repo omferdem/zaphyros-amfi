@@ -2,7 +2,8 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import gsap from 'gsap'
 import Gorsel from './Gorsel'
 import Konfeti from './Konfeti'
-import { GECME_ORANI, GUVENLI_ARALIK, type MerdivenDurumu } from '../lib/merdiven'
+import { GUVENLI_ARALIK, type MerdivenDurumu } from '../lib/merdiven'
+import { sesCal, useOyunSesi } from '../lib/ses'
 import type { SoruJokerleri } from './MerdivenPaneli'
 
 /**
@@ -30,6 +31,7 @@ interface Nokta {
 
 export default function ZirveSahnesi({ d, sonSonuc, jokerler, sonOran }: { d: MerdivenDurumu; sonSonuc: 'cikti' | 'dustu' | 'joker' | null; jokerler?: SoruJokerleri; sonOran: number | null }) {
   const n = Math.max(1, d.toplam)
+  useOyunSesi(d.gecmis.length, d.kazandi, true)
   const yolRef = useRef<SVGPathElement>(null)
   const grupRef = useRef<HTMLDivElement>(null)
   const bobRef = useRef<HTMLDivElement>(null)
@@ -74,6 +76,7 @@ export default function ZirveSahnesi({ d, sonSonuc, jokerler, sonOran }: { d: Me
       return
     }
     const dustu = hedef < konum.current.b
+    sesCal(dustu ? 'yanlis' : 'dogru')
     const tl = gsap.timeline()
     if (dustu) {
       tl.fromTo(cigRef.current, { opacity: 0, xPercent: 70, yPercent: -70, scale: 0.6 }, { opacity: 1, xPercent: -10, yPercent: 15, scale: 1.6, duration: 0.9, ease: 'power2.in' }, 0)
@@ -226,7 +229,7 @@ export default function ZirveSahnesi({ d, sonSonuc, jokerler, sonOran }: { d: Me
             <p className="font-display font-extrabold text-[2.8cqw]">⛰ Zirveye Tırmanış: nasıl oynanır?</p>
             <ul className="list-disc pl-[2.5cqw] space-y-[0.6cqw] text-slate-200">
               <li>Sınıf bir tırmanış ekibidir; zirveye {n} kamp var.</li>
-              <li>Her soruda sınıfın en az %{GECME_ORANI}'i doğru bilirse ekip bir kamp yukarı çıkar.</li>
+              <li>Her soruda sınıfın en az %{d.esik}'i doğru bilirse ekip bir kamp yukarı çıkar.</li>
               <li>Bilemezse çığ düşer, ekip son güvenli kampa (⛺ bayraklı) kayar.</li>
               <li>Üç eşya: ✂ Kestirme yol, 📻 Telsizle şerpaya sor, 🫁 Oksijen tüpü.</li>
             </ul>

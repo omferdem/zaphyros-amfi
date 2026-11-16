@@ -20,6 +20,7 @@ import Cizim, { type CizimModu } from '../bilesenler/Cizim'
 import { dengeliSec, havuzSirasinaDiz, sonSorulanlar, turuKaydet } from '../lib/soruSec'
 import PerdeNotu from '../bilesenler/PerdeNotu'
 import { oyunuAc, TAKIM_SECILEBILIR } from '../lib/oyunAc'
+import { zorlukYaz } from '../lib/zorluk'
 import YorumBandi, { yorumYayinla } from '../bilesenler/YorumBandi'
 import { sinifYorumlari } from '../lib/yorum'
 import OyunProvasi from '../bilesenler/OyunProvasi'
@@ -448,6 +449,7 @@ export default function Sahne() {
       .single()
     if (turHatasi || !tur) throw turHatasi ?? new Error('tur')
     const turId = tur.id as string
+    zorlukYaz(oturumId, lobiyle?.zorluk ?? 'orta')
     const idler = await adimlarEkle(id, 0, sorular.map((s) => ({ tur: 'soru' as const, question_id: s.id, ayar: {}, tur_id: turId })))
     if (!kahootAkisi) {
       try {
@@ -778,7 +780,7 @@ export default function Sahne() {
           cevrimici={cevrimici}
           otoGec={otoGec}
           otoIleri={otoIleri && !!kahootAkisi && !lobi && !finalAcik && aktifSira < adimlar.length - 1 ? ileri : undefined}
-          oyunKilitli={oyunKilitli && zapootOyunu ? { ad: OYUNLAR[zapootOyunu].ad, emoji: OYUNLAR[zapootOyunu].emoji, oyun: zapootOyunu, adlar: gelenler.map((g) => g.ad).filter(Boolean), ileri: aktifSira < adimlar.length - 1 ? ileri : undefined, geri: aktifSira > 0 ? geri : undefined } : undefined}
+          oyunKilitli={oyunKilitli && zapootOyunu ? { ad: OYUNLAR[zapootOyunu].ad, emoji: OYUNLAR[zapootOyunu].emoji, oyun: zapootOyunu, adlar: gelenler.map((g) => g.ad).filter(Boolean), ileri: aktifSira < adimlar.length - 1 ? ileri : undefined, geri: aktifSira > 0 ? geri : undefined, final: () => setFinalAcik(true) } : undefined}
         />
       ) : aktif && (aktif.tur === 'fikir' || aktif.tur === 'oylama' || aktif.tur === 'video') ? (
         <EtkinlikSahnesi
@@ -1313,7 +1315,7 @@ function SoruSahnesi({
   /** Verilirse (Zapoot ve oyunlar) sonuç birkaç saniye göründükten sonra bu çağrılır ve sonraki soruya geçilir */
   otoIleri?: () => void
   /** Zapoot'ta perde oyunu seçiliyse: soru ekranı yerine yalnızca kontrol çubuğu çizilir (sorular telefonlardadır) */
-  oyunKilitli?: { ad: string; emoji: string; oyun: OyunAnahtari; adlar: string[]; ileri?: () => void; geri?: () => void }
+  oyunKilitli?: { ad: string; emoji: string; oyun: OyunAnahtari; adlar: string[]; ileri?: () => void; geri?: () => void; final?: () => void }
 }) {
   const [soruGoster, setSoruGoster] = useState(false)
   const [durum, setDurum] = useState<DersDurumu['adim']>(null)
@@ -1439,6 +1441,18 @@ function SoruSahnesi({
     yorumYayinla(sinifYorumlari(oran, durum.sira, durum.toplam, sinifOranlari.current))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sonuc, durum?.dagilim])
+
+  // Oyunun son sorusunun sonucu birkaç saniye göründükten sonra ortak final (podyum + "Tümünü göster") kendiliğinden açılır
+  const finalAcildi = useRef(false)
+  useEffect(() => {
+    if (!oyunKilitli?.final || !sonuc || !durum || durum.sira < durum.toplam || finalAcildi.current) return
+    const t = setTimeout(() => {
+      finalAcildi.current = true
+      oyunKilitli.final?.()
+    }, 9000)
+    return () => clearTimeout(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sonuc, durum?.sira, durum?.toplam])
 
   const secenekler = durum?.secenekler ?? []
   const toplamCevap = sonuc && durum?.dagilim ? durum.dagilim.reduce((a, b) => a + b, 0) : cevap

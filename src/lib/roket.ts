@@ -1,6 +1,7 @@
 // Roket Yarışı: her öğrenci bir roket; doğru cevap roketi ileri iter, ilk varan podyuma çıkar.
 // Saf kurallar (ekran ve veritabanı bilmez); zombi_goster (0023) sonuçlarından hesaplanır.
 import type { ZombiOyuncusu, ZombiSorusu } from './zombi'
+import { ZORLUK, type Zorluk } from './zorluk'
 
 export interface RoketOyuncusu {
   ad: string
@@ -26,14 +27,14 @@ export interface RoketDurumu {
   bitti: boolean
 }
 
-export function roketHedefi(toplamSoru: number): number {
-  return Math.max(3, Math.round(toplamSoru * 0.7))
+export function roketHedefi(toplamSoru: number, zorluk: Zorluk = 'orta'): number {
+  return Math.max(3, Math.round(toplamSoru * ZORLUK.roketOrani[zorluk]))
 }
 
-export function roketHesapla(sorular: ZombiSorusu[], oyuncular: ZombiOyuncusu[]): RoketDurumu | null {
+export function roketHesapla(sorular: ZombiSorusu[], oyuncular: ZombiOyuncusu[], zorluk: Zorluk = 'orta'): RoketDurumu | null {
   const toplamSoru = sorular.length
   if (toplamSoru === 0) return null
-  const hedef = roketHedefi(toplamSoru)
+  const hedef = roketHedefi(toplamSoru, zorluk)
   const acik = sorular.map((s, i) => (s.acildi ? i : -1)).filter((i) => i >= 0)
   const liste: RoketOyuncusu[] = oyuncular.map((o) => {
     let ilerleme = 0

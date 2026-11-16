@@ -14,7 +14,7 @@ import { ZombiSahnesi } from './ZombiPaneli'
 import { ArenaSahnesi, EjderhaSahnesi, KuleSahnesi, RoketSahnesi } from './GrafikOyunlari'
 import { KaleHaritaSahnesi } from './KaleHaritasi'
 import { Merdiven } from './MerdivenPaneli'
-import { Halat } from './TakimPaneli'
+import { HalatSahnesi } from './HalatSahnesi'
 
 const TOPLAM = 20
 const OYUNLAR_LISTESI: OyunAnahtari[] = ['orman', 'zombi', 'roket', 'ejderha', 'arena', 'kule', 'kale', 'halat', 'merdiven', 'hoca']
@@ -51,6 +51,8 @@ export default function OyunProvasi({ kapat, baslangic = 'zombi' }: { kapat: () 
   const [sayi, setSayi] = useState(20)
   const [basari, setBasari] = useState(0.6)
   const [acik, setAcik] = useState(true)
+  // Her yeni soruda ilk 1,6 sn cevap bekleniyormuş gibi karakterler zorlanır
+  const [cevapBekle, setCevapBekle] = useState(false)
   const oyuncular = useMemo(() => sahteOyuncular(sayi, basari, TOPLAM), [sayi, basari])
   const sorular: ZombiSorusu[] = useMemo(() => Array.from({ length: TOPLAM }, (_, i) => ({ adim: `p${i}`, sira: i + 1, acildi: i < k })), [k])
 
@@ -59,6 +61,12 @@ export default function OyunProvasi({ kapat, baslangic = 'zombi' }: { kapat: () 
     const t = setTimeout(() => setK((x) => Math.min(TOPLAM, x + 1)), 3500)
     return () => clearTimeout(t)
   }, [oynuyor, k])
+
+  useEffect(() => {
+    setCevapBekle(true)
+    const t = setTimeout(() => setCevapBekle(false), 1600)
+    return () => clearTimeout(t)
+  }, [k, oyun])
 
   const sahne = useMemo(() => {
     if (oyun === 'zombi') {
@@ -92,11 +100,8 @@ export default function OyunProvasi({ kapat, baslangic = 'zombi' }: { kapat: () 
     }
     if (oyun === 'halat') {
       const h = halatTurHesapla(takimOzeti(oyuncular, 2, k))
-      return (
-        <div className="fixed inset-0 z-40 bg-slate-950/95 flex items-center justify-center p-6">
-          {h ? <Halat h={{ konum: h.konum, kazanan: h.kazanan }} kucuk={false} /> : null}
-        </div>
-      )
+      const halatOyuncular = oyuncular.map((o, i) => ({ ad: o.ad, takim: (i % 2) + 1, sonuc: o.sonuc.map((s, q) => (q < k ? s : null)) }))
+      return h ? <HalatSahnesi h={{ konum: h.konum, kazanan: h.kazanan, oynanan: h.oynanan }} oyuncular={halatOyuncular} zorlaniyor={cevapBekle && !h.kazanan} kucult={kapat} /> : null
     }
     if (oyun === 'merdiven') {
       const ms: MerdivenSorusu[] = sorular.map((s, i) => {
@@ -133,7 +138,7 @@ export default function OyunProvasi({ kapat, baslangic = 'zombi' }: { kapat: () 
         </div>
       </div>
     )
-  }, [oyun, sorular, oyuncular, k, kapat, basari])
+  }, [oyun, sorular, oyuncular, k, kapat, basari, cevapBekle])
 
   return (
     <>

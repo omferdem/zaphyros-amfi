@@ -2,6 +2,9 @@ import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { OYUN_OLAYI } from '../lib/oyun'
 import Gorsel, { arkaPlan } from './Gorsel'
+import { HalatSahnesi } from './HalatSahnesi'
+import { kaleHaritaVerisi, type KaleHaritaGirdisi } from './KaleHaritasi'
+import type { KaleOyuncusu } from '../lib/kaleHarita'
 import { TAKIM_SAYILARI, takimBilgisi, type HalatDurumu, type TakimDurumu } from '../lib/takim'
 import { halatTurHesapla, type TakimOzeti } from '../lib/takimOyunlari'
 
@@ -13,6 +16,9 @@ export default function TakimPaneli({ oturum, anahtar, mod, dugme = true }: { ot
   // Halat çekme (yalnızca 2 takımla): halat, soru açıkken kıpırdamasın diye son "kapalı" andaki değerlerle çizilir
   const [halat, setHalat] = useState(false)
   const [snap, setSnap] = useState<HalatDurumu | null>(null)
+  const [sahneOyuncu, setSahneOyuncu] = useState<KaleOyuncusu[]>([])
+  const [oynanan, setOynanan] = useState(0)
+  const [soruAcik, setSoruAcik] = useState(false)
 
   const yenile = useCallback(async () => {
     const [{ data }, { data: durum }] = await Promise.all([
@@ -22,13 +28,19 @@ export default function TakimPaneli({ oturum, anahtar, mod, dugme = true }: { ot
     if (data && !(data as { hata?: string }).hata) {
       const g = data as TakimDurumu
       setD(g)
-      const soruAcik = (durum as { adim?: { tur?: string; soru_durum?: string | null } | null } | null)?.adim?.soru_durum === 'acik'
-      if (!soruAcik && g.sayi === 2) {
+      const acikMi = (durum as { adim?: { tur?: string; soru_durum?: string | null } | null } | null)?.adim?.soru_durum === 'acik'
+      setSoruAcik(acikMi)
+      if (!acikMi && g.sayi === 2) {
         const { data: oz } = await supabase.rpc('takim_soru_ozeti', { p_session: oturum, p_anahtar: anahtar })
         if (oz && !(oz as { hata?: string }).hata) {
           const h = halatTurHesapla(oz as TakimOzeti)
-          if (h) setSnap({ konum: h.konum, kazanan: h.kazanan })
+          if (h) {
+            setSnap({ konum: h.konum, kazanan: h.kazanan })
+            setOynanan(h.oynanan)
+          }
         }
+        const v: KaleHaritaGirdisi | null = await kaleHaritaVerisi(oturum, anahtar)
+        if (v) setSahneOyuncu(v.oyuncular)
       }
     }
   }, [oturum, anahtar])
@@ -78,7 +90,10 @@ export default function TakimPaneli({ oturum, anahtar, mod, dugme = true }: { ot
     </div>
   )
 
-  const halatGorunumu = halat && acik && d.sayi === 2 && snap && <Halat h={snap} kucuk={!perde} />
+  const halatGorunumu = halat && acik && d.sayi === 2 && snap && !perde && <Halat h={snap} kucuk />
+  const halatSahnesi = halat && acik && d.sayi === 2 && snap && perde && (
+    <HalatSahnesi h={{ konum: snap.konum, kazanan: snap.kazanan, oynanan }} oyuncular={sahneOyuncu} zorlaniyor={soruAcik} kucult={() => setHalat(false)} />
+  )
 
   const puanTablosu = acik && (
     <ul className="cam-panel rounded-2xl p-3 space-y-1.5 min-w-52">
@@ -102,6 +117,7 @@ export default function TakimPaneli({ oturum, anahtar, mod, dugme = true }: { ot
 
   return (
     <div className={perde ? 'fixed right-4 bottom-4 z-30 flex flex-col items-end gap-2' : 'space-y-2'}>
+      {halatSahnesi}
       {halatGorunumu}
       {puanTablosu}
       {secenekler}

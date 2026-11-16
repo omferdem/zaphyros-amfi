@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.1 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Halat çekme tam ekran sahne (2c):** perdede yalnızca halat ve iki takım; her öğrenci adı ve enerji barıyla halatın üstünde. Cevap beklenirken karakterler zorlanır, halat titrer; sonuç açılınca halat yay gibi kayar, toz kalkar, yanlış yapan öne tökezler, kaybeden takım çamura düşer. +1/−1 ve 🔥 karakterin üstünden çıkar. Soru perdede görünmez. Prova 30 ve 80 oyuncuyla ve final ekranıyla denendi.
+
 ## v0.64.0 (16 Kasım 2026)
 - **Slayt başlıkları (1a):** PDF'ten gelen "preencoded.png", "image.png", "Resim 3" gibi görsel adı satırları ayıklanır; başlık ilk anlamlı satırdır, yoksa "Slayt N". Akış düzenleyici, perde, telefon metni, ekran görüntüsü kartı ve önizlemeler aynı temizleyiciyi kullanır. Var olan sunumlar tek seferlik SQL ile düzeltildi (28 sunum, 333 sayfa).
 - **Zombi kaçışı kuralı (1b):** oyun sonunda sınıfın %60'ı yakalanmadan kalırsa sınıf kurtulur; perdedeki bütün yazılar ve ilerleme çubuğu bu kurala uydu.

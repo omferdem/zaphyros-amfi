@@ -755,18 +755,33 @@ export function KuleSahnesi({ d, kucult }: { d: KuleDurumu; kucult: () => void }
         </div>
         {satirlar.map((s) => {
           const b = takimBilgisi(s.takim)
-          const yukseklik = Math.min(1, s.blok / d.hedef)
           const lider = s.sira === 1 && s.blok > 0
+          const kat = Math.max(0, Math.min(d.hedef, s.katlar))
+          const dilim = 100 / d.hedef
           return (
-            <div key={s.takim} className="relative flex flex-col items-center justify-end h-full w-[18%] min-w-24">
-              {lider && <div className="text-4xl kule-tac mb-1" aria-hidden>👑</div>}
-              <div className="w-full flex flex-col-reverse justify-start overflow-hidden transition-all duration-[4500ms] ease-[cubic-bezier(.45,.05,.25,1)]" style={{ height: `${yukseklik * 84}%` }}>
-                {Array.from({ length: Math.max(0, s.katlar) }, (_, k) => (
-                  <div key={k} className={`flex-1 min-h-3 mt-0.5 rounded-md bg-linear-to-br ${b.renk} kule-blok border border-white/20`} style={{ animationDelay: `${k * 60}ms`, backgroundImage: `url("${gorselAdresi(`blok-${s.takim}.webp`)}")`, backgroundSize: '100% 100%' }} />
+            <div key={s.takim} className="relative h-full w-[18%] min-w-24">
+              {/* Kule alanı sabit yükseklikte: her blok hedefe göre hesaplanan sabit bir dilimde durur, hiçbir yükseklikte esneyip ezilmez */}
+              <div className="absolute inset-x-[8%] bottom-0 top-[8%]">
+                {Array.from({ length: kat }, (_, k) => (
+                  <div
+                    key={k}
+                    className="absolute inset-x-0 p-px"
+                    style={{ bottom: `${k * dilim}%`, height: `${dilim}%` }}
+                  >
+                    <div
+                      className={`h-full w-full rounded-md bg-linear-to-br ${b.renk} kule-blok border border-white/25`}
+                      style={{ backgroundImage: `url("${gorselAdresi(`blok-${s.takim}.webp`)}")`, backgroundSize: '100% 100%' }}
+                    />
+                  </div>
                 ))}
+                {lider && (
+                  <div className="absolute inset-x-0 text-center text-4xl kule-tac leading-none transition-[bottom] duration-[4500ms] ease-[cubic-bezier(.45,.05,.25,1)]" style={{ bottom: `${kat * dilim}%` }} aria-hidden>
+                    👑
+                  </div>
+                )}
               </div>
-              <p className="absolute -bottom-10 text-center text-sm font-bold whitespace-nowrap">
-                {b.emoji} {b.ad} <span className="text-slate-400 font-normal">({s.uye} kişi · {s.blok.toFixed(1)})</span>
+              <p className="absolute -bottom-9 inset-x-0 mx-auto w-max max-w-full rounded-full bg-slate-950/85 border border-white/15 px-3 py-0.5 text-center text-xs sm:text-sm font-bold whitespace-nowrap">
+                {b.emoji} {b.ad} <span className="text-slate-400 font-normal">({s.uye} kişi · {kat}/{d.hedef})</span>
               </p>
             </div>
           )

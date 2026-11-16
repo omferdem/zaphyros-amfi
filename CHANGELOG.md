@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.30 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Kule yarışı grafiği:** bloklar eskiden esneyip ince çizgilere ezilirdi; artık kule alanı sabit yükseklikte ve her blok hedef kata göre hesaplanan sabit bir dilimde durur (1 ya da 18 kat fark etmez). Takım adı etiketi koyu bir hapın içinde, zemin resminin üstünde okunur; taç kulenin tepesinde durur. 30 oyuncu ve 4 takımla tarayıcıda 1280x720 denendi.
+
 ## v0.64.29 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Oyuna girince gerçek sahne:** akıştaki oyun kartı ve oyun başladıktan sonra ilk soru açılana kadar perdede artık oyunun kendi sahnesi görünür (ejderha, oyuncular, halat, orman vb.). Kartta örnek oyuncularla (derse katılanların adlarıyla) kendi kendine oynar; başladıktan sonra gerçek katılımcılar başlangıç konumunda durur. Eskiden tek bir emoji görünüyordu. Halat, merdiven ve hocayla yarış da artık oyun sırasında kilitli sahnede.

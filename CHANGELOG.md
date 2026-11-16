@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.16 (16 Kasım 2026)
+Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 1. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-01-yeni.sql`, SQL ile uygulandı).
+- **Bahar 1. hafta soruları:** "Din Felsefesi ve İlgili Alanlar" sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-01.txt`.
+
 ## v0.64.15 (16 Kasım 2026)
 Şema değişikliği yok. 13 ve 14. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-1-hafta-13-14-yeni.sql`, SQL ile uygulandı). Din Felsefesi I'in 14 haftası tamamlandı.
 - **13-14. hafta soruları:** "Din ile Felsefenin Diğer Münasebetleri" sunumundan gayeler, ortak sorular, ayrılan yönler, meşruiyet (13. hafta) ile Kindi, Farabi, İbn Rüşd ve karşı çıkanlar (14. hafta); Zapoot 20+20, Quiz 15+15; denetimden 0 hata ile geçti.

@@ -566,3 +566,11 @@ body::after {
   50% { transform: translateY(-2%) scale(1.03, 0.98) rotate(1.2deg); }
 }
 @media (prefers-reduced-motion: reduce) { .karakter-canli { animation: none; } }
+
+.kar-tanesi { animation: kar-yagis 6s linear infinite; }
+@keyframes kar-yagis {
+  0% { transform: translate(0, -5%); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translate(-30px, 110cqh); opacity: 0.2; }
+}
+@media (prefers-reduced-motion: reduce) { .kar-tanesi { animation: none; display: none; } }

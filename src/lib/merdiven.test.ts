@@ -6,7 +6,7 @@ const hepsi = (oranlar: (number | null)[]) => oranlar.map((o, i) => soru(i + 1, 
 
 describe('merdivenHesapla', () => {
   it('doğru bilinen her soruda bir basamak çıkar', () => {
-    const d = merdivenHesapla(hepsi([80, 60, 50]), new Set())
+    const d = merdivenHesapla(hepsi([80, 60, 65]), new Set())
     expect(d.basamak).toBe(3)
     expect(d.gecmis.map((g) => g.sonuc)).toEqual(['cikti', 'cikti', 'cikti'])
   })
@@ -43,5 +43,14 @@ describe('merdivenHesapla', () => {
   it('bütün basamaklar çıkılınca kazanılır', () => {
     expect(merdivenHesapla(hepsi([60, 60]), new Set()).kazandi).toBe(true)
     expect(merdivenHesapla([], new Set()).kazandi).toBe(false)
+  })
+})
+
+describe('Zirveye Tırmanış eşiği', () => {
+  it('%60 geçer, %59 geçmez ve son oran döner', () => {
+    expect(merdivenHesapla(hepsi([60]), new Set()).basamak).toBe(1)
+    const d = merdivenHesapla(hepsi([59]), new Set())
+    expect(d.basamak).toBe(0)
+    expect(d.sonOran).toBe(59)
   })
 })

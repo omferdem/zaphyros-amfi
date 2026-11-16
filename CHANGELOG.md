@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.65.1 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Zirveye Tırmanış (bilgi merdiveninin yeni hâli, GSAP ile):** karlı dağ, zirveye kıvrılan patika, patikada kamplar (5, 10, ... bayraklı güvenli çadır). Sınıf bir tırmanış ekibi: doğru bilince patika boyunca yürüyerek bir kamp çıkar, bilemeyince çığ düşer ve ekip son güvenli kampa kayar. Yükseldikçe hava kararır, kar artar; ekip boşta nefes alır. Her sonuçta "Sınıfın %72'si bildi" etiketi. Zirvede bayrak ve konfeti. İlk 10 saniye "Nasıl oynanır" ekranı.
+- **Jokerler tırmanış eşyası:** ✂ Kestirme yol (yarı yarıya), 📻 Şerpaya sor (seyirci), 🫁 Oksijen +15 sn; kullanılınca sahnede kısa bir bildirim animasyonu çıkar.
+- **Geçme eşiği %50'den %60'a** çıktı (soru sayısı kadar kamp). `gsap` bağımlılığı eklendi.
+- Tarayıcıda yürüme ve çığ denendi; gerçek derste ve bot ile denenmedi. Kişi başına katkı ("ipi çeken") gösterimi yok, sunucudan öğrenci bazlı veri gerekir.
+
 ## v0.65.0 (16 Kasım 2026)
 Veritabanı değişikliği yok. v0.65 oyun görevinin ilk parçası.
 - **Olay odaklı güncelleme:** oyun sahnesi, oturum satırı değişince (soru açıldı, sonuç açıldı, adım değişti) veriyi hemen çeker ve 0,9 saniye sonra bir kez daha çeker; 3,5 saniyelik yoklama yedek olarak 6 saniyeye indi.

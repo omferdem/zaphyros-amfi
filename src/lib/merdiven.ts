@@ -24,13 +24,15 @@ export interface MerdivenDurumu {
   jokerlenebilir: string | null
   jokerKalan: number
   kazandi: boolean
+  /** Son oynanan sorunun doğru yüzdesi (yoksa null) */
+  sonOran: number | null
 }
 
 /** Her bu kadar basamakta bir güvenli basamak vardır; yanlışta en yakın alttaki güvenli basamağa inilir. */
 export const GUVENLI_ARALIK = 5
 export const JOKER_HAKKI = 2
 /** Cevap verenlerin en az bu yüzdesi doğru bilirse sınıf soruyu bildi sayılır. */
-export const GECME_ORANI = 50
+export const GECME_ORANI = 60
 
 export function merdivenHesapla(sorular: MerdivenSorusu[], jokerler: ReadonlySet<string>): MerdivenDurumu {
   const toplam = sorular.length
@@ -38,8 +40,10 @@ export function merdivenHesapla(sorular: MerdivenSorusu[], jokerler: ReadonlySet
   const gecmis: MerdivenGecmisi[] = []
   let sonYanlis: string | null = null
   let kullanilan = 0
+  let sonOran: number | null = null
   for (const s of sorular) {
     if (!s.acildi || s.cevap === 0 || s.oran === null) continue
+    sonOran = s.oran
     if (s.oran >= GECME_ORANI) {
       basamak = Math.min(toplam, basamak + 1)
       gecmis.push({ adim: s.adim, sonuc: 'cikti' })
@@ -55,5 +59,5 @@ export function merdivenHesapla(sorular: MerdivenSorusu[], jokerler: ReadonlySet
     }
   }
   const jokerKalan = Math.max(0, JOKER_HAKKI - kullanilan)
-  return { basamak, toplam, gecmis, jokerlenebilir: jokerKalan > 0 ? sonYanlis : null, jokerKalan, kazandi: toplam > 0 && basamak >= toplam }
+  return { basamak, toplam, gecmis, jokerlenebilir: jokerKalan > 0 ? sonYanlis : null, jokerKalan, kazandi: toplam > 0 && basamak >= toplam, sonOran }
 }

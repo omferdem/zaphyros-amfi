@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
-import { GUVENLI_ARALIK, merdivenHesapla, type MerdivenDurumu, type MerdivenSorusu } from '../lib/merdiven'
+import ZirveSahnesi from './ZirveSahnesi'
+import { GECME_ORANI, GUVENLI_ARALIK, merdivenHesapla, type MerdivenDurumu, type MerdivenSorusu } from '../lib/merdiven'
 import { OYUN_OLAYI } from '../lib/oyun'
 
 const ANAHTAR = (oturum: string) => `amfi_merdiven_${oturum}`
@@ -145,7 +146,7 @@ export function Merdiven({ d, sonSonuc, kucuk, joker, kapat, jokerler, tamEkran 
           })}
         </ol>
       ) : (
-        <MerdivenSahnesi d={d} sonSonuc={sonSonuc} />
+        <MerdivenSahnesi d={d} sonSonuc={sonSonuc} jokerler={jokerler} />
       )}
       <div className="flex flex-wrap items-center gap-3 text-sm">
         {d.kazandi ? (
@@ -174,9 +175,9 @@ export function Merdiven({ d, sonSonuc, kucuk, joker, kapat, jokerler, tamEkran 
             <span className="text-xs font-bold text-slate-300">Soru jokerleri:</span>
             {(
               [
-                ['yarim', '✂ Yarı yarıya', 'Telefonlarda 2 yanlış şık silinir'],
-                ['seyirci', '👥 Seyirci', 'İlk 10 saniyedeki cevap dağılımını perdede göster'],
-                ['sure', '⏱ +15 sn', 'Açık sorunun süresini 15 saniye uzat'],
+                ['yarim', '✂ Kestirme yol', 'Yarı yarıya: telefonlarda 2 yanlış şık silinir'],
+                ['seyirci', '📻 Şerpaya sor', 'Seyirci: ilk 10 saniyedeki cevap dağılımını perdede göster'],
+                ['sure', '🫁 Oksijen +15 sn', 'Açık sorunun süresini 15 saniye uzat'],
               ] as const
             ).map(([tur, ad, ipucu]) => {
               const kullanildi = jokerler.kullanilan.includes(tur)
@@ -210,61 +211,18 @@ export function Merdiven({ d, sonSonuc, kucuk, joker, kapat, jokerler, tamEkran 
   )
 }
 
-/**
- * Perdede merdiven: iki yan direk, basamaklar alttan üste dizilir, güvenli basamaklar altın renkte ve kalkanlıdır.
- * Sınıf tırmanıcısı basamaklar arasında yumuşakça kayar; yanlışta güvenli basamağa süzülür.
- */
-function MerdivenSahnesi({ d, sonSonuc }: { d: MerdivenDurumu; sonSonuc: 'cikti' | 'dustu' | 'joker' | null }) {
-  const n = Math.max(1, d.toplam)
-  // 0. konum zemin; n. konum en tepe
-  const yuzde = (b: number) => 4 + (b / n) * 82
-  const basamaklar = Array.from({ length: n }, (_, i) => i + 1)
-  const hic = d.gecmis.length === 0
+/** Perdede merdiven: Zirveye Tırmanış sahnesi ve yanında kurallar. */
+function MerdivenSahnesi({ d, sonSonuc, jokerler }: { d: MerdivenDurumu; sonSonuc: 'cikti' | 'dustu' | 'joker' | null; jokerler?: SoruJokerleri }) {
   return (
-    <div className="grid gap-4 md:grid-cols-[1fr_16rem] items-stretch">
-      <div className="relative h-[min(58vh,34rem)] rounded-3xl overflow-hidden border border-white/10 bg-gradient-to-t from-emerald-950 via-slate-900 to-indigo-950">
-        {/* yıldızlar */}
-        <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_20%_15%,white_0_1px,transparent_2px),radial-gradient(circle_at_70%_30%,white_0_1px,transparent_2px),radial-gradient(circle_at_45%_8%,white_0_1px,transparent_2px),radial-gradient(circle_at_85%_12%,white_0_1px,transparent_2px)]" aria-hidden />
-        {/* direkler */}
-        <div className="absolute left-[28%] right-[28%] top-3 bottom-3">
-          <span className="absolute left-0 top-0 bottom-0 w-2 rounded-full bg-gradient-to-b from-amber-200 to-amber-700 shadow-lg" />
-          <span className="absolute right-0 top-0 bottom-0 w-2 rounded-full bg-gradient-to-b from-amber-200 to-amber-700 shadow-lg" />
-          {basamaklar.map((b) => {
-            const cikildi = b <= d.basamak
-            const guvenli = b % GUVENLI_ARALIK === 0
-            return (
-              <div key={b} className="absolute left-0 right-0 flex items-center justify-center" style={{ bottom: `${((b / n) * 100 * 0.82 + 4) * 0.94}%` }}>
-                <span
-                  className={`h-3 w-full rounded-full transition-colors duration-700 ${
-                    cikildi ? 'bg-gradient-to-r from-emerald-300 to-teal-400' : guvenli ? 'bg-gradient-to-r from-amber-200 to-amber-400' : 'bg-white/20'
-                  }`}
-                />
-                <span className={`absolute -left-14 text-sm font-bold tabular-nums ${cikildi ? 'text-emerald-300' : guvenli ? 'text-amber-300' : 'text-slate-500'}`}>{b}</span>
-                {guvenli && <span className="absolute -right-12 text-lg" title="Güvenli basamak">🛡</span>}
-              </div>
-            )
-          })}
-          {/* tırmanıcı: yumuşak kayar */}
-          <div
-            className="absolute left-1/2 -translate-x-1/2 text-6xl select-none transition-[bottom] duration-[1800ms] ease-out"
-            style={{ bottom: `${yuzde(d.basamak) * 0.94 - 2}%` }}
-            aria-label={`Sınıf ${d.basamak}. basamakta`}
-          >
-            <span className={`inline-block ${sonSonuc === 'dustu' ? 'merdiven-dus' : 'merdiven-sallan'}`}>{d.kazandi ? '🏆' : sonSonuc === 'dustu' ? '😵' : '🧗'}</span>
-            <span className="absolute -top-2 left-full ml-1 whitespace-nowrap rounded-full bg-black/60 border border-white/15 px-2 py-0.5 text-xs font-bold">Sınıf</span>
-          </div>
-        </div>
-        <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-emerald-900 to-transparent" aria-hidden />
-      </div>
+    <div className="grid gap-4 md:grid-cols-[1fr_15rem] items-stretch">
+      <ZirveSahnesi d={d} sonSonuc={sonSonuc} jokerler={jokerler} sonOran={d.sonOran} />
       <div className="rounded-3xl border border-white/10 bg-white/5 p-4 text-sm space-y-2 self-stretch">
-        <p className="font-display font-extrabold text-base">Nasıl oynanır?</p>
+        <p className="font-display font-extrabold text-base">⛰ Zirveye Tırmanış</p>
         <ul className="space-y-1.5 text-slate-300 list-disc pl-4">
-          <li>Sınıf tek yarışmacıdır; her soruda cevap verenlerin en az yarısı bilirse bir basamak çıkar.</li>
-          <li>{d.toplam} basamak var. Altın renkli 🛡 basamaklar güvenlidir.</li>
-          <li>Bilemezse en son güvenli basamağa iner.</li>
-          <li>3 joker var, turda birer kez: ✂ yarı yarıya, 👥 seyirci, ⏱ +15 sn. Ayrıca bir yanlış cevabı kurtaran kurtarma hakkı vardır.</li>
+          <li>Sınıf bir tırmanış ekibi; zirveye {d.toplam} kamp var.</li>
+          <li>Sınıfın en az %{GECME_ORANI}'i bilirse bir kamp çıkılır, bilemezse çığ düşer ve son güvenli kampa (⛺ bayraklı) kayılır.</li>
+          <li>Üç eşya, turda birer kez: ✂ Kestirme yol, 📻 Telsizle şerpaya sor, 🫁 Oksijen tüpü. Ayrıca bir yanlış soruyu kurtaran kurtarma hakkı var.</li>
         </ul>
-        {hic && <p className="text-xs text-slate-400">İlk sorunun sonucu açılınca tırmanıcı kımıldar.</p>}
       </div>
     </div>
   )

@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.22 (16 Kasım 2026)
+Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 7. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-07-yeni.sql`, SQL ile uygulandı).
+- **Bahar 7. hafta soruları:** "Konatif, Eskatolojik ve Analitik Tahliller" (din dili) sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-07.txt`.
+
 ## v0.64.21 (16 Kasım 2026)
 Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 6. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-06-yeni.sql`, SQL ile uygulandı).
 - **Bahar 6. hafta soruları:** "Doğrulamacı ve Yanlışlamacı Tahliller" (Tanrı'nın sıfatları, din dili) sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-06.txt`.

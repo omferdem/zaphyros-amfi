@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.8 (16 Kasım 2026)
+Veritabanı değişikliği yok (3. hafta soruları onay bekler).
+- **3. hafta soru taslağı:** Zapoot 20 + Quiz 15, kaynak 1-3. hafta sunumunun son bölümü ve Din-Felsefe Münasebeti kitabı (kavramlar, gayeler, sorular, realitelere yöneliş). `docs/soru-onerileri/yeni/h03.txt`, döküm `h03-dokum.md`; `soru-kontrol.py --yeni` denetiminden 0 hata, 0 uyarı ile geçti.
+
 ## v0.64.7 (16 Kasım 2026)
 Şema değişikliği yok. 1. ve 2. hafta yeni soruları kullanıcı onayıyla `supabase/data/din-felsefesi-1-hafta-1-2-yeni.sql` ile eklendi (SQL ile uygulandı).
 - **Soru deposu (3):** eski 560 soruluk dosya uygulanmadı, uyarı notu eklendi. 1. ve 2. hafta Zapoot (20+20) ve Quiz (15+15) soruları yeniden yazıldı: `docs/soru-onerileri/yeni/h01-h02.txt`, okunaklı döküm `docs/soru-onerileri/yeni/h01-h02-dokum.md`. Ayrı paketler olarak eklendi ("N. hafta: Zapoot (yeni, 20 soru)" ve "N. hafta: Quiz (yeni, 15 soru)"); eski paketlere dokunulmadı, istenirse eskileri Soru bankasından silinebilir.

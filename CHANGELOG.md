@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.65.11 (16 Kasım 2026)
+Veritabanı değişikliği yok. Yorumcu bandı botla canlıda denendi (Zombi kaçışı, 30 bot).
+- **Bulgu 1:** sınıf yorumu çalıştı ("Sınıfın %63'i bildi...") ama aynı aralıkta aynı cümle tekrarlandı; her aralığa iki söyleyiş eklendi, soru sırasına göre dönüşümlü kullanılır.
+- **Bulgu 2:** zombi paneli ayrı kodla çalışıyor; yorumcuya bağlı değildi ve 3,5 saniyelik yoklamayla güncelleniyordu. Artık oturum satırı değişince hemen veri çeker (yedek yoklama 6 saniye) ve doğru serisi lideri anılır.
+
 ## v0.65.10 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Yorumcu bandı:** oyunlarda her sonuç açılınca perdenin üstünde tek satırlık yorum çıkar (6 saniye). Sınıf yorumu doğru oranından ("Sınıfın %82'si bildi, bu soru kolay geldi 👏", "Sınıf ikiye bölündü: %48 bildi", "Bir soru kaldı, herkes yerinde! 🏁", üç soru üst üste %60 üstünde ise 🔥); zombi, roket, ejderha, arena ve orman oyunlarında ayrıca doğru serisi lideri adıyla anılır ("Mehmet 3 sorudur durdurulamıyor! 🔥"). Yalnızca gerçek veriye dayanır, aynı tür yorum üst üste gelmez, kimseyle alay etmez. Kural ve testler `src/lib/yorum.ts`.

@@ -9,6 +9,8 @@ import Gorsel, { adIndeksi, arkaPlan } from './Gorsel'
 import { useRaund } from './Hareket'
 import { Sinema, merkez, rastgele } from './Sinema'
 import { sesCal } from '../lib/ses'
+import { yorumYayinla } from './YorumBandi'
+import { oyuncuYorumlari } from '../lib/yorum'
 
 const ANAHTAR = (oturum: string) => `amfi_zombi_${oturum}`
 const KARAKTERLER = ['🧑‍🎓', '👩‍🎓', '🧙', '🦸', '🥷', '🧑‍🚀', '👨‍🔬', '👩‍🎨', '🧝', '🕵️', '👩‍🚀', '🧑‍🍳', '🦹', '🤠', '👩‍🏫', '🧑‍🎤']
@@ -47,9 +49,34 @@ export default function ZombiPaneli({ oturum, anahtar, mod }: { oturum: string; 
   useEffect(() => {
     if (!acik) return
     yenile()
-    const t = setInterval(yenile, 3500)
-    return () => clearInterval(t)
-  }, [yenile, acik])
+    // Yedek yoklama; asıl güncelleme oturum satırı değişince (soru açıldı, sonuç açıldı, adım değişti) gelir
+    const t = setInterval(yenile, 6000)
+    let gecikmeli: ReturnType<typeof setTimeout> | undefined
+    const kanal = supabase
+      .channel(`zombipaneli:${oturum}`)
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'sessions', filter: `id=eq.${oturum}` }, () => {
+        void yenile()
+        clearTimeout(gecikmeli)
+        gecikmeli = setTimeout(() => void yenile(), 900)
+      })
+      .subscribe()
+    return () => {
+      clearInterval(t)
+      clearTimeout(gecikmeli)
+      supabase.removeChannel(kanal)
+    }
+  }, [yenile, acik, oturum])
+
+  // Yorumcu bandı: her yeni sonuçta doğru serisi lideri anılır
+  const oncekiOynanan = useRef<number | null>(null)
+  useEffect(() => {
+    if (!veri) return
+    const oynanan = veri.sorular.filter((s) => s.acildi).length
+    const onceki = oncekiOynanan.current
+    oncekiOynanan.current = oynanan
+    if (onceki === null || oynanan <= onceki) return
+    yorumYayinla(oyuncuYorumlari(veri.oyuncular, oynanan))
+  }, [veri])
 
   function ac(a: boolean) {
     setAcik(a)

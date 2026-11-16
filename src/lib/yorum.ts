@@ -48,12 +48,15 @@ export function sinifYorumlari(oran: number, oynanan: number, toplam: number, ge
   if (toplam > 0 && toplam - oynanan === 1) {
     liste.push({ anahtar: 'son-soru', metin: 'Bir soru kaldı, herkes yerinde! 🏁' })
   }
-  if (o >= 90) liste.push({ anahtar: 'cok-kolay', metin: `Sınıfın %${o}'i bildi, bu soru kolay geldi 👏` })
-  else if (o >= 75) liste.push({ anahtar: 'kolay', metin: `Sınıfın %${o}'i doğru cevapladı, güzel gidiyor` })
-  else if (o >= 60) liste.push({ anahtar: 'orta-iyi', metin: `Sınıfın %${o}'i bildi, eşiğin üstünde` })
-  else if (o >= 40) liste.push({ anahtar: 'ikiye-bolundu', metin: `Sınıf ikiye bölündü: %${o} bildi, %${100 - o} bilemedi` })
-  else if (o >= 20) liste.push({ anahtar: 'zor', metin: `Bu soru zorladı, %${o} doğru cevap verdi` })
-  else liste.push({ anahtar: 'cok-zor', metin: `Soru sınıfa baskın çıktı, yalnızca %${o} bildi` })
+  // Aynı aralıkta art arda gelen sorularda iki söyleyiş dönüşümlü kullanılır
+  const v = oynanan % 2
+  const sec = (a: string, b2: string) => (v === 0 ? a : b2)
+  if (o >= 90) liste.push({ anahtar: 'cok-kolay', metin: sec(`Sınıfın %${o}'i bildi, bu soru kolay geldi 👏`, `%${o} doğru, sınıf soruyu uçurdu 🚀`) })
+  else if (o >= 75) liste.push({ anahtar: 'kolay', metin: sec(`Sınıfın %${o}'i doğru cevapladı, güzel gidiyor`, `%${o} doğru, sınıf ısındı 👍`) })
+  else if (o >= 60) liste.push({ anahtar: 'orta-iyi', metin: sec(`Sınıfın %${o}'i bildi, fena değil`, `Soruyu sınıfın %${o}'i doğru yaptı`) })
+  else if (o >= 40) liste.push({ anahtar: 'ikiye-bolundu', metin: sec(`Sınıf ikiye bölündü: %${o} bildi, %${100 - o} bilemedi`, `Kafalar karıştı: %${o} doğru, %${100 - o} yanlış`) })
+  else if (o >= 20) liste.push({ anahtar: 'zor', metin: sec(`Bu soru zorladı, %${o} doğru cevap verdi`, `Sert soruydu: yalnızca %${o} bildi`) })
+  else liste.push({ anahtar: 'cok-zor', metin: sec(`Soru sınıfa baskın çıktı, yalnızca %${o} bildi`, `%${o} doğru: bu soru kolay pes etmedi`) })
   return liste
 }
 

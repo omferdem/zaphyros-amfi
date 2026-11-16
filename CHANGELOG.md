@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.10 (16 Kasım 2026)
+Şema değişikliği yok. 6 ve 7. hafta yeni soruları eklendi (SQL ile uygulandı: `supabase/data/din-felsefesi-1-hafta-6-7-yeni.sql`).
+- **6-7. hafta soruları:** "Âlem ve Felsefe" sunumundan Zapoot 20+20, Quiz 15+15; `soru-kontrol.py --yeni` denetiminden 0 hata ile geçti.
+
 ## v0.64.9 (16 Kasım 2026)
 Şema değişikliği yok. 3, 4 ve 5. hafta yeni soruları `supabase/data/din-felsefesi-1-hafta-*-yeni.sql` ile eklendi (SQL ile uygulandı).
 - **4-5. hafta soruları:** "Tanrı ve Felsefe" sunumundan Zapoot 20+20, Quiz 15+15; `soru-kontrol.py --yeni` denetiminden 0 hata ile geçti. 3. hafta (35 soru) veritabanına eklendi.

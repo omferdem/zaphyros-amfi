@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.64.28 (16 Kasım 2026)
+Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 13. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-13-yeni.sql`, SQL ile uygulandı). Bahar dönemi 1-13. haftaların yeni soruları tamamlandı.
+- **Bahar 13. hafta soruları:** "Dinî Çoğulculuk, Kapsayıcılık ve Dışlayıcılık" sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-13.txt`.
+- Eski paketler ("Hızlı Zapoot", "Ciddi Quiz", 14. hafta dahil) silinmedi; yeni paketler "(yeni, ...)" adıyla yanlarında durur.
+
 ## v0.64.27 (16 Kasım 2026)
 Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 12. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-12-yeni.sql`, SQL ile uygulandı).
 - **Bahar 12. hafta soruları:** "Din, Bilim, Ahlak ve Sanat İlişkisi" sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-12.txt`.

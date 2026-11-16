@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.14 (16 Kasım 2026)
+Şema değişikliği yok. 11 ve 12. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-1-hafta-11-12-yeni.sql`, SQL ile uygulandı).
+- **11-12. hafta soruları:** "Bilgi Meselesi" sunumundan kavramlar, bilgi teorileri ve bilginin kaynakları (11. hafta) ile bilginin değeri (12. hafta); Zapoot 20+20, Quiz 15+15; denetimden 0 hata ile geçti.
+
 ## v0.64.13 (16 Kasım 2026)
 Şema değişikliği yok. 9 ve 10. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-1-hafta-9-10-yeni.sql`, SQL ile uygulandı).
 - **9-10. hafta soruları:** "Değer Meselesi" sunumundan ahlâk (9. hafta) ve estetik ile din-sanat (10. hafta); Zapoot 20+20, Quiz 15+15, denetimden 0 hata ile geçti. Eski bankada birebir aynı metni olan iki soru, metni değiştirilerek eklendi.

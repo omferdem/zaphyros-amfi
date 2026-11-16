@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.65.3 (16 Kasım 2026)
+0047_test_botu.sql (Supabase MCP ile uygulandı).
+- **Gerçek ders test botu:** `scripts/bot.mjs` açık bir TEST-BOT dersine N sanal öğrenci katar (`takma_ad_al`), sorular açıldıkça rastgele gecikmeyle `cevap_ver` çağırır; başarı oranı ayarlanır. Doğru şıkkı yalnızca adı TEST-BOT ile başlayan derslerde veren `test_dogru_index` işlevi eklendi (gerçek derste hata döner). Kullanım ve temizlik: `docs/BOT.md`, `scripts/bot-temizle.sql`.
+- Canlı projede 30 botla denendi: 30/30 katıldı, 1. soruya 30 cevap, %70 hedefle 20 doğru. Deneme verisi silindi. Botla her oyunun tam akışı henüz oynanmadı.
+
 ## v0.65.2 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Lazer ve tahta katmanı artık her şeyin üstünde:** oyun sahnelerinin ve kontrol çubuklarının altında kalıyordu; çizim ve lazer katmanı üste alındı.

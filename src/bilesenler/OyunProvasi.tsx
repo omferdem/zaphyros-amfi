@@ -51,7 +51,8 @@ export default function OyunProvasi({ kapat, baslangic = 'zombi' }: { kapat: () 
   const [oynuyor, setOynuyor] = useState(true)
   const [sayi, setSayi] = useState(20)
   const [basari, setBasari] = useState(0.6)
-  const [acik, setAcik] = useState(true)
+  // Telefonda çubuk kapalı başlar: sahne tam görünür, düğmeyle açılır
+  const [acik, setAcik] = useState(() => typeof window === 'undefined' || window.innerWidth >= 768)
   // Her yeni soruda ilk 1,6 sn cevap bekleniyormuş gibi karakterler zorlanır
   const [cevapBekle, setCevapBekle] = useState(false)
   const oyuncular = useMemo(() => sahteOyuncular(sayi, basari, TOPLAM), [sayi, basari])
@@ -155,7 +156,7 @@ export default function OyunProvasi({ kapat, baslangic = 'zombi' }: { kapat: () 
           🧪 Prova · soru {k}/{TOPLAM}
         </button>
       )}
-      <div className={`fixed left-1/2 -translate-x-1/2 bottom-3 z-[70] cam-panel rounded-2xl px-3 py-2 ${acik ? "flex" : "hidden"} flex-wrap items-center gap-2 text-sm shadow-2xl`}>
+      <div className={`fixed left-1/2 -translate-x-1/2 bottom-3 z-[70] cam-panel rounded-2xl px-3 py-2 ${acik ? "flex" : "hidden"} flex-wrap items-center gap-2 text-sm shadow-2xl w-[calc(100vw-1rem)] md:w-auto max-h-[38vh] overflow-y-auto`}>
         <span className="font-bold text-fuchsia-300">🧪 Oyun provası</span>
         <span className="text-xs text-slate-400 hidden sm:inline">sahte öğrencilerle, hiçbir şey kaydedilmez</span>
         <div className="flex flex-wrap gap-1">

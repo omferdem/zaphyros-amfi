@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.64.5 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Kale haritası görünümü (2d):** toprak dokulu üç halka (çim, toprak, kaya), her dolu hücrede takım renginde çadır, dalgalanan bayrak ve asker, hücre sahibinin adı; ortada hendekli, surlu, dört kuleli ayrıntılı kale (kuşatan takımın bayrağı çekilir). Durum paneli küçüldü, harita genişledi. Kale görseli dosyası olmadığı için kale SVG ile çizildi.
+- **Oyun provası telefonda:** denetim çubuğu telefonda kapalı başlar (sağ altta küçük düğme), açılınca ekranın en çok %38'ini kaplar ve kaydırılır; sahne her zaman görünür kalır.
+
 ## v0.64.4 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Orman'dan eve dönüş yeniden çizildi (2b):** katmanlı gece ormanı (ay, yıldız, üç derinlikte çam, sis, dere ve köprü, toprak patika, pencereleri yanan ev); karakterler öteki oyunlardaki öğrenci çizimleri; aynı adımdaki oyuncular patikanın iki yanına yelpaze gibi açılır, 4'ten fazlası "+N" rozetinde toplanır; yakalanan öğrenci kurt atlayınca sarsılıp sağ alttaki "Kurdun yakaladıkları" alanına çekilir; eve varanlar evin önünde toplanır; her karakterin tepesinde enerji barı. 30 ve 80 oyuncuyla provada denendi.

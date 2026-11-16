@@ -40,46 +40,135 @@ function merkez(halka: number, dilim: number): { x: number; y: number } {
   return { x: 50 + r * Math.cos(a), y: 50 + r * Math.sin(a) }
 }
 
-/** Kale kuşatması hücre haritası: ortada hedef kale, takımların bayrakları halkalar hâlinde toprağı paylaşır. */
+const ZEMIN = ['#4d7c2f', '#7a6330', '#6b6b66']
+const ZEMIN_ACIK = ['#6a9a43', '#9a8244', '#8b8b85']
+
+/** Hücrenin sahibi takımın rengiyle çadır, bayrak ve asker çizer (halka küçüldükçe ölçek küçülür). */
+function KampCizimi({ x, y, renk, olcek, ad }: { x: number; y: number; renk: string; olcek: number; ad: string }) {
+  return (
+    <g transform={`translate(${x} ${y + 0.8 * olcek}) scale(${olcek})`}>
+      <ellipse cx="0" cy="2.2" rx="4.2" ry="1.1" fill="rgba(0,0,0,0.35)" />
+      {/* çadır */}
+      <polygon points="-2.8,1.9 0,-2.5 2.8,1.9" fill={renk} stroke="rgba(0,0,0,0.55)" strokeWidth="0.25" />
+      <polygon points="-0.8,1.9 0,-0.2 0.8,1.9" fill="rgba(0,0,0,0.55)" />
+      <polygon points="0,-2.5 -2.8,1.9 -1.6,1.9" fill="rgba(255,255,255,0.18)" />
+      {/* bayrak */}
+      <line x1="0" y1="-2.5" x2="0" y2="-5.6" stroke="#3f2d1a" strokeWidth="0.3" />
+      <polygon points="0,-5.6 2.9,-4.7 0,-3.8" fill={renk} stroke="#fff" strokeWidth="0.2" style={{ transformOrigin: '0px -4.7px', animation: 'kale-bayrak 1.6s ease-in-out infinite' }} />
+      {/* asker */}
+      <g transform="translate(-3.5 1.2)">
+        <line x1="1.1" y1="-3.4" x2="1.1" y2="1.4" stroke="#a8a29e" strokeWidth="0.22" />
+        <polygon points="1.1,-4.1 0.8,-3.3 1.4,-3.3" fill="#e5e7eb" />
+        <rect x="-0.7" y="-1.4" width="1.4" height="2.2" rx="0.4" fill={renk} stroke="rgba(0,0,0,0.5)" strokeWidth="0.15" />
+        <circle cx="0" cy="-2.1" r="0.75" fill="#fcd9b6" />
+        <path d="M-0.8 -2.3 A0.8 0.8 0 0 1 0.8 -2.3 Z" fill="#6b7280" />
+      </g>
+      {ad && (
+        <text x="0" y="4.4" fontSize="1.7" textAnchor="middle" fill="#fff" fontWeight="bold" stroke="rgba(0,0,0,0.7)" strokeWidth="0.3" paintOrder="stroke">
+          {ad}
+        </text>
+      )}
+    </g>
+  )
+}
+
+/** Hedef kale: hendek, surlar, dört kule ve ortada ana bina; kuşatan takımın bayrağı çekilir. */
+function KaleCizimi({ bayrak }: { bayrak: string }) {
+  return (
+    <g transform="translate(50 50)">
+      <circle r="16.6" fill="#0c4a6e" />
+      <circle r="16.6" fill="none" stroke="#38bdf8" strokeWidth="0.5" strokeDasharray="1.2 1.6" opacity="0.7" />
+      <circle r="14.6" fill="#78716c" stroke="#44403c" strokeWidth="0.5" />
+      {Array.from({ length: 20 }, (_, i) => (
+        <rect key={i} x="-0.7" y="-15.7" width="1.4" height="1.6" fill="#a8a29e" stroke="#44403c" strokeWidth="0.15" transform={`rotate(${i * 18})`} />
+      ))}
+      <circle r="12.4" fill="#a8a29e" />
+      <circle r="12.4" fill="none" stroke="#57534e" strokeWidth="0.3" />
+      {[45, 135, 225, 315].map((a) => (
+        <g key={a} transform={`rotate(${a}) translate(0 -10.6)`}>
+          <circle r="3" fill="#d6d3d1" stroke="#57534e" strokeWidth="0.3" />
+          <polygon points="0,-6 -3.4,-1.6 3.4,-1.6" fill="#9a3412" stroke="#431407" strokeWidth="0.25" transform="rotate(0)" />
+          <rect x="-0.4" y="-0.4" width="0.8" height="1.4" fill="#292524" />
+        </g>
+      ))}
+      <rect x="-5.4" y="-4.8" width="10.8" height="9.2" fill="#e7e5e4" stroke="#57534e" strokeWidth="0.35" />
+      {Array.from({ length: 5 }, (_, i) => (
+        <rect key={i} x={-5.4 + i * 2.2} y="-5.8" width="1.4" height="1.2" fill="#e7e5e4" stroke="#57534e" strokeWidth="0.25" />
+      ))}
+      <path d="M-1.5 4.4 V0.6 A1.5 1.5 0 0 1 1.5 0.6 V4.4 Z" fill="#451a03" stroke="#1c1917" strokeWidth="0.3" />
+      <rect x="-4.3" y="-2.4" width="1.3" height="2" rx="0.5" fill="#1c1917" />
+      <rect x="3" y="-2.4" width="1.3" height="2" rx="0.5" fill="#1c1917" />
+      <line x1="0" y1="-5.8" x2="0" y2="-11.4" stroke="#3f2d1a" strokeWidth="0.35" />
+      <polygon points="0,-11.4 5,-9.8 0,-8.2" fill={bayrak} stroke="#fff" strokeWidth="0.25" style={{ transformOrigin: '0px -9.8px', animation: 'kale-bayrak 1.6s ease-in-out infinite' }} />
+    </g>
+  )
+}
+
+const KALE_STIL = `@keyframes kale-bayrak { 0%,100% { transform: skewY(0deg) scaleX(1) } 50% { transform: skewY(-9deg) scaleX(.88) } }`
+
+/** Kale kuşatması hücre haritası: ortada hedef kale, takımların kampları halkalar hâlinde toprağı paylaşır. */
 export function KaleHaritaSahnesi({ h, takimSayisi, kucult }: { h: KaleHaritasi; takimSayisi: number; kucult: () => void }) {
   const sirali = [...h.takimlar].sort((a, b) => b.ic - a.ic || b.toplam - a.toplam)
+  const kalabalik = h.hucreler.filter((c) => c.takim !== null).length > 24
+  const kalinlik = (R_DIS - R_IC) / HALKA_SAYISI
   return (
-    <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
+    <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-4 gap-2">
+      <style>{KALE_STIL}</style>
       {h.bitti && h.kazanan !== null && <Konfeti />}
-      <div className="flex items-center gap-4 flex-wrap">
+      <div className="flex items-center gap-3 flex-wrap">
         <h2 className="text-2xl font-display font-extrabold">🏰 Kale kuşatması</h2>
         <span className="text-sm text-slate-300 tabular-nums">Soru {h.oynanan}</span>
-        <span className="text-xs text-slate-400">Her öğrenci 2 doğruda 1 hücre alır; boş toprak bitince rakibin komşu hücresi ele geçirilir. İç halkayı tamamen tutan takım kaleyi kuşatır.</span>
+        <span className="text-xs text-slate-400 hidden xl:inline">2 doğruda 1 hücre; boş toprak bitince rakibin komşu hücresi alınır. İç halkayı tutan takım kaleyi kuşatır.</span>
         <button className="ikincil-buton ml-auto !py-1.5 kucult-dugmesi" onClick={kucult}>
           Küçült
         </button>
       </div>
-      <div className="flex-1 min-h-0 grid lg:grid-cols-[1fr_18rem] gap-3">
-        <div className="relative min-h-0 rounded-3xl overflow-hidden border border-white/10 bg-slate-900/60 flex items-center justify-center">
+      <div className="flex-1 min-h-0 grid lg:grid-cols-[1fr_12rem] gap-3">
+        <div className="relative min-h-0 rounded-3xl overflow-hidden border border-white/10 flex items-center justify-center" style={{ background: 'radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 80%)' }}>
           <svg viewBox="0 0 100 100" className="h-full max-h-full w-auto max-w-full" role="img" aria-label="Kale haritası">
-            <circle cx="50" cy="50" r={R_DIS + 2} fill="rgba(15,23,42,0.6)" />
-            {h.hucreler.map((c) => (
-              <path
-                key={`${c.halka}-${c.dilim}`}
-                d={dilimYolu(c.halka, c.dilim)}
-                fill={c.takim === null ? 'rgba(148,163,184,0.18)' : RENKLER[(c.takim - 1) % RENKLER.length]}
-                fillOpacity={c.takim === null ? 1 : 0.85}
-                stroke="rgba(255,255,255,0.25)"
-                strokeWidth="0.25"
-              >
-                <title>{c.sahip ? `${c.sahip} (${takimBilgisi(c.takim ?? 1).ad}) · ${c.soru}. soruda` : 'Boş toprak'}</title>
-              </path>
-            ))}
+            <defs>
+              <filter id="kale-doku" x="0" y="0" width="100%" height="100%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="4" result="g" />
+                <feColorMatrix in="g" type="matrix" values="0 0 0 0 0.05  0 0 0 0 0.04  0 0 0 0 0.02  0 0 0 0.55 -0.12" />
+              </filter>
+              <clipPath id="kale-disk">
+                <circle cx="50" cy="50" r={R_DIS + 2} />
+              </clipPath>
+            </defs>
+            <circle cx="50" cy="50" r={R_DIS + 2.6} fill="#3f2d1a" />
+            <g clipPath="url(#kale-disk)">
+              <circle cx="50" cy="50" r={R_DIS + 2} fill="#4d7c2f" />
+              {Array.from({ length: HALKA_SAYISI }, (_, i) => (
+                <circle key={i} cx="50" cy="50" r={R_DIS + 2 - i * kalinlik} fill={ZEMIN[i]} />
+              ))}
+              <rect width="100" height="100" filter="url(#kale-doku)" />
+            </g>
+            {h.hucreler.map((c) => {
+              const renk = c.takim === null ? null : RENKLER[(c.takim - 1) % RENKLER.length]
+              return (
+                <path
+                  key={`${c.halka}-${c.dilim}`}
+                  d={dilimYolu(c.halka, c.dilim)}
+                  fill={renk ?? ZEMIN_ACIK[c.halka]}
+                  fillOpacity={renk ? 0.4 : 0.1}
+                  stroke={renk ?? 'rgba(255,255,255,0.35)'}
+                  strokeOpacity={renk ? 0.95 : 1}
+                  strokeWidth={renk ? 0.45 : 0.25}
+                  strokeDasharray={renk ? undefined : '0.9 0.9'}
+                >
+                  <title>{c.sahip ? `${c.sahip} (${takimBilgisi(c.takim ?? 1).ad}) · ${c.soru}. soruda` : 'Boş toprak'}</title>
+                </path>
+              )
+            })}
             {h.hucreler
               .filter((c) => c.takim !== null && c.sahip)
               .map((c) => {
                 const p = merkez(c.halka, c.dilim)
-                return (
-                  <text key={`t-${c.halka}-${c.dilim}`} x={p.x} y={p.y + 1} fontSize="2.6" textAnchor="middle" fill="white" fontWeight="bold">
-                    {`⚑${(c.sahip ?? '').trim()[0]?.toLocaleUpperCase('tr') ?? ''}`}
-                  </text>
-                )
+                const ilk = (c.sahip ?? '').trim().split(/\s+/)[0] ?? ''
+                const ad = kalabalik && c.halka === 2 ? '' : ilk.slice(0, 7)
+                return <KampCizimi key={`k-${c.halka}-${c.dilim}`} x={p.x} y={p.y} renk={RENKLER[((c.takim ?? 1) - 1) % RENKLER.length]} olcek={[1, 0.92, 0.78][c.halka] ?? 0.8} ad={ad} />
               })}
+            <KaleCizimi bayrak={h.kusatan !== null ? RENKLER[(h.kusatan - 1) % RENKLER.length] : '#e5e7eb'} />
             {/* Bu sorudaki hamleler: asker evinden hücreye koşar, bayrak diker; ele geçirmede iki asker çarpışır */}
             {h.oynanan > 0 &&
               h.hucreler
@@ -101,10 +190,6 @@ export function KaleHaritaSahnesi({ h, takimSayisi, kucult }: { h: KaleHaritasi;
                           <animate attributeName="opacity" values="0;1;0" dur="0.8s" begin={`${gecikme + 1}s`} fill="freeze" />
                         </text>
                       )}
-                      <text x={hedef.x} y={hedef.y - 2.6} fontSize="3" textAnchor="middle" opacity="0">
-                        🚩
-                        <animate attributeName="opacity" values="0;1" dur="0.3s" begin={`${gecikme + 1.1}s`} fill="freeze" />
-                      </text>
                     </g>
                   )
                 })}
@@ -122,9 +207,6 @@ export function KaleHaritaSahnesi({ h, takimSayisi, kucult }: { h: KaleHaritasi;
                   </text>
                 )
               })}
-            <text x="50" y="53" fontSize="12" textAnchor="middle">
-              🏰
-            </text>
           </svg>
           {h.bitti && (
             <div className="absolute inset-0 flex items-center justify-center bg-slate-950/55 backdrop-blur-[2px]">
@@ -137,21 +219,19 @@ export function KaleHaritaSahnesi({ h, takimSayisi, kucult }: { h: KaleHaritasi;
             </div>
           )}
         </div>
-        <div className="cam-panel rounded-3xl p-4 space-y-2 overflow-y-auto">
-          <h3 className="text-sm font-bold text-slate-300">Durum ({takimSayisi} takım)</h3>
+        <div className="cam-panel rounded-2xl p-2.5 space-y-1.5 overflow-y-auto text-xs">
+          <h3 className="font-bold text-slate-300">Durum ({takimSayisi} takım)</h3>
           {sirali.map((t, i) => {
             const b = takimBilgisi(t.takim)
-            const enIyi = Object.entries(t.alinan).sort((a, c) => c[1] - a[1]).slice(0, 3)
             return (
-              <div key={t.takim} className="rounded-xl border border-white/10 p-2.5" style={{ borderLeft: `4px solid ${RENKLER[(t.takim - 1) % RENKLER.length]}` }}>
-                <p className="font-bold text-sm">
+              <div key={t.takim} className="rounded-lg border border-white/10 px-2 py-1" style={{ borderLeft: `4px solid ${RENKLER[(t.takim - 1) % RENKLER.length]}` }}>
+                <p className="font-bold leading-tight">
                   {i + 1}. {b.emoji} {b.ad}
                 </p>
-                <p className="text-xs text-slate-300 tabular-nums">
-                  İç halka {t.ic}/{HUCRE_SAYISI} · toplam {t.toplam} hücre
-                  {t.geriAlinan > 0 && ` · ${t.geriAlinan} ele geçirme`}
+                <p className="text-[11px] text-slate-300 tabular-nums leading-tight">
+                  İç {t.ic}/{HUCRE_SAYISI} · toplam {t.toplam}
+                  {t.geriAlinan > 0 && ` · ${t.geriAlinan} alınan`}
                 </p>
-                {enIyi.length > 0 && <p className="text-[11px] text-slate-400 truncate">{enIyi.map(([ad, n]) => `${ad} (${n})`).join(', ')}</p>}
               </div>
             )
           })}

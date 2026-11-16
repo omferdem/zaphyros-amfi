@@ -89,3 +89,18 @@ export function turuKaydet(oturumId: string, idler: string[]): void {
     /* önemsiz */
   }
 }
+
+/** Elle seçilen soru kimliklerini paketlerin sırasıyla döndürür (aynı soru iki pakette olsa bile bir kez). Paketlerde olmayan kimlikler yok sayılır. */
+export function elleSecilenler<T extends { id: string }>(paketler: { sorular: T[] }[], secim: Set<string>): T[] {
+  const goruldu = new Set<string>()
+  const sonuc: T[] = []
+  for (const p of paketler) {
+    for (const s of p.sorular) {
+      if (secim.has(s.id) && !goruldu.has(s.id)) {
+        goruldu.add(s.id)
+        sonuc.push(s)
+      }
+    }
+  }
+  return sonuc
+}

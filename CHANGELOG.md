@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.2 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Bankadan tek tek soru seçimi:** Zapoot/Oyun sihirbazında, hoca panelindeki "Yeni quiz" formunda ve sahnedeki quiz seçicide "✋ Soruları tek tek seç" eklendi: paket paket listelenir, aramayla bulunur, işaretlenen sorular (bankadaki sırasıyla) kullanılır. Elle seçim yapılmazsa eski otomatik çekim aynen sürer.
+
 ## v0.64.1 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Halat çekme tam ekran sahne (2c):** perdede yalnızca halat ve iki takım; her öğrenci adı ve enerji barıyla halatın üstünde. Cevap beklenirken karakterler zorlanır, halat titrer; sonuç açılınca halat yay gibi kayar, toz kalkar, yanlış yapan öne tökezler, kaybeden takım çamura düşer. +1/−1 ve 🔥 karakterin üstünden çıkar. Soru perdede görünmez. Prova 30 ve 80 oyuncuyla ve final ekranıyla denendi.

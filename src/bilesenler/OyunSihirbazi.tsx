@@ -4,7 +4,8 @@ import { paketleriSirala } from '../lib/gecis'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import { GRUPLU_OYUNLAR } from '../lib/oyunAc'
 import { paketleriGrupla } from '../lib/paket'
-import { dengeliSec, havuzSirasinaDiz, sonSorulanlar, turuKaydet } from '../lib/soruSec'
+import { dengeliSec, elleSecilenler, havuzSirasinaDiz, sonSorulanlar, turuKaydet } from '../lib/soruSec'
+import SoruSecici from './SoruSecici'
 import type { Soru } from '../lib/tipler'
 
 export interface TurIstegi {
@@ -118,6 +119,8 @@ export function OyunSihirbazi({
   const [sureDk, setSureDk] = useState(10)
   const [mesgul, setMesgul] = useState(false)
   const [kolaydanZora, setKolaydanZora] = useState(false)
+  // null: soru sayısı kadar paketlerden otomatik çekilir; küme: yalnızca elle işaretlenen sorular
+  const [secim, setSecim] = useState<Set<string> | null>(null)
 
   useEffect(() => {
     sorulariGetir(icerikId)
@@ -132,6 +135,9 @@ export function OyunSihirbazi({
 
   const seciliPaketler = liste.filter((p) => secili.includes(p.ad))
   const toplam = seciliPaketler.reduce((a, p) => a + p.sorular.length, 0)
+  const elle = secim ? elleSecilenler(seciliPaketler, secim) : null
+  const secimAnahtari = secili.join('|')
+  useEffect(() => setSecim(null), [secimAnahtari])
   const bilgi = OYUN_LISTESI.find((o) => o.anahtar === oyun)
   const oyunGruplu = tur === 'oyun' && bilgi?.etiket === 'takim'
   const takimiGerekli = tur === 'zapoot' ? takimli : oyunGruplu || (bilgi?.etiket === 'ikisi' && oyunTakimi && GRUPLU_OYUNLAR.includes(oyun))
@@ -139,18 +145,20 @@ export function OyunSihirbazi({
   const grupSayisi = takimiGerekli && mod !== 'halat' ? grup : null
 
   async function baslat() {
-    if (seciliPaketler.length === 0) return
+    if (seciliPaketler.length === 0 || (elle && elle.length === 0)) return
     setMesgul(true)
     try {
       const istenen = tur === 'oyun' && sureli ? Math.min(60, toplam) : Math.min(adet, toplam)
-      const secilen = dengeliSec(
-        seciliPaketler.map((p) => ({ ad: p.ad, sorular: p.sorular })),
-        istenen,
-        (s) => s.id,
-        sonSorulanlar(oturumId),
-      )
+      const secilen = elle
+        ? [...elle]
+        : dengeliSec(
+            seciliPaketler.map((p) => ({ ad: p.ad, sorular: p.sorular })),
+            istenen,
+            (s) => s.id,
+            sonSorulanlar(oturumId),
+          )
       // Her turda havuzdan farklı sorular gelir; oynanma sırası paketin özgün sırasıdır (zorluk sırası seçilmediyse)
-      if (!kolaydanZora) secilen.splice(0, secilen.length, ...havuzSirasinaDiz(secilen, seciliPaketler.flatMap((p) => p.sorular)))
+      if (!kolaydanZora && !elle) secilen.splice(0, secilen.length, ...havuzSirasinaDiz(secilen, seciliPaketler.flatMap((p) => p.sorular)))
       if (kolaydanZora) {
         const sira = (s: Soru) => ({ kolay: 0, orta: 1, zor: 2 })[String(s.ek?.zorluk ?? '').toLowerCase() as 'kolay'] ?? 1
         secilen.sort((a, b) => sira(a) - sira(b))
@@ -267,10 +275,12 @@ export function OyunSihirbazi({
               )
             })}
           </ul>
+          {seciliPaketler.length > 0 && <SoruSecici gruplar={seciliPaketler} secim={secim} degistir={setSecim} />}
         </div>
 
         <div className="space-y-1.5">
           <h3 className="text-xs font-bold text-slate-300">3. {tur === 'oyun' ? 'Ne zaman bitsin?' : 'Kaç soru?'}</h3>
+          {elle && <p className="text-xs text-emerald-300">Elle {elle.length} soru seçtin; sayı ve süre seçimi bu tur için kullanılmaz.</p>}
           <div className="flex flex-wrap gap-2">
             {tur === 'oyun' && (
               <>
@@ -311,12 +321,14 @@ export function OyunSihirbazi({
           </div>
         </div>
 
-        <button disabled={mesgul || seciliPaketler.length === 0} onClick={baslat} className="parlak-buton w-full rounded-2xl py-3 font-display font-extrabold">
+        <button disabled={mesgul || seciliPaketler.length === 0 || (elle !== null && elle.length === 0)} onClick={baslat} className="parlak-buton w-full rounded-2xl py-3 font-display font-extrabold">
           {mesgul
             ? 'Açılıyor…'
             : seciliPaketler.length === 0
               ? 'Önce paket seç'
-              : `Lobiyi aç (${tur === 'oyun' && sureli ? 'süreli' : Math.min(adet, toplam) + ' soru'})`}
+              : elle && elle.length === 0
+                ? 'En az bir soru işaretle'
+                : `Lobiyi aç (${elle ? elle.length + ' soru, elle seçildi' : tur === 'oyun' && sureli ? 'süreli' : Math.min(adet, toplam) + ' soru'})`}
         </button>
       </section>
     </div>

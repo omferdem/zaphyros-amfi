@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { dengeliSec, havuzSirasinaDiz, paketPaylari } from './soruSec'
+import { dengeliSec, elleSecilenler, havuzSirasinaDiz, paketPaylari } from './soruSec'
 
 const paket = (ad: string, n: number) => ({
   ad,
@@ -54,5 +54,13 @@ describe('dengeliSec', () => {
   })
   it('istek paket toplamını aşarsa hepsini verir', () => {
     expect(dengeliSec([paket('A', 3)], 99, (x) => x)).toHaveLength(3)
+  })
+})
+
+describe('elleSecilenler', () => {
+  it('seçilenleri paket sırasıyla ve bir kez döndürür, bilinmeyen kimliği yok sayar', () => {
+    const p = [{ sorular: [{ id: 'a' }, { id: 'b' }, { id: 'c' }] }, { sorular: [{ id: 'c' }, { id: 'd' }] }]
+    expect(elleSecilenler(p, new Set(['d', 'a', 'c', 'x'])).map((s) => s.id)).toEqual(['a', 'c', 'd'])
+    expect(elleSecilenler(p, new Set())).toEqual([])
   })
 })

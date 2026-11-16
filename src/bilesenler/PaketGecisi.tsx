@@ -2,7 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { sorulariGetir, sorulariGetirIdIle } from '../lib/akis'
 import { paketleriGrupla } from '../lib/paket'
 import { paketleriSirala } from '../lib/gecis'
-import { dengeliSec, havuzSirasinaDiz, sonSorulanlar, turuKaydet } from '../lib/soruSec'
+import { dengeliSec, elleSecilenler, havuzSirasinaDiz, sonSorulanlar, turuKaydet } from '../lib/soruSec'
+import SoruSecici from './SoruSecici'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import { GRUPLU_OYUNLAR, GRUP_SAYILARI } from '../lib/oyunAc'
 import type { Soru } from '../lib/tipler'
@@ -202,6 +203,8 @@ export function QuizPaneli({
 
   const liste = useMemo(() => (sorular ? paketleriSirala(paketleriGrupla(sorular), 'quiz', hafta) : []), [sorular, hafta])
   const secili = liste.find((p) => p.ad === paket)
+  const [secim, setSecim] = useState<Set<string> | null>(null)
+  const elle = secili && secim ? elleSecilenler([secili], secim) : null
 
   // Açık quiz var mı? (sayfa yenilense de panel kaldığı yerden sürer)
   useEffect(() => {
@@ -243,10 +246,13 @@ export function QuizPaneli({
     setMesgul(true)
     setMesaj(null)
     try {
-      const secilen = havuzSirasinaDiz(
-        dengeliSec([{ ad: secili.ad, sorular: secili.sorular }], Math.min(adet, secili.sorular.length), (s) => s.id, sonSorulanlar(dersId)),
-        secili.sorular,
-      )
+      const secilen =
+        elle && elle.length > 0
+          ? elle
+          : havuzSirasinaDiz(
+              dengeliSec([{ ad: secili.ad, sorular: secili.sorular }], Math.min(adet, secili.sorular.length), (s) => s.id, sonSorulanlar(dersId)),
+              secili.sorular,
+            )
       turuKaydet(dersId, secilen.map((s) => s.id))
       const { id } = await quizOlustur(dersId, secili.ad.slice(0, 200), Math.max(1, Math.min(240, Math.floor(sure) || 20)), secilen.map((s) => s.id), false)
       const q = (await quizleriGetir(dersId)).find((x) => x.id === id) ?? null
@@ -429,13 +435,15 @@ export function QuizPaneli({
           )}
         </div>
         <p className="text-xs text-slate-400">Seçilen sayı kadar soru paketten karışık çekilir; süre soru başına 1 dakika olarak önerilir, istersen aşağıdan değiştir.</p>
+        {secili && <SoruSecici key={secili.ad} gruplar={[secili]} secim={secim} degistir={setSecim} />}
+        {elle && <p className="text-xs text-emerald-300">Elle {elle.length} soru seçtin; soru sayısı bu quiz için kullanılmaz.</p>}
       </div>
       <div className="flex flex-wrap items-end gap-3">
         <label className="text-xs text-slate-300 space-y-1">
           <span className="block">Süre (dakika)</span>
           <input className="giris-kutusu !py-1.5 !w-24 text-sm" type="number" min={1} max={240} value={sure} onChange={(e) => setSure(Number(e.target.value))} />
         </label>
-        <button disabled={!secili || mesgul} className="parlak-buton rounded-xl px-6 py-2.5 font-bold" onClick={baslat}>
+        <button disabled={!secili || mesgul || (elle !== null && elle.length === 0)} className="parlak-buton rounded-xl px-6 py-2.5 font-bold" onClick={baslat}>
           {mesgul ? 'Başlatılıyor…' : 'Quizi başlat'}
         </button>
       </div>

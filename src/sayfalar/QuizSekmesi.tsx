@@ -2,6 +2,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { Ders, Ogrenci, Soru } from '../lib/tipler'
 import { sorulariGetir } from '../lib/akis'
 import { karistir, paketleriGrupla } from '../lib/paket'
+import { elleSecilenler } from '../lib/soruSec'
+import SoruSecici from '../bilesenler/SoruSecici'
 import { tarihSaat } from '../lib/bicim'
 import { quizSonucunuExceleAktar } from '../lib/rapor'
 import {
@@ -260,19 +262,24 @@ function YeniQuiz({
   const [karisik, setKarisik] = useState(true)
   const [sonuc, setSonuc] = useState(false)
   const [mesgul, setMesgul] = useState(false)
+  const [secim, setSecim] = useState<Set<string> | null>(null)
 
   const havuz = paket === '__hepsi' ? sorular : (gruplar.find((g) => (g.ad || '__paketsiz') === paket)?.sorular ?? [])
   const istenen = Math.max(1, Math.min(100, Math.floor(Number(sayi) || 0)))
-  const secilecek = Math.min(istenen, havuz.length)
+  const secilecekGruplar = paket === '__hepsi' ? gruplar : gruplar.filter((g) => (g.ad || '__paketsiz') === paket)
+  const elle = secim ? elleSecilenler(secilecekGruplar, secim) : null
+  const secilecek = elle ? elle.length : Math.min(istenen, havuz.length)
 
   async function baslat(e: React.FormEvent) {
     e.preventDefault()
     hataVer(null)
     if (secilecek === 0) return hataVer('Quiz için en az bir soru gerekir. Önce "Ders akışları" sekmesinden soru paketi yükle.')
     const sureDk = Math.max(1, Math.min(240, Math.floor(Number(sure) || 0)))
-    let idler = havuz.map((s) => s.id)
-    if (karisik) idler = karistir(idler)
-    idler = idler.slice(0, secilecek)
+    let idler = elle ? elle.map((s) => s.id) : havuz.map((s) => s.id)
+    if (!elle) {
+      if (karisik) idler = karistir(idler)
+      idler = idler.slice(0, secilecek)
+    }
     setMesgul(true)
     try {
       const { id } = await quizOlustur(ders.id, baslik.trim() || `Quiz ${new Date().toLocaleDateString('tr-TR')}`, sureDk, idler, sonuc)
@@ -298,7 +305,7 @@ function YeniQuiz({
             </label>
             <label className="text-sm space-y-1">
               <span className="text-slate-300">Sorular nereden?</span>
-              <select className="giris-kutusu !py-2.5" value={paket} onChange={(e) => setPaket(e.target.value)}>
+              <select className="giris-kutusu !py-2.5" value={paket} onChange={(e) => { setPaket(e.target.value); setSecim(null) }}>
                 <option value="__hepsi">Bütün sorular ({sorular.length})</option>
                 {gruplar.map((g) => (
                   <option key={g.ad || '__paketsiz'} value={g.ad || '__paketsiz'}>
@@ -318,6 +325,8 @@ function YeniQuiz({
               </label>
             </div>
           </div>
+          <SoruSecici gruplar={secilecekGruplar} secim={secim} degistir={setSecim} />
+          {elle && <p className="text-xs text-emerald-300">Elle {elle.length} soru seçtin; soru sayısı alanı ve rastgele seçim kullanılmaz, sorular bankadaki sırasıyla gelir.</p>}
           <div className="flex flex-col gap-2 text-sm text-slate-300">
             <label className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" className="accent-pink-500" checked={karisik} onChange={(e) => setKarisik(e.target.checked)} />

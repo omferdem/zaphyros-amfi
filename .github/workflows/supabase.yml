@@ -40,7 +40,12 @@ jobs:
           ref=$(jq -r .supabaseUrl public/ayarlar.json | sed -E 's#https://([a-z0-9]+)\.supabase\.co.*#\1#')
           echo "REF=$ref" >> "$GITHUB_ENV"
           sahip=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          echo "SITE=https://$sahip.github.io/${{ github.event.repository.name }}/" >> "$GITHUB_ENV"
+          pages="https://$sahip.github.io/${{ github.event.repository.name }}/"
+          echo "PAGES=$pages" >> "$GITHUB_ENV"
+          # Özel alan adı kullanılıyorsa: depo Settings > Secrets and variables > Actions > Variables altında
+          # SITE_ADRESI (ör. https://zapedu.app/) tanımlanır; giriş adresi o olur, github.io adresi de izinli kalır.
+          echo "SITE=${{ vars.SITE_ADRESI || '' }}" >> "$GITHUB_ENV"
+          if [ -z "${{ vars.SITE_ADRESI || '' }}" ]; then echo "SITE=$pages" >> "$GITHUB_ENV"; fi
           echo "Proje: $ref"
 
       - name: SQL çalıştır
@@ -59,7 +64,7 @@ jobs:
       - name: Giriş adreslerini ayarla
         if: inputs.islem != 'sql-dosyasi'
         run: |
-          jq -n --arg site "$SITE" '{site_url: $site, uri_allow_list: ($site + ",http://localhost:5173/")}' > auth.json
+          jq -n --arg site "$SITE" --arg pages "$PAGES" '{site_url: $site, uri_allow_list: ($site + "," + $pages + ",http://localhost:5173/")}' > auth.json
           kod=$(curl -sS -o yanit.json -w '%{http_code}' -X PATCH \
             "https://api.supabase.com/v1/projects/$REF/config/auth" \
             -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" --data @auth.json)

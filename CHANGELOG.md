@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.65.20 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Kısa alan adına hazırlık (zapedu.app):** kod zaten adresten bağımsız (göreli yol, perdedeki adres `window.location` ile yazılır), kodda değişiklik gerekmedi. `docs/ALAN-ADI.md`: satın alma, DNS kayıtları, GitHub Pages ve Supabase giriş adresi adımları. "Supabase işlemleri" iş akışı `SITE_ADRESI` deposu değişkenini okur: tanımlıysa giriş adresi o olur, github.io adresi izinli listede kalır (değişken yokken davranış aynıdır).
+- Alan adı henüz alınmadı.
+
 ## v0.65.19 (16 Kasım 2026)
 `0050_kumanda_zorluk.sql` PGlite testinden geçti ve apply_migration ile canlıya uygulandı.
 - **Kumandadan zorluk:** telefon kumandasında oyun başlatırken 🌱 Kolay / ⚖ Orta / 🔥 Zor satırı (zorluk seçilebilen oyunlarda). `kumanda_istek` zorluğu taşır ve doğrular; perde isteği alınca zorluğu oyunun başında uygular.

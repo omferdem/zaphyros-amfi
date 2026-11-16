@@ -7,6 +7,7 @@ import { SIKLAR } from '../lib/yarisma'
 import { youtubeGomme } from '../lib/video'
 import { SlaytCizimi, usePdfBelgeleri } from '../bilesenler/Slayt'
 import OyunProvasi from '../bilesenler/OyunProvasi'
+import OyunOnizleme from '../bilesenler/OyunOnizleme'
 import { slaytMetniniTemizle } from '../lib/slaytMetni'
 import { SimKontrol, SimPerde, SimTelefon, etkilesimli, ilkSim, simSuresi, useSimSayaci, type Sim } from './OnizlemeSimulasyonu'
 
@@ -323,13 +324,17 @@ function PerdeIcerigi({ adim, soru, cevapGoster, belge }: { adim: Adim; soru: So
     )
   }
   if (adim.tur === 'oyun') {
-    const o = OYUNLAR[(adim.ayar.oyun ?? 'takim') as OyunAnahtari] ?? OYUNLAR.takim
+    const anahtar = (adim.ayar.oyun ?? 'takim') as OyunAnahtari
+    const o = OYUNLAR[anahtar] ?? OYUNLAR.takim
+    // transform: içteki "fixed" sahne bu kutuya sığar (tam ekran olmaz)
     return (
-      <div className="m-auto text-center space-y-3 max-w-2xl">
-        <p className="text-sm font-mono uppercase tracking-widest text-fuchsia-300">🎮 Bugünün oyunu</p>
-        <p className="text-7xl">{o.emoji}</p>
-        <h2 className="text-3xl font-display font-extrabold">{adim.ayar.baslik || o.ad}</h2>
-        <p className="text-slate-200">{adim.ayar.aciklama || o.nasil}</p>
+      <div className="w-full space-y-2">
+        <div className="relative w-full h-[min(62vh,34rem)] overflow-hidden rounded-2xl border border-white/10" style={{ transform: 'translateZ(0)' }}>
+          <OyunOnizleme oyun={anahtar} adlar={[]} demo />
+        </div>
+        <p className="text-sm text-slate-300 text-center">
+          <b>{o.emoji} {adim.ayar.baslik || o.ad}</b>: {adim.ayar.aciklama || o.nasil} (örnek oyuncularla kendi kendine oynar)
+        </p>
       </div>
     )
   }

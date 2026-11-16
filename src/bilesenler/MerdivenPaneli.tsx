@@ -246,7 +246,7 @@ function MerdivenSahnesi({ d, sonSonuc }: { d: MerdivenDurumu; sonSonuc: 'cikti'
           })}
           {/* tırmanıcı: yumuşak kayar */}
           <div
-            className="absolute left-1/2 -translate-x-1/2 text-6xl select-none transition-[bottom] duration-[4500ms] ease-[cubic-bezier(.45,.05,.25,1)]"
+            className="absolute left-1/2 -translate-x-1/2 text-6xl select-none transition-[bottom] duration-[1800ms] ease-out"
             style={{ bottom: `${yuzde(d.basamak) * 0.94 - 2}%` }}
             aria-label={`Sınıf ${d.basamak}. basamakta`}
           >
@@ -262,7 +262,7 @@ function MerdivenSahnesi({ d, sonSonuc }: { d: MerdivenDurumu; sonSonuc: 'cikti'
           <li>Sınıf tek yarışmacıdır; her soruda cevap verenlerin en az yarısı bilirse bir basamak çıkar.</li>
           <li>{d.toplam} basamak var. Altın renkli 🛡 basamaklar güvenlidir.</li>
           <li>Bilemezse en son güvenli basamağa iner.</li>
-          <li>2 joker hakkı vardır; yanlış cevabı kurtarır.</li>
+          <li>3 joker var, turda birer kez: ✂ yarı yarıya, 👥 seyirci, ⏱ +15 sn. Ayrıca bir yanlış cevabı kurtaran kurtarma hakkı vardır.</li>
         </ul>
         {hic && <p className="text-xs text-slate-400">İlk sorunun sonucu açılınca tırmanıcı kımıldar.</p>}
       </div>

@@ -224,7 +224,7 @@ export function ZombiSahnesi({ d, kapat }: { d: ZombiDurumu; kapat: () => void }
         {/* Zombi sürüsü: seviyeye kadar yeşil sis, kenarında zombiler */}
         <div
           ref={sisRef}
-          className="absolute inset-x-0 bottom-0 zombi-sis transition-[height] duration-[4500ms] ease-[cubic-bezier(.45,.05,.25,1)]"
+          className="absolute inset-x-0 bottom-0 zombi-sis transition-[height] duration-[1400ms] ease-out"
           style={{ height: `${Math.min(kat, d.zombiSeviyesi + 1) * birim}%` }}
         >
           <div className="absolute inset-x-0 top-0 flex justify-around text-4xl -translate-y-1/2 zombi-yuru" aria-hidden>
@@ -250,7 +250,7 @@ export function ZombiSahnesi({ d, kapat }: { d: ZombiDurumu; kapat: () => void }
                   if (el) karakterRef.current.set(gi, el)
                   else karakterRef.current.delete(gi)
                 }}
-                className={`absolute -translate-x-1/2 text-center leading-none transition-all duration-[4500ms] ease-[cubic-bezier(.45,.05,.25,1)] ${zombi ? 'zombi-yakalanan' : o.durum === 'zirve' ? 'zombi-zirvede' : 'zombi-yuruyen'} ${aktif && !zombi && o.son === 1 ? 'zombi-zipla' : ''}`}
+                className={`absolute -translate-x-1/2 text-center leading-none transition-all duration-[1400ms] ease-out ${zombi ? 'zombi-yakalanan' : o.durum === 'zirve' ? 'zombi-zirvede' : 'zombi-yuruyen'} ${aktif && !zombi && o.son === 1 ? 'zombi-zipla' : ''}`}
                 style={{ left: `${Math.max(4, Math.min(96, sol))}%`, bottom: `${altta}%` }}
                 title={o.ad}
               >

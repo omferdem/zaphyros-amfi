@@ -558,3 +558,11 @@ body::after {
 .merdiven-sallan { animation: merdiven-sallan 1.6s ease-in-out infinite; }
 .merdiven-dus { animation: merdiven-dus 1.1s ease-in-out 1; }
 @media (prefers-reduced-motion: reduce) { .merdiven-sallan, .merdiven-dus { animation: none; } }
+
+/* Boşta yaşam: karakterler nefes alır ve hafifçe sallanır */
+.karakter-canli { transform-origin: 50% 100%; animation: karakter-nefes 3s ease-in-out infinite; }
+@keyframes karakter-nefes {
+  0%, 100% { transform: translateY(0) scale(1, 1) rotate(-1.2deg); }
+  50% { transform: translateY(-2%) scale(1.03, 0.98) rotate(1.2deg); }
+}
+@media (prefers-reduced-motion: reduce) { .karakter-canli { animation: none; } }

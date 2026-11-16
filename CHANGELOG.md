@@ -1,5 +1,16 @@
 # Sürüm Geçmişi
 
+## v0.65.0 (16 Kasım 2026)
+Veritabanı değişikliği yok. v0.65 oyun görevinin ilk parçası.
+- **Olay odaklı güncelleme:** oyun sahnesi, oturum satırı değişince (soru açıldı, sonuç açıldı, adım değişti) veriyi hemen çeker ve 0,9 saniye sonra bir kez daha çeker; 3,5 saniyelik yoklama yedek olarak 6 saniyeye indi.
+- **4,5 saniyelik geçişler geri alındı:** konum geçişleri 1,4 saniye ease-out (merdiven 1,8, halat 1,5, orman 1,6). Yeni hedef gelince önceki geçiş bitmiş oluyor.
+- **"İlk sorunun sonucu açılınca başlar" kutusu kalktı:** veri gelene kadar perdede oyunun başlangıç sahnesi (derse katılanların karakterleri) durur.
+- **Boşta yaşam:** öğrenci, kahraman, zombi ve roket görselleri her biri kendi hızında nefes alıp sallanır (hareketi azalt ayarına uyar).
+- **Akış önizlemesi:** oyun kartı adımı artık oyunun sahnesini örnek oyuncularla oynatır (kutunun içinde).
+- **Metinler:** kule başlığı "Hedef: N blok", merdiven kutusu 3 jokeri doğru anlatır.
+- **Otomatik geçiş:** oyunlarda sayaç 10 saniye (sonuç koreografisi bitince başlasın diye).
+- Bu parça canlı derste ve bot ile denenmedi; GSAP, bot aracı, Zirveye Tırmanış, kule şantiyesi ve yeni görseller sonraki parçalarda.
+
 ## v0.64.31 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Sonraki soruya kendiliğinden geçiş:** Zapoot ve oyunlarda süre bitip sonuç açılınca 6 saniye (ilk 5 tablosu varsa 10 saniye) sonra sonraki soruya geçilir; çubukta geri sayım ve "Durdur" düğmesi var. Son sorudan sonra geçilmez, hoca "Bitir" ile podyumu açar. "⋯" menüsünde "Sonraki soruya kendiliğinden geç" anahtarı (varsayılan açık). Normal ders akışındaki sorular kendiliğinden ilerlemez.

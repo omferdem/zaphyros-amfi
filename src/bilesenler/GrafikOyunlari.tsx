@@ -85,9 +85,24 @@ function OyunKabugu<D, V = Veri>({
   useEffect(() => {
     if (!acik) return
     yenile()
-    const t = setInterval(yenile, 3500)
-    return () => clearInterval(t)
-  }, [yenile, acik])
+    // Yedek yoklama; asıl güncelleme aşağıdaki olaydan gelir
+    const t = setInterval(yenile, 6000)
+    // Olay odaklı: soru açılıp kapanınca ve adım değişince veri hemen çekilir (sahne 3,5 saniye beklemez)
+    let gecikmeli: ReturnType<typeof setTimeout> | undefined
+    const kanal = supabase
+      .channel(`oyunkabugu:${oyun}:${oturum}`)
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'sessions', filter: `id=eq.${oturum}` }, () => {
+        void yenile()
+        clearTimeout(gecikmeli)
+        gecikmeli = setTimeout(() => void yenile(), 900)
+      })
+      .subscribe()
+    return () => {
+      clearInterval(t)
+      clearTimeout(gecikmeli)
+      supabase.removeChannel(kanal)
+    }
+  }, [yenile, acik, oyun, oturum])
 
   function ac(a: boolean) {
     setAcik(a)
@@ -119,13 +134,8 @@ function OyunKabugu<D, V = Veri>({
 
   // Bu oyun seçili değilse ve henüz açılmadıysa hiçbir şey göstermeyiz (düğmeler yalnızca oyun seçilince çıkar)
   if (!acik) return null
-  if (!d) {
-    return perde ? (
-      <div className={`fixed right-4 ${konum} z-30 cam-panel rounded-2xl px-4 py-2 text-sm text-slate-300`}>
-        {baslik}: ilk sorunun sonucu açılınca başlar.
-      </div>
-    ) : null
-  }
+  // Veri gelene kadar perdede oyunun başlangıç sahnesi zaten durur (Sahne.tsx); ayrı bir "başlar" kutusu çizilmez
+  if (!d) return null
   if (!perde) return <div className="text-sm">{ozet(d)}</div>
   return (
     <>
@@ -243,7 +253,7 @@ export function RoketSahnesi({ d, kucult }: { d: RoketDurumu; kucult: () => void
                 if (el) roketRef.current.set(i, el)
                 else roketRef.current.delete(i)
               }}
-              className={`absolute -translate-y-1/2 transition-all duration-[4500ms] ease-[cubic-bezier(.45,.05,.25,1)] flex items-center ${aktifRaund && o.son === 1 ? 'roket-hizlan' : ''}`}
+              className={`absolute -translate-y-1/2 transition-all duration-[1400ms] ease-out flex items-center ${aktifRaund && o.son === 1 ? 'roket-hizlan' : ''}`}
               style={{ left: `${4 + oran * 84}%`, top: `${8 + (serit / seritSayisi) * 84 + 4}%` }}
               title={`${o.ad}: ${o.ilerleme} doğru`}
             >
@@ -743,7 +753,7 @@ export function KuleSahnesi({ d, kucult }: { d: KuleDurumu; kucult: () => void }
         <span className="text-sm text-slate-300">
           Soru {d.oynanan} / {d.toplamSoru}
         </span>
-        <span className="text-sm text-slate-300">Hedef: kişi başına {d.hedef} doğru</span>
+        <span className="text-sm text-slate-300">Hedef: {d.hedef} blok (her doğru oranı blok kazandırır)</span>
         <button className="ikincil-buton ml-auto !py-1.5 kucult-dugmesi" onClick={kucult}>
           Küçült
         </button>
@@ -775,7 +785,7 @@ export function KuleSahnesi({ d, kucult }: { d: KuleDurumu; kucult: () => void }
                   </div>
                 ))}
                 {lider && (
-                  <div className="absolute inset-x-0 text-center text-4xl kule-tac leading-none transition-[bottom] duration-[4500ms] ease-[cubic-bezier(.45,.05,.25,1)]" style={{ bottom: `${kat * dilim}%` }} aria-hidden>
+                  <div className="absolute inset-x-0 text-center text-4xl kule-tac leading-none transition-[bottom] duration-[1400ms] ease-out" style={{ bottom: `${kat * dilim}%` }} aria-hidden>
                     👑
                   </div>
                 )}
@@ -916,7 +926,7 @@ export function KaleSahnesi({ d, kucult }: { d: KaleDurumu; kucult: () => void }
           return (
             <div key={`ordu-${s.takim}`}>
               {s.asama === 'yuruyor' && (
-                <div className="absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-[4500ms] ease-[cubic-bezier(.45,.05,.25,1)] text-3xl" style={{ left: `${x}%`, top: `${y}%`, filter: `drop-shadow(0 0 8px ${renk})` }} title={`${takimBilgisi(s.takim).ad} ordusu yürüyor`}>
+                <div className="absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-[1400ms] ease-out text-3xl" style={{ left: `${x}%`, top: `${y}%`, filter: `drop-shadow(0 0 8px ${renk})` }} title={`${takimBilgisi(s.takim).ad} ordusu yürüyor`}>
                   ⚔️
                 </div>
               )}

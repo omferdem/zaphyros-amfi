@@ -1321,7 +1321,7 @@ function SoruSahnesi({
   const araTablo = !!durum && durum.sira % 3 === 0 && durum.sira < durum.toplam
   const puanlar = usePuanlar(oturumId, sonuc && araTablo, 5)
   const [otoDurdu, setOtoDurdu] = useState(false)
-  const otoSure = oyunKilitli ? 6 : araTablo ? 10 : 6
+  const otoSure = oyunKilitli ? 10 : araTablo ? 10 : 6
   const [otoKalan, setOtoKalan] = useState<number | null>(null)
 
   // Soru bilgisi (şıkların karışık sırası sunucudan gelir) ve sonuç. Adım değişikliği veritabanına

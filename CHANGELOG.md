@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.17 (16 Kasım 2026)
+Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 2. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-02-yeni.sql`, SQL ile uygulandı).
+- **Bahar 2. hafta soruları:** "Akıl ve İnanç İlişkisi" sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-02.txt`.
+
 ## v0.64.16 (16 Kasım 2026)
 Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 1. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-01-yeni.sql`, SQL ile uygulandı).
 - **Bahar 1. hafta soruları:** "Din Felsefesi ve İlgili Alanlar" sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-01.txt`.

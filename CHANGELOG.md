@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.27 (16 Kasım 2026)
+Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 12. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-12-yeni.sql`, SQL ile uygulandı).
+- **Bahar 12. hafta soruları:** "Din, Bilim, Ahlak ve Sanat İlişkisi" sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-12.txt`.
+
 ## v0.64.26 (16 Kasım 2026)
 Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 11. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-11-yeni.sql`, SQL ile uygulandı).
 - **Bahar 11. hafta soruları:** "Ölüm ve Sonrası" sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-11.txt`.

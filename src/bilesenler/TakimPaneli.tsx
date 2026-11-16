@@ -116,7 +116,7 @@ export default function TakimPaneli({ oturum, anahtar, mod, dugme = true }: { ot
   )
 
   return (
-    <div className={perde ? 'fixed right-4 bottom-4 z-30 flex flex-col items-end gap-2' : 'space-y-2'}>
+    <div className={perde ? 'fixed right-4 bottom-24 z-30 flex flex-col items-end gap-2' : 'space-y-2'}>
       {halatSahnesi}
       {halatGorunumu}
       {puanTablosu}

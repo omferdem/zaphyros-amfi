@@ -1,5 +1,14 @@
 # Sürüm Geçmişi
 
+## v0.65.17 (16 Kasım 2026)
+Veritabanı değişikliği yok (iki veri güncellemesi SQL ile yapıldı). v0.65 görevinin kalan maddeleri.
+- **Soru deposu:** yeni Zapoot sorularının zorluğu paket içinde bloom düzeyi ve metin uzunluğuna göre %40 kolay, %40 orta, %20 zor olarak yeniden atandı (216 / 216 / 108). Yeni sorulardaki çeldirici dolgu kuyrukları ("ve ... maz/mez" ile biten uzatmalar, 104 soruda) kaldırıldı; cümleler tam kalıyor, doğru şıkkın en uzun olma oranı %25,9'dan %26,9'a çıktı (şansa yakın).
+- **Görsel listesi:** `docs/GORSEL-LISTESI.md` (Gemini üretim listesi, adlandırma, kodda bağlantı durumu).
+- **Prova:** oyuncu sayısı düğmeleri "Sahte öğrenci: 5 / 30 / 80" oldu, açıklamasında gerçek derste herkesin oynadığı yazar. 250 oyuncu sınırına ulaşılınca perdede uyarı çıkar.
+- **Gerilim ve sarsıntı:** soru süresinin son 5 saniyesinde ekran kenarı kırmızı nabız atar; ejderhaya vuruş ve düşüş (elenme, yakalanma) olaylarında sahne kısa süre sarsılır (hareketi azalt ayarına uyar).
+- **Küçük düzeltmeler:** final başlığı araç çubuğunun altında kalmıyor; takım puan tablosu ders kodunun üstüne çıkarıldı; "Paket geçişi" ekranında da zorluk seçilir.
+- Yapılmayanlar (neden): "Final turu ×2" puanlama değişikliği ister (veritabanı), kumandadan zorluk seçimi kumanda isteği şeması ister, 80+ kişide bölük gruplaması, vinç kancasının blok taşıması, kişi başına "ipi çekme", oyun kayıtları (araç yalnızca 3 sn'de bir kare alıyor, dosya 10 MB).
+
 ## v0.65.16 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Akış düzenleyicide seçimden vazgeçilebiliyor:** "Hepsini seç" artık anahtar gibi çalışır (hepsi seçiliyse "Seçimi kaldır"); seçim çubuğundaki küçük "Seçimi temizle" yazısı belirgin "✕ Vazgeç" düğmesine döndü ve Esc tuşu da seçimi kaldırır.

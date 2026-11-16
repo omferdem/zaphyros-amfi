@@ -75,10 +75,11 @@ export default function OyunProvasi({ kapat, baslangic = 'zombi' }: { kapat: () 
             </button>
           ))}
         </div>
-        <div className="flex gap-1" aria-label="Oyuncu sayısı">
+        <div className="flex items-center gap-1" aria-label="Sahte öğrenci sayısı" title="Yalnızca prova için sahte öğrenci sayısıdır. Gerçek derste derse katılan herkes oynar.">
+          <span className="text-xs text-slate-400">Sahte öğrenci:</span>
           {OYUNCU_SAYILARI.map((n) => (
             <button key={n} onClick={() => setSayi(n)} className={`rounded-full px-2 py-1 text-xs border ${sayi === n ? 'border-emerald-300 bg-emerald-500/30 font-bold' : 'border-white/10 bg-white/5'}`}>
-              {n} kişi
+              {n}
             </button>
           ))}
         </div>

@@ -69,6 +69,8 @@ export default function ZombiPaneli({ oturum, anahtar, mod }: { oturum: string; 
     }
   }, [yenile, acik, oturum])
 
+  const oyuncuSayisi = veri?.oyuncular.length ?? 0
+
   // Oyun erken bitince (herkes zirvede) ortak final açılsın diye duyurulur
   const bittiBildirildi = useRef(false)
   useEffect(() => {
@@ -133,6 +135,7 @@ export default function ZombiPaneli({ oturum, anahtar, mod }: { oturum: string; 
           </div>
         </div>
       )}
+      {buyuk && oyuncuSayisi >= 250 && <p className="fixed left-1/2 -translate-x-1/2 top-16 z-[57] rounded-full bg-amber-400 text-slate-950 px-4 py-1 text-sm font-bold">250 oyuncu sınırına ulaşıldı; fazlası perdede çizilmiyor</p>}
       {buyuk && (
         <EnerjiSaglayici oyuncular={veri?.oyuncular}>
           <ZombiSahnesi d={d} kapat={() => setBuyuk(false)} />

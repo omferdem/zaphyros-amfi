@@ -574,3 +574,19 @@ body::after {
   100% { transform: translate(-30px, 110cqh); opacity: 0.2; }
 }
 @media (prefers-reduced-motion: reduce) { .kar-tanesi { animation: none; display: none; } }
+
+/* Ekran sarsıntısı ve soru süresi bitmeden kırmızı kenar nabzı */
+.ekran-sars { animation: ekran-sars 0.5s ease-in-out; }
+@keyframes ekran-sars {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-7px, 4px) rotate(-0.25deg); }
+  40% { transform: translate(6px, -5px) rotate(0.25deg); }
+  60% { transform: translate(-4px, 3px); }
+  80% { transform: translate(3px, -2px); }
+}
+.gerilim-nabiz { box-shadow: inset 0 0 0 0 rgba(239, 68, 68, 0); animation: gerilim-nabiz 1s ease-in-out infinite; }
+@keyframes gerilim-nabiz {
+  0%, 100% { box-shadow: inset 0 0 40px 6px rgba(239, 68, 68, 0.25); }
+  50% { box-shadow: inset 0 0 120px 28px rgba(239, 68, 68, 0.6); }
+}
+@media (prefers-reduced-motion: reduce) { .ekran-sars, .gerilim-nabiz { animation: none; } }

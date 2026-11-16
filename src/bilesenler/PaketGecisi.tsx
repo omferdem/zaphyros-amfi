@@ -6,6 +6,7 @@ import { dengeliSec, elleSecilenler, havuzSirasinaDiz, sonSorulanlar, turuKaydet
 import SoruSecici from './SoruSecici'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import { GRUPLU_OYUNLAR, GRUP_SAYILARI } from '../lib/oyunAc'
+import { ZORLUKLAR, ZORLUK_ACIKLAMASI, ZORLUK_OYUNLARI, zorlukBekleyenAyarla, type Zorluk } from '../lib/zorluk'
 import type { Soru } from '../lib/tipler'
 import {
   maddeAnalizi,
@@ -66,6 +67,7 @@ export function KahootSecici({
   const [mesgul, setMesgul] = useState<string | null>(null)
   // undefined = her paketin önerilen modu (paketin ek bilgisindeki "mod"); yoksa bireysel
   const [mod, setMod] = useState<OyunAnahtari | null | undefined>(undefined)
+  const [zorluk, setZorluk] = useState<Zorluk>('orta')
   const [grup, setGrup] = useState<number>(3)
   const liste = useMemo(() => (sorular ? paketleriSirala(paketleriGrupla(sorular), 'kahoot', hafta) : []), [sorular, hafta])
 
@@ -135,6 +137,26 @@ export function KahootSecici({
           </div>
         )}
         {mod === 'halat' && <p className="text-xs text-slate-400">Halat çekme her zaman 2 takımdır.</p>}
+        {mod && ZORLUK_OYUNLARI.includes(mod) && (
+          <div className="space-y-1.5 pt-1">
+            <h3 className="text-xs font-bold text-slate-300">Zorluk</h3>
+            <div className="flex flex-wrap gap-2 items-center">
+              {ZORLUKLAR.map((z) => (
+                <button
+                  key={z.anahtar}
+                  onClick={() => {
+                    setZorluk(z.anahtar)
+                    zorlukBekleyenAyarla(z.anahtar)
+                  }}
+                  className={`rounded-full border px-3 py-1.5 text-sm ${zorluk === z.anahtar ? 'border-emerald-300 bg-emerald-500/25 font-bold' : 'border-white/10 bg-white/5 hover:bg-white/10'}`}
+                >
+                  {z.ad}
+                </button>
+              ))}
+              <span className="text-xs text-slate-400">{ZORLUK_ACIKLAMASI[mod]?.[zorluk]}</span>
+            </div>
+          </div>
+        )}
       </div>
       {hata && <p className="text-rose-300 text-sm">Paketler yüklenemedi.</p>}
       {!sorular && !hata && <p className="text-slate-400 text-sm">Yükleniyor…</p>}

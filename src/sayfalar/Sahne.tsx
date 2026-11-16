@@ -20,7 +20,7 @@ import Cizim, { type CizimModu } from '../bilesenler/Cizim'
 import { dengeliSec, havuzSirasinaDiz, sonSorulanlar, turuKaydet } from '../lib/soruSec'
 import PerdeNotu from '../bilesenler/PerdeNotu'
 import { oyunuAc, TAKIM_SECILEBILIR } from '../lib/oyunAc'
-import { zorlukYaz } from '../lib/zorluk'
+import { zorlukBekleyenAl, zorlukYaz } from '../lib/zorluk'
 import YorumBandi, { yorumYayinla } from '../bilesenler/YorumBandi'
 import { sinifYorumlari } from '../lib/yorum'
 import OyunProvasi from '../bilesenler/OyunProvasi'
@@ -465,7 +465,7 @@ export default function Sahne() {
       .single()
     if (turHatasi || !tur) throw turHatasi ?? new Error('tur')
     const turId = tur.id as string
-    zorlukYaz(oturumId, lobiyle?.zorluk ?? 'orta')
+    zorlukYaz(oturumId, lobiyle?.zorluk ?? zorlukBekleyenAl() ?? 'orta')
     setFinalAcik(false)
     const idler = await adimlarEkle(id, 0, sorular.map((s) => ({ tur: 'soru' as const, question_id: s.id, ayar: {}, tur_id: turId })))
     if (!kahootAkisi) {
@@ -1489,6 +1489,7 @@ function SoruSahnesi({
       <>
         <OyunOnizleme oyun={oyunKilitli.oyun} adlar={oyunKilitli.adlar} demo={false} />
         <YorumBandi />
+        {!sonuc && kalan !== null && kalan > 0 && kalan <= 5000 && <div className="pointer-events-none fixed inset-0 z-[56] gerilim-nabiz" aria-hidden />}
         <div className="fixed top-2 right-2 z-[60] max-w-[96vw] cam-panel rounded-2xl p-2 opacity-70 hover:opacity-100 transition-opacity">{araclar}</div>
         {soruGoster && (
           <div className="fixed left-3 bottom-24 z-[60] cam-panel rounded-2xl p-4 max-w-[min(42rem,92vw)] space-y-2">

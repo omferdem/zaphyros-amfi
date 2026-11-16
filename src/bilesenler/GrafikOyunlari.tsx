@@ -137,6 +137,8 @@ function OyunKabugu<D, V = Veri>({
 
   const d = useMemo(() => (veri ? hesapla(veri) : null), [veri, hesapla])
 
+  const oyuncuSayisi = (veri as unknown as { oyuncular?: unknown[] } | null)?.oyuncular?.length ?? 0
+
   // Oyun soru sayısı dolmadan bitebilir (ejderha öldü, herkes bitişe vardı): sahne bunu duyurur, ortak final açılır
   const bittiBildirildi = useRef(false)
   useEffect(() => {
@@ -181,6 +183,7 @@ function OyunKabugu<D, V = Veri>({
           </div>
         </div>
       )}
+      {buyuk && oyuncuSayisi >= 250 && <p className="fixed left-1/2 -translate-x-1/2 top-16 z-[57] rounded-full bg-amber-400 text-slate-950 px-4 py-1 text-sm font-bold">250 oyuncu sınırına ulaşıldı; fazlası perdede çizilmiyor</p>}
       {buyuk && <EnerjiSaglayici oyuncular={(veri as unknown as { oyuncular?: SeritOyuncusu[] } | null)?.oyuncular}>{sahne(d, () => setBuyuk(false))}</EnerjiSaglayici>}
     </>
   )

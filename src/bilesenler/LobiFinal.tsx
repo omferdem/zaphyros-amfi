@@ -240,7 +240,7 @@ export function Final({ oturumId, takimli, kapat }: { oturumId: string; takimli:
   const kazananTakim = takimlar[0]
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur overflow-y-auto p-6">
+    <div className="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur overflow-y-auto p-6 pt-20">
       {asama >= 3 && <Konfeti adet={90} />}
       <div className="mx-auto max-w-4xl space-y-6 text-center">
         <h2 className="font-display font-extrabold text-5xl">🏆 Final</h2>

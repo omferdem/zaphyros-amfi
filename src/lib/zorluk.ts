@@ -56,3 +56,14 @@ export function zorlukYaz(oturum: string, z: Zorluk): void {
     /* saklanamazsa orta kalır */
   }
 }
+
+let bekleyen: Zorluk | null = null
+/** Akıştaki oyun kartı gibi sihirbazsız başlatmalarda seçilen zorluk, bir sonraki başlatma tarafından alınır. */
+export function zorlukBekleyenAyarla(z: Zorluk | null): void {
+  bekleyen = z
+}
+export function zorlukBekleyenAl(): Zorluk | null {
+  const z = bekleyen
+  bekleyen = null
+  return z
+}

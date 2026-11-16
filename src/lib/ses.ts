@@ -203,6 +203,7 @@ const EFEKTLER: Record<Ses, () => void> = {
   },
   // Vuruş: kısa gürültü patlaması ve alçak darbe
   vurus: () => {
+    ekranSars()
     gurultu(0, 0.12, 0.18, 'lowpass', 1800, 300)
     nota(140, 0, 0.18, { tur: 'sine', seviye: 0.3, son: 50 })
     nota(900, 0, 0.06, { tur: 'square', seviye: 0.05, suzgec: 2500 })
@@ -229,6 +230,7 @@ const EFEKTLER: Record<Ses, () => void> = {
     nota(620, 0, 0.55, { tur: 'sine', seviye: 0.12, son: 90 })
     nota(80, 0.5, 0.25, { tur: 'sine', seviye: 0.3, son: 35 })
     gurultu(0.5, 0.2, 0.1, 'lowpass', 900, 200)
+    setTimeout(ekranSars, 500)
   },
   // Yarışma başlıyor: yükselen süpürme ve vuruş
   baslat: () => {
@@ -513,4 +515,16 @@ export function useCevrimici(): boolean {
     }
   }, [])
   return acik
+}
+
+/** Büyük olaylarda (ejderhanın son darbesi, elenme) en üstteki oyun sahnesini kısa süre sarsar; hareketi azalt ayarına uyar. */
+export function ekranSars(): void {
+  if (typeof document === 'undefined' || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
+  const sahneler = document.querySelectorAll<HTMLElement>('div.fixed.inset-0.z-40')
+  const el = sahneler[sahneler.length - 1]
+  if (!el) return
+  el.classList.remove('ekran-sars')
+  void el.offsetWidth
+  el.classList.add('ekran-sars')
+  setTimeout(() => el.classList.remove('ekran-sars'), 600)
 }

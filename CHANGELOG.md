@@ -1,8 +1,8 @@
 # Sürüm Geçmişi
 
 ## v0.65.19 (16 Kasım 2026)
-`0050_kumanda_zorluk.sql` yazıldı ve PGlite testinden geçti; canlıya henüz uygulanmadı (onay bekliyor).
-- **Kumandadan zorluk:** telefon kumandasında oyun başlatırken 🌱 Kolay / ⚖ Orta / 🔥 Zor satırı (zorluk seçilebilen oyunlarda). `kumanda_istek` zorluğu taşır ve doğrular; perde isteği alınca zorluğu oyunun başında uygular. Migration uygulanana kadar kumandadan seçilen zorluk reddedilir (istek geçersiz sayılır); bu yüzden önce migration uygulanmalı.
+`0050_kumanda_zorluk.sql` PGlite testinden geçti ve apply_migration ile canlıya uygulandı.
+- **Kumandadan zorluk:** telefon kumandasında oyun başlatırken 🌱 Kolay / ⚖ Orta / 🔥 Zor satırı (zorluk seçilebilen oyunlarda). `kumanda_istek` zorluğu taşır ve doğrular; perde isteği alınca zorluğu oyunun başında uygular.
 - **Kule vinç halatı:** düşen blok artık vinç halatına bağlı iner (halat ve kanca blokla birlikte uzar, oturunca kalkar).
 - **Zirveye Tırmanış ekibi gerçek öğrencilerle:** ekipte en çok doğrusu olan 5 öğrenci adıyla görünür; son soruda doğru bilen "+1" ile ipi çeker, bilemeyen 😵 ile ipte sallanır.
 - Bu üçü canlıda botla denenmedi.

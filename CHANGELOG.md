@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.65.13 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Final yeni oyunun üstünde kalıyordu (botla canlıda görüldü):** oyun bitip final açıldıktan sonra yeni oyun başlayınca eski final ekranı açık kalıyordu; yeni oyun başlarken ve "Derse dön" denince final kapanır.
+- **Doğrulandı (canlı):** sihirbazda Zor seçilince "Zombiler her 2 soruda bir kat çıkar"; oyun sonunda final kendiliğinden açıldı (Mehmet, Ayşe, Hatice podyumu, "Tümünü göster", "Tamam").
+
 ## v0.65.12 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Oyun zorluğu (hoca seçer):** Oyunlar sihirbazında 🌱 Kolay / ⚖ Orta / 🔥 Zor satırı (zombi, roket, arena, ejderha, orman, bilgi merdiveni). Zorlaştıkça sınıf zayıflar: ejderhanın canı (%35 / %45 / %60), zombiler her 4 / 3 / 2 soruda bir kat çıkar, roket bitişi soruların %55 / %70 / %85'i, arena yanlış hakkı %50 / %40 / %30, orman patikası %50 / %60 / %75, merdiven kamp eşiği %50 / %60 / %70. Orta eski değerlerin aynısıdır. Seçim oturumda saklanır, veritabanına yazılmaz; akıştaki oyun kartı ve kumanda orta başlatır. Kurallar testli (`zorluk.test.ts`).

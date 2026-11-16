@@ -450,6 +450,7 @@ export default function Sahne() {
     if (turHatasi || !tur) throw turHatasi ?? new Error('tur')
     const turId = tur.id as string
     zorlukYaz(oturumId, lobiyle?.zorluk ?? 'orta')
+    setFinalAcik(false)
     const idler = await adimlarEkle(id, 0, sorular.map((s) => ({ tur: 'soru' as const, question_id: s.id, ayar: {}, tur_id: turId })))
     if (!kahootAkisi) {
       try {
@@ -494,6 +495,7 @@ export default function Sahne() {
 
   /** Zapoot bitince: kaldığın akışa ve slayta döner. */
   async function dersedon() {
+    setFinalAcik(false)
     const kayit = donusKaydi()
     const hedefAkis = kayit?.lesson_id && akislar.some((a) => a.id === kayit.lesson_id) ? kayit.lesson_id : null
     let hedefAdim: string | null = null

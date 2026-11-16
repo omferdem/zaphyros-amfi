@@ -144,7 +144,7 @@ export default function ZirveSahnesi({ d, sonSonuc, jokerler, sonOran }: { d: Me
   const guvenliKamp = (b: number) => b % GUVENLI_ARALIK === 0
 
   return (
-    <div className="relative mx-auto overflow-hidden rounded-3xl border border-white/10 [container-type:inline-size]" style={{ aspectRatio: '5 / 3', height: 'min(58vh, 34rem)', background: 'linear-gradient(to top, #1e1b4b, #312e81 45%, #0ea5e9 130%)' }}>
+    <div className="relative mx-auto overflow-hidden rounded-3xl border border-white/10 [container-type:inline-size]" style={{ aspectRatio: '5 / 3', width: 'min(100%, calc(min(58vh, 34rem) * 5 / 3))', background: 'linear-gradient(to top, #1e1b4b, #312e81 45%, #0ea5e9 130%)' }}>
       {/* gökyüzü: yükseldikçe kararır */}
       <div className="absolute inset-0 bg-slate-950 pointer-events-none transition-opacity duration-[1500ms]" style={{ opacity: 0.05 + ilerleme * 0.5 }} aria-hidden />
       <svg viewBox="0 0 1000 600" className="absolute inset-0 w-full h-full" aria-hidden>

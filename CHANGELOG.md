@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.65.5 (16 Kasım 2026)
+Botla gerçek ders yolundan deneme (canlı site, 30 bot, Zombi kaçışı ve Zirveye Tırmanış).
+- **Doğrulandı (canlı, gerçek yol):** oyun başlar başlamaz sahne ve bot adları görünür (eski "ilk sorunun sonucu açılınca başlar" kutusu yok); zombi katlara çıkar ("Zirvede 7, Yakalanan 4"); otomatik geçiş sayacı ("⏸ 9 sn") çalışır ve sonraki soruya kendiliğinden geçer; Zirveye Tırmanış ekibi patikada kamp kamp yürür ("Sınıfın %70'i bildi"); sihirbazda her oyunda aynı "Nasıl oynansın?" satırı.
+- **Zirve sahnesi yerleşimi:** sahne sabit en-boy oranıyla sağdaki "Nasıl oynanır" kutusunun üstüne taşıyordu; genişlik artık sütuna sığıyor.
+- **Bulunan hata (0048_tur_sirasi.sql hazır, uygulanması onay bekliyor):** ikinci oyunda soru sırası "11 / 20" gösteriyor (eski turların adımları da sayılıyor); düzeltme sıra ve toplamı yalnızca etkin turdan hesaplar. PGlite testi geçti.
+- Denenmeyenler: takım oyunları (Kule, Halat, Kale: botlar takım seçmiyor), ejderha, roket, arena, orman, hocayla yarış. Deneme verisi silindi.
+
 ## v0.65.4 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Kule şantiyesi (GSAP):** her takımın kendi şantiyesi: sabit boyutlu gerçek blok görselleri (en-boy oranı bozulmaz), vinç direği, işçi karakterler. Kule yükseldikçe kamera yukarı kayar, bloklar küçülmez. Yeni bloklar gökten düşüp zıplayarak oturur (toz ve ses), rüzgâr kuralı işleyince üst blok sallanıp uçar. Altta kameradan bağımsız yükseklik çubuğu ve takım etiketi. Final: kazanan kulenin tepesine bayrak, konfeti, kaybedenlerin işçileri alkışlar; başlık yeni kurala uydu ("Hedef: 18 blok").

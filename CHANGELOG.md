@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.18 (16 Kasım 2026)
+Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 3. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-03-yeni.sql`, SQL ile uygulandı).
+- **Bahar 3. hafta soruları:** "Tanrı'nın Varlığı ile İlgili Deliller" (ontolojik ve kozmolojik delil) sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-03.txt`.
+
 ## v0.64.17 (16 Kasım 2026)
 Şema değişikliği yok. Bahar dönemi (Din Felsefesi 2) 2. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-2-hafta-02-yeni.sql`, SQL ile uygulandı).
 - **Bahar 2. hafta soruları:** "Akıl ve İnanç İlişkisi" sunumundan Zapoot 20, Quiz 15; denetimden 0 hata ile geçti. Kaynak: `docs/soru-onerileri/yeni/bahar-02.txt`.

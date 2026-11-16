@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.64.3 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Enerji barı karakterin tepesinde (2a):** zombi, roket, ejderha ve arenada her karakterin üstünde ince enerji barı; sonuç açılınca +1/−1 ve seri 🔥'u karakterin üstünden çıkar. 40+ oyuncuda bar incelir ama kaybolmaz. Eski ayrı "⚡ Enerji" listesi kaldırıldı. (Halat v0.64.1'de, orman bir sonraki sürümde.)
+- 80 oyuncuda ejderha ve arena karakterleri kaydırmasız tek ekrana sığar (boyut ve boşluk küçüldü, arenada kalpler sayıya döner).
+
 ## v0.64.2 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Bankadan tek tek soru seçimi:** Zapoot/Oyun sihirbazında, hoca panelindeki "Yeni quiz" formunda ve sahnedeki quiz seçicide "✋ Soruları tek tek seç" eklendi: paket paket listelenir, aramayla bulunur, işaretlenen sorular (bankadaki sırasıyla) kullanılır. Elle seçim yapılmazsa eski otomatik çekim aynen sürer.

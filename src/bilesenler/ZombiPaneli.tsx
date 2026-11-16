@@ -1,3 +1,4 @@
+import { EnerjiSaglayici, KarakterEnerjisi } from './KarakterEnerjisi'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { OYUN_OLAYI } from '../lib/oyun'
@@ -95,7 +96,11 @@ export default function ZombiPaneli({ oturum, anahtar, mod }: { oturum: string; 
           </div>
         </div>
       )}
-      {buyuk && <ZombiSahnesi d={d} kapat={() => setBuyuk(false)} />}
+      {buyuk && (
+        <EnerjiSaglayici oyuncular={veri?.oyuncular}>
+          <ZombiSahnesi d={d} kapat={() => setBuyuk(false)} />
+        </EnerjiSaglayici>
+      )}
     </>
   )
 }
@@ -251,6 +256,7 @@ export function ZombiSahnesi({ d, kapat }: { d: ZombiDurumu; kapat: () => void }
               >
                 {aktif && zombi && o.bittigiSoru === d.oynanan && <Gorsel ad="efekt-yakalandi.webp" emoji="💥" className="ej-patla absolute inset-0 m-auto w-24 h-24 pointer-events-none z-10" emojiClass="ej-patla absolute inset-0 text-4xl" />}
                 {aktif && !zombi && o.durum === 'zirve' && o.bittigiSoru === d.oynanan && <Gorsel ad="efekt-kurtuldu.webp" emoji="✨" className="ej-patla absolute inset-0 m-auto w-24 h-24 pointer-events-none z-10" emojiClass="ej-patla absolute inset-0 text-4xl" />}
+                {!zombi && <KarakterEnerjisi ad={o.ad} className="absolute -top-3 left-1/2 -translate-x-1/2 w-12" />}
                 <div className={boy}>{zombi ? <Gorsel ad={`zombi-${adIndeksi(o.ad, 3)}.webp`} emoji="🧟" className={gBoy} emojiClass={boy} /> : <Gorsel ad={`ogrenci-${adIndeksi(o.ad, 8)}.webp`} emoji={karakter(o.ad)} className={gBoy} emojiClass={boy} />}</div>
                 <div className={`${ad} font-bold px-1 rounded bg-slate-950/70 whitespace-nowrap max-w-20 truncate ${zombi ? 'text-rose-300' : o.durum === 'zirve' ? 'text-amber-200' : 'text-white'}`}>{o.ad}</div>
               </div>

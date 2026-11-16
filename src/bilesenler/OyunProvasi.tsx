@@ -15,6 +15,7 @@ import { ArenaSahnesi, EjderhaSahnesi, KuleSahnesi, RoketSahnesi } from './Grafi
 import { KaleHaritaSahnesi } from './KaleHaritasi'
 import { Merdiven } from './MerdivenPaneli'
 import { HalatSahnesi } from './HalatSahnesi'
+import { EnerjiSaglayici } from './KarakterEnerjisi'
 
 const TOPLAM = 20
 const OYUNLAR_LISTESI: OyunAnahtari[] = ['orman', 'zombi', 'roket', 'ejderha', 'arena', 'kule', 'kale', 'halat', 'merdiven', 'hoca']
@@ -140,9 +141,11 @@ export default function OyunProvasi({ kapat, baslangic = 'zombi' }: { kapat: () 
     )
   }, [oyun, sorular, oyuncular, k, kapat, basari, cevapBekle])
 
+  const enerjiVerisi = useMemo(() => oyuncular.map((o) => ({ ad: o.ad, sonuc: o.sonuc.map((s, q) => (q < k ? s : null)) })), [oyuncular, k])
+
   return (
     <>
-      {sahne}
+      <EnerjiSaglayici oyuncular={enerjiVerisi}>{sahne}</EnerjiSaglayici>
       {!acik && (
         <button
           className="fixed right-2 bottom-2 z-[70] rounded-full bg-fuchsia-600/90 hover:bg-fuchsia-500 text-white text-xs font-bold px-3 py-1.5 shadow-lg"

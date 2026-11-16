@@ -17,7 +17,8 @@ import { takimBilgisi } from '../lib/takim'
 import { EJDERHA_ORANI, KAHRAMAN_CANI, ejderhaHesapla, type EjderhaDurumu } from '../lib/ejderha'
 import type { ZombiOyuncusu, ZombiSorusu } from '../lib/zombi'
 import Konfeti from './Konfeti'
-import { EnerjiSeridi, type SeritOyuncusu } from './EnerjiSeridi'
+import { type SeritOyuncusu } from './EnerjiSeridi'
+import { EnerjiSaglayici, KarakterEnerjisi } from './KarakterEnerjisi'
 import { sesCal, useOyunSesi } from '../lib/ses'
 
 type Veri = { sorular: ZombiSorusu[]; oyuncular: ZombiOyuncusu[] }
@@ -66,7 +67,6 @@ function OyunKabugu<D, V = Veri>({
     }
   })
   const [buyuk, setBuyuk] = useState(false)
-  const [enerjiAcik, setEnerjiAcik] = useState(false)
   const [veri, setVeri] = useState<V | null>(null)
 
   const yenile = useCallback(async () => {
@@ -145,19 +145,7 @@ function OyunKabugu<D, V = Veri>({
           </div>
         </div>
       )}
-      {buyuk && sahne(d, () => setBuyuk(false))}
-      {buyuk && Array.isArray((veri as { oyuncular?: unknown } | null)?.oyuncular) && ((veri as unknown as { oyuncular: SeritOyuncusu[] }).oyuncular[0]?.sonuc !== undefined) && (
-        <div className="fixed left-3 bottom-3 z-[46] flex flex-col items-start gap-1 max-w-[min(46rem,70vw)]">
-          {enerjiAcik && (
-            <div className="max-h-[24vh] overflow-hidden">
-              <EnerjiSeridi oyuncular={(veri as unknown as { oyuncular: SeritOyuncusu[] }).oyuncular} />
-            </div>
-          )}
-          <button className="ikincil-buton !py-1 !px-2 text-xs" onClick={() => setEnerjiAcik((a) => !a)} title="Oyuncuların enerji barlarını göster ya da gizle">
-            ⚡ Enerji {enerjiAcik ? '▾' : '▸'}
-          </button>
-        </div>
-      )}
+      {buyuk && <EnerjiSaglayici oyuncular={(veri as unknown as { oyuncular?: SeritOyuncusu[] } | null)?.oyuncular}>{sahne(d, () => setBuyuk(false))}</EnerjiSaglayici>}
     </>
   )
 }
@@ -260,7 +248,8 @@ export function RoketSahnesi({ d, kucult }: { d: RoketDurumu; kucult: () => void
               title={`${o.ad}: ${o.ilerleme} doğru`}
             >
               <span className="roket-iz" style={{ width: `${Math.max(1, oran * 14)}vw` }} aria-hidden />
-              <span className={`inline-block ${bitti ? 'roket-varti' : 'roket-ucus'}`}>
+              <span className={`relative inline-block ${bitti ? 'roket-varti' : 'roket-ucus'}`}>
+                <KarakterEnerjisi ad={o.ad} className="absolute -top-3 left-1/2 -translate-x-1/2 w-10" />
                 <span className="inline-block" style={{ transform: 'rotate(90deg)' }}>
                   <Gorsel ad={`roket-${adIndeksi(o.ad, 6)}.webp`} emoji={karakter(o.ad, ROKETLER)} className={n > 60 ? 'w-8 h-8' : n > 30 ? 'w-11 h-11' : 'w-14 h-14'} emojiClass={`${boy} inline-block`} />
                 </span>
@@ -514,7 +503,7 @@ export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => 
           </div>
         </div>
         <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-4">
-          <ul className="flex flex-wrap justify-center gap-x-5 gap-y-4">
+          <ul className={`flex flex-wrap justify-center ${n > 40 ? 'gap-x-2 gap-y-3' : 'gap-x-5 gap-y-4'}`}>
             {d.kahramanlar.map((h, i) => {
               const dustu = h.dustu !== null
               return (
@@ -527,7 +516,8 @@ export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => 
                   className={`relative text-center leading-none transition-opacity duration-700 ${dustu ? 'opacity-40 grayscale' : 'ejderha-kahraman'}`}
                 >
                   {!dustu && <span className="absolute -right-1 top-0 text-base sm:text-xl pointer-events-none" aria-hidden>{SILAHLAR[adIndeksi(h.ad, SILAHLAR.length) - 1]}</span>}
-                  <div className={boy}>{dustu ? '💤' : <Gorsel ad={`kahraman-${adIndeksi(h.ad, 8)}.webp`} emoji={karakter(h.ad, KAHRAMANLAR)} className={n > 80 ? 'w-8 h-8' : n > 40 ? 'w-12 h-12' : n > 20 ? 'w-16 h-16' : 'w-20 h-20'} emojiClass={boy} />}</div>
+                  {!dustu && <KarakterEnerjisi ad={h.ad} className="absolute -top-3 left-1/2 -translate-x-1/2 w-[min(100%,3.5rem)]" />}
+                  <div className={boy}>{dustu ? '💤' : <Gorsel ad={`kahraman-${adIndeksi(h.ad, 8)}.webp`} emoji={karakter(h.ad, KAHRAMANLAR)} className={n > 60 ? 'w-9 h-9' : n > 40 ? 'w-11 h-11' : n > 20 ? 'w-16 h-16' : 'w-20 h-20'} emojiClass={boy} />}</div>
                   <div className={`${adBoy} font-bold truncate mx-auto`}>{h.ad}</div>
                   <div className={n > 40 ? "text-[9px] tracking-tighter" : "text-xs tracking-tighter"}>{'❤️'.repeat(Math.max(0, h.kalan)) + '🖤'.repeat(KAHRAMAN_CANI - Math.max(0, h.kalan))}</div>
                 </li>
@@ -663,7 +653,7 @@ export function ArenaSahnesi({ d, kucult }: { d: ArenaDurumu; kucult: () => void
       </div>
       <div className="relative flex-1 min-h-0 rounded-3xl overflow-hidden arena-zemin border border-white/10 flex flex-col" style={arkaPlan('arka-arena.webp')}>
         <div className="flex-1 min-h-0 overflow-y-auto p-4">
-          <ul className="flex flex-wrap justify-center gap-x-5 gap-y-4 arena-platform rounded-[2rem] p-5 mx-auto max-w-6xl">
+          <ul className={`flex flex-wrap justify-center arena-platform rounded-[2rem] mx-auto max-w-6xl ${n > 40 ? 'gap-x-2 gap-y-3 p-3' : 'gap-x-5 gap-y-4 p-5'}`}>
             {ayaktakiler.map((o, i) => (
               <li
                 key={`${o.ad}-${i}`}
@@ -673,9 +663,10 @@ export function ArenaSahnesi({ d, kucult }: { d: ArenaDurumu; kucult: () => void
                 }}
                 className="relative text-center leading-none arena-savasci"
               >
-                <div className={boy}><Gorsel ad={`kahraman-${adIndeksi(o.ad, 8)}.webp`} emoji={karakter(o.ad, ARENA_KARAKTERLERI)} className={n > 80 ? 'w-8 h-8' : n > 40 ? 'w-10 h-10' : n > 20 ? 'w-16 h-16' : 'w-20 h-20'} emojiClass={boy} /></div>
+                <KarakterEnerjisi ad={o.ad} className="absolute -top-3 left-1/2 -translate-x-1/2 w-[min(100%,3.5rem)]" />
+                <div className={boy}><Gorsel ad={`kahraman-${adIndeksi(o.ad, 8)}.webp`} emoji={karakter(o.ad, ARENA_KARAKTERLERI)} className={n > 60 ? 'w-12 h-12' : n > 40 ? 'w-14 h-14' : n > 20 ? 'w-16 h-16' : 'w-20 h-20'} emojiClass={boy} /></div>
                 <div className={`${adBoy} font-bold truncate mx-auto`}>{o.ad}</div>
-                <div className="text-xs">{'❤️'.repeat(Math.max(0, o.kalan)) + '🖤'.repeat(d.can - Math.max(0, o.kalan))}</div>
+                <div className={n > 40 ? 'text-[10px] font-bold tabular-nums' : 'text-xs'}>{n > 40 ? `❤️ ${Math.max(0, o.kalan)}` : '❤️'.repeat(Math.max(0, o.kalan)) + '🖤'.repeat(d.can - Math.max(0, o.kalan))}</div>
               </li>
             ))}
           </ul>

@@ -15,6 +15,7 @@ import { ArenaSahnesi, EjderhaSahnesi, KuleSahnesi, RoketSahnesi } from './Grafi
 import { KaleHaritaSahnesi } from './KaleHaritasi'
 import { Merdiven } from './MerdivenPaneli'
 import { HalatSahnesi } from './HalatSahnesi'
+import { HocaYarisSahnesi } from './HocaYarisSahnesi'
 import { EnerjiSaglayici } from './KarakterEnerjisi'
 
 const TOPLAM = 20
@@ -122,24 +123,16 @@ export default function OyunProvasi({ kapat, baslangic = 'zombi' }: { kapat: () 
     const hocaR = tohumluRastgele(7)
     let hoca = 0
     let sinif = 0
+    let son: { hoca_dogru: boolean; sinif_orani: number | null } | null = null
     for (let i = 0; i < k; i++) {
-      if (hocaR() < basari) hoca++
+      const hocaDogru = hocaR() < basari
+      if (hocaDogru) hoca++
       const oran = oyuncular.filter((o) => o.sonuc[i] === 1).length / Math.max(1, oyuncular.length)
       if (oran >= 0.6) sinif++
+      son = { hoca_dogru: hocaDogru, sinif_orani: Math.round(oran * 100) }
     }
-    return (
-      <div className="fixed inset-0 z-40 bg-slate-950/95 flex items-center justify-center p-6">
-        <div className="cam-panel rounded-3xl px-10 py-8 text-center space-y-3">
-          <p className="text-6xl">🥊</p>
-          <p className="font-display font-extrabold text-6xl tabular-nums">
-            Hoca {hoca} <span className="text-slate-500">–</span> {sinif} Sınıf
-          </p>
-          <p className="text-slate-300">
-            {k >= TOPLAM ? (sinif > hoca ? 'Sınıf hocayı yendi!' : sinif < hoca ? 'Hoca bu sefer kazandı' : 'Berabere') : `Soru ${k} / ${TOPLAM}`}
-          </p>
-        </div>
-      </div>
-    )
+    const hocaVeri = oyuncular.map((o) => ({ ad: o.ad, sonuc: o.sonuc.map((s, q) => (q < k ? s : null)) }))
+    return <HocaYarisSahnesi hoca={hoca} sinif={sinif} son={son} oynanan={k} toplam={TOPLAM} oyuncular={hocaVeri} bitti={k >= TOPLAM} kapat={kapat} />
   }, [oyun, sorular, oyuncular, k, kapat, basari, cevapBekle])
 
   const enerjiVerisi = useMemo(() => oyuncular.map((o) => ({ ad: o.ad, sonuc: o.sonuc.map((s, q) => (q < k ? s : null)) })), [oyuncular, k])

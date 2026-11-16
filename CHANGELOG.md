@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.6 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Hocayla yarış büyük sahne ve final (2e):** iki rakip, büyük skor, sonuç açılınca yumruk animasyonu; yarış bitince "Sınıf hocayı yendi!" / "Hoca bu sefer kazandı" / "Berabere" ve sınıfa en çok katkı veren 5 öğrenci. Perdedeki küçük skor kutusuna ⛶ düğmesi eklendi. Daha önce final ekranı yalnızca provada taslak olarak vardı, gerçek bileşende yoktu; şimdi ikisi aynı bileşeni kullanır. Provada 30 ve 80 oyuncuyla denendi.
+
 ## v0.64.5 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Kale haritası görünümü (2d):** toprak dokulu üç halka (çim, toprak, kaya), her dolu hücrede takım renginde çadır, dalgalanan bayrak ve asker, hücre sahibinin adı; ortada hendekli, surlu, dört kuleli ayrıntılı kale (kuşatan takımın bayrağı çekilir). Durum paneli küçüldü, harita genişledi. Kale görseli dosyası olmadığı için kale SVG ile çizildi.

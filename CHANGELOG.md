@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.65.6 (16 Kasım 2026)
+Veritabanı değişikliği yok. Botla gerçek yoldan ikinci tur (Ejderha, Roket, Arena, Orman, Kule, Halat).
+- **Halat sahnesinde karakterler görünmüyordu (gerçek derste bulundu):** önizleme sahnesi (z-40), takım panelinin z-30 sarmalayıcısı içindeki gerçek halat sahnesinin üstünde kalıyor ve boş halatı çiziyordu. Önizleme kendi z-20 katmanına alındı; katılımcı yokken yalnızca "Öğrenciler derse katıldıkça…" notu çıkar.
+- **Kule yarışı:** alttaki kontrol çubuğu ortadaki takımın etiketini kapatıyordu; sahne çubuğun üstünde bitiyor.
+- **Bot:** `--takim N` ile botlar takım seçer ve hoca oyunu değiştirip takım üyelikleri silinince 6 saniyede bir yeniden seçer.
+- **Doğrulandı (canlı, 30 bot):** Ejderha (ejderha canı düşer, kahramanlar saldırır), Roket, Arena, Orman, Kule (3 takım, bloklar düşer). Soru sırası artık turun kendi sayısı (3 / 10).
+
 ## v0.65.5 (16 Kasım 2026)
 Botla gerçek ders yolundan deneme (canlı site, 30 bot, Zombi kaçışı ve Zirveye Tırmanış).
 - **Doğrulandı (canlı, gerçek yol):** oyun başlar başlamaz sahne ve bot adları görünür (eski "ilk sorunun sonucu açılınca başlar" kutusu yok); zombi katlara çıkar ("Zirvede 7, Yakalanan 4"); otomatik geçiş sayacı ("⏸ 9 sn") çalışır ve sonraki soruya kendiliğinden geçer; Zirveye Tırmanış ekibi patikada kamp kamp yürür ("Sınıfın %70'i bildi"); sihirbazda her oyunda aynı "Nasıl oynansın?" satırı.

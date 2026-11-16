@@ -5,6 +5,7 @@
 // Kullanım:
 //   node scripts/bot.mjs --oturum <oturum-uuid> [--n 30] [--basari 0.6] [--gecikme 1-15]
 //   node scripts/bot.mjs --kod 123456 [--n 30] ...
+//   --takim 4   takım oyunları için botları 4 takıma böler (lobi açılıp takım sayısı ayarlanınca kendiliğinden seçer)
 //
 // Önce panelde adı "TEST-BOT" ile başlayan bir ders (şube) açıp dersi başlatın. Gerçek derslere cevap verilmez:
 // doğru şıkkı veren test_dogru_index işlevi yalnızca TEST-BOT derslerinde çalışır.
@@ -28,6 +29,7 @@ const BASARI = Math.max(0, Math.min(1, Number(arg('basari', 0.6))))
 const [GEC_MIN, GEC_MAX] = String(arg('gecikme', '1-15')).split('-').map(Number)
 let oturum = arg('oturum', null)
 const kod = arg('kod', null)
+const TAKIM = Number(arg('takim', 0))
 
 const sb = createClient(AYAR.supabaseUrl, AYAR.supabaseKey, { auth: { persistSession: false } })
 
@@ -42,6 +44,7 @@ const bot = Array.from({ length: N }, (_, i) => ({
   ad: i < ADLAR.length ? ADLAR[i] : `${ADLAR[i % ADLAR.length]} ${Math.floor(i / ADLAR.length) + 1}`,
   cihaz: randomUUID(),
   son: null,
+  takimTamam: false,
 }))
 
 const bekle = (ms) => new Promise((r) => setTimeout(r, ms))
@@ -69,6 +72,29 @@ async function katil() {
   }
   log(`${tamam}/${N} sanal öğrenci katıldı`)
   if (tamam === 0) throw new Error('hiçbiri katılamadı (oturum bitti mi?)')
+}
+
+let takimKuruldu = 0
+async function takimlariKur() {
+  if (!TAKIM) return
+  const bekleyen = bot.filter((b) => !b.takimTamam)
+  if (bekleyen.length === 0) return
+  let hata = null
+  for (let i = 0; i < bekleyen.length; i += 10) {
+    await Promise.all(
+      bekleyen.slice(i, i + 10).map(async (b) => {
+        const k = bot.indexOf(b) % TAKIM + 1
+        const { data, error } = await sb.rpc('takim_sec', { p_session: oturum, p_cihaz: b.cihaz, p_takim: k })
+        if (error || data?.hata) hata = error?.message ?? data?.hata
+        else b.takimTamam = true
+      }),
+    )
+  }
+  const tamam = bot.filter((b) => b.takimTamam).length
+  if (tamam !== takimKuruldu) {
+    takimKuruldu = tamam
+    log(`takım seçimi: ${tamam}/${bot.length}` + (hata && tamam < bot.length ? ` (bekleniyor: ${hata})` : ''))
+  }
 }
 
 let uyarildi = false
@@ -105,10 +131,14 @@ async function soruyuOyna(adim, kalanMs) {
   log(`soru "${String(adim.soru ?? '').slice(0, 50)}": ${sonuc.cevap} cevap, ${sonuc.dogru} doğru, ${sonuc.hata} hata`)
 }
 
+let dongu_no = 0
 async function dongu() {
   let sonAdim = null
   let bos = 0
   while (true) {
+    // Hoca oyunu değiştirince takım üyelikleri silinir; botlar her 6 saniyede takımlarını yeniden seçer (takim_sec yinelenebilir)
+    if (TAKIM && ++dongu_no % 6 === 0) bot.forEach((b) => (b.takimTamam = false))
+    await takimlariKur()
     const { data: d, error } = await sb.rpc('ders_durumu', { p_session: oturum })
     if (error || !d || d.hata) {
       if (++bos > 5) throw new Error('ders durumu okunamadı')

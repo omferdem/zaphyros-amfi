@@ -120,7 +120,7 @@ export function KuleSantiyesi({ d, kucult }: { d: KuleDurumu; kucult: () => void
   const genislik = `${Math.min(24, 92 / Math.max(1, satirlar.length))}%`
 
   return (
-    <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
+    <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 pb-24 gap-3">
       {d.bitti && <Konfeti />}
       <div className="flex items-center gap-4 flex-wrap">
         <h2 className="text-2xl sm:text-3xl font-display font-extrabold kule-baslik">🏗️ Kule Yarışı</h2>

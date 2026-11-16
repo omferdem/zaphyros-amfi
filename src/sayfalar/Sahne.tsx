@@ -1489,6 +1489,7 @@ function SoruSahnesi({
       <>
         <OyunOnizleme oyun={oyunKilitli.oyun} adlar={oyunKilitli.adlar} demo={false} />
         <YorumBandi />
+        {durum?.final_turu && !sonuc && <FinalTuruDuyurusu />}
         {!sonuc && kalan !== null && kalan > 0 && kalan <= 5000 && <div className="pointer-events-none fixed inset-0 z-[56] gerilim-nabiz" aria-hidden />}
         <div className="fixed top-2 right-2 z-[60] max-w-[96vw] cam-panel rounded-2xl p-2 opacity-70 hover:opacity-100 transition-opacity">{araclar}</div>
         {soruGoster && (
@@ -1548,6 +1549,7 @@ function SoruSahnesi({
   return (
     <main className="min-h-screen flex flex-col p-5 lg:p-8 gap-5">
       {sonuc && durum?.dagilim && !herkesYanlis && <Konfeti adet={40} />}
+      {durum?.final_turu && !sonuc && <FinalTuruDuyurusu />}
       <header className="flex items-center gap-4">
         <p className="text-sm font-mono uppercase tracking-widest text-fuchsia-300">
           🎯 Soru {durum ? `${durum.sira} / ${durum.toplam}` : ''}
@@ -1822,6 +1824,15 @@ function PuanTablosu({ oturumId, kapat }: { oturumId: string; kapat: () => void 
           Kapat
         </button>
       </div>
+    </div>
+  )
+}
+
+/** Final turunda (oyunun son 3 sorusu) soru açılırken perdede büyük duyuru: doğru cevap puanı iki katıdır. */
+function FinalTuruDuyurusu() {
+  return (
+    <div className="pointer-events-none fixed left-1/2 top-28 -translate-x-1/2 z-[57] pop">
+      <p className="rounded-full bg-gradient-to-r from-amber-400 to-rose-500 text-slate-950 px-7 py-2 font-display font-extrabold text-2xl sm:text-3xl shadow-2xl animate-pulse">🔥 FİNAL TURU: puanlar ×2 🔥</p>
     </div>
   )
 }

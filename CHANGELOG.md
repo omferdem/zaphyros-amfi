@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.65.18 (16 Kasım 2026)
+`0049_final_turu.sql` yazıldı ve PGlite testinden geçti; canlıya henüz uygulanmadı (onay bekliyor).
+- **Final turu ×2:** Zapoot ve oyun turlarında (en az 6 soruluk tur) son 3 soruda doğru cevabın puanı iki katı olur; geride kalanın geri dönmesi için. `responses.puan` üst sınırı 2000'e çıkar, `ozel.final_turu`, `cevap_ver` ve `ders_durumu.adim.final_turu` güncellenir. Normal ders soruları ve kısa turlar etkilenmez.
+- Perdede soru açılırken "🔥 FİNAL TURU: puanlar ×2 🔥" duyurusu, öğrenci telefonunda "FİNAL TURU ×2 puan" etiketi. Migration uygulanana kadar ikisi de görünmez, puanlama eskisi gibi sürer.
+
 ## v0.65.17 (16 Kasım 2026)
 Veritabanı değişikliği yok (iki veri güncellemesi SQL ile yapıldı). v0.65 görevinin kalan maddeleri.
 - **Soru deposu:** yeni Zapoot sorularının zorluğu paket içinde bloom düzeyi ve metin uzunluğuna göre %40 kolay, %40 orta, %20 zor olarak yeniden atandı (216 / 216 / 108). Yeni sorulardaki çeldirici dolgu kuyrukları ("ve ... maz/mez" ile biten uzatmalar, 104 soruda) kaldırıldı; cümleler tam kalıyor, doğru şıkkın en uzun olma oranı %25,9'dan %26,9'a çıktı (şansa yakın).

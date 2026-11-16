@@ -155,6 +155,8 @@ export interface DersDurumu {
     soru_durum?: 'acik' | 'sonuc' | null
     kalan_ms?: number | null
     cevap_sayisi?: number
+    /** Oyun turunun son 3 sorusu: doğru cevabın puanı iki katı */
+    final_turu?: boolean
     dogru_index?: number | null
     dagilim?: number[] | null
     /** Yarı yarıya jokeri: telefonda silinen şıkların sırası */

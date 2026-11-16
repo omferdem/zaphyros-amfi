@@ -1,6 +1,6 @@
 -- ZAPEDU kurulum SQL'i (bu dosya otomatik üretilir, elle düzenleme; kaynağı supabase/migrations)
 -- Yeni bir Supabase projesinde SQL Editor'e bu dosyanın tamamını yapıştırıp bir kez çalıştır.
--- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql, 0019_oyun_adimi.sql, 0020_yoklama_haftalari.sql, 0021_pencere_6sn.sql, 0022_oturum_quizi.sql, 0023_acik_uclu_zombi.sql, 0024_kumanda_notu.sql, 0025_acik_uclu_sure.sql, 0026_devam_serisi.sql, 0027_hoca_davetleri.sql, 0028_etkinlik_fotograflari.sql, 0029_kod_yoklama_vermez.sql, 0030_sabit_ders_kodu.sql, 0031_kumanda_istegi.sql, 0032_slayt_gorseli_herkese.sql, 0033_slayt_gorseli_telefon_modu.sql, 0034_not_defteri.sql, 0035_kumanda_kale.sql, 0036_oyun_turlari.sql, 0037_katki_sil_hoca_yaris.sql, 0038_puan_turu_lobi.sql, 0039_takim_soru_ozeti.sql, 0040_kumanda_soru_sayisi.sql, 0041_takim_oyuncu_sonuclari.sql, 0042_soru_jokerleri.sql, 0043_kumanda_orman.sql, 0044_hizli_cevap.sql, 0045_ekran_goruntusu_kumanda_notu.sql, 0046_takim_on.sql, 0047_test_botu.sql, 0048_tur_sirasi.sql
+-- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql, 0019_oyun_adimi.sql, 0020_yoklama_haftalari.sql, 0021_pencere_6sn.sql, 0022_oturum_quizi.sql, 0023_acik_uclu_zombi.sql, 0024_kumanda_notu.sql, 0025_acik_uclu_sure.sql, 0026_devam_serisi.sql, 0027_hoca_davetleri.sql, 0028_etkinlik_fotograflari.sql, 0029_kod_yoklama_vermez.sql, 0030_sabit_ders_kodu.sql, 0031_kumanda_istegi.sql, 0032_slayt_gorseli_herkese.sql, 0033_slayt_gorseli_telefon_modu.sql, 0034_not_defteri.sql, 0035_kumanda_kale.sql, 0036_oyun_turlari.sql, 0037_katki_sil_hoca_yaris.sql, 0038_puan_turu_lobi.sql, 0039_takim_soru_ozeti.sql, 0040_kumanda_soru_sayisi.sql, 0041_takim_oyuncu_sonuclari.sql, 0042_soru_jokerleri.sql, 0043_kumanda_orman.sql, 0044_hizli_cevap.sql, 0045_ekran_goruntusu_kumanda_notu.sql, 0046_takim_on.sql, 0047_test_botu.sql, 0048_tur_sirasi.sql, 0049_final_turu.sql
 
 -- ===========================================================================
 -- 0001_saglik.sql
@@ -6873,6 +6873,166 @@ as $$
         'tur', a.tur,
         'sira', a.no,
         'toplam', a.toplam,
+        'sunum', p.ad,
+        'sayfa_no', a.sayfa_no,
+        'sayfa_sayisi', p.sayfa_sayisi,
+        'metin', case when a.tur = 'slayt' then p.metinler ->> (a.sayfa_no - 1) end,
+        'gorsel', case when s.telefon_modu and a.tur = 'slayt' and p.gorseller_hazir
+          then p.subject_id::text || '/' || p.id::text || '/' || a.sayfa_no::text end
+      ) || case when a.tur = 'soru' then (
+        select jsonb_build_object(
+          'soru', q.soru,
+          'secenekler', to_jsonb(ozel.secenekler(s.id, q.id)),
+          'elenen', (select j.veri -> 'elenen' from public.soru_jokerleri j where j.session_id = s.id and j.step_id = a.id and j.tur = 'yarim'),
+          'sure_sn', q.sure_sn,
+          'soru_durum', s.soru_durum,
+          'kalan_ms', case when s.soru_durum = 'acik'
+            then greatest(0, ceil(extract(epoch from (s.soru_basladi + make_interval(secs => q.sure_sn) - clock_timestamp())) * 1000))::integer
+            end,
+          'cevap_sayisi', (select count(*) from public.responses r where r.session_id = s.id and r.step_id = a.id),
+          'dogru_index', case when s.soru_durum = 'sonuc' then array_position(ozel.secenekler(s.id, q.id), q.dogru) - 1 end,
+          'dagilim', case when s.soru_durum = 'sonuc' then (
+            select jsonb_agg((select count(*) from public.responses r where r.session_id = s.id and r.step_id = a.id and r.secim = i - 1) order by i)
+            from generate_series(1, cardinality(ozel.secenekler(s.id, q.id))) as i
+          ) end
+        )
+        from public.questions q where q.id = a.question_id
+      )
+      when a.tur in ('fikir', 'oylama', 'video') then ozel.etkinlik(s.id, a.id)
+      else '{}'::jsonb end
+      from (
+        select st.*, row_number() over (order by st.sira, st.id) as no, count(*) over () as toplam
+        from public.lesson_steps st
+        where st.lesson_id = s.lesson_id
+          -- Oyun turlarında sıra ve toplam yalnızca etkin turun adımlarını sayar (eski turların adımları saymaz)
+          and st.tur_id is not distinct from (select x.tur_id from public.lesson_steps x where x.id = s.aktif_adim)
+      ) a
+      left join public.presentations p on p.id = a.presentation_id
+      where a.id = s.aktif_adim
+    )
+  )
+  from public.sessions s
+  join public.courses c on c.id = s.course_id
+  where s.id = p_session;
+$$;
+
+-- ===========================================================================
+-- 0049_final_turu.sql
+-- ===========================================================================
+
+-- 0049: Final turu: oyun turunun son 3 sorusunda puan x2
+--
+-- Geride kalana geri dönüş şansı: Zapoot ve oyun turlarında (en az 6 soruluk tur) son 3 soruda doğru cevabın puanı iki katı olur.
+-- * ozel.final_turu(adim): bu adım, kendi turunun son 3 sorusundan biri mi (turu olmayan normal ders soruları hiçbir zaman değil).
+-- * responses.puan üst sınırı 2000'e çıkar (tek soru en çok 2000).
+-- * cevap_ver: final turunda doğru cevap puanı x2 (yanlış 0 kalır).
+-- * ozel.durum: adim.final_turu alanı; perde "FİNAL TURU x2" duyurur, telefon etiket gösterir.
+
+-- Final turunda tek soru 2000 puana çıkabilir
+alter table public.responses drop constraint if exists responses_puan_check;
+alter table public.responses add constraint responses_puan_check check (puan between 0 and 2000);
+
+create function ozel.final_turu(p_adim uuid)
+returns boolean
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select coalesce((
+    with t as (
+      select st.id, row_number() over (order by st.sira, st.id) as no, count(*) over () as toplam
+      from public.lesson_steps st
+      where st.tur_id = (select x.tur_id from public.lesson_steps x where x.id = p_adim)
+    )
+    select t.toplam >= 6 and t.no > t.toplam - 3 from t where t.id = p_adim
+  ), false);
+$$;
+
+revoke all on function ozel.final_turu(uuid) from public;
+
+create or replace function public.cevap_ver(p_session uuid, p_cihaz text, p_secim integer)
+returns jsonb
+language plpgsql
+volatile
+security definer
+set search_path = ''
+as $$
+declare
+  r          record;
+  v_ms       integer;
+  v_secenek  text[];
+  v_dogru    boolean;
+  v_puan     integer;
+begin
+  if p_cihaz is null or p_cihaz !~ '^[0-9A-Za-z-]{8,64}$' then
+    return jsonb_build_object('hata', 'cihaz_gecersiz');
+  end if;
+
+  select s.aktif_adim, s.soru_durum, s.soru_basladi, s.bitti, q.id as soru, q.dogru, q.sure_sn
+    into r
+  from public.sessions s
+  join public.lesson_steps st on st.id = s.aktif_adim and st.tur = 'soru'
+  join public.questions q on q.id = st.question_id
+  where s.id = p_session;
+
+  if not found then
+    return jsonb_build_object('hata', 'soru_yok');
+  end if;
+  v_ms := floor(extract(epoch from (clock_timestamp() - r.soru_basladi)) * 1000)::integer;
+  -- Ağ gecikmesi için 1,5 saniye pay
+  if r.bitti is not null or r.soru_durum is distinct from 'acik' or v_ms > r.sure_sn * 1000 + 1500 then
+    return jsonb_build_object('hata', 'sure_bitti');
+  end if;
+  if ozel.oyuncu_adi(p_session, p_cihaz) is null then
+    return jsonb_build_object('hata', 'kimlik_yok');
+  end if;
+
+  v_secenek := ozel.secenekler(p_session, r.soru);
+  if p_secim is null or p_secim < 0 or p_secim >= cardinality(v_secenek) then
+    return jsonb_build_object('hata', 'secim_gecersiz');
+  end if;
+
+  v_dogru := v_secenek[p_secim + 1] = r.dogru;
+  v_puan := case when v_dogru
+    then 1000 - round(500.0 * least(greatest(v_ms, 0), r.sure_sn * 1000) / (r.sure_sn * 1000))::integer
+    else 0 end;
+  -- Final turu: oyun turunun son 3 sorusunda (tur en az 6 soruysa) doğru cevabın puanı iki katıdır
+  if v_dogru and ozel.final_turu(r.aktif_adim) then
+    v_puan := v_puan * 2;
+  end if;
+
+  insert into public.responses (session_id, step_id, question_id, cihaz_id, secim, dogru, puan, sure_ms)
+  values (p_session, r.aktif_adim, r.soru, p_cihaz, p_secim, v_dogru, v_puan, greatest(v_ms, 0))
+  on conflict do nothing;
+  if not found then
+    return jsonb_build_object('hata', 'zaten_cevapladin');
+  end if;
+  return jsonb_build_object('durum', 'tamam');
+end;
+$$;
+
+create or replace function ozel.durum(p_session uuid)
+returns jsonb
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select jsonb_build_object(
+    'ders', c.ad || coalesce(' · ' || nullif(btrim(c.sube), ''), ''),
+    'baslik', s.baslik,
+    'bitti', s.bitti is not null,
+    'yoklama_acik', s.yoklama_acik and s.bitti is null,
+    'telefon_modu', s.telefon_modu,
+    'ekran_goruntusu', s.ekran_goruntusu,
+    'adim', (
+      select jsonb_build_object(
+        'id', a.id,
+        'tur', a.tur,
+        'sira', a.no,
+        'toplam', a.toplam,
+        'final_turu', (a.tur_id is not null and a.toplam >= 6 and a.no > a.toplam - 3),
         'sunum', p.ad,
         'sayfa_no', a.sayfa_no,
         'sayfa_sayisi', p.sayfa_sayisi,

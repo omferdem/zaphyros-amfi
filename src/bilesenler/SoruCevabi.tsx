@@ -158,6 +158,7 @@ export default function SoruCevabi({ oturum, adim, yoklamali }: { oturum: string
         <div className="min-w-0">
           <span className="font-mono text-[11px] text-ze-pink font-bold uppercase">
             Soru {adim.sira} / {adim.toplam} · Hızlı yarışma
+            {adim.final_turu && <b className="ml-2 rounded-full bg-amber-400 text-slate-950 px-2 py-0.5">🔥 FİNAL TURU ×2 puan</b>}
           </span>
           <h1 className="font-display font-bold text-base leading-snug whitespace-pre-line">{adim.soru}</h1>
         </div>

@@ -30,7 +30,7 @@ interface Nokta {
   y: number
 }
 
-export default function ZirveSahnesi({ d, sonSonuc, jokerler, sonOran }: { d: MerdivenDurumu; sonSonuc: 'cikti' | 'dustu' | 'joker' | null; jokerler?: SoruJokerleri; sonOran: number | null }) {
+export default function ZirveSahnesi({ d, sonSonuc, jokerler, sonOran, oyuncular }: { d: MerdivenDurumu; sonSonuc: 'cikti' | 'dustu' | 'joker' | null; jokerler?: SoruJokerleri; sonOran: number | null; oyuncular?: { ad: string; sonuc: (1 | 0 | -1 | null)[] }[] }) {
   const n = Math.max(1, d.toplam)
   useOyunSesi(d.gecmis.length, d.kazandi, true, 'merdiven')
   const yolRef = useRef<SVGPathElement>(null)
@@ -143,6 +143,16 @@ export default function ZirveSahnesi({ d, sonSonuc, jokerler, sonOran }: { d: Me
   }, [giris])
 
   const ilerleme = d.basamak / n
+  // Ekip: en çok doğrusu olan 5 öğrenci; son soruda doğru bilen ipi çeker (+1), bilemeyen ipte sallanır
+  const ekip = useMemo(() => {
+    const liste = oyuncular ?? []
+    let son = -1
+    for (const o of liste) for (let i = o.sonuc.length - 1; i > son; i--) if (o.sonuc[i] !== null && o.sonuc[i] !== undefined) { son = i; break }
+    return [...liste]
+      .map((o) => ({ ad: o.ad, dogru: o.sonuc.filter((x) => x === 1).length, son: son >= 0 ? (o.sonuc[son] ?? null) : null }))
+      .sort((a, b) => b.dogru - a.dogru || a.ad.localeCompare(b.ad, 'tr'))
+      .slice(0, 5)
+  }, [oyuncular])
   const kar = useMemo(() => Array.from({ length: 48 }, (_, i) => ({ sol: (i * 37) % 100, gecikme: -((i * 0.73) % 6), sure: 5 + ((i * 7) % 5), boy: 3 + (i % 4) })), [])
   const karSayisi = Math.round(10 + ilerleme * 38)
   const guvenliKamp = (b: number) => b % GUVENLI_ARALIK === 0
@@ -200,8 +210,13 @@ export default function ZirveSahnesi({ d, sonSonuc, jokerler, sonOran }: { d: Me
               </span>
             )}
             <div className="flex items-end -space-x-[1.2cqw]">
-              {[1, 2, 3, 4, 5].map((k) => (
-                <Gorsel key={k} ad={`ogrenci-${k}.webp`} emoji="🧗" className="w-[5cqw] h-[5cqw] drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]" emojiClass="text-[3cqw]" />
+              {(ekip.length > 0 ? ekip : [1, 2, 3, 4, 5].map((k) => ({ ad: '', dogru: 0, son: null as 1 | 0 | -1 | null, k }))).map((o, i) => (
+                <div key={`${o.ad}-${i}`} className={`relative flex flex-col items-center ${o.son !== null && o.son !== 1 ? 'opacity-60 rotate-[-8deg]' : ''}`}>
+                  {o.son === 1 && sonSonuc && <span className="absolute -top-[1.8cqw] text-[1.4cqw] font-extrabold text-emerald-300 drop-shadow">+1</span>}
+                  {o.son !== null && o.son !== 1 && sonSonuc && <span className="absolute -top-[1.8cqw] text-[1.4cqw]">😵</span>}
+                  <Gorsel ad={`ogrenci-${(i % 5) + 1}.webp`} emoji="🧗" className="w-[5cqw] h-[5cqw] drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]" emojiClass="text-[3cqw]" />
+                  {o.ad && <span className="max-w-[7cqw] truncate text-[1cqw] font-bold leading-none rounded bg-black/55 px-1">{o.ad}</span>}
+                </div>
               ))}
             </div>
             <span className="mt-0.5 rounded-full bg-black/60 border border-white/15 px-2 text-[1.4cqw] font-bold">Sınıf · {d.basamak}. kamp</span>

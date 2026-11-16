@@ -20,7 +20,7 @@ import Cizim, { type CizimModu } from '../bilesenler/Cizim'
 import { dengeliSec, havuzSirasinaDiz, sonSorulanlar, turuKaydet } from '../lib/soruSec'
 import PerdeNotu from '../bilesenler/PerdeNotu'
 import { oyunuAc, TAKIM_SECILEBILIR } from '../lib/oyunAc'
-import { zorlukBekleyenAl, zorlukYaz } from '../lib/zorluk'
+import { zorlukBekleyenAl, zorlukBekleyenAyarla, zorlukYaz } from '../lib/zorluk'
 import YorumBandi, { yorumYayinla } from '../bilesenler/YorumBandi'
 import { sinifYorumlari } from '../lib/yorum'
 import OyunProvasi from '../bilesenler/OyunProvasi'
@@ -52,6 +52,8 @@ interface KumandaIstegi {
   sure: number
   /** Oynanacak soru sayısı (kumandadan; boşsa 20) */
   adet?: number
+  /** Oyun zorluğu (kolay, orta, zor) */
+  zorluk?: string
   t: number
 }
 
@@ -565,6 +567,7 @@ export default function Sahne() {
         // Kumanda isteğinde grup sayısı `sure` alanında taşınır (2-6; başka değer varsayılan grup sayısı demektir)
         const secilen = havuzSirasinaDiz(dengeliSec([{ ad: grup.ad, sorular: grup.sorular }], Math.min(i.adet ?? 20, grup.sorular.length), (s) => s.id, sonSorulanlar(oturumId)), grup.sorular)
         turuKaydet(oturumId, secilen.map((s) => s.id))
+        zorlukBekleyenAyarla(i.zorluk === 'kolay' || i.zorluk === 'zor' ? i.zorluk : 'orta')
         await kahootaGit(grup.ad, secilen, mod, i.sure >= 2 && i.sure <= 10 ? i.sure : null)
       } else {
         const secilenQ = havuzSirasinaDiz(dengeliSec([{ ad: grup.ad, sorular: grup.sorular }], Math.min(i.adet ?? 20, grup.sorular.length), (s) => s.id, sonSorulanlar(oturum.course_id)), grup.sorular)

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import { GRUPLU_OYUNLAR, GRUP_SAYILARI } from '../lib/oyunAc'
+import { ZORLUKLAR, ZORLUK_OYUNLARI, type Zorluk } from '../lib/zorluk'
 import { adaGoreHafta, paketTuru } from '../lib/gecis'
 
 interface Paket {
@@ -28,6 +29,7 @@ export default function KumandaBaslat({ oturum, anahtar }: { oturum: string; ana
   const [mod, setMod] = useState('oneri')
   const [grup, setGrup] = useState(3)
   const [adet, setAdet] = useState(20)
+  const [zorluk, setZorluk] = useState<Zorluk>('orta')
   const [bilgi, setBilgi] = useState<string | null>(null)
   const [mesgul, setMesgul] = useState(false)
 
@@ -109,6 +111,16 @@ export default function KumandaBaslat({ oturum, anahtar }: { oturum: string; ana
               </div>
             )}
           </div>
+          {ZORLUK_OYUNLARI.includes(mod as OyunAnahtari) && (
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="text-xs font-bold text-slate-300">Zorluk</span>
+              {ZORLUKLAR.map((z) => (
+                <button key={z.anahtar} onClick={() => setZorluk(z.anahtar)} className={`rounded-full border px-2.5 py-1 text-xs ${zorluk === z.anahtar ? 'border-emerald-300 bg-emerald-500/25 font-bold' : 'border-white/10 bg-white/5'}`}>
+                  {z.ad}
+                </button>
+              ))}
+            </div>
+          )}
           <div className="flex flex-wrap items-center gap-1.5">
             <span className="text-xs font-bold text-slate-300">Kaç soru?</span>
             {[10, 20, 30, 40].map((n) => (
@@ -125,7 +137,7 @@ export default function KumandaBaslat({ oturum, anahtar }: { oturum: string; ana
                 <button
                   disabled={mesgul}
                   className="w-full text-left rounded-xl border border-white/10 bg-white/5 p-3 active:scale-[0.99]"
-                  onClick={() => istekGonder({ tur: 'kahoot', paket: p.ad, mod, adet, sure: GRUPLU_OYUNLAR.includes(mod as OyunAnahtari) ? grup : 0 }, `"${p.ad}" başlatılıyor (${Math.min(adet, p.sayi)} soru).`)}
+                  onClick={() => istekGonder({ tur: 'kahoot', paket: p.ad, mod, adet, zorluk: ZORLUK_OYUNLARI.includes(mod as OyunAnahtari) ? zorluk : 'orta', sure: GRUPLU_OYUNLAR.includes(mod as OyunAnahtari) ? grup : 0 }, `"${p.ad}" başlatılıyor (${Math.min(adet, p.sayi)} soru).`)}
                 >
                   <b className="block text-sm">{p.ad}</b>
                   <span className="text-xs text-slate-400">{p.sayi} soru</span>

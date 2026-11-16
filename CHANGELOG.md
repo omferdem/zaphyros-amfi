@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.65.19 (16 Kasım 2026)
+`0050_kumanda_zorluk.sql` yazıldı ve PGlite testinden geçti; canlıya henüz uygulanmadı (onay bekliyor).
+- **Kumandadan zorluk:** telefon kumandasında oyun başlatırken 🌱 Kolay / ⚖ Orta / 🔥 Zor satırı (zorluk seçilebilen oyunlarda). `kumanda_istek` zorluğu taşır ve doğrular; perde isteği alınca zorluğu oyunun başında uygular. Migration uygulanana kadar kumandadan seçilen zorluk reddedilir (istek geçersiz sayılır); bu yüzden önce migration uygulanmalı.
+- **Kule vinç halatı:** düşen blok artık vinç halatına bağlı iner (halat ve kanca blokla birlikte uzar, oturunca kalkar).
+- **Zirveye Tırmanış ekibi gerçek öğrencilerle:** ekipte en çok doğrusu olan 5 öğrenci adıyla görünür; son soruda doğru bilen "+1" ile ipi çeker, bilemeyen 😵 ile ipte sallanır.
+- Bu üçü canlıda botla denenmedi.
+
 ## v0.65.18 (16 Kasım 2026)
 `0049_final_turu.sql` PGlite testinden geçti ve apply_migration ile canlıya uygulandı.
 - **Final turu ×2:** Zapoot ve oyun turlarında (en az 6 soruluk tur) son 3 soruda doğru cevabın puanı iki katı olur; geride kalanın geri dönmesi için. `responses.puan` üst sınırı 2000'e çıkar, `ozel.final_turu`, `cevap_ver` ve `ders_durumu.adim.final_turu` güncellenir. Normal ders soruları ve kısa turlar etkilenmez.

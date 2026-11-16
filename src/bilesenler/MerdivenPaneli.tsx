@@ -32,12 +32,17 @@ export default function MerdivenPaneli({ oturum, anahtar, mod, dugme = true }: {
 
   const [jokerDurumu, setJokerDurumu] = useState<{ kullanilan: string[]; seyirci: number[] | null }>({ kullanilan: [], seyirci: null })
   const [jokerHata, setJokerHata] = useState<string | null>(null)
+  // Ekipteki öğrencilerin son sorudaki sonucu (ipi çekenler ve sallananlar)
+  const [oyuncular, setOyuncular] = useState<{ ad: string; sonuc: (1 | 0 | -1 | null)[] }[]>([])
 
   const yenile = useCallback(async () => {
-    const [{ data }, { data: j }] = await Promise.all([
+    const [{ data }, { data: j }, { data: z }] = await Promise.all([
       supabase.rpc('merdiven_goster', { p_session: oturum, p_anahtar: anahtar }),
       supabase.rpc('joker_durumu', { p_session: oturum, p_anahtar: anahtar }),
+      supabase.rpc('zombi_goster', { p_session: oturum, p_anahtar: anahtar }),
     ])
+    const oy = (z as { oyuncular?: { ad: string; sonuc: (1 | 0 | -1 | null)[] }[] } | null)?.oyuncular
+    if (oy) setOyuncular(oy)
     const s = (data as { sorular?: MerdivenSorusu[] } | null)?.sorular
     if (s) setSorular(s)
     const jd = j as { kullanilan?: string[]; bu_soru?: { seyirci?: { dagilim?: number[] } } } | null
@@ -97,7 +102,7 @@ export default function MerdivenPaneli({ oturum, anahtar, mod, dugme = true }: {
 
   return (
     <div className={perde ? 'fixed inset-0 z-40 bg-slate-950/95 flex items-start justify-center p-3 pb-28 pt-14 overflow-y-auto' : ''}>
-      <Merdiven tamEkran={perde} d={d} jokerler={{ kullanilan: jokerDurumu.kullanilan, seyirci: jokerDurumu.seyirci, kullan: jokerKullan, hata: jokerHata }} sonSonuc={sonSonuc?.sonuc ?? null} kucuk={!perde} joker={() => d.jokerlenebilir && kaydet({ ...kayit, jokerler: [...kayit.jokerler, d.jokerlenebilir] })} kapat={() => kaydet({ ...kayit, acik: false })} />
+      <Merdiven tamEkran={perde} oyuncular={oyuncular} d={d} jokerler={{ kullanilan: jokerDurumu.kullanilan, seyirci: jokerDurumu.seyirci, kullan: jokerKullan, hata: jokerHata }} sonSonuc={sonSonuc?.sonuc ?? null} kucuk={!perde} joker={() => d.jokerlenebilir && kaydet({ ...kayit, jokerler: [...kayit.jokerler, d.jokerlenebilir] })} kapat={() => kaydet({ ...kayit, acik: false })} />
     </div>
   )
 }
@@ -112,7 +117,7 @@ export interface SoruJokerleri {
 
 const SIK_HARFLERI = ['A', 'B', 'C', 'D', 'E', 'F']
 
-export function Merdiven({ d, sonSonuc, kucuk, joker, kapat, jokerler, tamEkran = false }: { d: MerdivenDurumu; sonSonuc: 'cikti' | 'dustu' | 'joker' | null; kucuk: boolean; joker: () => void; kapat: () => void; jokerler?: SoruJokerleri; tamEkran?: boolean }) {
+export function Merdiven({ d, sonSonuc, kucuk, joker, kapat, jokerler, tamEkran = false, oyuncular }: { d: MerdivenDurumu; sonSonuc: 'cikti' | 'dustu' | 'joker' | null; kucuk: boolean; joker: () => void; kapat: () => void; jokerler?: SoruJokerleri; tamEkran?: boolean; oyuncular?: { ad: string; sonuc: (1 | 0 | -1 | null)[] }[] }) {
   const basamaklar = Array.from({ length: d.toplam }, (_, i) => i + 1)
   return (
     <div className={`cam-panel rounded-3xl p-4 space-y-3 ${kucuk ? 'w-full' : tamEkran ? 'w-[min(64rem,96vw)] max-h-[96vh] overflow-y-auto' : 'w-[min(60rem,94vw)]'}`}>
@@ -147,7 +152,7 @@ export function Merdiven({ d, sonSonuc, kucuk, joker, kapat, jokerler, tamEkran 
           })}
         </ol>
       ) : (
-        <MerdivenSahnesi d={d} sonSonuc={sonSonuc} jokerler={jokerler} />
+        <MerdivenSahnesi d={d} sonSonuc={sonSonuc} jokerler={jokerler} oyuncular={oyuncular} />
       )}
       <div className="flex flex-wrap items-center gap-3 text-sm">
         {d.kazandi ? (
@@ -213,10 +218,10 @@ export function Merdiven({ d, sonSonuc, kucuk, joker, kapat, jokerler, tamEkran 
 }
 
 /** Perdede merdiven: Zirveye Tırmanış sahnesi ve yanında kurallar. */
-function MerdivenSahnesi({ d, sonSonuc, jokerler }: { d: MerdivenDurumu; sonSonuc: 'cikti' | 'dustu' | 'joker' | null; jokerler?: SoruJokerleri }) {
+function MerdivenSahnesi({ d, sonSonuc, jokerler, oyuncular }: { d: MerdivenDurumu; sonSonuc: 'cikti' | 'dustu' | 'joker' | null; jokerler?: SoruJokerleri; oyuncular?: { ad: string; sonuc: (1 | 0 | -1 | null)[] }[] }) {
   return (
     <div className="grid gap-4 md:grid-cols-[1fr_15rem] items-stretch">
-      <ZirveSahnesi d={d} sonSonuc={sonSonuc} jokerler={jokerler} sonOran={d.sonOran} />
+      <ZirveSahnesi d={d} sonSonuc={sonSonuc} jokerler={jokerler} sonOran={d.sonOran} oyuncular={oyuncular} />
       <div className="rounded-3xl border border-white/10 bg-white/5 p-4 text-sm space-y-2 self-stretch">
         <p className="font-display font-extrabold text-base">⛰ Zirveye Tırmanış</p>
         <ul className="space-y-1.5 text-slate-300 list-disc pl-4">

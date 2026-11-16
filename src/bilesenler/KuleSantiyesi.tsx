@@ -25,6 +25,7 @@ export function KuleSantiyesi({ d, kucult }: { d: KuleDurumu; kucult: () => void
   const siteRef = useRef(new Map<number, HTMLDivElement>())
   const onceki = useRef<Map<number, number> | null>(null)
   const kameraIlk = useRef(true)
+  const ipler = useRef(new Map<HTMLElement, HTMLElement>()).current
 
   const enYuksek = Math.max(0, ...satirlar.map((s) => Math.min(d.hedef, s.katlar)))
   // Lider kulenin tepesi sahnenin %80'inde kalacak şekilde kamera kayar
@@ -76,8 +77,27 @@ export function KuleSantiyesi({ d, kucult }: { d: KuleDurumu; kucult: () => void
                 duration: 0.8,
                 delay: 0.5 + sira * 0.55,
                 ease: 'bounce.out',
-                onStart: () => gsap.set(el, { opacity: 1 }),
+                onStart: () => {
+                  gsap.set(el, { opacity: 1 })
+                  // Vinç halatı: bloğu yukarıdan indirir (halat kancadan bloğun tepesine uzanır)
+                  if (!site) return
+                  const ip = document.createElement('span')
+                  ip.style.cssText = 'position:absolute;left:40%;top:0;width:2px;background:#e2e8f0;box-shadow:0 0 4px rgba(0,0,0,.5);pointer-events:none;transform:translateX(-50%)'
+                  const kanca = document.createElement('span')
+                  kanca.textContent = '🪝'
+                  kanca.style.cssText = 'position:absolute;left:0;bottom:-10px;font-size:14px;line-height:1;transform:translateX(-50%)'
+                  ip.appendChild(kanca)
+                  site.appendChild(ip)
+                  ipler.set(el, ip)
+                },
+                onUpdate: () => {
+                  const ip = ipler.get(el)
+                  if (!ip || !site) return
+                  ip.style.height = `${Math.max(0, el.getBoundingClientRect().top - site.getBoundingClientRect().top)}px`
+                },
                 onComplete: () => {
+                  ipler.get(el)?.remove()
+                  ipler.delete(el)
                   sesCal('tik')
                   if (!site) return
                   // toz bulutu

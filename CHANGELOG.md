@@ -1,5 +1,10 @@
 # Sürüm Geçmişi
 
+## v0.65.4 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Kule şantiyesi (GSAP):** her takımın kendi şantiyesi: sabit boyutlu gerçek blok görselleri (en-boy oranı bozulmaz), vinç direği, işçi karakterler. Kule yükseldikçe kamera yukarı kayar, bloklar küçülmez. Yeni bloklar gökten düşüp zıplayarak oturur (toz ve ses), rüzgâr kuralı işleyince üst blok sallanıp uçar. Altta kameradan bağımsız yükseklik çubuğu ve takım etiketi. Final: kazanan kulenin tepesine bayrak, konfeti, kaybedenlerin işçileri alkışlar; başlık yeni kurala uydu ("Hedef: 18 blok").
+- Sınırlar: işçiler adsız ve enerji barsız (kule verisi öğrenci bazlı değil), vinç kancası blokları taşımıyor, bloklar kendi başlarına düşüyor. Tarayıcıda 30 sahte öğrenciyle çizim denendi; düşüş animasyonu ve final gerçek akışta görülmedi.
+
 ## v0.65.3 (16 Kasım 2026)
 0047_test_botu.sql (Supabase MCP ile uygulandı).
 - **Gerçek ders test botu:** `scripts/bot.mjs` açık bir TEST-BOT dersine N sanal öğrenci katar (`takma_ad_al`), sorular açıldıkça rastgele gecikmeyle `cevap_ver` çağırır; başarı oranı ayarlanır. Doğru şıkkı yalnızca adı TEST-BOT ile başlayan derslerde veren `test_dogru_index` işlevi eklendi (gerçek derste hata döner). Kullanım ve temizlik: `docs/BOT.md`, `scripts/bot-temizle.sql`.

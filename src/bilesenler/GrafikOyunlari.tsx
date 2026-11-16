@@ -7,10 +7,11 @@ import { type KuleDurumu } from '../lib/kule'
 import { kuleTurHesapla, type TakimOzeti } from '../lib/takimOyunlari'
 import { HUCRE_SAYISI, type KaleHaritasi } from '../lib/kaleHarita'
 import { OrmanSahnesi } from './OrmanSahnesi'
+import { KuleSantiyesi } from './KuleSantiyesi'
 import { ormanHesapla, type OrmanSonucu } from '../lib/orman'
 import { KaleHaritaSahnesi, kaleHaritaHesapla, kaleHaritaVerisi, type KaleHaritaGirdisi } from './KaleHaritasi'
 import { type KaleDurumu } from '../lib/kale'
-import Gorsel, { adIndeksi, arkaPlan, gorselAdresi } from './Gorsel'
+import Gorsel, { adIndeksi, arkaPlan } from './Gorsel'
 import { SILAHLAR, useRaund } from './Hareket'
 import { Sinema, merkez, rastgele } from './Sinema'
 import { takimBilgisi } from '../lib/takim'
@@ -743,73 +744,7 @@ export function KulePaneli({ oturum, anahtar, mod }: { oturum: string; anahtar: 
 }
 
 export function KuleSahnesi({ d, kucult }: { d: KuleDurumu; kucult: () => void }) {
-  useOyunSesi(d.oynanan, d.bitti, true)
-  const satirlar = [...d.satirlar].sort((a, b) => a.takim - b.takim)
-  return (
-    <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
-      {d.bitti && <Konfeti />}
-      <div className="flex items-center gap-4 flex-wrap">
-        <h2 className="text-2xl sm:text-3xl font-display font-extrabold kule-baslik">🏗️ Kule Yarışı</h2>
-        <span className="text-sm text-slate-300">
-          Soru {d.oynanan} / {d.toplamSoru}
-        </span>
-        <span className="text-sm text-slate-300">Hedef: {d.hedef} blok (her doğru oranı blok kazandırır)</span>
-        <button className="ikincil-buton ml-auto !py-1.5 kucult-dugmesi" onClick={kucult}>
-          Küçült
-        </button>
-      </div>
-      <div className="relative flex-1 min-h-0 rounded-3xl overflow-hidden kule-gokyuzu border border-white/10 flex items-end justify-around px-6 pb-12" style={arkaPlan('arka-kule.webp')}>
-        <div className="absolute inset-x-0 bottom-0 h-12 kule-zemin" style={{ backgroundImage: `url("${gorselAdresi('kule-zemin.webp')}")`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
-        <div className="absolute inset-x-6 top-[8%] border-t-2 border-dashed border-amber-300/50" aria-hidden>
-          <span className="absolute -top-5 right-0 text-xs text-amber-200">🏁 hedef: {d.hedef} kat</span>
-        </div>
-        {satirlar.map((s) => {
-          const b = takimBilgisi(s.takim)
-          const lider = s.sira === 1 && s.blok > 0
-          const kat = Math.max(0, Math.min(d.hedef, s.katlar))
-          const dilim = 100 / d.hedef
-          return (
-            <div key={s.takim} className="relative h-full w-[18%] min-w-24">
-              {/* Kule alanı sabit yükseklikte: her blok hedefe göre hesaplanan sabit bir dilimde durur, hiçbir yükseklikte esneyip ezilmez */}
-              <div className="absolute inset-x-[8%] bottom-0 top-[8%]">
-                {Array.from({ length: kat }, (_, k) => (
-                  <div
-                    key={k}
-                    className="absolute inset-x-0 p-px"
-                    style={{ bottom: `${k * dilim}%`, height: `${dilim}%` }}
-                  >
-                    <div
-                      className={`h-full w-full rounded-md bg-linear-to-br ${b.renk} kule-blok border border-white/25`}
-                      style={{ backgroundImage: `url("${gorselAdresi(`blok-${s.takim}.webp`)}")`, backgroundSize: '100% 100%' }}
-                    />
-                  </div>
-                ))}
-                {lider && (
-                  <div className="absolute inset-x-0 text-center text-4xl kule-tac leading-none transition-[bottom] duration-[1400ms] ease-out" style={{ bottom: `${kat * dilim}%` }} aria-hidden>
-                    👑
-                  </div>
-                )}
-              </div>
-              <p className="absolute -bottom-9 inset-x-0 mx-auto w-max max-w-full rounded-full bg-slate-950/85 border border-white/15 px-3 py-0.5 text-center text-xs sm:text-sm font-bold whitespace-nowrap">
-                {b.emoji} {b.ad} <span className="text-slate-400 font-normal">({s.uye} kişi · {kat}/{d.hedef})</span>
-              </p>
-            </div>
-          )
-        })}
-        {d.bitti && d.kazanan !== null && (
-          <div className="absolute inset-0 flex items-center justify-center bg-slate-950/55 backdrop-blur-[2px]">
-            <div className="cam-panel rounded-[2rem] p-8 text-center space-y-2 girdi">
-              <p className="text-7xl">🏆</p>
-              <p className="text-4xl font-display font-extrabold">
-                {takimBilgisi(d.kazanan).emoji} {takimBilgisi(d.kazanan).ad} takım kazandı!
-              </p>
-            </div>
-          </div>
-        )}
-      </div>
-      <p className="text-xs text-slate-500 text-center">Her doğru cevap takımın kulesine kat ekler; sıralama kişi başına doğru sayısına göredir, böylece kalabalık takım avantajlı olmaz.</p>
-    </div>
-  )
+  return <KuleSantiyesi d={d} kucult={kucult} />
 }
 
 // -------------------------------------------------------------------------------------------------- Kale kuşatması

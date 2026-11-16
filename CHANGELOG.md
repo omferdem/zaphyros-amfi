@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.64.15 (16 Kasım 2026)
+Şema değişikliği yok. 13 ve 14. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-1-hafta-13-14-yeni.sql`, SQL ile uygulandı). Din Felsefesi I'in 14 haftası tamamlandı.
+- **13-14. hafta soruları:** "Din ile Felsefenin Diğer Münasebetleri" sunumundan gayeler, ortak sorular, ayrılan yönler, meşruiyet (13. hafta) ile Kindi, Farabi, İbn Rüşd ve karşı çıkanlar (14. hafta); Zapoot 20+20, Quiz 15+15; denetimden 0 hata ile geçti.
+
 ## v0.64.14 (16 Kasım 2026)
 Şema değişikliği yok. 11 ve 12. hafta yeni soruları eklendi (`supabase/data/din-felsefesi-1-hafta-11-12-yeni.sql`, SQL ile uygulandı).
 - **11-12. hafta soruları:** "Bilgi Meselesi" sunumundan kavramlar, bilgi teorileri ve bilginin kaynakları (11. hafta) ile bilginin değeri (12. hafta); Zapoot 20+20, Quiz 15+15; denetimden 0 hata ile geçti.

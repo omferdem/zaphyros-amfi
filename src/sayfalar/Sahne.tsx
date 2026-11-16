@@ -163,6 +163,22 @@ export default function Sahne() {
       /* önemsiz */
     }
   }
+  // Zapoot ve oyunlarda sonuç birkaç saniye göründükten sonra sonraki soruya kendiliğinden geçilir
+  const [otoIleri, setOtoIleriDurum] = useState(() => {
+    try {
+      return localStorage.getItem('amfi_oto_ileri') !== '0'
+    } catch {
+      return true
+    }
+  })
+  function otoIleriAyarla(a: boolean) {
+    setOtoIleriDurum(a)
+    try {
+      localStorage.setItem('amfi_oto_ileri', a ? '1' : '0')
+    } catch {
+      /* önemsiz */
+    }
+  }
   const [devam, setDevam] = useState<{ akis: string; baslangic: string | null; metin: string } | null>(null)
   // Akış seçilmemişse bu şubede en son kalınan akış önerilir
   const [sonAkis, setSonAkis] = useState<{ akisId: string; ad: string; sira: number; toplam: number } | null>(null)
@@ -698,6 +714,9 @@ export default function Sahne() {
           <button className="ikincil-buton text-left" onClick={() => sesAyarla(!sesAcik)}>
             {sesAcik ? '🔊 Ses efektlerini kapat' : '🔇 Ses efektlerini aç'}
           </button>
+          <button className="ikincil-buton text-left" onClick={() => otoIleriAyarla(!otoIleri)} title="Zapoot ve oyunlarda sonuç birkaç saniye göründükten sonra sonraki soruya kendiliğinden geçer">
+            {otoIleri ? '⏩ Sonraki soruya kendiliğinden geç: açık' : '⏩ Sonraki soruya kendiliğinden geç: kapalı'}
+          </button>
           <button className="ikincil-buton text-left" onClick={() => otoGecAyarla(!otoGec)} title="Soruda çevrimiçi herkes cevap verince süre dolmasını bekleme">
             {otoGec ? '⏭ Herkes cevaplayınca geç: açık' : '⏭ Herkes cevaplayınca geç: kapalı'}
           </button>
@@ -754,6 +773,7 @@ export default function Sahne() {
           kod={kodGoster ? kod : null}
           cevrimici={cevrimici}
           otoGec={otoGec}
+          otoIleri={otoIleri && !!kahootAkisi && !lobi && !finalAcik && aktifSira < adimlar.length - 1 ? ileri : undefined}
           oyunKilitli={oyunKilitli && zapootOyunu ? { ad: OYUNLAR[zapootOyunu].ad, emoji: OYUNLAR[zapootOyunu].emoji, oyun: zapootOyunu, adlar: gelenler.map((g) => g.ad).filter(Boolean), ileri: aktifSira < adimlar.length - 1 ? ileri : undefined, geri: aktifSira > 0 ? geri : undefined } : undefined}
         />
       ) : aktif && (aktif.tur === 'fikir' || aktif.tur === 'oylama' || aktif.tur === 'video') ? (
@@ -1275,6 +1295,7 @@ function SoruSahnesi({
   oyunKilitli,
   cevrimici = 0,
   otoGec = false,
+  otoIleri,
 }: {
   oturumId: string
   adimId: string
@@ -1284,6 +1305,8 @@ function SoruSahnesi({
   /** Derse bağlı telefon sayısı (presence); herkes cevap verdiyse soru kendiliğinden kapanır */
   cevrimici?: number
   otoGec?: boolean
+  /** Verilirse (Zapoot ve oyunlar) sonuç birkaç saniye göründükten sonra bu çağrılır ve sonraki soruya geçilir */
+  otoIleri?: () => void
   /** Zapoot'ta perde oyunu seçiliyse: soru ekranı yerine yalnızca kontrol çubuğu çizilir (sorular telefonlardadır) */
   oyunKilitli?: { ad: string; emoji: string; oyun: OyunAnahtari; adlar: string[]; ileri?: () => void; geri?: () => void }
 }) {
@@ -1294,7 +1317,12 @@ function SoruSahnesi({
   const [simdi, setSimdi] = useState(Date.now())
   const kapatildi = useRef<string | null>(null)
   const sonuc = soruDurum === 'sonuc'
-  const puanlar = usePuanlar(oturumId, sonuc, 5)
+  // İlk 5 her soruda değil, her 3 soruda bir (son soruda finalin podyumu vardır)
+  const araTablo = !!durum && durum.sira % 3 === 0 && durum.sira < durum.toplam
+  const puanlar = usePuanlar(oturumId, sonuc && araTablo, 5)
+  const [otoDurdu, setOtoDurdu] = useState(false)
+  const otoSure = oyunKilitli ? 6 : araTablo ? 10 : 6
+  const [otoKalan, setOtoKalan] = useState<number | null>(null)
 
   // Soru bilgisi (şıkların karışık sırası sunucudan gelir) ve sonuç. Adım değişikliği veritabanına
   // henüz yazılmadıysa sunucu eski adımı döndürür; doğru adım gelene kadar kısa aralıkla yeniden sorulur.
@@ -1376,6 +1404,25 @@ function SoruSahnesi({
     return () => clearTimeout(t)
   }, [otoGec, soruDurum, cevrimici, cevap, adimId, sonucuGoster])
 
+  // Sonuç birkaç saniye göründükten sonra sonraki soruya kendiliğinden geç (hoca "Dur" diyebilir)
+  useEffect(() => {
+    if (!otoIleri || !sonuc || otoDurdu || !durum) {
+      setOtoKalan(null)
+      return
+    }
+    const hedefAni = Date.now() + otoSure * 1000
+    setOtoKalan(otoSure)
+    const t = setInterval(() => {
+      const k = Math.ceil((hedefAni - Date.now()) / 1000)
+      if (k <= 0) {
+        clearInterval(t)
+        setOtoKalan(null)
+        otoIleri()
+      } else setOtoKalan(k)
+    }, 250)
+    return () => clearInterval(t)
+  }, [otoIleri, sonuc, otoDurdu, otoSure, !!durum])
+
   const secenekler = durum?.secenekler ?? []
   const toplamCevap = sonuc && durum?.dagilim ? durum.dagilim.reduce((a, b) => a + b, 0) : cevap
 
@@ -1422,6 +1469,11 @@ function SoruSahnesi({
           {!sonuc && (
             <button className="ikincil-buton !py-1.5" onClick={() => sureUzat(10)} title="Süreyi 10 saniye uzat">
               ⏱ +10
+            </button>
+          )}
+          {otoKalan !== null && (
+            <button className="ikincil-buton !py-1.5" onClick={() => setOtoDurdu(true)} title="Kendiliğinden geçişi bu soruda durdur">
+              ⏸ {otoKalan} sn
             </button>
           )}
           {oyunKilitli.ileri && (
@@ -1502,6 +1554,11 @@ function SoruSahnesi({
             ⏱ +10 sn
           </button>
         )}
+        {otoKalan !== null && (
+          <button className="ikincil-buton" onClick={() => setOtoDurdu(true)} title="Kendiliğinden geçişi bu soruda durdur">
+            ⏩ Sonraki soru {otoKalan} sn · ⏸ Durdur
+          </button>
+        )}
         {kod && (
           <div className="ml-auto">
             <KodSeridi kod={kod} />
@@ -1509,9 +1566,9 @@ function SoruSahnesi({
         )}
       </footer>
 
-      {sonuc && puanlar && puanlar.length > 0 && (
+      {sonuc && araTablo && puanlar && puanlar.length > 0 && (
         <section className="cam-panel rounded-3xl p-5 lg:p-6">
-          <p className="text-sm font-mono uppercase tracking-widest text-amber-300 mb-3">İlk 5</p>
+          <p className="text-sm font-mono uppercase tracking-widest text-amber-300 mb-3">İlk 5 · {durum?.sira}. sorudan sonra</p>
           <PuanListesi puanlar={puanlar} />
         </section>
       )}

@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.64.31 (16 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Sonraki soruya kendiliğinden geçiş:** Zapoot ve oyunlarda süre bitip sonuç açılınca 6 saniye (ilk 5 tablosu varsa 10 saniye) sonra sonraki soruya geçilir; çubukta geri sayım ve "Durdur" düğmesi var. Son sorudan sonra geçilmez, hoca "Bitir" ile podyumu açar. "⋯" menüsünde "Sonraki soruya kendiliğinden geç" anahtarı (varsayılan açık). Normal ders akışındaki sorular kendiliğinden ilerlemez.
+- **İlk 5 ara tablosu** her soruda değil, 3 soruda bir (3., 6., 9. ...) gösterilir; son soruda finalin podyumu vardır, tam sıralama "Tümünü göster" ile.
+- Bu sürüm canlı derste denenmedi (süreler gerçek derste ayarlanacak).
+
 ## v0.64.30 (16 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Kule yarışı grafiği:** bloklar eskiden esneyip ince çizgilere ezilirdi; artık kule alanı sabit yükseklikte ve her blok hedef kata göre hesaplanan sabit bir dilimde durur (1 ya da 18 kat fark etmez). Takım adı etiketi koyu bir hapın içinde, zemin resminin üstünde okunur; taç kulenin tepesinde durur. 30 oyuncu ve 4 takımla tarayıcıda 1280x720 denendi.

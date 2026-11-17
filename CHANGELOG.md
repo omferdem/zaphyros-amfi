@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.65.23 (17 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Soru yüklemede biçim seçimi:** "Yeni paket yükle" alanında Otomatik tanı, ZOMR (etiketli), Sekmeli tablo (soru, doğru, yanlışlar; Excel ya da Word tablosundan yapıştırılır) ve Şıklı metin (A B C D ve "Cevap: C") seçilebilir. Seçilen biçim için "Yapay zeka talimatını kopyala" düğmesi, soruları o biçime çevirtmek için yapay zekaya verilecek hazır metni panoya alır. Dosya seçmeden doğrudan yapıştırma da aynı yolu kullanır.
+- **Etkinlik alanında yapıştır ve etkinlik oluştur:** Zapoot/Oyunlar/Quiz bölümünde yeni paket yüklenince, o paketi kullanan etkinlik yoksa paketin adıyla etkinlik satırı kendiliğinden açılır.
+- Zapoot ve Oyunlar bölümlerine "Özel ilgi turizmi" etkinliği (Geocaching, 20 soru) eklendi.
+
 ## v0.65.22 (16 Kasım 2026)
 `0051_etkinlikler.sql` PGlite testinden geçti ve apply_migration ile canlıya uygulandı (yeni `etkinlikler` tablosu).
 - **Anasayfada Zapoot / Oyunlar / Quiz bölümleri:** hoca paneli ana sayfasının üstünde üç büyük buton. Her bölüm derse bağlı olmayan, yoklamasız, yalnızca kodla girilen bir etkinlik alanıdır (`/panel/etkinlik/zapoot|oyun|quiz`).

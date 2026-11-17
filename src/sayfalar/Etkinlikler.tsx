@@ -88,6 +88,20 @@ function EtkinlikAlani({ bolum }: { bolum: EtkinlikBolumu }) {
     }
   }
 
+  /** Yeni paket yüklenince, o paketi kullanan bir etkinlik yoksa paketin adıyla etkinlik satırı açar. */
+  async function paketYuklendi(paketAdi: string, sayi: number) {
+    if (!alan) return
+    try {
+      const mevcut = await etkinlikleriGetir(alan.courseId)
+      if (!mevcut.some((e) => e.paket === paketAdi)) {
+        await etkinlikEkle(alan.courseId, { ad: paketAdi, paket: paketAdi, mod: modlar[0]?.anahtar ?? 'bireysel', adet: Math.min(20, sayi), zorluk: 'orta' }, mevcut.length + 1)
+      }
+      await yukle()
+    } catch {
+      setHata('Etkinlik satırı açılamadı; paket bankaya eklendi.')
+    }
+  }
+
   async function degistir(e: EtkinlikSatiri, alanlar: Partial<EtkinlikSatiri>) {
     setSatirlar((l) => l?.map((x) => (x.id === e.id ? { ...x, ...alanlar } : x)) ?? l)
     try {
@@ -228,7 +242,7 @@ function EtkinlikAlani({ bolum }: { bolum: EtkinlikBolumu }) {
       <section className="space-y-3">
         <h2 className="text-xl font-bold">{b.ad} soru bankası</h2>
         <p className="text-sm text-slate-400">Bu bölümün soru paketleri. Etkinlik satırları buradaki paketlerden seçer.</p>
-        {alan && <SoruBankasi icerikId={alan.icerikId} />}
+        {alan && <SoruBankasi icerikId={alan.icerikId} yuklendi={paketYuklendi} />}
       </section>
     </div>
   )

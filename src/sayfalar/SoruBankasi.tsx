@@ -5,7 +5,7 @@ import type { Soru } from '../lib/tipler'
 import { adimlarEkle, akisOlustur, paketiSil, paketiYenidenAdlandir, soruPaketiniDegistir, sorulariEkle, sorulariGetir } from '../lib/akis'
 import { otomatikSure, paketleriGrupla, type PaketGrubu } from '../lib/paket'
 import SoruFormu, { type SoruDegisikligi } from '../bilesenler/SoruFormu'
-import { zomrOku } from '../lib/zomr'
+import { BICIMLER, soruMetniOku, type SoruBicimi } from '../lib/soruBicimi'
 
 const SURELER = [10, 15, 20, 30, 45, 60, 90, 120]
 
@@ -20,11 +20,13 @@ function toplamSure(sorular: Soru[]): string {
 }
 
 /** Ders içeriğinin soru bankası: soru paketleri (hafta ya da konu başına), ZOMR içe aktarma, yarışma akışı. */
-export default function SoruBankasi({ icerikId }: { icerikId: string }) {
+export default function SoruBankasi({ icerikId, yuklendi }: { icerikId: string; /** Paket yüklenince çağrılır (etkinlik alanı paketten etkinlik satırı açar) */ yuklendi?: (paketAdi: string, sayi: number) => void | Promise<void> }) {
   const navigate = useNavigate()
   const [sorular, setSorular] = useState<Soru[] | null>(null)
   const [metin, setMetin] = useState('')
   const [paketAdi, setPaketAdi] = useState('')
+  const [bicim, setBicim] = useState<SoruBicimi>('otomatik')
+  const [kopyalandi, setKopyalandi] = useState(false)
   const [sure, setSure] = useState(20)
   const [hata, setHata] = useState<string | null>(null)
   const [mesaj, setMesaj] = useState<string | null>(null)
@@ -44,7 +46,7 @@ export default function SoruBankasi({ icerikId }: { icerikId: string }) {
     yukle()
   }, [yukle])
 
-  const onizleme = useMemo(() => (metin.trim() ? zomrOku(metin) : null), [metin])
+  const onizleme = useMemo(() => (metin.trim() ? soruMetniOku(metin, bicim) : null), [metin, bicim])
   const gruplar = useMemo(() => paketleriGrupla(sorular ?? []), [sorular])
   const paketAdlari = gruplar.filter((g) => g.ad).map((g) => g.ad)
   // Dosyada #PAKET satırı olan sorular kendi paketlerine girer (paket adı kutusu boşsa)
@@ -65,9 +67,12 @@ export default function SoruBankasi({ icerikId }: { icerikId: string }) {
     try {
       await sorulariEkle(icerikId, onizleme.sorular, sure, paketAdi)
       setMesaj(`${onizleme.sorular.length} soru ${paketAdi.trim() ? `"${paketAdi.trim()}" paketine` : 'bankaya'} eklendi.`)
+      const eklenenPaket = paketAdi.trim() || dosyadakiPaketler[0] || ''
+      const eklenenSayi = onizleme.sorular.length
       setMetin('')
       setPaketAdi('')
       await yukle()
+      if (yuklendi && eklenenPaket) await yuklendi(eklenenPaket, eklenenSayi)
     } catch {
       setHata('Sorular kaydedilemedi.')
     }
@@ -207,18 +212,42 @@ export default function SoruBankasi({ icerikId }: { icerikId: string }) {
       {mesaj && <p className="text-sm text-emerald-300">{mesaj}</p>}
 
       <div className="space-y-2">
-        <p className="text-sm font-semibold">Yeni paket yükle (ZOMR biçimi)</p>
+        <p className="text-sm font-semibold">Yeni paket yükle</p>
         <div className="flex flex-wrap gap-2 items-center">
           <label className="ikincil-buton cursor-pointer">
             .txt dosyası seç
             <input type="file" accept=".txt,text/plain" className="hidden" onChange={dosyaSecildi} />
           </label>
           <span className="text-xs text-slate-500">ya da aşağıya yapıştır</span>
+          <select className="giris-kutusu !w-auto !py-1.5 text-xs" value={bicim} onChange={(e) => setBicim(e.target.value as SoruBicimi)} aria-label="Soru metni biçimi">
+            {BICIMLER.map((b) => (
+              <option key={b.anahtar} value={b.anahtar}>
+                Biçim: {b.ad}
+              </option>
+            ))}
+          </select>
+          {bicim !== 'otomatik' && (
+            <button
+              className="text-xs text-violet-300 hover:text-white underline"
+              title="Bu talimatı yapay zekaya soruların başına yapıştır; çıktısını buraya yapıştırabilirsin"
+              onClick={async () => {
+                try {
+                  await navigator.clipboard.writeText(BICIMLER.find((b) => b.anahtar === bicim)?.talimat ?? '')
+                  setKopyalandi(true)
+                  setTimeout(() => setKopyalandi(false), 2500)
+                } catch {
+                  setHata('Panoya kopyalanamadı.')
+                }
+              }}
+            >
+              {kopyalandi ? '✓ Kopyalandı' : '📋 Yapay zeka talimatını kopyala'}
+            </button>
+          )}
         </div>
         <textarea
           rows={4}
           className="giris-kutusu font-mono text-xs"
-          placeholder={'#QUESTION:Sorunun metni?\n#CORRECT:Doğru cevap\n#WRONG:Yanlış cevap 1\n#WRONG:Yanlış cevap 2'}
+          placeholder={BICIMLER.find((b) => b.anahtar === (bicim === 'otomatik' ? 'zomr' : bicim))?.ornek}
           value={metin}
           onChange={(e) => {
             setMetin(e.target.value)

@@ -600,3 +600,14 @@ body::after {
   50% { box-shadow: inset 0 0 120px 28px rgba(239, 68, 68, 0.6); }
 }
 @media (prefers-reduced-motion: reduce) { .ekran-sars, .gerilim-nabiz { animation: none; } }
+
+/* Dokunmatik ekranlarda (telefon) düğmeler en az 40x40 px */
+@media (max-width: 500px), (max-height: 450px) {
+  .ikincil-buton,
+  .parlak-buton,
+  .tehlike-buton,
+  button {
+    min-height: 40px;
+    min-width: 40px;
+  }
+}

@@ -2,6 +2,42 @@
   "surum": "v0.66",
   "sonuclar": [
     {
+      "durum": "yoklama",
+      "ekran": "projeksiyon",
+      "dosya": "yoklama__projeksiyon.png",
+      "ihlaller": []
+    },
+    {
+      "durum": "yoklama",
+      "ekran": "telefon-390",
+      "dosya": "yoklama__telefon-390.png",
+      "ihlaller": []
+    },
+    {
+      "durum": "yoklama",
+      "ekran": "telefon-yatay",
+      "dosya": "yoklama__telefon-yatay.png",
+      "ihlaller": []
+    },
+    {
+      "durum": "slayt-metinli",
+      "ekran": "projeksiyon",
+      "dosya": "slayt-metinli__projeksiyon.png",
+      "ihlaller": []
+    },
+    {
+      "durum": "slayt-metinli",
+      "ekran": "telefon-390",
+      "dosya": "slayt-metinli__telefon-390.png",
+      "ihlaller": []
+    },
+    {
+      "durum": "slayt-metinli",
+      "ekran": "telefon-yatay",
+      "dosya": "slayt-metinli__telefon-yatay.png",
+      "ihlaller": []
+    },
+    {
       "durum": "zapoot-uzun-soru",
       "ekran": "projeksiyon",
       "dosya": "zapoot-uzun-soru__projeksiyon.png",
@@ -11,105 +47,73 @@
       "durum": "zapoot-uzun-soru",
       "ekran": "telefon-390",
       "dosya": "zapoot-uzun-soru__telefon-390.png",
-      "ihlaller": [
-        "24 düğme 40x40 px'ten küçük (ör. \"🎮 Zapoot\" 55x31)"
-      ]
+      "ihlaller": []
     },
     {
-      "durum": "oyun-zombi-soru",
+      "durum": "zapoot-uzun-soru",
+      "ekran": "telefon-yatay",
+      "dosya": "zapoot-uzun-soru__telefon-yatay.png",
+      "ihlaller": []
+    },
+    {
+      "durum": "zapoot-sonuc",
       "ekran": "projeksiyon",
-      "dosya": "oyun-zombi-soru__projeksiyon.png",
-      "ihlaller": [
-        "araç çubuğu ikinci satıra taşıyor"
-      ]
+      "dosya": "zapoot-sonuc__projeksiyon.png",
+      "ihlaller": []
     },
     {
-      "durum": "oyun-zombi-soru",
+      "durum": "zapoot-sonuc",
       "ekran": "telefon-390",
-      "dosya": "oyun-zombi-soru__telefon-390.png",
-      "ihlaller": [
-        "28 düğme 40x40 px'ten küçük (ör. \"🏁 Bitir\" 84x31)"
-      ]
+      "dosya": "zapoot-sonuc__telefon-390.png",
+      "ihlaller": []
     },
     {
-      "durum": "oyun-zombi-sonuc",
+      "durum": "oyun-ejderha-soru",
       "ekran": "projeksiyon",
-      "dosya": "oyun-zombi-sonuc__projeksiyon.png",
-      "ihlaller": [
-        "araç çubuğu ikinci satıra taşıyor"
-      ]
+      "dosya": "oyun-ejderha-soru__projeksiyon.png",
+      "ihlaller": []
     },
     {
-      "durum": "oyun-zombi-sonuc",
+      "durum": "oyun-ejderha-soru",
       "ekran": "telefon-390",
-      "dosya": "oyun-zombi-sonuc__telefon-390.png",
-      "ihlaller": [
-        "27 düğme 40x40 px'ten küçük (ör. \"🏁 Bitir\" 84x31)"
-      ]
+      "dosya": "oyun-ejderha-soru__telefon-390.png",
+      "ihlaller": []
     },
     {
-      "durum": "oyun-kale-soru",
+      "durum": "oyun-ejderha-sonuc",
       "ekran": "projeksiyon",
-      "dosya": "oyun-kale-soru__projeksiyon.png",
-      "ihlaller": [
-        "araç çubuğu ikinci satıra taşıyor"
-      ]
+      "dosya": "oyun-ejderha-sonuc__projeksiyon.png",
+      "ihlaller": []
     },
     {
-      "durum": "oyun-kale-soru",
+      "durum": "oyun-ejderha-sonuc",
       "ekran": "telefon-390",
-      "dosya": "oyun-kale-soru__telefon-390.png",
-      "ihlaller": [
-        "29 düğme 40x40 px'ten küçük (ör. \"🏁 Bitir\" 84x31)"
-      ]
-    },
-    {
-      "durum": "oyun-kale-sonuc",
-      "ekran": "projeksiyon",
-      "dosya": "oyun-kale-sonuc__projeksiyon.png",
-      "ihlaller": [
-        "araç çubuğu ikinci satıra taşıyor"
-      ]
-    },
-    {
-      "durum": "oyun-kale-sonuc",
-      "ekran": "telefon-390",
-      "dosya": "oyun-kale-sonuc__telefon-390.png",
-      "ihlaller": [
-        "28 düğme 40x40 px'ten küçük (ör. \"🏁 Bitir\" 84x31)"
-      ]
+      "dosya": "oyun-ejderha-sonuc__telefon-390.png",
+      "ihlaller": []
     },
     {
       "durum": "oyun-merdiven-soru",
       "ekran": "projeksiyon",
       "dosya": "oyun-merdiven-soru__projeksiyon.png",
-      "ihlaller": [
-        "araç çubuğu ikinci satıra taşıyor"
-      ]
+      "ihlaller": []
     },
     {
       "durum": "oyun-merdiven-soru",
       "ekran": "telefon-390",
       "dosya": "oyun-merdiven-soru__telefon-390.png",
-      "ihlaller": [
-        "30 düğme 40x40 px'ten küçük (ör. \"🏁 Bitir\" 84x31)"
-      ]
+      "ihlaller": []
     },
     {
       "durum": "oyun-merdiven-sonuc",
       "ekran": "projeksiyon",
       "dosya": "oyun-merdiven-sonuc__projeksiyon.png",
-      "ihlaller": [
-        "araç çubuğu ikinci satıra taşıyor"
-      ]
+      "ihlaller": []
     },
     {
       "durum": "oyun-merdiven-sonuc",
       "ekran": "telefon-390",
       "dosya": "oyun-merdiven-sonuc__telefon-390.png",
-      "ihlaller": [
-        "30 düğme 40x40 px'ten küçük (ör. \"🏁 Bitir\" 84x31)"
-      ]
+      "ihlaller": []
     }
   ]
 }

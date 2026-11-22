@@ -1,5 +1,17 @@
 # Sürüm Geçmişi
 
+## v0.66.5 (23 Kasım 2026)
+Veritabanı değişikliği yok. Görsel denetim (alt küme) ihlalsiz; ayrıntı `denetim/v0.66/KONTROL.md`.
+- **Lazer ve kalem ayrıldı (madde 5):** lazer yalnızca kırmızı nokta, çizmez, tıklamalar alttaki videoya ve düğmelere geçer; ✏️ Kalem ayrı araç; kumandada "Kalem: açık/kapalı" anahtarı.
+- **Etkinlik lobisi (madde 8):** ders dışı etkinlikte "Başlat" oyunu kendiliğinden açmaz; lobi büyük kod, adres, giriş karekodu ve ▶ Başlat (boşluk tuşu) gösterir. Katılımcı yokken otomatik sonraki soru geçişi yok. Telefonlar bitişi 5 sn içinde alır ("Etkinlik bitti, teşekkürler").
+- **Giriş karekodu:** yoklama kapalıyken kod şeridinde ve lobide `#/katil?kod=` karekodu çıkar; yoklama yazmaz, yalnızca girişi sağlar.
+- **Renkler tek kaynak (madde 9):** şık ve takım renkleri `renkler.ts`/`takim.ts` üzerinden hem perdede hem telefonda aynı; lobide 3. ve 4. takım renkleri yer değiştirmişti, düzeldi.
+- **Zirveye Tırmanış (madde 7c):** tam ekran, yan kural paneli kalktı, joker hakkı 3 (tek sabit `JOKER_HAKKI`; eski değer 2).
+- **Etkinlikte mod (madde 7b):** Oyunlar bölümünde mod listesi doğrudan oyunlar; Zapoot satırında "Önerilen: …" gösterilir.
+- **Prova (madde 7a):** her zaman görünen 44 px ✕, Esc ve geri tuşu provayı kapatır.
+- Telefonda kod şeridi kapalı başlar; tüm düğmeler dar ekranda en az 40 px.
+- Yapılmadı: görsel kesici (`gorsel-kes.mjs`), madde 3'ün öğrenci telefonu tarafı.
+
 ## v0.66.0 (22 Kasım 2026) (kısmi: görsel denetim kapısı ve perde kabuğu)
 Veritabanı değişikliği yok.
 - **Görsel denetim kapısı:** `scripts/gorsel-denetim.mjs` (`npm run gorsel-denetim`): Playwright, gerçek bir TEST-BOT oturumu kurar, sahneyi yoklama, slayt, uzun Zapoot sorusu ve oyunlarda 8 ekran boyutunda açar, ekran görüntüsü alır (`denetim/<sürüm>/`) ve taşma, araç çubuğu, çakışma, şık görünürlüğü ve 40 px düğme ölçümlerini yapar; ihlalde 1 koduyla çıkar. Önceki sürümün görüntüleri `denetim/v0.65.23/`.

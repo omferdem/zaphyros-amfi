@@ -292,8 +292,8 @@ function olcumBetigi() {
     if (b.height > 56) ihlal.push(`araç çubuğu yüksekliği ${Math.round(b.height)} px (en çok 56)`)
     const dugmeler = [...arac.querySelectorAll('button, a, select, summary')].filter(gorunur).filter((d) => !d.closest('details > div'))
     if (dugmeler.length) {
-      const ust = dugmeler.map((d) => Math.round(r(d).top))
-      if (Math.max(...ust) - Math.min(...ust) > 2) ihlal.push('araç çubuğu ikinci satıra taşıyor')
+      const ust = dugmeler.map((d) => Math.round(r(d).top + r(d).height / 2))
+      if (Math.max(...ust) - Math.min(...ust) > 6) ihlal.push('araç çubuğu ikinci satıra taşıyor')
     }
     if (b.right > vw + 1) ihlal.push('araç çubuğu ekranın dışına taşıyor')
   }

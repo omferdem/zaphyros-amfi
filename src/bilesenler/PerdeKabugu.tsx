@@ -75,9 +75,10 @@ export function KodSerit({
   /** true: yoklama karekodu (6 sn'de bir döner); false: yalnızca giriş karekodu (sabit, yoklama yazmaz) */
   donuyor: boolean
 }) {
-  const [kapali, setKapali] = useState(false)
+  // Dar ekranda (telefon) şerit kapalı başlar; içeriğe yer kalsın
+  const [kapali, setKapali] = useState(() => typeof window !== 'undefined' && window.innerWidth < 700)
   const qrVar = donuyor ? acik && !qrGizli : !!qr
-  const genislik = kapali ? 24 : qrVar ? 148 : 56
+  const genislik = kapali ? 40 : qrVar ? 148 : 56
   usePerdeDegiskeni('--perde-sag', `${genislik}px`)
   if (kapali)
     return (
@@ -87,7 +88,7 @@ export function KodSerit({
         aria-label="Kod şeridini göster"
         title="Katılım kodunu göster"
         className="fixed right-0 z-[64] bg-slate-900/70 text-slate-300 hover:text-white text-xs"
-        style={{ top: ARAC_YUKSEKLIK, bottom: 0, width: 24 }}
+        style={{ top: ARAC_YUKSEKLIK, bottom: 0, width: 40 }}
       >
         ◂
       </button>
@@ -98,15 +99,15 @@ export function KodSerit({
       className="fixed right-0 z-[64] flex flex-col items-center gap-2 py-2 bg-slate-950/70 border-l border-white/10"
       style={{ top: ARAC_YUKSEKLIK, bottom: 0, width: genislik }}
     >
-      <button onClick={() => setKapali(true)} aria-label="Kod şeridini gizle" title="Şeridi gizle" className="shrink-0 h-6 w-full text-xs text-slate-400 hover:text-white">
+      <button onClick={() => setKapali(true)} aria-label="Kod şeridini gizle" title="Şeridi gizle" className="shrink-0 h-10 min-h-10 w-full text-sm text-slate-400 hover:text-white">
         ▸
       </button>
-      <div className="flex-1 min-h-0 w-full flex items-center justify-center overflow-hidden">
+      <div className="flex-1 min-h-0 w-full flex items-start justify-center overflow-hidden pt-1">
         <p className="whitespace-nowrap text-center font-bold leading-tight text-[clamp(13px,2.6vh,22px)] [writing-mode:vertical-rl] rotate-180">
-          <span className="text-slate-300">Derse katıl </span>
-          <span className="font-mono text-sari tracking-widest text-[1.5em]">{kod}</span>
+          <span className="text-slate-300">Kod </span>
+          <span className="font-mono text-sari tracking-widest text-[1.4em]">{kod}</span>
           <span className="text-slate-400"> · {adres}</span>
-          <span className="text-emerald-300"> · {katilan} katılan</span>
+          <span className="text-emerald-300"> · {katilan}</span>
         </p>
       </div>
       {qrVar && (

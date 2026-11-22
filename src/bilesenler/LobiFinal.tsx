@@ -20,6 +20,8 @@ export function Lobi({
   sureDk,
   cevrimici,
   adlar = [],
+  kod,
+  adres,
   basla,
   iptal,
 }: {
@@ -33,6 +35,9 @@ export function Lobi({
   cevrimici: number
   /** Yoklamadan gelen katılımcı adları (bireysel modda balonlarda görünür) */
   adlar?: string[]
+  /** Katılım kodu ve adresi (lobide büyük gösterilir) */
+  kod?: string | null
+  adres?: string
   basla: () => Promise<void>
   iptal: () => void
 }) {
@@ -71,6 +76,18 @@ export function Lobi({
     return () => clearTimeout(t)
   }, [sayim])
 
+  // Klavye: boşluk tuşu ▶ Başlat gibi çalışır
+  useEffect(() => {
+    if (sayim !== null) return
+    const tus = (e: KeyboardEvent) => {
+      if (e.code !== 'Space' || (e.target instanceof HTMLElement && /^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(e.target.tagName))) return
+      e.preventDefault()
+      setSayim(3)
+    }
+    window.addEventListener('keydown', tus)
+    return () => window.removeEventListener('keydown', tus)
+  }, [sayim])
+
   async function dagit(yontem: 'dengele' | 'rastgele') {
     await supabase.rpc('takim_dagit', {
       p_session: oturumId,
@@ -89,7 +106,7 @@ export function Lobi({
   const toplamUye = takimlar.reduce((a, t) => a + t.adlar.length, 0)
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur flex flex-col items-center justify-center p-6 gap-6">
+    <div className="perde-alan z-50 bg-slate-950/95 backdrop-blur flex flex-col items-center justify-center p-6 gap-6 overflow-y-auto">
       {sayim !== null ? (
         <div className="text-center space-y-6 max-w-2xl">
           <p key={sayim} className="font-display font-extrabold text-[12rem] leading-none text-ze-yellow animate-pop">
@@ -108,6 +125,13 @@ export function Lobi({
             <p className="text-slate-300">
               {paketAdi} · {sureDk ? `${sureDk} dakika` : `${soruSayisi} soru`}
             </p>
+            {kod && (
+              <p className="text-2xl lg:text-3xl font-bold" data-denetim="lobi-kod">
+                <span className="text-slate-300">Katıl: </span>
+                <b className="font-mono text-sari tracking-widest text-4xl lg:text-5xl">{kod}</b>
+                {adres && <span className="text-cyan-200 font-mono text-xl"> · {adres}</span>}
+              </p>
+            )}
             <p className="text-lg font-bold text-ze-lime">{takimli ? `${toplamUye} kişi takımını seçti` : `${Math.max(cevrimici, adlar.length)} öğrenci katıldı`}</p>
           </div>
           {takimli ? (

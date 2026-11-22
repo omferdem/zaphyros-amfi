@@ -56,6 +56,8 @@ interface KumandaIstegi {
   adet?: number
   /** Oyun zorluğu (kolay, orta, zor) */
   zorluk?: string
+  /** Etkinlik alanından: oyun hemen başlamaz, önce lobi (kod, katılan sayısı, ▶ Başlat) açılır */
+  lobi?: boolean
   t: number
 }
 
@@ -119,6 +121,7 @@ export default function Sahne() {
   const [aramaParametreleri, setAramaParametreleri] = useSearchParams()
   const etkinlikKimligi = aramaParametreleri.get('etkinlik')
   const etkinlikBasladi = useRef(false)
+  const [etkinlikHazirlaniyor, setEtkinlikHazirlaniyor] = useState(!!aramaParametreleri.get('etkinlik'))
   const [oturum, setOturum] = useState<(Oturum & { courses: Ders }) | null | undefined>(undefined)
   const [mevcut, setMevcut] = useState(0)
   const [gelenler, setGelenler] = useState<Gelen[]>([])
@@ -573,7 +576,8 @@ export default function Sahne() {
         const secilen = havuzSirasinaDiz(dengeliSec([{ ad: grup.ad, sorular: grup.sorular }], Math.min(i.adet ?? 20, grup.sorular.length), (s) => s.id, sonSorulanlar(oturumId)), grup.sorular)
         turuKaydet(oturumId, secilen.map((s) => s.id))
         zorlukBekleyenAyarla(i.zorluk === 'kolay' || i.zorluk === 'zor' ? i.zorluk : 'orta')
-        await kahootaGit(grup.ad, secilen, mod, i.sure >= 2 && i.sure <= 10 ? i.sure : null)
+        const grupSayisi = i.sure >= 2 && i.sure <= 10 ? i.sure : null
+        await kahootaGit(grup.ad, secilen, mod, grupSayisi, i.lobi ? { ad: grup.ad, sorular: secilen, mod, grup: grupSayisi, sureDk: null, zorluk: i.zorluk === 'kolay' || i.zorluk === 'zor' ? i.zorluk : 'orta' } : null)
       } else {
         const secilenQ = havuzSirasinaDiz(dengeliSec([{ ad: grup.ad, sorular: grup.sorular }], Math.min(i.adet ?? 20, grup.sorular.length), (s) => s.id, sonSorulanlar(oturum.course_id)), grup.sorular)
         turuKaydet(oturum.course_id, secilenQ.map((s) => s.id))
@@ -602,10 +606,12 @@ export default function Sahne() {
           adet: e.adet,
           sure: quizMi ? Math.max(5, e.adet) : 0,
           zorluk: e.zorluk,
+          lobi: !quizMi,
           t: Date.now(),
         })
       }
       setAramaParametreleri({}, { replace: true })
+      setEtkinlikHazirlaniyor(false)
     }, 700)
     return () => clearTimeout(zamanlayici)
   }, [etkinlikKimligi, oturum, icerikId, setAramaParametreleri])
@@ -843,7 +849,7 @@ export default function Sahne() {
           soruDurum={oturum.soru_durum}
           cevrimici={cevrimici}
           otoGec={otoGec}
-          otoIleri={otoIleri && !!kahootAkisi && !lobi && !finalAcik && aktifSira < adimlar.length - 1 ? ileri : undefined}
+          otoIleri={otoIleri && !!kahootAkisi && !lobi && !finalAcik && (cevrimici > 0 || gelenler.length > 0) && aktifSira < adimlar.length - 1 ? ileri : undefined}
           oyunKilitli={oyunKilitli && zapootOyunu ? { ad: OYUNLAR[zapootOyunu].ad, emoji: OYUNLAR[zapootOyunu].emoji, oyun: zapootOyunu, adlar: gelenler.map((g) => g.ad).filter(Boolean), ileri: aktifSira < adimlar.length - 1 ? ileri : undefined, geri: aktifSira > 0 ? geri : undefined, final: () => setFinalAcik(true) } : undefined}
         />
       ) : aktif && (aktif.tur === 'fikir' || aktif.tur === 'oylama' || aktif.tur === 'video') ? (
@@ -905,6 +911,7 @@ export default function Sahne() {
       <Cizim oturum={oturum.id} anahtar={oturum.aktif_adim ?? 'yok'} mod={cizimModu} kapat={() => setCizimModu('kapali')} bitti={!!oturum.bitti} ac={() => setCizimModu('lazer')} modDegistir={setCizimModu} kodDegistir={() => setKodGoster((g) => !g)} />
       {notAcik && <PerdeNotu key={oturum.id} dersId={oturum.course_id} baglam={`${new Date().toLocaleString('tr-TR')} · ${oturum.courses.ad}${oturum.baslik ? ` · ${oturum.baslik}` : ''}`} kapat={() => setNotAcik(false)} />}
       <TepkiKatmani oturum={oturum.id} etkin={tepkiAcik && !quizAcik && !lobi && !finalAcik} ayar={tepkiAyarla} />
+      {etkinlikHazirlaniyor && !lobi && <div className="perde-alan z-[52] bg-slate-950 flex items-center justify-center text-slate-300 text-xl">Etkinlik hazırlanıyor…</div>}
       {lobi && (
         <Lobi
           oturumId={oturum.id}
@@ -915,6 +922,8 @@ export default function Sahne() {
           sureDk={lobi.sureDk}
           cevrimici={cevrimici}
           adlar={gelenler.map((g) => g.ad).filter(Boolean)}
+          kod={kod ? kodBicimle(kod) : null}
+          adres={kisaAdres()}
           basla={lobidenBasla}
           iptal={() => void dersedon().then(() => setLobi(null))}
         />

@@ -430,8 +430,13 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
         else sor()
       })
       .subscribe()
-    const t = setInterval(sor, 20000)
+    const t = setInterval(sor, 5000)
+    const gorunur = () => {
+      if (document.visibilityState === 'visible') sor()
+    }
+    document.addEventListener('visibilitychange', gorunur)
     return () => {
+      document.removeEventListener('visibilitychange', gorunur)
       iptal = true
       clearInterval(t)
       supabase.removeChannel(kanal)
@@ -553,7 +558,7 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
                   <span className="font-display font-extrabold text-xl text-ze-gradient">ZE</span>
                 </div>
               </div>
-              <h1 className="font-display font-extrabold text-2xl">Ders bitti, teşekkürler</h1>
+              <h1 className="font-display font-extrabold text-2xl">{durum.ders?.startsWith('Etkinlik:') ? 'Etkinlik bitti, teşekkürler' : 'Ders bitti, teşekkürler'}</h1>
               <p className="text-xs text-slate-300">{durum.ders}</p>
             </div>
             {karne && (

@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { KALEM_RENKLERI, lazerKanali } from './Cizim'
 
@@ -13,6 +13,7 @@ export default function LazerYuzeyi({ oturum }: { oturum: string }) {
   const kanal = useMemo(() => supabase.channel(lazerKanali(oturum), { config: { broadcast: { self: false } } }), [oturum])
   const son = useRef(0)
   const basili = useRef(false)
+  const [kalem, setKalem] = useState(false)
 
   function gonder(e: React.PointerEvent, d: boolean, zorla = false) {
     const simdi = Date.now()
@@ -27,18 +28,23 @@ export default function LazerYuzeyi({ oturum }: { oturum: string }) {
   function komut(k: string, r?: number) {
     void kanal.httpSend('komut', { k, r }).catch(() => {})
   }
+  function kalemDegistir() {
+    const yeni = !kalem
+    setKalem(yeni)
+    komut('mod', yeni ? 1 : 0)
+  }
 
   return (
     <section className="cam-panel rounded-2xl p-4 space-y-2">
-      <h3 className="text-xs font-bold text-slate-300">🔴 Lazer: parmağını kaydır, basılı tutunca perdede çizer</h3>
+      <h3 className="text-xs font-bold text-slate-300">{kalem ? '✏️ Kalem: basılı tutunca perdede çizer' : '🔴 Lazer: parmağını kaydır, yalnızca işaret eder'}</h3>
       <div
         className="h-56 rounded-2xl border border-white/15 bg-slate-950/60 touch-none select-none flex items-center justify-center text-slate-500 text-xs"
         onPointerDown={(e) => {
           e.currentTarget.setPointerCapture(e.pointerId)
           basili.current = true
-          gonder(e, true, true)
+          gonder(e, kalem, true)
         }}
-        onPointerMove={(e) => gonder(e, basili.current)}
+        onPointerMove={(e) => gonder(e, basili.current && kalem)}
         onPointerUp={(e) => {
           basili.current = false
           gonder(e, false, true)
@@ -51,6 +57,9 @@ export default function LazerYuzeyi({ oturum }: { oturum: string }) {
         Dokunmatik yüzey
       </div>
       <div className="flex flex-wrap items-center gap-1.5">
+        <button className={kalem ? 'parlak-buton rounded-xl px-3 py-1.5 text-xs font-bold' : 'ikincil-buton !py-1.5 !px-2.5 text-xs'} onClick={kalemDegistir} aria-pressed={kalem}>
+          ✏️ Kalem: {kalem ? 'açık' : 'kapalı'}
+        </button>
         {KALEM_RENKLERI.map((r, i) => (
           <button key={r.renk} aria-label={r.ad} onClick={() => komut('renk', i)} className="w-8 h-8 rounded-full border-2 border-white/40" style={{ background: r.renk }} />
         ))}

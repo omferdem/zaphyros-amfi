@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { muzikAyarla, sesAyarla, sesDuzeyiAyarla } from '../lib/ses'
 
-export type CizimModu = 'kapali' | 'lazer' | 'tahta'
+export type CizimModu = 'kapali' | 'lazer' | 'kalem' | 'tahta'
 
 interface Vurus {
   renk: string
@@ -47,7 +47,10 @@ function yukle(oturum: string): Record<string, Vurus[]> {
  * Çizimler slayta (anahtar) bağlıdır; slayt değişip geri gelince görünür. Veritabanına yazılmaz: bellekte ve sekmenin sessionStorage'ında durur.
  * Telefon kumandasındaki dokunmatik yüzey, lazer kanalından (Broadcast) aynı lazeri oynatır.
  */
-export default function Cizim({ oturum, anahtar, mod, kapat, bitti, ac, kodDegistir }: { oturum: string; anahtar: string; mod: CizimModu; kapat: () => void; bitti: boolean; ac: () => void; kodDegistir?: () => void }) {
+export default function Cizim({ oturum, anahtar, mod, kapat, bitti, ac, kodDegistir, modDegistir }: { oturum: string; anahtar: string; mod: CizimModu; kapat: () => void; bitti: boolean; ac: () => void; kodDegistir?: () => void; modDegistir?: (m: CizimModu) => void }) {
+  const modDegistirRef = useRef(modDegistir)
+  modDegistirRef.current = modDegistir
+  const kapRef = useRef<HTMLDivElement>(null)
   const modRef = useRef(mod)
   modRef.current = mod
   const acRef = useRef(ac)
@@ -153,6 +156,18 @@ export default function Cizim({ oturum, anahtar, mod, kapat, bitti, ac, kodDegis
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ciz])
 
+  // Lazer yalnızca işaretçidir: imleç pencere üzerinden izlenir, tıklamalar alttaki içeriğe (video, düğme) geçer; hiçbir şey çizilmez.
+  useEffect(() => {
+    if (mod !== 'lazer') return
+    const izle = (e: PointerEvent) => {
+      const r = kapRef.current?.getBoundingClientRect()
+      if (!r || r.width === 0) return
+      setNokta({ x: (e.clientX - r.left) / r.width, y: (e.clientY - r.top) / r.height })
+    }
+    window.addEventListener('pointermove', izle)
+    return () => window.removeEventListener('pointermove', izle)
+  }, [mod])
+
   // Telefon kumandası: dokunmatik yüzey lazeri hareket ettirir
   useEffect(() => {
     const kanal = supabase.channel(lazerKanali(oturum), { config: { broadcast: { self: false } } })
@@ -165,10 +180,12 @@ export default function Cizim({ oturum, anahtar, mod, kapat, bitti, ac, kodDegis
       // Kumanda dokunmatik yüzeyi kullanılınca lazer kendiliğinden açılır
       if (modRef.current === 'kapali') acRef.current()
       setNokta({ x, y })
-      if (p.d && !basili) {
+      // Basılı tutunca yalnızca kalem ya da tahta modunda çizilir; lazer modunda nokta hareket eder, çizgi çıkmaz
+      const ciziyor = modRef.current === 'kalem' || modRef.current === 'tahta'
+      if (p.d && ciziyor && !basili) {
         basili = true
         baslat(x, y)
-      } else if (p.d) surdur(x, y)
+      } else if (p.d && ciziyor) surdur(x, y)
       else if (basili) {
         basili = false
         bitir()
@@ -183,6 +200,7 @@ export default function Cizim({ oturum, anahtar, mod, kapat, bitti, ac, kodDegis
       else if (p.k === 'ses_duzey' && typeof p.r === 'number') sesDuzeyiAyarla(p.r)
       else if (p.k === 'kod') kodRef.current?.()
       else if (p.k === 'kapat') kapatRef.current()
+      else if (p.k === 'mod') modDegistirRef.current?.(p.r ? 'kalem' : 'lazer')
       else komutRef.current(p.k, p.r)
     })
     kanal.subscribe()
@@ -220,10 +238,10 @@ export default function Cizim({ oturum, anahtar, mod, kapat, bitti, ac, kodDegis
   }
   return (
     <>
-      <div className={`fixed inset-0 z-[70] ${mod === 'tahta' ? (kara ? 'bg-slate-900' : 'bg-white') : ''}`} style={{ cursor: mod === 'lazer' ? 'none' : 'crosshair' }}>
+      <div ref={kapRef} className={`perde-alan z-[70] ${mod === 'tahta' ? (kara ? 'bg-slate-900' : 'bg-white') : ''} ${mod === 'lazer' ? 'pointer-events-none' : ''}`} style={{ cursor: mod === 'lazer' ? 'none' : 'crosshair' }}>
         <canvas
           ref={canvas}
-          className="w-full h-full touch-none"
+          className={`w-full h-full touch-none ${mod === 'lazer' ? 'pointer-events-none' : ''}`}
           onPointerDown={(e) => {
             e.currentTarget.setPointerCapture(e.pointerId)
             const k = koordinat(e)
@@ -246,8 +264,9 @@ export default function Cizim({ oturum, anahtar, mod, kapat, bitti, ac, kodDegis
           />
         )}
       </div>
-      <div className="fixed top-2 left-1/2 -translate-x-1/2 z-[71] cam-panel rounded-2xl px-3 py-2 flex flex-wrap items-center gap-2 text-sm shadow-2xl">
-        <b>{mod === 'tahta' ? '🖍️ Tahta' : '🔴 Lazer'}</b>
+      <div className="fixed left-1/2 -translate-x-1/2 z-[71] cam-panel rounded-2xl px-3 py-2 flex flex-wrap items-center gap-2 text-sm shadow-2xl" style={{ top: 'calc(var(--perde-ust, 0px) + 8px)' }}>
+        <b>{mod === 'tahta' ? '🖍️ Tahta' : mod === 'kalem' ? '✏️ Kalem' : '🔴 Lazer (yalnızca işaret)'}</b>
+        {mod !== 'lazer' && <>
         {KALEM_RENKLERI.map((r) => (
           <button
             key={r.renk}
@@ -280,6 +299,7 @@ export default function Cizim({ oturum, anahtar, mod, kapat, bitti, ac, kodDegis
             {kara ? '⬜ Beyaz tahta' : '⬛ Kara tahta'}
           </button>
         )}
+        </>}
         <button className="tehlike-buton !py-1 !px-2" onClick={kapat}>
           Kapat
         </button>

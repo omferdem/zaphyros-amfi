@@ -727,7 +727,10 @@ export default function Sahne() {
       <button className="ikincil-buton" onClick={() => setCizimModu((m) => (m === 'tahta' ? 'kapali' : 'tahta'))} title="Boş tahta aç (beyaz ya da kara)">
         🖍️<span className="hidden @[1180px]:inline"> Tahta</span>
       </button>
-      <button className="ikincil-buton" onClick={() => setCizimModu((m) => (m === 'lazer' ? 'kapali' : 'lazer'))} title="Lazer: slaytta işaret et, basılı tutup çiz (L tuşu)">
+      <button className="ikincil-buton" onClick={() => setCizimModu((m) => (m === 'kalem' ? 'kapali' : 'kalem'))} title="Kalem: slaytın üstüne yaz ve çiz">
+        ✏️<span className="hidden @[1180px]:inline"> Kalem</span>
+      </button>
+      <button className="ikincil-buton" onClick={() => setCizimModu((m) => (m === 'lazer' ? 'kapali' : 'lazer'))} title="Lazer: yalnızca kırmızı nokta, çizmez; videoya ve düğmelere tıklanır (L tuşu)">
         🔴<span className="hidden @[1180px]:inline"> Lazer</span>
       </button>
       {adimlar.length > 0 && (
@@ -899,7 +902,7 @@ export default function Sahne() {
           </div>
         </AltSerit>
       )}
-      <Cizim oturum={oturum.id} anahtar={oturum.aktif_adim ?? 'yok'} mod={cizimModu} kapat={() => setCizimModu('kapali')} bitti={!!oturum.bitti} ac={() => setCizimModu('lazer')} kodDegistir={() => setKodGoster((g) => !g)} />
+      <Cizim oturum={oturum.id} anahtar={oturum.aktif_adim ?? 'yok'} mod={cizimModu} kapat={() => setCizimModu('kapali')} bitti={!!oturum.bitti} ac={() => setCizimModu('lazer')} modDegistir={setCizimModu} kodDegistir={() => setKodGoster((g) => !g)} />
       {notAcik && <PerdeNotu key={oturum.id} dersId={oturum.course_id} baglam={`${new Date().toLocaleString('tr-TR')} · ${oturum.courses.ad}${oturum.baslik ? ` · ${oturum.baslik}` : ''}`} kapat={() => setNotAcik(false)} />}
       <TepkiKatmani oturum={oturum.id} etkin={tepkiAcik && !quizAcik && !lobi && !finalAcik} ayar={tepkiAyarla} />
       {lobi && (

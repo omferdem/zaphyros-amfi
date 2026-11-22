@@ -1,5 +1,9 @@
 # Sürüm Geçmişi
 
+## v0.66.6 (23 Kasım 2026)
+Veritabanı değişikliği yok.
+- **Ders dışı etkinlikte giriş karekodu büyütüldü:** lobide ekran yüksekliğinin %46'sı kadar (en çok 420 px), sağ kod şeridinde 288 px; arka sıradaki telefonlar okuyabilsin. Ders içi döner yoklama karekodu eskisi gibi küçük şeritte.
+
 ## v0.66.5 (23 Kasım 2026)
 Veritabanı değişikliği yok. Görsel denetim (alt küme) ihlalsiz; ayrıntı `denetim/v0.66/KONTROL.md`.
 - **Lazer ve kalem ayrıldı (madde 5):** lazer yalnızca kırmızı nokta, çizmez, tıklamalar alttaki videoya ve düğmelere geçer; ✏️ Kalem ayrı araç; kumandada "Kalem: açık/kapalı" anahtarı.

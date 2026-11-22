@@ -78,7 +78,9 @@ export function KodSerit({
   // Dar ekranda (telefon) şerit kapalı başlar; içeriğe yer kalsın
   const [kapali, setKapali] = useState(() => typeof window !== 'undefined' && window.innerWidth < 700)
   const qrVar = donuyor ? acik && !qrGizli : !!qr
-  const genislik = kapali ? 40 : qrVar ? 148 : 56
+  // Giriş karekodu (etkinlik) amfinin arka sırasından okunsun diye büyük; döner yoklama karekodu küçük kalır
+  const boy = donuyor ? 128 : 288
+  const genislik = kapali ? 40 : qrVar ? boy + 20 : 56
   usePerdeDegiskeni('--perde-sag', `${genislik}px`)
   if (kapali)
     return (
@@ -112,12 +114,12 @@ export function KodSerit({
       </div>
       {qrVar && (
         <div className="shrink-0 flex flex-col items-center gap-1 pb-1">
-          <div className="bg-white rounded-lg p-1 w-[128px] h-[128px] flex items-center justify-center">
+          <div className="bg-white rounded-lg p-1.5 flex items-center justify-center" style={{ width: boy, height: boy }}>
             {qr ? <img src={qr} alt="Yoklama QR kodu" className="w-full h-full [image-rendering:pixelated]" /> : <span className="text-slate-500 text-[10px] text-center">{qrHata ? 'Bağlantı yok' : '…'}</span>}
           </div>
           {donuyor ? (
             <>
-              <div className="w-[120px] h-1 rounded-full bg-white/10 overflow-hidden">
+              <div className="h-1 rounded-full bg-white/10 overflow-hidden" style={{ width: boy - 8 }}>
                 <div className="h-full bg-linear-to-r from-pink-500 to-violet-500" style={{ width: `${kalanOran * 100}%` }} />
               </div>
               <button className="text-[10px] text-slate-400 hover:text-white underline" onClick={() => qrAc(false)}>
@@ -125,7 +127,7 @@ export function KodSerit({
               </button>
             </>
           ) : (
-            <span className="text-[10px] text-slate-400">giriş karekodu</span>
+            <span className="text-sm font-bold text-slate-200">Karekodu okut</span>
           )}
         </div>
       )}

@@ -54,7 +54,7 @@ export function Lobi({
   useEffect(() => {
     if (!girisAdresi) return
     let iptal = false
-    QRCode.toDataURL(girisAdresi, { margin: 1, width: 256, errorCorrectionLevel: 'M' }).then((r) => !iptal && setGirisQr(r))
+    QRCode.toDataURL(girisAdresi, { margin: 1, width: 800, errorCorrectionLevel: 'M' }).then((r) => !iptal && setGirisQr(r))
     return () => {
       iptal = true
     }
@@ -140,8 +140,8 @@ export function Lobi({
               {paketAdi} · {sureDk ? `${sureDk} dakika` : `${soruSayisi} soru`}
             </p>
             {kod && (
-              <p className="text-2xl lg:text-3xl font-bold flex items-center justify-center gap-4 flex-wrap" data-denetim="lobi-kod">
-                {girisQr && <img src={girisQr} alt="Giriş karekodu" className="w-28 h-28 rounded-xl bg-white p-1 [image-rendering:pixelated]" />}
+              <p className="text-2xl lg:text-3xl font-bold flex flex-col items-center justify-center gap-3" data-denetim="lobi-kod">
+                {girisQr && <img src={girisQr} alt="Giriş karekodu" className="rounded-2xl bg-white p-2 [image-rendering:pixelated]" style={{ width: 'min(46vh, 420px)', height: 'min(46vh, 420px)' }} />}
                 <span className="text-slate-300">Katıl: </span>
                 <b className="font-mono text-sari tracking-widest text-4xl lg:text-5xl">{kod}</b>
                 {adres && <span className="text-cyan-200 font-mono text-xl"> · {adres}</span>}

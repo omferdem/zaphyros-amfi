@@ -1147,7 +1147,7 @@ function KodSeridiKabugu({ oturumId, kod, katilan, acik, qrGizli, qrAc }: { otur
   useEffect(() => {
     if (acik) return
     let iptal = false
-    QRCode.toDataURL(girisAdresi(kod), { margin: 1, width: 256, errorCorrectionLevel: 'M' }).then((r) => !iptal && setGirisQr(r))
+    QRCode.toDataURL(girisAdresi(kod), { margin: 1, width: 640, errorCorrectionLevel: 'M' }).then((r) => !iptal && setGirisQr(r))
     return () => {
       iptal = true
     }

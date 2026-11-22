@@ -82,6 +82,11 @@ function katilimAdresi(oturumId: string, token: string): string {
   return `${kokAdres()}#/katil?s=${oturumId}&t=${token}`
 }
 
+/** Karekodun taşıdığı giriş adresi: kodu önceden doldurur, yoklama bileti içermez. */
+function girisAdresi(kod: string): string {
+  return `${kokAdres()}#/katil?kod=${kod}`
+}
+
 function kodBicimle(kod: string): string {
   return `${kod.slice(0, 3)} ${kod.slice(3)}`
 }
@@ -666,7 +671,7 @@ export default function Sahne() {
   if (oturum.bitti) return <DersBitti oturum={oturum} katilan={gelenler.length} yenidenAc={dersiYenidenAc} />
 
   const araclar = (
-    <div className="flex w-full min-w-0 flex-nowrap items-center gap-1.5 [&_button]:whitespace-nowrap [&_button]:shrink-0 [&_button]:!py-1 [&_summary]:!py-1">
+    <div className="flex w-full min-w-0 flex-nowrap items-center gap-1.5 [&_button]:whitespace-nowrap [&_button]:shrink-0 [&_button]:!py-1 [&_button]:!min-h-10 [&_button]:!min-w-10 [&_summary]:!py-1 [&_summary]:!min-h-10 [&_summary]:!min-w-10 [&_summary]:flex [&_summary]:items-center [&_summary]:justify-center">
       <select
         className="giris-kutusu !w-auto !py-1 text-sm max-w-52 min-w-0 shrink hidden @[640px]:block"
         value={aktif ? (oturum.lesson_id ?? '') : ''}
@@ -924,6 +929,7 @@ export default function Sahne() {
           adlar={gelenler.map((g) => g.ad).filter(Boolean)}
           kod={kod ? kodBicimle(kod) : null}
           adres={kisaAdres()}
+          girisAdresi={kod ? girisAdresi(kod) : undefined}
           basla={lobidenBasla}
           iptal={() => void dersedon().then(() => setLobi(null))}
         />
@@ -1136,7 +1142,17 @@ function useDonenQr(oturumId: string, acik: boolean) {
 /** Slayt, soru ve etkinlik ekranlarında sağ kenardaki kod şeridi (kod, adres ve yoklama açıksa küçük karekod). */
 function KodSeridiKabugu({ oturumId, kod, katilan, acik, qrGizli, qrAc }: { oturumId: string; kod: string; katilan: number; acik: boolean; qrGizli: boolean; qrAc: (ac: boolean) => void }) {
   const { qr, qrHata, kalanOran } = useDonenQr(oturumId, acik && !qrGizli)
-  return <KodSerit kod={kodBicimle(kod)} adres={kisaAdres()} qr={qr} qrHata={qrHata} kalanOran={kalanOran} katilan={katilan} acik={acik} qrGizli={qrGizli} qrAc={qrAc} />
+  // Yoklama kapalıyken (ders dışı etkinlik, geç gelenler): kodu taşıyan sabit karekod; yoklama yazmaz, yalnızca derse/etkinliğe girişi sağlar
+  const [girisQr, setGirisQr] = useState<string | null>(null)
+  useEffect(() => {
+    if (acik) return
+    let iptal = false
+    QRCode.toDataURL(girisAdresi(kod), { margin: 1, width: 256, errorCorrectionLevel: 'M' }).then((r) => !iptal && setGirisQr(r))
+    return () => {
+      iptal = true
+    }
+  }, [acik, kod])
+  return <KodSerit kod={kodBicimle(kod)} adres={kisaAdres()} qr={acik ? qr : girisQr} qrHata={qrHata} kalanOran={kalanOran} katilan={katilan} acik={acik} qrGizli={qrGizli} qrAc={qrAc} donuyor={acik} />
 }
 
 function YoklamaSahnesi({

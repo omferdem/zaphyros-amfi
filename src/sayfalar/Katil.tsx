@@ -169,6 +169,18 @@ export default function Katil() {
     setDurum({ tur: 'ders', ad, ders: durum.bilet.ders })
   }
 
+  // Karekoddan gelen giriş (#/katil?kod=123456): kod otomatik denenir; yoklama bileti içermez
+  const karekod = parametreler.get('kod')
+  const karekodDenendi = useRef(false)
+  useEffect(() => {
+    if (!karekod || oturum || karekodDenendi.current) return
+    karekodDenendi.current = true
+    void kodlaKatil(karekod.replace(/\D/g, '').slice(0, 6)).then((h) => {
+      if (h) setFormHata(h)
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [karekod, oturum])
+
   /** Geç gelen öğrenci: perdedeki 6 haneli kodla katılır. */
   async function kodlaKatil(kod: string): Promise<string | null> {
     const { data, error } = await supabase.rpc('kodla_katil', { p_kod: kod, p_cihaz: cihazKimligi() })

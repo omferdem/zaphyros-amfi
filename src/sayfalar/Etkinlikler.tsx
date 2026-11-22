@@ -26,9 +26,7 @@ const ZORLUKLAR = [
 function modSecenekleri(bolum: EtkinlikBolumu): { anahtar: string; ad: string }[] {
   if (bolum === 'quiz') return []
   if (bolum === 'zapoot') return [{ anahtar: 'oneri', ad: '✨ Paketin önerilen modu' }, { anahtar: 'bireysel', ad: '🧑 Bireysel' }]
-  return [
-    ...(Object.keys(OYUNLAR) as OyunAnahtari[]).map((k) => ({ anahtar: k, ad: `${OYUNLAR[k].emoji} ${OYUNLAR[k].ad}` })),
-  ]
+  return (Object.keys(OYUNLAR) as OyunAnahtari[]).map((k) => ({ anahtar: k, ad: `${OYUNLAR[k].emoji} ${OYUNLAR[k].ad}` }))
 }
 
 /**

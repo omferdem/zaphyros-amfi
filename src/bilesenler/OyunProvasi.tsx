@@ -26,6 +26,22 @@ export default function OyunProvasi({ kapat, baslangic = 'zombi' }: { kapat: () 
   const [cevapBekle, setCevapBekle] = useState(false)
   const oyuncular = useMemo(() => sahteOyuncular(sayi, basari, TOPLAM), [sayi, basari])
 
+  // Çıkış: Esc ve tarayıcı geri tuşu da provayı kapatır (telefonda ekran dışında kalan düğmeye gerek kalmaz)
+  useEffect(() => {
+    const esc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') kapat()
+    }
+    const geri = () => kapat()
+    window.history.pushState({ provaAcik: true }, '')
+    window.addEventListener('keydown', esc)
+    window.addEventListener('popstate', geri)
+    return () => {
+      window.removeEventListener('keydown', esc)
+      window.removeEventListener('popstate', geri)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   useEffect(() => {
     if (!oynuyor || k >= TOPLAM) return
     const t = setTimeout(() => setK((x) => Math.min(TOPLAM, x + 1)), 3500)
@@ -48,6 +64,16 @@ export default function OyunProvasi({ kapat, baslangic = 'zombi' }: { kapat: () 
   return (
     <>
       <EnerjiSaglayici oyuncular={enerjiVerisi}>{sahne}</EnerjiSaglayici>
+      <button
+        data-denetim="prova-kapat"
+        className="fixed right-2 z-[80] w-11 h-11 rounded-full bg-slate-900/90 border border-white/30 text-white text-xl font-bold shadow-xl hover:bg-rose-600"
+        style={{ top: 'calc(var(--perde-ust, 0px) + 8px)' }}
+        onClick={kapat}
+        aria-label="Provayı kapat"
+        title="Provayı kapat (Esc)"
+      >
+        ✕
+      </button>
       {!acik && (
         <button
           className="fixed right-2 bottom-2 z-[70] rounded-full bg-fuchsia-600/90 hover:bg-fuchsia-500 text-white text-xs font-bold px-3 py-1.5 shadow-lg"

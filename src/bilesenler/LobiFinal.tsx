@@ -1,3 +1,4 @@
+import QRCode from 'qrcode'
 import { TAKIMLAR } from '../lib/takim'
 import { useEffect, useRef, useState } from 'react'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
@@ -23,6 +24,7 @@ export function Lobi({
   adlar = [],
   kod,
   adres,
+  girisAdresi,
   basla,
   iptal,
 }: {
@@ -39,6 +41,8 @@ export function Lobi({
   /** Katılım kodu ve adresi (lobide büyük gösterilir) */
   kod?: string | null
   adres?: string
+  /** Karekod için giriş adresi (yoklama yazmaz) */
+  girisAdresi?: string
   basla: () => Promise<void>
   iptal: () => void
 }) {
@@ -46,6 +50,15 @@ export function Lobi({
   const [takimlar, setTakimlar] = useState<{ takim: number; adlar: string[] }[]>([])
   const [takimSayisi, setTakimSayisi] = useState(0)
   const [sayim, setSayim] = useState<number | null>(null)
+  const [girisQr, setGirisQr] = useState<string | null>(null)
+  useEffect(() => {
+    if (!girisAdresi) return
+    let iptal = false
+    QRCode.toDataURL(girisAdresi, { margin: 1, width: 256, errorCorrectionLevel: 'M' }).then((r) => !iptal && setGirisQr(r))
+    return () => {
+      iptal = true
+    }
+  }, [girisAdresi])
   const baslaRef = useRef(basla)
   baslaRef.current = basla
 
@@ -127,7 +140,8 @@ export function Lobi({
               {paketAdi} · {sureDk ? `${sureDk} dakika` : `${soruSayisi} soru`}
             </p>
             {kod && (
-              <p className="text-2xl lg:text-3xl font-bold" data-denetim="lobi-kod">
+              <p className="text-2xl lg:text-3xl font-bold flex items-center justify-center gap-4 flex-wrap" data-denetim="lobi-kod">
+                {girisQr && <img src={girisQr} alt="Giriş karekodu" className="w-28 h-28 rounded-xl bg-white p-1 [image-rendering:pixelated]" />}
                 <span className="text-slate-300">Katıl: </span>
                 <b className="font-mono text-sari tracking-widest text-4xl lg:text-5xl">{kod}</b>
                 {adres && <span className="text-cyan-200 font-mono text-xl"> · {adres}</span>}

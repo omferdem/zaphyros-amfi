@@ -61,6 +61,7 @@ export function KodSerit({
   acik,
   qrGizli,
   qrAc,
+  donuyor,
 }: {
   kod: string
   adres: string
@@ -71,9 +72,11 @@ export function KodSerit({
   acik: boolean
   qrGizli: boolean
   qrAc: (ac: boolean) => void
+  /** true: yoklama karekodu (6 sn'de bir döner); false: yalnızca giriş karekodu (sabit, yoklama yazmaz) */
+  donuyor: boolean
 }) {
   const [kapali, setKapali] = useState(false)
-  const qrVar = acik && !qrGizli
+  const qrVar = donuyor ? acik && !qrGizli : !!qr
   const genislik = kapali ? 24 : qrVar ? 148 : 56
   usePerdeDegiskeni('--perde-sag', `${genislik}px`)
   if (kapali)
@@ -111,12 +114,18 @@ export function KodSerit({
           <div className="bg-white rounded-lg p-1 w-[128px] h-[128px] flex items-center justify-center">
             {qr ? <img src={qr} alt="Yoklama QR kodu" className="w-full h-full [image-rendering:pixelated]" /> : <span className="text-slate-500 text-[10px] text-center">{qrHata ? 'Bağlantı yok' : '…'}</span>}
           </div>
-          <div className="w-[120px] h-1 rounded-full bg-white/10 overflow-hidden">
-            <div className="h-full bg-linear-to-r from-pink-500 to-violet-500" style={{ width: `${kalanOran * 100}%` }} />
-          </div>
-          <button className="text-[10px] text-slate-400 hover:text-white underline" onClick={() => qrAc(false)}>
-            karekodu gizle
-          </button>
+          {donuyor ? (
+            <>
+              <div className="w-[120px] h-1 rounded-full bg-white/10 overflow-hidden">
+                <div className="h-full bg-linear-to-r from-pink-500 to-violet-500" style={{ width: `${kalanOran * 100}%` }} />
+              </div>
+              <button className="text-[10px] text-slate-400 hover:text-white underline" onClick={() => qrAc(false)}>
+                karekodu gizle
+              </button>
+            </>
+          ) : (
+            <span className="text-[10px] text-slate-400">giriş karekodu</span>
+          )}
         </div>
       )}
       {acik && qrGizli && (

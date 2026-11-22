@@ -27,7 +27,6 @@ function modSecenekleri(bolum: EtkinlikBolumu): { anahtar: string; ad: string }[
   if (bolum === 'quiz') return []
   if (bolum === 'zapoot') return [{ anahtar: 'oneri', ad: '✨ Paketin önerilen modu' }, { anahtar: 'bireysel', ad: '🧑 Bireysel' }]
   return [
-    { anahtar: 'oneri', ad: '✨ Paketin önerilen modu' },
     ...(Object.keys(OYUNLAR) as OyunAnahtari[]).map((k) => ({ anahtar: k, ad: `${OYUNLAR[k].emoji} ${OYUNLAR[k].ad}` })),
   ]
 }
@@ -48,6 +47,7 @@ function EtkinlikAlani({ bolum }: { bolum: EtkinlikBolumu }) {
   const [alan, setAlan] = useState<{ courseId: string; icerikId: string } | null>(null)
   const [satirlar, setSatirlar] = useState<EtkinlikSatiri[] | null>(null)
   const [paketAdlari, setPaketAdlari] = useState<string[]>([])
+  const [paketModlari, setPaketModlari] = useState<Record<string, string>>({})
   const [hata, setHata] = useState<string | null>(null)
   const [mesgul, setMesgul] = useState<string | null>(null)
   const [yeniAd, setYeniAd] = useState('')
@@ -59,7 +59,9 @@ function EtkinlikAlani({ bolum }: { bolum: EtkinlikBolumu }) {
       setAlan(a)
       const [l, sorular] = await Promise.all([etkinlikleriGetir(a.courseId), sorulariGetir(a.icerikId)])
       setSatirlar(l)
-      setPaketAdlari(paketleriGrupla(sorular).filter((g) => g.ad).map((g) => g.ad))
+      const gruplar = paketleriGrupla(sorular).filter((g) => g.ad)
+      setPaketAdlari(gruplar.map((g) => g.ad))
+      setPaketModlari(Object.fromEntries(gruplar.map((g) => [g.ad, String(g.sorular[0]?.ek?.mod ?? '')])))
     } catch {
       setHata('Etkinlikler yüklenemedi. Sayfayı yenileyip tekrar dene.')
     }
@@ -178,12 +180,18 @@ function EtkinlikAlani({ bolum }: { bolum: EtkinlikBolumu }) {
                 </select>
                 {modlar.length > 0 && (
                   <select className="giris-kutusu !w-auto !py-1.5 text-sm" value={e.mod} onChange={(ev) => degistir(e, { mod: ev.target.value })} aria-label="Oyun modu">
+                    {!modlar.some((m) => m.anahtar === e.mod) && <option value={e.mod}>✨ Paketin önerilen modu</option>}
                     {modlar.map((m) => (
                       <option key={m.anahtar} value={m.anahtar}>
                         {m.ad}
                       </option>
                     ))}
                   </select>
+                )}
+                {e.mod === 'oneri' && (
+                  <span className="text-xs text-amber-200" title="Paketin hazırlanmış oyun modu; yoksa bireysel oynanır">
+                    Önerilen: {paketModlari[e.paket] && paketModlari[e.paket] in OYUNLAR ? OYUNLAR[paketModlari[e.paket] as OyunAnahtari].ad : 'yok (bireysel)'}
+                  </span>
                 )}
                 <label className="flex items-center gap-1 text-xs text-slate-300">
                   Soru

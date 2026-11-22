@@ -34,7 +34,8 @@ export interface MerdivenDurumu {
 
 /** Her bu kadar basamakta bir güvenli basamak vardır; yanlışta en yakın alttaki güvenli basamağa inilir. */
 export const GUVENLI_ARALIK = 5
-export const JOKER_HAKKI = 2
+/** Joker hakkı (tek kaynak). 0.65 tasarımında 3'tü; 0.66.4'te 3'e döndürüldü (önceki değer 2 idi). */
+export const JOKER_HAKKI = 3
 /** Cevap verenlerin en az bu yüzdesi doğru bilirse sınıf soruyu bildi sayılır. */
 export const GECME_ORANI = 60
 

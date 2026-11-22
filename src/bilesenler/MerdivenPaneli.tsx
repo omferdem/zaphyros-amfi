@@ -101,7 +101,7 @@ export default function MerdivenPaneli({ oturum, anahtar, mod, dugme = true }: {
   const sonSonuc = d.gecmis[d.gecmis.length - 1]
 
   return (
-    <div className={perde ? 'perde-alan z-40 bg-slate-950/95 flex items-start justify-center p-3 pb-28 pt-14 overflow-y-auto' : ''}>
+    <div className={perde ? 'perde-alan z-40 bg-slate-950/95 flex items-stretch justify-center p-2 overflow-hidden' : ''}>
       <Merdiven tamEkran={perde} oyuncular={oyuncular} d={d} jokerler={{ kullanilan: jokerDurumu.kullanilan, seyirci: jokerDurumu.seyirci, kullan: jokerKullan, hata: jokerHata }} sonSonuc={sonSonuc?.sonuc ?? null} kucuk={!perde} joker={() => d.jokerlenebilir && kaydet({ ...kayit, jokerler: [...kayit.jokerler, d.jokerlenebilir] })} kapat={() => kaydet({ ...kayit, acik: false })} />
     </div>
   )
@@ -120,7 +120,7 @@ const SIK_HARFLERI = ['A', 'B', 'C', 'D', 'E', 'F']
 export function Merdiven({ d, sonSonuc, kucuk, joker, kapat, jokerler, tamEkran = false, oyuncular }: { d: MerdivenDurumu; sonSonuc: 'cikti' | 'dustu' | 'joker' | null; kucuk: boolean; joker: () => void; kapat: () => void; jokerler?: SoruJokerleri; tamEkran?: boolean; oyuncular?: { ad: string; sonuc: (1 | 0 | -1 | null)[] }[] }) {
   const basamaklar = Array.from({ length: d.toplam }, (_, i) => i + 1)
   return (
-    <div className={`cam-panel rounded-3xl p-4 space-y-3 ${kucuk ? 'w-full' : tamEkran ? 'w-[min(64rem,96vw)] max-h-[96vh] overflow-y-auto' : 'w-[min(60rem,94vw)]'}`}>
+    <div className={`cam-panel rounded-3xl p-4 space-y-3 ${kucuk ? 'w-full' : tamEkran ? 'w-full h-full overflow-hidden flex flex-col' : 'w-[min(60rem,94vw)]'}`}>
       <div className="flex items-center gap-3 text-sm">
         <span className="font-bold">🪜 Bilgi merdiveni</span>
         <span className="font-display font-extrabold tabular-nums">
@@ -220,16 +220,8 @@ export function Merdiven({ d, sonSonuc, kucuk, joker, kapat, jokerler, tamEkran 
 /** Perdede merdiven: Zirveye Tırmanış sahnesi ve yanında kurallar. */
 function MerdivenSahnesi({ d, sonSonuc, jokerler, oyuncular }: { d: MerdivenDurumu; sonSonuc: 'cikti' | 'dustu' | 'joker' | null; jokerler?: SoruJokerleri; oyuncular?: { ad: string; sonuc: (1 | 0 | -1 | null)[] }[] }) {
   return (
-    <div className="grid gap-4 md:grid-cols-[1fr_15rem] items-stretch">
+    <div className="flex-1 min-h-0 flex items-center justify-center">
       <ZirveSahnesi d={d} sonSonuc={sonSonuc} jokerler={jokerler} sonOran={d.sonOran} oyuncular={oyuncular} />
-      <div className="rounded-3xl border border-white/10 bg-white/5 p-4 text-sm space-y-2 self-stretch">
-        <p className="font-display font-extrabold text-base">⛰ Zirveye Tırmanış</p>
-        <ul className="space-y-1.5 text-slate-300 list-disc pl-4">
-          <li>Sınıf bir tırmanış ekibi; zirveye {d.toplam} kamp var.</li>
-          <li>Sınıfın en az %{d.esik}'i bilirse bir kamp çıkılır, bilemezse çığ düşer ve son güvenli kampa (⛺ bayraklı) kayılır.</li>
-          <li>Üç eşya, turda birer kez: ✂ Kestirme yol, 📻 Telsizle şerpaya sor, 🫁 Oksijen tüpü. Ayrıca bir yanlış soruyu kurtaran kurtarma hakkı var.</li>
-        </ul>
-      </div>
     </div>
   )
 }

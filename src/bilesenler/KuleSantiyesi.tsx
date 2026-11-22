@@ -141,7 +141,7 @@ export function KuleSantiyesi({ d, kucult }: { d: KuleDurumu; kucult: () => void
   const genislik = `${Math.min(24, 92 / Math.max(1, satirlar.length))}%`
 
   return (
-    <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 pb-24 gap-3">
+    <div data-denetim="sahne" className="perde-alan z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
       {d.bitti && (
         <>
           <Konfeti />

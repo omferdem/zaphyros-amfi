@@ -1,0 +1,19 @@
+{
+  "surum": "v0.65.23",
+  "sonuclar": [
+    {
+      "durum": "slayt-metinli",
+      "ekran": "projeksiyon",
+      "dosya": "slayt-metinli__projeksiyon.png",
+      "ihlaller": []
+    },
+    {
+      "durum": "slayt-metinli",
+      "ekran": "telefon-390",
+      "dosya": "slayt-metinli__telefon-390.png",
+      "ihlaller": [
+        "20 düğme 40x40 px'ten küçük (ör. \"🎮 Zapoot\" 107x39)"
+      ]
+    }
+  ]
+}

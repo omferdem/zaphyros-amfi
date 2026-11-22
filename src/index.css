@@ -53,6 +53,16 @@ h1, h2, h3, .baslik {
   outline-offset: 2px;
 }
 
+/* Hoca perdesinin sahne alanı: üst araç şeridi, sağ kod şeridi ve alt kontrol şeridi (PerdeKabugu) dışında kalan yer.
+   Şeritler değişkenleri yayınlar; hiçbiri sahnenin üstüne binmez. Perde dışında değişkenler tanımsızdır, alan tam ekran olur. */
+.perde-alan {
+  position: fixed;
+  top: var(--perde-ust, 0px);
+  left: 0;
+  right: var(--perde-sag, 0px);
+  bottom: var(--perde-alt, 0px);
+}
+
 /* ------------------------------------------------------------------ yüzeyler */
 .cam-panel {
   background: linear-gradient(155deg, rgba(36, 40, 96, 0.55), rgba(14, 17, 46, 0.78));

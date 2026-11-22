@@ -168,7 +168,7 @@ function OyunKabugu<D, V = Veri>({
   return (
     <>
       {!buyuk && (
-        <div className={`fixed right-4 ${konum} z-30 w-[min(22rem,90vw)]`}>
+        <div className={`fixed ${konum} z-30 w-[min(22rem,90vw)]`} style={{ right: 'calc(var(--perde-sag, 0px) + 16px)', marginBottom: 'var(--perde-alt, 0px)' }}>
           <div className="cam-panel rounded-2xl p-3 space-y-2">
             <div className="flex items-center gap-2 text-sm">
               <b>{baslik}</b>
@@ -252,7 +252,7 @@ export function RoketSahnesi({ d, kucult }: { d: RoketDurumu; kucult: () => void
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [raund])
   return (
-    <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
+    <div data-denetim="sahne" className="perde-alan z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
       {d.bitti && <Konfeti />}
       <div className="flex items-center gap-4 flex-wrap">
         <h2 className="text-2xl sm:text-3xl font-display font-extrabold roket-baslik">🚀 Roket Yarışı</h2>
@@ -520,7 +520,7 @@ export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => 
   }, [d.bitti, d.kazandi])
 
   return (
-    <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
+    <div data-denetim="sahne" className="perde-alan z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
       {d.bitti && d.kazandi && (
         <>
           <Konfeti />
@@ -698,7 +698,7 @@ export function ArenaSahnesi({ d, kucult }: { d: ArenaDurumu; kucult: () => void
   const dusenler = d.oyuncular.filter((o) => o.elendi !== null)
   const kazananlar = d.bitti ? d.kazananlar.slice(0, 3) : []
   return (
-    <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
+    <div data-denetim="sahne" className="perde-alan z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
       {d.bitti && !d.kimseKalmadi && kazananlar.length > 0 && (
         <>
           <Konfeti />
@@ -878,7 +878,7 @@ export function KaleSahnesi({ d, kucult }: { d: KaleDurumu; kucult: () => void }
   const konum = new Map(satirlar.map((s, i) => [s.takim, kaleKonumu(i, satirlar.length)]))
   const KALE_YARICAPI = 7
   return (
-    <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
+    <div data-denetim="sahne" className="perde-alan z-40 bg-slate-950/95 flex flex-col p-3 sm:p-5 gap-3">
       {d.bitti && <Konfeti />}
       <div className="flex items-center gap-4 flex-wrap">
         <h2 className="text-2xl sm:text-3xl font-display font-extrabold kule-baslik">🏰 Kale Kuşatması</h2>

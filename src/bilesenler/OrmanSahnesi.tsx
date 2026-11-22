@@ -172,7 +172,7 @@ export function OrmanSahnesi({ d, kucult }: { d: OrmanSonucu; kucult: () => void
   const kapanisKurt = d.oyuncular.some((o) => o.durum === 'kapildi' && o.bittigiSoru === d.oynanan)
 
   return (
-    <div className="fixed inset-0 z-40 bg-slate-950 flex flex-col p-3 sm:p-5 gap-3">
+    <div data-denetim="sahne" className="perde-alan z-40 bg-slate-950 flex flex-col p-3 sm:p-5 gap-3">
       <style>{STIL}</style>
       {d.bitti && evde.length > 0 && (
         <>

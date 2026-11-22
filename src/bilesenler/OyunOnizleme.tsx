@@ -113,7 +113,7 @@ export function oyunSahnesiUret({
     })
     const d = merdivenHesapla(ms, new Set())
     return (
-      <div className="fixed inset-0 z-40 bg-slate-950/95 flex items-center justify-center p-6">
+      <div data-denetim="sahne" className="perde-alan z-40 bg-slate-950/95 flex items-center justify-center p-6">
         <Merdiven d={d} sonSonuc={d.gecmis[d.gecmis.length - 1]?.sonuc ?? null} kucuk={false} joker={() => {}} kapat={kapat} tamEkran />
       </div>
     )
@@ -183,7 +183,7 @@ export default function OyunOnizleme({ oyun, adlar, demo, takimSayisi }: { oyun:
   // Katılımcı adı yokken (ör. yalnızca takma adla girenler) ve veri gelmeden hiçbir şey çizilmez; gerçek sahne veriyle kendisi açılır
   if (!sahne || (!demo && oyuncular.length === 0)) return null
   return (
-    <div className="fixed inset-0 z-[20]">
+    <div data-denetim="sahne" className="perde-alan z-[20]">
       <EnerjiSaglayici oyuncular={enerji as unknown as { ad: string; sonuc: (1 | 0 | -1 | null)[] }[]}>{sahne}</EnerjiSaglayici>
     </div>
   )

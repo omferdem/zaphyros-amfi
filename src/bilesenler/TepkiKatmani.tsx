@@ -73,7 +73,7 @@ export default function TepkiKatmani({ oturum, etkin, ayar }: { oturum: string; 
           {u.adet > 1 && <b className="text-sm align-top text-white bg-black/50 rounded-full px-1.5 ml-0.5">×{u.adet}</b>}
         </span>
       ))}
-      <div className={`fixed right-3 bottom-28 text-4xl select-none ${hocaDurumu === 'ziplar' ? 'tepki-hoca-zipla' : ''}`} title="Hoca">
+      <div className={`fixed bottom-28 text-4xl select-none ${hocaDurumu === 'ziplar' ? 'tepki-hoca-zipla' : ''}`} style={{ right: 'calc(var(--perde-sag, 0px) + 12px)' }} title="Hoca">
         {hocaDurumu === 'sakin' ? '🧑‍🏫' : hocaDurumu === 'gulumse' ? '😊' : '🥳'}
       </div>
     </div>

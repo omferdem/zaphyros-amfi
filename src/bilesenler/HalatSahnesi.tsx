@@ -129,7 +129,7 @@ export function HalatSahnesi({ h, oyuncular, zorlaniyor, kucult }: { h: HalatSah
   }
 
   return (
-    <div className="fixed inset-0 z-40 overflow-hidden flex flex-col" style={arkaPlan('arka-halat.webp', 'linear-gradient(#1e3a8a, #0f172a)')}>
+    <div data-denetim="sahne" className="perde-alan z-40 overflow-hidden flex flex-col" style={arkaPlan('arka-halat.webp', 'linear-gradient(#1e3a8a, #0f172a)')}>
       <style>{STIL}</style>
       {h.kazanan !== null && (
         <>

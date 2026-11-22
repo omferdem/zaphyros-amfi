@@ -115,7 +115,7 @@ export function KaleHaritaSahnesi({ h, takimSayisi, kucult }: { h: KaleHaritasi;
   const kalabalik = h.hucreler.filter((c) => c.takim !== null).length > 24
   const kalinlik = (R_DIS - R_IC) / HALKA_SAYISI
   return (
-    <div className="fixed inset-0 z-40 bg-slate-950/95 flex flex-col p-3 sm:p-4 gap-2">
+    <div data-denetim="sahne" className="perde-alan z-40 bg-slate-950/95 flex flex-col p-3 sm:p-4 gap-2">
       <style>{KALE_STIL}</style>
       {h.bitti && h.kazanan !== null && (
         <>

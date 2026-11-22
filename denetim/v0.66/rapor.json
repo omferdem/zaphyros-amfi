@@ -1,0 +1,115 @@
+{
+  "surum": "v0.66",
+  "sonuclar": [
+    {
+      "durum": "zapoot-uzun-soru",
+      "ekran": "projeksiyon",
+      "dosya": "zapoot-uzun-soru__projeksiyon.png",
+      "ihlaller": []
+    },
+    {
+      "durum": "zapoot-uzun-soru",
+      "ekran": "telefon-390",
+      "dosya": "zapoot-uzun-soru__telefon-390.png",
+      "ihlaller": [
+        "24 düğme 40x40 px'ten küçük (ör. \"🎮 Zapoot\" 55x31)"
+      ]
+    },
+    {
+      "durum": "oyun-zombi-soru",
+      "ekran": "projeksiyon",
+      "dosya": "oyun-zombi-soru__projeksiyon.png",
+      "ihlaller": [
+        "araç çubuğu ikinci satıra taşıyor"
+      ]
+    },
+    {
+      "durum": "oyun-zombi-soru",
+      "ekran": "telefon-390",
+      "dosya": "oyun-zombi-soru__telefon-390.png",
+      "ihlaller": [
+        "28 düğme 40x40 px'ten küçük (ör. \"🏁 Bitir\" 84x31)"
+      ]
+    },
+    {
+      "durum": "oyun-zombi-sonuc",
+      "ekran": "projeksiyon",
+      "dosya": "oyun-zombi-sonuc__projeksiyon.png",
+      "ihlaller": [
+        "araç çubuğu ikinci satıra taşıyor"
+      ]
+    },
+    {
+      "durum": "oyun-zombi-sonuc",
+      "ekran": "telefon-390",
+      "dosya": "oyun-zombi-sonuc__telefon-390.png",
+      "ihlaller": [
+        "27 düğme 40x40 px'ten küçük (ör. \"🏁 Bitir\" 84x31)"
+      ]
+    },
+    {
+      "durum": "oyun-kale-soru",
+      "ekran": "projeksiyon",
+      "dosya": "oyun-kale-soru__projeksiyon.png",
+      "ihlaller": [
+        "araç çubuğu ikinci satıra taşıyor"
+      ]
+    },
+    {
+      "durum": "oyun-kale-soru",
+      "ekran": "telefon-390",
+      "dosya": "oyun-kale-soru__telefon-390.png",
+      "ihlaller": [
+        "29 düğme 40x40 px'ten küçük (ör. \"🏁 Bitir\" 84x31)"
+      ]
+    },
+    {
+      "durum": "oyun-kale-sonuc",
+      "ekran": "projeksiyon",
+      "dosya": "oyun-kale-sonuc__projeksiyon.png",
+      "ihlaller": [
+        "araç çubuğu ikinci satıra taşıyor"
+      ]
+    },
+    {
+      "durum": "oyun-kale-sonuc",
+      "ekran": "telefon-390",
+      "dosya": "oyun-kale-sonuc__telefon-390.png",
+      "ihlaller": [
+        "28 düğme 40x40 px'ten küçük (ör. \"🏁 Bitir\" 84x31)"
+      ]
+    },
+    {
+      "durum": "oyun-merdiven-soru",
+      "ekran": "projeksiyon",
+      "dosya": "oyun-merdiven-soru__projeksiyon.png",
+      "ihlaller": [
+        "araç çubuğu ikinci satıra taşıyor"
+      ]
+    },
+    {
+      "durum": "oyun-merdiven-soru",
+      "ekran": "telefon-390",
+      "dosya": "oyun-merdiven-soru__telefon-390.png",
+      "ihlaller": [
+        "30 düğme 40x40 px'ten küçük (ör. \"🏁 Bitir\" 84x31)"
+      ]
+    },
+    {
+      "durum": "oyun-merdiven-sonuc",
+      "ekran": "projeksiyon",
+      "dosya": "oyun-merdiven-sonuc__projeksiyon.png",
+      "ihlaller": [
+        "araç çubuğu ikinci satıra taşıyor"
+      ]
+    },
+    {
+      "durum": "oyun-merdiven-sonuc",
+      "ekran": "telefon-390",
+      "dosya": "oyun-merdiven-sonuc__telefon-390.png",
+      "ihlaller": [
+        "30 düğme 40x40 px'ten küçük (ör. \"🏁 Bitir\" 84x31)"
+      ]
+    }
+  ]
+}

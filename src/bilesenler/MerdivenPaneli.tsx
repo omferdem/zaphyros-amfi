@@ -101,7 +101,7 @@ export default function MerdivenPaneli({ oturum, anahtar, mod, dugme = true }: {
   const sonSonuc = d.gecmis[d.gecmis.length - 1]
 
   return (
-    <div className={perde ? 'fixed inset-0 z-40 bg-slate-950/95 flex items-start justify-center p-3 pb-28 pt-14 overflow-y-auto' : ''}>
+    <div className={perde ? 'perde-alan z-40 bg-slate-950/95 flex items-start justify-center p-3 pb-28 pt-14 overflow-y-auto' : ''}>
       <Merdiven tamEkran={perde} oyuncular={oyuncular} d={d} jokerler={{ kullanilan: jokerDurumu.kullanilan, seyirci: jokerDurumu.seyirci, kullan: jokerKullan, hata: jokerHata }} sonSonuc={sonSonuc?.sonuc ?? null} kucuk={!perde} joker={() => d.jokerlenebilir && kaydet({ ...kayit, jokerler: [...kayit.jokerler, d.jokerlenebilir] })} kapat={() => kaydet({ ...kayit, acik: false })} />
     </div>
   )

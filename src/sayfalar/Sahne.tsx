@@ -44,6 +44,7 @@ import { ArenaPaneli, EjderhaPaneli, KalePaneli, KulePaneli, OrmanPaneli, RoketP
 import DersSayaci from '../bilesenler/DersSayaci'
 import OyunSahnesi from '../bilesenler/OyunSahnesi'
 import OyunOnizleme from '../bilesenler/OyunOnizleme'
+import { AltSerit, AracSeridi, ARAC_YUKSEKLIK, KodSerit } from '../bilesenler/PerdeKabugu'
 
 /** Telefon kumandasının bıraktığı istek (veritabanında sessions.kumanda_istek). */
 interface KumandaIstegi {
@@ -659,9 +660,9 @@ export default function Sahne() {
   if (oturum.bitti) return <DersBitti oturum={oturum} katilan={gelenler.length} yenidenAc={dersiYenidenAc} />
 
   const araclar = (
-    <div className="relative z-40 flex flex-wrap items-center gap-2">
+    <div className="flex w-full min-w-0 flex-nowrap items-center gap-1.5 [&_button]:whitespace-nowrap [&_button]:shrink-0 [&_button]:!py-1 [&_summary]:!py-1">
       <select
-        className="giris-kutusu !w-auto !py-1.5 text-sm max-w-64"
+        className="giris-kutusu !w-auto !py-1 text-sm max-w-52 min-w-0 shrink hidden @[640px]:block"
         value={aktif ? (oturum.lesson_id ?? '') : ''}
         onChange={(e) => akisSec(e.target.value)}
         aria-label="Akış seç"
@@ -676,12 +677,12 @@ export default function Sahne() {
         {kahootAkisi && <option value={kahootAkisi.id}>{kahootAkisi.ad}</option>}
       </select>
       {!oturum.lesson_id && sonAkis && akislar.some((a) => a.id === sonAkis.akisId) && (
-        <button className="parlak-buton rounded-xl px-3 py-1.5 text-sm font-bold" onClick={() => akisSec(sonAkis.akisId)} title="Bu şubede en son kaldığın akış">
+        <button className="parlak-buton rounded-xl px-3 py-1 text-sm font-bold hidden @[1500px]:block whitespace-nowrap" onClick={() => akisSec(sonAkis.akisId)} title="Bu şubede en son kaldığın akış">
           ↺ Kaldığın yerden devam: {sonAkis.ad.length > 28 ? `${sonAkis.ad.slice(0, 27)}…` : sonAkis.ad} ({sonAkis.sira}/{sonAkis.toplam})
         </button>
       )}
       {devam && devam.akis === oturum.lesson_id && (
-        <span className="rounded-full bg-emerald-500/15 text-emerald-200 text-xs px-3 py-1.5 flex items-center gap-2">
+        <span className="rounded-full bg-emerald-500/15 text-emerald-200 text-xs px-3 py-1.5 hidden @[1500px]:flex items-center gap-2 whitespace-nowrap">
           ↺ {devam.metin}
           <button
             className="underline"
@@ -710,31 +711,31 @@ export default function Sahne() {
       ) : (
         <>
           <button className="ikincil-buton" onClick={() => tekAc('kahoot')} title="Zapoot: bireysel ya da takım, hızlı bilgi yarışması">
-            🎮 Zapoot
+            🎮<span className="hidden @[1180px]:inline"> Zapoot</span>
           </button>
           <button className="ikincil-buton" onClick={() => tekAc('oyun')} title="Oyunlar: zombi, roket, halat, kale ve daha fazlası">
-            🕹️ Oyunlar
+            🕹️<span className="hidden @[1180px]:inline"> Oyunlar</span>
           </button>
           <button className="ikincil-buton" onClick={() => tekAc('quiz')} title="Ciddi quizi başlat; bitince sonuçlar açıklanır">
-            📝 Quiz
+            📝<span className="hidden @[1180px]:inline"> Quiz</span>
           </button>
         </>
       )}
       <button className="ikincil-buton" onClick={() => setNotAcik((a) => !a)} title="Not al: şubenin not defterine kaydedilir">
-        📓 Not
+        📓<span className="hidden @[1180px]:inline"> Not</span>
       </button>
       <button className="ikincil-buton" onClick={() => setCizimModu((m) => (m === 'tahta' ? 'kapali' : 'tahta'))} title="Boş tahta aç (beyaz ya da kara)">
-        🖍️ Tahta
+        🖍️<span className="hidden @[1180px]:inline"> Tahta</span>
       </button>
       <button className="ikincil-buton" onClick={() => setCizimModu((m) => (m === 'lazer' ? 'kapali' : 'lazer'))} title="Lazer: slaytta işaret et, basılı tutup çiz (L tuşu)">
-        🔴 Lazer
+        🔴<span className="hidden @[1180px]:inline"> Lazer</span>
       </button>
       {adimlar.length > 0 && (
         <>
           <button className="ikincil-buton" onClick={geri} disabled={aktifSira <= 0} aria-label="Önceki adım">
             ◀
           </button>
-          <span className="text-sm font-mono text-slate-300 tabular-nums">
+          <span className="text-sm font-mono text-slate-300 tabular-nums whitespace-nowrap">
             {aktifSira + 1} / {adimlar.length}
           </span>
           <button className="ikincil-buton" onClick={ileri} disabled={aktifSira >= adimlar.length - 1} aria-label="Sonraki adım">
@@ -750,7 +751,7 @@ export default function Sahne() {
       <button className="ikincil-buton" onClick={() => tekAc('kumanda')} title="Kumanda: telefondan yönetmek için karekod" aria-label="Kumanda">
         📱
       </button>
-      <DersSayaci oturum={oturum.id} />
+      <span className="hidden @[1100px]:block"><DersSayaci oturum={oturum.id} /></span>
       <details className="relative">
         <summary className="ikincil-buton cursor-pointer list-none select-none" title="Yoklama, kod, tam ekran ve diğer ayarlar">
           ⋯
@@ -815,14 +816,21 @@ export default function Sahne() {
           </Link>
         </div>
       </details>
-      <button className="tehlike-buton" onClick={dersiBitir} title="Dersi bitir">
+      <span className="flex-1" />
+      <button className="tehlike-buton whitespace-nowrap" onClick={dersiBitir} title="Dersi bitir">
         ⏹ Bitir
       </button>
     </div>
   )
 
+  const yoklamaSahnesiMi = !(aktif?.tur === 'soru' || aktif?.tur === 'fikir' || aktif?.tur === 'oylama' || aktif?.tur === 'video' || aktif?.tur === 'oyun' || (slaytGorunumu && aktif))
+  const kodSeridiGoster = kodGoster && !!kod && !yoklamaSahnesiMi
+
   return (
     <>
+      <AracSeridi>{araclar}</AracSeridi>
+      {kodSeridiGoster && <KodSeridiKabugu oturumId={oturum.id} kod={kod} katilan={gelenler.length} acik={acik} qrGizli={!yoklamaKatmani} qrAc={setYoklamaKatmani} />}
+      <div className="h-dvh box-border overflow-y-auto overflow-x-hidden" style={{ paddingTop: ARAC_YUKSEKLIK, paddingRight: 'var(--perde-sag, 0px)', paddingBottom: 'var(--perde-alt, 0px)' }}>
       {aktif?.tur === 'soru' ? (
         <SoruSahnesi
           // Her soruda baştan kurulur; önceki sorunun bitmiş sayacı yeni soruya taşınmasın.
@@ -830,8 +838,6 @@ export default function Sahne() {
           oturumId={oturum.id}
           adimId={aktif.id}
           soruDurum={oturum.soru_durum}
-          araclar={araclar}
-          kod={kodGoster ? kod : null}
           cevrimici={cevrimici}
           otoGec={otoGec}
           otoIleri={otoIleri && !!kahootAkisi && !lobi && !finalAcik && aktifSira < adimlar.length - 1 ? ileri : undefined}
@@ -843,18 +849,14 @@ export default function Sahne() {
           oturumId={oturum.id}
           adim={aktif}
           soruDurum={oturum.soru_durum}
-          araclar={araclar}
-          kod={kodGoster ? kod : null}
+          kod={null}
         />
       ) : aktif?.tur === 'oyun' ? (
-        <OyunSahnesi key={aktif.id} adim={aktif} araclar={araclar} ac={setKartOyunu} adlar={gelenler.map((g) => g.ad).filter(Boolean)} />
+        <OyunSahnesi key={aktif.id} adim={aktif} ac={setKartOyunu} adlar={gelenler.map((g) => g.ad).filter(Boolean)} />
       ) : slaytGorunumu && aktif ? (
         <SlaytSahnesi
           belge={aktif.presentation_id ? belgeler.get(aktif.presentation_id) : undefined}
           sayfaNo={aktif.sayfa_no ?? 1}
-          araclar={araclar}
-          kod={kodGoster ? kod : null}
-          katilan={gelenler.length}
           ileri={aktifSira < adimlar.length - 1 ? ileri : undefined}
           geri={aktifSira > 0 ? geri : undefined}
           sira={`${aktifSira + 1} / ${adimlar.length}`}
@@ -868,12 +870,9 @@ export default function Sahne() {
           mevcut={mevcut}
           mevcutGoster={mevcutGoster}
           kod={kodGoster ? kod : null}
-          araclar={araclar}
         />
       )}
-      {acik && yoklamaKatmani && (aktif?.tur === 'soru' || aktif?.tur === 'fikir' || aktif?.tur === 'oylama' || aktif?.tur === 'video' || aktif?.tur === 'oyun' || (slaytGorunumu && aktif)) && (
-        <YoklamaKatmani oturumId={oturum.id} kod={kod} katilan={gelenler.length} kapat={() => yoklamaDurumu(false)} gizle={() => setYoklamaKatmani(false)} />
-      )}
+      </div>
       {kumandaAcik && <KumandaQr oturumId={oturum.id} kapat={() => setKumandaAcik(false)} />}
       <BaglantiUyarisi />
       {provaAcik && <OyunProvasi kapat={() => setProvaAcik(false)} />}
@@ -894,9 +893,11 @@ export default function Sahne() {
         />
       )}
       {kahootAkisi && zapootOyunu === null && !lobi && !finalAcik && seritSonuclari.length > 0 && (
-        <div className="fixed left-4 bottom-20 z-20 w-[min(46vw,640px)] max-h-[28vh] overflow-hidden">
-          <EnerjiSeridi oyuncular={seritSonuclari} />
-        </div>
+        <AltSerit>
+          <div data-denetim="etiket" className="w-full max-w-5xl max-h-[20vh] overflow-hidden">
+            <EnerjiSeridi oyuncular={seritSonuclari} />
+          </div>
+        </AltSerit>
       )}
       <Cizim oturum={oturum.id} anahtar={oturum.aktif_adim ?? 'yok'} mod={cizimModu} kapat={() => setCizimModu('kapali')} bitti={!!oturum.bitti} ac={() => setCizimModu('lazer')} kodDegistir={() => setKodGoster((g) => !g)} />
       {notAcik && <PerdeNotu key={oturum.id} dersId={oturum.course_id} baglam={`${new Date().toLocaleString('tr-TR')} · ${oturum.courses.ad}${oturum.baslik ? ` · ${oturum.baslik}` : ''}`} kapat={() => setNotAcik(false)} />}
@@ -1017,18 +1018,12 @@ function KodSeridi({ kod, buyuk = false }: { kod: string; buyuk?: boolean }) {
 function SlaytSahnesi({
   belge,
   sayfaNo,
-  araclar,
-  kod,
-  katilan,
   ileri,
   geri,
   sira,
 }: {
   belge: Parameters<typeof SlaytCizimi>[0]['belge']
   sayfaNo: number
-  araclar: React.ReactNode
-  kod: string | null
-  katilan: number
   ileri?: () => void
   geri?: () => void
   sira: string
@@ -1037,7 +1032,7 @@ function SlaytSahnesi({
   const baslangic = useRef<{ x: number; y: number } | null>(null)
   return (
     <main
-      className="h-screen bg-black flex flex-col relative group"
+      data-denetim="icerik" className="bg-black flex flex-col relative group" style={{ height: `calc(100dvh - ${ARAC_YUKSEKLIK}px - var(--perde-alt, 0px))` }}
       onTouchStart={(e) => {
         baslangic.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }
       }}
@@ -1051,10 +1046,6 @@ function SlaytSahnesi({
       }}
     >
       <SlaytCizimi belge={belge} sayfaNo={sayfaNo} className="flex-1 min-h-0" />
-      {/* Araç çubuğu fareyle üzerine gelince görünür; dokunmatik ekranda (hover yok) her zaman görünür. */}
-      <div className="absolute top-0 inset-x-0 p-3 flex justify-end opacity-0 group-hover:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity">
-        <div className="cam-panel rounded-2xl p-2 max-w-full">{araclar}</div>
-      </div>
       {/* Her zaman görünen büyük oklar (telefon ve tablet için); fareyle üzerine gelince belirginleşir */}
       <button
         onClick={geri}
@@ -1073,14 +1064,6 @@ function SlaytSahnesi({
         ›
       </button>
       <span className="absolute bottom-3 left-3 rounded-full bg-slate-900/60 px-3 py-1 text-xs text-slate-200 tabular-nums backdrop-blur">{sira}</span>
-      {kod && (
-        <div className="absolute bottom-3 right-3 cam-panel rounded-2xl px-4 py-2 flex items-center gap-4">
-          <span className="text-xs text-slate-400">
-            <b className="text-emerald-300 text-sm">{katilan}</b> katılan
-          </span>
-          <KodSeridi kod={kod} />
-        </div>
-      )}
     </main>
   )
 }
@@ -1138,32 +1121,10 @@ function useDonenQr(oturumId: string, acik: boolean) {
   return { qr, qrHata, kalanOran }
 }
 
-/** Slayt ya da etkinlik ekranındayken yoklama açılınca karekodu perdenin ortasında gösterir. */
-function YoklamaKatmani({ oturumId, kod, katilan, kapat, gizle }: { oturumId: string; kod: string | null; katilan: number; kapat: () => void; gizle: () => void }) {
-  const { qr, qrHata, kalanOran } = useDonenQr(oturumId, true)
-  return (
-    <div className="fixed left-1/2 top-16 -translate-x-1/2 z-50 cam-panel rounded-3xl p-4 flex flex-col items-center gap-3 shadow-[0_0_80px_rgba(124,92,255,0.55)] max-w-[92vw]">
-      <p className="text-lg font-display font-extrabold text-center">📲 Yoklama açık: QR'ı okut, numaranı gir</p>
-      <div className="bg-white rounded-3xl p-2 w-[min(55vh,440px)] aspect-square flex items-center justify-center">
-        {qr ? <img src={qr} alt="Yoklama QR kodu" className="w-full h-full [image-rendering:pixelated]" /> : <span className="text-slate-500 text-sm">{qrHata ? 'Sunucuya ulaşılamıyor, deneniyor…' : 'Hazırlanıyor…'}</span>}
-      </div>
-      <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
-        <div className="h-full bg-linear-to-r from-pink-500 to-violet-500 transition-[width] duration-200 ease-linear" style={{ width: `${kalanOran * 100}%` }} />
-      </div>
-      {kod ? <KodSeridi kod={kod} /> : <AdresSeridi />}
-      <p className="text-sm text-slate-300">
-        <b className="text-emerald-300">{katilan}</b> kişi katıldı
-      </p>
-      <div className="flex gap-2">
-        <button className="tehlike-buton !py-1.5 text-sm" onClick={kapat}>
-          🔒 Yoklamayı kapat
-        </button>
-        <button className="ikincil-buton !py-1.5 text-sm" onClick={gizle} title="Karekodu perdeden kaldırır; yoklama açık kalır">
-          Karekodu gizle
-        </button>
-      </div>
-    </div>
-  )
+/** Slayt, soru ve etkinlik ekranlarında sağ kenardaki kod şeridi (kod, adres ve yoklama açıksa küçük karekod). */
+function KodSeridiKabugu({ oturumId, kod, katilan, acik, qrGizli, qrAc }: { oturumId: string; kod: string; katilan: number; acik: boolean; qrGizli: boolean; qrAc: (ac: boolean) => void }) {
+  const { qr, qrHata, kalanOran } = useDonenQr(oturumId, acik && !qrGizli)
+  return <KodSerit kod={kodBicimle(kod)} adres={kisaAdres()} qr={qr} qrHata={qrHata} kalanOran={kalanOran} katilan={katilan} acik={acik} qrGizli={qrGizli} qrAc={qrAc} />
 }
 
 function YoklamaSahnesi({
@@ -1174,7 +1135,6 @@ function YoklamaSahnesi({
   mevcut,
   mevcutGoster,
   kod,
-  araclar,
 }: {
   dersegec: { ad: string; git: () => void } | null
   oturum: Oturum & { courses: Ders }
@@ -1183,20 +1143,18 @@ function YoklamaSahnesi({
   mevcut: number
   mevcutGoster: boolean
   kod: string | null
-  araclar: React.ReactNode
 }) {
   const oturumId = oturum.id
   const { qr, qrHata, kalanOran } = useDonenQr(oturumId, acik)
   const oran = mevcut ? gelenler.length / mevcut : 0
 
   return (
-    <main className="min-h-screen flex flex-col p-5 lg:p-8 gap-5">
+    <main className="min-h-full flex flex-col p-5 lg:p-8 gap-5">
       <header className="flex items-center gap-4">
         <div className="min-w-0">
           <p className="text-sm font-mono text-indigo-300">{dersEtiketi(oturum.courses)}</p>
           <h1 className="text-2xl lg:text-3xl font-extrabold truncate">{oturumAdi(oturum)}</h1>
         </div>
-        <div className="ml-auto opacity-60 hover:opacity-100 transition-opacity">{araclar}</div>
       </header>
 
       {dersegec && (
@@ -1210,14 +1168,14 @@ function YoklamaSahnesi({
           {acik ? (
             <>
               <p className="text-xl lg:text-2xl font-display font-extrabold text-center">📲 Kamerayı aç, QR'ı okut, numaranı gir</p>
-              <div className="bg-white rounded-[2rem] p-3 w-full max-w-[min(52vh,600px)] aspect-square flex items-center justify-center shadow-[0_0_90px_rgba(124,92,255,0.6)] ring-8 ring-white/10">
+              <div className="bg-white rounded-[2rem] p-3 w-full max-w-[min(42vh,600px)] aspect-square flex items-center justify-center shadow-[0_0_90px_rgba(124,92,255,0.6)] ring-8 ring-white/10">
                 {qr ? (
                   <img src={qr} alt="Yoklama QR kodu" className="w-full h-full [image-rendering:pixelated]" />
                 ) : (
                   <span className="text-slate-500 text-sm">{qrHata ? 'Sunucuya ulaşılamıyor, deneniyor…' : 'Hazırlanıyor…'}</span>
                 )}
               </div>
-              <div className="w-full max-w-[min(52vh,600px)] h-1.5 rounded-full bg-white/10 overflow-hidden">
+              <div className="w-full max-w-[min(42vh,600px)] h-1.5 rounded-full bg-white/10 overflow-hidden">
                 <div className="h-full bg-linear-to-r from-pink-500 to-violet-500 transition-[width] duration-200 ease-linear" style={{ width: `${kalanOran * 100}%` }} />
               </div>
               {kod ? (
@@ -1352,8 +1310,6 @@ function SoruSahnesi({
   oturumId,
   adimId,
   soruDurum,
-  araclar,
-  kod,
   oyunKilitli,
   cevrimici = 0,
   otoGec = false,
@@ -1362,8 +1318,6 @@ function SoruSahnesi({
   oturumId: string
   adimId: string
   soruDurum: 'acik' | 'sonuc' | null
-  araclar: React.ReactNode
-  kod: string | null
   /** Derse bağlı telefon sayısı (presence); herkes cevap verdiyse soru kendiliğinden kapanır */
   cevrimici?: number
   otoGec?: boolean
@@ -1523,13 +1477,13 @@ function SoruSahnesi({
         <YorumBandi />
         {durum?.final_turu && !sonuc && <FinalTuruDuyurusu />}
         {!sonuc && kalan !== null && kalan > 0 && kalan <= 5000 && <div className="pointer-events-none fixed inset-0 z-[56] gerilim-nabiz" aria-hidden />}
-        <div className="fixed top-2 right-2 z-[60] max-w-[96vw] cam-panel rounded-2xl p-2 opacity-70 hover:opacity-100 transition-opacity">{araclar}</div>
+        <AltSerit>
         {soruGoster && (
-          <div className="fixed left-3 bottom-24 z-[60] cam-panel rounded-2xl p-4 max-w-[min(42rem,92vw)] space-y-2">
-            <p className="text-xl font-bold">{durum?.soru}</p>
-            <ul className="grid gap-1.5 sm:grid-cols-2 text-lg">
+          <div data-denetim="siklar" className="cam-panel rounded-2xl p-3 w-full max-w-[min(70rem,100%)] space-y-1.5">
+            <p className="text-[clamp(14px,2.6vh,22px)] font-bold leading-snug">{durum?.soru}</p>
+            <ul className="grid gap-1.5 grid-cols-2 lg:grid-cols-4 text-[clamp(12px,2.2vh,18px)]">
               {secenekler.map((x, i) => (
-                <li key={i} className={`rounded-xl px-3 py-1.5 ${SIKLAR[i % SIKLAR.length].renk} ${sonuc && durum?.dogru_index !== i ? 'opacity-40' : ''}`}>
+                <li data-denetim="sik" key={i} className={`rounded-xl px-3 py-1 ${SIKLAR[i % SIKLAR.length].renk} ${sonuc && durum?.dogru_index !== i ? 'opacity-40' : ''}`}>
                   <b>{SIKLAR[i % SIKLAR.length].harf}</b> {x}
                   {sonuc && durum?.dogru_index === i && ' ✓'}
                 </li>
@@ -1537,7 +1491,7 @@ function SoruSahnesi({
             </ul>
           </div>
         )}
-        <div className="fixed bottom-3 left-1/2 -translate-x-1/2 z-[60] cam-panel rounded-2xl px-4 py-2.5 flex flex-wrap items-center justify-center gap-3 max-w-[96vw]">
+        <div className="cam-panel rounded-2xl px-4 py-2 flex flex-wrap items-center justify-center gap-3 max-w-full">
           <span className="text-sm font-mono text-fuchsia-300">
             Soru {durum ? `${durum.sira} / ${durum.toplam}` : ''}
           </span>
@@ -1574,39 +1528,40 @@ function SoruSahnesi({
             👁 Soru
           </button>
         </div>
+        </AltSerit>
       </>
     )
   }
 
   return (
-    <main className="min-h-screen flex flex-col p-5 lg:p-8 gap-5">
+    <main className="h-full min-h-0 overflow-hidden flex flex-col p-3 lg:p-5 gap-[clamp(6px,1.6vh,16px)]">
       {sonuc && durum?.dagilim && !herkesYanlis && <Konfeti adet={40} />}
       {durum?.final_turu && !sonuc && <FinalTuruDuyurusu />}
       <header className="flex items-center gap-4">
         <p className="text-sm font-mono uppercase tracking-widest text-fuchsia-300">
           🎯 Soru {durum ? `${durum.sira} / ${durum.toplam}` : ''}
         </p>
-        <div className="ml-auto opacity-60 hover:opacity-100 transition-opacity">{araclar}</div>
       </header>
 
-      <section className="cam-panel rounded-3xl p-6 lg:p-10 flex items-center gap-6">
-        <h1 className="flex-1 text-3xl lg:text-5xl font-extrabold leading-tight whitespace-pre-line">{durum?.soru ?? 'Yükleniyor…'}</h1>
+      <section data-denetim="icerik" className="cam-panel rounded-3xl p-[clamp(10px,2.2vh,32px)] flex items-center gap-6 flex-none max-h-[42%] min-h-0">
+        <h1 className="flex-1 min-h-0 max-h-full overflow-y-auto text-[clamp(18px,4.6vh,48px)] font-extrabold leading-tight whitespace-pre-line">{durum?.soru ?? 'Yükleniyor…'}</h1>
         {!sonuc && kalan !== null && (
           <div className={Math.ceil(kalan / 1000) <= 5 ? 'acil-halka' : ''}>
-            <Halka oran={kalan / ((durum?.sure_sn ?? 20) * 1000)} etiket={Math.ceil(kalan / 1000)} boyut={150} />
+            <Halka oran={kalan / ((durum?.sure_sn ?? 20) * 1000)} etiket={Math.ceil(kalan / 1000)} boyut={Math.max(64, Math.min(150, Math.round(window.innerHeight * 0.16)))} />
           </div>
         )}
       </section>
 
-      <div className="grid gap-4 sm:grid-cols-2 flex-1 content-start">
+      <div data-denetim="siklar" className="grid gap-[clamp(6px,1.4vh,16px)] grid-cols-1 sm:grid-cols-2 flex-1 min-h-0 auto-rows-fr">
         {secenekler.map((x, i) => {
           const sik = SIKLAR[i % SIKLAR.length]
           const dogru = sonuc && durum?.dogru_index === i
           const sayi = durum?.dagilim?.[i] ?? 0
           return (
             <div
+              data-denetim="sik"
               key={i}
-              className={`pop relative overflow-hidden rounded-3xl p-5 lg:p-7 flex items-center gap-4 text-2xl lg:text-4xl font-bold transition-all duration-500 ${sik.renk} ${
+              className={`pop relative overflow-hidden rounded-3xl min-h-0 px-4 py-1 lg:px-6 flex items-center gap-4 text-[clamp(15px,3.6vh,36px)] font-bold leading-tight transition-all duration-500 ${sik.renk} ${
                 sonuc && !dogru ? 'opacity-30 scale-[0.98]' : ''
               } ${dogru ? 'ring-8 ring-white scale-[1.02]' : ''}`}
               style={{ animationDelay: `${i * 70}ms` }}
@@ -1614,10 +1569,10 @@ function SoruSahnesi({
               {sonuc && toplamCevap > 0 && (
                 <div className="absolute inset-y-0 left-0 bg-black/25" style={{ width: `${(sayi / toplamCevap) * 100}%` }} />
               )}
-              <span className="relative w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-black/25 flex items-center justify-center shrink-0">
+              <span className="relative w-[clamp(32px,6vh,56px)] h-[clamp(32px,6vh,56px)] rounded-xl bg-black/25 flex items-center justify-center shrink-0">
                 <span className="flex flex-col items-center leading-none"><span className="text-xs lg:text-sm opacity-80">{sik.sekil}</span>{sik.harf}</span>
               </span>
-              <span className="relative flex-1">{x}</span>
+              <span className="relative flex-1 min-w-0 max-h-full overflow-hidden">{x}</span>
               {sonuc && (
                 <span className="relative font-mono text-xl lg:text-3xl text-right leading-tight">
                   %{toplamCevap > 0 ? Math.round((sayi / toplamCevap) * 100) : 0}
@@ -1630,7 +1585,7 @@ function SoruSahnesi({
         })}
       </div>
 
-      <footer className="flex flex-wrap items-center gap-4">
+      <footer className="flex flex-none flex-wrap items-center gap-4">
         <p className="text-lg text-slate-300">
           <b className="text-white text-2xl tabular-nums">{toplamCevap}</b> cevap
         </p>
@@ -1648,11 +1603,6 @@ function SoruSahnesi({
           <button className="ikincil-buton" onClick={() => setOtoDurdu(true)} title="Kendiliğinden geçişi bu soruda durdur">
             ⏩ Sonraki soru {otoKalan} sn · ⏸ Durdur
           </button>
-        )}
-        {kod && (
-          <div className="ml-auto">
-            <KodSeridi kod={kod} />
-          </div>
         )}
       </footer>
 
@@ -1678,13 +1628,11 @@ function EtkinlikSahnesi({
   oturumId,
   adim,
   soruDurum,
-  araclar,
   kod,
 }: {
   oturumId: string
   adim: Adim
   soruDurum: 'acik' | 'sonuc' | null
-  araclar: React.ReactNode
   kod: string | null
 }) {
   const [durum, setDurum] = useState<DersDurumu['adim']>(null)
@@ -1740,10 +1688,9 @@ function EtkinlikSahnesi({
   const baslikEtiketi = adim.tur === 'fikir' ? '🧠 Beyin fırtınası' : adim.tur === 'oylama' ? '⚖️ Şeytanın avukatı' : adim.ayar.url ? '🎬 Video' : '📝 Not'
 
   return (
-    <main className="min-h-screen flex flex-col p-5 lg:p-8 gap-5">
+    <main className="min-h-full flex flex-col p-5 lg:p-8 gap-5">
       <header className="flex items-center gap-4">
         <p className="text-sm font-mono uppercase tracking-widest text-amber-300">{baslikEtiketi}</p>
-        <div className="ml-auto opacity-60 hover:opacity-100 transition-opacity">{araclar}</div>
       </header>
 
       {adim.tur === 'video' ? (
@@ -1755,7 +1702,7 @@ function EtkinlikSahnesi({
         </section>
       ) : (
         <>
-          <section className="cam-panel rounded-3xl p-6 lg:p-10 flex items-center gap-6">
+          <section data-denetim="icerik" className="cam-panel rounded-3xl p-6 lg:p-10 flex items-center gap-6">
             <h1 className="flex-1 text-3xl lg:text-5xl font-extrabold leading-tight whitespace-pre-line">{adim.ayar.soru}</h1>
             {acik && adim.ayar.sure_sn && kalanSn !== null && (
               <div className="shrink-0">

@@ -126,7 +126,7 @@ export default function ZombiPaneli({ oturum, anahtar, mod }: { oturum: string; 
   return (
     <>
       {!buyuk && (
-        <div className="fixed right-4 bottom-28 z-30 w-[min(22rem,90vw)]">
+        <div className="fixed bottom-28 z-30 w-[min(22rem,90vw)]" style={{ right: 'calc(var(--perde-sag, 0px) + 16px)', marginBottom: 'var(--perde-alt, 0px)' }}>
           <div className="cam-panel rounded-2xl p-3 space-y-2">
             <Ozet d={d} kapat={() => ac(false)} />
             <button className="parlak-buton rounded-xl px-3 py-1.5 text-sm font-bold w-full" onClick={() => setBuyuk(true)}>
@@ -228,7 +228,7 @@ export function ZombiSahnesi({ d, kapat }: { d: ZombiDurumu; kapat: () => void }
   const gBoy = kalabalik > 90 ? 'w-6 h-6' : kalabalik > 50 ? 'w-9 h-9' : kalabalik > 24 ? 'w-12 h-12' : 'w-16 h-16'
 
   return (
-    <div className="fixed inset-0 z-40 bg-slate-950/95 backdrop-blur-sm flex flex-col p-3 sm:p-5 gap-3">
+    <div data-denetim="sahne" className="perde-alan z-40 bg-slate-950/95 backdrop-blur-sm flex flex-col p-3 sm:p-5 gap-3">
       {d.bitti && d.kazandi && (
         <>
           <Konfeti />

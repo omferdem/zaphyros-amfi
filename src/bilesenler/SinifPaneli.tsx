@@ -264,7 +264,7 @@ export default function SinifPaneli({
       {/* Perde yerleşim haritası: sağ sütun (üstten) el kaldırma, altında soru zarfları; sol altta sıkıldım göstergesi.
           Alt orta (oyun kontrol çubuğu) ve sağ alt (ders kodu) başka bileşenlere ayrılmıştır; hiçbiri üst üste binmez. */}
       {(eller.length > 0 || sorular.length > 0) && (
-        <div className="fixed right-4 top-20 z-30 flex flex-col gap-3 items-end max-w-[30vw] max-h-[60vh] overflow-hidden">
+        <div className="fixed top-20 z-30 flex flex-col gap-3 items-end max-w-[30vw] max-h-[60vh] overflow-hidden" style={{ right: 'calc(var(--perde-sag, 0px) + 16px)' }}>
           {ellerPaneli}
           {sorularPaneli}
         </div>

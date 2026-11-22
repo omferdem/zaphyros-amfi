@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.66.0 (22 Kasım 2026) (kısmi: görsel denetim kapısı ve perde kabuğu)
+Veritabanı değişikliği yok.
+- **Görsel denetim kapısı:** `scripts/gorsel-denetim.mjs` (`npm run gorsel-denetim`): Playwright, gerçek bir TEST-BOT oturumu kurar, sahneyi yoklama, slayt, uzun Zapoot sorusu ve oyunlarda 8 ekran boyutunda açar, ekran görüntüsü alır (`denetim/<sürüm>/`) ve taşma, araç çubuğu, çakışma, şık görünürlüğü ve 40 px düğme ölçümlerini yapar; ihlalde 1 koduyla çıkar. Önceki sürümün görüntüleri `denetim/v0.65.23/`.
+- **Perde kabuğu (madde 1, 2, 4, 6 ve 3'ün büyük kısmı):** üstte sabit tek satırlık 44 px araç şeridi (genişliğe göre sadeleşir, sarmaz, 3 sn sonra yer değiştirmeden soluklaşır); sağda dikey kod şeridi (kod ve adres 90° dönük, yoklama açıksa 128 px karekod, gizlenebilir); altta kontrol şeridi. Sahneler `.perde-alan` ile bu şeritlerin arasında kalır. Zapoot sorusu ve 4 şık ekrana sığar. Enerji çubuğu ve isimler şıkların üstünden alt şeride alındı.
+- Henüz yapılmadı: madde 5 (lazer/kalem ayrımı), 8 (etkinlik lobisi, ▶ Başlat, Bitir ile telefonların bitmesi), 7a-7c, 9 (tek renk kaynağı), görsel kesici. Ölçümde kalan: dar ekranda araç şeridi düğmeleri 40 px altı, oyun ekranlarında araç şeridi "ikinci satır" ölçümü.
+
 ## v0.65.23 (17 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Soru yüklemede biçim seçimi:** "Yeni paket yükle" alanında Otomatik tanı, ZOMR (etiketli), Sekmeli tablo (soru, doğru, yanlışlar; Excel ya da Word tablosundan yapıştırılır) ve Şıklı metin (A B C D ve "Cevap: C") seçilebilir. Seçilen biçim için "Yapay zeka talimatını kopyala" düğmesi, soruları o biçime çevirtmek için yapay zekaya verilecek hazır metni panoya alır. Dosya seçmeden doğrudan yapıştırma da aynı yolu kullanır.

@@ -51,7 +51,7 @@ export function HocaYarisSahnesi({
   const sagVurdu = sinifPuanladi
 
   return (
-    <div className="fixed inset-0 z-40 flex flex-col" style={arkaPlan('arka-sahne.webp', 'linear-gradient(#1e1b4b, #0f172a)')}>
+    <div data-denetim="sahne" className="perde-alan z-40 flex flex-col" style={arkaPlan('arka-sahne.webp', 'linear-gradient(#1e1b4b, #0f172a)')}>
       <style>{STIL}</style>
       {bitti && sonuc === 'sinif' && <Konfeti />}
       <div className="flex items-center gap-3 px-5 pt-4">

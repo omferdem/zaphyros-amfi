@@ -64,7 +64,7 @@ function siklarOku(metin: string): ZomrSonucu {
     const siklar = new Map<string, string>()
     let cevap = ''
     for (const satir of blok.split('\n')) {
-      const c = satir.match(/^\s*(?:cevap|doğru cevap|dogru cevap|doğru)\s*[:\-]\s*([A-Ea-e])\b/i)
+      const c = satir.match(/^\s*(?:cevap|doğru cevap|dogru cevap|doğru)\s*[:-]\s*([A-Ea-e])\b/i)
       const s = satir.match(/^\s*([A-Ea-e])\s*[).:]\s*(.+)$/)
       if (c) cevap = c[1].toUpperCase()
       else if (s) siklar.set(s[1].toUpperCase(), s[2].trim())

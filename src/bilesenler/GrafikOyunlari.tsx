@@ -1,3 +1,4 @@
+import { TAKIMLAR } from '../lib/takim'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { OYUN_OLAYI, type OyunAnahtari } from '../lib/oyun'
@@ -806,7 +807,7 @@ export function KuleSahnesi({ d, kucult }: { d: KuleDurumu; kucult: () => void }
 
 // -------------------------------------------------------------------------------------------------- Kale kuşatması
 
-const KALE_RENKLERI = ['#f43f5e', '#0ea5e9', '#10b981', '#f59e0b', '#8b5cf6', '#f97316']
+const KALE_RENKLERI = TAKIMLAR.map((t) => t.hex)
 
 export function KalePaneli({ oturum, anahtar, mod }: { oturum: string; anahtar: string | null; mod: 'perde' | 'kumanda' }) {
   return (
@@ -898,7 +899,7 @@ export function KaleSahnesi({ d, kucult }: { d: KaleDurumu; kucult: () => void }
           {satirlar.map((s) => {
             const a = konum.get(s.takim)!
             const b = konum.get(s.hedefTakim)!
-            return <line key={s.takim} x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke={KALE_RENKLERI[(s.takim - 1) % 6]} strokeWidth="0.35" strokeDasharray="1.2 1.2" opacity="0.55" />
+            return <line key={s.takim} x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke={KALE_RENKLERI[(s.takim - 1) % KALE_RENKLERI.length]} strokeWidth="0.35" strokeDasharray="1.2 1.2" opacity="0.55" />
           })}
         </svg>
 
@@ -913,7 +914,7 @@ export function KaleSahnesi({ d, kucult }: { d: KaleDurumu; kucult: () => void }
           const yol = Math.max(0, uzunluk - KALE_YARICAPI * 1.9)
           const x = a.x + (dx / uzunluk) * (KALE_YARICAPI + yol * s.yuruyusOrani)
           const y = a.y + (dy / uzunluk) * (KALE_YARICAPI + yol * s.yuruyusOrani)
-          const renk = KALE_RENKLERI[(s.takim - 1) % 6]
+          const renk = KALE_RENKLERI[(s.takim - 1) % KALE_RENKLERI.length]
           const bakis = Math.atan2(-dy, -dx) // hedef kaleden saldıran orduya doğru
           return (
             <div key={`ordu-${s.takim}`}>
@@ -970,7 +971,7 @@ export function KaleSahnesi({ d, kucult }: { d: KaleDurumu; kucult: () => void }
                 {b.ad} <span className="text-slate-400 font-normal">({s.uye} kişi · {s.blok.toFixed(1)})</span>
               </p>
               <div className="mt-1 h-1.5 w-24 rounded-full bg-white/15 overflow-hidden">
-                <div className="h-full transition-[width] duration-1000" style={{ width: `${(s.ilerleme / d.hedef) * 100}%`, background: KALE_RENKLERI[(s.takim - 1) % 6] }} />
+                <div className="h-full transition-[width] duration-1000" style={{ width: `${(s.ilerleme / d.hedef) * 100}%`, background: KALE_RENKLERI[(s.takim - 1) % KALE_RENKLERI.length] }} />
               </div>
               <p className="text-[10px] text-slate-300 mt-0.5">{dustu ? 'kuşatıldı!' : s.asama === 'yuruyor' ? 'yürüyor' : s.asama === 'kusatiyor' ? `kuşatıyor ${s.kusatan}/${d.kusatma}` : 'kuşattı'}</p>
             </div>

@@ -1,15 +1,9 @@
+import { SIK_RENKLERI } from './renkler'
 // Bilgi yarışmasında sahne, kumanda ve öğrenci telefonunun ortak kullandığı küçük yardımcılar.
 
 /** Şık harfleri ve renkleri (perdede ve telefonda aynı; öğrenci rengi görüp basabilsin). */
 /** zapedu2 tasarımındaki şık renkleri (öğrenci telefonu): A pembe, B mor, C turkuaz, D sarı. */
-export const ZE_SIKLAR = [
-  { harf: 'A', sekil: '▲', hex: '#ff4d9d' },
-  { harf: 'B', sekil: '◆', hex: '#7c5cff' },
-  { harf: 'C', sekil: '●', hex: '#22e3d2' },
-  { harf: 'D', sekil: '■', hex: '#ffd23f' },
-  { harf: 'E', sekil: '★', hex: '#b8ff4a' },
-  { harf: 'F', sekil: '⬢', hex: '#ff8a4c' },
-]
+export const ZE_SIKLAR = SIK_RENKLERI
 
 export const SIKLAR = [
   { harf: 'A', sekil: '▲', renk: 'bg-linear-to-br from-rose-500 to-pink-600 shadow-[0_8px_28px_rgba(244,63,94,0.4)]', cerceve: 'border-rose-400', yazi: 'text-rose-200' },

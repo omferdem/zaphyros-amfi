@@ -16,16 +16,16 @@ export interface TakimDurumu {
 }
 
 export const TAKIMLAR = [
-  { ad: 'Kırmızı', emoji: '🔴', renk: 'from-rose-500 to-red-600' },
-  { ad: 'Mavi', emoji: '🔵', renk: 'from-sky-500 to-blue-600' },
-  { ad: 'Yeşil', emoji: '🟢', renk: 'from-emerald-500 to-green-600' },
-  { ad: 'Sarı', emoji: '🟡', renk: 'from-amber-400 to-yellow-500' },
-  { ad: 'Mor', emoji: '🟣', renk: 'from-violet-500 to-purple-600' },
-  { ad: 'Turuncu', emoji: '🟠', renk: 'from-orange-500 to-amber-600' },
-  { ad: 'Pembe', emoji: '💗', renk: 'from-pink-400 to-pink-600' },
-  { ad: 'Turkuaz', emoji: '🔷', renk: 'from-cyan-400 to-teal-600' },
-  { ad: 'Kahverengi', emoji: '🟤', renk: 'from-amber-700 to-stone-700' },
-  { ad: 'Gri', emoji: '⚪', renk: 'from-slate-400 to-slate-600' },
+  { ad: 'Kırmızı', emoji: '🔴', renk: 'from-rose-500 to-red-600', hex: '#f43f5e', yazi: 'text-rose-400' },
+  { ad: 'Mavi', emoji: '🔵', renk: 'from-sky-500 to-blue-600', hex: '#38bdf8', yazi: 'text-sky-400' },
+  { ad: 'Yeşil', emoji: '🟢', renk: 'from-emerald-500 to-green-600', hex: '#10b981', yazi: 'text-emerald-400' },
+  { ad: 'Sarı', emoji: '🟡', renk: 'from-amber-400 to-yellow-500', hex: '#fbbf24', yazi: 'text-amber-300' },
+  { ad: 'Mor', emoji: '🟣', renk: 'from-violet-500 to-purple-600', hex: '#8b5cf6', yazi: 'text-violet-400' },
+  { ad: 'Turuncu', emoji: '🟠', renk: 'from-orange-500 to-amber-600', hex: '#f97316', yazi: 'text-orange-400' },
+  { ad: 'Pembe', emoji: '💗', renk: 'from-pink-400 to-pink-600', hex: '#f472b6', yazi: 'text-pink-400' },
+  { ad: 'Turkuaz', emoji: '🔷', renk: 'from-cyan-400 to-teal-600', hex: '#22d3ee', yazi: 'text-cyan-300' },
+  { ad: 'Kahverengi', emoji: '🟤', renk: 'from-amber-700 to-stone-700', hex: '#a16207', yazi: 'text-amber-600' },
+  { ad: 'Gri', emoji: '⚪', renk: 'from-slate-400 to-slate-600', hex: '#94a3b8', yazi: 'text-slate-300' },
 ] as const
 
 /** 1'den başlayan takım numarasının adı ve simgesi */

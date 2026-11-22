@@ -1,3 +1,4 @@
+import { TAKIMLAR } from '../lib/takim'
 import { useEffect, useRef, useState } from 'react'
 import { OYUNLAR, type OyunAnahtari } from '../lib/oyun'
 import { GRUPLU_OYUNLAR } from '../lib/oyunAc'
@@ -8,7 +9,7 @@ import type { PuanSatiri } from '../lib/tipler'
 import Konfeti from './Konfeti'
 
 const takimliMi = (mod: OyunAnahtari | null) => mod === 'halat' || (mod !== null && GRUPLU_OYUNLAR.includes(mod))
-const TAKIM_RENKLERI = ['text-ze-pink', 'text-ze-cyan', 'text-ze-yellow', 'text-ze-lime', 'text-purple-300', 'text-orange-300', 'text-pink-300', 'text-cyan-300', 'text-amber-600', 'text-slate-300']
+const TAKIM_RENKLERI = TAKIMLAR.map((t) => t.yazi)
 
 /** Oyun başlamadan önceki bekleme ekranı: katılanlar, takımlar, dağıtma düğmeleri, 3-2-1 ve kural. */
 export function Lobi({

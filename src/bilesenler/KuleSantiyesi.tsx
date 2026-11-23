@@ -214,7 +214,7 @@ export function KuleSantiyesi({ d, kucult }: { d: KuleDurumu; kucult: () => void
                   {/* işçiler */}
                   <div className="absolute flex items-end -space-x-[1cqh]" style={{ left: '8%', bottom: `${ZEMIN - 4}cqh` }}>
                     {[0, 1, 2].map((i) => (
-                      <Gorsel key={i} ad={`ogrenci-${((s.takim * 3 + i) % 8) + 1}.webp`} emoji="👷" className="h-[11cqh] w-auto drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]" emojiClass="text-[5cqh]" />
+                      <Gorsel key={i} ad={`ogrenci-${((s.takim * 3 + i) % 8) + 1}.webp`} poz="kos" emoji="👷" className="h-[11cqh] w-auto drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]" emojiClass="text-[5cqh]" />
                     ))}
                   </div>
                   {alkis && (

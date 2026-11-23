@@ -297,7 +297,7 @@ export function OrmanSahnesi({ d, kucult }: { d: OrmanSonucu; kucult: () => void
               >
                 <KarakterEnerjisi ad={o.ad} className="relative w-[80%] mb-[3%]" />
                 <div className="w-full" style={yuruyor ? { animation: `orman-yuru ${0.55 + (i % 5) * 0.04}s ease-in-out infinite`, transformOrigin: '50% 100%' } : undefined}>
-                  <Gorsel ad={`ogrenci-${adIndeksi(o.ad, 8)}.webp`} emoji="🧒" className="w-full aspect-square drop-shadow-[0_2px_2px_rgba(0,0,0,0.6)]" emojiClass="text-2xl" />
+                  <Gorsel ad={`ogrenci-${adIndeksi(o.ad, 8)}.webp`} emoji="🧒" poz="kos" className="w-full aspect-square drop-shadow-[0_2px_2px_rgba(0,0,0,0.6)]" emojiClass="text-2xl" />
                 </div>
                 {o.fener > 0 && (
                   <span className="absolute right-0 top-1/3" style={{ fontSize: `${boy * 0.4}cqw` }} aria-label="fener">
@@ -338,7 +338,7 @@ export function OrmanSahnesi({ d, kucult }: { d: OrmanSonucu; kucult: () => void
                     className="absolute flex flex-col items-center"
                     style={{ width: `${boy}cqw`, left: 0, top: 0, animation: 'orman-kac 2.2s ease-in forwards', ['--dx' as string]: `${80 - p.x}cqw`, ['--dy' as string]: `${(55 - p.y) * DIKEY}cqw` }}
                   >
-                    <Gorsel ad={`ogrenci-${adIndeksi(o.ad, 8)}.webp`} emoji="😰" className="w-full aspect-square grayscale" emojiClass="text-2xl" />
+                    <Gorsel ad={`ogrenci-${adIndeksi(o.ad, 8)}.webp`} emoji="😰" poz="dus" className="w-full aspect-square grayscale" emojiClass="text-2xl" />
                   </div>
                   <span className="absolute" style={{ fontSize: `${boy * 0.9}cqw`, animation: 'orman-atla 1.6s ease-out forwards', left: 0, top: 0 }}>
                     🐺
@@ -350,7 +350,7 @@ export function OrmanSahnesi({ d, kucult }: { d: OrmanSonucu; kucult: () => void
           {/* Eve varanlar evin önünde toplanır */}
           {eveVaran.map((o, i) => (
             <div key={`ev-${o.ad}-${i}`} className="absolute" style={{ left: `${81 + (i % 5) * 3.6}%`, top: `${(17 + Math.floor(i / 5) * 4.4) / DIKEY}%`, width: `${Math.min(boy, 4.2)}%`, transform: 'translate(-50%, -50%)' }} title={`${o.ad}: eve vardı`}>
-              <Gorsel ad={`ogrenci-${adIndeksi(o.ad, 8)}.webp`} emoji="🧒" className="w-full aspect-square" emojiClass="text-2xl" />
+              <Gorsel ad={`ogrenci-${adIndeksi(o.ad, 8)}.webp`} emoji="🧒" poz="kos" className="w-full aspect-square" emojiClass="text-2xl" />
             </div>
           ))}
           {evde.length > eveVaran.length && (
@@ -369,7 +369,7 @@ export function OrmanSahnesi({ d, kucult }: { d: OrmanSonucu; kucult: () => void
                 const yeni = o.bittigiSoru === d.oynanan
                 return (
                   <span key={`k-${o.ad}-${i}`} className="inline-flex items-center gap-[0.3cqw] text-slate-200" style={{ fontSize: '1.05cqw', animation: yeni ? 'orman-gel 2.4s ease-out both' : undefined }}>
-                    <Gorsel ad={`ogrenci-${adIndeksi(o.ad, 8)}.webp`} emoji="😰" className="w-[2.3cqw] h-[2.3cqw] grayscale opacity-80" emojiClass="text-sm" />
+                    <Gorsel ad={`ogrenci-${adIndeksi(o.ad, 8)}.webp`} emoji="😰" poz="dus" className="w-[2.3cqw] h-[2.3cqw] grayscale opacity-80" emojiClass="text-sm" />
                     <span className="truncate max-w-[6cqw]">{n > 40 ? o.ad.split(/\s+/)[0] : o.ad}</span>
                   </span>
                 )

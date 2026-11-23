@@ -1,7 +1,7 @@
 {
   "name": "zaphyros-amfi",
   "private": true,
-  "version": "0.66.7",
+  "version": "0.67.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,7 +11,8 @@
     "test": "vitest run",
     "kurulum-sql": "node scripts/kurulum-sql.mjs",
     "sql-test": "node scripts/sql-test.mjs",
-    "gorsel-denetim": "node scripts/gorsel-denetim.mjs"
+    "gorsel-denetim": "node scripts/gorsel-denetim.mjs",
+    "gorsel-kes": "node scripts/gorsel-kes.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",
@@ -35,6 +36,7 @@
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
     "oxlint": "^1.81.0",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4.3.3",
     "typescript": "~6.0.2",
     "vite": "^8.3.0",

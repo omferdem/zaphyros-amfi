@@ -17,3 +17,4 @@ docs/oyun-kayitlari/
 denetim/.gizli*
 denetim/**/*.tmp
 denetim/.test-hoca.sql
+gorsel-ham/

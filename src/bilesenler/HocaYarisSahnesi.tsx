@@ -126,7 +126,7 @@ export function HocaYarisSahnesi({
                 {katki.map((k, i) => (
                   <div key={`${k.ad}-${i}`} className="flex items-center gap-3 rounded-xl bg-white/5 px-3 py-1.5">
                     <span className="w-7 text-center text-lg">{['🥇', '🥈', '🥉', '4', '5'][i]}</span>
-                    <Gorsel ad={`ogrenci-${adIndeksi(k.ad, 8)}.webp`} emoji="🧑" className="w-9 h-9" emojiClass="text-2xl" />
+                    <Gorsel ad={`ogrenci-${adIndeksi(k.ad, 8)}.webp`} poz="kos" emoji="🧑" className="w-9 h-9" emojiClass="text-2xl" />
                     <span className="flex-1 font-bold truncate">{k.ad}</span>
                     <span className="tabular-nums text-emerald-300 font-bold">
                       {k.dogru} / {k.acilan} doğru

@@ -115,7 +115,7 @@ export function HalatSahnesi({ h, oyuncular, zorlaniyor, kucult }: { h: HalatSah
                   {k.son === 'arti' && k.seri > 0 && k.seri % 3 === 0 ? '🔥' : ''}
                 </span>
               )}
-              <Gorsel ad={`ogrenci-${adIndeksi(k.ad, 8)}.webp`} emoji="🧑" className="w-full aspect-square" emojiClass="text-4xl" />
+              <Gorsel ad={`ogrenci-${adIndeksi(k.ad, 8)}.webp`} poz="cek" emoji="🧑" className="w-full aspect-square" emojiClass="text-4xl" />
               {ad && (
                 <span className="text-center font-bold text-white drop-shadow leading-none truncate max-w-full" style={{ fontSize: `max(10px, calc(${boy} * 0.17))` }}>
                   {ad}

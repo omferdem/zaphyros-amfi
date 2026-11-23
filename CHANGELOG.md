@@ -1,5 +1,11 @@
 # Sürüm Geçmişi
 
+## v0.67.0 (24 Kasım 2026) (kısmi: görsel kesici ve poz bağlama)
+Veritabanı değişikliği yok.
+- **Görsel kesici:** `npm run gorsel-kes` (`scripts/gorsel-kes.mjs`, sharp): `gorsel-ham/` her seferinde baştan taranır; `ogrenci-N-tablo` (koşu, halat, düşüş, sevinç), `kahraman-N-tablo` (vur, düş, sevin), `ejderha-tablo`, `hoca-tablo` hücrelere bölünür, ince siyah ayırıcı çizgi kırpılır, arka plan kenardan flood fill ile şeffaf yapılır, 512x512 kareye ayaklar aynı taban çizgisinde olacak biçimde ortalanır (WebP). `arka-*` dosyaları 1920x1080 (kule gökyüzü 1080x1920) WebP olur; dağ ve kule nesneleri şeffaf kırpılır. Çıktı `public/gorseller` (44 görsel); kontrol sayfası `denetim/v0.67/gorsel-kontrol.html` ve `.png`.
+- **Poz bağlama:** `Gorsel` bileşeni `poz` alır (`ogrenci-3-kos.webp` denenir, yoksa `ogrenci-3.webp`, o da yoksa emoji). Koşu: orman, kule, hocayla yarış, Zirve, zombi; halatta çekme; ormanda yakalananlar düşüş; ejderha ve arena kahramanları vuruş.
+- Henüz yapılmadı: Zirve'de `arka-dag` üstüne 15 kampın yerleşimi ve kamp/çığ/bayrak görselleri; kule blok, vinç ve bayrak görselleri; 150 ms poz geçişi; yanlış cevap, hasar, sevinç gibi duruma bağlı pozlar; v0.67 canlı doğrulama senaryoları.
+
 ## v0.66.7 (24 Kasım 2026)
 `0052_etkinlik_arsiv_akis.sql` PGlite testinden geçti ve apply_migration ile canlıya uygulandı (`etkinlikler.arsiv`, `etkinlikler.akis_id`).
 - **Etkinlikte oyun görünür:** katılımcı adı olmayan (yoklamasız) etkinlikte oyun sahnesi örnek oyuncularla çizilir; gerçek cevaplar gelince gerçek sahne üstüne açılır. Önceden perde boş kalıyordu.

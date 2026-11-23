@@ -1,3 +1,4 @@
+import Gorsel from './Gorsel'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { EN_COK_UCAN, useTepkiDinle, type Tepki } from '../lib/tepki'
 
@@ -74,7 +75,7 @@ export default function TepkiKatmani({ oturum, etkin, ayar }: { oturum: string; 
         </span>
       ))}
       <div className={`fixed bottom-28 text-4xl select-none ${hocaDurumu === 'ziplar' ? 'tepki-hoca-zipla' : ''}`} style={{ right: 'calc(var(--perde-sag, 0px) + 12px)' }} title="Hoca">
-        {hocaDurumu === 'sakin' ? '🧑‍🏫' : hocaDurumu === 'gulumse' ? '😊' : '🥳'}
+        <Gorsel ad="hoca.webp" poz={hocaDurumu === 'sakin' ? 'normal' : hocaDurumu === 'gulumse' ? 'mutlu' : 'ziplar'} emoji={hocaDurumu === 'sakin' ? '🧑‍🏫' : hocaDurumu === 'gulumse' ? '😊' : '🥳'} className="w-16 h-16" emojiClass="text-4xl" />
       </div>
     </div>
   )

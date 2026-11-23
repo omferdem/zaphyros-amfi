@@ -202,7 +202,7 @@ export default function ZirveSahnesi({ d, sonSonuc, jokerler, sonOran, oyuncular
                 <div key={`${o.ad}-${i}`} className={`relative flex flex-col items-center ${o.son !== null && o.son !== 1 ? 'opacity-60 rotate-[-8deg]' : ''}`}>
                   {o.son === 1 && sonSonuc && <span className="absolute -top-[1.8cqw] text-[1.4cqw] font-extrabold text-emerald-300 drop-shadow">+1</span>}
                   {o.son !== null && o.son !== 1 && sonSonuc && <span className="absolute -top-[1.8cqw] text-[1.4cqw]">😵</span>}
-                  <Gorsel ad={`ogrenci-${(i % 5) + 1}.webp`} poz={d.kazandi ? 'sevin' : o.son !== null && o.son !== 1 && sonSonuc ? 'dus' : 'kos'} emoji="🧗" className="w-[3.6cqw] h-[3.6cqw] drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]" emojiClass="text-[2.4cqw]" />
+                  <Gorsel ad={`ogrenci-${(i % 5) + 1}.webp`} poz={d.kazandi ? 'sevin' : o.son !== null && o.son !== 1 && sonSonuc ? 'dus' : 'tirman'} emoji="🧗" className="w-[3.6cqw] h-[3.6cqw] drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]" emojiClass="text-[2.4cqw]" />
                   {o.ad && <span className="max-w-[7cqw] truncate text-[1cqw] font-bold leading-none rounded bg-black/55 px-1">{o.ad}</span>}
                 </div>
               ))}

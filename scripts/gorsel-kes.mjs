@@ -120,6 +120,38 @@ function beyaziSil({ data, w, h }) {
   return { data, w, h }
 }
 
+/** Karakterden kopuk küçük artıkları (komşu hücreden taşan parçalar) siler: en büyük bileşenin %4'ünden küçük olanlar atılır. */
+function artikTemizle({ data, w, h }) {
+  const etiket = new Int32Array(w * h)
+  const alanlar = [0]
+  let sayac = 0
+  for (let p0 = 0; p0 < w * h; p0++) {
+    if (etiket[p0] || data[p0 * 4 + 3] <= 40) continue
+    sayac++
+    let alan = 0
+    const yigin = [p0]
+    etiket[p0] = sayac
+    while (yigin.length) {
+      const p = yigin.pop()
+      alan++
+      const x = p % w
+      const y = (p - x) / w
+      for (const [nx, ny] of [[x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1], [x + 1, y + 1], [x - 1, y - 1], [x + 1, y - 1], [x - 1, y + 1]]) {
+        if (nx < 0 || ny < 0 || nx >= w || ny >= h) continue
+        const q = ny * w + nx
+        if (!etiket[q] && data[q * 4 + 3] > 40) {
+          etiket[q] = sayac
+          yigin.push(q)
+        }
+      }
+    }
+    alanlar.push(alan)
+  }
+  const en = Math.max(...alanlar)
+  for (let p = 0; p < w * h; p++) if (etiket[p] && alanlar[etiket[p]] < en * 0.04) data[p * 4 + 3] = 0
+  return { data, w, h }
+}
+
 function sinirKutusu({ data, w, h }) {
   let x0 = w
   let y0 = h
@@ -139,7 +171,7 @@ function sinirKutusu({ data, w, h }) {
 }
 
 async function yaz(rgba, ad, { kare = true } = {}) {
-  const kutu = sinirKutusu(rgba)
+  const kutu = sinirKutusu(artikTemizle(rgba))
   if (!kutu) throw new Error(`${ad}: boş görsel`)
   const kesit = sharp(rgba.data, { raw: { width: rgba.w, height: rgba.h, channels: 4 } }).extract({ left: kutu.x0, top: kutu.y0, width: kutu.x1 - kutu.x0 + 1, height: kutu.y1 - kutu.y0 + 1 })
   if (kare) {

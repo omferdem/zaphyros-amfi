@@ -575,7 +575,7 @@ export function EjderhaSahnesi({ d, kucult }: { d: EjderhaDurumu; kucult: () => 
                 >
                   {!dustu && <span className="absolute -right-1 top-0 text-base sm:text-xl pointer-events-none" aria-hidden>{SILAHLAR[adIndeksi(h.ad, SILAHLAR.length) - 1]}</span>}
                   {!dustu && <KarakterEnerjisi ad={h.ad} className="absolute -top-3 left-1/2 -translate-x-1/2 w-[min(100%,3.5rem)]" />}
-                  <div className={boy}>{dustu ? '💤' : <Gorsel ad={`kahraman-${adIndeksi(h.ad, 8)}.webp`} poz="vur" emoji={karakter(h.ad, KAHRAMANLAR)} className={n > 60 ? 'w-9 h-9' : n > 40 ? 'w-11 h-11' : n > 20 ? 'w-16 h-16' : 'w-20 h-20'} emojiClass={boy} />}</div>
+                  <div className={boy}>{dustu ? '💤' : <Gorsel ad={`kahraman-${adIndeksi(h.ad, 8)}.webp`} poz={d.kazandi ? 'sevin' : 'vur'} emoji={karakter(h.ad, KAHRAMANLAR)} className={n > 60 ? 'w-9 h-9' : n > 40 ? 'w-11 h-11' : n > 20 ? 'w-16 h-16' : 'w-20 h-20'} emojiClass={boy} />}</div>
                   <div className={`${adBoy} font-bold truncate mx-auto`}>{h.ad}</div>
                   <div className={n > 40 ? "text-[9px] tracking-tighter" : "text-xs tracking-tighter"}>{'❤️'.repeat(Math.max(0, h.kalan)) + '🖤'.repeat(KAHRAMAN_CANI - Math.max(0, h.kalan))}</div>
                 </li>

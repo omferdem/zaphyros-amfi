@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.67.2 (24 Kasım 2026)
+Veritabanı değişikliği yok. Görsel denetim (halat, ejderha, merdiven) ihlalsiz.
+- Gemini'den gelen yeni görseller kesildi (83 görsel: kahraman 1-8, ejderha kükre/ateş, hoca pozları, tırmanış pozları, kale mancınık ve merkez, orman ev ve fener, orman arka planı). Kesiciye kopuk küçük artıkları silen adım eklendi (`kahraman-1-sevin` temizlendi).
+- **Pozlar:** halatta kazanan takım sevinç, kaybeden düşüş pozunda; ejderha bitince kahramanlar sevinç; Zirve'de ekip tırmanış pozunda; hoca emojisi yerine hoca görseli (normal, mutlu, zıplar).
+- **Takım sıralama kartı** artık halat/kule sahnesinin üstüne kendiliğinden binmiyor; "takım" düğmesiyle açılıyor.
+- Yapılmadı: kale mancınık/merkez, orman ev/fener/arka plan ve `arka-kule-gok` görsellerinin sahnelere bağlanması; telefonda orman kartının sahneyi örtmesi; 15'in üstündeki canlı senaryolar.
+
 ## v0.67.1 (24 Kasım 2026)
 Veritabanı değişikliği yok. Tam görsel denetim ve lazer/kalem testi ihlalsiz; ayrıntı `denetim/v0.67/KONTROL.md`.
 - **Zirveye Tırmanış:** `arka-dag` zemin; 15 kamp resimdeki gerçek patikanın üzerinde (`src/lib/dagYolu.ts`), `dag-kamp`, `dag-guvenli-kamp`, `dag-cig`, `dag-zirve-bayrak` görselleri; ekip kazanınca sevinç, çığda düşüş pozu.

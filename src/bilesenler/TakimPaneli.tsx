@@ -119,7 +119,8 @@ export default function TakimPaneli({ oturum, anahtar, mod, dugme = true }: { ot
     <div className={perde ? 'fixed bottom-24 z-30 flex flex-col items-end gap-2' : 'space-y-2'} style={perde ? { right: 'calc(var(--perde-sag, 0px) + 16px)', marginBottom: 'var(--perde-alt, 0px)' } : undefined}>
       {halatSahnesi}
       {halatGorunumu}
-      {puanTablosu}
+      {/* Sıralama kartı yalnızca "takım" düğmesiyle açılır; sahnedeki karakterlerin üstüne kendiliğinden binmez */}
+      {menu && puanTablosu}
       {secenekler}
       <div className="flex gap-2">
         {d.sayi === 2 && (

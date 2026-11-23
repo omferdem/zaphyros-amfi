@@ -185,6 +185,51 @@ async function main() {
   await durumuYakala('yoklama', Object.keys(EKRANLAR))
   await adimYaz(adimlar[0].id, false)
   await durumuYakala('slayt-metinli', Object.keys(EKRANLAR))
+  // Lazer ve kalem testi: lazer çizmez ve tıklamayı geçirir; kalem çizer
+  if (istenen('arac')) {
+    const sayfa = await sayfaAc('projeksiyon')
+    try {
+      await adimYaz(adimlar[0].id, false)
+      await sayfa.goto(`${BASE}#/sahne/${SID}`)
+      await sayfa.waitForTimeout(3000)
+      const piksel = () =>
+        sayfa.evaluate(() => {
+          const c = document.querySelector('.perde-alan canvas')
+          if (!c) return -1
+          const g = c.getContext('2d')
+          const veri = g.getImageData(0, 0, c.width, c.height).data
+          let n = 0
+          for (let i = 3; i < veri.length; i += 4) if (veri[i] > 0) n++
+          return n
+        })
+      const surukle = async () => {
+        await sayfa.mouse.move(300, 200)
+        await sayfa.mouse.down()
+        for (let i = 0; i < 12; i++) await sayfa.mouse.move(300 + i * 40, 200 + i * 15)
+        await sayfa.mouse.up()
+      }
+      await sayfa.locator('button[title^="Lazer"]').click()
+      await sayfa.waitForTimeout(400)
+      await surukle()
+      const lazerPiksel = await piksel()
+      const ustte = await sayfa.evaluate(() => {
+        const e = document.elementFromPoint(640, 360)
+        return e && e.closest('.perde-alan') ? 'CIZIM-KATMANI' : e ? e.tagName : 'yok'
+      })
+      if (lazerPiksel > 0) ihlalToplam.push(`lazer testi: lazer çizim yaptı (${lazerPiksel} piksel)`)
+      if (ustte === 'CIZIM-KATMANI') ihlalToplam.push('lazer testi: lazer açıkken tıklama canvas tarafından yutuluyor')
+      await sayfa.locator('button[title^="Lazer"]').click()
+      await sayfa.locator('button[title^="Kalem"]').click()
+      await sayfa.waitForTimeout(400)
+      await surukle()
+      const kalemPiksel = await piksel()
+      if (kalemPiksel <= 0) ihlalToplam.push('kalem testi: kalem açıkken sürükleme çizim bırakmadı')
+      log(`arac testi: lazer piksel=${lazerPiksel}, üstteki öğe=${ustte}, kalem piksel=${kalemPiksel}`)
+    } catch (e) {
+      ihlalToplam.push(`arac testi çalışmadı: ${e.message}`)
+    }
+    await sayfaKapat(sayfa)
+  }
   await adimYaz(adimlar[2].id, false)
   await durumuYakala('zapoot-uzun-soru', Object.keys(EKRANLAR))
   await sb.from('sessions').update({ soru_durum: 'sonuc' }).eq('id', SID)
@@ -204,7 +249,7 @@ async function main() {
     for (const mod of oyunlar) {
       log('oyun', mod)
       await surucuDepoyuYay()
-      await sb.from('sessions').update({ kumanda_istek: { tur: 'kahoot', paket: 'Denetim Paketi', mod, adet: 6, zorluk: 'orta', sure: 0, t: Date.now() } }).eq('id', SID)
+      await sb.from('sessions').update({ kumanda_istek: { tur: 'kahoot', paket: 'Denetim Paketi', mod, adet: mod === 'merdiven' ? 15 : 6, zorluk: 'orta', sure: 0, t: Date.now() } }).eq('id', SID)
       await surucu.waitForTimeout(9000)
       await surucuDepoyuYay()
       await durumuYakala(`oyun-${mod}-soru`, OYUN_EKRANLARI)

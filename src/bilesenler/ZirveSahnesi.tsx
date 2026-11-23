@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import gsap from 'gsap'
-import Gorsel from './Gorsel'
+import Gorsel, { gorselAdresi } from './Gorsel'
+import { DAG_GENISLIK, DAG_YOLU, DAG_YUKSEKLIK, ZIRVE_YUZDE } from '../lib/dagYolu'
 import Konfeti from './Konfeti'
 import { HavaiFisek } from './FinalEfekti'
 import { GUVENLI_ARALIK, type MerdivenDurumu } from '../lib/merdiven'
@@ -13,11 +14,8 @@ import type { SoruJokerleri } from './MerdivenPaneli'
  * Hareket GSAP zaman çizelgeleriyle akar; boşta ekip nefes alır, kar yağar, yükseldikçe hava kararır.
  */
 
-// 1000 x 600 kutuda, dağın içinde kalan dolambaçlı patika (soldan alttan zirveye)
-const YOL =
-  'M 90 570 C 260 575, 450 575, 560 520 S 330 470, 420 430 S 720 430, 680 370 S 500 340, 590 290 S 780 270, 730 210 S 640 170, 700 130 S 760 100, 782 66'
-const DAG = '0,600 0,430 160,340 300,370 480,230 640,130 790,48 900,170 1000,300 1000,600'
-const KAR_BOLGESI = '640,130 790,48 900,170 820,150 760,110'
+// Patika arka-dag.webp (1920x1080) üzerindeki gerçek patikadır; koordinatlar src/lib/dagYolu.ts içinde
+const YOL = DAG_YOLU
 
 const JOKER_ADLARI: Record<string, string> = {
   yarim: '✂ Kestirme yol: telefonlarda 2 yanlış şık silindi',
@@ -65,8 +63,8 @@ export default function ZirveSahnesi({ d, sonSonuc, jokerler, sonOran, oyuncular
     if (!p || !g) return
     const L = p.getTotalLength()
     const q = p.getPointAtLength((L * Math.max(0, Math.min(n, b))) / n)
-    g.style.left = `${q.x / 10}%`
-    g.style.top = `${q.y / 6}%`
+    g.style.left = `${(q.x / DAG_GENISLIK) * 100}%`
+    g.style.top = `${(q.y / DAG_YUKSEKLIK) * 100}%`
   }
 
   // Basamak değişince ekip patika boyunca yürür ya da çığda kayar
@@ -158,21 +156,12 @@ export default function ZirveSahnesi({ d, sonSonuc, jokerler, sonOran, oyuncular
   const guvenliKamp = (b: number) => b % GUVENLI_ARALIK === 0
 
   return (
-    <div className="relative mx-auto overflow-hidden rounded-3xl border border-white/10 [container-type:inline-size]" style={{ aspectRatio: '5 / 3', width: 'min(100%, calc((100dvh - var(--perde-ust, 0px) - var(--perde-alt, 0px) - 8rem) * 5 / 3))', background: 'linear-gradient(to top, #1e1b4b, #312e81 45%, #0ea5e9 130%)' }}>
+    <div className="relative mx-auto overflow-hidden rounded-3xl border border-white/10 [container-type:inline-size]" style={{ aspectRatio: '16 / 9', width: 'min(100%, calc((100dvh - var(--perde-ust, 0px) - var(--perde-alt, 0px) - 7rem) * 16 / 9))', background: `url("${gorselAdresi('arka-dag.webp')}") center / cover, linear-gradient(to top, #1e1b4b, #312e81 45%, #0ea5e9 130%)` }}>
       {/* gökyüzü: yükseldikçe kararır */}
-      <div className="absolute inset-0 bg-slate-950 pointer-events-none transition-opacity duration-[1500ms]" style={{ opacity: 0.05 + ilerleme * 0.5 }} aria-hidden />
-      <svg viewBox="0 0 1000 600" className="absolute inset-0 w-full h-full" aria-hidden>
-        <defs>
-          <linearGradient id="dagrenk" x1="0" y1="1" x2="0" y2="0">
-            <stop offset="0" stopColor="#14532d" />
-            <stop offset="0.45" stopColor="#57534e" />
-            <stop offset="1" stopColor="#cbd5e1" />
-          </linearGradient>
-        </defs>
-        <polygon points={DAG} fill="url(#dagrenk)" stroke="#0f172a" strokeWidth="5" strokeLinejoin="round" />
-        <polygon points={KAR_BOLGESI} fill="#f8fafc" opacity="0.9" />
-        <path d={YOL} fill="none" stroke="#0f172a" strokeWidth="16" strokeLinecap="round" opacity="0.5" />
-        <path ref={yolRef} d={YOL} fill="none" stroke="#fde68a" strokeWidth="9" strokeLinecap="round" strokeDasharray="2 14" />
+      <div className="absolute inset-0 bg-slate-950 pointer-events-none transition-opacity duration-[1500ms]" style={{ opacity: ilerleme * 0.22 }} aria-hidden />
+      {/* patika: yalnızca konum hesabı için (görseldeki gerçek patikayı izler), çizilmez */}
+      <svg viewBox={`0 0 ${DAG_GENISLIK} ${DAG_YUKSEKLIK}`} className="absolute inset-0 w-full h-full" aria-hidden>
+        <path ref={yolRef} d={YOL} fill="none" stroke="none" />
       </svg>
 
       {/* kamplar */}
@@ -181,17 +170,16 @@ export default function ZirveSahnesi({ d, sonSonuc, jokerler, sonOran, oyuncular
         const cikildi = b <= d.basamak
         const guvenli = guvenliKamp(b)
         return (
-          <div key={b} className="absolute -translate-x-1/2 -translate-y-1/2 text-center leading-none" style={{ left: `${q.x / 10}%`, top: `${q.y / 6}%` }}>
-            <span className={guvenli ? 'text-[3.6cqw]' : 'text-[2cqw] opacity-80'}>{guvenli ? '⛺' : '🔸'}</span>
-            {guvenli && <span className="absolute -top-[1.6cqw] left-1/2 text-[2cqw]">🚩</span>}
-            <span className={`block text-[1.3cqw] font-bold tabular-nums ${cikildi ? 'text-emerald-300' : guvenli ? 'text-amber-300' : 'text-white/50'}`}>{b}</span>
+          <div key={b} className="absolute -translate-x-1/2 -translate-y-1/2 text-center leading-none" style={{ left: `${(q.x / DAG_GENISLIK) * 100}%`, top: `${(q.y / DAG_YUKSEKLIK) * 100}%` }}>
+            <Gorsel ad={guvenli ? 'dag-guvenli-kamp.webp' : 'dag-kamp.webp'} emoji={guvenli ? '⛺' : '🔸'} className={guvenli ? 'w-[5.5cqw] h-[4.4cqw]' : 'w-[3.4cqw] h-[2.6cqw]'} emojiClass={guvenli ? 'text-[3.6cqw]' : 'text-[2cqw] opacity-80'} />
+            <span className={`block rounded-full bg-black/55 px-[0.5cqw] text-[1.2cqw] font-bold tabular-nums ${cikildi ? 'text-emerald-300' : guvenli ? 'text-amber-300' : 'text-white/70'}`}>{b}</span>
           </div>
         )
       })}
 
       {/* zirve bayrağı */}
-      <div ref={bayrakRef} className="absolute -translate-x-1/2 -translate-y-full text-[4cqw] leading-none" style={{ left: '78.2%', top: '10%', opacity: d.kazandi ? 1 : 0.55 }}>
-        🚩
+      <div ref={bayrakRef} className="absolute -translate-x-1/2 -translate-y-full text-[4cqw] leading-none" style={{ left: `${ZIRVE_YUZDE.x}%`, top: `${ZIRVE_YUZDE.y + 1}%`, opacity: d.kazandi ? 1 : 0.9 }}>
+        <Gorsel ad="dag-zirve-bayrak.webp" emoji="🚩" className="w-[6cqw] h-[6cqw]" emojiClass="text-[4cqw]" />
       </div>
       {d.kazandi && (
         <>
@@ -214,7 +202,7 @@ export default function ZirveSahnesi({ d, sonSonuc, jokerler, sonOran, oyuncular
                 <div key={`${o.ad}-${i}`} className={`relative flex flex-col items-center ${o.son !== null && o.son !== 1 ? 'opacity-60 rotate-[-8deg]' : ''}`}>
                   {o.son === 1 && sonSonuc && <span className="absolute -top-[1.8cqw] text-[1.4cqw] font-extrabold text-emerald-300 drop-shadow">+1</span>}
                   {o.son !== null && o.son !== 1 && sonSonuc && <span className="absolute -top-[1.8cqw] text-[1.4cqw]">😵</span>}
-                  <Gorsel ad={`ogrenci-${(i % 5) + 1}.webp`} poz="kos" emoji="🧗" className="w-[5cqw] h-[5cqw] drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]" emojiClass="text-[3cqw]" />
+                  <Gorsel ad={`ogrenci-${(i % 5) + 1}.webp`} poz={d.kazandi ? 'sevin' : o.son !== null && o.son !== 1 && sonSonuc ? 'dus' : 'kos'} emoji="🧗" className="w-[3.6cqw] h-[3.6cqw] drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]" emojiClass="text-[2.4cqw]" />
                   {o.ad && <span className="max-w-[7cqw] truncate text-[1cqw] font-bold leading-none rounded bg-black/55 px-1">{o.ad}</span>}
                 </div>
               ))}
@@ -225,8 +213,8 @@ export default function ZirveSahnesi({ d, sonSonuc, jokerler, sonOran, oyuncular
       </div>
 
       {/* çığ */}
-      <div ref={cigRef} className="absolute left-[42%] top-[25%] text-[14cqw] leading-none pointer-events-none opacity-0 z-20" aria-hidden>
-        🌨️
+      <div ref={cigRef} className="absolute left-[40%] top-[28%] leading-none pointer-events-none opacity-0 z-20" aria-hidden>
+        <Gorsel ad="dag-cig.webp" emoji="🌨️" className="w-[24cqw] h-[24cqw]" emojiClass="text-[14cqw]" />
       </div>
 
       {/* kar */}

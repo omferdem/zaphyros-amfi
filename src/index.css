@@ -611,3 +611,12 @@ body::after {
     min-width: 40px;
   }
 }
+
+/* Poz geçişi: yeni poz 150 ms içinde belirir (kesik değil, çapraz geçiş hissi) */
+@keyframes poz-gecis {
+  from { opacity: 0.15; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+.poz-gecis {
+  animation: poz-gecis 150ms ease-out;
+}

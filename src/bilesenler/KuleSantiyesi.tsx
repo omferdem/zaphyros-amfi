@@ -3,7 +3,7 @@ import gsap from 'gsap'
 import Konfeti from './Konfeti'
 import { HavaiFisek } from './FinalEfekti'
 import Gorsel, { arkaPlan, gorselAdresi } from './Gorsel'
-import { takimBilgisi } from '../lib/takim'
+import { TAKIMLAR, takimBilgisi } from '../lib/takim'
 import { sesCal, useOyunSesi } from '../lib/ses'
 import type { KuleDurumu } from '../lib/kule'
 
@@ -182,10 +182,9 @@ export function KuleSantiyesi({ d, kucult }: { d: KuleDurumu; kucult: () => void
                   className="relative h-full"
                   style={{ width: genislik }}
                 >
-                  {/* vinç */}
-                  <div className="absolute" style={{ right: '4%', bottom: `${ZEMIN}cqh`, width: '1.2cqh', height: `${(d.hedef + 1) * BH}cqh`, background: 'repeating-linear-gradient(135deg,#f59e0b 0 6px,#78350f 6px 12px)' }} aria-hidden />
-                  <div className="absolute origin-top" style={{ right: '4%', bottom: `${ZEMIN + (d.hedef + 1) * BH}cqh`, width: '60%', height: '1cqh', background: '#f59e0b' }} aria-hidden>
-                    <span className="absolute left-0 top-full w-px bg-slate-300" style={{ height: `${BH * 1.2}cqh` }} />
+                  {/* vinç: görsel yoksa eski çizgisel vinç */}
+                  <div className="absolute flex items-end" style={{ right: '0%', bottom: `${ZEMIN}cqh`, height: `${(d.hedef + 1) * BH}cqh` }}>
+                    <Gorsel ad="kule-vinc.webp" emoji="🏗️" className="h-full w-auto" emojiClass="text-[8cqh]" />
                   </div>
                   {/* blok kulesi */}
                   {Array.from({ length: kat }, (_, k) => (
@@ -194,11 +193,18 @@ export function KuleSantiyesi({ d, kucult }: { d: KuleDurumu; kucult: () => void
                       ref={(el) => {
                         if (el) blokRef.current.set(`${s.takim}-${k}`, el)
                       }}
-                      src={gorselAdresi(`blok-${s.takim}.webp`)}
+                      src={gorselAdresi('kule-tugla.webp')}
+                      onError={(e) => {
+                        const img = e.currentTarget
+                        if (!img.dataset.yedek) {
+                          img.dataset.yedek = '1'
+                          img.src = gorselAdresi(`blok-${s.takim}.webp`)
+                        }
+                      }}
                       alt=""
                       draggable={false}
                       className="absolute select-none"
-                      style={{ left: '40%', transform: 'translateX(-50%)', bottom: `${ZEMIN + k * BH}cqh`, height: `${BH}cqh`, width: 'auto' }}
+                      style={{ left: '40%', transform: 'translateX(-50%)', bottom: `${ZEMIN + k * BH}cqh`, height: `${BH}cqh`, width: 'auto', filter: `drop-shadow(0 0 0.5cqh ${TAKIMLAR[(s.takim - 1) % TAKIMLAR.length].hex})` }}
                     />
                   ))}
                   {lider && !d.bitti && (
@@ -207,14 +213,16 @@ export function KuleSantiyesi({ d, kucult }: { d: KuleDurumu; kucult: () => void
                     </div>
                   )}
                   {kazandi && (
-                    <div className="absolute text-[9cqh] leading-none pop" style={{ left: '40%', transform: 'translateX(-30%)', bottom: `${ZEMIN + kat * BH}cqh` }} aria-hidden>
-                      🚩
+                    <div className="absolute pop" style={{ left: '40%', transform: 'translateX(-30%)', bottom: `${ZEMIN + kat * BH}cqh`, width: '12cqh', height: '12cqh' }} aria-hidden>
+                      {/* beyaz bez takım rengine boyanır: renk katmanı + çarpma karışımlı görsel */}
+                      <div className="absolute inset-0" style={{ backgroundColor: TAKIMLAR[(s.takim - 1) % TAKIMLAR.length].hex, WebkitMask: `url("${gorselAdresi('kule-bayrak.webp')}") center / contain no-repeat`, mask: `url("${gorselAdresi('kule-bayrak.webp')}") center / contain no-repeat` }} />
+                      <img src={gorselAdresi('kule-bayrak.webp')} alt="" className="absolute inset-0 w-full h-full object-contain" style={{ mixBlendMode: 'multiply' }} onError={(e) => (e.currentTarget.style.display = 'none')} />
                     </div>
                   )}
                   {/* işçiler */}
                   <div className="absolute flex items-end -space-x-[1cqh]" style={{ left: '8%', bottom: `${ZEMIN - 4}cqh` }}>
                     {[0, 1, 2].map((i) => (
-                      <Gorsel key={i} ad={`ogrenci-${((s.takim * 3 + i) % 8) + 1}.webp`} poz="kos" emoji="👷" className="h-[11cqh] w-auto drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]" emojiClass="text-[5cqh]" />
+                      <Gorsel key={i} ad={`ogrenci-${((s.takim * 3 + i) % 8) + 1}.webp`} poz={kazandi || alkis ? 'sevin' : 'kos'} emoji="👷" className="h-[11cqh] w-auto drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]" emojiClass="text-[5cqh]" />
                     ))}
                   </div>
                   {alkis && (

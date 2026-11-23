@@ -21,7 +21,7 @@ export default function Gorsel({ ad, emoji, className = '', emojiClass, alt = ''
   const canli = /^(ogrenci|kahraman|zombi|roket)-\d/.test(ad)
   const canliStil = useMemo<React.CSSProperties | undefined>(() => (canli ? { animationDuration: `${2.2 + Math.random() * 1.6}s`, animationDelay: `-${(Math.random() * 3).toFixed(2)}s` } : undefined), [canli])
   if (hata) return <span className={emojiClass ?? className} aria-hidden>{emoji}</span>
-  return <img key={pozluAd} src={gorselAdresi(pozluAd)} alt={alt} className={`object-contain select-none ${canli ? 'karakter-canli' : ''} ${className}`} style={canliStil} draggable={false} loading="lazy" onError={() => (poz && pozYok !== poz ? setPozYok(poz) : setHata(true))} />
+  return <img key={pozluAd} src={gorselAdresi(pozluAd)} alt={alt} className={`object-contain select-none ${poz ? 'poz-gecis' : ''} ${canli ? 'karakter-canli' : ''} ${className}`} style={canliStil} draggable={false} loading="lazy" onError={() => (poz && pozYok !== poz ? setPozYok(poz) : setHata(true))} />
 }
 
 /** Bir addan 1 ile n arasında sabit bir sıra numarası (aynı öğrenci hep aynı karakteri alır). */

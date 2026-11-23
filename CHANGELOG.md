@@ -1,5 +1,12 @@
 # Sürüm Geçmişi
 
+## v0.67.1 (24 Kasım 2026)
+Veritabanı değişikliği yok. Tam görsel denetim ve lazer/kalem testi ihlalsiz; ayrıntı `denetim/v0.67/KONTROL.md`.
+- **Zirveye Tırmanış:** `arka-dag` zemin; 15 kamp resimdeki gerçek patikanın üzerinde (`src/lib/dagYolu.ts`), `dag-kamp`, `dag-guvenli-kamp`, `dag-cig`, `dag-zirve-bayrak` görselleri; ekip kazanınca sevinç, çığda düşüş pozu.
+- **Kule yarışı:** `kule-tugla` blok (takım renginde parıltı), `kule-vinc`, takım rengine boyanan `kule-bayrak`.
+- **Poz geçişi** 150 ms; lazer/kalem otomatik testi (lazer çizmez ve tıklamayı geçirir, kalem çizer) görsel denetim koşusuna eklendi.
+- Yapılmadı: halat ve ejderhada duruma bağlı pozlar, `arka-kule-gok`, v0.67 canlı senaryoları.
+
 ## v0.67.0 (24 Kasım 2026) (kısmi: görsel kesici ve poz bağlama)
 Veritabanı değişikliği yok.
 - **Görsel kesici:** `npm run gorsel-kes` (`scripts/gorsel-kes.mjs`, sharp): `gorsel-ham/` her seferinde baştan taranır; `ogrenci-N-tablo` (koşu, halat, düşüş, sevinç), `kahraman-N-tablo` (vur, düş, sevin), `ejderha-tablo`, `hoca-tablo` hücrelere bölünür, ince siyah ayırıcı çizgi kırpılır, arka plan kenardan flood fill ile şeffaf yapılır, 512x512 kareye ayaklar aynı taban çizgisinde olacak biçimde ortalanır (WebP). `arka-*` dosyaları 1920x1080 (kule gökyüzü 1080x1920) WebP olur; dağ ve kule nesneleri şeffaf kırpılır. Çıktı `public/gorseller` (44 görsel); kontrol sayfası `denetim/v0.67/gorsel-kontrol.html` ve `.png`.

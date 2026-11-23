@@ -2,75 +2,45 @@
   "surum": "v0.67",
   "sonuclar": [
     {
-      "durum": "oyun-ejderha-soru",
+      "durum": "slayt-metinli",
       "ekran": "projeksiyon",
-      "dosya": "oyun-ejderha-soru__projeksiyon.png",
+      "dosya": "slayt-metinli__projeksiyon.png",
       "ihlaller": []
     },
     {
-      "durum": "oyun-ejderha-soru",
+      "durum": "slayt-metinli",
       "ekran": "telefon-390",
-      "dosya": "oyun-ejderha-soru__telefon-390.png",
+      "dosya": "slayt-metinli__telefon-390.png",
       "ihlaller": []
     },
     {
-      "durum": "oyun-ejderha-sonuc",
+      "durum": "slayt-metinli",
+      "ekran": "telefon-yatay",
+      "dosya": "slayt-metinli__telefon-yatay.png",
+      "ihlaller": []
+    },
+    {
+      "durum": "oyun-orman-soru",
       "ekran": "projeksiyon",
-      "dosya": "oyun-ejderha-sonuc__projeksiyon.png",
+      "dosya": "oyun-orman-soru__projeksiyon.png",
       "ihlaller": []
     },
     {
-      "durum": "oyun-ejderha-sonuc",
+      "durum": "oyun-orman-soru",
       "ekran": "telefon-390",
-      "dosya": "oyun-ejderha-sonuc__telefon-390.png",
+      "dosya": "oyun-orman-soru__telefon-390.png",
       "ihlaller": []
     },
     {
-      "durum": "oyun-halat-soru",
+      "durum": "oyun-orman-sonuc",
       "ekran": "projeksiyon",
-      "dosya": "oyun-halat-soru__projeksiyon.png",
+      "dosya": "oyun-orman-sonuc__projeksiyon.png",
       "ihlaller": []
     },
     {
-      "durum": "oyun-halat-soru",
+      "durum": "oyun-orman-sonuc",
       "ekran": "telefon-390",
-      "dosya": "oyun-halat-soru__telefon-390.png",
-      "ihlaller": []
-    },
-    {
-      "durum": "oyun-halat-sonuc",
-      "ekran": "projeksiyon",
-      "dosya": "oyun-halat-sonuc__projeksiyon.png",
-      "ihlaller": []
-    },
-    {
-      "durum": "oyun-halat-sonuc",
-      "ekran": "telefon-390",
-      "dosya": "oyun-halat-sonuc__telefon-390.png",
-      "ihlaller": []
-    },
-    {
-      "durum": "oyun-merdiven-soru",
-      "ekran": "projeksiyon",
-      "dosya": "oyun-merdiven-soru__projeksiyon.png",
-      "ihlaller": []
-    },
-    {
-      "durum": "oyun-merdiven-soru",
-      "ekran": "telefon-390",
-      "dosya": "oyun-merdiven-soru__telefon-390.png",
-      "ihlaller": []
-    },
-    {
-      "durum": "oyun-merdiven-sonuc",
-      "ekran": "projeksiyon",
-      "dosya": "oyun-merdiven-sonuc__projeksiyon.png",
-      "ihlaller": []
-    },
-    {
-      "durum": "oyun-merdiven-sonuc",
-      "ekran": "telefon-390",
-      "dosya": "oyun-merdiven-sonuc__telefon-390.png",
+      "dosya": "oyun-orman-sonuc__telefon-390.png",
       "ihlaller": []
     }
   ]

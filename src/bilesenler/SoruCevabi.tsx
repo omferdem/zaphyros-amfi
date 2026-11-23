@@ -38,7 +38,7 @@ function cevapAnahtari(adim: string) {
  * Öğrenci telefonunda bilgi yarışması sorusu. Yoklaması alınan öğrenci adıyla yarışır;
  * yoklamasız derste önce takma ad sorulur.
  */
-export default function SoruCevabi({ oturum, adim, yoklamali }: { oturum: string; adim: SoruAdimi; yoklamali: boolean }) {
+export default function SoruCevabi({ oturum, adim, yoklamali, numarali = false }: { oturum: string; adim: SoruAdimi; yoklamali: boolean; /** Ders oturumu (ders dışı etkinlik değil): kodla giren öğrenci numarasını yazar, yalnızca kimlik içindir, yoklama yazmaz */ numarali?: boolean }) {
   const [takmaAd, setTakmaAd] = useState(() => oku(takmaAdAnahtari(oturum)))
   const [secim, setSecim] = useState<number | null>(() => {
     const k = oku(cevapAnahtari(adim.id))
@@ -113,6 +113,7 @@ export default function SoruCevabi({ oturum, adim, yoklamali }: { oturum: string
     return (
       <TakmaAdFormu
         oturum={oturum}
+        numarali={numarali}
         tamam={(ad) => {
           sakla(takmaAdAnahtari(oturum), ad)
           setTakmaAd(ad)
@@ -284,7 +285,7 @@ export default function SoruCevabi({ oturum, adim, yoklamali }: { oturum: string
   )
 }
 
-function TakmaAdFormu({ oturum, tamam }: { oturum: string; tamam: (ad: string) => void }) {
+function TakmaAdFormu({ oturum, tamam, numarali = false }: { oturum: string; tamam: (ad: string) => void; numarali?: boolean }) {
   const [ad, setAd] = useState('')
   const [hata, setHata] = useState<string | null>(null)
   const [mesgul, setMesgul] = useState(false)
@@ -293,12 +294,18 @@ function TakmaAdFormu({ oturum, tamam }: { oturum: string; tamam: (ad: string) =
     e.preventDefault()
     setMesgul(true)
     setHata(null)
-    const { data, error } = await supabase.rpc('takma_ad_al', { p_session: oturum, p_cihaz: cihazKimligi(), p_ad: ad })
+    const { data, error } = numarali
+      ? await supabase.rpc('numarayla_katil', { p_session: oturum, p_cihaz: cihazKimligi(), p_numara: ad.trim() })
+      : await supabase.rpc('takma_ad_al', { p_session: oturum, p_cihaz: cihazKimligi(), p_ad: ad })
     setMesgul(false)
     const s = (data ?? {}) as { durum?: string; ad?: string; hata?: string }
     if (error || !s.durum) {
       setHata(
-        s.hata === 'ad_kullaniliyor'
+        s.hata === 'numara_gecersiz'
+          ? 'Bu numara sınıf listesinde yok. Numaranı kontrol et.'
+          : s.hata === 'numara_kullanildi'
+            ? 'Bu numarayla başka bir telefondan girilmiş.'
+            : s.hata === 'ad_kullaniliyor'
           ? 'Bu ad alınmış, başka bir ad yaz.'
           : s.hata === 'ad_kisa'
             ? 'En az 2 harf yaz.'
@@ -312,18 +319,19 @@ function TakmaAdFormu({ oturum, tamam }: { oturum: string; tamam: (ad: string) =
   return (
     <form onSubmit={gonder} className="space-y-4">
       <h1 className="text-xl font-extrabold">Yarışmaya katıl</h1>
-      <p className="text-sm text-slate-300">Puan tablosunda görünecek bir ad yaz.</p>
+      <p className="text-sm text-slate-300">{numarali ? 'Öğrenci numaranı yaz; puan tablosunda adınla görünürsün. Bu yoklama yerine geçmez.' : 'Puan tablosunda görünecek bir ad yaz.'}</p>
       <input
         autoFocus
         required
-        maxLength={24}
+        maxLength={numarali ? 20 : 24}
         autoComplete="off"
+        inputMode={numarali ? 'numeric' : undefined}
         className="giris-kutusu text-xl text-center"
-        placeholder="Takma ad"
+        placeholder={numarali ? 'Öğrenci numarası' : 'Takma ad'}
         value={ad}
         onChange={(e) => setAd(e.target.value)}
       />
-      <button disabled={mesgul || ad.trim().length < 2} className="parlak-buton w-full rounded-xl py-3 font-bold disabled:opacity-50">
+      <button disabled={mesgul || ad.trim().length < (numarali ? 1 : 2)} className="parlak-buton w-full rounded-xl py-3 font-bold disabled:opacity-50">
         Katıl
       </button>
       {hata && <p className="text-sm text-rose-200 bg-rose-500/10 rounded-xl p-3">{hata}</p>}

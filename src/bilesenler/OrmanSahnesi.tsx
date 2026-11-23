@@ -300,8 +300,8 @@ export function OrmanSahnesi({ d, kucult }: { d: OrmanSonucu; kucult: () => void
                   <Gorsel ad={`ogrenci-${adIndeksi(o.ad, 8)}.webp`} emoji="🧒" poz="kos" className="w-full aspect-square drop-shadow-[0_2px_2px_rgba(0,0,0,0.6)]" emojiClass="text-2xl" />
                 </div>
                 {o.fener > 0 && (
-                  <span className="absolute right-0 top-1/3" style={{ fontSize: `${boy * 0.4}cqw` }} aria-label="fener">
-                    🏮
+                  <span className="absolute right-0 top-1/3 block" style={{ fontSize: `${boy * 0.4}cqw`, width: `${boy * 0.4}cqw`, height: `${boy * 0.4}cqw` }} aria-label="fener">
+                    <Gorsel ad="orman-fener.webp" emoji="🏮" className="w-full h-full" emojiClass="" />
                   </span>
                 )}
                 {ad && (
@@ -383,7 +383,7 @@ export function OrmanSahnesi({ d, kucult }: { d: OrmanSonucu; kucult: () => void
           {d.bitti && (
             <div className="absolute inset-0 flex items-center justify-center bg-slate-950/55 backdrop-blur-[2px] z-[100]">
               <div className="cam-panel rounded-[2rem] p-8 text-center space-y-2 girdi max-w-lg">
-                <p className="text-7xl">{evde.length > 0 ? '🏠' : '🌙'}</p>
+                <p className="text-7xl flex justify-center">{evde.length > 0 ? <Gorsel ad="orman-ev.webp" emoji="🏠" className="h-28 w-auto" emojiClass="text-7xl" /> : '🌙'}</p>
                 <p className="text-4xl font-display font-extrabold">{evde.length > 0 ? 'Evin ışıkları yandı!' : 'Kimse eve varamadı'}</p>
                 {d.siralama.slice(0, 3).map((o, i) => (
                   <p key={`${o.ad}-${i}`} className="text-xl">

@@ -1,6 +1,6 @@
 -- ZAPEDU kurulum SQL'i (bu dosya otomatik üretilir, elle düzenleme; kaynağı supabase/migrations)
 -- Yeni bir Supabase projesinde SQL Editor'e bu dosyanın tamamını yapıştırıp bir kez çalıştır.
--- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql, 0019_oyun_adimi.sql, 0020_yoklama_haftalari.sql, 0021_pencere_6sn.sql, 0022_oturum_quizi.sql, 0023_acik_uclu_zombi.sql, 0024_kumanda_notu.sql, 0025_acik_uclu_sure.sql, 0026_devam_serisi.sql, 0027_hoca_davetleri.sql, 0028_etkinlik_fotograflari.sql, 0029_kod_yoklama_vermez.sql, 0030_sabit_ders_kodu.sql, 0031_kumanda_istegi.sql, 0032_slayt_gorseli_herkese.sql, 0033_slayt_gorseli_telefon_modu.sql, 0034_not_defteri.sql, 0035_kumanda_kale.sql, 0036_oyun_turlari.sql, 0037_katki_sil_hoca_yaris.sql, 0038_puan_turu_lobi.sql, 0039_takim_soru_ozeti.sql, 0040_kumanda_soru_sayisi.sql, 0041_takim_oyuncu_sonuclari.sql, 0042_soru_jokerleri.sql, 0043_kumanda_orman.sql, 0044_hizli_cevap.sql, 0045_ekran_goruntusu_kumanda_notu.sql, 0046_takim_on.sql, 0047_test_botu.sql, 0048_tur_sirasi.sql, 0049_final_turu.sql, 0050_kumanda_zorluk.sql, 0051_etkinlikler.sql, 0052_etkinlik_arsiv_akis.sql
+-- İçerdiği migration'lar: 0001_saglik.sql, 0002_yoklama.sql, 0003_ders_akisi.sql, 0004_ders_icerigi.sql, 0005_bilgi_yarismasi.sql, 0006_telefon_modu.sql, 0007_donem_sube_plan.sql, 0008_sube_gorunur.sql, 0009_uyandir.sql, 0010_tartisma.sql, 0011_kumanda_dersi_bitir.sql, 0012_quiz.sql, 0013_misafir_ogrenci.sql, 0014_sinif_etkilesimi.sql, 0015_takim_yarismasi.sql, 0016_hocayla_yaris.sql, 0017_bilgi_merdiveni.sql, 0018_ilk_ad.sql, 0019_oyun_adimi.sql, 0020_yoklama_haftalari.sql, 0021_pencere_6sn.sql, 0022_oturum_quizi.sql, 0023_acik_uclu_zombi.sql, 0024_kumanda_notu.sql, 0025_acik_uclu_sure.sql, 0026_devam_serisi.sql, 0027_hoca_davetleri.sql, 0028_etkinlik_fotograflari.sql, 0029_kod_yoklama_vermez.sql, 0030_sabit_ders_kodu.sql, 0031_kumanda_istegi.sql, 0032_slayt_gorseli_herkese.sql, 0033_slayt_gorseli_telefon_modu.sql, 0034_not_defteri.sql, 0035_kumanda_kale.sql, 0036_oyun_turlari.sql, 0037_katki_sil_hoca_yaris.sql, 0038_puan_turu_lobi.sql, 0039_takim_soru_ozeti.sql, 0040_kumanda_soru_sayisi.sql, 0041_takim_oyuncu_sonuclari.sql, 0042_soru_jokerleri.sql, 0043_kumanda_orman.sql, 0044_hizli_cevap.sql, 0045_ekran_goruntusu_kumanda_notu.sql, 0046_takim_on.sql, 0047_test_botu.sql, 0048_tur_sirasi.sql, 0049_final_turu.sql, 0050_kumanda_zorluk.sql, 0051_etkinlikler.sql, 0052_etkinlik_arsiv_akis.sql, 0053_numarayla_katil.sql
 
 -- ===========================================================================
 -- 0001_saglik.sql
@@ -7176,3 +7176,74 @@ alter table public.etkinlikler
   add column akis_id uuid references public.lessons (id) on delete set null;
 
 create index etkinlikler_akis_idx on public.etkinlikler (akis_id) where akis_id is not null;
+
+-- ===========================================================================
+-- 0053_numarayla_katil.sql
+-- ===========================================================================
+
+-- 0053: Derste kodla giren öğrenci numarasıyla kimliğini bildirir (yoklama yazılmaz)
+--
+-- Kullanıcı kararı (24 Kasım 2026): ders başladıktan sonra perdedeki ders koduyla giren öğrenci takma ad yerine
+-- öğrenci numarasını girer; numara şube listesinden ad soyada çevrilir ve oyunlarda ilk adıyla görünür.
+-- Kod sınıfta paylaşılabileceği için bu yol YOKLAMA YAZMAZ (yoklama yalnızca karekodla).
+-- * Numara oturumun şubesinin listesinde olmalı (misafir öğrenciler dahil, şubeye eklenmiş her kayıt).
+-- * Görünen ad ilk addır ("Ahmet Can Yılmaz" -> "Ahmet Can"); aynı oturumda bu ad alınmışsa soyadın baş harfi eklenir.
+--   Aynı numarayı başka cihaz kullanıyorsa 'numara_kullanildi' döner.
+-- * Ders dışı etkinliklerde (gizli __etkinlik_* dersleri) liste olmadığı için kullanılmaz; orada yalnızca takma ad vardır.
+
+alter table public.session_players add column ogrenci_id uuid references public.students (id) on delete cascade;
+
+create function public.numarayla_katil(p_session uuid, p_cihaz text, p_numara text)
+returns jsonb
+language plpgsql
+volatile
+security definer
+set search_path = ''
+as $$
+declare
+  v_no      text := btrim(coalesce(p_numara, ''));
+  v_ders    uuid;
+  v_ogr     public.students;
+  v_ilk     text;
+  v_soyad   text;
+  v_ad      text;
+begin
+  if p_cihaz is null or p_cihaz !~ '^[0-9A-Za-z-]{8,64}$' then
+    return jsonb_build_object('hata', 'cihaz_gecersiz');
+  end if;
+  if v_no !~ '^[0-9A-Za-z]{1,20}$' then
+    return jsonb_build_object('hata', 'numara_gecersiz');
+  end if;
+  select s.course_id into v_ders from public.sessions s where s.id = p_session and s.bitti is null;
+  if v_ders is null then
+    return jsonb_build_object('hata', 'oturum_yok');
+  end if;
+  select * into v_ogr from public.students st where st.course_id = v_ders and lower(st.ogrenci_no) = lower(v_no);
+  if not found then
+    return jsonb_build_object('hata', 'numara_gecersiz');
+  end if;
+  -- Aynı numara bu oturumda başka cihazdan alınmış mı?
+  if exists (select 1 from public.session_players p where p.session_id = p_session and p.cihaz_id <> p_cihaz and p.ogrenci_id = v_ogr.id) then
+    return jsonb_build_object('hata', 'numara_kullanildi');
+  end if;
+  v_ilk := case when btrim(v_ogr.ad_soyad) ~ '\s' then regexp_replace(btrim(v_ogr.ad_soyad), '\s+\S+$', '') else btrim(v_ogr.ad_soyad) end;
+  v_soyad := case when btrim(v_ogr.ad_soyad) ~ '\s' then regexp_replace(btrim(v_ogr.ad_soyad), '^.*\s', '') else '' end;
+  v_ad := left(v_ilk, 24);
+  begin
+    insert into public.session_players (session_id, cihaz_id, takma_ad, ogrenci_id) values (p_session, p_cihaz, v_ad, v_ogr.id)
+    on conflict (session_id, cihaz_id) do update set takma_ad = excluded.takma_ad, ogrenci_id = excluded.ogrenci_id;
+  exception when unique_violation then
+    v_ad := left(v_ilk || ' ' || left(v_soyad, 1) || '.', 24);
+    begin
+      insert into public.session_players (session_id, cihaz_id, takma_ad, ogrenci_id) values (p_session, p_cihaz, v_ad, v_ogr.id)
+      on conflict (session_id, cihaz_id) do update set takma_ad = excluded.takma_ad, ogrenci_id = excluded.ogrenci_id;
+    exception when unique_violation then
+      return jsonb_build_object('hata', 'numara_kullanildi');
+    end;
+  end;
+  return jsonb_build_object('durum', 'tamam', 'ad', v_ad);
+end;
+$$;
+
+revoke all on function public.numarayla_katil(uuid, text, text) from public;
+grant execute on function public.numarayla_katil(uuid, text, text) to anon, authenticated;

@@ -677,7 +677,7 @@ function DersTakibi({ oturum, ad, ders }: { oturum: string; ad: string | null; d
             )}
           </div>
         ) : adim?.tur === 'soru' ? (
-          <SoruCevabi key={adim.id} oturum={oturum} adim={adim} yoklamali={ad !== null} />
+          <SoruCevabi key={adim.id} oturum={oturum} adim={adim} yoklamali={ad !== null} numarali={!!durum?.ders && !durum.ders.startsWith('Etkinlik:')} />
         ) : adim?.tur === 'fikir' || adim?.tur === 'oylama' || adim?.tur === 'video' ? (
           <EtkinlikCevabi key={adim.id} oturum={oturum} adim={adim} telefonModu={!!durum?.telefon_modu} />
         ) : adim?.tur === 'yoklama' ? (

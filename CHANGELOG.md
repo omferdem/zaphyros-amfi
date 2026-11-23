@@ -1,5 +1,13 @@
 # Sürüm Geçmişi
 
+## v0.67.3 (24 Kasım 2026)
+`0053_numarayla_katil.sql` PGlite testinden geçti ve apply_migration ile canlıya uygulandı (`session_players.ogrenci_id`, `numarayla_katil`).
+- **Slayt okları:** ileri/geri okları slaydın üstüne binmiyor; slaydın altında ayrı bir şeritte (telefonda da okunur).
+- **Karekod yalnızca yoklamada:** yoklama ekranında karekod durur. Ders başladıktan sonra sağdaki şeritte yalnızca ders kodu ve adres kalır; karekod hoca ⋯ menüsünden ya da şeritten "karekodu göster" deyince çıkar.
+- **Kodla girişte numara (yalnız kimlik):** derste perdedeki kodla giren öğrenci numarasını yazar; numara şube listesinden ilk adına çevrilir, oyunlarda ve puan tablosunda adıyla görünür. Yoklama YAZILMAZ (yoklama yalnızca karekodla). Aynı numara ikinci telefondan reddedilir. Ders dışı etkinliklerde numara yok, yalnızca takma ad.
+- Orman: fener ve ev görselleri bağlandı.
+- Yapılmadı: kale mancınık/merkez ve `arka-kule-gok` görselleri; sınıf düğmeleri (parmak kaldır vb.) ilk basışta hâlâ takma ad soruyor; telefonda orman kartı.
+
 ## v0.67.2 (24 Kasım 2026)
 Veritabanı değişikliği yok. Görsel denetim (halat, ejderha, merdiven) ihlalsiz.
 - Gemini'den gelen yeni görseller kesildi (83 görsel: kahraman 1-8, ejderha kükre/ateş, hoca pozları, tırmanış pozları, kale mancınık ve merkez, orman ev ve fener, orman arka planı). Kesiciye kopuk küçük artıkları silen adım eklendi (`kahraman-1-sevin` temizlendi).

@@ -214,7 +214,8 @@ export default function Sahne() {
       .catch(() => setSonAkis(null))
   }, [dersKimligi, akissizMi])
   const [quizAcik, setQuizAcik] = useState(false)
-  const [yoklamaKatmani, setYoklamaKatmani] = useState(true)
+  // Ders başladıktan sonra karekod kendiliğinden çıkmaz; hoca ⋯ menüsünden ya da şeritten "karekodu göster" der
+  const [yoklamaKatmani, setYoklamaKatmani] = useState(false)
   const [quizBitirSinyali, setQuizBitirSinyali] = useState(0)
   // Telefon kumandasından gelen istek (Zapoot, quiz, derse dön) bu işleyiciyle uygulanır; sahne açıkken hoca girişi burada vardır
   const istekIsleyici = useRef<(i: KumandaIstegi) => void>(() => {})
@@ -622,7 +623,6 @@ export default function Sahne() {
   }, [etkinlikKimligi, oturum, icerikId, setAramaParametreleri])
 
   async function yoklamaDurumu(ac: boolean) {
-    if (ac) setYoklamaKatmani(true)
     const { data } = await supabase
       .from('sessions')
       .update(ac ? { yoklama_acik: true, bitti: null } : { yoklama_acik: false })
@@ -672,6 +672,8 @@ export default function Sahne() {
       </main>
     )
   if (oturum.bitti) return <DersBitti oturum={oturum} katilan={gelenler.length} yenidenAc={dersiYenidenAc} />
+
+  const yoklamaSahnesiMi = !(aktif?.tur === 'soru' || aktif?.tur === 'fikir' || aktif?.tur === 'oylama' || aktif?.tur === 'video' || aktif?.tur === 'oyun' || (slaytGorunumu && aktif))
 
   const araclar = (
     <div className="flex w-full min-w-0 flex-nowrap items-center gap-1.5 [&_button]:whitespace-nowrap [&_button]:shrink-0 [&_button]:!py-1 [&_button]:!min-h-10 [&_button]:!min-w-10 [&_summary]:!py-1 [&_summary]:!min-h-10 [&_summary]:!min-w-10 [&_summary]:flex [&_summary]:items-center [&_summary]:justify-center">
@@ -777,6 +779,11 @@ export default function Sahne() {
           <button className="ikincil-buton text-left" onClick={() => yoklamaDurumu(!acik)}>
             {acik ? '🔒 Yoklamayı kapat' : '🔓 Yoklamayı aç'}
           </button>
+          {acik && !yoklamaSahnesiMi && (
+            <button className="ikincil-buton text-left" onClick={() => setYoklamaKatmani((g) => !g)}>
+              {yoklamaKatmani ? '📱 Karekodu gizle' : '📱 Karekodu göster'}
+            </button>
+          )}
           <button className="ikincil-buton text-left" onClick={() => setKodGoster((g) => !g)}>
             {kodGoster ? '🙈 Kodu gizle' : '👁 Kodu göster'}
           </button>
@@ -840,7 +847,6 @@ export default function Sahne() {
     </div>
   )
 
-  const yoklamaSahnesiMi = !(aktif?.tur === 'soru' || aktif?.tur === 'fikir' || aktif?.tur === 'oylama' || aktif?.tur === 'video' || aktif?.tur === 'oyun' || (slaytGorunumu && aktif))
   const kodSeridiGoster = kodGoster && !!kod && !yoklamaSahnesiMi
 
   return (
@@ -1067,24 +1073,16 @@ function SlaytSahnesi({
       }}
     >
       <SlaytCizimi belge={belge} sayfaNo={sayfaNo} className="flex-1 min-h-0" />
-      {/* Her zaman görünen büyük oklar (telefon ve tablet için); fareyle üzerine gelince belirginleşir */}
-      <button
-        onClick={geri}
-        disabled={!geri}
-        aria-label="Önceki adım"
-        className="absolute left-2 top-1/2 -translate-y-1/2 h-16 w-12 rounded-2xl bg-slate-900/60 text-white text-3xl backdrop-blur opacity-60 hover:opacity-100 disabled:opacity-20 active:scale-95"
-      >
-        ‹
-      </button>
-      <button
-        onClick={ileri}
-        disabled={!ileri}
-        aria-label="Sonraki adım"
-        className="absolute right-2 top-1/2 -translate-y-1/2 h-16 w-12 rounded-2xl bg-slate-900/60 text-white text-3xl backdrop-blur opacity-60 hover:opacity-100 disabled:opacity-20 active:scale-95"
-      >
-        ›
-      </button>
-      <span className="absolute bottom-3 left-3 rounded-full bg-slate-900/60 px-3 py-1 text-xs text-slate-200 tabular-nums backdrop-blur">{sira}</span>
+      {/* Adım okları slaydın altında ayrı bir şerittedir; slaydın üstüne binmez (telefonda da okunur) */}
+      <div className="flex-none h-12 flex items-center justify-center gap-4 pl-24 bg-slate-950/90 border-t border-white/10">
+        <button onClick={geri} disabled={!geri} aria-label="Önceki adım" className="h-10 w-16 rounded-xl bg-white/10 text-white text-2xl disabled:opacity-25 active:scale-95">
+          ‹
+        </button>
+        <span className="text-xs text-slate-300 tabular-nums w-14 text-center">{sira}</span>
+        <button onClick={ileri} disabled={!ileri} aria-label="Sonraki adım" className="h-10 w-16 rounded-xl bg-white/10 text-white text-2xl disabled:opacity-25 active:scale-95">
+          ›
+        </button>
+      </div>
     </main>
   )
 }

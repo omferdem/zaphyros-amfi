@@ -92,3 +92,44 @@ export function soruMetniOku(metin: string, bicim: SoruBicimi = 'otomatik'): Zom
   if (b === 'zomr') return zomrOku(metin)
   return b === 'sekmeli' ? sekmeliOku(metin) : siklarOku(metin)
 }
+
+/** Soruları seçilen biçimde düz metne yazar (dışa aktarma). Aynı biçim geri içe aktarılabilir. */
+export function soruMetniYaz(sorular: { soru: string; dogru: string; yanlislar: string[]; ek?: Record<string, unknown> }[], bicim: Exclude<SoruBicimi, 'otomatik'> = 'zomr'): string {
+  const NL = String.fromCharCode(10)
+  const tek = (m: string) => m.split(NL).join(' ')
+  if (bicim === 'sekmeli') return sorular.map((q) => [tek(q.soru), q.dogru, ...q.yanlislar].join(String.fromCharCode(9))).join(NL) + NL
+  if (bicim === 'siklar') {
+    return (
+      sorular
+        .map((q, i) => {
+          const siklar = [q.dogru, ...q.yanlislar]
+          // Doğru şık sabit konumda kalmasın: sıraya göre döndür
+          const kaydir = i % siklar.length
+          const sirali = [...siklar.slice(kaydir), ...siklar.slice(0, kaydir)].reverse().slice(0)
+          const dogruHarf = 'ABCDEF'[sirali.indexOf(q.dogru)]
+          return [q.soru, ...sirali.map((x, j) => `${'ABCDEF'[j]}) ${x}`), `Cevap: ${dogruHarf}`].join(NL)
+        })
+        .join(NL + NL) + NL
+    )
+  }
+  return (
+    sorular
+      .map((q) => {
+        const ekler = Object.entries(q.ek ?? {})
+          .filter(([k, v]) => k !== 'paket' && typeof v === 'string' && v)
+          .map(([k, v]) => `#${k.toUpperCase()}:${v}`)
+        return [`#QUESTION:${q.soru}`, `#CORRECT:${q.dogru}`, ...q.yanlislar.map((y) => `#WRONG:${y}`), ...ekler].join(NL)
+      })
+      .join(NL + NL) + NL
+  )
+}
+
+/** Metni .txt dosyası olarak indirtir. */
+export function metniIndir(metin: string, dosyaAdi: string): void {
+  const url = URL.createObjectURL(new Blob([metin], { type: 'text/plain;charset=utf-8' }))
+  const a = document.createElement('a')
+  a.href = url
+  a.download = dosyaAdi.replace(/["*/:<>?|]+/g, '').trim().slice(0, 80) + '.txt'
+  a.click()
+  setTimeout(() => URL.revokeObjectURL(url), 1000)
+}

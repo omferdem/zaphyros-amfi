@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { bicimiTani, soruMetniOku } from './soruBicimi'
+import { bicimiTani, soruMetniOku, soruMetniYaz } from './soruBicimi'
 
 describe('soruMetniOku', () => {
   it('sekmeli satırı okur, doğru ikinci sütundur', () => {
@@ -25,5 +25,17 @@ describe('soruMetniOku', () => {
   })
   it('ZOMR yine çalışır', () => {
     expect(soruMetniOku('#QUESTION:S?\n#CORRECT:D\n#WRONG:Y').sorular).toHaveLength(1)
+  })
+  it('dışa aktarılan metin her biçimde geri okunur', () => {
+    const sorular = [
+      { soru: 'Birinci?', dogru: 'Evet', yanlislar: ['Hayır', 'Belki'], ek: {} },
+      { soru: 'İkinci?', dogru: 'Mavi', yanlislar: ['Kırmızı', 'Yeşil', 'Sarı'], ek: {} },
+    ]
+    for (const b of ['zomr', 'sekmeli', 'siklar'] as const) {
+      const geri = soruMetniOku(soruMetniYaz(sorular, b), b).sorular
+      expect(geri).toHaveLength(2)
+      expect(geri.map((q) => q.dogru)).toEqual(['Evet', 'Mavi'])
+      expect(geri[1].yanlislar.sort()).toEqual(['Kırmızı', 'Sarı', 'Yeşil'])
+    }
   })
 })

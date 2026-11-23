@@ -1,5 +1,14 @@
 # Sürüm Geçmişi
 
+## v0.66.7 (24 Kasım 2026)
+`0052_etkinlik_arsiv_akis.sql` PGlite testinden geçti ve apply_migration ile canlıya uygulandı (`etkinlikler.arsiv`, `etkinlikler.akis_id`).
+- **Etkinlikte oyun görünür:** katılımcı adı olmayan (yoklamasız) etkinlikte oyun sahnesi örnek oyuncularla çizilir; gerçek cevaplar gelince gerçek sahne üstüne açılır. Önceden perde boş kalıyordu.
+- **Kod şeridinde karekod yok:** soru ve oyun başladıktan sonra yalnızca kod ve adres kalır (alan daralmaz); büyük giriş karekodu lobide ve giriş ekranında.
+- **Dışa aktarma:** her soru paketi ve etkinlik satırı .txt olarak indirilir (ZOMR, sekmeli ya da şıklı; biçim yükleme biçimiyle aynı, geri yüklenir).
+- **Etkinlik kopyalama:** bir etkinlik, soru paketiyle birlikte başka bölüme (Zapoot, Oyunlar, Quiz) kopyalanır.
+- **Slaytlı etkinlik:** ders dışı bölümlerde de akış (slayt, video, soru adımları) kurulur ve ders gibi işlenir; yoklama aranmaz, kod ve karekodla girilir.
+- **Arşiv:** etkinlikler silmeden arşive kaldırılır, arşivden geri alınır.
+
 ## v0.66.6 (23 Kasım 2026)
 Veritabanı değişikliği yok.
 - **Ders dışı etkinlikte giriş karekodu büyütüldü:** lobide ekran yüksekliğinin %46'sı kadar (en çok 420 px), sağ kod şeridinde 288 px; arka sıradaki telefonlar okuyabilsin. Ders içi döner yoklama karekodu eskisi gibi küçük şeritte.

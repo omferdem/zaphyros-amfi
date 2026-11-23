@@ -5,7 +5,7 @@ import type { Soru } from '../lib/tipler'
 import { adimlarEkle, akisOlustur, paketiSil, paketiYenidenAdlandir, soruPaketiniDegistir, sorulariEkle, sorulariGetir } from '../lib/akis'
 import { otomatikSure, paketleriGrupla, type PaketGrubu } from '../lib/paket'
 import SoruFormu, { type SoruDegisikligi } from '../bilesenler/SoruFormu'
-import { BICIMLER, soruMetniOku, type SoruBicimi } from '../lib/soruBicimi'
+import { BICIMLER, metniIndir, soruMetniOku, soruMetniYaz, type SoruBicimi } from '../lib/soruBicimi'
 
 const SURELER = [10, 15, 20, 30, 45, 60, 90, 120]
 
@@ -326,6 +326,13 @@ export default function SoruBankasi({ icerikId, yuklendi }: { icerikId: string; 
                 <div className="flex flex-wrap gap-2">
                   <button className="parlak-buton rounded-full px-4 py-2 text-sm disabled:opacity-60" disabled={mesgul} onClick={() => yarismaAkisiOlustur(g)}>
                     🚀 Yarışma akışı oluştur
+                  </button>
+                  <button
+                    className="ikincil-buton"
+                    title={`Paketi ${bicim === 'otomatik' ? 'ZOMR' : BICIMLER.find((b) => b.anahtar === bicim)?.ad} biçiminde .txt olarak indir (yukarıdaki Biçim seçiciye göre)`}
+                    onClick={() => metniIndir(soruMetniYaz(g.sorular, bicim === 'otomatik' ? 'zomr' : bicim), g.ad || 'paketsiz sorular')}
+                  >
+                    ⬇ Dışa aktar
                   </button>
                   {g.ad && (
                     <button className="ikincil-buton" disabled={mesgul} onClick={() => yenidenAdlandir(g)}>
